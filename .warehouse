@@ -10,6 +10,7 @@ base 2-2
 bat 0.18.0-2
 bison 3.7.3-1
 bluez-utils 5.56-2
+bpytop 1.0.63-1
 breeze-icons 5.80.0-1
 cmake 3.19.7-1
 crystal 0.36.1-1
@@ -41,9 +42,11 @@ lmms 1.2.2-3
 lxappearance 0.6.3-4
 make 4.3-3
 materia-gtk-theme 20210322-1
+meld 3.20.3-1
 nerd-fonts-source-code-pro 2.1.0-2
 network-manager-applet 1.20.0-2
 nextcloud 21.0.0-9
+nim 1.4.4-1
 nitrogen 1.6.1-3
 nnn 3.6-1
 papirus-icon-theme 20210302-1
@@ -56,6 +59,7 @@ reflector 2021-1
 ripgrep-all 0.9.6-1
 signal-desktop 1.40.1-1
 spectrwm 3.4.1-1
+streamlink 2.1.0-1
 sxiv 26-1
 thefuck 3.30-2
 tig 2.5.3-1
@@ -109,5 +113,3 @@ yay 10.1.2-2
 
  ---cargo
 
-tealdeer v1.4.1:
-    tldr

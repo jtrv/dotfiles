@@ -12,3 +12,5 @@ PATH="~/bin:${PATH}"
 export PATH
 
 alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
+
+source /home/sugimoto/.config/broot/launcher/bash/br
