@@ -6,8 +6,8 @@ end
 ### EXPORT ###
 
 set fish_greeting                     # Supresses fish's intro message
-set EDITOR "emacsclient -t -a ''"     # $EDITOR use Emacs in terminal
-set VISUAL "emacsclient -c -a emacs"  # $VISUAL use Emacs in GUI mode
+set EDITOR "kak -c sesh"    # $EDITOR use Emacs in terminal
+set VISUAL "kak -c sesh"  	# $VISUAL use Emacs in GUI mode
 
 ### SET MANPAGER
 ### Uncomment only one of these!
@@ -95,19 +95,6 @@ function take --argument number
     head -$number
 end
 
-# Function for org-agenda
-function org-search -d "send a search string to org-mode"
-    set -l output (/usr/bin/emacsclient -a "" -e "(message \"%s\" (mapconcat #'substring-no-properties \
-        (mapcar #'org-link-display-format \
-        (org-ql-query \
-        :select #'org-get-heading \
-        :from  (org-agenda-files) \
-        :where (org-ql--query-string-to-sexp \"$argv\"))) \
-        \"
-    \"))")
-    printf $output
-end
-
 ### END OF FUNCTIONS ###
 
 
@@ -133,7 +120,6 @@ alias doomupgrade="~/.emacs.d/bin/doom upgrade"
 alias doompurge="~/.emacs.d/bin/doom purge"
 
 # broot
-alias br='broot -dhp'
 alias bs='broot --sizes'
 
 # Changing "ls" to "exa"
@@ -142,6 +128,9 @@ alias la='exa -a --color=always --group-directories-first'  # all files and dirs
 alias ll='exa -l --color=always --group-directories-first'  # long format
 alias lt='exa -aT --color=always --group-directories-first' # tree listing
 alias l.='exa -a | egrep "^\."'
+
+# changing "cat" to "bat"
+alias cat=bat
 
 # Search contents in directory
 alias skrg='sk --ansi -i -c \'rg --color=always --line-number "{}"\''
