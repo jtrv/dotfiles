@@ -81,7 +81,7 @@ plug "andreyorst/fzf.kak" config %{
     map global user f -docstring "fzf" ': fzf-mode<ret>'
 } defer fzf %{
 	set-option global fzf_implementation 'sk' 
-    set-option global fzf_file_command 'fd'
+    # set-option global fzf_file_command 'fd'
     set-option global fzf_highlight_command 'bat'
 }
 
