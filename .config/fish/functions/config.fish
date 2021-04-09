@@ -169,4 +169,7 @@ alias gpg-check="gpg2 --keyserver-options auto-key-retrieve --verify"
 alias gpg-retrieve="gpg2 --keyserver-options auto-key-retrieve --receive-keys"
 
 # bare git repo alias for dotfiles
-alias config="/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME"
+#alias config="/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME"
+
+# use lazygit with dotfiles
+alias config="lazygit --git-dir=$HOME/dotfiles --work-tree=$HOME"
