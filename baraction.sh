@@ -107,7 +107,7 @@ echo "$batstat $battery%"
 
 network() {
 wire="$(ip a | grep eth0 | grep inet | wc -l)"
-wifi="$(ip a | grep wlan | grep inet | wc -l)"
+wifi="$(ip a | grep wlp61s0 | grep UP | wc -l)"
 
 if [ $wire = 1 ]; then
     echo ""
