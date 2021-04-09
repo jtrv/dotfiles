@@ -1,4 +1,4 @@
---pacman
+--yay
 
 acpi
 alacritty
@@ -47,7 +47,6 @@ lmms
 lxappearance
 make
 materia-gtk-theme
-meld
 nerd-fonts-source-code-pro
 network-manager-applet
 nextcloud
@@ -63,13 +62,16 @@ qtkeychain-qt5
 redshift
 reflector
 ripgrep-all
+sd
 signal-desktop
 skim
 spectrwm
 streamlink
 sxiv
+teip
 thefuck
 tig
+topgrade
 tree-sitter
 udiskie
 viu
@@ -120,11 +122,41 @@ xorg-xwd
 xorg-xwud
 yay
 
- ---cargo
 
-broot v1.2.9:
-    broot
-kak-lsp v9.0.0-snapshot (/home/sugimoto/.config/kak/plugins/kak-lsp):
-    kak-lsp
-tealdeer v1.4.1:
-    tldr
+
+--cargo
+
+broot 
+cargo-update 
+kak-lsp 
+tealdeer 
+
+
+
+--fisher
+
+jorgebucaran/fisher
+jethrokuan/z
+jethrokuan/fzf
+acomagu/fish-async-prompt
+laughedelic/pisces
+nickeb96/puffer-fish
+jorgebucaran/nvm.fish
+franciscolourenco/done
+jorgebucaran/autopair.fish
+gazorby/fish-abbreviation-tips
+
+
+
+--Oh-My-Fish
+
+abbr_tips.fish
+__async_prompt.fish
+autopair.fish
+done.fish
+fzf.fish
+nvm.fish
+omf.fish
+pisces.fish
+puffer_fish_key_bindings.fish
+z.fish
