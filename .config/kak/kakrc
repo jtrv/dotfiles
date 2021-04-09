@@ -1,74 +1,116 @@
-#Kakoune with Kakhis
-#Author: Jacob Travers
+# Kakoune with Kakhis
+# A bootstrapping config for kakoune meant
+# as a starting point or inspiration
+# to get you up and running ASAP
 
-# kill clippy, he takes precious real-estate
+# Author: Jacob Travers
+
+# Plugin manager
+source "~/.config/kak/plugins/plug.kak/rc/plug.kak"
+plug "andreyorst/plug.kak" noload
+
+############### DISPLAY  ############### 
+
+# Kill clippy, he takes precious real-estate
 set-option global ui_options ncurses_assistant=off
 
-set-option global tabstop 4
-set-option global indentwidth 4
-
-# min surrounding rows / columns 
+# Min surrounding rows / columns 
 set-option global scrolloff 1,3
 
-# relative line numbers
+# FIXME: Highlight trailing whitespace
+add-highlighter global/ regex \h+$ 0:Error
 add-highlighter global/ show-matching
 
-# Highlight trailing whitespace
-add-highlighter global/ regex \h+$ 0:Error
+# relative line numbers toggled on insert
+plug "evanrelf/number-toggle.kak" config %{
+	require-module "number-toggle"
+}
 
-# Exit with jj
+# Colorscheme with opacities (syntax HLs under selection HLs)
+plug "caksoylar/kakoune-mysticaltutor" theme %{ colorscheme mysticaltutor }
+
+# Matching powerline theme
+plug "jordan-yee/kakoune-mysticaltutor-powerline"
+
+# Powerline like nvim, spacemacs
+plug "andreyorst/powerline.kak" defer powerline %{
+	powerline-separator curve
+  powerline-theme mysticaltutor
+} config %{
+  powerline-start
+}
+
+########## FORMATTING/LINTING ######### 
+
+set-option global tabstop 2
+set-option global indentwidth 2
+
+plug "kak-lsp/kak-lsp" do %{cargo install --locked --force --path .}
+  hook global WinSetOption filetype=(python|javascript|typescript|html|css|bash) %{lsp-enable-window}
+
+define-command -hidden prettier-format %{
+    execute-keys '%|npx prettier --stdin-filepath $kak_buffile<ret><space>;'
+}
+
+############### MISC  ############### 
+
+# Exit with jj ( also recommend 'xcape' on linux)
 hook global InsertChar j %{ try %{
-    exec -draft hH <a-k>jj<ret> d
-    exec <esc>
+  exec -draft hH <a-k>jj<ret> d
+  exec <esc>
 }}
+
+# Spacebar as leader-key
+map global normal <space> , -docstring 'leader'
+
+# Select/add next match
+define-command -hidden select-or-add-cursor %{
+    try %{
+        execute-keys "<a-k>\A.\z<ret>"
+        execute-keys -save-regs '' "_<a-i>w*"
+    } catch %{
+        execute-keys -save-regs '' "_*<s-n>"
+    } catch nop
+}
+map global normal v -docstring 'add next match' ":select-or-add-cursor<ret>"
+
+# Remove multi-selection
+map global normal V <a-space>   -docstring 'remove main selection'
+map global normal <esc> <space> -docstring 'remove all selections except main'
+
+# Clipboard integration
+plug "lePerdu/kakboard" %{
+    hook global WinCreate .* %{ kakboard-enable }
+}
 
 # Use ripgrep instead of grep
 set global grepcmd 'rg -n'
 
-# Spacebar leader-key
-map global normal <space> ,       -docstring 'leader'
-map global normal <'> <space>     -docstring 'remove all sels except main'
-map global normal <a-'> <a-space> -docstring 'remove main sel'
-map global user   <space> :       -docstring 'commander'
-
-# Comment Lines
-define-command comment %{
-    try %{
-        execute-keys _
-        comment-block
-    } catch comment-line
-}
-map global user c -docstring 'comment' %{: comment<ret>}
-
-
-################### Plugins ###################
-
-source "~/.config/kak/plugins/plug.kak/rc/plug.kak"
-plug "andreyorst/plug.kak" noload
-	map global user = -docstring 'plugins' ": plug-list<ret>"
-plug "occivink/kakoune-find"
+# Additional plugins
 plug "jjk96/kakoune-fireplace"
 plug "delapouite/kakoune-palette"
 plug "occivink/kakoune-sudo-write"
 plug "listentolist/kakoune-replicate"
 
-# clipboard integration
 
-plug "lePerdu/kakboard" %{
-    hook global WinCreate .* %{ kakboard-enable }
+################# MODES ##################
+
+# space twice for cmdline
+map global user <space> : -docstring 'commander'
+
+# Plugin manager
+map global user = -docstring 'plug' ": plug-list<ret>"
+
+# Comment Lines
+define-command comment %{
+  try %{
+    execute-keys _
+    comment-block
+  } catch comment-line
 }
+map global user c -docstring 'comment' %{: comment<ret>}
 
-plug "kak-lsp/kak-lsp" do %{
-        cargo install --locked --force --path .
-}
-hook global WinSetOption filetype=(rust|python|go|javascript|typescript|c|cpp|html|css|scss) %{
-        lsp-enable-window
-}
-
-
-################# User Modes ##################
-
-# quickly navigate buffers
+# Navigate buffers
 plug "delapouite/kakoune-buffers" %{
     hook global WinDisplay .* info-buffers
         map global user b -docstring 'buffer' ": enter-buffers-mode<ret>"
@@ -79,14 +121,23 @@ plug "delapouite/kakoune-buffers" %{
         alias global bo! buffer-only-force
 }
 
-# efficient useful fzf or skim in my case
+# development mode (linting and formating)
+declare-user-mode dev
+  map global user d -docstring 'dev' ": enter-user-mode dev<ret>"
+  map global dev l  -docstring 'lint' ": lint<ret>"
+  map global dev f  -docstring 'format' ": format<ret>"
+
+# Useful fzf tools or 'skim' in my case
 plug "andreyorst/fzf.kak" config %{
-    map global user f -docstring "fzf" ': fzf-mode<ret>'
+  map global user f -docstring 'fzf' ": fzf-mode<ret>"
 } defer fzf %{
 	set-option global fzf_implementation 'sk' 
-    # set-option global fzf_file_command 'fd'
-    set-option global fzf_highlight_command 'bat'
+  set-option global fzf_highlight_command 'bat'
+  # set-option global fzf_file_command 'fd'
 }
+
+# LSP-mode
+map global user l %{: enter-user-mode lsp<ret>} -docstring "LSP"
 
 # Edit/extend/trim selections one by one
 plug "occivink/kakoune-phantom-selection" %{
@@ -98,9 +149,10 @@ plug "occivink/kakoune-phantom-selection" %{
         map global phantom-selection p -docstring "Previous" ": phantom-selection-iterate-prev<ret>"
 }
 
-# select/edit surrounding chars and tags
+# Select/edit surrounding chars and tags
 plug "h-youhei/kakoune-surround"
 	declare-user-mode surround
+    map global normal <'> ": enter-user-mode surround<ret>" 
 		map global surround r -docstring 'replace surround'        ": change-surround<ret>" 
 		map global surround d -docstring 'delete surround'         ": delete-surround<ret>" 
 		map global surround s -docstring 'select surround'         ": select-surround<ret>" 
@@ -109,9 +161,8 @@ plug "h-youhei/kakoune-surround"
 		map global surround R -docstring 'replace surrounding tag' ": change-surrounding-tag<ret>" 
 		map global surround S -docstring 'select surrounding tag'  ": select-surrounding-tag<ret>" 
 		map global surround I -docstring 'surround with tag'       ": surround-with-tag<ret>" 
-		map global user s 	  -docstring 'surround'                ": enter-user-mode surround<ret>" 
 
-# spelling and grammar checking
+# Spelling and grammar checking
 declare-user-mode spell
     map global spell a -docstring 'add' 	": spell-add<ret>"
     map global spell c -docstring 'clear'   ": spell-clear<ret>"
@@ -121,12 +172,12 @@ declare-user-mode spell
     map global user  S -docstring 'spell' 	": enter-user-mode -lock spell<ret>"
     declare-option str language en-US
     define-command spell-enable %{
-            hook window BufWritePost .* %{
-                spell %opt{language}
-            }
+        hook window BufWritePost .* %{
+            spell %opt{language}
+        }
     }
 
-# tree-sitter integrations 
+# Tree-sitter
 plug "ul/kak-tree" %{
     declare-user-mode tree
         map global user t -docstring 'tree sitter' ": enter-user-mode tree<ret>"
@@ -139,9 +190,10 @@ plug "ul/kak-tree" %{
         map global tree . -docstring 'lock'        ": enter-user-mode -lock tree<ret>"
 }
 
-# connect kakoune to externals
+# Connect kakoune to externals
 plug "kakounedotcom/prelude.kak" %{
     plug "kakounedotcom/connect.kak" %{
+
 		# clipboard history
 		plug "alexherbo2/yank-ring.kak" %{
 			require-module yank-ring
@@ -152,20 +204,7 @@ plug "kakounedotcom/prelude.kak" %{
     }
 }
 
-# (un)wrap lines
+# (un)Wrap lines
 map global user w -docstring 'wrap'   ": add-highlighter global/ wrap -word -indent<ret>"
 map global user W -docstring 'unwrap' ": remove-highlighter global/wrap_-word_-indent<ret>"
 
-############### UI Plugins ############### 
-
-plug "evanrelf/number-toggle.kak" config %{
-	require-module "number-toggle"
-}
-plug "caksoylar/kakoune-mysticaltutor" theme %{ colorscheme mysticaltutor }
-plug "jordan-yee/kakoune-mysticaltutor-powerline"
-plug "andreyorst/powerline.kak" defer powerline %{
-	powerline-separator curve
-    powerline-theme mysticaltutor
-} config %{
-    powerline-start
-}
