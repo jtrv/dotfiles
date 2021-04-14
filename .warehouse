@@ -10,6 +10,7 @@ base
 bat
 bison
 bluez-utils
+bottom-bin
 bpytop
 breeze-icons
 cmake
@@ -26,6 +27,7 @@ fd
 firefox-developer-edition
 firefox-tridactyl
 flex
+fuse3
 fzf
 gimp
 git-delta-bin
@@ -71,6 +73,7 @@ sxiv
 teip
 thefuck
 tig
+tokei
 topgrade
 tree-sitter
 udiskie
@@ -129,7 +132,9 @@ yay
 broot 
 cargo-update 
 kak-lsp 
+kalk_cli 
 tealdeer 
+xsv 
 
 
 
