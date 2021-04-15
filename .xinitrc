@@ -39,4 +39,6 @@ nitrogen --restore &
 picom -f &
 kak -d -s sesh &  # kakoune daemon
 redshift -l 34:-119 &  # bluelight filter
+rclone mount --daemon mxsdrive: ~/mxs/drive &
+rclone mount --daemon mxsftp: ~/mxs/ftp &
 exec spectrwm
