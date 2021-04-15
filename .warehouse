@@ -6,6 +6,7 @@ alsa-utils
 anki
 autoconf
 automake
+barrier
 base
 bat
 bison
@@ -26,6 +27,7 @@ fakeroot
 fd
 firefox-developer-edition
 firefox-tridactyl
+flameshot
 flex
 fuse3
 fzf
@@ -55,11 +57,13 @@ nextcloud
 nim
 nitrogen
 nnn
+noto-fonts-emoji
 papirus-icon-theme
 patch
 picom
 pkgconf
 pv
+qbittorrent
 qtkeychain-qt5
 redshift
 reflector
@@ -78,6 +82,7 @@ topgrade
 tree-sitter
 udiskie
 viu
+vivaldi
 wget
 wtfutil-bin
 wttr
