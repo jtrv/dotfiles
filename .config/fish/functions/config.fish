@@ -5,7 +5,7 @@ end
 
 ### EXPORT ###
 
-set fish_greeting                     # Supresses fish's intro message
+set fish_greeting           # Supresses fish's intro message
 set EDITOR "kak -c sesh"    # $EDITOR use Emacs in terminal
 set VISUAL "kak -c sesh"  	# $VISUAL use Emacs in GUI mode
 
@@ -48,51 +48,51 @@ end
 # ex: backup file.txt
 # result: copies file as file.txt.bak
 function backup --argument filename
-    cp $filename $filename.bak
+  cp $filename $filename.bak
 end
 
 # Function for copying files and directories, even recursively.
 # ex: copy DIRNAME LOCATIONS
 # result: copies the directory and all of its contents.
 function copy
-    set count (count $argv | tr -d \n)
-    if test "$count" = 2; and test -d "$argv[1]"
-	set from (echo $argv[1] | trim-right /)
-	set to (echo $argv[2])
-        command cp -r $from $to
-    else
-        command cp $argv
-    end
+  set count (count $argv | tr -d \n)
+  if test "$count" = 2; and test -d "$argv[1]"
+  	set from (echo $argv[1] | trim-right /)
+  	set to (echo $argv[2])
+    command cp -r $from $to
+  else
+    command cp $argv
+  end
 end
 
 # Function for printing a column (splits input on whitespace)
 # ex: echo 1 2 3 | coln 3
 # output: 3
 function coln
-    while read -l input
-        echo $input | awk '{print $'$argv[1]'}'
-    end
+  while read -l input
+    echo $input | awk '{print $'$argv[1]'}'
+  end
 end
 
 # Function for printing a row
 # ex: seq 3 | rown 3
 # output: 3
 function rown --argument index
-    sed -n "$index p"
+  sed -n "$index p"
 end
 
 # Function for ignoring the first 'n' lines
 # ex: seq 10 | skip 5
 # results: prints everything but the first 5 lines
 function skip --argument n
-    tail +(math 1 + $n)
+  tail +(math 1 + $n)
 end
 
 # Function for taking the first 'n' lines
 # ex: seq 10 | take 5
 # results: prints only the first 5 lines
 function take --argument number
-    head -$number
+  head -$number
 end
 
 ### END OF FUNCTIONS ###
@@ -169,7 +169,7 @@ alias gpg-check="gpg2 --keyserver-options auto-key-retrieve --verify"
 alias gpg-retrieve="gpg2 --keyserver-options auto-key-retrieve --receive-keys"
 
 # bare git repo alias for dotfiles
-#alias config="/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME"
+alias config="/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME"
 
 # use lazygit with dotfiles
-alias config="lazygit --git-dir=$HOME/dotfiles --work-tree=$HOME"
+alias lazyconf="lazygit --git-dir=$HOME/dotfiles --work-tree=$HOME"
