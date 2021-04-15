@@ -48,11 +48,14 @@ set-option global indentwidth 2
 plug "kak-lsp/kak-lsp" do %{cargo install --locked --force --path .}
   hook global WinSetOption filetype=(python|javascript|typescript|html|css|bash) %{lsp-enable-window}
 
-define-command -hidden prettier-format %{
+define-command -hidden prettier %{
     execute-keys '%|npx prettier --stdin-filepath $kak_buffile<ret><space>;'
 }
 
 ############### MISC  ############### 
+
+# Spacebar as leader-key
+map global normal <space> , -docstring 'leader'
 
 # Exit with jj ( also recommend 'xcape' on linux)
 hook global InsertChar j %{ try %{
@@ -60,8 +63,14 @@ hook global InsertChar j %{ try %{
   exec <esc>
 }}
 
-# Spacebar as leader-key
-map global normal <space> , -docstring 'leader'
+# Comment Lines
+define-command comment %{
+  try %{
+    execute-keys _
+    comment-block
+  } catch comment-line
+}
+map global normal <#> -docstring 'comment' %{: comment<ret>}
 
 # Select/add next match
 define-command -hidden select-or-add-cursor %{
@@ -95,20 +104,11 @@ plug "listentolist/kakoune-replicate"
 
 ################# MODES ##################
 
-# space twice for cmdline
+# Double tap space for cmdline
 map global user <space> : -docstring 'commander'
 
 # Plugin manager
 map global user = -docstring 'plug' ": plug-list<ret>"
-
-# Comment Lines
-define-command comment %{
-  try %{
-    execute-keys _
-    comment-block
-  } catch comment-line
-}
-map global user c -docstring 'comment' %{: comment<ret>}
 
 # Navigate buffers
 plug "delapouite/kakoune-buffers" %{
@@ -121,10 +121,10 @@ plug "delapouite/kakoune-buffers" %{
         alias global bo! buffer-only-force
 }
 
-# development mode (linting and formating)
+# Development mode (linting and formating)
 declare-user-mode dev
-  map global user d -docstring 'dev' ": enter-user-mode dev<ret>"
-  map global dev l  -docstring 'lint' ": lint<ret>"
+  map global user d -docstring 'dev'    ": enter-user-mode dev<ret>"
+  map global dev l  -docstring 'lint'   ": lint<ret>"
   map global dev f  -docstring 'format' ": format<ret>"
 
 # Useful fzf tools or 'skim' in my case
@@ -142,11 +142,11 @@ map global user l %{: enter-user-mode lsp<ret>} -docstring "LSP"
 # Edit/extend/trim selections one by one
 plug "occivink/kakoune-phantom-selection" %{
     declare-user-mode phantom-selection
-        map global user p -docstring "phantom"               ": enter-user-mode phantom-selection<ret>"
-        map global phantom-selection a -docstring "Add"      ": phantom-selection-add-selection<ret>"
-        map global phantom-selection c -docstring "Clear"    ": phantom-selection-select-all; phantom-selection-clear<ret>"
-        map global phantom-selection n -docstring "Next"     ": phantom-selection-iterate-next<ret>"
-        map global phantom-selection p -docstring "Previous" ": phantom-selection-iterate-prev<ret>"
+        map global user p -docstring 'phantom'               ": enter-user-mode phantom-selection<ret>"
+        map global phantom-selection a -docstring 'Add'      ": phantom-selection-add-selection<ret>"
+        map global phantom-selection c -docstring 'Clear'    ": phantom-selection-select-all; phantom-selection-clear<ret>"
+        map global phantom-selection n -docstring 'Next'     ": phantom-selection-iterate-next<ret>"
+        map global phantom-selection p -docstring 'Previous' ": phantom-selection-iterate-prev<ret>"
 }
 
 # Select/edit surrounding chars and tags
@@ -199,7 +199,7 @@ plug "kakounedotcom/prelude.kak" %{
 			require-module yank-ring
 			require-module yank-ring-connect
             yank-ring-enable
-            map global user y -docstring 'yank ring' ': yank-ring<ret>' 
+            map global user y -docstring 'yank ring' ": yank-ring<ret>" 
         }
     }
 }
