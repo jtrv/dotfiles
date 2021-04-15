@@ -5,15 +5,13 @@
 ##############################
 #	    DISK
 ##############################
-
 ssd() {
 	  SSD="$(df -h /home | grep /dev | awk '{print $5}')"
 	    echo -e "$SSD"
-    }
+}
 ##############################
 #	    RAM
 ##############################
-
 mem() {
 used="$(free | grep Mem: | awk '{print $3}')"
 total="$(free | grep Mem: | awk '{print $2}')"
@@ -23,9 +21,8 @@ ram="$(( 200 * $used/$total - 100 * $used/$total ))% "
 echo $ram
 }
 ##############################
-#	    TODO CPU
+#	    CPU
 ##############################
-
 cpu() {
 	  read cpu a b c previdle rest < /proc/stat
 	    prevtotal=$((a+b+c+previdle))
@@ -34,37 +31,45 @@ cpu() {
 		  total=$((a+b+c+idle))
 		    cpu=$((100*( (total-prevtotal) - (idle-previdle) ) / (total-prevtotal) ))
 		      echo -e " $cpu%"
-	      }
+}
 ##############################
 #	    VOLUME
 ##############################
-
 vol() {
 	vol="$(amixer get Master | awk -F'[][]' 'END{ print $2 }')"
 	echo -e "$vol"
 }
 ##############################
-#	    Packages
+#	    BLUETOOTH
 ##############################
+bluetooth() {
+	bluetoothStatus="$(bluetoothctl info | rg 'Connected: yes' | wc -l)"
 
+  if [ $bluetoothStatus = 1 ]; then
+    echo ""
+  else
+    echo ""
+  fi
+}
+##############################
+#	    PACKAGES
+##############################
 pkgs() {
-	pkgs="$(pacman -Q | wc -l)"
-	echo -e " $pkgs"
+	pkgs="$(yay -Q | wc -l)"
+	echo -e "$pkgs"
 }
 ##############################
 #	    UPGRADES
 ##############################
-
 upgrades() {
-	upgrades="$(pacman -Qu | wc -l)"
+	upgrades="$(yay -Qu | wc -l)"
 	echo -e "$upgrades"
 }
 ##############################
 #	    VPN
 ##############################
-
 vpn() {
-	state="$(ip a | grep tun0 | grep inet | wc -l)"
+	state="$(ip a | rg tun0 | rg inet | wc -l)"
 
 if [ $state = 1 ]; then
     echo " on "
@@ -82,7 +87,9 @@ fi
 # 	echo " $tmp"
 # }
 
-## BATTERY
+##############################
+#	    BATTERY
+##############################
 bat() {
 batstat="$(cat /sys/class/power_supply/BAT0/status)"
 battery="$(cat /sys/class/power_supply/BAT0/capacity)"
@@ -118,9 +125,9 @@ else
 fi
 }
 
-      SLEEP_SEC=2
-      #loops forever outputting a line every SLEEP_SEC secs
-      while :; do
-    echo "$(cpu) |  $(mem) |  $(ssd) |  $(vol) | $(vpn)$(network) | $(bat) | ﯁ $(upgrades) |"
-		sleep $sleep_sec
-		done
+SLEEP_SEC=2
+#loops forever outputting a line every SLEEP_SEC secs
+while :; do
+  echo "$(cpu)    $(mem)    $(ssd)    $(upgrades)  |  $(vpn)$(network)  $(bluetooth)  |  $(vol) | $(bat) |"
+  sleep $sleep_sec
+done
