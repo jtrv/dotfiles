@@ -1,5 +1,5 @@
 # Defined via `source`
-function config --wraps='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME' --description 'alias config=/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
+function config --wraps='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME' --description 'alias for gitting dotfiles'
   /usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME $argv; 
 end
 
@@ -110,15 +110,6 @@ alias .3='cd ../../..'
 alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
 
-# vim and emacs
-alias vim='nvim'
-alias em='/usr/bin/emacs -nw'
-alias emacs="emacsclient -c -a 'emacs'"
-alias doomsync="~/.emacs.d/bin/doom sync"
-alias doomdoctor="~/.emacs.d/bin/doom doctor"
-alias doomupgrade="~/.emacs.d/bin/doom upgrade"
-alias doompurge="~/.emacs.d/bin/doom purge"
-
 # broot
 alias bs='broot --sizes'
 
@@ -130,7 +121,7 @@ alias lt='exa -aT --color=always --group-directories-first' # tree listing
 alias l.='exa -a | egrep "^\."'
 
 # changing "cat" to "bat"
-alias cat=bat
+alias cat='bat'
 
 # Search contents in directory
 alias skrg='sk --ansi -i -c \'rg --color=always --line-number "{}"\''
@@ -159,17 +150,3 @@ alias psmem10='ps auxf | sort -nr -k 4 | head -10'
 alias pscpu='ps auxf | sort -nr -k 3'
 alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
 
-# get error messages from journalctl
-alias jctl="journalctl -p 3 -xb"
-
-# gpg encryption
-# verify signature for isos
-alias gpg-check="gpg2 --keyserver-options auto-key-retrieve --verify"
-# receive the key of a developer
-alias gpg-retrieve="gpg2 --keyserver-options auto-key-retrieve --receive-keys"
-
-# bare git repo alias for dotfiles
-alias config="/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME"
-
-# use lazygit with dotfiles
-alias lazyconf="lazygit --git-dir=$HOME/dotfiles --work-tree=$HOME"
