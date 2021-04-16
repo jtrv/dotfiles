@@ -22,15 +22,15 @@ gui:
     show: true
   mouseEvents: true
   skipUnstageLineWarning: false
-  skipStashWarning: true
+  skipStashWarning: false
   showFileTree: false # for rendering changes files in a tree format
-  showRandomTip: true
+  showRandomTip: false
   showCommandLog: true
   commandLogSize: 8
 git:
   paging:
     colorArg: always
-    pager: delta --dark --paging=never
+    pager: delta --dark --paging=never --24-bit-color=never
   merging:
     # only applicable to unix users
     manualCommit: false
@@ -53,8 +53,8 @@ update:
 reporting: 'undetermined' # one of: 'on' | 'off' | 'undetermined'
 confirmOnQuit: false
 # determines whether hitting 'esc' will quit the application when there is nothing to cancel/close
-quitOnTopLevelReturn: false
-disableStartupPopups: false
+quitOnTopLevelReturn: true
+disableStartupPopups: true
 notARepository: 'prompt' # one of: 'prompt' | 'create' | 'skip'
 keybinding:
   universal:
@@ -89,8 +89,8 @@ keybinding:
     openFile: 'o'
     scrollUpMain: '<pgup>' # main panel scroll up
     scrollDownMain: '<pgdown>' # main panel scroll down
-    scrollUpMain-alt1: '<c-k>' # main panel scroll up
-    scrollDownMain-alt1: '<c-j>' # main panel scroll down
+    scrollUpMain-alt1: 'K' # main panel scroll up
+    scrollDownMain-alt1: 'J' # main panel scroll down
     scrollUpMain-alt2: '<c-u>' # main panel scroll up
     scrollDownMain-alt2: '<c-d>' # main panel scroll down
     executeCustomCommand: ':'

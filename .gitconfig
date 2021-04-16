@@ -8,20 +8,23 @@
 [core]
 	editor = kak
 	pager = delta
+[diff]
+	color-moved = dimmed_zebra
 [interactive]
-    diffFilter = delta --color-only
+  diffFilter = delta --color-only
 [delta]
-    features = side-by-side line-numbers decorations
-    syntax-theme = Dracula
-    plus-style = syntax "#003800"
-    minus-style = syntax "#3f0001"
+  features = unobtrusive-line-numbers decorations
+  syntax-theme = Dracula
 [delta "decorations"]
-    commit-decoration-style = bold yellow box ul
-    file-style = bold yellow ul
-    file-decoration-style = none
-    hunk-header-decoration-style = cyan box ul
-[delta "line-numbers"]
-    line-numbers-left-style = cyan
-    line-numbers-right-style = cyan
-    line-numbers-minus-style = 124
-    line-numbers-plus-style = 28
+  commit-decoration-style = brightblue box
+  file-decoration-style = brightmagenta box ul
+  hunk-header-decoration-style = brightyellow box
+[delta "unobtrusive-line-numbers"]
+  line-numbers = true
+  line-numbers-minus-style = brightred
+  line-numbers-zero-style = "#999999"
+  line-numbers-plus-style = brightgreen
+  line-numbers-left-format = "{nm:>4}┊"
+  line-numbers-right-format = "{np:>4}│"
+  line-numbers-left-style = brightblue
+  line-numbers-right-style = brightblue
