@@ -55,14 +55,14 @@ bluetooth() {
 #	    PACKAGES
 ##############################
 pkgs() {
-	pkgs="$(yay -Q | wc -l)"
+	pkgs="$(pacman -Q | wc -l)"
 	echo -e "$pkgs"
 }
 ##############################
 #	    UPGRADES
 ##############################
 upgrades() {
-	upgrades="$(yay -Qu | wc -l)"
+	upgrades="$(pacman -Qu | wc -l)"
 	echo -e "$upgrades"
 }
 ##############################
