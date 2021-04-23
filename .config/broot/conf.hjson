@@ -194,7 +194,7 @@
 		# Here's an example of a shorctut bringing you to your home directory
 		{
 			invocation: home
-			key: ctrl-home
+			key: ~
 			execution: ":focus ~"
 		}
 
@@ -226,16 +226,16 @@
 
 		# You can reproduce the bindings of Norton Commander
 		# on copying or moving to the other panel:
-		# {
-		# 	key: F5
-		# 	external: "cp -r {file} {other-panel-directory}"
-		# 	leave_broot: false
-		# }
-		# {
-		# 	key: F6
-		# 	external: "mv {file} {other-panel-directory}"
-		# 	leave_broot: false
-		# }
+		{
+			key: ctrl-c
+			external: "cp -r {file} {other-panel-directory}"
+			leave_broot: false
+		}
+		 {
+		 	key: ctrl-m
+		 	external: "mv {file} {other-panel-directory}"
+		 	leave_broot: false
+		 }
 	]
 
 	###############################################################
