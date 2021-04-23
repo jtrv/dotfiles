@@ -85,11 +85,16 @@
 	# If some paths must be handled specially, uncomment (and change
 	# this section as per the examples)
 	#
-	# special_paths: {
+	special_paths: {
+        "~/mxs/drive/" :no-enter
+        "~/mxs/ftp/"   :no-enter
+        "~/cargo/"   :no-enter
+        "~/aws/"   :no-enter
+        "~/bin/"   :no-enter
 	# 	"/media/slow-backup-disk"		: no-enter
 	# 	"/home/dys/useless"			: hide
 	# 	"/home/dys/my-link-I-want-to-explore"	: enter
-	# }
+	}
 
 
 	###############################################################
