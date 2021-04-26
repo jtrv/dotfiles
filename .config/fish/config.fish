@@ -99,6 +99,16 @@ end
 ### END OF FUNCTIONS ###
 
 
+
+### ABBREVIATIONS ###
+
+if status --is-interactive
+    # use rip instead of rm
+    abbr --add --global rm 'rip'
+    abbr --add --global sudo 'doas'
+    abbr --add --global skrg 'sk --ansi -i -c \'rg --color=always --line-number "{}"\''
+end
+
 ### ALIASES ###
 
 # root privileges
@@ -110,6 +120,10 @@ alias ...='cd ../..'
 alias .3='cd ../../..'
 alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
+
+# confirm before overwriting something
+alias cp="cp -i"
+alias mv='mv -i'
 
 # nnn
 alias n='nnn'
@@ -133,9 +147,6 @@ alias l.='exa -a | egrep "^\."'
 # changing "cat" to "bat"
 alias cat='bat'
 
-# Search contents in directory
-alias skrg='sk --ansi -i -c \'rg --color=always --line-number "{}"\''
-
 # Colorize grep output (good for log files)
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
@@ -146,11 +157,6 @@ alias mirror="sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacma
 alias mirrord="sudo reflector --latest 50 --number 20 --sort delay --save /etc/pacman.d/mirrorlist"
 alias mirrors="sudo reflector --latest 50 --number 20 --sort score --save /etc/pacman.d/mirrorlist"
 alias mirrora="sudo reflector --latest 50 --number 20 --sort age --save /etc/pacman.d/mirrorlist"
-
-# confirm before overwriting something
-alias cp="cp -i"
-alias mv='mv -i'
-alias rm='rm -i'
 
 ## get top process eating memory
 alias psmem='ps auxf | sort -nr -k 4'
