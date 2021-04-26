@@ -1,4 +1,4 @@
---yay
+--paru
 
 acpi
 alacritty
@@ -8,11 +8,11 @@ autoconf
 automake
 barrier
 base
-bat
 bison
 bluez-utils
 bottom-bin
 breeze-icons
+chromium
 cmake
 crystal
 ctags
@@ -21,7 +21,9 @@ dash
 dialog
 discord
 docker
+dust-bin
 entr
+eva
 exa
 fakeroot
 fd
@@ -55,26 +57,32 @@ materia-gtk-theme
 navi
 neofetch
 nerd-fonts-source-code-pro
+net-tools
 network-manager-applet
 nextcloud
 nim
 nnn
-noto-fonts-emoji
+opendoas
 otf-kodomo-maru-gothic
 papirus-icon-theme
+paru
 patch
 picom
 pkgconf
+procs
 pv
 qbittorrent
 qtkeychain-qt5
 redshift
 reflector
 ripgrep-all
+rm-improved
 sad
 sd
 signal-desktop
+sniffglue
 spectrwm
+starship
 streamlink
 sxiv
 teip
@@ -128,7 +136,7 @@ xorg-xvinfo
 xorg-xwayland
 xorg-xwd
 xorg-xwud
-yay
+zoxide-bin
 
 
 
@@ -136,8 +144,10 @@ yay
 
 broot 
 cargo-update 
+du-dust 
 kak-lsp 
 kalk_cli 
+runiq 
 tealdeer 
 xsv 
 
@@ -146,7 +156,6 @@ xsv
 --fisher
 
 jorgebucaran/fisher
-jethrokuan/z
 jethrokuan/fzf
 acomagu/fish-async-prompt
 laughedelic/pisces
@@ -169,4 +178,3 @@ nvm.fish
 omf.fish
 pisces.fish
 puffer_fish_key_bindings.fish
-z.fish
