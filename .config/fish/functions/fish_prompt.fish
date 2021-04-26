@@ -66,9 +66,6 @@ function fish_prompt
     set_color -o green
     echo -n ']'
 
-    # Date
-    _nim_prompt_wrapper $retc '' (date +%X)
-
     # Virtual Environment
     set -q VIRTUAL_ENV_DISABLE_PROMPT
     or set -g VIRTUAL_ENV_DISABLE_PROMPT true
@@ -82,8 +79,7 @@ function fish_prompt
 
     # Battery status
     type -q acpi
-    and test (acpi -a 2> /dev/null | string match -r off)
-    and _nim_prompt_wrapper $retc B (acpi -b | cut -d' ' -f 4-)
+    and _nim_prompt_wrapper $retc B (acpi -b | sd '.*,\s' ''| sd '\sremaining' '')
 
     # New line
     echo
