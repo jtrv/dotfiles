@@ -107,7 +107,7 @@ xsv
 
 
 
---fisher
+--fish-plugins
 
 jorgebucaran/fisher
 jethrokuan/fzf
@@ -118,17 +118,3 @@ jorgebucaran/nvm.fish
 franciscolourenco/done
 jorgebucaran/autopair.fish
 gazorby/fish-abbreviation-tips
-
-
-
---Oh-My-Fish
-
-abbr_tips.fish
-__async_prompt.fish
-autopair.fish
-done.fish
-fzf.fish
-nvm.fish
-omf.fish
-pisces.fish
-puffer_fish_key_bindings.fish
