@@ -128,12 +128,6 @@ alias mv='mv -i'
 # nnn
 alias n='nnn'
 
-# config = git for ~/dotfiles
-alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
-
-# lazyconf = lazygit for ~/dotfiles
-alias lazyconf='lazygit --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
-
 # broot
 alias bs='broot --sizes'
 
@@ -165,6 +159,12 @@ alias psmem10='ps auxf | sort -nr -k 4 | head -10'
 ## get top process eating cpu ##
 alias pscpu='ps auxf | sort -nr -k 3'
 alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
+
+# config = git for ~/dotfiles
+alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
+
+# lazyconf = lazygit for ~/dotfiles
+alias lazyconf='lazygit --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
 
 
 # Start X at login
