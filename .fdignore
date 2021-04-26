@@ -1,0 +1,12 @@
+.bash_history/
+.bash_logout/
+.bash_profile/
+.cache/
+.cargo/
+.node-gyp/
+.npm/
+aws/
+bin/
+go/
+mxs/ftp/
+mxs/drive/
