@@ -9,11 +9,8 @@ function warehouse
         sd "v\d.*\n" "\n" |\
         sd "^\s.*\n" ""                  >> ~/.warehouse
       
-    echo -e "\n\n\n--fisher\n" 	         >> ~/.warehouse
+    echo -e "\n\n\n--fish-plugins\n" 	 >> ~/.warehouse
     /bin/cat ~/.config/fish/fish_plugins >> ~/.warehouse
-
-    echo -e "\n\n\n--Oh-My-Fish\n"       >> ~/.warehouse
-    /bin/ls ~/.config/fish/conf.d/       >> ~/.warehouse
 
     config diff ~/.warehouse # &&
     config add ~/.warehouse &&
