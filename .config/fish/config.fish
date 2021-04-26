@@ -141,6 +141,15 @@ alias l.='exa -a | egrep "^\."'
 # changing "cat" to "bat"
 alias cat='bat'
 
+# config = git for ~/dotfiles
+alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
+
+# lazygit
+alias lg='lazygit'
+
+# lazyconf = lazygit for ~/dotfiles
+alias lc='lazygit --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
+
 # Colorize grep output (good for log files)
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
@@ -159,12 +168,6 @@ alias psmem10='ps auxf | sort -nr -k 4 | head -10'
 ## get top process eating cpu ##
 alias pscpu='ps auxf | sort -nr -k 3'
 alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
-
-# config = git for ~/dotfiles
-alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
-
-# lazyconf = lazygit for ~/dotfiles
-alias lazyconf='lazygit --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
 
 # kakoune coderunner
 alias k='kcr edit'
