@@ -5,6 +5,7 @@
 set fish_greeting           # Supresses fish's intro message
 set EDITOR "kak -c sesh"    # kakoune in default sesh
 set VISUAL "kak -c sesh"  	# kakoune in default sesh
+set SKIM_DEFAULT_COMMAND "fd --type f || git ls-tree -r --name-only HEAD || rg --files || find ."
 
 # smarter 'cd' alternative in rust
 zoxide init fish | source
