@@ -3,7 +3,6 @@
 acpi
 alacritty
 alsa-utils
-anki
 autoconf
 automake
 barrier
@@ -12,7 +11,6 @@ bison
 bluez-utils
 bottom-bin
 breeze-icons
-chromium
 cmake
 crystal
 ctags
@@ -23,7 +21,6 @@ discord
 docker
 dust-bin
 entr
-eva
 exa
 fakeroot
 fd
@@ -39,14 +36,11 @@ go
 gotop-bin
 grex
 grub-btrfs
-gtop
-htop
 intel-ucode
 jellyfin-mpv-shim
 jq
 kakoune
 lazygit
-lf
 libgccjit
 linux-headers
 linux-zen
@@ -60,7 +54,6 @@ nerd-fonts-source-code-pro
 net-tools
 network-manager-applet
 nextcloud
-nim
 nnn
 opendoas
 otf-kodomo-maru-gothic
