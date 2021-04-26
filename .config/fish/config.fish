@@ -3,8 +3,8 @@
 ### EXPORT ###
 
 set fish_greeting           # Supresses fish's intro message
-set EDITOR "kak -c sesh"    # $EDITOR use Emacs in terminal
-set VISUAL "kak -c sesh"  	# $VISUAL use Emacs in GUI mode
+set EDITOR "kak -c sesh"    # kakoune in default sesh
+set VISUAL "kak -c sesh"  	# kakoune in default sesh
 
 # smarter 'cd' alternative in rust
 zoxide init fish | source
