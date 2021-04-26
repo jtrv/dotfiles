@@ -10,6 +10,9 @@ set SKIM_DEFAULT_COMMAND "fd --type f || git ls-tree -r --name-only HEAD || rg -
 # smarter 'cd' alternative in rust
 zoxide init fish | source
 
+# better prompt in rust
+starship init fish | source
+
 ### "bat" as manpager
 set -x MANPAGER "sh -c 'col -bx | bat -l man -p'"
 
