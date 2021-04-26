@@ -166,6 +166,20 @@ alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
 # lazyconf = lazygit for ~/dotfiles
 alias lazyconf='lazygit --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
 
+# kakoune coderunner
+alias k='kcr edit'
+alias K='kcr-fzf-shell'
+alias KK='K --working-directory .'
+alias ks='kcr shell --session'
+alias kl='kcr list'
+alias a='kcr attach'
+alias :='kcr send'
+alias :br='KK broot'
+alias :cat='kcr cat --raw'
+
+alias val='kcr get --value'
+alias opt='kcr get --option'
+alias reg='kcr get --register'
 
 # Start X at login
 if status is-login
@@ -173,3 +187,4 @@ if status is-login
         exec startx -- -keeptty
     end
 end
+

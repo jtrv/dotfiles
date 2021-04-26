@@ -5,6 +5,11 @@
 
 # Author: Jacob Travers
 
+# kakoune.cr (coderunner)
+evaluate-commands %sh{
+    kcr init kakoune
+} 
+
 # Plugin manager
 source "~/.config/kak/plugins/plug.kak/rc/plug.kak"
 plug "andreyorst/plug.kak" noload
