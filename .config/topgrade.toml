@@ -49,7 +49,7 @@ assume_yes = true
 #arguments = "--rebase --autostash"
 
 [composer]
-#self_update = true
+self_update = true
 
 # Commands to run before anything
 [pre_commands]
