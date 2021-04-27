@@ -8,11 +8,16 @@ set EDITOR "kak -c sesh"    # kakoune in default sesh
 set VISUAL "kak -c sesh"  	# kakoune in default sesh
 set SKIM_DEFAULT_COMMAND "fd --type f || git ls-tree -r --name-only HEAD || rg --files || find ."
 
-# smarter 'cd' alternative in rust
-zoxide init fish | source
+set NAVI_CONFIG_YAML "~/.config/navi/config.yaml"
 
 # better prompt in rust
 starship init fish | source
+
+# smarter 'cd' (z) in rust
+zoxide init fish | source
+
+# cli cheatsheet widget
+navi widget fish | source
 
 ### "bat" as manpager
 set -x MANPAGER "sh -c 'col -bx | bat -l man -p'"
