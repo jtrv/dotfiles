@@ -7,7 +7,6 @@ set fish_greeting           # Supresses fish's intro message
 set EDITOR "kak -c sesh"    # kakoune in default sesh
 set VISUAL "kak -c sesh"  	# kakoune in default sesh
 set SKIM_DEFAULT_COMMAND "fd --type f || git ls-tree -r --name-only HEAD || rg --files || find ."
-
 set NAVI_CONFIG_YAML "~/.config/navi/config.yaml"
 
 # better prompt in rust
@@ -119,13 +118,6 @@ end
 
 # root privileges
 alias doas="doas --"
-
-# navigation
-alias ..='cd ..'
-alias ...='cd ../..'
-alias .3='cd ../../..'
-alias .4='cd ../../../..'
-alias .5='cd ../../../../..'
 
 # confirm before overwriting something
 alias cp="cp -i"
