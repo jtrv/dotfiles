@@ -1,0 +1,169 @@
+# modeled with kakoune and mnemonics
+[keymaps]
+# backspace = 263
+
+[[mapcommand]]
+command = "new_tab"
+keys = [ "ctrl+t" ]
+
+[[mapcommand]]
+command = "close_tab"
+keys = [ "q" ]
+[[mapcommand]]
+command = "force_quit"
+keys = [ "Q" ]
+[[mapcommand]]
+command = "reload_dir_list"
+keys = [ "R" ]
+[[mapcommand]]
+command = "toggle_hidden"
+keys = [ "z", "h" ]
+
+[[mapcommand]]
+command = "tab_switch 1"
+keys = [ "\t" ]
+[[mapcommand]]
+command = "tab_switch -1"
+keys = [ "backtab" ]
+
+[[mapcommand]]
+command = "cursor_move_up"
+keys = [ "up" ]
+[[mapcommand]]
+command = "cursor_move_up"
+keys = [ "k" ]
+[[mapcommand]]
+command = "cursor_move_down"
+keys = [ "down" ]
+[[mapcommand]]
+command = "cursor_move_down"
+keys = [ "j" ]
+[[mapcommand]]
+command = "cursor_move_end"
+keys = [ "g", "j" ]
+[[mapcommand]]
+command = "cursor_move_home"
+keys = [ "home" ]
+[[mapcommand]]
+command = "cursor_move_home"
+keys = [ "g", "k" ]
+[[mapcommand]]
+command = "cursor_move_page_up"
+keys = [ "ctrl+u" ]
+[[mapcommand]]
+command = "cursor_move_page_down"
+keys = [ "ctrl+d" ]
+
+[[mapcommand]]
+command = "parent_cursor_move_up"
+keys = [ "[" ]
+[[mapcommand]]
+command = "parent_cursor_move_down"
+keys = [ "]" ]
+
+[[mapcommand]]
+command = "cd .."
+keys = [ "h" ]
+[[mapcommand]]
+command = "cd .."
+keys = [ "left" ]
+
+[[mapcommand]]
+command = "open_file"
+keys = [ "right" ]
+[[mapcommand]]
+command = "open_file"
+keys = [ "l" ]
+[[mapcommand]]
+command = "open_file"
+keys = [ "\n" ]
+[[mapcommand]]
+command = "open_file_with"
+keys = [ "o" ]
+
+
+[[mapcommand]]
+command = "cut_files"
+keys = [ "c" ]
+[[mapcommand]]
+command = "copy_files"
+keys = [ "y" ]
+[[mapcommand]]
+command = "paste_files"
+keys = [ "p" ]
+[[mapcommand]]
+command = "paste_files --overwrite=true"
+keys = [ "p" ]
+[[mapcommand]]
+command = "delete_files"
+keys = [ "d" ]
+[[mapcommand]]
+command = "delete_files"
+keys = [ "delete" ]
+
+[[mapcommand]]
+command = "rename_append"
+keys = [ "i" ]
+[[mapcommand]]
+command = "rename_prepend"
+keys = [ "a" ]
+
+[[mapcommand]]
+command = "select --toggle=true"
+keys = [ " " ]
+[[mapcommand]]
+command = "select --toggle=true --all=true"
+keys = [ "%" ]
+
+[[mapcommand]]
+command = ":search "
+keys = [ "/" ]
+[[mapcommand]]
+command = ":search_glob "
+keys = [ "\\" ]
+[[mapcommand]]
+command = "search_next"
+keys = [ "n" ]
+[[mapcommand]]
+command = "search_prev"
+keys = [ "N" ]
+
+[[mapcommand]]
+command = "bulk_rename"
+keys = [ "R" ]
+[[mapcommand]]
+command = "set_mode"
+keys = [ "=" ]
+
+[[mapcommand]]
+command = ":"
+keys = [ ";" ]
+[[mapcommand]]
+command = ":mkdir "
+keys = [ "ctrl+n" ]
+[[mapcommand]]
+command = ":rename "
+keys = [ "r" ]
+
+[[mapcommand]]
+command = "sort lexical"
+keys = [ "s", "l" ]
+[[mapcommand]]
+command = "sort mtime"
+keys = [ "s", "m" ]
+[[mapcommand]]
+command = "sort natural"
+keys = [ "s", "n" ]
+[[mapcommand]]
+command = "sort reverse"
+keys = [ "s", "r" ]
+
+[[mapcommand]]
+command = "cd /"
+keys = [ "g", "/" ]
+[[mapcommand]]
+command = "cd /etc"
+keys = [ "g", "e" ]
+[[mapcommand]]
+command = "cd ~"
+keys = [ "g", "~" ]
