@@ -102,6 +102,7 @@ plug 'jjk96/kakoune-emmet' %{
 # Clipboard integration
 plug "lePerdu/kakboard" %{
     hook global WinCreate .* %{ kakboard-enable }
+    map global normal <c-k> -docstring "toggle kakboard" 
 }
 
 # Alacritty integration
