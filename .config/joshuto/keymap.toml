@@ -4,20 +4,23 @@
 
 [[mapcommand]]
 command = "new_tab"
-keys = [ "ctrl+t" ]
+keys = [ "t" ]
 
 [[mapcommand]]
 command = "close_tab"
 keys = [ "q" ]
 [[mapcommand]]
+command = "close_tab"
+keys = [ "escape" ]
+[[mapcommand]]
 command = "force_quit"
 keys = [ "Q" ]
 [[mapcommand]]
 command = "reload_dir_list"
-keys = [ "R" ]
+keys = [ "ctrl+r" ]
 [[mapcommand]]
 command = "toggle_hidden"
-keys = [ "z", "h" ]
+keys = [ "." ]
 
 [[mapcommand]]
 command = "tab_switch 1"
@@ -93,7 +96,7 @@ command = "paste_files"
 keys = [ "p" ]
 [[mapcommand]]
 command = "paste_files --overwrite=true"
-keys = [ "p" ]
+keys = [ "P" ]
 [[mapcommand]]
 command = "delete_files"
 keys = [ "d" ]
@@ -138,6 +141,9 @@ keys = [ "=" ]
 [[mapcommand]]
 command = ":"
 keys = [ ";" ]
+[[mapcommand]]
+command = ":"
+keys = [ ":" ]
 [[mapcommand]]
 command = ":mkdir "
 keys = [ "ctrl+n" ]
