@@ -73,7 +73,7 @@ plug "andreyorst/smarttab.kak" defer smarttab %{
 
 # LSP Magic
 plug "kak-lsp/kak-lsp" do %{ cargo install --locked --force --path . }
-    hook global WinSetOption filetype=(python|javascript|typescript|html|css|bash) %{lsp-enable-window}
+    hook global WinSetOption filetype=(python|javascript|typescript|html|css|bash|sass) %{lsp-enable-window}
 
 # JS/TS formatting and linting with eslint, tslint, prettier
 plug "schemar/kak-jsts" config %{
