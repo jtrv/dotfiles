@@ -88,6 +88,9 @@ plug "schemar/kak-jsts" config %{
     }
 }
 
+# scss read correctly
+hook global WinCreate .*\.scss filetype=sass
+
 # Emmet completions
 plug 'jjk96/kakoune-emmet' %{
     hook global WinSetOption filetype=(xml|html|sass|css) %{
@@ -117,9 +120,9 @@ plug "alexherbo2/alacritty.kak" %{
 set global grepcmd 'rg -n'
 
 # Auto-insert pairs
-# plug "alexherbo2/auto-pairs.kak" %{
-#     auto-pairs-enable
-# }
+plug "alexherbo2/auto-pairs.kak" %{
+    auto-pairs-enable
+}
 
 # Pass to kak with ansi colors
 plug "eraserhd/kak-ansi" do %{
