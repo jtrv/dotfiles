@@ -32,13 +32,13 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
  unset f
 fi
 
-setxkbmap us -option ctrl:nocaps &&	# capslock = ctrl key
-xcape -e 'Control_L=Escape' & 		# ctrl (^caps) = escape when tapped
 xrandr --output virtual-1 --mode 1920x1080
 nitrogen --restore &
 picom -f &
-kak -d -s sesh &  # kakoune daemon
 redshift -l 34:-119 &  # bluelight filter
+setxkbmap us -option ctrl:nocaps &&	# capslock = ctrl key
+xcape -e 'Control_L=Escape' & 		# ctrl (^caps) = escape when tapped
+kak -d -s sesh &  # kakoune daemon
 rclone mount --daemon mxsdrive: ~/mxs/drive &
 rclone mount --daemon mxsftp: ~/mxs/ftp &
 exec spectrwm
