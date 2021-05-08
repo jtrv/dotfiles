@@ -125,7 +125,7 @@ alias cp="cp -i"
 alias mv='mv -i'
 
 # nnn
-alias n='nnn'
+alias j='joshuto'
 
 # broot
 alias bs='broot --sizes'
