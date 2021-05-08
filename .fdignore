@@ -3,6 +3,7 @@
 .bash_profile/
 .cache/
 .cargo/
+.git/
 .node-gyp/
 .npm/
 aws/
@@ -10,3 +11,4 @@ bin/
 go/
 mxs/ftp/
 mxs/drive/
+node_modules/
