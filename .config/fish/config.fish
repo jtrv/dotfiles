@@ -1,11 +1,12 @@
 # Defined via `source`
 
-### EXPORT ###
 fish_vi_key_bindings
 
+### EXPORT ###
+
 set fish_greeting           # Supresses fish's intro message
-set EDITOR "kak -c sesh"    # kakoune in default sesh
-set VISUAL "kak -c sesh"  	# kakoune in default sesh
+set -U EDITOR "kcr edit"    # kakoune in default sesh
+set -U VISUAL "kcr edit"  	# kakoune in default sesh
 set SKIM_DEFAULT_COMMAND "fd --type f || git ls-tree -r --name-only HEAD || rg --files || find ."
 set NAVI_CONFIG_YAML "~/.config/navi/config.yaml"
 
