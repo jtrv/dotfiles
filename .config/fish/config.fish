@@ -4,9 +4,9 @@ fish_vi_key_bindings
 
 ### EXPORT ###
 
-set fish_greeting           # Supresses fish's intro message
-set -U EDITOR "kcr edit"    # kakoune in default sesh
-set -U VISUAL "kcr edit"  	# kakoune in default sesh
+set fish_greeting  # Supresses fish's intro message
+set -gx EDITOR "kcr edit" # kakoune with kakoune code runner
+set -gx VISUAL "kcr edit"
 set SKIM_DEFAULT_COMMAND "fd --type f || git ls-tree -r --name-only HEAD || rg --files || find ."
 set NAVI_CONFIG_YAML "~/.config/navi/config.yaml"
 
@@ -20,7 +20,7 @@ zoxide init fish | source
 navi widget fish | source
 
 ### "bat" as manpager
-set -x MANPAGER "sh -c 'col -bx | bat -l man -p'"
+set -gx MANPAGER "sh -c 'col -bx | bat -l man -p'"
 
 # Functions needed for !! and !$
 function __history_previous_command
