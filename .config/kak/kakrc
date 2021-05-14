@@ -245,7 +245,7 @@ map global normal +     -docstring "New popup"     ': connect-popup<ret>'
 # map global normal <c-/> -docstring "Open files by content"  ': + kcr-fzf-grep<ret>'
 
 map global normal <c-e> -docstring "Open Broot"  ': > broot<ret>'
-map global normal <c-l> -docstring "Open Gitui"  ': > gitui<ret>'
+map global normal <c-l> -docstring "Open Lazygit"  ': > lazygit<ret>'
 
 
 ################# MODES ##################
