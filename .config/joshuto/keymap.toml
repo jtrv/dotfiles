@@ -1,11 +1,10 @@
-# modeled with kakoune and mnemonics
-[keymaps]
-# backspace = 263
-
 [[mapcommand]]
 command = "new_tab"
 keys = [ "t" ]
 
+[[mapcommand]]
+command = "new_tab"
+keys = [ "ctrl+t" ]
 [[mapcommand]]
 command = "close_tab"
 keys = [ "q" ]
@@ -16,7 +15,7 @@ keys = [ "escape" ]
 command = "force_quit"
 keys = [ "Q" ]
 [[mapcommand]]
-command = "reload_dir_list"
+command = "reload_dirlist"
 keys = [ "ctrl+r" ]
 [[mapcommand]]
 command = "toggle_hidden"
@@ -31,13 +30,13 @@ keys = [ "backtab" ]
 
 [[mapcommand]]
 command = "cursor_move_up"
-keys = [ "up" ]
+keys = [ "arrow_up" ]
 [[mapcommand]]
 command = "cursor_move_up"
 keys = [ "k" ]
 [[mapcommand]]
 command = "cursor_move_down"
-keys = [ "down" ]
+keys = [ "arrow_down" ]
 [[mapcommand]]
 command = "cursor_move_down"
 keys = [ "j" ]
@@ -65,25 +64,27 @@ command = "parent_cursor_move_down"
 keys = [ "]" ]
 
 [[mapcommand]]
-command = "cd .."
-keys = [ "h" ]
+command = "open"
+keys = [ "arrow_right" ]
 [[mapcommand]]
-command = "cd .."
-keys = [ "left" ]
-
-[[mapcommand]]
-command = "open_file"
-keys = [ "right" ]
-[[mapcommand]]
-command = "open_file"
+command = "open"
 keys = [ "l" ]
 [[mapcommand]]
-command = "open_file"
+command = "open"
 keys = [ "\n" ]
 [[mapcommand]]
-command = "open_file_with"
 keys = [ "o" ]
+command = "open_with"
 
+[[mapcommand]]
+command = ":cd "
+keys = [ "G" ]
+[[mapcommand]]
+command = "cd .."
+keys = [ "arrow_left" ]
+[[mapcommand]]
+command = "cd .."
+keys = [ "h" ]
 
 [[mapcommand]]
 command = "cut_files"
@@ -170,6 +171,3 @@ keys = [ "g", "/" ]
 [[mapcommand]]
 command = "cd /etc"
 keys = [ "g", "e" ]
-[[mapcommand]]
-command = "cd ~"
-keys = [ "g", "~" ]
