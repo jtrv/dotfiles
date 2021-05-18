@@ -79,14 +79,6 @@ plug "ul/kak-lsp" do %{
     cargo build --release --locked
     cargo install --force --path .
 } config %{
-
-    # uncomment to enable debugging
-    # eval %sh{echo ${kak_opt_lsp_cmd} >> /tmp/kak-lsp.log}
-    # set global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
-
-    # this is not necessary; the `lsp-enable-window` will take care of it
-    # eval %sh{${kak_opt_lsp_cmd} --kakoune -s $kak_session}
-
     set global lsp_diagnostic_line_error_sign '║'
     set global lsp_diagnostic_line_warning_sign '┊'
 
@@ -97,12 +89,11 @@ plug "ul/kak-lsp" do %{
     define-command lsp-restart -docstring 'restart lsp server' %{ lsp-stop; lsp-start }
     hook global WinSetOption filetype=(python|javascript|typescript|html|css|bash|sass) %{
         set-option window lsp_auto_highlight_references true
-        set-option window lsp_hover_anchor false
+        set-option window lsp_hover_anchor true
         lsp-auto-hover-enable
         echo -debug "Enabling LSP for filtetype %opt{filetype}"
         lsp-enable-window
     }
-
     hook global KakEnd .* lsp-exit
 }
 
@@ -121,14 +112,13 @@ plug "schemar/kak-jsts" config %{
     }
 }
 
-# Emmet completions
-plug 'jjk96/kakoune-emmet' %{
-    hook global WinSetOption filetype=(xml|html|sass|css) %{
-        emmet-enable-autocomplete
+# Emmet completions using npm emmet-cli
+hook global WinSetOption filetype=(js|html) %{
+    define-command emmet %{
+        execute-keys "giGl! emmet <ret>x<a-d>h" 
     }
+    map global dev e -docstring "emmet" ': emmet<ret>'
 }
-
-
 
 ###################### UTILITY ###################### 
 
@@ -155,10 +145,9 @@ plug "occivink/kakoune-sudo-write"
 
 # Alacritty integration
 plug "alexherbo2/alacritty.kak" %{
-    hook global ModuleLoaded spectrwm %{
-        alias global terminal alacritty-terminal
-        alias global popup alacritty-terminal-popup
-    }
+    require-module alacritty
+    alias global terminal alacritty-terminal
+    alias global popup alacritty-terminal-popup
 }
 
 
@@ -254,7 +243,7 @@ map global normal <c-l> -docstring "Open Lazygit"  ': > lazygit<ret>'
 map global user <space> -docstring "commander" :
 
 # Plugin manager
-map global user = -docstring "buttplug"  ': plug-list<ret>'
+map global user = -docstring "buttplug" ': plug-list<ret>'
 
 # Navigate buffers
 plug "delapouite/kakoune-buffers" %{
