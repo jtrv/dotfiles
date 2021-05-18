@@ -1,5 +1,3 @@
-# Defined via `source`
-
 fish_vi_key_bindings
 
 ### EXPORT ###
@@ -110,10 +108,18 @@ end
 ### ABBREVIATIONS ###
 
 if status --is-interactive
+
+    # confirm before overwriting something
+    abbr --add --global cp 'cp -i' 
+    abbr --add --global mv 'mv -i' 
+
     # use rip instead of rm
     abbr --add --global rm 'rip -i'
+
     abbr --add --global sudo 'doas'
+
     abbr --add --global skrg 'sk --ansi -i -c \'rg --color=always --line-number "{}"\''
+
 end
 
 ### ALIASES ###
@@ -121,14 +127,14 @@ end
 # root privileges
 alias doas="doas --"
 
-# confirm before overwriting something
-alias cp="cp -i"
-alias mv='mv -i'
-
-# nnn
 alias j='joshuto'
 
-# broot
+alias cat='bat'
+
+alias lg='lazygit'
+
+alias c='kalk'
+
 alias bs='broot --sizes'
 
 # Changing "ls" to "exa"
@@ -138,14 +144,9 @@ alias ll='exa -l --color=always --group-directories-first --git --icons'  # long
 alias lt='exa -aT --color=always --group-directories-first --git --icons' # tree listing
 alias lh='exa -al --color=always --group-directories-first --git --icons --ignore-glob="[a-z]*|[A-Z]*|[0-9]*"'
 
-# changing "cat" to "bat"
-alias cat='bat'
 
 # config = git for ~/dotfiles
 alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
-
-# lazygit
-alias lg='lazygit'
 
 # lazyconf = lazygit for ~/dotfiles
 alias lc='lazygit --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
@@ -183,6 +184,8 @@ alias :cat='kcr cat --raw'
 alias val='kcr get --value'
 alias opt='kcr get --option'
 alias reg='kcr get --register'
+
+source ~/.config/fish/functions/deboard.fish
 
 # Start X at login
 if status is-login
