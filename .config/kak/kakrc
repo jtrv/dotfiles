@@ -209,9 +209,9 @@ define-command -hidden select-next-of-sel %{
         execute-keys -save-regs '' "_*<n>"
     } catch nop
 }
-map global normal v           -docstring "select next match"      ':select-next-of-sel<ret>'
-map global normal V           -docstring "add next match"         ':add-next-of-sel<ret>'
-map global normal <a-percent> -docstring "select all matches"     '*%s<ret>)'
+map global normal v           -docstring "select next match"   ':select-next-of-sel<ret>'
+map global normal V           -docstring "add next match"      ':add-next-of-sel<ret>'
+map global normal <a-percent> -docstring "select all matches"  '*%s<ret>)'
 
 map global normal <a-v>           -docstring "select previous match"  ':select-prev-of-sel<ret>' # also good for deselecting current sel (match)
 map global normal <a-V> <a-space> -docstring "deselect current sel"  # more predictable deselect current sel (non-match)
@@ -331,7 +331,6 @@ declare-user-mode spell
         }
     }
 
-# Tree-sitter
 # Tree-sitter syntax parsing and functionality
 plug "ul/kak-tree" %{
     declare-user-mode tree
