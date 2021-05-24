@@ -78,7 +78,7 @@
 	# (see https://dystroy.org/broot/icons for installation and
 	# troubleshooting)
 	#
-	icon_theme: vscode
+	# icon_theme: "vscode"
 
 	###############################################################
 	# Special paths
@@ -86,14 +86,10 @@
 	# this section as per the examples)
 	#
 	special_paths: {
-        "~/mxs/drive/" :no-enter
-        "~/mxs/ftp/"   :no-enter
-        "~/cargo/"   :no-enter
-        "~/aws/"   :no-enter
-        "~/bin/"   :no-enter
-	# 	"/media/slow-backup-disk"		: no-enter
-	# 	"/home/dys/useless"			: hide
-	# 	"/home/dys/my-link-I-want-to-explore"	: enter
+        "~/mxs/drive/" : no-enter
+        "~/mxs/ftp/"   : no-enter
+        "~/cargo/"   : no-enter
+        "~/aws/"   : no-enter
 	}
 
 
