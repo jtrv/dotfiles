@@ -1,6 +1,7 @@
 add_newline = false
 format = """\
 ${custom.kakcursor}\
+${custom.kakposition}\
 ${custom.kakmode}\
 ${custom.kakcontext}\
 $directory\
@@ -16,19 +17,18 @@ $git_status\
 ${custom.kaksession}\
 $memory_usage\
 $battery\
-${custom.kakposition}\
 $time\
 ${custom.kaktime}"""
 
 [time]
 format = "[]($style)[  $time ]($style)"
-style = "fg:black bg:bright-green"
+style = "fg:black bg:purple"
 time_format = "%H:%M"
 disabled = false
 
 [git_branch]
 format = '[  $branch]($style)'
-style = 'fg:bright-blue italic'
+style = 'fg:yellow dimmed italic'
 truncation_length = 9223372036854775807
 truncation_symbol = '…'
 only_attached = false
@@ -37,7 +37,7 @@ disabled = false
 
 [git_commit]
 format = '[ \($hash$tag\)]($style)'
-style = 'fg:blue dimmed'
+style = 'fg:yellow dimmed'
 commit_hash_length = 7
 only_detached = false
 tag_symbol = '笠'
@@ -46,7 +46,7 @@ disabled = false
 
 [git_state]
 format = '\( [$state($progress_current/$progress_total)]($style)\)'
-style = 'fg:blue dimmed'
+style = 'fg:yellow dimmed'
 rebase = 'REBASING'
 merge = 'MERGING'
 revert = 'REVERTING'
@@ -57,8 +57,8 @@ am_or_rebase = 'AM/REBASE'
 disabled = false
 
 [git_status]
-format = '[ \[$all_status$ahead_behind\]]($style)[ ]($style)'
-style = 'fg:blue dimmed bold'
+format = '[ \[$all_status$ahead_behind\]]($style)[  ]($style)'
+style = 'fg:yellow dimmed bold'
 stashed = '\$'
 ahead = '⇡${count}'
 behind = '⇣${count}'
@@ -77,7 +77,7 @@ truncation_length = 3
 truncate_to_repo = false
 fish_style_pwd_dir_length = 0
 use_logical_path = true
-style = 'bg:blue fg:black'
+style = 'bg:purple fg:black'
 read_only_style = 'bg:blue fg:200'
 read_only = '[]'
 truncation_symbol = '…'
@@ -87,7 +87,7 @@ disabled = false
 "~/.config" = ""
 "~/mxs/drive" = "MXS"
 "~/mxs/ftp" = "MXS"
-"~/mxs/projects" = "MXS"
+"~/mxs/projects" = "MXS"
 "~" = " "
 
 [package]
@@ -97,68 +97,68 @@ display_private = true
 disabled = false
 
 [battery]
-format = "[ $symbol $percentage]($style) "
+format = "[ $symbol $percentage ]($style)"
 charging_symbol = ' '
 discharging_symbol = ' '
 disabled = false
 
 [[battery.display]]
 threshold = 10
-style = "red"
+style = "red dimmed"
 charging_symbol = ' '
 discharging_symbol = ' '
 
 [[battery.display]]
 threshold = 20
-style = "red"
+style = "red dimmed"
 charging_symbol = ' '
 discharging_symbol = ' '
 
 [[battery.display]]
 threshold = 30
-style = "yellow"
+style = "yellow dimmed"
 charging_symbol = ' '
 discharging_symbol = ' '
 
 [[battery.display]]
 threshold = 40
-style = "yellow"
+style = "yellow dimmed"
 charging_symbol = ' '
 discharging_symbol = ' '
 
 [[battery.display]]
 threshold = 50
-style = "blue"
+style = "blue dimmed"
 charging_symbol = ' '
 discharging_symbol = ' '
 
 [[battery.display]]
 threshold = 60
-style = "blue"
+style = "blue dimmed"
 charging_symbol = ' '
 discharging_symbol = ' '
 
 [[battery.display]]
 threshold = 70
-style = "blue"
+style = "blue dimmed"
 charging_symbol = ' '
 discharging_symbol = ' '
 
 [[battery.display]]
 threshold = 80
-style = "green"
+style = "green dimmed"
 charging_symbol = ' '
 discharging_symbol = ' '
 
 [[battery.display]]
 threshold = 90
-style = "green"
+style = "green dimmed"
 charging_symbol = ' '
 discharging_symbol = ' '
 
 [[battery.display]]
 threshold = 100
-style = "green"
+style = "green dimmed"
 charging_symbol = ' '
 discharging_symbol = ' '
 
@@ -170,8 +170,8 @@ disabled = true
 
 [custom.kakfile]
 description = 'The current Kakoune buffername'
-format = '[/$output ]($style) [](bg:black fg:blue)'
-style = 'bg:blue fg:black bold'
+format = '[/$output]($style) [](fg:purple)'
+style = 'bg:purple fg:black bold'
 command = 'basename $kak_buffile'
 when = 'true'
 shell = ['sh']
@@ -188,7 +188,7 @@ disabled = true
 [custom.kakcursor]
 description = 'The current Kakoune cursor position'
 format = '[%val{cursor_line}:%val{cursor_char_column}]($style)[ ]($style)'
-style = 'fg:white'
+style = 'fg:green dimmed'
 when = ''
 shell = ['true']
 disabled = false
@@ -216,9 +216,9 @@ disabled = true
 
 [custom.kakposition]
 description = 'Relative position of the cursor inside the buffer'
-format = '[$symbol$output]($style)'
-style = 'bright-white'
-symbol = ' '
+format = '[$symbol$output]($style)[ ]($style)'
+style = 'fg:yellow dimmed'
+symbol = '  '
 command = 'echo -n $(($kak_cursor_line * 100 / $kak_buf_line_count))%'
 when = '[ -n "$kak_cursor_line" ]'
 shell = ['sh']
