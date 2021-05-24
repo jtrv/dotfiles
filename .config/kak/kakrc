@@ -25,17 +25,12 @@ set-option global scrolloff 1,3
 
 plug "caksoylar/kakoune-mysticaltutor" theme %{ colorscheme mysticaltutor }
 
-# Powerline like nvim, spacemacs
-plug "andreyorst/powerline.kak" defer powerline %{
-    set-option global powerline_ignore_warnings true
-        powerline-separator global curve
+# modeline using starship.rs
+plug "eburghar/kakship" do %{
+	cargo install --force --path . --root ~/.local
+	[ ! -e $kak_config/starship.toml ] && cp starship.toml $kak_config/
 } config %{
-    powerline-start
-}
-
-# Powerline theme to matching colorscheme
-plug "jordan-yee/kakoune-mysticaltutor-powerline" defer powerline_mysticaltutor %{
-    powerline-theme mysticaltutor
+	kakship-enable
 }
 
 # Relative line numbers toggled on insert
