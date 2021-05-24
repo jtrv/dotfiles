@@ -122,9 +122,9 @@ plug "schemar/kak-jsts" config %{
 }
 
 # Emmet completions using npm emmet-cli
-hook global WinSetOption filetype=(js|html) %{
+hook global WinSetOption filetype=(javascript|html) %{
     define-command emmet %{
-        execute-keys "giGl! emmet <ret>x<a-d>h" 
+        execute-keys "giGl| emmet <ret>" 
     }
     map global dev e -docstring "emmet" ': emmet<ret>'
 }
@@ -332,6 +332,7 @@ declare-user-mode spell
     }
 
 # Tree-sitter
+# Tree-sitter syntax parsing and functionality
 plug "ul/kak-tree" %{
     declare-user-mode tree
     map global user t -docstring "tree sitter"  ': enter-user-mode tree<ret>'
