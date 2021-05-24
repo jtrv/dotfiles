@@ -107,10 +107,10 @@ keys = [ "delete" ]
 
 [[mapcommand]]
 command = "rename_append"
-keys = [ "i" ]
+keys = [ "a" ]
 [[mapcommand]]
 command = "rename_prepend"
-keys = [ "a" ]
+keys = [ "i" ]
 
 [[mapcommand]]
 command = "select --toggle=true"
