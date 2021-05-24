@@ -6,8 +6,8 @@ alsa-utils
 arch-wiki-docs
 autoconf
 automake
-barrier
 base
+bdf-unifont
 bison
 bluez-cups
 bluez-utils
@@ -23,7 +23,6 @@ dialog
 discord
 docker
 dust-bin
-entr
 exa
 fakeroot
 fd
@@ -38,8 +37,6 @@ git-delta-bin
 gitui
 glow-bin
 go
-gotop-bin
-grex
 grub-btrfs
 inkscape
 intel-ucode
@@ -48,11 +45,8 @@ joshuto-git
 jq
 krita
 lazygit
-leftwm-theme-git
-lf-bin
 linux-headers
 linux-zen
-lmms
 lxappearance
 make
 materia-gtk-theme
@@ -65,7 +59,6 @@ nextcloud
 nnn
 ntp
 opendoas
-otf-kodomo-maru-gothic
 p7zip
 papirus-icon-theme
 paru
@@ -90,18 +83,16 @@ spectrwm
 starship
 streamlink
 sxiv
-teip
 thefuck
 tokei
 topgrade
 tree-sitter
 udiskie
-unrar
 usbutils
-vidir
 viu
 watchexec
 wget
+wireguard-tools
 wtfutil-bin
 wttr
 xcape
