@@ -12,7 +12,7 @@ function warehouse
     echo -e "\n\n\n--fish-plugins\n" 	 >> ~/.warehouse
     /bin/cat ~/.config/fish/fish_plugins >> ~/.warehouse
 
-    config diff ~/.warehouse # &&
+    config diff ~/.warehouse
     config add ~/.warehouse &&
     config commit -m "Warehousing packages"
 end
