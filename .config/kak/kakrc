@@ -343,6 +343,12 @@ plug "ul/kak-tree" %{
     map global tree . -docstring "lock"         ': enter-user-mode -lock tree<ret>'
 }
 
+# scrub duplicate lines
+define-command runiq %{
+    execute-keys "|runiq -<ret>" 
+}
+map global user u -docstring "uniq" ': runiq<ret>'
+
 # (un)Wrap lines
 map global user w -docstring "wrap"    ': add-highlighter global/ wrap -word -indent<ret>'
 map global user W -docstring "unwrap"  ': remove-highlighter global/wrap_-word_-indent<ret>'
