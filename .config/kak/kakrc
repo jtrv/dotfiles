@@ -102,28 +102,35 @@ plug "kak-lsp/kak-lsp" do %{
     hook global KakEnd .* lsp-exit
 }
 
+# Emmet completions using npm emmet-cli
+define-command emmet %{
+    execute-keys "giGl| emmet <ret>" 
+}
 
+# Development mode (linting and formating)
+declare-user-mode dev
+    map global dev f  -docstring "format"  ': format<ret>'
+    map global dev l  -docstring "lint"    ': lint<ret>'
+
+    hook global WinSetOption filetype=(javascript|html) %{
+        map global dev e -docstring "emmet" ': emmet<ret>'
+    }
 
 # JS/TS formatting and linting with eslint, tslint, prettier
 plug "schemar/kak-jsts" config %{
-    hook global WinSetOption filetype=(javascript) %{
-        map window dev l -docstring "lint"    ': lint<ret>'
-        map window dev f -docstring "format"  ': format-prettier<ret>'
+    hook global WinSetOption filetype=(javascript|html|css|sass|scss) %{
+        lint-buffer
+        map buffer dev f -docstring "format"  ': format-prettier<ret>'
+        map buffer dev l -docstring "lint"    ': lint<ret>'
         # format-eslint also an option
     }
     hook global WinSetOption filetype=(typescript) %{
-        map window dev l -docstring "lint"    ': lint<ret>'
-        map window dev f -docstring "format"  ': format-tslint<ret>'
+        lint-buffer
+        map buffer dev f -docstring "format"  ': format-tslint<ret>'
+        map buffer dev l -docstring "lint"    ': lint<ret>'
     }
 }
 
-# Emmet completions using npm emmet-cli
-hook global WinSetOption filetype=(javascript|html) %{
-    define-command emmet %{
-        execute-keys "giGl| emmet <ret>" 
-    }
-    map global dev e -docstring "emmet" ': emmet<ret>'
-}
 
 ###################### UTILITY ###################### 
 
@@ -261,11 +268,7 @@ plug "delapouite/kakoune-buffers" %{
         alias global bo! buffer-only-force
 }
 
-# Development mode (linting and formating)
-declare-user-mode dev
-    map global user d -docstring "dev"     ': enter-user-mode dev<ret>'
-    map global dev l  -docstring "lint"    ': lint<ret>'
-    map global dev f  -docstring "format"  ': format<ret>'
+map global user d -docstring "dev"  ': enter-user-mode dev<ret>'
 
 # Useful fzf tools or 'skim' in my case
 plug "andreyorst/fzf.kak" config %{
