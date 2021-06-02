@@ -162,8 +162,6 @@ plug "alexherbo2/alacritty.kak" %{
     alias global popup alacritty-terminal-popup
 }
 
-
-
 ###################### NORMAL MODE ###################### 
 
 
@@ -279,6 +277,10 @@ plug "andreyorst/fzf.kak" config %{
     require-module fzf-file
     set-option global fzf_file_command 'fd'
 }
+
+# script for incrementing and decrementing
+source "~/.config/kak/inc-dec.kak"
+map global user i -docstring "inc-dec"  ': inc-dec-modify-numbers '
 
 map global user k -docstring "kakboard"  ': kakboard-toggle <ret>' 
 
