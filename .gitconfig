@@ -1,6 +1,7 @@
 [user]
-	email = jtravers@tutanota.com
+	email = travershasemail@gmail.com
 	name = Jacob Travers
+	signingkey = A677F1929C2B08D2
 [credential]
 	helper = store
 [init]
@@ -28,3 +29,5 @@
     line-numbers-right-format = "{np:>4}│"
     line-numbers-left-style = brightblue
     line-numbers-right-style = brightblue
+[commit]
+	gpgsign = true
