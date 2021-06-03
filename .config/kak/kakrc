@@ -19,7 +19,7 @@ set-option global ui_options ncurses_assistant=off
 # Min visible surrounding rows / columns 
 set-option global scrolloff 1,3
 
-plug "caksoylar/kakoune-mysticaltutor" theme %{ colorscheme mysticaltutor }
+plug "caksoylar/kakoune-mysticaltutor" theme %{ colorscheme mysticaltutor-trans }
 
 # modeline using starship.rs
 plug "eburghar/kakship" do %{
@@ -216,6 +216,12 @@ map global normal <a-percent> -docstring "select all matches"  '*%s<ret>)'
 
 map global normal <a-v>           -docstring "select previous match"  ':select-prev-of-sel<ret>' # also good for deselecting current sel (match)
 map global normal <a-V> <a-space> -docstring "deselect current sel"  # more predictable deselect current sel (non-match)
+
+# paste in insert mode
+define-command -hidden insert-paste %{
+        execute-keys "<esc>;Pi"
+}
+map global insert <c-v> -docstring "insert mode paste" '<esc>: insert-paste<ret>'
 
 
 # (un)Comment Lines
