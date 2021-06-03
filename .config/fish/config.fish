@@ -18,8 +18,10 @@ zoxide init fish | source
 # cli cheatsheet widget
 navi widget fish | source
 
-### "bat" as manpager
-set -gx MANPAGER "sh -c 'col -bx | bat -l man -p'"
+# kakoune as manpager
+function man
+    kak -e "man $argv"; 
+end
 
 # Functions needed for !! and !$
 function __history_previous_command
