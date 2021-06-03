@@ -3,8 +3,8 @@ fish_vi_key_bindings
 ### EXPORT ###
 
 set fish_greeting  # Supresses fish's intro message
-set -gx EDITOR "kcr edit" # kakoune with kakoune code runner
-set -gx VISUAL "kcr edit"
+set -gx EDITOR "kak" # kakoune with kakoune code runner
+set -gx VISUAL "kak"
 set -gx CALIBRE_USE_DARK_PALETTE "1"
 set SKIM_DEFAULT_COMMAND "fd --type f || git ls-tree -r --name-only HEAD || rg --files || find ."
 set NAVI_CONFIG_YAML "~/.config/navi/config.yaml"
@@ -128,6 +128,7 @@ end
 
 # root privileges
 alias doas="doas --"
+alias d="doas --"
 
 alias j='joshuto'
 
