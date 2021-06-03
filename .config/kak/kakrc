@@ -162,6 +162,16 @@ plug "alexherbo2/alacritty.kak" %{
     alias global popup alacritty-terminal-popup
 }
 
+hook global WinSetOption filetype=(man) %{
+    map buffer normal <a-q> -docstring "quit pager" ':q<ret>'
+    map buffer normal u <c-u>
+    map buffer normal d <c-d>
+    map buffer normal f <c-f>
+    map buffer normal b <c-b>
+ 
+}
+
+
 ###################### NORMAL MODE ###################### 
 
 
@@ -172,9 +182,6 @@ map global normal <space> , -docstring "leader-key"
 map global normal q b -docstring "back word"
 map global normal Q B -docstring "add back word"
 
-map global normal <a-q> <a-b> -docstring "back WORD"
-map global normal <a-Q> <a-B> -docstring "add back WORD"
-
 map global normal ^ q     -docstring "start macro"
 map global normal <a-^> Q -docstring "end macro"
 
@@ -184,6 +191,9 @@ map global normal <a-H> Gi -docstring "select to first non-blank char on line"
 map global normal <esc> <space> -docstring "deselect all but current selection"
 
 #########AUGMENTATION
+
+map global normal <c-q> -docstring "quit"  ':q<ret>'
+map global normal <a-Q> -docstring "force quit"  ':q!<ret>'
 
 # Select/add next match
 define-command -hidden select-prev-of-sel %{
