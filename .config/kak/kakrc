@@ -351,14 +351,14 @@ declare-user-mode spell
 # Tree-sitter syntax parsing and functionality
 plug "ul/kak-tree" %{
     declare-user-mode tree
-    map global user t -docstring "tree sitter"  ': enter-user-mode tree<ret>'
-    map global tree c -docstring "children"     ': tree-select-children<ret>'
-    map global tree f -docstring "first child"  ': tree-select-first-child<ret>'
-    map global tree n -docstring "next"         ': tree-select-next-node<ret>'
-    map global tree p -docstring "previous"     ': tree-select-previous-node<ret>'
-    map global tree t -docstring "syntax tree"  ': tree-node-sexp<ret>'
-    map global tree u -docstring "parent"       ': tree-select-parent-node<ret>'
-    map global tree . -docstring "lock"         ': enter-user-mode -lock tree<ret>'
+    map global user t -docstring "tree sitter"  ':enter-user-mode tree<ret>'
+    map global tree t -docstring "syntax tree"  ':tree-node-sexp<ret>'
+    map global tree c -docstring "children"     ':tree-select-children<ret>'
+    map global tree h -docstring "parent"       ':tree-select-parent-node<ret>'
+    map global tree j -docstring "next"         ':tree-select-next-node<ret>'
+    map global tree k -docstring "previous"     ':tree-select-previous-node<ret>'
+    map global tree l -docstring "first child"  ':tree-select-first-child<ret>'
+    map global tree . -docstring "lock"         ':enter-user-mode -lock tree<ret>'
 }
 
 # scrub duplicate lines
