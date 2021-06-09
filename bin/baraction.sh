@@ -10,8 +10,9 @@ cpu() {
 	      sleep 0.5
 	        read cpu a b c idle rest < /proc/stat
 		  total=$((a+b+c+idle))
-		    cpu=$((100*( (total-prevtotal) - (idle-previdle) ) / (total-prevtotal) ))
-		      echo -e " $cpu%"
+		    percent=$((100*( (total-prevtotal) - (idle-previdle) ) / (total-prevtotal) ))
+	        cpu=$(printf %02d $percent)
+	        echo -e " $cpu%"
 }
 ##############################
 #	    RAM
@@ -20,9 +21,10 @@ ram() {
 used="$(free | grep Mem: | awk '{print $3}')"
 total="$(free | grep Mem: | awk '{print $2}')"
 
-ram="$(( 200 * $used/$total - 100 * $used/$total ))% "
+percent=$(( 200 * $used/$total - 100 * $used/$total ))
+ram=$(printf %02d $percent)
 
-echo $ram
+echo -e "$ram%"
 }
 ##############################
 #	      MIC
