@@ -168,9 +168,6 @@ hook global WinSetOption filetype=(man) %{
     map buffer normal <a-q> -docstring "quit pager" ':q<ret>'
     map buffer normal u <c-u>
     map buffer normal d <c-d>
-    map buffer normal f <c-f>
-    map buffer normal b <c-b>
- 
 }
 
 
