@@ -1,25 +1,6 @@
  !/bin/bash
 # Example Bar Action Script for Linux.
-# Requires: acpi, iostat, lm-sensors, aptitude.
 
-##############################
-#	    DISK
-##############################
-ssd() {
-	  SSD="$(df -h /home | grep /dev | awk '{print $5}')"
-	    echo -e "$SSD"
-}
-##############################
-#	    RAM
-##############################
-mem() {
-used="$(free | grep Mem: | awk '{print $3}')"
-total="$(free | grep Mem: | awk '{print $2}')"
-
-ram="$(( 200 * $used/$total - 100 * $used/$total ))% "
-
-echo $ram
-}
 ##############################
 #	    CPU
 ##############################
@@ -33,11 +14,42 @@ cpu() {
 		      echo -e " $cpu%"
 }
 ##############################
-#	    VOLUME
+#	    RAM
 ##############################
-vol() {
-	vol="$(amixer get Master | awk -F'[][]' 'END{ print $2 }')"
-	echo -e "$vol"
+ram() {
+used="$(free | grep Mem: | awk '{print $3}')"
+total="$(free | grep Mem: | awk '{print $2}')"
+
+ram="$(( 200 * $used/$total - 100 * $used/$total ))% "
+
+echo $ram
+}
+##############################
+#	      MIC
+##############################
+mic() {
+    state=`amixer -D pulse get Capture toggle | gawk 'match($0, /(Front Left|Mono).*\[(.*)\]/, a) {print a[2]}'`
+
+    if [ "$state" = "on" ]; then
+        echo ""
+    else
+        echo ""
+    fi
+}
+##############################
+#	    NETWORK
+##############################
+network() {
+wire="$(mullvad status | rg Connected | wc -l)"
+wifi="$(ip a | grep wlp61s0 | grep UP | wc -l)"
+
+if [ $wire = 1 ]; then
+    echo ""
+elif [ $wifi = 1 ]; then
+    echo ""
+else
+    echo "睊"
+fi
 }
 ##############################
 #	    BLUETOOTH
@@ -52,41 +64,12 @@ bluetooth() {
   fi
 }
 ##############################
-#	    PACKAGES
+#	    VOLUME
 ##############################
-pkgs() {
-	pkgs="$(pacman -Q | wc -l)"
-	echo -e "$pkgs"
+vol() {
+	vol="$(amixer get Master | awk -F'[][]' 'END{ print $2 }')"
+	echo -e "$vol"
 }
-##############################
-#	    UPGRADES
-##############################
-upgrades() {
-	upgrades="$(pacman -Qu | wc -l)"
-	echo -e "$upgrades"
-}
-##############################
-#	    VPN
-##############################
-vpn() {
-	state="$(ip a | rg tun0 | rg inet | wc -l)"
-
-if [ $state = 1 ]; then
-    echo " on "
-fi
-}
-## WEATHER
-# weather() {
-# 	wthr="$(sed 20q ~/.config/weather.txt | grep value | awk '{print $2 $3}' | sed 's/"//g')"
-# 	echo " $wthr"
-# }
-
-## TEMP
-# temp() {
-# 	tmp="$(grep temp_F ~/.config/weather.txt | awk '{print $2}' | sed 's/"//g' | sed 's/,/ F/g')"
-# 	echo " $tmp"
-# }
-
 ##############################
 #	    BATTERY
 ##############################
@@ -111,23 +94,47 @@ fi
 
 echo "$batstat $battery%"
 }
-
-network() {
-wire="$(ip a | grep eth0 | grep inet | wc -l)"
-wifi="$(ip a | grep wlp61s0 | grep UP | wc -l)"
-
-if [ $wire = 1 ]; then
-    echo ""
-elif [ $wifi = 1 ]; then
-    echo ""
-else
-    echo "睊"
-fi
-}
-
+##############################
+#	    WEATHER
+##############################
+# weather() {
+# 	wthr="$(sed 20q ~/.config/weather.txt | grep value | awk '{print $2 $3}' | sed 's/"//g')"
+# 	echo " $wthr"
+# }
+##############################
+#	    TEMP
+##############################
+# temp() {
+# 	tmp="$(grep temp_F ~/.config/weather.txt | awk '{print $2}' | sed 's/"//g' | sed 's/,/ F/g')"
+# 	echo " $tmp"
+# }
+##############################
+#	    PACKAGES
+##############################
+# pkgs() {
+# 	pkgs="$(pacman -Q | wc -l)"
+# 	echo -e "$pkgs"
+# }
+##############################
+#	    UPGRADES
+##############################
+# upgrades() {
+# 	upgrades="$(pacman -Qu | wc -l)"
+# 	echo -e "$upgrades"
+# }
+##############################
+#	    DISK
+##############################
+# ssd() {
+# 	  SSD="$(df -h /home | grep /dev | awk '{print $5}')"
+# 	    echo -e "$SSD"
+# }
+##############################
+#	    BAR RENDER
+##############################
 SLEEP_SEC=2
 #loops forever outputting a line every SLEEP_SEC secs
 while :; do
-  echo "$(cpu)    $(mem)    $(ssd)    $(upgrades)  |  $(vpn)$(network)  $(bluetooth)  |  $(vol) | $(bat) |"
+  echo "$(cpu)   $(ram) | $(mic)  $(network)  $(bluetooth) |  $(vol) | $(bat) |"
   sleep $sleep_sec
 done
