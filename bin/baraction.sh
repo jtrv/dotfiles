@@ -11,8 +11,8 @@ cpu() {
 	        read cpu a b c idle rest < /proc/stat
 		  total=$((a+b+c+idle))
 		    percent=$((100*( (total-prevtotal) - (idle-previdle) ) / (total-prevtotal) ))
-	        cpu=$(printf %02d $percent)
-	        echo -e " $cpu%"
+	        cpu=$(printf %3d $percent)
+	        echo -e "$cpu%"
 }
 ##############################
 #	    RAM
@@ -22,7 +22,7 @@ used="$(free | grep Mem: | awk '{print $3}')"
 total="$(free | grep Mem: | awk '{print $2}')"
 
 percent=$(( 200 * $used/$total - 100 * $used/$total ))
-ram=$(printf %02d $percent)
+ram=$(printf %3d $percent)
 
 echo -e "$ram%"
 }
@@ -137,6 +137,6 @@ echo "$batstat $battery%"
 SLEEP_SEC=2
 #loops forever outputting a line every SLEEP_SEC secs
 while :; do
-  echo "$(cpu)   $(ram) | $(mic)  $(network)  $(bluetooth) |  $(vol) | $(bat) |"
+  echo "$(cpu)  $(ram) | $(mic)  $(network)  $(bluetooth) |  $(vol) | $(bat) |"
   sleep $sleep_sec
 done
