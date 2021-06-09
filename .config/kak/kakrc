@@ -109,25 +109,27 @@ define-command emmet %{
 
 # Development mode (linting and formating)
 declare-user-mode dev
-    map global dev f  -docstring "format"  ': format<ret>'
-    map global dev l  -docstring "lint"    ': lint<ret>'
+    map global dev f  -docstring "format"         ':format<ret>'
+    map global dev l  -docstring "lint"           ':lint<ret>'
+    map global dev j  -docstring "next lint"      ':next-lint-message<ret>'
+    map global dev k  -docstring "previous lint"  ':previous-lint-message<ret>'
 
     hook global WinSetOption filetype=(javascript|html) %{
-        map global dev e -docstring "emmet" ': emmet<ret>'
+        map global dev e -docstring "emmet" ':emmet<ret>'
     }
 
 # JS/TS formatting and linting with eslint, tslint, prettier
 plug "schemar/kak-jsts" config %{
     hook global WinSetOption filetype=(javascript|html|css|sass|scss) %{
         lint-buffer
-        map buffer dev f -docstring "format"  ': format-prettier<ret>'
-        map buffer dev l -docstring "lint"    ': lint<ret>'
+        map buffer dev f -docstring "format"  ':format-prettier<ret>'
+        map buffer dev l -docstring "lint"    ':lint<ret>'
         # format-eslint also an option
     }
     hook global WinSetOption filetype=(typescript) %{
         lint-buffer
-        map buffer dev f -docstring "format"  ': format-tslint<ret>'
-        map buffer dev l -docstring "lint"    ': lint<ret>'
+        map buffer dev f -docstring "format"  ':format-tslint<ret>'
+        map buffer dev l -docstring "lint"    ':lint<ret>'
     }
 }
 
@@ -179,8 +181,10 @@ hook global WinSetOption filetype=(man) %{
 
 map global normal <space> , -docstring "leader-key"
 
-map global normal q b -docstring "back word"
-map global normal Q B -docstring "add back word"
+map global normal q b -docstring "select previous word"
+map global normal Q B -docstring "extend previous word"
+map global normal <a-q> <a-b> -docstring "select previous BIG-WORD"
+map global normal <a-Q> <a-B> -docstring "extend prevous BIG-WORD"
 
 map global normal ^ q     -docstring "start macro"
 map global normal <a-^> Q -docstring "end macro"
@@ -193,7 +197,6 @@ map global normal <esc> <space> -docstring "deselect all but current selection"
 #########AUGMENTATION
 
 map global normal <c-q> -docstring "quit"  ':q<ret>'
-map global normal <a-Q> -docstring "force quit"  ':q!<ret>'
 
 # Select/add next match
 define-command -hidden select-prev-of-sel %{
@@ -220,19 +223,18 @@ define-command -hidden select-next-of-sel %{
         execute-keys -save-regs '' "_*<n>"
     } catch nop
 }
-map global normal v           -docstring "select next match"   ':select-next-of-sel<ret>'
-map global normal V           -docstring "add next match"      ':add-next-of-sel<ret>'
-map global normal <a-percent> -docstring "select all matches"  '*%s<ret>)'
+map global normal v           -docstring "select next match"      ':select-next-of-sel<ret>'
+map global normal <a-V>       -docstring "select previous match"  ':select-prev-of-sel<ret>'
+map global normal V           -docstring "add next match"         ':add-next-of-sel<ret>'
+map global normal <a-percent> -docstring "select all matches"     '*%s<ret>)'
 
-map global normal <a-v>           -docstring "select previous match"  ':select-prev-of-sel<ret>' # also good for deselecting current sel (match)
-map global normal <a-V> <a-space> -docstring "deselect current sel"  # more predictable deselect current sel (non-match)
+map global normal <a-v> <a-space> -docstring "deselect current sel"
 
 # paste in insert mode
 define-command -hidden insert-paste %{
         execute-keys "<esc>;Pi"
 }
-map global insert <c-v> -docstring "insert mode paste" '<esc>: insert-paste<ret>'
-
+map global insert <c-v> -docstring "insert mode paste" '<esc>:insert-paste<ret>'
 
 # (un)Comment Lines
 define-command comment %{
@@ -241,26 +243,25 @@ define-command comment %{
         comment-block
     } catch comment-line
 }
-map -docstring "comment" global normal <#> %{: comment<ret>}
+map -docstring "comment" global normal <#> %{:comment<ret>}
 
 # Better match function
 plug "useredsa/dynamic-matching.kak" %{
     dynamic-matching-dmatch-conf
-    map global normal m -docstring "select dynamic match"  ': enter-user-mode dmatch<ret>'
-    map global normal M -docstring "add dynamic match"     ': enter-user-mode Dmatch<ret>'
+    map global normal m -docstring "select dynamic match"  ':enter-user-mode dmatch<ret>'
+    map global normal M -docstring "add dynamic match"     ':enter-user-mode Dmatch<ret>'
 }
 
 # Kakoune.cr (coderunner) implementations
-map global normal <c-t> -docstring "New client"    ': new<ret>'
-map global normal <c-n> -docstring "New terminal"  ': connect-terminal<ret>'
-map global normal +     -docstring "New popup"     ': connect-popup<ret>'
+map global normal <c-t> -docstring "New client"    ':new<ret>'
+map global normal <c-n> -docstring "New terminal"  ':connect-terminal<ret>'
+map global normal +     -docstring "New popup"     ':connect-popup<ret>'
+map global normal <c-s> -docstring "Open buffers"  ':+ kcr-fzf-buffers<ret>'
+map global normal <c-g> -docstring "Open files"    ':+ kcr-fzf-files<ret>'
+map global normal <c-/> -docstring "Find files by content"  ':+ kcr-fzf-grep<ret>'
 
-# map global normal <c-r> -docstring "Open buffers"           ': + kcr-fzf-buffers<ret>'
-# map global normal <c-v> -docstring "Open files"             ': + kcr-fzf-files<ret>'
-# map global normal <c-/> -docstring "Open files by content"  ': + kcr-fzf-grep<ret>'
-
-map global normal <c-e> -docstring "Open Broot"  ': > broot<ret>'
-map global normal <c-l> -docstring "Open Lazygit"  ': > lazygit<ret>'
+map global normal <c-e> -docstring "Open Broot"  ':> broot<ret>'
+map global normal <c-l> -docstring "Open Lazygit"  ':> lazygit<ret>'
 
 
 ################# MODES ##################
@@ -269,12 +270,12 @@ map global normal <c-l> -docstring "Open Lazygit"  ': > lazygit<ret>'
 map global user <space> -docstring "commander" :
 
 # Plugin manager
-map global user = -docstring "buttplug" ': plug-list<ret>'
+map global user = -docstring "buttplug" ':plug-list<ret>'
 
 # Navigate buffers
 plug "delapouite/kakoune-buffers" %{
     hook global WinDisplay .* info-buffers
-        map global normal b ": enter-buffers-mode<ret>"
+        map global normal b ":enter-buffers-mode<ret>"
         alias global bd delete-buffer
         alias global bf buffer-first
         alias global bl buffer-last
@@ -282,11 +283,11 @@ plug "delapouite/kakoune-buffers" %{
         alias global bo! buffer-only-force
 }
 
-map global user d -docstring "dev"  ': enter-user-mode dev<ret>'
+map global user d -docstring "dev"  ':enter-user-mode dev<ret>'
 
 # Useful fzf tools or 'skim' in my case
 plug "andreyorst/fzf.kak" config %{
-    map global user f -docstring "fzf"  ': fzf-mode<ret>'
+    map global user f -docstring "fzf"  ':fzf-mode<ret>'
 } defer fzf %{
     set-option global fzf_implementation 'sk' 
     set-option global fzf_highlight_command 'bat'
@@ -296,51 +297,51 @@ plug "andreyorst/fzf.kak" config %{
 
 # script for incrementing and decrementing
 source "~/.config/kak/inc-dec.kak"
-map global user i -docstring "inc-dec"  ': inc-dec-modify-numbers '
+map global user i -docstring "inc-dec"  ':inc-dec-modify-numbers '
 
-map global user k -docstring "kakboard"  ': kakboard-toggle <ret>' 
+map global user k -docstring "kakboard"  ':kakboard-toggle <ret>' 
 
-map global user l -docstring "LSP" %{: enter-user-mode lsp<ret>}
+map global user l -docstring "LSP" %{:enter-user-mode lsp<ret>}
 
 # Dynamic match mode
-map global user m  -docstring "dmatch"  ': enter-user-mode -lock dmatch<ret>'
+map global user m  -docstring "dmatch"  ':enter-user-mode -lock dmatch<ret>'
 
 # Edit/extend/trim selections one by one
 plug "occivink/kakoune-phantom-selection" %{
     declare-user-mode phantom
-    map global user p -docstring "phantom"      ': enter-user-mode phantom<ret>'
-    map global phantom a -docstring "Add"       ': phantom-selection-add-selection<ret>'
-    map global phantom c -docstring "Clear"     ': phantom-selection-select-all; phantom-selection-clear<ret>'
-    map global phantom n -docstring "Next"      ': phantom-selection-iterate-next<ret>'
-    map global phantom p -docstring "Previous"  ': phantom-selection-iterate-prev<ret>'
+    map global user p -docstring "phantom"      ':enter-user-mode phantom<ret>'
+    map global phantom a -docstring "Add"       ':phantom-selection-add-selection<ret>'
+    map global phantom c -docstring "Clear"     ':phantom-selection-select-all; phantom-selection-clear<ret>'
+    map global phantom n -docstring "Next"      ':phantom-selection-iterate-next<ret>'
+    map global phantom p -docstring "Previous"  ':phantom-selection-iterate-prev<ret>'
 }
 
 # Select/edit surrounding chars and tags
 plug "h-youhei/kakoune-surround"
 	declare-user-mode surround
-    map global normal <'> ": enter-user-mode surround<ret>" 
-	map global surround i -docstring "insert"             ': surround<ret>' 
-	map global surround d -docstring "delete"             ': delete-surround<ret>' 
-	map global surround r -docstring "replace"            ': change-surround<ret>' 
-	map global surround s -docstring "select"             ': select-surround<ret>' 
-	map global surround I -docstring "surround with tag"  ': surround-with-tag<ret>' 
-	map global surround D -docstring "delete tag"         ': delete-surrounding-tag<ret>' 
-	map global surround R -docstring "replace tag"        ': change-surrounding-tag<ret>' 
-	map global surround S -docstring "select tag"         ': select-surrounding-tag<ret>' 
+    map global normal <'> ":enter-user-mode surround<ret>" 
+	map global surround i -docstring "insert"             ':surround<ret>' 
+	map global surround d -docstring "delete"             ':delete-surround<ret>' 
+	map global surround r -docstring "replace"            ':change-surround<ret>' 
+	map global surround s -docstring "select"             ':select-surround<ret>' 
+	map global surround I -docstring "surround with tag"  ':surround-with-tag<ret>' 
+	map global surround D -docstring "delete tag"         ':delete-surrounding-tag<ret>' 
+	map global surround R -docstring "replace tag"        ':change-surrounding-tag<ret>' 
+	map global surround S -docstring "select tag"         ':select-surrounding-tag<ret>' 
 
 # Splits using objects
 plug 'alexherbo2/split-object.kak' %{
-    map -docstring "split-object" global user s ': enter-user-mode split-object<ret>'
+    map -docstring "split-object" global user s ':enter-user-mode split-object<ret>'
 }
 
 # Spelling and grammar checking
 declare-user-mode spell
-    map global user  S -docstring "spell" 	 ': enter-user-mode -lock spell<ret>'
-    map global spell a -docstring "add" 	 ': spell-add<ret>'
-    map global spell c -docstring "clear"    ': spell-clear<ret>'
-    map global spell e -docstring "enable"   ': spell-enable<ret>'
-    map global spell n -docstring "next"     ': spell-next<ret>'
-    map global spell r -docstring "replace"  ': spell-replace<ret>'
+    map global user  S -docstring "spell" 	 ':enter-user-mode -lock spell<ret>'
+    map global spell a -docstring "add" 	 ':spell-add<ret>'
+    map global spell c -docstring "clear"    ':spell-clear<ret>'
+    map global spell e -docstring "enable"   ':spell-enable<ret>'
+    map global spell n -docstring "next"     ':spell-next<ret>'
+    map global spell r -docstring "replace"  ':spell-replace<ret>'
     declare-option str language en-US
     define-command spell-enable %{
         hook window BufWritePost .* %{
@@ -365,11 +366,11 @@ plug "ul/kak-tree" %{
 define-command runiq %{
     execute-keys "|runiq -<ret>" 
 }
-map global user u -docstring "uniq" ': runiq<ret>'
+map global user u -docstring "uniq" ':runiq<ret>'
 
 # (un)Wrap lines
-map global user w -docstring "wrap"    ': add-highlighter global/ wrap -word -indent<ret>'
-map global user W -docstring "unwrap"  ': remove-highlighter global/wrap_-word_-indent<ret>'
+map global user w -docstring "wrap"    ':add-highlighter global/ wrap -word -indent<ret>'
+map global user W -docstring "unwrap"  ':remove-highlighter global/wrap_-word_-indent<ret>'
 
 #FIXME: broken with kcr, waiting for fix
 # Clipboard history
@@ -377,6 +378,6 @@ map global user W -docstring "unwrap"  ': remove-highlighter global/wrap_-word_-
 #     require-module yank-ring
 #     require-module yank-ring-connect
 #     yank-ring-enable
-#     map global user y -docstring "yank ring" ': yank-ring<ret>' 
+#     map global user y -docstring "yank ring" ':yank-ring<ret>' 
 # }
 
