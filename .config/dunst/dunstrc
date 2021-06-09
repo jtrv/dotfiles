@@ -29,7 +29,7 @@
     # the top and down respectively.
     # The width can be negative.  In this case the actual width is the
     # screen width minus the width defined in within the geometry option.
-    geometry = "0x0-30+20"
+    geometry = "500x0-30+20"
 
     # Show how many messages are currently hidden (because of geometry).
     indicate_hidden = yes
@@ -41,7 +41,7 @@
     # The transparency of the window.  Range: [0; 100].
     # This option will only work if a compositing window manager is
     # present (e.g. xcompmgr, compiz, etc.).
-    transparency = 8
+    transparency = 0
 
     # The height of the entire notification.  If the height is smaller
     # than the font height and padding combined, it will be raised
@@ -165,7 +165,7 @@
     max_icon_size = 32
 
     # Paths to default icons.
-    icon_path = /usr/share/icons/breeze-dark/actions/symbolic/:/usr/share/icons/breeze-dark/devices/symbolic/:/usr/share/icons/breeze-dark/status/symbolic/
+    icon_path = /usr/share/icons/breeze-dark/actions/64/:/usr/share/icons/breeze-dark/devices/64/:/usr/share/icons/breeze-dark/status/64/:/usr/share/icons/breeze-dark/apps/64/:/usr/share/icons/breeze-dark/mimetypes/64/
 
     ### History ###
 
