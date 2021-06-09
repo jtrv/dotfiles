@@ -36,6 +36,7 @@ xrandr --output virtual-1 --mode 1920x1080
 nitrogen --restore &
 picom -f &
 ntpd start &
+dunst & # notifications
 redshift -l 34:-119 &  # bluelight filter
 setxkbmap us -option ctrl:nocaps &&	# capslock = ctrl key
 xcape -e 'Control_L=Escape' & 		# ctrl (^caps) = escape when tapped
