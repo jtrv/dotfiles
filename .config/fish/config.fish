@@ -115,9 +115,6 @@ if status --is-interactive
     abbr --add --global cp 'cp -i' 
     abbr --add --global mv 'mv -i' 
 
-    # use rip instead of rm
-    abbr --add --global rm 'rip -i'
-
     abbr --add --global sudo 'doas'
 
     abbr --add --global skrg 'sk --ansi -i -c \'rg --color=always --line-number "{}"\''
