@@ -1,18 +1,26 @@
 fish_vi_key_bindings
 
 ### EXPORT ###
+set -gx fish_greeting
 
-set fish_greeting  # Supresses fish's intro message
-set -gx EDITOR "kak" # kakoune with kakoune code runner
+set -gx EDITOR "kak"
 set -gx VISUAL "kak"
-set -gx CALIBRE_USE_DARK_PALETTE "1"
-set SKIM_DEFAULT_COMMAND "fd --type f || git ls-tree -r --name-only HEAD || rg --files || find ."
-set NAVI_CONFIG_YAML "~/.config/navi/config.yaml"
 
-# better prompt in rust
+set -gx MCFLY_KEY_SCHEME vim
+set -gx MCFLY_FUZZY true
+
+set NAVI_CONFIG_YAML "~/.config/navi/config.yaml"
+set NPM_CONFIG_USERCONFIG "~/.config/npm/npmrc"
+set CALIBRE_USE_DARK_PALETTE "1"
+set SKIM_DEFAULT_COMMAND "fd --type f || git ls-tree -r --name-only HEAD || rg --files || find ."
+
+# better prompt
 starship init fish | source
 
-# smarter 'cd' (z) in rust
+# smarter shell history
+mcfly init fish | source
+
+# smarter 'cd' (z)
 zoxide init fish | source
 
 # cli cheatsheet widget
