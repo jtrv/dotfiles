@@ -193,36 +193,11 @@ map global normal <esc> <space> -docstring "deselect all but current selection"
 map global normal <c-q> -docstring "quit"  ':q<ret>'
 
 # Select/add next match
-define-command -hidden select-prev-of-sel %{
-    try %{
-        execute-keys "<a-k>\A.\z<ret>"
-        execute-keys -save-regs '' "_<a-i>*"
-    } catch %{
-        execute-keys -save-regs '' "_*<a-n>"
-    } catch nop
-}
-define-command -hidden add-next-of-sel %{
-    try %{
-        execute-keys "<a-k>\A.\z<ret>"
-        execute-keys -save-regs '' "_<a-i>w*"
-    } catch %{
-        execute-keys -save-regs '' "_*<s-n>"
-    } catch nop
-}
-define-command -hidden select-next-of-sel %{
-    try %{
-        execute-keys "<a-k>\A.\z<ret>"
-        execute-keys -save-regs '' "_<a-i>w*"
-    } catch %{
-        execute-keys -save-regs '' "_*<n>"
-    } catch nop
-}
-map global normal v           -docstring "select next match"      ':select-next-of-sel<ret>'
-map global normal <a-V>       -docstring "select previous match"  ':select-prev-of-sel<ret>'
-map global normal V           -docstring "add next match"         ':add-next-of-sel<ret>'
+map global normal v           -docstring "select next match"      '*n'
+map global normal <a-v>       -docstring "deselect current sel"   '*<a-n>'
+map global normal V           -docstring "add next match"         '*N'
+map global normal <a-V>       -docstring "add previous match"     '*<a-N>'
 map global normal <a-percent> -docstring "select all matches"     '*%s<ret>)'
-
-map global normal <a-v> <a-space> -docstring "deselect current sel"
 
 # paste in insert mode
 define-command -hidden insert-paste %{
