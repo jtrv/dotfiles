@@ -69,32 +69,35 @@ bluetooth() {
 #	    VOLUME
 ##############################
 vol() {
-	vol="$(amixer get Master | awk -F'[][]' 'END{ print $2 }')"
-	echo -e "$vol"
+	percent="$(amixer get Master | awk -F'[][]' 'END{ print $2 }')"
+    vol=$(printf %3d $percent)
+	echo -e "$vol%"
 }
 ##############################
 #	    BATTERY
 ##############################
 bat() {
 batstat="$(cat /sys/class/power_supply/BAT0/status)"
-battery="$(cat /sys/class/power_supply/BAT0/capacity)"
+percent="$(cat /sys/class/power_supply/BAT0/capacity)"
     if [ $batstat = 'Unknown' ]; then
     batstat=""
-    elif [[ $battery -ge 5 ]] && [[ $battery -le 19 ]]; then
+    elif [[ $percent -ge 5 ]] && [[ $percent -le 19 ]]; then
     batstat=""
-    elif [[ $battery -ge 20 ]] && [[ $battery -le 39 ]]; then
+    elif [[ $percent -ge 20 ]] && [[ $percent -le 39 ]]; then
     batstat=""
-    elif [[ $battery -ge 40 ]] && [[ $battery -le 59 ]]; then
+    elif [[ $percent -ge 40 ]] && [[ $percent -le 59 ]]; then
     batstat=""
-    elif [[ $battery -ge 60 ]] && [[ $battery -le 79 ]]; then
+    elif [[ $percent -ge 60 ]] && [[ $percent -le 79 ]]; then
     batstat=""
-    elif [[ $battery -ge 80 ]] && [[ $battery -le 95 ]]; then
+    elif [[ $percent -ge 80 ]] && [[ $percent -le 95 ]]; then
     batstat=""
-    elif [[ $battery -ge 96 ]] && [[ $battery -le 100 ]]; then
+    elif [[ $percent -ge 96 ]] && [[ $percent -le 100 ]]; then
     batstat=""
 fi
 
-echo "$batstat $battery%"
+battery=$(printf %3d $percent)
+
+echo "$batstat$battery%"
 }
 ##############################
 #	    WEATHER
@@ -137,6 +140,6 @@ echo "$batstat $battery%"
 SLEEP_SEC=2
 #loops forever outputting a line every SLEEP_SEC secs
 while :; do
-  echo "$(cpu)  $(ram) | $(mic)  $(network)  $(bluetooth) |  $(vol) | $(bat) |"
+  echo "$(cpu)  $(ram) | $(mic)  $(network)  $(bluetooth) | $(vol) | $(bat) |"
   sleep $sleep_sec
 done
