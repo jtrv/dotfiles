@@ -165,7 +165,7 @@ plug "alexherbo2/alacritty.kak" %{
 }
 
 hook global WinSetOption filetype=(man) %{
-    map buffer normal <a-q> -docstring "quit pager" ':q<ret>'
+    set-option buffer readonly
     map buffer normal u <c-u>
     map buffer normal d <c-d>
 }
