@@ -256,8 +256,7 @@ plug "delapouite/kakoune-buffers" %{
 map global user d -docstring "dev"  ':enter-user-mode dev<ret>'
 
 # script for incrementing and decrementing
-source "~/.config/kak/inc-dec.kak"
-map global user i -docstring "inc-dec"  ':inc-dec-modify-numbers '
+map global user i -docstring "math"  ':math<ret>'
 
 map global user k -docstring "kakboard"  ':kakboard-toggle <ret>' 
 
