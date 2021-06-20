@@ -186,9 +186,6 @@ map global normal <a-Q> <a-B> -docstring "extend prevous BIG-WORD"
 map global normal ^ q     -docstring "start macro"
 map global normal <a-^> Q -docstring "end macro"
 
-map global normal <a-h> gi -docstring "first non-blank char on line"
-map global normal <a-H> Gi -docstring "select to first non-blank char on line"
-
 map global normal <esc> <space> -docstring "deselect all but current selection"
 
 #########AUGMENTATION
