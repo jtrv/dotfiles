@@ -80,11 +80,11 @@ use_logical_path = true
 style = 'bg:purple fg:black'
 read_only_style = 'bg:blue fg:200'
 read_only = '[]'
-truncation_symbol = '…'
+truncation_symbol = ' '
 disabled = false
 
 [directory.substitutions]
-"~/.config" = ""
+"~/.config" = "CFG"
 "~/mxs/drive" = "MXS"
 "~/mxs/ftp" = "MXS"
 "~/mxs/projects" = "MXS"
@@ -123,44 +123,44 @@ discharging_symbol = ' '
 [[battery.display]]
 threshold = 40
 style = "yellow dimmed"
-charging_symbol = ' '
-discharging_symbol = ' '
+charging_symbol = ''
+discharging_symbol = ''
 
 [[battery.display]]
 threshold = 50
 style = "blue dimmed"
-charging_symbol = ' '
-discharging_symbol = ' '
+charging_symbol = ''
+discharging_symbol = ''
 
 [[battery.display]]
 threshold = 60
 style = "blue dimmed"
-charging_symbol = ' '
-discharging_symbol = ' '
+charging_symbol = ''
+discharging_symbol = ''
 
 [[battery.display]]
 threshold = 70
 style = "blue dimmed"
-charging_symbol = ' '
-discharging_symbol = ' '
+charging_symbol = ''
+discharging_symbol = ''
 
 [[battery.display]]
 threshold = 80
 style = "green dimmed"
-charging_symbol = ' '
-discharging_symbol = ' '
+charging_symbol = ''
+discharging_symbol = ''
 
 [[battery.display]]
 threshold = 90
 style = "green dimmed"
-charging_symbol = ' '
-discharging_symbol = ' '
+charging_symbol = ''
+discharging_symbol = ''
 
 [[battery.display]]
 threshold = 100
 style = "green dimmed"
-charging_symbol = ' '
-discharging_symbol = ' '
+charging_symbol = ''
+discharging_symbol = ''
 
 [memory_usage]
 format = "[  ${ram}]($style)"
@@ -170,7 +170,7 @@ disabled = true
 
 [custom.kakfile]
 description = 'The current Kakoune buffername'
-format = '[/$output]($style) [](fg:purple)'
+format = '[/$output]($style)[](fg:purple)'
 style = 'bg:purple fg:black bold'
 command = 'basename $kak_buffile'
 when = 'true'
