@@ -7,7 +7,6 @@ set -gx EDITOR "kak"
 set -gx VISUAL "kak"
 
 set -gx MCFLY_KEY_SCHEME vim
-set -gx MCFLY_FUZZY true
 
 set NAVI_CONFIG_YAML "~/.config/navi/config.yaml"
 set NPM_CONFIG_USERCONFIG "~/.config/npm/npmrc"
