@@ -1,10 +1,6 @@
 [[mapcommand]]
 command = "new_tab"
 keys = [ "t" ]
-
-[[mapcommand]]
-command = "new_tab"
-keys = [ "ctrl+t" ]
 [[mapcommand]]
 command = "close_tab"
 keys = [ "q" ]
@@ -91,7 +87,16 @@ command = "cut_files"
 keys = [ "c" ]
 [[mapcommand]]
 command = "copy_files"
-keys = [ "y" ]
+keys = [ "y", "y" ]
+[[mapcommand]]
+command = "copy_filename"
+keys = [ "y", "n" ]
+[[mapcommand]]
+command = "copy_filepath"
+keys = [ "y", "p" ]
+[[mapcommand]]
+command = "copy_dirname"
+keys = [ "y", "d" ]
 [[mapcommand]]
 command = "paste_files"
 keys = [ "p" ]
@@ -106,18 +111,17 @@ command = "delete_files"
 keys = [ "delete" ]
 
 [[mapcommand]]
-command = "rename_append"
-keys = [ "a" ]
-[[mapcommand]]
-command = "rename_prepend"
-keys = [ "i" ]
-
-[[mapcommand]]
 command = "select --toggle=true"
 keys = [ " " ]
 [[mapcommand]]
+command = "select --toggle=true"
+keys = [ "J" ]
+[[mapcommand]]
 command = "select --toggle=true --all=true"
 keys = [ "%" ]
+[[mapcommand]]
+command = "select --toggle=true --all=true"
+keys = [ "ctrl+a" ]
 
 [[mapcommand]]
 command = ":search "
@@ -133,9 +137,6 @@ command = "search_prev"
 keys = [ "N" ]
 
 [[mapcommand]]
-command = "bulk_rename"
-keys = [ "R" ]
-[[mapcommand]]
 command = "set_mode"
 keys = [ "=" ]
 
@@ -145,12 +146,32 @@ keys = [ ";" ]
 [[mapcommand]]
 command = ":"
 keys = [ ":" ]
+
 [[mapcommand]]
 command = ":mkdir "
 keys = [ "ctrl+n" ]
 [[mapcommand]]
+command = ":mkdir "
+keys = [ "m", "d" ]
+[[mapcommand]]
+command = ":touch "
+keys = [ "ctrl+t" ]
+[[mapcommand]]
+command = ":touch "
+keys = [ "m", "f" ]
+
+[[mapcommand]]
 command = ":rename "
 keys = [ "r" ]
+[[mapcommand]]
+command = "bulk_rename"
+keys = [ "R" ]
+[[mapcommand]]
+command = "rename_prepend"
+keys = [ "i" ]
+[[mapcommand]]
+command = "rename_append"
+keys = [ "a" ]
 
 [[mapcommand]]
 command = "sort lexical"
