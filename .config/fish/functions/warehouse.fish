@@ -2,7 +2,7 @@
 function warehouse
 
     echo -e "--paru\n"                   > ~/.config/.warehouse
-        paru -Qetq | sd "^x[d-o].*\n" "" >> ~/.config/.warehouse
+        paru -Qetq | sd "^x[d|f|o].*\n" "" >> ~/.config/.warehouse
         
     echo -e "\n\n\n--cargo\n"            >> ~/.config/.warehouse
         cargo install --list |\
