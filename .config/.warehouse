@@ -15,12 +15,15 @@ bottom
 breeze-icons
 calibre
 cmake
+cowsay
+cronie
 crystal
 ctags
 cups-pdf
 dialog
 discord
 docker
+dunst
 dust
 exa
 fakeroot
@@ -35,8 +38,6 @@ git-delta
 gitui
 go
 gping
-grub-btrfs
-httpie
 hyperfine
 inkscape
 intel-ucode
@@ -51,6 +52,7 @@ linux-zen
 lxappearance
 make
 materia-gtk-theme
+mcfly
 mons
 mullvad-vpn-bin
 navi
@@ -62,7 +64,6 @@ noto-fonts-cjk
 ntp
 opendoas
 p7zip
-papirus-icon-theme
 paru
 pastel
 patch
@@ -70,6 +71,7 @@ picom
 pkgconf
 procs
 pv
+python-selenium
 qbittorrent
 qtkeychain-qt5
 redshift
@@ -81,6 +83,7 @@ sad
 sd
 signal-desktop
 slack-desktop
+snap-pac-grub
 sniffglue
 spectrwm
 starship
@@ -100,6 +103,7 @@ wtfutil
 wttr
 xcape
 xclip
+xh
 zoxide
 
 
