@@ -8,6 +8,9 @@ set -gx VISUAL "kak"
 
 set -gx MCFLY_KEY_SCHEME vim
 
+set -gx GOPATH "~/build/go"
+set -gx CARGO_HOME "~/build/cargo"
+
 set NAVI_CONFIG_YAML "~/.config/navi/config.yaml"
 set NPM_CONFIG_USERCONFIG "~/.config/npm/npmrc"
 set CALIBRE_USE_DARK_PALETTE "1"
