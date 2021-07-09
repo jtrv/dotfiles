@@ -192,3 +192,9 @@ keys = [ "g", "/" ]
 [[mapcommand]]
 command = "cd /etc"
 keys = [ "g", "e" ]
+[[mapcommand]]
+command = "cd ~"
+keys = [ "g", "~" ]
+[[mapcommand]]
+command = "cd ~"
+keys = [ "~" ]
