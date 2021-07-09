@@ -39,12 +39,6 @@ plug "crizan/kak-rainbower" %{
 	hook global WinCreate .* %{ rainbow-enable-window }
 }
 
-# Display colors inline
-plug "alexherbo2/palette.kak" %{
-    require-module palette
-	palette-enable
-}
-
 
 ############### FORMATTING/LINTING ############### 
 
@@ -70,27 +64,19 @@ plug "kak-lsp/kak-lsp" do %{
     cargo build --release --locked
     cargo install --force --path .
 } config %{
-
-    # uncomment to enable debugging
-    # eval %sh{echo ${kak_opt_lsp_cmd} >> /tmp/kak-lsp.log}
-    # set global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
-
     set global lsp_diagnostic_line_error_sign '║'
     set global lsp_diagnostic_line_warning_sign '┊'
-
     define-command lsp-restart -docstring 'restart lsp server' %{ lsp-stop; lsp-start }
-    hook global WinSetOption filetype=(python|rust|javascript|typescript|html|css|sass|json|yaml|sql) %{
+    hook global WinSetOption filetype=(python|rust|typescript|html|css|sass|scss|json|yaml|sql) %{
         set-option window lsp_auto_highlight_references true
         set-option window lsp_hover_anchor false
         lsp-auto-hover-enable
         echo -debug "Enabling LSP for filtetype %opt{filetype}"
         lsp-enable-window
     }
-
     hook global WinSetOption filetype=(rust) %{
         set window lsp_server_configuration rust.clippy_preference="on"
     }
-
     hook global WinSetOption filetype=rust %{
         hook window BufWritePre .* %{
             evaluate-commands %sh{
@@ -98,76 +84,52 @@ plug "kak-lsp/kak-lsp" do %{
             }
         }
     }
-
     hook global KakEnd .* lsp-exit
-}
-
-# Emmet completions using npm emmet-cli
-define-command emmet %{
-    execute-keys "giGl| emmet <ret>" 
 }
 
 # Development mode (linting and formating)
 declare-user-mode dev
     map global dev f  -docstring "format"         ':format<ret>'
     map global dev l  -docstring "lint"           ':lint<ret>'
-    map global dev j  -docstring "next lint"      ':next-lint-message<ret>'
-    map global dev k  -docstring "previous lint"  ':previous-lint-message<ret>'
+    map global dev j  -docstring "next lint"      ':lint-next-message<ret>'
+    map global dev k  -docstring "previous lint"  ':lint-previous-message<ret>'
 
-    hook global WinSetOption filetype=(javascript|html) %{
-        map global dev e -docstring "emmet" ':emmet<ret>'
-    }
-
-# JS/TS formatting and linting with eslint, tslint, prettier
-plug "schemar/kak-jsts" config %{
-    hook global WinSetOption filetype=(javascript|html|css|sass|scss) %{
-        lint-buffer
-        map buffer dev f -docstring "format"  ':format-prettier<ret>'
-        map buffer dev l -docstring "lint"    ':lint<ret>'
-        # format-eslint also an option
-    }
-    hook global WinSetOption filetype=(typescript) %{
-        lint-buffer
-        map buffer dev f -docstring "format"  ':format-tslint<ret>'
-        map buffer dev l -docstring "lint"    ':lint<ret>'
-    }
+# Emmet completions using npm emmet-cli
+define-command emmet %{
+    execute-keys "giGl| emmet <ret>" 
+}
+hook global WinSetOption filetype=(javascript|html) %{
+    map global dev e -docstring "emmet" ':emmet<ret>'
 }
 
+hook global WinSetOption filetype=(css|scss) %{
+    set-option buffer lintcmd 'stylelint --config ~/.config/linting/.stylelintrc -f unix'
+}
 
 ###################### UTILITY ###################### 
 
-# Auto-insert pairs
-plug "alexherbo2/auto-pairs.kak" %{
-    require-module auto-pairs
-    auto-pairs-enable
+# Alacritty integration
+plug "alexherbo2/alacritty.kak" %{
+    alias global terminal alacritty-terminal
+    alias global popup alacritty-terminal-popup
 }
+
+plug "occivink/kakoune-sudo-write"
 
 # Clipboard integration
 plug "lePerdu/kakboard" %{
     hook global WinCreate .* %{ kakboard-enable }
 }
 
+# Auto-pairs provided by KCR
+enable-auto-pairs
+
 # Use ripgrep instead of grep
 set global grepcmd 'rg -n'
 
-# Read with ansi colors
-plug "eraserhd/kak-ansi" do %{
-    make
-}
-
-plug "occivink/kakoune-sudo-write"
-
-# Alacritty integration
-plug "alexherbo2/alacritty.kak" %{
-    require-module alacritty
-    alias global terminal alacritty-terminal
-    alias global popup alacritty-terminal-popup
-}
-
-hook global WinSetOption filetype=(man) %{
-    set-option buffer readonly
-    map buffer normal u <c-u>
-    map buffer normal d <c-d>
+# scrub duplicate lines
+define-command runiq %{
+    execute-keys "|runiq -<ret>" 
 }
 
 
@@ -177,9 +139,10 @@ hook global WinSetOption filetype=(man) %{
 ##########REMAPPINGS
 
 map global normal <space> , -docstring "leader-key"
+map global user <space> : #<space>x2 for command prompt
 
-map global normal q b -docstring "select previous word"
-map global normal Q B -docstring "extend previous word"
+map global normal q b         -docstring "select previous word"
+map global normal Q B         -docstring "extend previous word"
 map global normal <a-q> <a-b> -docstring "select previous BIG-WORD"
 map global normal <a-Q> <a-B> -docstring "extend prevous BIG-WORD"
 
@@ -226,21 +189,25 @@ map global normal <c-t> -docstring "New client"    ':new<ret>'
 map global normal <c-n> -docstring "New terminal"  ':connect-terminal<ret>'
 map global normal +     -docstring "New popup"     ':connect-popup<ret>'
 
-map global normal <c-e> -docstring "Open Broot"  ':> broot<ret>'
-map global normal <c-l> -docstring "Open Lazygit"  ':> lazygit<ret>'
+map global normal B     -docstring "Open buffers"           ':+ kcr-fzf-buffers<ret>'
+map global normal <c-s> -docstring "Open files"             ':+ kcr-fzf-files<ret>'
+map global normal <c-g> -docstring "Find files by content"  ':+ kcr-fzf-grep<ret>'
 
-map global normal <c-b> -docstring "Open buffers"  ':+ kcr-fzf-buffers<ret>'
-map global normal <c-g> -docstring "Open files"    ':+ kcr-fzf-files<ret>'
-map global normal <c-/> -docstring "Find files by content"  ':+ kcr-fzf-grep<ret>'
+map global normal <c-k> -docstring "Joshuto"  ':+ joshuto<ret>'
+map global normal <c-l> -docstring "Lazygit"  ':+ lazygit<ret>'
+
 
 
 ################# MODES ##################
 
-# Space(x2) for prompt
-map global user <space> -docstring "commander" :
+hook global WinSetOption filetype=(man) %{
+    set-option buffer readonly
+    map buffer normal u <c-u>
+    map buffer normal d <c-d>
+}
 
 # Plugin manager
-map global user = -docstring "buttplug" ':plug-list<ret>'
+map global user = -docstring "buttplug"  ':plug-list<ret>'
 
 # Navigate buffers
 plug "delapouite/kakoune-buffers" %{
@@ -255,15 +222,21 @@ plug "delapouite/kakoune-buffers" %{
 
 map global user d -docstring "dev"  ':enter-user-mode dev<ret>'
 
+# Code-runner + skim actions
+declare-user-mode find
+    map global user f -docstring "find"           ':enter-user-mode find<ret>'
+    map global find b -docstring "buffers"        ':+ kcr-fzf-buffers<ret>'
+    map global find f -docstring "files"          ':+ kcr-fzf-files<ret>'
+    map global find g -docstring "grep contents"  ':+ kcr-fzf-grep<ret>'
+
 # script for incrementing and decrementing
 map global user i -docstring "math"  ':math<ret>'
 
 map global user k -docstring "kakboard"  ':kakboard-toggle <ret>' 
 
 map global user l -docstring "LSP" %{:enter-user-mode lsp<ret>}
-
-# Dynamic match mode
-map global user m  -docstring "dmatch"  ':enter-user-mode -lock dmatch<ret>'
+    map global lsp <minus> -docstring "disable"  ':lsp-disable-window<ret>'
+    map global lsp <plus> -docstring "enable"  ':lsp-enable-window<ret>'
 
 # Edit/extend/trim selections one by one
 plug "occivink/kakoune-phantom-selection" %{
@@ -271,37 +244,43 @@ plug "occivink/kakoune-phantom-selection" %{
     map global user p -docstring "phantom"      ':enter-user-mode phantom<ret>'
     map global phantom a -docstring "Add"       ':phantom-selection-add-selection<ret>'
     map global phantom c -docstring "Clear"     ':phantom-selection-select-all; phantom-selection-clear<ret>'
-    map global phantom n -docstring "Next"      ':phantom-selection-iterate-next<ret>'
-    map global phantom p -docstring "Previous"  ':phantom-selection-iterate-prev<ret>'
+    map global phantom j -docstring "Next"      ':phantom-selection-iterate-next<ret>'
+    map global phantom l -docstring "Next"      ':phantom-selection-iterate-next<ret>'
+    map global phantom h -docstring "Previous"  ':phantom-selection-iterate-prev<ret>'
+    map global phantom k -docstring "Previous"  ':phantom-selection-iterate-prev<ret>'
 }
-# Code-runner + skim actions
-declare-user-mode find
-map global user f -docstring "find" ':enter-user-mode find<ret>'
-map global find b -docstring "buffers"  ':+ kcr-fzf-buffers<ret>'
-map global find f -docstring "files"    ':+ kcr-fzf-files<ret>'
-map global find g -docstring "grep contents"  ':+ kcr-fzf-grep<ret>'
 
 # Select/edit surrounding chars and tags
 plug "h-youhei/kakoune-surround"
-	declare-user-mode surround
+    declare-user-mode surround
     map global normal <'> ":enter-user-mode surround<ret>" 
-	map global surround i -docstring "insert"             ':surround<ret>' 
 	map global surround d -docstring "delete"             ':delete-surround<ret>' 
+	map global surround i -docstring "insert"             ':surround<ret>' 
 	map global surround r -docstring "replace"            ':change-surround<ret>' 
 	map global surround s -docstring "select"             ':select-surround<ret>' 
-	map global surround I -docstring "surround with tag"  ':surround-with-tag<ret>' 
 	map global surround D -docstring "delete tag"         ':delete-surrounding-tag<ret>' 
+    map global surround I -docstring "surround with tag"  ':surround-with-tag<ret>' 
 	map global surround R -docstring "replace tag"        ':change-surrounding-tag<ret>' 
 	map global surround S -docstring "select tag"         ':select-surrounding-tag<ret>' 
 
-# Splits using objects
-plug 'alexherbo2/split-object.kak' %{
-    map -docstring "split-object" global user s ':enter-user-mode split-object<ret>'
+map global user l -docstring "LSP" %{:enter-user-mode lsp<ret>}
+
+# Dynamic match mode
+map global user m  -docstring "dmatch"  ':enter-user-mode -lock dmatch<ret>'
+
+# script for applying math
+map global user M -docstring "math"  ':math<ret>'
+
+plug 'https://gitlab.com/kstr0k/mru-files.kak.git' %{
+    require-module kakhist
+    kakhist-init
+} demand mru-files %{ 
+    map global user r -docstring "recent"  ': mru-files<ret>'
 }
 
 # Spelling and grammar checking
 declare-user-mode spell
-    map global user  S -docstring "spell" 	 ':enter-user-mode -lock spell<ret>'
+    map global user  s -docstring "spell" 	 ':enter-user-mode -lock spell<ret>'
     map global spell a -docstring "add" 	 ':spell-add<ret>'
     map global spell c -docstring "clear"    ':spell-clear<ret>'
     map global spell e -docstring "enable"   ':spell-enable<ret>'
@@ -327,15 +306,16 @@ plug "ul/kak-tree" %{
     map global tree . -docstring "lock"         ':enter-user-mode -lock tree<ret>'
 }
 
-# scrub duplicate lines
-define-command runiq %{
-    execute-keys "|runiq -<ret>" 
+plug "kkga/ui.kak" %{
+    map global user u -docstring "ui mode"  ':enter-user-mode ui<ret>'
 }
-map global user u -docstring "uniq" ':runiq<ret>'
 
-# (un)Wrap lines
-map global user w -docstring "wrap"    ':add-highlighter global/ wrap -word -indent<ret>'
-map global user W -docstring "unwrap"  ':remove-highlighter global/wrap_-word_-indent<ret>'
+# write to file
+map global user w -docstring "write"  ':w<ret>'
+
+# # (un)Wrap lines
+# map global user w -docstring "wrap"    ':add-highlighter global/ wrap -word -indent<ret>'
+# map global user W -docstring "unwrap"  ':remove-highlighter global/wrap_-word_-indent<ret>'
 
 #FIXME: broken with kcr, waiting for fix
 # Clipboard history
