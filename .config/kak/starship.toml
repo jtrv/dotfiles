@@ -222,7 +222,7 @@ symbol = '  '
 command = 'echo -n $(($kak_cursor_line * 100 / $kak_buf_line_count))%'
 when = '[ -n "$kak_cursor_line" ]'
 shell = ['sh']
-disabled = true
+disabled = false
 
 [custom.kaktime]
 description = "Alternate time segment using kakoune evaluation"
