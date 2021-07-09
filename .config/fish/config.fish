@@ -8,8 +8,8 @@ set -gx VISUAL "kak"
 
 set -gx MCFLY_KEY_SCHEME vim
 
-set -gx GOPATH "~/build/go"
-set -gx CARGO_HOME "~/build/cargo"
+set -gx GOPATH "/home/sugimoto/build/go"
+set -gx CARGO_HOME "/home/sugimoto/build/cargo"
 
 set NAVI_CONFIG_YAML "~/.config/navi/config.yaml"
 set NPM_CONFIG_USERCONFIG "~/.config/npm/npmrc"
