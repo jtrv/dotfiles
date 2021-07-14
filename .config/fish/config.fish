@@ -10,6 +10,7 @@ set -gx MCFLY_KEY_SCHEME vim
 
 set -gx GOPATH "/home/sugimoto/build/go"
 set -gx CARGO_HOME "/home/sugimoto/build/cargo"
+set -gx RUSTC_WRAPPER "/usr/bin/sccache"
 
 set NAVI_CONFIG_YAML "~/.config/navi/config.yaml"
 set NPM_CONFIG_USERCONFIG "~/.config/npm/npmrc"
@@ -136,6 +137,9 @@ end
 # root privileges
 alias doas="doas --"
 alias d="doas --"
+
+# control monitors (mons is made for bash)
+alias mons="bass mons"
 
 alias j='joshuto'
 
