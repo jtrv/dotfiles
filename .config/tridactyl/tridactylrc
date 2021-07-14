@@ -1,0 +1,25 @@
+" BINDS
+"
+" Allow Ctrl-c to copy in the commandline
+unbind --mode=ex <C-c>
+"
+" g keys to match kakoune
+bind gk scrollto 100
+bind gk scrollto 0
+"
+bind <A-e> editor
+"
+" Open right click menu on links
+bind ;C composite hint_focus; !s xdotool key Menu
+"
+" COMMANDS
+"
+" Suspend / "discard" all tabs - handy for stretching out battery life
+command discardall jsb browser.tabs.query({}).then(ts => browser.tabs.discard(ts.map(t=>t.id)))
+"
+" MISC SETTINGS
+"
+set editorcmd alacritty --class popup --command kak
+"
+" Defaults to 300ms but I'm a 'move fast and close the wrong tabs' kinda chap
+set hintdelay 100
