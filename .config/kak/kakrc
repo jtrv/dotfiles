@@ -7,14 +7,15 @@ plug "andreyorst/plug.kak" noload
 
 # kakoune.cr (coderunner)
 evaluate-commands %sh{
-    kcr init kakoune
+  kcr init kakoune
 }
 
 
 ################### DISPLAY  ################### 
 
 # Kill clippy, he takes precious real-estate
-set-option global ui_options ncurses_assistant=off
+set-option global ui_options terminal_assistant=none
+set-option global ui_options terminal_status_on_top=true
 
 # Min visible surrounding rows / columns 
 set-option global scrolloff 1,3
@@ -23,102 +24,102 @@ plug "caksoylar/kakoune-mysticaltutor" theme %{ colorscheme mysticaltutor-trans 
 
 # modeline using starship.rs
 plug "eburghar/kakship" do %{
-	cargo install --force --path . --root ~/.local
-	[ ! -e $kak_config/starship.toml ] && cp starship.toml $kak_config/
+  cargo install --force --path . --root ~/.local
+  [ ! -e $kak_config/starship.toml ] && cp starship.toml $kak_config/
 } config %{
-	kakship-enable
+  kakship-enable
 }
 
 # Relative line numbers toggled on insert
 plug "evanrelf/number-toggle.kak" config %{
-	require-module "number-toggle"
+  require-module "number-toggle"
 }
 
 # Rainbow delimiters + current scope
 plug "crizan/kak-rainbower" %{
-	hook global WinCreate .* %{ rainbow-enable-window }
+  hook global WinCreate .* %{ rainbow-enable-window }
 }
 
 
 ############### FORMATTING/LINTING ############### 
 
 # Tab definitions
-set-option global tabstop 4
-set-option global indentwidth 4
+set-option global tabstop 2
+set-option global indentwidth 2
 
 # Use space for tabs and alignments
 plug "andreyorst/smarttab.kak" defer smarttab %{
 } config %{
-    hook global WinSetOption filetype=(?!makefile)(?!snippet).* %{
-        expandtab
-        set-option window softtabstop %opt{indentwidth}
-        hook window WinSetOption indentwidth=([0-9]+) %{
-            set-option window softtabstop %val{hook_param_capture_1}
-        }
+  hook global WinSetOption filetype=(?!makefile)(?!snippet).* %{
+    expandtab
+    set-option window softtabstop %opt{indentwidth}
+    hook window WinSetOption indentwidth=([0-9]+) %{
+      set-option window softtabstop %val{hook_param_capture_1}
     }
-    hook global WinSetOption filetype=(makefile|snippet) noexpandtab
+  }
+  hook global WinSetOption filetype=(makefile|snippet) noexpandtab
 }
 
 # LSP Magic
 plug "kak-lsp/kak-lsp" do %{
-    cargo build --release --locked
-    cargo install --force --path .
+  cargo build --release --locked
+  cargo install --force --path .
 } config %{
-    set global lsp_diagnostic_line_error_sign '║'
-    set global lsp_diagnostic_line_warning_sign '┊'
-    define-command lsp-restart -docstring 'restart lsp server' %{ lsp-stop; lsp-start }
-    hook global WinSetOption filetype=(python|rust|typescript|html|css|sass|scss|json|yaml|sql) %{
-        set-option window lsp_auto_highlight_references true
-        set-option window lsp_hover_anchor false
-        lsp-auto-hover-enable
-        echo -debug "Enabling LSP for filtetype %opt{filetype}"
-        lsp-enable-window
+  set global lsp_diagnostic_line_error_sign '║'
+  set global lsp_diagnostic_line_warning_sign '┊'
+  define-command lsp-restart -docstring 'restart lsp server' %{ lsp-stop; lsp-start }
+  hook global WinSetOption filetype=(python|rust|html|css|sass|scss|json|yaml|sql) %{
+    set-option window lsp_auto_highlight_references true
+    set-option window lsp_hover_anchor false
+    lsp-auto-hover-enable
+    echo -debug "Enabling LSP for filtetype %opt{filetype}"
+    lsp-enable-window
+  }
+  hook global WinSetOption filetype=(rust) %{
+    set window lsp_server_configuration rust.clippy_preference="on"
+  }
+  hook global WinSetOption filetype=rust %{
+    hook window BufWritePre .* %{
+      evaluate-commands %sh{
+        test -f rustfmt.toml && printf lsp-formatting-sync
+      }
     }
-    hook global WinSetOption filetype=(rust) %{
-        set window lsp_server_configuration rust.clippy_preference="on"
-    }
-    hook global WinSetOption filetype=rust %{
-        hook window BufWritePre .* %{
-            evaluate-commands %sh{
-                test -f rustfmt.toml && printf lsp-formatting-sync
-            }
-        }
-    }
-    hook global KakEnd .* lsp-exit
+  }
+  hook global KakEnd .* lsp-exit
 }
 
 # Development mode (linting and formating)
 declare-user-mode dev
-    map global dev f  -docstring "format"         ':format<ret>'
-    map global dev l  -docstring "lint"           ':lint<ret>'
-    map global dev j  -docstring "next lint"      ':lint-next-message<ret>'
-    map global dev k  -docstring "previous lint"  ':lint-previous-message<ret>'
+  map global dev f  -docstring "format"     ':format<ret>'
+  map global dev l  -docstring "lint"       ':lint<ret>'
+  map global dev j  -docstring "next lint"    ':lint-next-message<ret>'
+  map global dev k  -docstring "previous lint"  ':lint-previous-message<ret>'
 
 # Emmet completions using npm emmet-cli
 define-command emmet %{
-    execute-keys "giGl| emmet <ret>" 
+  execute-keys "giGl| emmet <ret>" 
 }
 hook global WinSetOption filetype=(javascript|html) %{
-    map global dev e -docstring "emmet" ':emmet<ret>'
+  map global dev e -docstring "emmet" ':emmet<ret>'
 }
 
 hook global WinSetOption filetype=(css|scss) %{
-    set-option buffer lintcmd 'stylelint --config ~/.config/linting/.stylelintrc -f unix'
+  set-option buffer lintcmd 'stylelint --config ~/.config/linting/.stylelintrc -f unix'
 }
 
 ###################### UTILITY ###################### 
 
 # Alacritty integration
 plug "alexherbo2/alacritty.kak" %{
-    alias global terminal alacritty-terminal
-    alias global popup alacritty-terminal-popup
+  alias global terminal alacritty-terminal
+  alias global popup alacritty-terminal-popup
 }
 
 plug "occivink/kakoune-sudo-write"
 
 # Clipboard integration
 plug "lePerdu/kakboard" %{
-    hook global WinCreate .* %{ kakboard-enable }
+  hook global WinCreate .* %{ kakboard-enable }
 }
 
 # Auto-pairs provided by KCR
@@ -129,7 +130,7 @@ set global grepcmd 'rg -n'
 
 # scrub duplicate lines
 define-command runiq %{
-    execute-keys "|runiq -<ret>" 
+  execute-keys "|runiq -<ret>" 
 }
 
 
@@ -139,10 +140,10 @@ define-command runiq %{
 ##########REMAPPINGS
 
 map global normal <space> , -docstring "leader-key"
-map global user <space> : #<space>x2 for command prompt
+map global user <space> : -docstring "prompt"
 
-map global normal q b         -docstring "select previous word"
-map global normal Q B         -docstring "extend previous word"
+map global normal q b     -docstring "select previous word"
+map global normal Q B     -docstring "extend previous word"
 map global normal <a-q> <a-b> -docstring "select previous BIG-WORD"
 map global normal <a-Q> <a-B> -docstring "extend prevous BIG-WORD"
 
@@ -156,78 +157,78 @@ map global normal <esc> <space> -docstring "deselect all but current selection"
 map global normal <c-q> -docstring "quit"  ':q<ret>'
 
 # Select/add next match
-map global normal v           -docstring "select next match"      '*n'
+map global normal v           -docstring "select next match"    '*n'
 map global normal <a-v>       -docstring "deselect current sel"   '*<a-n>'
-map global normal V           -docstring "add next match"         '*N'
-map global normal <a-V>       -docstring "add previous match"     '*<a-N>'
-map global normal <a-percent> -docstring "select all matches"     '*%s<ret>)'
+map global normal V           -docstring "add next match"     '*N'
+map global normal <a-V>       -docstring "add previous match"   '*<a-N>'
+map global normal <a-percent> -docstring "select all matches"   '*%s<ret>)'
 
 # paste in insert mode
 define-command -hidden insert-paste %{
-        execute-keys "<esc>;Pi"
+    execute-keys "<esc>;Pi"
 }
 map global insert <c-v> -docstring "insert mode paste" '<esc>:insert-paste<ret>'
 
 # (un)Comment Lines
 define-command comment %{
-    try %{
-        execute-keys _
-        comment-block
-    } catch comment-line
+  try %{
+    execute-keys _
+    comment-block
+  } catch comment-line
 }
 map -docstring "comment" global normal <#> %{:comment<ret>}
 
 # Better match function
 plug "useredsa/dynamic-matching.kak" %{
-    dynamic-matching-dmatch-conf
-    map global normal m -docstring "select dynamic match"  ':enter-user-mode dmatch<ret>'
-    map global normal M -docstring "add dynamic match"     ':enter-user-mode Dmatch<ret>'
+  dynamic-matching-dmatch-conf
+  map global normal m -docstring "select dynamic match"  ':enter-user-mode dmatch<ret>'
+  map global normal M -docstring "add dynamic match"   ':enter-user-mode Dmatch<ret>'
 }
 
 # Kakoune.cr (coderunner) implementations
-map global normal <c-t> -docstring "New client"    ':new<ret>'
+map global normal <c-t> -docstring "New client"  ':new<ret>'
 map global normal <c-n> -docstring "New terminal"  ':connect-terminal<ret>'
-map global normal +     -docstring "New popup"     ':connect-popup<ret>'
+map global normal +   -docstring "New popup"   ':connect-popup<ret>'
 
-map global normal B     -docstring "Open buffers"           ':+ kcr-fzf-buffers<ret>'
-map global normal <c-s> -docstring "Open files"             ':+ kcr-fzf-files<ret>'
+map global normal B   -docstring "Open buffers"       ':+ kcr-fzf-buffers<ret>'
+map global normal <c-s> -docstring "Open files"       ':+ kcr-fzf-files<ret>'
 map global normal <c-g> -docstring "Find files by content"  ':+ kcr-fzf-grep<ret>'
 
 map global normal <c-k> -docstring "Joshuto"  ':+ joshuto<ret>'
-map global normal <c-l> -docstring "Lazygit"  ':+ lazygit<ret>'
+map global normal <c-l> -docstring "Lazygit"  ':> lazygit<ret>'
 
 
 
 ################# MODES ##################
 
 hook global WinSetOption filetype=(man) %{
-    set-option buffer readonly
-    map buffer normal u <c-u>
-    map buffer normal d <c-d>
+  set-option buffer readonly
+  map buffer normal u <c-u>
+  map buffer normal d <c-d>
 }
 
 # Plugin manager
-map global user = -docstring "buttplug"  ':plug-list<ret>'
+map global user = -docstring "plug"  ':plug-list<ret>'
 
 # Navigate buffers
 plug "delapouite/kakoune-buffers" %{
-    hook global WinDisplay .* info-buffers
-        map global normal b ":enter-buffers-mode<ret>"
-        alias global bd delete-buffer
-        alias global bf buffer-first
-        alias global bl buffer-last
-        alias global bo buffer-only
-        alias global bo! buffer-only-force
+  hook global WinDisplay .* info-buffers
+    map global normal b ":enter-buffers-mode<ret>"
+    alias global bd delete-buffer
+    alias global bf buffer-first
+    alias global bl buffer-last
+    alias global bo buffer-only
+    alias global bo! buffer-only-force
 }
 
 map global user d -docstring "dev"  ':enter-user-mode dev<ret>'
 
 # Code-runner + skim actions
 declare-user-mode find
-    map global user f -docstring "find"           ':enter-user-mode find<ret>'
-    map global find b -docstring "buffers"        ':+ kcr-fzf-buffers<ret>'
-    map global find f -docstring "files"          ':+ kcr-fzf-files<ret>'
-    map global find g -docstring "grep contents"  ':+ kcr-fzf-grep<ret>'
+  map global user f -docstring "find"       ':enter-user-mode find<ret>'
+  map global find b -docstring "buffers"    ':+ kcr-fzf-buffers<ret>'
+  map global find f -docstring "files"      ':+ kcr-fzf-files<ret>'
+  map global find g -docstring "grep contents"  ':+ kcr-fzf-grep<ret>'
 
 # script for incrementing and decrementing
 map global user i -docstring "math"  ':math<ret>'
@@ -235,33 +236,33 @@ map global user i -docstring "math"  ':math<ret>'
 map global user k -docstring "kakboard"  ':kakboard-toggle <ret>' 
 
 map global user l -docstring "LSP" %{:enter-user-mode lsp<ret>}
-    map global lsp <minus> -docstring "disable"  ':lsp-disable-window<ret>'
-    map global lsp <plus> -docstring "enable"  ':lsp-enable-window<ret>'
+  map global lsp <minus> -docstring "disable"  ':lsp-disable-window<ret>'
+  map global lsp <plus> -docstring "enable"  ':lsp-enable-window<ret>'
 
 # Edit/extend/trim selections one by one
 plug "occivink/kakoune-phantom-selection" %{
-    declare-user-mode phantom
-    map global user p -docstring "phantom"      ':enter-user-mode phantom<ret>'
-    map global phantom a -docstring "Add"       ':phantom-selection-add-selection<ret>'
-    map global phantom c -docstring "Clear"     ':phantom-selection-select-all; phantom-selection-clear<ret>'
-    map global phantom j -docstring "Next"      ':phantom-selection-iterate-next<ret>'
-    map global phantom l -docstring "Next"      ':phantom-selection-iterate-next<ret>'
-    map global phantom h -docstring "Previous"  ':phantom-selection-iterate-prev<ret>'
-    map global phantom k -docstring "Previous"  ':phantom-selection-iterate-prev<ret>'
+  declare-user-mode phantom
+  map global user p -docstring "phantom"    ':enter-user-mode phantom<ret>'
+  map global phantom a -docstring "Add"     ':phantom-selection-add-selection<ret>'
+  map global phantom c -docstring "Clear"   ':phantom-selection-select-all; phantom-selection-clear<ret>'
+  map global phantom j -docstring "Next"    ':phantom-selection-iterate-next<ret>'
+  map global phantom l -docstring "Next"    ':phantom-selection-iterate-next<ret>'
+  map global phantom h -docstring "Previous"  ':phantom-selection-iterate-prev<ret>'
+  map global phantom k -docstring "Previous"  ':phantom-selection-iterate-prev<ret>'
 }
 
 # Select/edit surrounding chars and tags
 plug "h-youhei/kakoune-surround"
-    declare-user-mode surround
-    map global normal <'> ":enter-user-mode surround<ret>" 
-	map global surround d -docstring "delete"             ':delete-surround<ret>' 
-	map global surround i -docstring "insert"             ':surround<ret>' 
-	map global surround r -docstring "replace"            ':change-surround<ret>' 
-	map global surround s -docstring "select"             ':select-surround<ret>' 
-	map global surround D -docstring "delete tag"         ':delete-surrounding-tag<ret>' 
-    map global surround I -docstring "surround with tag"  ':surround-with-tag<ret>' 
-	map global surround R -docstring "replace tag"        ':change-surrounding-tag<ret>' 
-	map global surround S -docstring "select tag"         ':select-surrounding-tag<ret>' 
+  declare-user-mode surround
+  map global normal <'> ":enter-user-mode surround<ret>" 
+  map global surround d -docstring "delete"       ':delete-surround<ret>' 
+  map global surround i -docstring "insert"       ':surround<ret>' 
+  map global surround r -docstring "replace"      ':change-surround<ret>' 
+  map global surround s -docstring "select"       ':select-surround<ret>' 
+  map global surround D -docstring "delete tag"     ':delete-surrounding-tag<ret>' 
+  map global surround I -docstring "surround with tag"  ':surround-with-tag<ret>' 
+  map global surround R -docstring "replace tag"    ':change-surrounding-tag<ret>' 
+  map global surround S -docstring "select tag"     ':select-surrounding-tag<ret>' 
 
 map global user l -docstring "LSP" %{:enter-user-mode lsp<ret>}
 
@@ -272,57 +273,57 @@ map global user m  -docstring "dmatch"  ':enter-user-mode -lock dmatch<ret>'
 map global user M -docstring "math"  ':math<ret>'
 
 plug 'https://gitlab.com/kstr0k/mru-files.kak.git' %{
-    require-module kakhist
-    kakhist-init
+  require-module kakhist
+  kakhist-init
 } demand mru-files %{ 
-    map global user r -docstring "recent"  ': mru-files<ret>'
+  map global user r -docstring "recent"  ': mru-files<ret>'
 }
 
 # Spelling and grammar checking
 declare-user-mode spell
-    map global user  s -docstring "spell" 	 ':enter-user-mode -lock spell<ret>'
-    map global spell a -docstring "add" 	 ':spell-add<ret>'
-    map global spell c -docstring "clear"    ':spell-clear<ret>'
-    map global spell e -docstring "enable"   ':spell-enable<ret>'
-    map global spell n -docstring "next"     ':spell-next<ret>'
-    map global spell r -docstring "replace"  ':spell-replace<ret>'
-    declare-option str language en-US
-    define-command spell-enable %{
-        hook window BufWritePost .* %{
-            spell %opt{language}
-        }
+  map global user  s -docstring "spell"    ':enter-user-mode -lock spell<ret>'
+  map global spell a -docstring "add"    ':spell-add<ret>'
+  map global spell c -docstring "clear"  ':spell-clear<ret>'
+  map global spell e -docstring "enable"   ':spell-enable<ret>'
+  map global spell n -docstring "next"   ':spell-next<ret>'
+  map global spell r -docstring "replace"  ':spell-replace<ret>'
+  declare-option str language en-US
+  define-command spell-enable %{
+    hook window BufWritePost .* %{
+      spell %opt{language}
     }
+  }
 
 # Tree-sitter syntax parsing and functionality
 plug "ul/kak-tree" %{
-    declare-user-mode tree
-    map global user t -docstring "tree sitter"  ':enter-user-mode tree<ret>'
-    map global tree t -docstring "syntax tree"  ':tree-node-sexp<ret>'
-    map global tree c -docstring "children"     ':tree-select-children<ret>'
-    map global tree h -docstring "parent"       ':tree-select-parent-node<ret>'
-    map global tree j -docstring "next"         ':tree-select-next-node<ret>'
-    map global tree k -docstring "previous"     ':tree-select-previous-node<ret>'
-    map global tree l -docstring "first child"  ':tree-select-first-child<ret>'
-    map global tree . -docstring "lock"         ':enter-user-mode -lock tree<ret>'
+  declare-user-mode tree
+  map global user t -docstring "tree sitter"  ':enter-user-mode tree<ret>'
+  map global tree t -docstring "syntax tree"  ':tree-node-sexp<ret>'
+  map global tree c -docstring "children"   ':tree-select-children<ret>'
+  map global tree h -docstring "parent"     ':tree-select-parent-node<ret>'
+  map global tree j -docstring "next"     ':tree-select-next-node<ret>'
+  map global tree k -docstring "previous"   ':tree-select-previous-node<ret>'
+  map global tree l -docstring "first child"  ':tree-select-first-child<ret>'
+  map global tree . -docstring "lock"     ':enter-user-mode -lock tree<ret>'
 }
 
 plug "kkga/ui.kak" %{
-    map global user u -docstring "ui mode"  ':enter-user-mode ui<ret>'
+  map global user u -docstring "ui mode"  ':enter-user-mode ui<ret>'
 }
 
 # write to file
 map global user w -docstring "write"  ':w<ret>'
 
 # # (un)Wrap lines
-# map global user w -docstring "wrap"    ':add-highlighter global/ wrap -word -indent<ret>'
+# map global user w -docstring "wrap"  ':add-highlighter global/ wrap -word -indent<ret>'
 # map global user W -docstring "unwrap"  ':remove-highlighter global/wrap_-word_-indent<ret>'
 
 #FIXME: broken with kcr, waiting for fix
 # Clipboard history
 # plug "alexherbo2/yank-ring.kak" %{
-#     require-module yank-ring
-#     require-module yank-ring-connect
-#     yank-ring-enable
-#     map global user y -docstring "yank ring" ':yank-ring<ret>' 
+#   require-module yank-ring
+#   require-module yank-ring-connect
+#   yank-ring-enable
+#   map global user y -docstring "yank ring" ':yank-ring<ret>' 
 # }
 
