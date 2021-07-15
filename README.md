@@ -1,3 +1,6 @@
+# OS/FS
+I run [Arch Linux](https://wiki.archlinux.org/title/Arch_Linux) on the [Zen kernel](https://wiki.archlinux.org/title/Kernel) with the [BTRFS](https://www.wikiwand.com/en/Btrfs#/Features) filesystem utilizing incremental snapshots in [Snapper](https://www.wikiwand.com/en/Btrfs#/Features) and [grub-btrfs](https://github.com/Antynea/grub-btrfs) in case I need to revert breaking changes from the grub menu on my machine. (haven't needed to yet so :fingers_crossed:)
+
 # dotfiles
 All my configs managed with a [git --bare repo](https://www.atlassian.com/git/tutorials/dotfiles), usually in [lazygit](https://github.com/jesseduffield/lazygit) with the following aliases in [.config/fish/config.fish](https://github.com/JacobTravers/dotfiles/blob/main/.config/fish/config.fish#L148): 
 
