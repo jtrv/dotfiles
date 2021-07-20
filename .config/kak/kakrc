@@ -241,13 +241,11 @@ map global user l -docstring "LSP" %{:enter-user-mode lsp<ret>}
 # Edit/extend/trim selections one by one
 plug "occivink/kakoune-phantom-selection" %{
   declare-user-mode phantom
-  map global user p -docstring "phantom"    ':enter-user-mode phantom<ret>'
-  map global phantom a -docstring "Add"     ':phantom-selection-add-selection<ret>'
-  map global phantom c -docstring "Clear"   ':phantom-selection-select-all; phantom-selection-clear<ret>'
-  map global phantom j -docstring "Next"    ':phantom-selection-iterate-next<ret>'
-  map global phantom l -docstring "Next"    ':phantom-selection-iterate-next<ret>'
-  map global phantom h -docstring "Previous"  ':phantom-selection-iterate-prev<ret>'
-  map global phantom k -docstring "Previous"  ':phantom-selection-iterate-prev<ret>'
+  map global user p -docstring "phantom"      ':enter-user-mode phantom<ret>'
+  map global phantom a -docstring "Add"       ':phantom-selection-add-selection<ret>'
+  map global phantom c -docstring "Clear"     ':phantom-selection-select-all; phantom-selection-clear<ret>'
+  map global phantom n -docstring "Next"      ':phantom-selection-iterate-next<ret>'
+  map global phantom p -docstring "Previous"  ':phantom-selection-iterate-prev<ret>'
 }
 
 # Select/edit surrounding chars and tags
