@@ -151,6 +151,8 @@ alias c='kalk'
 
 alias bs='broot --sizes'
 
+alias btm="btm --battery"
+
 # Changing "ls" to "exa"
 alias ls='exa -l --color=always --group-directories-first --git --icons' # my preferred listing
 alias la='exa -al --color=always --group-directories-first --git --icons'  # all files and dirs
