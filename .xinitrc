@@ -41,6 +41,7 @@ redshift -l 34:-119 &  # bluelight filter
 setxkbmap us -option ctrl:nocaps &&	# capslock = ctrl key
 xcape -e 'Control_L=Escape' & # (capslock) ctrl = escape when tapped
 kak -d -s sesh &  # kakoune daemon
+~/bin/low-battery.sh &              # low-battery notifications
 rclone mount mxsdrive: ~/mxs/drive --daemon --fast-list &
 rclone mount mxsftp: ~/mxs/ftp --daemon &
 exec spectrwm
