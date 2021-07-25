@@ -1,6 +1,4 @@
- !/bin/bash
-# Example Bar Action Script for Linux.
-
+#!/bin/bash
 ##############################
 #    CPU
 ##############################
@@ -81,6 +79,8 @@ bat() {
   percent="$(cat /sys/class/power_supply/BAT0/capacity)"
   if [ $batstat = 'Unknown' ]; then
     batstat=""
+  elif [ $batstat = "Charging" ]; then
+    batstat=""
   elif [[ $percent -ge 5 ]] && [[ $percent -le 19 ]]; then
     batstat=""
   elif [[ $percent -ge 20 ]] && [[ $percent -le 39 ]]; then
