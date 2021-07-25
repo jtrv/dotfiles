@@ -33,14 +33,13 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
 fi
 
 xrandr --output virtual-1 --mode 1920x1080
-nitrogen --restore & # wallpaper
-picom -f & # allow for opacities
-ntpd start & # time-sync
-dunst & # notifications
-redshift -l 34:-119 &  # bluelight filter
-setxkbmap us -option ctrl:nocaps &&	# capslock = ctrl key
-xcape -e 'Control_L=Escape' & # (capslock) ctrl = escape when tapped
-kak -d -s sesh &  # kakoune daemon
+nitrogen --restore &                # wallpaper
+picom -f &                          # allow for opacities
+ntpd start &                        # time-sync
+dunst &                             # notifications
+redshift -l 34:-119 &               # bluelight filter
+setxkbmap us -option ctrl:nocaps &&	# capslock = ctrl
+xcape -e 'Control_L=Escape' &       # capslock  (ctrl) = escape when tapped
 ~/bin/low-battery.sh &              # low-battery notifications
 rclone mount mxsdrive: ~/mxs/drive --daemon --fast-list &
 rclone mount mxsftp: ~/mxs/ftp --daemon &
