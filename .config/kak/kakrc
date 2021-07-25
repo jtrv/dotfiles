@@ -89,9 +89,9 @@ plug "kak-lsp/kak-lsp" do %{
 
 # Development mode (linting and formating)
 declare-user-mode dev
-  map global dev f  -docstring "format"     ':format<ret>'
-  map global dev l  -docstring "lint"       ':lint<ret>'
-  map global dev j  -docstring "next lint"    ':lint-next-message<ret>'
+  map global dev f  -docstring "format"         ':format<ret>'
+  map global dev l  -docstring "lint"           ':lint<ret>'
+  map global dev j  -docstring "next lint"      ':lint-next-message<ret>'
   map global dev k  -docstring "previous lint"  ':lint-previous-message<ret>'
 
 # Emmet completions using npm emmet-cli
@@ -139,7 +139,7 @@ define-command runiq %{
 ##########REMAPPINGS
 
 map global normal <space> , -docstring "leader-key"
-map global user <space> : -docstring "prompt"
+map global user   <space> : -docstring "prompt"
 
 map global normal q b     -docstring "select previous word"
 map global normal Q B     -docstring "extend previous word"
@@ -156,11 +156,11 @@ map global normal <esc> <space> -docstring "deselect all but current selection"
 map global normal <c-q> -docstring "quit"  ':q<ret>'
 
 # Select/add next match
-map global normal v           -docstring "select next match"    '*n'
+map global normal v           -docstring "select next match"      '*n'
 map global normal <a-v>       -docstring "deselect current sel"   '*<a-n>'
-map global normal V           -docstring "add next match"     '*N'
-map global normal <a-V>       -docstring "add previous match"   '*<a-N>'
-map global normal <a-percent> -docstring "select all matches"   '*%s<ret>)'
+map global normal V           -docstring "add next match"         '*N'
+map global normal <a-V>       -docstring "add previous match"     '*<a-N>'
+map global normal <a-percent> -docstring "select all matches"     '*%s<ret>)'
 
 # paste in insert mode
 define-command -hidden insert-paste %{
@@ -181,16 +181,16 @@ map -docstring "comment" global normal <#> %{:comment<ret>}
 plug "useredsa/dynamic-matching.kak" %{
   dynamic-matching-dmatch-conf
   map global normal m -docstring "select dynamic match"  ':enter-user-mode dmatch<ret>'
-  map global normal M -docstring "add dynamic match"   ':enter-user-mode Dmatch<ret>'
+  map global normal M -docstring "add dynamic match"     ':enter-user-mode Dmatch<ret>'
 }
 
 # Kakoune.cr (coderunner) implementations
-map global normal <c-t> -docstring "New client"  ':new<ret>'
+map global normal <c-t> -docstring "New client"    ':new<ret>'
 map global normal <c-n> -docstring "New terminal"  ':connect-terminal<ret>'
-map global normal +   -docstring "New popup"   ':connect-popup<ret>'
+map global normal +   -docstring "New popup"       ':connect-popup<ret>'
 
-map global normal B   -docstring "Open buffers"       ':+ kcr-fzf-buffers<ret>'
-map global normal <c-s> -docstring "Open files"       ':+ kcr-fzf-files<ret>'
+map global normal B   -docstring "Open buffers"             ':+ kcr-fzf-buffers<ret>'
+map global normal <c-s> -docstring "Open files"             ':+ kcr-fzf-files<ret>'
 map global normal <c-g> -docstring "Find files by content"  ':+ kcr-fzf-grep<ret>'
 
 map global normal <c-k> -docstring "Joshuto"  ':+ joshuto<ret>'
@@ -224,9 +224,9 @@ map global user d -docstring "dev"  ':enter-user-mode dev<ret>'
 
 # Code-runner + skim actions
 declare-user-mode find
-  map global user f -docstring "find"       ':enter-user-mode find<ret>'
-  map global find b -docstring "buffers"    ':+ kcr-fzf-buffers<ret>'
-  map global find f -docstring "files"      ':+ kcr-fzf-files<ret>'
+  map global user f -docstring "find"           ':enter-user-mode find<ret>'
+  map global find b -docstring "buffers"        ':+ kcr-fzf-buffers<ret>'
+  map global find f -docstring "files"          ':+ kcr-fzf-files<ret>'
   map global find g -docstring "grep contents"  ':+ kcr-fzf-grep<ret>'
 
 # script for incrementing and decrementing
@@ -236,7 +236,7 @@ map global user k -docstring "kakboard"  ':kakboard-toggle <ret>'
 
 map global user l -docstring "LSP" %{:enter-user-mode lsp<ret>}
   map global lsp <minus> -docstring "disable"  ':lsp-disable-window<ret>'
-  map global lsp <plus> -docstring "enable"  ':lsp-enable-window<ret>'
+  map global lsp <plus> -docstring "enable"    ':lsp-enable-window<ret>'
 
 # Edit/extend/trim selections one by one
 plug "occivink/kakoune-phantom-selection" %{
@@ -252,14 +252,14 @@ plug "occivink/kakoune-phantom-selection" %{
 plug "h-youhei/kakoune-surround"
   declare-user-mode surround
   map global normal <'> ":enter-user-mode surround<ret>" 
-  map global surround d -docstring "delete"       ':delete-surround<ret>' 
-  map global surround i -docstring "insert"       ':surround<ret>' 
-  map global surround r -docstring "replace"      ':change-surround<ret>' 
-  map global surround s -docstring "select"       ':select-surround<ret>' 
-  map global surround D -docstring "delete tag"     ':delete-surrounding-tag<ret>' 
+  map global surround d -docstring "delete"             ':delete-surround<ret>' 
+  map global surround i -docstring "insert"             ':surround<ret>' 
+  map global surround r -docstring "replace"            ':change-surround<ret>' 
+  map global surround s -docstring "select"             ':select-surround<ret>' 
+  map global surround D -docstring "delete tag"         ':delete-surrounding-tag<ret>' 
   map global surround I -docstring "surround with tag"  ':surround-with-tag<ret>' 
-  map global surround R -docstring "replace tag"    ':change-surrounding-tag<ret>' 
-  map global surround S -docstring "select tag"     ':select-surrounding-tag<ret>' 
+  map global surround R -docstring "replace tag"        ':change-surrounding-tag<ret>' 
+  map global surround S -docstring "select tag"         ':select-surrounding-tag<ret>' 
 
 map global user l -docstring "LSP" %{:enter-user-mode lsp<ret>}
 
@@ -297,16 +297,18 @@ plug "ul/kak-tree" %{
   declare-user-mode tree
   map global user t -docstring "tree sitter"  ':enter-user-mode tree<ret>'
   map global tree t -docstring "syntax tree"  ':tree-node-sexp<ret>'
-  map global tree c -docstring "children"   ':tree-select-children<ret>'
-  map global tree h -docstring "parent"     ':tree-select-parent-node<ret>'
-  map global tree j -docstring "next"     ':tree-select-next-node<ret>'
-  map global tree k -docstring "previous"   ':tree-select-previous-node<ret>'
+  map global tree c -docstring "children"     ':tree-select-children<ret>'
+  map global tree h -docstring "parent"       ':tree-select-parent-node<ret>'
+  map global tree j -docstring "next"         ':tree-select-next-node<ret>'
+  map global tree k -docstring "previous"     ':tree-select-previous-node<ret>'
   map global tree l -docstring "first child"  ':tree-select-first-child<ret>'
-  map global tree . -docstring "lock"     ':enter-user-mode -lock tree<ret>'
+  map global tree . -docstring "lock"         ':enter-user-mode -lock tree<ret>'
 }
 
 plug "kkga/ui.kak" %{
   map global user u -docstring "ui mode"  ':enter-user-mode ui<ret>'
+  set-option global ui_wrap_flags -word -indent -marker ~~
+  hook global WinCreate .* %{ ui-todos-toggle }
 }
 
 # write to file
