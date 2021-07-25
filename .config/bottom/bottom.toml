@@ -109,7 +109,7 @@ swap_color="LightYellow"
 border_color="LightGreen"
 
 # Represents the colour of the border of selected widgets.
-highlighted_border_color="White"
+highlighted_border_color="LightRed"
 
 # Represents the colour of most text.
 text_color="Gray"
