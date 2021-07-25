@@ -19,7 +19,7 @@ hide_avg_cpu = true
 rate = 1000
 
 # Whether to put the CPU legend to the left.
-#left_legend = false
+left_legend = true
 
 # Whether to set CPU% on a process to be based on the total CPU or just current usage.
 #current_usage = false
