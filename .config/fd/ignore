@@ -7,8 +7,8 @@
 .node-gyp/
 .npm/
 aws/
-bin/
+build/
 go/
-mxs/ftp/
 mxs/drive/
+mxs/ftp/
 node_modules/
