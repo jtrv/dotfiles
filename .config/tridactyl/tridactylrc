@@ -4,7 +4,7 @@
 unbind --mode=ex <C-c>
 "
 " g keys to match kakoune
-bind gk scrollto 100
+bind gj scrollto 100
 bind gk scrollto 0
 "
 bind <A-e> editor
@@ -12,14 +12,17 @@ bind <A-e> editor
 " Open right click menu on links
 bind ;C composite hint_focus; !s xdotool key Menu
 "
+"
 " COMMANDS
+"
+" set editor to kakoune
+set editorcmd alacritty --class popup --command kak
 "
 " Suspend / "discard" all tabs - handy for stretching out battery life
 command discardall jsb browser.tabs.query({}).then(ts => browser.tabs.discard(ts.map(t=>t.id)))
 "
+"
 " MISC SETTINGS
 "
-set editorcmd alacritty --class popup --command kak
-"
-" Defaults to 300ms but I'm a 'move fast and close the wrong tabs' kinda chap
+" Defaults to 300ms but I'd rather move fast and break things
 set hintdelay 100
