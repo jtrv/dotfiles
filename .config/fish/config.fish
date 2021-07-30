@@ -1,22 +1,18 @@
 fish_vi_key_bindings
 
-
 ### EXPORT ###
 set -gx fish_greeting
 
 set -gx EDITOR "kak"
 set -gx VISUAL "kak"
 
-set -gx MCFLY_KEY_SCHEME vim
-
-set -gx GOPATH "/home/sugimoto/build/go"
-set -gx CARGO_HOME "/home/sugimoto/build/cargo"
+set -gx GOPATH        "/home/sugimoto/build/go"
+set -gx CARGO_HOME    "/home/sugimoto/build/cargo"
 set -gx RUSTC_WRAPPER "/usr/bin/sccache"
 
-set NAVI_CONFIG_YAML "~/.config/navi/config.yaml"
+set NAVI_CONFIG_YAML      "~/.config/navi/config.yaml"
 set NPM_CONFIG_USERCONFIG "~/.config/npm/npmrc"
-set CALIBRE_USE_DARK_PALETTE "1"
-set SKIM_DEFAULT_COMMAND "fd --type f || git ls-tree -r --name-only HEAD || rg --files || find ."
+set SKIM_DEFAULT_COMMAND  "fd --type f || git ls-tree -r --name-only HEAD || rg --files || find ."
 
 # better prompt
 starship init fish | source
@@ -27,13 +23,13 @@ zoxide init fish | source
 # cli cheatsheet widget
 navi widget fish | source
 
+
+### FUNCTIONS ###
+
 # kakoune as manpager
 function man
   kak -e "man $argv"; 
 end
-
-
-### FUNCTIONS ###
 
 # needed for !! and !$
 function __history_previous_command
@@ -129,65 +125,65 @@ end
 ### ALIASES ###
 
 # root privileges
-alias doas = "doas --"
-alias d    = "doas --"
+alias doas 'doas --'
+alias d    'doas --'
+
+alias bc  'kalk'
+alias bs  'broot --sizes'
+alias btm 'btm --battery'
+alias cat 'bat'
+alias j   'joshuto'
+alias lg  'lazygit'
 
 # (mons is POSIX, bass runs it in bash)
-alias mons = 'bass mons'
+alias mons 'bass mons'
 
-alias cat  = 'bat'
-alias bc   = 'kalk'
-alias j    = 'joshuto'
-alias lg   = 'lazygit'
-alias bs   = 'broot --sizes'
-alias btm  = 'btm --battery'
+# git for ~/dotfiles
+alias config '/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
+
+# lazygit for ~/dotfiles
+alias lc 'lazygit --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
 
 # Changing "ls" to "exa"
-alias ls = 'exa -l --color=always --group-directories-first --git --icons' # my preferred listing
-alias la = 'exa -al --color=always --group-directories-first --git --icons'  # all files and dirs
-alias ll = 'exa -l --color=always --group-directories-first --git --icons'  # long format
-alias lt = 'exa -aT --color=always --group-directories-first --git --icons' # tree listing
-alias lh = 'exa -al --color=always --group-directories-first --git --icons --ignore-glob="[a-z]*|[A-Z]*|[0-9]*"'
-
-# config = git for ~/dotfiles
-alias config = '/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
-
-# lazyconf = lazygit for ~/dotfiles
-alias lc = 'lazygit --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
+alias ls 'exa -l --color=always --group-directories-first --git --icons' # my preferred listing
+alias la 'exa -al --color=always --group-directories-first --git --icons'  # all files and dirs
+alias lh 'exa -al --color=always --group-directories-first --git --icons --ignore-glob="[a-z]*|[A-Z]*|[0-9]*"'
+alias ll 'exa -l --color=always --group-directories-first --git --icons'  # long format
+alias lt 'exa -aT --color=always --group-directories-first --git --icons' # tree listing
 
 # Colorize grep output (good for log files)
-alias grep  = 'grep --color=auto'
-alias egrep = 'egrep --color=auto'
-alias fgrep = 'fgrep --color=auto'
+alias grep  'grep --color=auto'
+alias egrep 'egrep --color=auto'
+alias fgrep 'fgrep --color=auto'
 
 # get fastest mirrors
-alias mirror  = "sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist"
-alias mirrord = "sudo reflector --latest 50 --number 20 --sort delay --save /etc/pacman.d/mirrorlist"
-alias mirrors = "sudo reflector --latest 50 --number 20 --sort score --save /etc/pacman.d/mirrorlist"
-alias mirrora = "sudo reflector --latest 50 --number 20 --sort age --save /etc/pacman.d/mirrorlist"
+alias mirror  "doas reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist"
+alias mirrord "doas reflector --latest 50 --number 20 --sort delay --save /etc/pacman.d/mirrorlist"
+alias mirrors "doas reflector --latest 50 --number 20 --sort score --save /etc/pacman.d/mirrorlist"
+alias mirrora "doas reflector --latest 50 --number 20 --sort age --save /etc/pacman.d/mirrorlist"
 
 ## get top process eating memory
-alias psmem   = 'ps auxf | sort -nr -k 4'
-alias psmem10 = 'ps auxf | sort -nr -k 4 | head -10'
+alias psmem   'ps auxf | sort -nr -k 4'
+alias psmem10 'ps auxf | sort -nr -k 4 | head -10'
 
 ## get top process eating cpu ##
-alias pscpu   = 'ps auxf | sort -nr -k 3'
-alias pscpu10 = 'ps auxf | sort -nr -k 3 | head -10'
+alias pscpu   'ps auxf | sort -nr -k 3'
+alias pscpu10 'ps auxf | sort -nr -k 3 | head -10'
 
 # kakoune coderunner
-alias k    = 'kcr edit'
-alias K    = 'kcr-fzf-shell'
-alias KK   = 'K --working-directory .'
-alias ks   = 'kcr shell --session'
-alias kl   = 'kcr list'
-alias a    = 'kcr attach'
-alias :    = 'kcr send'
-alias :br  = 'KK broot'
-alias :cat = 'kcr cat --raw'
+alias k    'kcr edit'
+alias K    'kcr-fzf-shell'
+alias KK   'K --working-directory .'
+alias ks   'kcr shell --session'
+alias kl   'kcr list'
+alias a    'kcr attach'
+alias :    'kcr send'
+alias :br  'KK broot'
+alias :cat 'kcr cat --raw'
 
-alias val = 'kcr get --value'
-alias opt = 'kcr get --option'
-alias reg = 'kcr get --register'
+alias val 'kcr get --value'
+alias opt 'kcr get --option'
+alias reg 'kcr get --register'
 
 # Start X at login
 if status is-login
