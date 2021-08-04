@@ -39,26 +39,6 @@ plug "crizan/kak-rainbower" %{
   hook global WinCreate .* %{ rainbow-enable-window }
 }
 
-
-############### FORMATTING/LINTING ############### 
-
-# Tab definitions
-set-option global tabstop 2
-set-option global indentwidth 2
-
-# Use space for tabs and alignments
-plug "andreyorst/smarttab.kak" defer smarttab %{
-} config %{
-  hook global WinSetOption filetype=(?!makefile)(?!snippet).* %{
-    expandtab
-    set-option window softtabstop %opt{indentwidth}
-    hook window WinSetOption indentwidth=([0-9]+) %{
-      set-option window softtabstop %val{hook_param_capture_1}
-    }
-  }
-  hook global WinSetOption filetype=(makefile|snippet) noexpandtab
-}
-
 # LSP Magic
 plug "kak-lsp/kak-lsp" do %{
   cargo build --release --locked
@@ -74,20 +54,34 @@ plug "kak-lsp/kak-lsp" do %{
     echo -debug "Enabling LSP for filtetype %opt{filetype}"
     lsp-enable-window
   }
-  hook global WinSetOption filetype=(rust) %{
-    set window lsp_server_configuration rust.clippy_preference="on"
-  }
-  hook global WinSetOption filetype=rust %{
-    hook window BufWritePre .* %{
-      evaluate-commands %sh{
-        test -f rustfmt.toml && printf lsp-formatting-sync
-      }
-    }
-  }
   hook global KakEnd .* lsp-exit
 }
 
-# Development mode (linting and formating)
+############### FORMAT/LINT ############### 
+
+source "~/.config/kak/languages/javascript"
+source "~/.config/kak/languages/html"
+source "~/.config/kak/languages/css"
+source "~/.config/kak/languages/json"
+
+# Tab definitions
+set-option global tabstop 2
+set-option global indentwidth 2
+
+# Use space for tabs and alignments
+plug "andreyorst/smarttab.kak" defer smarttab %{
+} config %{
+  hook global WinSetOption filetype=(?!makefile)(?!snippet).* %{
+      expandtab
+    set-option window softtabstop %opt{indentwidth}
+    hook window WinSetOption indentwidth=([0-9]+) %{
+      set-option window softtabstop %val{hook_param_capture_1}
+    }
+  }
+  hook global WinSetOption filetype=(makefile|snippet) noexpandtab
+}
+
+# lint/format mode
 declare-user-mode dev
   map global dev f  -docstring "format"         ':format<ret>'
   map global dev l  -docstring "lint"           ':lint<ret>'
@@ -102,9 +96,6 @@ hook global WinSetOption filetype=(javascript|html) %{
   map global dev e -docstring "emmet" ':emmet<ret>'
 }
 
-hook global WinSetOption filetype=(css|scss) %{
-  set-option buffer lintcmd 'stylelint --config ~/.config/linting/.stylelintrc -f unix'
-}
 
 ###################### UTILITY ###################### 
 
@@ -195,7 +186,6 @@ map global normal <c-s> -docstring "Find files by content"  ':+ kcr-fzf-grep<ret
 
 map global normal <c-k> -docstring "Joshuto"  ':+ joshuto<ret>'
 map global normal <c-l> -docstring "Lazygit"  ':> lazygit<ret>'
-
 
 
 ################# MODES ##################
@@ -313,10 +303,6 @@ plug "kkga/ui.kak" %{
 
 # write to file
 map global user w -docstring "write"  ':w<ret>'
-
-# # (un)Wrap lines
-# map global user w -docstring "wrap"  ':add-highlighter global/ wrap -word -indent<ret>'
-# map global user W -docstring "unwrap"  ':remove-highlighter global/wrap_-word_-indent<ret>'
 
 #FIXME: broken with kcr, waiting for fix
 # Clipboard history
