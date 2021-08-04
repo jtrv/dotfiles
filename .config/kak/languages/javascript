@@ -1,0 +1,9 @@
+hook global WinSetOption filetype=javascript %{
+  set-option window lintcmd 'run() { cat "$1" | npx eslint -f unix --stdin --stdin-filename "$kak_buffile";} && run '
+  alias window fix format2 # the patched version, renamed to `format2`.
+  lint-enable
+}
+
+hook global BufSetOption filetype=javascript %{
+  set-option buffer formatcmd "prettier --stdin-filepath=%val{buffile}"
+}
