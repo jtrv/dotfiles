@@ -251,6 +251,10 @@ plug "h-youhei/kakoune-surround"
   map global surround R -docstring "replace tag"        ':change-surrounding-tag<ret>' 
   map global surround S -docstring "select tag"         ':select-surrounding-tag<ret>' 
 
+plug 'delapouite/kakoune-mirror' %{
+  map global normal <a-I> ': enter-user-mode -lock mirror<ret>'
+}
+
 map global user l -docstring "LSP" %{:enter-user-mode lsp<ret>}
 
 # Dynamic match mode
