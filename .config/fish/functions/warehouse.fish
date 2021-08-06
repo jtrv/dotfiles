@@ -13,6 +13,4 @@ function warehouse
     /bin/cat ~/.config/fish/fish_plugins >> ~/.config/.warehouse
 
     config diff ~/.config/.warehouse
-    config add ~/.config/.warehouse &&
-    config commit -m "Warehousing packages"
 end
