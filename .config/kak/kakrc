@@ -6,6 +6,7 @@ source "~/.config/kak/plugins/plug.kak/rc/plug.kak"
 plug "andreyorst/plug.kak" noload
 
 # kakoune.cr (coderunner)
+plug "alexherbo2/kakoune.cr" 
 evaluate-commands %sh{
   kcr init kakoune
 }
@@ -171,15 +172,15 @@ plug "useredsa/dynamic-matching.kak" %{
 
 # Kakoune.cr (coderunner) implementations
 map global normal <c-t> -docstring "New client"    ':new<ret>'
-map global normal <c-n> -docstring "New terminal"  ':connect-terminal<ret>'
-map global normal +   -docstring "New popup"       ':connect-popup<ret>'
+map global normal <c-n> -docstring "New terminal"  ':connect terminal<ret>'
+map global normal +   -docstring "New popup"       ':connect popup<ret>'
 
-map global normal B   -docstring "Open buffers"             ':+ kcr-fzf-buffers<ret>'
-map global normal <c-g> -docstring "Open files"             ':+ kcr-fzf-files<ret>'
-map global normal <c-s> -docstring "Find files by content"  ':+ kcr-fzf-grep<ret>'
+map global normal B   -docstring "Open buffers"             ':connect popup kcr-fzf-buffers<ret>'
+map global normal <c-g> -docstring "Open files"             ':connect popup kcr-fzf-files<ret>'
+map global normal <c-s> -docstring "Find files by content"  ':connect popup kcr-fzf-grep<ret>'
 
-map global normal <c-k> -docstring "Joshuto"  ':+ joshuto<ret>'
-map global normal <c-l> -docstring "Lazygit"  ':> lazygit<ret>'
+map global normal <c-k> -docstring "Joshuto"  ':connect popup joshuto<ret>'
+map global normal <c-l> -docstring "Lazygit"  ':connect terminal lazygit<ret>'
 
 
 ################# MODES ##################
