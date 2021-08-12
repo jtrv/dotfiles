@@ -118,12 +118,6 @@ enable-auto-pairs
 # Use ripgrep instead of grep
 set global grepcmd 'rg -n'
 
-# scrub duplicate lines
-define-command runiq %{
-  execute-keys "|runiq -<ret>" 
-}
-
-
 ###################### NORMAL MODE ###################### 
 
 
@@ -212,12 +206,7 @@ plug "delapouite/kakoune-buffers" %{
 
 map global user d -docstring "dev"  ':enter-user-mode dev<ret>'
 
-# Code-runner + skim actions
-declare-user-mode find
-  map global user f -docstring "find"           ':enter-user-mode find<ret>'
-  map global find b -docstring "buffers"        ':+ kcr-fzf-buffers<ret>'
-  map global find f -docstring "files"          ':+ kcr-fzf-files<ret>'
-  map global find g -docstring "grep contents"  ':+ kcr-fzf-grep<ret>'
+plug "occivink/kakoune-find"
 
 # script for incrementing and decrementing
 map global user i -docstring "math"  ':math<ret>'
