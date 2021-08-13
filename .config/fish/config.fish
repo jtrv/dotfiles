@@ -9,10 +9,12 @@ set -gx VISUAL "kak"
 set -gx GOPATH        "/home/sugimoto/build/go"
 set -gx CARGO_HOME    "/home/sugimoto/build/cargo"
 set -gx RUSTC_WRAPPER "/usr/bin/sccache"
+set -gx CALIBRE_USE_DARK_PALETTE yes
 
 set NAVI_CONFIG_YAML      "~/.config/navi/config.yaml"
 set NPM_CONFIG_USERCONFIG "~/.config/npm/npmrc"
 set SKIM_DEFAULT_COMMAND  "fd --type f || git ls-tree -r --name-only HEAD || rg --files || find ."
+set FZF_DEFAULT_OPTS      "--ansi --multi --tabstop=2 --color=dark --preview='bat --color=always {}'" 
 
 # better prompt
 starship init fish | source
