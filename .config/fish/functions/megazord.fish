@@ -2,5 +2,6 @@
 function megazord
   setxkbmap us -option ctrl:nocaps &&	# *holding* capslock = ctrl
   xcape -e 'Control_L=Escape' &&      # *tapping* capslock = escape
-  bass mons -s                             # display to second monitor only
+  trackball-speed &&                  # function for sensitivity
+  bass mons -s                        # display to second monitor only
 end
