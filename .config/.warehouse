@@ -36,7 +36,6 @@ firefox-tridactyl
 firefox-tridactyl-native
 flameshot
 flex
-fsearch-git
 fuse3
 gimp
 gitui
@@ -66,7 +65,6 @@ navi
 nerd-fonts-source-code-pro
 net-tools
 network-manager-applet
-nitrogen
 noto-fonts-cjk
 ntp
 onefetch
@@ -77,7 +75,6 @@ pastel
 patch
 pkgconf
 powertop
-procs
 pv
 qbittorrent
 qtkeychain-qt5
@@ -131,10 +128,8 @@ joshuto
 kak-lsp 
 kak-tree 
 kalk_cli 
-runiq 
 tealdeer 
 tiny 
-xsv 
 
 
 

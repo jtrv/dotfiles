@@ -33,7 +33,7 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
 fi
 
 xrandr --output virtual-1 --mode 1920x1080
-nitrogen --restore &                # wallpaper
+feh --randomize --bg-scale --no-fehbg ~/Pictures/wallpapers/ &
 picom -f &                          # allow for opacities
 ntpd start &                        # time-sync
 dunst &                             # notifications
