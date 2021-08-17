@@ -127,13 +127,10 @@ set global grepcmd 'rg -n'
 map global normal <space> , -docstring "leader-key"
 map global user   <space> : -docstring "prompt"
 
-map global normal q b     -docstring "select previous word"
-map global normal Q B     -docstring "extend previous word"
-map global normal <a-q> <a-b> -docstring "select previous BIG-WORD"
-map global normal <a-Q> <a-B> -docstring "extend prevous BIG-WORD"
-
-map global normal ^ q     -docstring "start macro"
-map global normal <a-^> Q -docstring "end macro"
+map global normal w b     -docstring "select previous word"
+map global normal W B     -docstring "extend previous word"
+map global normal <a-w> <a-b> -docstring "select previous BIG-WORD"
+map global normal <a-W> <a-B> -docstring "extend prevous BIG-WORD"
 
 map global normal <esc> <space> -docstring "deselect all but current selection"
 
