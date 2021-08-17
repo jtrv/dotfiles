@@ -38,9 +38,10 @@ picom -f &                          # allow for opacities
 ntpd start &                        # time-sync
 dunst &                             # notifications
 redshift -l 34:-119 &               # bluelight filter
-setxkbmap us -option ctrl:nocaps &&	# capslock = ctrl
-xcape -e 'Control_L=Escape' &       # capslock  (ctrl) = escape when tapped
 ~/bin/low-battery.sh &              # low-battery notifications
+trackball-speed &                   # function for sensitivity
+setxkbmap us -option ctrl:nocaps &&	# *holding* capslock = ctrl
+xcape -e 'Control_L=Escape' &       # *tapping* capslock = escape
 rclone mount mxsdrive: ~/mxs/drive --daemon --fast-list &
 rclone mount mxsftp: ~/mxs/ftp --daemon &
 exec spectrwm
