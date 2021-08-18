@@ -15,7 +15,7 @@ evaluate-commands %sh{
 ################### DISPLAY  ################### 
 
 # Kill clippy, he takes precious real-estate
-set-option global ui_options terminal_assistant=none terminal_status_on_top=true
+set-option global ui_options terminal_assistant=none
 
 # Min visible surrounding rows / columns 
 set-option global scrolloff 1,3
