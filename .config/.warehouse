@@ -49,7 +49,6 @@ jellyfin-mpv-shim
 jq
 just
 kak-lsp-git
-kondo-bin
 krita
 lazygit
 libreoffice-fresh
@@ -128,6 +127,7 @@ joshuto
 kak-lsp 
 kak-tree 
 kalk_cli 
+kondo 
 tealdeer 
 tiny 
 
@@ -143,3 +143,4 @@ franciscolourenco/done
 gazorby/fish-abbreviation-tips
 jorgebucaran/nvm.fish
 edc/bass
+oh-my-fish/plugin-thefuck
