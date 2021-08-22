@@ -6,21 +6,23 @@
 Why?
 
 ######################################################################
+
+######################################################################
 How?
 
 ######################################################################
 #
-# [Fix]  an issue 
-# [Add]  a capability
-# [Drop] a capability
-# [Bump] the version of dependancy
-# [Make] build process, tools, infrastructure.
-# [Start] doing something; enable a toggle, feature flag
-# [Stop]  doing something; disable a toggle, feature flag
-# [Optimize] Must be just about performance
-# [Document] Must be only in the documentation
-# [Refactor] Must be just refactoring
-# [Reformat] Must be just format; indent line, trim space
-# [Rephrase] Must be just textual; edit a comment, doc
+# [FIX]  an issue 
+# [ADD]  a capability
+# [DROP] a capability
+# [BUMP] the version of dependancy
+# [MAKE] build process, tools, infrastructure.
+# [START] doing something; enable a toggle, feature flag
+# [STOP]  doing something; disable a toggle, feature flag
+# [OPTIMIZE] Must be just about performance
+# [DOCUMENT] Must be only in the documentation
+# [REFACTOR] Must be just refactoring
+# [REFORMAT] Must be just format; indent line, trim space
+# [REPHRASE] Must be just textual; edit a comment, doc
 #
 ######################################################################
