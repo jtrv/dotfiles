@@ -114,8 +114,9 @@ plug "lePerdu/kakboard" %{
 }
 
 # Auto-pairs provided by KCR
-enable-auto-pairs
-
+plug "alexherbo2/auto-pairs.kak" %{
+  enable-auto-pairs
+}
 # Use ripgrep instead of grep
 set global grepcmd 'rg -n'
 
@@ -145,6 +146,12 @@ map global normal V           -docstring "add next match"         '*N'
 map global normal <a-V>       -docstring "add previous match"     '*<a-N>'
 map global normal <a-percent> -docstring "select all matches"     '*%s<ret>)'
 
+# case insensitive search
+map global normal /     -docstring "search"                      '/(?i)'
+map global normal <a-/> -docstring "search backwards"            '<a-/>(?i)'
+map global normal ?     -docstring "(extend) search"             '?(?i)'
+map global normal <a-?> -docstring "(extend) search backwards"   '<a-?>(?i)'
+
 # paste in insert mode
 define-command -hidden insert-paste %{
     execute-keys "<esc>;Pi"
@@ -172,9 +179,9 @@ map global normal <c-t> -docstring "New client"    ':new<ret>'
 map global normal <c-n> -docstring "New terminal"  ':connect terminal<ret>'
 map global normal +   -docstring "New popup"       ':connect popup<ret>'
 
-map global normal B   -docstring "Open buffers"             ':connect popup kcr-fzf-buffers<ret>'
-map global normal <c-g> -docstring "Open files"             ':connect popup kcr-fzf-files<ret>'
-map global normal <c-s> -docstring "Find files by content"  ':connect popup kcr-fzf-grep<ret>'
+map global normal B   -docstring "Open buffers"             ':connect popup kcr fzf buffers<ret>'
+map global normal <c-g> -docstring "Open files"             ':connect popup kcr fzf files<ret>'
+map global normal <c-s> -docstring "Find files by content"  ':connect popup kcr fzf grep<ret>'
 
 map global normal <c-k> -docstring "Joshuto"  ':connect popup joshuto<ret>'
 map global normal <c-l> -docstring "Lazygit"  ':connect terminal lazygit<ret>'
@@ -205,9 +212,6 @@ plug "delapouite/kakoune-buffers" %{
 map global user d -docstring "dev"  ':enter-user-mode dev<ret>'
 
 plug "occivink/kakoune-find"
-
-# script for incrementing and decrementing
-map global user i -docstring "math"  ':math<ret>'
 
 map global user k -docstring "kakboard"  ':kakboard-toggle <ret>' 
 
@@ -248,6 +252,17 @@ map global user l -docstring "LSP" %{:enter-user-mode lsp<ret>}
 map global user m  -docstring "dmatch"  ':enter-user-mode -lock dmatch<ret>'
 
 # script for applying math
+define-command execute-keys-with-register -params 2 -docstring 'execute keys with register' %{
+  evaluate-commands -save-regs '"' %{
+    set-register '"' %arg{2}
+    execute-keys '""' %arg{1}
+  }
+} 
+define-command math -docstring 'do the maths' %{
+  prompt math: %{
+    execute-keys-with-register 'a<c-r>"<esc>|bc<ret>' %val{text}
+  }
+}
 map global user M -docstring "math"  ':math<ret>'
 
 plug 'https://gitlab.com/kstr0k/mru-files.kak.git' %{
