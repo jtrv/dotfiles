@@ -39,7 +39,6 @@ ntpd start &                        # time-sync
 dunst &                             # notifications
 redshift -l 34:-119 &               # bluelight filter
 ~/bin/low-battery.sh &              # low-battery notifications
-trackball-speed &                   # function for sensitivity
 setxkbmap us -option ctrl:nocaps &&	# *holding* capslock = ctrl
 xcape -e 'Control_L=Escape' &       # *tapping* capslock = escape
 rclone mount mxsdrive: ~/mxs/drive --daemon --fast-list &
