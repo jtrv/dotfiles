@@ -178,9 +178,9 @@ plug "useredsa/dynamic-matching.kak" %{
 # Kakoune.cr (coderunner) implementations
 map global normal <c-t> -docstring "New client"    ':new<ret>'
 map global normal <c-n> -docstring "New terminal"  ':connect terminal<ret>'
-map global normal +   -docstring "New popup"       ':connect popup<ret>'
+map global normal +     -docstring "New popup"     ':connect popup<ret>'
 
-map global normal B   -docstring "Open buffers"             ':connect popup kcr fzf buffers<ret>'
+map global normal B     -docstring "Open buffers"           ':connect popup kcr fzf buffers<ret>'
 map global normal <c-g> -docstring "Open files"             ':connect popup kcr fzf files<ret>'
 map global normal <c-s> -docstring "Find files by content"  ':connect popup kcr fzf grep<ret>'
 
@@ -220,7 +220,7 @@ map global user k -docstring "kakboard"  ':kakboard-toggle <ret>'
 
 map global user l -docstring "LSP" %{:enter-user-mode lsp<ret>}
   map global lsp <minus> -docstring "disable"  ':lsp-disable-window<ret>'
-  map global lsp <plus> -docstring "enable"    ':lsp-enable-window<ret>'
+  map global lsp <plus>  -docstring "enable"   ':lsp-enable-window<ret>'
 
 # Edit/extend/trim selections one by one
 plug "occivink/kakoune-phantom-selection" %{
