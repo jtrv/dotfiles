@@ -281,15 +281,9 @@ declare-user-mode spell
   map global spell a -docstring "add"      ':spell-add<ret>'
   map global spell c -docstring "clear"    ':spell-clear<ret>'
   map global spell e -docstring "enable"   ':spell<ret>'
-  # map global spell e -docstring "enable"   ':spell-enable<ret>'
   map global spell n -docstring "next"     ':spell-next<ret>'
   map global spell r -docstring "replace"  ':spell-replace<ret>'
   declare-option str language en-US
-  # define-command spell-enable %{
-  #   hook window ModeChange insert:normal %{
-  #     spell %opt{language}
-  #   }
-  # }
 
 # Tree-sitter syntax parsing and functionality
 plug "ul/kak-tree" %{
