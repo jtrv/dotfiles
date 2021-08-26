@@ -212,7 +212,9 @@ plug "delapouite/kakoune-buffers" %{
 
 map global user d -docstring "dev"  ':enter-user-mode dev<ret>'
 
-plug "occivink/kakoune-find"
+plug "occivink/kakoune-find" %{
+  map global user f -docstring "find"  ':find'
+}
 
 map global user k -docstring "kakboard"  ':kakboard-toggle <ret>' 
 
