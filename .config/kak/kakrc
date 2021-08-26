@@ -137,7 +137,8 @@ map global normal <esc> <space> -docstring "deselect all but current selection"
 
 #########AUGMENTATION
 
-map global normal <c-q> -docstring "quit"  ':q<ret>'
+map global normal D     -docstring "vim D"  'Gld'
+map global normal <c-q> -docstring "close buffer/client"  ':bd;q'
 
 # Select/add next match
 map global normal v           -docstring "select next match"      '*n'
