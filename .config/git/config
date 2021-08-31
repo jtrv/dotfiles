@@ -12,23 +12,23 @@
 [diff]
 	color-moved = dimmed_zebra
 [interactive]
-    diffFilter = delta --color-only
+  diffFilter = delta --color-only
 [delta]
-    features = unobtrusive-line-numbers decorations
-    syntax-theme = Dracula
+  features = unobtrusive-line-numbers decorations
+  syntax-theme = Dracula
 [delta "decorations"]
-    commit-decoration-style = brightblue box
-    file-decoration-style = brightmagenta box ul
-    hunk-header-decoration-style = brightyellow box
+  commit-decoration-style = brightblue box
+  file-decoration-style = brightmagenta box ul
+  hunk-header-decoration-style = brightyellow box
 [delta "unobtrusive-line-numbers"]
-    line-numbers = true
-    line-numbers-minus-style = brightred
-    line-numbers-zero-style = "#999999"
-    line-numbers-plus-style = brightgreen
-    line-numbers-left-format = "{nm:>4}┊"
-    line-numbers-right-format = "{np:>4}│"
-    line-numbers-left-style = brightblue
-    line-numbers-right-style = brightblue
+  line-numbers = true
+  line-numbers-minus-style = brightred
+  line-numbers-zero-style = "#999999"
+  line-numbers-plus-style = brightgreen
+  line-numbers-left-format = "{nm:>4}┊"
+  line-numbers-right-format = "{np:>4}│"
+  line-numbers-left-style = brightblue
+  line-numbers-right-style = brightblue
 [commit]
 	gpgsign = true
 	template = ~/.config/git/message
