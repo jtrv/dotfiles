@@ -7,6 +7,7 @@
 [init]
 	defaultBranch = main
 [core]
+  autocrlf = input
 	editor = kak
 	pager = delta
 [diff]
