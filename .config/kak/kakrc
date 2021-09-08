@@ -301,7 +301,11 @@ plug "ul/kak-tree" %{
 plug "kkga/ui.kak" %{
   map global user u -docstring "ui mode"  ':enter-user-mode ui<ret>'
   set-option global ui_wrap_flags -word -indent -marker ~~
-  hook global WinCreate .* %{ ui-todos-toggle }
+  hook global WinCreate .* %{
+    ui-todos-toggle
+    ui-lint-toggle
+    ui-git-diff-toggle
+    }
 }
 
 # write to file
