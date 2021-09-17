@@ -204,6 +204,7 @@ plug "delapouite/kakoune-buffers" %{
   hook global WinDisplay .* info-buffers
     map global normal b ":enter-buffers-mode <ret>"
     alias global bd delete-buffer
+    alias global bd! delete-buffer!
     alias global bf buffer-first
     alias global bl buffer-last
     alias global bo buffer-only
