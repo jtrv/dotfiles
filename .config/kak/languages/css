@@ -1,5 +1,5 @@
 hook global WinSetOption filetype=(css|scss) %{
-  set-option window lintcmd "stylelint --fix --config='~/.config/.stylelintrc' --stdin-filename='%val{buffile}'"
+  set-option window lintcmd "stylelint --fix --config='/home/sugimoto/.config/.stylelintrc'  --stdin-filename='%val{buffile}'"
   lint
 }
 hook global BufSetOption filetype=(css|scss) %{
