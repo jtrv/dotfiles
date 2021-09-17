@@ -50,7 +50,7 @@ plug "kak-lsp/kak-lsp" do %{
   define-command lsp-restart -docstring 'restart lsp server' %{ lsp-stop; lsp-start }
   hook global WinSetOption filetype=(python|rust|html|css|sass|scss|json|yaml|sql) %{
     set-option window lsp_auto_highlight_references true
-    set-option window lsp_hover_anchor false
+    set-option window lsp_hover_anchor true
     lsp-auto-hover-enable
     echo -debug "Enabling LSP for filtetype %opt{filetype}"
     lsp-enable-window
