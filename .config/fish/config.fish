@@ -8,7 +8,7 @@ set -gx VISUAL "kak"
 
 set -gx GOPATH         "/home/sugimoto/build/go"
 set -gx CARGO_HOME     "/home/sugimoto/build/cargo"
-set -gx RUSTC_WRAPPER  "/usr/bin/sccache"
+set -gx RUSTC_WRAPPER  "/home/sugimoto/build/cargo/bin/sccache"
 set -gx NPM_CONFIG_USERCONFIG  "~/.config/npm/npmrc"
 set -gx SKIM_DEFAULT_COMMAND   "fd --type f || git ls-tree -r --name-only HEAD || rg --files || find ."
 set -gx FZF_DEFAULT_OPTS       "--ansi --multi --tabstop=2 --color=dark --preview='bat --color=always {}'" 
