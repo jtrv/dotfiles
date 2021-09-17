@@ -217,6 +217,11 @@ plug "occivink/kakoune-find" %{
   map global user f -docstring "find"  ':find'
 }
 
+declare-user-mode grep
+  map global user g -docstring "grep"        ':enter-user-mode grep <ret>'
+  map global grep j -docstring "next match"  ':grep-next-match <ret>'
+  map global grep k -docstring "prev match"  ':grep-previous-match <ret>'
+
 map global user k -docstring "kakboard"  ':kakboard-toggle <ret>' 
 
 map global user l -docstring "LSP" %{:enter-user-mode lsp <ret>}
@@ -311,6 +316,8 @@ plug "kkga/ui.kak" %{
 
 # write to file
 map global user w -docstring "write"  ':w <ret>'
+
+map global user / -docstring "search"  ':grep '
 
 #FIXME: broken with kcr, waiting for fix
 # Clipboard history
