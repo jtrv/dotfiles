@@ -106,17 +106,17 @@ plug "alexherbo2/alacritty.kak" %{
   alias global popup alacritty-terminal-popup
 }
 
-plug "occivink/kakoune-sudo-write"
+plug "alexherbo2/auto-pairs.kak" %{
+  enable-auto-pairs
+}
 
 # Clipboard integration
 plug "lePerdu/kakboard" %{
   hook global WinCreate .* %{ kakboard-enable }
 }
 
-# Auto-pairs provided by KCR
-plug "alexherbo2/auto-pairs.kak" %{
-  enable-auto-pairs
-}
+plug "occivink/kakoune-sudo-write"
+
 # Use ripgrep instead of grep
 set global grepcmd 'rg -n'
 
