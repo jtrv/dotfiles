@@ -27,11 +27,6 @@ navi widget fish | source
 
 ### FUNCTIONS ###
 
-# kakoune as manpager
-function man
-  kak -e "man $argv"; 
-end
-
 # needed for !! and !$
 function __history_previous_command
   switch (commandline -t)
@@ -170,6 +165,19 @@ alias psmem10 'ps auxf | sort -nr -k 4 | head -10'
 ## get top process eating cpu ##
 alias pscpu   'ps auxf | sort -nr -k 3'
 alias pscpu10 'ps auxf | sort -nr -k 3 | head -10'
+
+
+### KAKOUNE ###
+
+# kakoune as manpager
+function man
+  kak -e "man $argv"; 
+end
+
+# kakoune grep
+function kg
+  kak -e "grep $argv"; 
+end
 
 # kakoune coderunner
 alias k    'kcr edit'
