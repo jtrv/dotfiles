@@ -8,12 +8,20 @@ set -gx VISUAL "kak"
 
 set -gx GOPATH         "/home/sugimoto/build/go"
 set -gx CARGO_HOME     "/home/sugimoto/build/cargo"
+
+set -gx NPM_CONFIG_USERCONFIG  "/home/sugimoto/.config/npm/npmrc"
+set     NAVI_CONFIG_YAML       "/home/sugimoto/.config/navi/config.yaml"
+
+set -gx VOLTA_HOME  "/home/sugimoto/.volta"
+set -gx PATH        "/home/sugimoto/.volta/bin" $PATH
 set -gx RUSTC_WRAPPER  "/home/sugimoto/build/cargo/bin/sccache"
-set -gx NPM_CONFIG_USERCONFIG  "~/.config/npm/npmrc"
-set -gx SKIM_DEFAULT_COMMAND   "fd --type f || git ls-tree -r --name-only HEAD || rg --files || find ."
-set -gx FZF_DEFAULT_OPTS       "--ansi --multi --tabstop=2 --color=dark --preview='bat --color=always {}'" 
+
+set -gx FZF_DEFAULT_OPTS          "--ansi --multi --tabstop=2 --color=dark --preview='bat --color=always {}'" 
 set -gx CALIBRE_USE_DARK_PALETTE  "yes"
-set NAVI_CONFIG_YAML       "~/.config/navi/config.yaml"
+
+
+
+### SOURCE ###
 
 # better prompt
 starship init fish | source
@@ -23,6 +31,7 @@ zoxide init fish | source
 
 # cli cheatsheet widget
 navi widget fish | source
+
 
 
 ### FUNCTIONS ###
@@ -108,14 +117,15 @@ function take --argument number
 end
 
 
+
 ### ABBREVIATIONS ###
 
 if status --is-interactive
   abbr --add --global cp   'cp -i' 
   abbr --add --global mv   'mv -i' 
   abbr --add --global sudo 'doas'
-  abbr --add --global skrg 'sk --ansi -i -c \'rg --color=always --line-number "{}"\''
 end
+
 
 
 ### ALIASES ###
@@ -125,7 +135,6 @@ alias doas 'doas --'
 alias d    'doas --'
 
 alias bc  'kalk'
-alias bs  'broot --sizes'
 alias btm 'btm --battery'
 alias cat 'bat'
 alias j   'joshuto'
@@ -167,6 +176,7 @@ alias pscpu   'ps auxf | sort -nr -k 3'
 alias pscpu10 'ps auxf | sort -nr -k 3 | head -10'
 
 
+
 ### KAKOUNE ###
 
 # kakoune as manpager
@@ -200,4 +210,3 @@ if status is-login
     exec startx -- -keeptty
   end
 end
-
