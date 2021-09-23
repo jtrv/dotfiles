@@ -115,6 +115,13 @@ plug "lePerdu/kakboard" %{
   hook global WinCreate .* %{ kakboard-enable }
 }
 
+# display text with ansi color-codes inside a fifo
+plug "eburghar/kakpipe" do %{
+	cargo install --force --path . --root ~/.local
+}
+
+plug 'https://gitlab.com/Screwtapello/kakoune-repl-buffer'
+
 plug "occivink/kakoune-sudo-write"
 
 # Use ripgrep instead of grep
@@ -282,7 +289,7 @@ define-command execute-keys-with-register -params 2 -docstring 'execute keys wit
 } 
 define-command math -docstring 'do the maths' %{
   prompt math: %{
-    execute-keys-with-register 'a<c-r>"<esc>|bc <ret>' %val{text}
+    execute-keys-with-register 'a<c-r>"<esc>|kalk <ret>' %val{text}
   }
 }
 map global user M -docstring "math"  ':math <ret>'
