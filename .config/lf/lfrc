@@ -1,0 +1,116 @@
+%[ $LF_LEVEL -eq 1 ] || echo "Warning: You're in a nested lf instance!"
+
+##### BASIC SETTINGS #####
+
+set drawbox on
+set icons on
+set relativenumber on
+set scrolloff 10
+set shellopts '-eu'
+set shell sh
+set tabstop 2
+
+# previewer script
+# set previewer ~/.config/lf/pv.sh
+
+
+
+##### CUSTOM COMMANDS #####
+
+# jump to folder with zoxide
+cmd autojump %lf -remote "send $id cd '$(zoxide query $1)'"
+
+# jump with fzf
+cmd jump ${{
+    res="$(fd . -H -d 4 | fzf | sed 's/\\/\\\\/g;s/"/\\"/g')"
+    if [ -d "$res" ]; then
+        cmd="cd"
+    else
+        cmd="select"
+    fi
+    lf -remote "send $id $cmd \"$res\""
+}}
+
+cmd link %{{
+    set -- $(cat ~/.local/share/lf/files)
+    mode="$1"
+    shift
+    if [ "$#" -lt 1 ]; then
+        lf -remote "send $id echo no files to link"
+        exit 0
+    fi case "$mode" in
+        # symbolically copy mode is indicating a soft link
+        copy) ln -sr -t . -- "$@";;
+        # while a move mode is indicating a hard link
+        move) ln -t . -- "$@";;
+    esac
+    rm ~/.local/share/lf/files
+    lf -remote "send clear"
+}}
+
+# recursively make dirs
+cmd mkdir %{{
+    IFS=" "
+    mkdir -p -- "$*"
+    lf -remote "send $id select \"$*\""
+}}
+
+cmd mkdirfromsels ${{
+    set -f
+    read newd
+    mkdir -- "$newd"
+    mv -- $fx "$newd"
+}}
+
+cmd open-with %"$@" $fx
+cmd renamer $IFS="`printf '\n\t'`"; renamer $fx
+cmd rip $IFS="`printf '\n\t'`"; rip $fx
+cmd yank-basename $basename -a -- $fx | head -c-1 | xclip
+cmd yank-dirname $dirname -- "$f" | head -c-1 | xclip
+cmd yank-path $printf '%s' "$fx" | xclip
+
+
+
+##### KEY BINDINGS #####
+
+# goto shortcuts
+map gd cd ~/downloads/
+map gs cd ~/pictures/screenshots/
+map gm cd ~/pictures/memes/
+map gn cd ~/notes/
+map gt cd ~/tmp/
+
+# Kakoune like bindings
+map gk    top
+map gj    bottom
+map x     :toggle
+map K     :toggle; up
+map J     :toggle; down
+map <a-n> search-prev
+map N     :toggle; search-next
+map <a-N> :toggle; search-prev
+map <esc> clear
+
+map R        renamer  # rename files using $editor (pipe-rename)
+map D        rip      # remove with rip (rm-improved)
+
+map <enter>  open
+map o        push :open-with<space>
+
+map t        push $touch<space>  # new file
+map a        push %mkdir<space>  # new dir
+map <a-a>    newDirFromSel       # new dir with selections
+
+map f        :jump                   # jump to file with fzf
+map F        push :autojump<space>'  # jump to folder with zoxide
+
+map S        push :glob-select<space>    # select by glob
+map <a-S>    push :glob-unselect<space>  # unselect by glob
+
+map x        $$f  # execute current file (must be executable)
+map X        !$f  # execute current file (must be executable)
+
+map .        set hidden!  # show hidden items
+map P        :link        # soft-link press 'y->P'; hard-link press 'd->P'
+map Y        :yank-path   # copy path
+# map i        $LESSOPEN='| ~/.config/lf/pv.sh %s' less -R $f
