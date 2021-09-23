@@ -184,7 +184,7 @@ map global normal B     -docstring "Open buffers"           ':connect popup kcr 
 map global normal <c-g> -docstring "Open files"             ':connect popup kcr fzf files <ret>'
 map global normal <c-s> -docstring "Find files by content"  ':connect popup kcr fzf grep <ret>'
 
-map global normal <c-k> -docstring "Joshuto"  ':connect popup joshuto <ret>'
+map global normal <c-k> -docstring "Joshuto"  ':connect popup lf <ret>'
 map global normal <c-l> -docstring "Lazygit"  ':connect terminal lazygit <ret>'
 
 
