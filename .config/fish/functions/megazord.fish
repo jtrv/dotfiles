@@ -4,5 +4,5 @@ function megazord
   xcape -e 'Control_L=Escape' &&      # *tapping* capslock = escape
   trackball-speed &&                  # function for sensitivity
   bass mons -s &&                     # display to second monitor only
-  feh --randomize --bg-scale --no-fehbg ~/Pictures/wallpapers/
+  feh --randomize --bg-scale --no-fehbg ~/pictures/wallpapers/
 end
