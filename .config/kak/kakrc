@@ -249,29 +249,6 @@ map global user l -docstring "LSP" %{:enter-user-mode lsp <ret>}
   map global lsp <minus> -docstring "disable"  ':lsp-disable-window <ret>'
   map global lsp <plus>  -docstring "enable"   ':lsp-enable-window <ret>'
 
-# Edit/extend/trim selections one by one
-plug "occivink/kakoune-phantom-selection" %{
-  declare-user-mode phantom
-  map global user p -docstring "phantom"      ':enter-user-mode phantom <ret>'
-  map global phantom a -docstring "Add"       ':phantom-selection-add-selection <ret>'
-  map global phantom c -docstring "Clear"     ':phantom-selection-select-all; phantom-selection-clear <ret>'
-  map global phantom n -docstring "Next"      ':phantom-selection-iterate-next <ret>'
-  map global phantom p -docstring "Previous"  ':phantom-selection-iterate-prev <ret>'
-}
-
-# Select/edit surrounding chars and tags
-plug "h-youhei/kakoune-surround"
-  declare-user-mode surround
-  map global normal <'> ":enter-user-mode surround <ret>" 
-  map global surround d -docstring "delete"             ':delete-surround <ret>' 
-  map global surround i -docstring "insert"             ':surround <ret>' 
-  map global surround r -docstring "replace"            ':change-surround <ret>' 
-  map global surround s -docstring "select"             ':select-surround <ret>' 
-  map global surround D -docstring "delete tag"         ':delete-surrounding-tag <ret>' 
-  map global surround I -docstring "surround with tag"  ':surround-with-tag <ret>' 
-  map global surround R -docstring "replace tag"        ':change-surrounding-tag <ret>' 
-  map global surround S -docstring "select tag"         ':select-surrounding-tag <ret>' 
-
 plug 'delapouite/kakoune-mirror' %{
   map global normal <a-I> ':enter-user-mode -lock mirror <ret>'
 }
@@ -299,6 +276,29 @@ plug "caksoylar/kakoune-focus" config %{
   map global user n -docstring "narrow"  ':focus-toggle <ret>'
 }
 
+# Edit/extend/trim selections one by one
+plug "occivink/kakoune-phantom-selection" %{
+  declare-user-mode phantom
+  map global user p -docstring "phantom"      ':enter-user-mode phantom <ret>'
+  map global phantom a -docstring "Add"       ':phantom-selection-add-selection <ret>'
+  map global phantom c -docstring "Clear"     ':phantom-selection-select-all; phantom-selection-clear <ret>'
+  map global phantom n -docstring "Next"      ':phantom-selection-iterate-next <ret>'
+  map global phantom p -docstring "Previous"  ':phantom-selection-iterate-prev <ret>'
+}
+
+# Select/edit surrounding chars and tags
+plug "h-youhei/kakoune-surround"
+  declare-user-mode surround
+  map global normal <'> ":enter-user-mode surround <ret>" 
+  map global surround d -docstring "delete"             ':delete-surround <ret>' 
+  map global surround i -docstring "insert"             ':surround <ret>' 
+  map global surround r -docstring "replace"            ':change-surround <ret>' 
+  map global surround s -docstring "select"             ':select-surround <ret>' 
+  map global surround D -docstring "delete tag"         ':delete-surrounding-tag <ret>' 
+  map global surround I -docstring "surround with tag"  ':surround-with-tag <ret>' 
+  map global surround R -docstring "replace tag"        ':change-surrounding-tag <ret>' 
+  map global surround S -docstring "select tag"         ':select-surrounding-tag <ret>' 
+
 plug 'https://gitlab.com/kstr0k/mru-files.kak.git' %{
   require-module kakhist
   kakhist-init
@@ -319,7 +319,7 @@ declare-user-mode spell
 # Tree-sitter syntax parsing and functionality
 plug "ul/kak-tree" %{
   declare-user-mode tree
-  map global user t -docstring "tree sitter"  ':enter-user-mode tree <ret>'
+  map global user t -docstring "tree"  ':enter-user-mode tree <ret>'
   map global tree t -docstring "syntax tree"  ':tree-node-sexp <ret>'
   map global tree c -docstring "children"     ':tree-select-children <ret>'
   map global tree h -docstring "parent"       ':tree-select-parent-node <ret>'
