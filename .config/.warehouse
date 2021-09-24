@@ -4,6 +4,7 @@ acpi
 alacritty
 alsa-utils
 arch-wiki-docs
+archiver
 aspell-en
 base
 bison
@@ -37,6 +38,8 @@ gitui
 go
 gping
 gron
+handbrake-cli
+highlight
 inkscape
 intel-ucode
 jellyfin-mpv-shim
@@ -52,6 +55,7 @@ make
 materia-gtk-theme
 mons
 mullvad-vpn
+neofetch
 nerd-fonts-source-code-pro
 net-tools
 network-manager-applet
@@ -74,22 +78,24 @@ signal-desktop
 slack-desktop
 snap-pac-grub
 spectrwm
+spotifyd
 starship
 streamlink
 thefuck
 tidy
 tiny-irc-client
 tlp
+torbrowser-launcher
 ttf-times-new-roman
 udiskie
 ufw
+waifu2x-ncnn-vulkan
 wget
 wireguard-tools
 wtfutil
 wttr
 xcape
 xclip
-xh
 yarn
 zoom
 
@@ -100,10 +106,12 @@ zoom
 bandwhich 
 bottom 
 cargo-update 
+ddh 
 du-dust 
 exa 
 fcp 
 fd-find 
+gpg-tui 
 hors 
 hyperfine 
 joshuto 
@@ -116,13 +124,15 @@ mdcat
 navi 
 onefetch 
 pastel 
+pipe-rename 
 rm-improved 
 rsmixer 
+runiq 
 sccache 
 sd 
 seclip 
-skim 
 sniffglue 
+spotify-tui 
 tealdeer 
 tickrs 
 tiny 
@@ -130,6 +140,7 @@ tokei
 topgrade 
 viu 
 watchexec-cli 
+xh 
 zoxide 
 
 
