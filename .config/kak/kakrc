@@ -199,9 +199,8 @@ map global normal <c-l> -docstring "Lazygit"  ':connect terminal lazygit <ret>'
 ################# MODES ##################
 
 hook global WinSetOption filetype=(man) %{
-  set-option buffer readonly
-  map buffer normal u <c-u>
   map buffer normal d <c-d>
+  map buffer normal u <c-u>
 }
 
 # Plugin manager
