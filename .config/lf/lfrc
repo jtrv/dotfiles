@@ -81,9 +81,9 @@ cmd rename-blank ${{
 cmd open-with %"$@" $fx
 cmd renamer $IFS="`printf '\n\t'`"; renamer $fx
 cmd rip $IFS="`printf '\n\t'`"; rip $fx
-cmd yank-basename $basename -a -- $fx | head -c-1 | xclip
-cmd yank-dirname $dirname -- "$f" | head -c-1 | xclip
-cmd yank-path $printf '%s' "$fx" | xclip
+cmd yank-basename $basename -a -- $fx | head -c-1 | xclip -selection clipboard
+cmd yank-dirname $dirname -- "$f" | head -c-1 | xclip -selection clipboard
+cmd yank-path $printf '%s' "$fx" | xclip -selection clipboard
 
 
 
