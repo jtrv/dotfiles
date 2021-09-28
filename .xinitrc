@@ -37,7 +37,7 @@ feh --randomize --bg-scale --no-fehbg ~/pictures/wallpapers/ &
 picom -f &                          # allow for opacities
 ntpd start &                        # time-sync
 dunst &                             # notifications
-redshift -l 34:-119 &               # bluelight filter
+redshift -l 34:-119 -b 1.0:0.6 &    # bluelight filter
 ~/bin/low-battery.sh &              # low-battery notifications
 setxkbmap us -option ctrl:nocaps &&	# *holding* capslock = ctrl
 xcape -e 'Control_L=Escape' &       # *tapping* capslock = escape
