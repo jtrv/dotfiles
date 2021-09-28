@@ -5,7 +5,7 @@
 source "~/.config/kak/plugins/plug.kak/rc/plug.kak"
 plug "andreyorst/plug.kak" noload
 
-# kakoune.cr (coderunner)
+# plugin for connecting external programs
 plug "alexherbo2/kakoune.cr" 
 evaluate-commands %sh{
   kcr init kakoune
@@ -14,10 +14,7 @@ evaluate-commands %sh{
 
 ################### DISPLAY  ################### 
 
-# Kill clippy, he takes precious real-estate
 set-option global ui_options terminal_assistant=none
-
-# Min visible surrounding rows / columns 
 set-option global scrolloff 1,3
 
 plug "caksoylar/kakoune-mysticaltutor" theme %{ colorscheme mysticaltutor-trans }
@@ -58,6 +55,7 @@ plug "kak-lsp/kak-lsp" do %{
   hook global KakEnd .* lsp-exit
 }
 
+
 ############### FORMAT/LINT ############### 
 
 source "~/.config/kak/languages/javascript"
@@ -90,10 +88,8 @@ declare-user-mode dev
   map global dev k  -docstring "previous lint"  ':lint-previous-message <ret>'
 
 # Emmet completions using npm emmet-cli
-define-command emmet %{
-  execute-keys "giGl| emmet <ret>" 
-}
 hook global WinSetOption filetype=(javascript|html) %{
+  define-command emmet %{ execute-keys "giGl| emmet <ret>" }
   map global dev e -docstring "emmet" ':emmet <ret>'
 }
 
@@ -121,7 +117,6 @@ plug "eburghar/kakpipe" do %{
 }
 
 plug 'https://gitlab.com/Screwtapello/kakoune-repl-buffer'
-
 plug "occivink/kakoune-sudo-write"
 
 # Use ripgrep instead of grep
@@ -144,9 +139,8 @@ map global normal <esc> <space> -docstring "deselect all but current selection"
 
 #########AUGMENTATION
 
-map global normal D     -docstring "vim D"  'Gld'
-map global normal Y     -docstring "yank to end"  'Gly'
-map global normal <c-q> -docstring "close buffer/client"  ':bd:q'
+map global normal D -docstring "vim D"        'Gld'
+map global normal Y -docstring "yank to end"  'Gly'
 
 # Select/add next match
 map global normal v           -docstring "select next match"      '*n'
@@ -162,10 +156,7 @@ map global normal ?     -docstring "(extend) search"             '?(?i)'
 map global normal <a-?> -docstring "(extend) search backwards"   '<a-?>(?i)'
 
 # paste in insert mode
-define-command -hidden insert-paste %{
-    execute-keys "<esc>;Pi"
-}
-map global insert <c-v> -docstring "insert mode paste" '<esc>:insert-paste <ret>'
+map global insert <c-v> -docstring "insert mode paste" '<esc>Pi'
 
 # (un)Comment Lines
 define-command comment %{
@@ -340,15 +331,4 @@ plug "kkga/ui.kak" %{
 
 # write to file
 map global user w -docstring "write"  ':w <ret>'
-
 map global user / -docstring "search"  ':grep '
-
-#FIXME: broken with kcr, waiting for fix
-# Clipboard history
-# plug "alexherbo2/yank-ring.kak" %{
-#   require-module yank-ring
-#   require-module yank-ring-connect
-#   yank-ring-enable
-#   map global user y -docstring "yank ring" ':yank-ring<ret>' 
-# }
-
