@@ -99,11 +99,13 @@ map gs cd ~/pictures/screenshots/
 map gm cd ~/pictures/memes/
 map gn cd ~/notes/
 map gt cd ~/tmp/
+map gw cd ~/pictures/wallpapers/
 
 # kakoune-like bindings
-map A rename                 # at the very end
-map i push A<c-a>            # at the very beginning
-map a push A<a-b><a-b><a-f>  # before extention
+map A rename                      # at the very end
+map a push A<a-b><a-b><a-f>       # before extention
+map i push A<c-a>                 # at the very beginning
+map I push A<a-b><a-b><a-f><c-u>  # empty w/extention
 map gj    bottom
 map gk    top
 map J     :toggle; down
