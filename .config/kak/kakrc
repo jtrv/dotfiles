@@ -11,7 +11,6 @@ evaluate-commands %sh{
   kcr init kakoune
 }
 
-
 ################### DISPLAY  ################### 
 
 set-option global ui_options terminal_assistant=none
@@ -96,6 +95,7 @@ hook global WinSetOption filetype=(javascript|html) %{
 
 ###################### UTILITY ###################### 
 
+
 # Alacritty integration
 plug "alexherbo2/alacritty.kak" %{
   alias global terminal alacritty-terminal
@@ -142,12 +142,18 @@ map global normal <esc> <space> -docstring "deselect all but current selection"
 map global normal D -docstring "vim D"        'Gld'
 map global normal Y -docstring "yank to end"  'Gly'
 
+map global normal J -docstring "select next line"      'J<a-x>'
+map global normal K -docstring "select previous line"  'K<a-x>'
+
+map global normal X     -docstring "select all matches"   '*%s<ret>)'
+map global normal <a-x> -docstring "select outer indent"  '<a-i>iJ<a-;>K<a-;>'
+map global normal <a-X> -docstring "select buffer"        <percent>  
+
 # Select/add next match
 map global normal v           -docstring "select next match"      '*n'
 map global normal <a-v>       -docstring "deselect current sel"   '*<a-n>'
 map global normal V           -docstring "add next match"         '*N'
 map global normal <a-V>       -docstring "add previous match"     '*<a-N>'
-map global normal <a-percent> -docstring "select all matches"     '*%s<ret>)'
 
 # case insensitive search
 map global normal /     -docstring "search"                      '/(?i)'
@@ -230,6 +236,7 @@ plug "occivink/kakoune-find" %{
 
 declare-user-mode grep
   map global user g -docstring "grep"        ':enter-user-mode grep <ret>'
+  map global grep g -docstring "grep"        ':grep '
   map global grep j -docstring "next match"  ':grep-next-match <ret>'
   map global grep k -docstring "prev match"  ':grep-previous-match <ret>'
 
