@@ -57,6 +57,9 @@ plug "kak-lsp/kak-lsp" do %{
 
 ############### FORMAT/LINT ############### 
 
+# Empty scratch buffer
+hook global WinCreate '\*scratch\*' %{ execute-keys '%<a-d>' }
+
 source "~/.config/kak/languages/javascript"
 source "~/.config/kak/languages/html"
 source "~/.config/kak/languages/css"
