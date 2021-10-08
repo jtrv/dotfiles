@@ -124,7 +124,7 @@ plug "occivink/kakoune-sudo-write"
 plug "JacobTravers/kakoune-grep-write"
 
 # Use ripgrep instead of grep
-set global grepcmd 'rg -n'
+set global grepcmd 'rg --column'
 
 ###################### NORMAL MODE ###################### 
 
