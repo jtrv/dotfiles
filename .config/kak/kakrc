@@ -119,8 +119,9 @@ plug "eburghar/kakpipe" do %{
 	cargo install --force --path . --root ~/.local
 }
 
-plug 'https://gitlab.com/Screwtapello/kakoune-repl-buffer'
+plug "https://gitlab.com/Screwtapello/kakoune-repl-buffer"
 plug "occivink/kakoune-sudo-write"
+plug "JacobTravers/kakoune-grep-write"
 
 # Use ripgrep instead of grep
 set global grepcmd 'rg -n'
