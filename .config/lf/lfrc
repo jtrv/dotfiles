@@ -105,7 +105,7 @@ map gw cd ~/pictures/wallpapers/
 map A rename                      # at the very end
 map a push A<a-b><a-b><a-f>       # before extention
 map i push A<c-a>                 # at the very beginning
-map I push A<a-b><a-b><a-f><c-u>  # empty w/extention
+map r push A<a-b><a-b><a-f><c-u>  # empty w/extention
 map gj    bottom
 map gk    top
 map J     :toggle; down
@@ -127,7 +127,6 @@ map f     :jump                   # jump to file with fzf choice
 map F     push :autojump<space>'  # jump to dir with zoxide guess
 map m     push %mkdir<space>      # create new dir
 map M     mkdirfromsels           # create new dir with selections
-map r     rename-blank            # rename files using prompt
 map R     renamer                 # rename files using $EDITOR (pipe-rename)
 map P     :link                   # press 'y->P' soft-link; press 'd->P' hard-link
 map t     push $touch<space>      # new file
