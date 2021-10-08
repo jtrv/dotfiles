@@ -234,10 +234,6 @@ demand fast-context %{
 
 map global user d -docstring "dev"  ':enter-user-mode dev <ret>'
 
-plug "occivink/kakoune-find" %{
-  map global user f -docstring "find"  ':find'
-}
-
 declare-user-mode grep
   map global user g -docstring "grep"        ':enter-user-mode grep <ret>'
   map global grep g -docstring "grep"        ':grep '
@@ -249,10 +245,6 @@ map global user k -docstring "kakboard"  ':kakboard-toggle <ret>'
 map global user l -docstring "LSP" %{:enter-user-mode lsp <ret>}
   map global lsp <minus> -docstring "disable"  ':lsp-disable-window <ret>'
   map global lsp <plus>  -docstring "enable"   ':lsp-enable-window <ret>'
-
-plug 'delapouite/kakoune-mirror' %{
-  map global normal <a-I> ':enter-user-mode -lock mirror <ret>'
-}
 
 map global user l -docstring "LSP" %{:enter-user-mode lsp <ret>}
 
