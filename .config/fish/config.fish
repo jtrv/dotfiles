@@ -8,16 +8,16 @@ set -gx VISUAL "kak"
 
 set -gx GOPATH         "/home/sugimoto/build/go"
 set -gx CARGO_HOME     "/home/sugimoto/build/cargo"
+set -gx VOLTA_HOME     "/home/sugimoto/.volta"
+set -gx PATH           "/home/sugimoto/.volta/bin" $PATH
+set -gx RUSTC_WRAPPER  "/home/sugimoto/build/cargo/bin/sccache"
 
 set -gx NPM_CONFIG_USERCONFIG  "/home/sugimoto/.config/npm/npmrc"
 set     NAVI_CONFIG_YAML       "/home/sugimoto/.config/navi/config.yaml"
 
-set -gx VOLTA_HOME  "/home/sugimoto/.volta"
-set -gx PATH        "/home/sugimoto/.volta/bin" $PATH
-set -gx RUSTC_WRAPPER  "/home/sugimoto/build/cargo/bin/sccache"
-
 set -gx FZF_DEFAULT_OPTS          "--ansi --multi --tabstop=2 --color=dark --preview='bat --color=always {}'" 
 set -gx CALIBRE_USE_DARK_PALETTE  "yes"
+set -gx HORS_ENGINE               "google"
 
 
 
@@ -86,36 +86,14 @@ function copy
     end
 end
 
-# Function for printing a column (splits input on whitespace)
-#   ex: echo 1 2 3 | coln 3
-#   output: 3
-function coln
-  while read -l input
-  echo $input | awk '{print $'$argv[1]'}'
-  end
+function how
+  kak -e "kakpipe -n how -- hors -a -n 2 -p never $argv"
 end
 
-# Function for printing a row
-#   ex: seq 3 | rown 3
-#   output: 3
-function rown --argument index
-  sed -n "$index p"
+# pretty print markdown files in kakoune
+function md
+  kak -e "kakpipe -n mdcat -- mdcat $argv"
 end
-
-# Function for ignoring the first 'n' lines
-#   ex: seq 10 | skip 5
-#   results: prints everything but the first 5 lines
-function skip --argument n
-  tail +(math 1 + $n)
-end
-
-# Function for taking the first 'n' lines
-#   ex: seq 10 | take 5
-#   results: prints only the first 5 lines
-function take --argument number
-  head -$number
-end
-
 
 
 ### ABBREVIATIONS ###
@@ -140,14 +118,14 @@ alias cat 'bat'
 alias j   'lf'
 alias lg  'lazygit'
 
-# (mons is POSIX, bass runs it in bash)
-alias mons 'bass mons'
-
 # git for ~/dotfiles
 alias config '/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
 
 # lazygit for ~/dotfiles
 alias lc 'lazygit --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
+
+# (mons is POSIX, bass runs it in bash)
+alias mons 'bass mons'
 
 # Changing "ls" to "exa"
 alias ls 'exa -l --color=always --group-directories-first --git --icons' # my preferred listing
@@ -156,25 +134,14 @@ alias lh 'exa -al --color=always --group-directories-first --git --icons --ignor
 alias ll 'exa -l --color=always --group-directories-first --git --icons'  # long format
 alias lt 'exa -aT --color=always --group-directories-first --git --icons' # tree listing
 
-# Colorize grep output (good for log files)
-alias grep  'grep --color=auto'
-alias egrep 'egrep --color=auto'
-alias fgrep 'fgrep --color=auto'
-
 # get fastest mirrors
 alias mirror  "doas reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist"
 alias mirrord "doas reflector --latest 50 --number 20 --sort delay --save /etc/pacman.d/mirrorlist"
 alias mirrors "doas reflector --latest 50 --number 20 --sort score --save /etc/pacman.d/mirrorlist"
 alias mirrora "doas reflector --latest 50 --number 20 --sort age --save /etc/pacman.d/mirrorlist"
 
-## get top process eating memory
-alias psmem   'ps auxf | sort -nr -k 4'
-alias psmem10 'ps auxf | sort -nr -k 4 | head -10'
-
-## get top process eating cpu ##
-alias pscpu   'ps auxf | sort -nr -k 3'
-alias pscpu10 'ps auxf | sort -nr -k 3 | head -10'
-
+## change bg ##
+alias newbg 'feh --randomize --bg-scale --no-fehbg ~/pictures/wallpapers/' 
 
 
 ### KAKOUNE ###
