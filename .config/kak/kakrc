@@ -11,6 +11,11 @@ evaluate-commands %sh{
   kcr init kakoune
 }
 
+# extend kak with lua scripts
+plug "gustavo-hms/luar" %{
+  require-module luar
+}
+
 ################### DISPLAY  ################### 
 
 set-option global ui_options terminal_assistant=none
@@ -118,10 +123,11 @@ plug "lePerdu/kakboard" %{
 plug "eburghar/kakpipe" do %{
 	cargo install --force --path . --root ~/.local
 }
+require-module kakpipe
 
+plug "JacobTravers/kakoune-grep-write"
 plug "https://gitlab.com/Screwtapello/kakoune-repl-buffer"
 plug "occivink/kakoune-sudo-write"
-plug "JacobTravers/kakoune-grep-write"
 
 # Use ripgrep instead of grep
 set global grepcmd 'rg --column'
@@ -189,11 +195,7 @@ map global normal <c-t> -docstring "New client"    ':new <ret>'
 map global normal <c-n> -docstring "New terminal"  ':connect terminal <ret>'
 map global normal +     -docstring "New popup"     ':connect popup <ret>'
 
-map global normal B     -docstring "Open buffers"           ':connect popup kcr fzf buffers <ret>'
-map global normal <c-g> -docstring "Open files"             ':connect popup kcr fzf files <ret>'
-map global normal <c-s> -docstring "Find files by content"  ':connect popup kcr fzf grep <ret>'
-
-map global normal <c-k> -docstring "Joshuto"  ':connect popup lf <ret>'
+map global normal <c-h> -docstring "Lf"  ':connect terminal lf <ret>'
 map global normal <c-l> -docstring "Lazygit"  ':connect terminal lazygit <ret>'
 
 
@@ -233,6 +235,24 @@ demand fast-context %{
 }
 
 map global user d -docstring "dev"  ':enter-user-mode dev <ret>'
+
+# kakoune fuzzy finder with fzy algorithm
+plug "gustavo-hms/peneira" %{
+  require-module peneira
+  define-command peneira-buffers %{
+    peneira 'buffers: ' %( printf '%s\n' $kak_quoted_buflist ) %{
+      buffer %arg{1}
+    }
+  }
+  declare-user-mode find
+  map global user f -docstring "find"              ':enter-user-mode find <ret>'
+  map global find s -docstring "symbol"            ':peneira-symbols <ret>'
+  map global find h -docstring "here"              ':peneira-lines <ret>'
+  map global find f -docstring "file"              ':peneira-files <ret>'
+  map global find l -docstring "local"             ':peneira-local-files <ret>'
+  map global find B -docstring "buffer"            ':peneira-buffers <ret>'
+  map global normal <c-k> -docstring "Open files"  ':peneira-files <ret>'
+}
 
 declare-user-mode grep
   map global user g -docstring "grep"         ':enter-user-mode grep <ret>'
@@ -332,6 +352,8 @@ plug "kkga/ui.kak" %{
     ui-git-diff-toggle
     }
 }
+
+plug "alexherbo2/window.kak"
 
 # write to file
 map global user w -docstring "write"  ':w <ret>'
