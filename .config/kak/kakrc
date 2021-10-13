@@ -1,11 +1,11 @@
 # Kakoune with Kakhis
 # Author: Jacob Travers
 
-# Plugin manager
+# plugin manager
 source "~/.config/kak/plugins/plug.kak/rc/plug.kak"
 plug "andreyorst/plug.kak" noload
 
-# plugin for connecting external programs
+# interface for external programs
 plug "alexherbo2/kakoune.cr" 
 evaluate-commands %sh{
   kcr init kakoune
@@ -63,7 +63,7 @@ plug "kak-lsp/kak-lsp" do %{
 ############### FORMAT/LINT ############### 
 
 # Empty scratch buffer
-hook global WinCreate '\*scratch\*' %{ execute-keys '%<a-d>' }
+hook global WinDisplay '\*scratch\*' %{ execute-keys '%<a-d>' }
 
 source "~/.config/kak/languages/javascript"
 source "~/.config/kak/languages/html"
