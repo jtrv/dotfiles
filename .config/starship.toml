@@ -1,6 +1,5 @@
-# Replace the "❯" symbol in the prompt with "➜"
-[character]      # The name of the module we are configuring is "character"
-success_symbol = "[❯](bold green)"     # The "symbol" segment is being set to "➜"
+[character]
+success_symbol = "[❯](bold green)"
 error_symbol = "[](bold red)"
 vicmd_symbol = "[](bold green)"
 use_symbol_for_status = true
@@ -10,11 +9,11 @@ full_symbol = "🔋"
 charging_symbol = "⚡"
 discharging_symbol = "💀"
 
-[[battery.display]]  # "bold red" style when capacity is between 0% and 10%
+[[battery.display]]
 threshold = 10
 style = "bold red"
 
-[[battery.display]]  # "bold yellow" style when capacity is between 10% and 30%
+[[battery.display]]
 threshold = 30
 style = "bold yellow"
 
