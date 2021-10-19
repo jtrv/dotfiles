@@ -1,22 +1,23 @@
 [user]
-	email = travershasemail@gmail.com
-	name = Jacob Travers
-	signingkey = A677F1929C2B08D2
+  email = travershasemail@gmail.com
+  name = JacobTravers
+  signingkey = A677F1929C2B08D2
 [credential]
-	helper = store
+  helper = store
 [init]
-	defaultBranch = main
+  defaultBranch = main
 [core]
   autocrlf = input
-	editor = kak
-	pager = delta
+  editor = kak
+  pager = delta
 [diff]
-	color-moved = dimmed_zebra
+  color-moved = dimmed_zebra
 [interactive]
   diffFilter = delta --color-only
 [delta]
   features = unobtrusive-line-numbers decorations
   syntax-theme = Dracula
+  ; side-by-side = true
 [delta "decorations"]
   commit-decoration-style = brightblue box
   file-decoration-style = brightmagenta box ul
@@ -31,6 +32,6 @@
   line-numbers-left-style = brightblue
   line-numbers-right-style = brightblue
 [commit]
-	gpgsign = true
-	template = ~/.config/git/message
+  gpgsign = true
+  template = ~/.config/git/message
   verbose = true
