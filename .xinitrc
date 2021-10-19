@@ -41,6 +41,7 @@ redshift -l 34:-119 -b 1.0:0.6 &    # bluelight filter
 ~/bin/low-battery.sh &              # low-battery notifications
 setxkbmap us -option ctrl:nocaps &&	# *holding* capslock = ctrl
 xcape -e 'Control_L=Escape' &       # *tapping* capslock = escape
+udiskie -An --terminal=lf &         # notify mountable drives
 rclone mount mxsdrive: ~/mxs/drive --daemon --fast-list &
 rclone mount mxsftp: ~/mxs/ftp --daemon &
 exec spectrwm
