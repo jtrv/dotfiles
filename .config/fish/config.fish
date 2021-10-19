@@ -3,8 +3,8 @@ fish_vi_key_bindings
 ### EXPORT ###
 set -gx fish_greeting
 
-set -gx EDITOR "kak"
-set -gx VISUAL "kak"
+set -gx EDITOR "/usr/bin/kak"
+set -gx VISUAL "/usr/bin/kak"
 
 set -gx GOPATH         "/home/sugimoto/build/go"
 set -gx CARGO_HOME     "/home/sugimoto/build/cargo"
@@ -15,7 +15,7 @@ set -gx RUSTC_WRAPPER  "/home/sugimoto/build/cargo/bin/sccache"
 set -gx NPM_CONFIG_USERCONFIG  "/home/sugimoto/.config/npm/npmrc"
 set     NAVI_CONFIG_YAML       "/home/sugimoto/.config/navi/config.yaml"
 
-set -gx FZF_DEFAULT_OPTS          "--ansi --multi --tabstop=2 --color=dark --preview='bat --color=always {}'" 
+set -gx FZF_DEFAULT_OPTS          "--ansi --multi --tabstop=2 --color=dark --preview='bat --color=always {}'"
 set -gx CALIBRE_USE_DARK_PALETTE  "yes"
 set -gx HORS_ENGINE               "google"
 
@@ -115,6 +115,7 @@ alias d    'doas --'
 alias bc  'kalk'
 alias btm 'btm --battery'
 alias cat 'bat'
+alias hn  'hackernews_tui'
 alias j   'lf'
 alias lg  'lazygit'
 
@@ -135,12 +136,9 @@ alias ll 'exa -l --color=always --group-directories-first --git --icons'  # long
 alias lt 'exa -aT --color=always --group-directories-first --git --icons' # tree listing
 
 # get fastest mirrors
-alias mirror  "doas reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist"
-alias mirrord "doas reflector --latest 50 --number 20 --sort delay --save /etc/pacman.d/mirrorlist"
-alias mirrors "doas reflector --latest 50 --number 20 --sort score --save /etc/pacman.d/mirrorlist"
-alias mirrora "doas reflector --latest 50 --number 20 --sort age --save /etc/pacman.d/mirrorlist"
+alias mirror  "doas reflector --save /etc/pacman.d/mirrorlist --protocol https --country US --latest 200 --sort age"
 
-## change bg ##
+# change bg 
 alias newbg 'feh --randomize --bg-scale --no-fehbg ~/pictures/wallpapers/' 
 
 
