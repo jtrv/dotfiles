@@ -84,7 +84,7 @@ highlight_text = "#ff00ff"
 link_text = "#ffffff"
 link_id_bg = "#ff00ff"
 search_highlight_bg = "#ff00ff"
-status_bar_bg = "#ff00ff"
+status_bar_bg = "#000000"
 code_block_bg = "#1b1b1b"
 
 # ---------------------------------
