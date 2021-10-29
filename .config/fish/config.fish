@@ -114,7 +114,6 @@ alias d    'doas --'
 alias bc  'kalk'
 alias btm 'btm --battery'
 alias cat 'bat'
-alias hn  'hackernews_tui'
 alias j   'lf'
 alias lg  'lazygit'
 
