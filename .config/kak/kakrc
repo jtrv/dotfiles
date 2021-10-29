@@ -137,6 +137,10 @@ plug "JacobTravers/kakoune-sudo-write" %{
 # Use ripgrep instead of grep
 set global grepcmd 'rg --column'
 
+hook global WinDisplay '\*greeting\*' %{
+  hide-whitespaces
+}
+
 ###################### NORMAL MODE ###################### 
 
 
@@ -161,8 +165,8 @@ map global normal J -docstring "select next line"       'J<a-x>'
 map global normal K -docstring "select previous line"   'K<a-x>'
 
 map global normal x     -docstring "select inner"          '<a-i>'
-map global normal X     -docstring "select all matches"    '*%s<ret>)'
-map global normal <a-x> -docstring "select outer indent"   '<a-i>iJ<a-;>K<a-;>'
+map global normal X     -docstring "select outer"          '<a-a>'
+map global normal <a-x> -docstring "select all matches"    '*%s<ret>)'
 map global normal <a-X> -docstring "select buffer"         <percent>
 
 # Select/add next match
