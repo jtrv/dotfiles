@@ -2,6 +2,7 @@ fish_vi_key_bindings
 
 ### EXPORT ###
 set -gx fish_greeting
+set -gx GREETING "/home/sugimoto/.config/greeting"
 
 set -gx EDITOR "/usr/bin/kak"
 set -gx VISUAL "/usr/bin/kak"
@@ -18,8 +19,6 @@ set     NAVI_CONFIG_YAML       "/home/sugimoto/.config/navi/config.yaml"
 set -gx FZF_DEFAULT_OPTS          "--ansi --multi --tabstop=2 --color=dark --preview='bat --color=always {}'"
 set -gx CALIBRE_USE_DARK_PALETTE  "yes"
 set -gx HORS_ENGINE               "google"
-
-
 
 ### SOURCE ###
 
