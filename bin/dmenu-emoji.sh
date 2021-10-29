@@ -16,7 +16,7 @@ case "$1" in
     fi
     ;;
   "")
-    bash $0 list | dmenu -p 'Emoji: ' | bash $0 copy
+    bash $0 list | dmenu -fn 'SauceCodePro Nerd Font Mono:pixelsize=18:antialias=true' -nb 'black' -nf 'green' -sb 'magenta' -sf 'black' -p 'Emoji: ' | bash $0 copy
     ;;
 esac
 
