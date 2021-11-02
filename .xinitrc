@@ -5,6 +5,9 @@ usermodmap=$HOME/.config/.Xmodmap
 sysresources=/etc/X11/xinit/.Xresources
 sysmodmap=/etc/X11/xinit/.Xmodmap
 
+# prepare greeting
+~/bin/set-greeting.sh &
+
 # merge in defaults and keymaps
 
 if [ -f $sysresources ]; then
@@ -39,9 +42,10 @@ ntpd start &                        # time-sync
 dunst &                             # notifications
 redshift -l 34:-119 -b 1.0:0.6 &    # bluelight filter
 ~/bin/low-battery.sh &              # low-battery notifications
-setxkbmap us -option ctrl:nocaps &&	# *holding* capslock = ctrl
-xcape -e 'Control_L=Escape' &       # *tapping* capslock = escape
 udiskie -An --terminal=lf &         # notify mountable drives
-rclone mount mxsdrive: ~/mxs/drive --daemon --fast-list &
 rclone mount mxsftp: ~/mxs/ftp --daemon &
+rclone mount mxsdrive: ~/mxs/drive --daemon --fast-list &
+setxkbmap us -option ctrl:nocaps && # *holding* capslock = ctrl
+xcape -e 'Control_L=Escape' &       # *tapping* capslock = escape
+
 exec spectrwm
