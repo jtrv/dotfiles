@@ -3,9 +3,18 @@
 " Allow Ctrl-c to copy in the commandline
 unbind --mode=ex <C-c>
 "
+" space to enter cmd
+bind <space><space> fillcmdline_notrail
+"
 " g keys to match kakoune
 bind gj scrollto 100
 bind gk scrollto 0
+bind gl scrollto 100 x
+bind gh scrollto 0 x
+"
+" space to enter cmd
+bind ? fillcmdline find
+bind n findnext
 "
 bind <A-e> editor
 "
