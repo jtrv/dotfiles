@@ -32,6 +32,5 @@
   line-numbers-left-style = brightblue
   line-numbers-right-style = brightblue
 [commit]
-  gpgsign = true
   template = ~/.config/git/message
   verbose = true
