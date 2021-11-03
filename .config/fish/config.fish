@@ -117,11 +117,11 @@ alias cat 'bat'
 alias j   'lf'
 alias lg  'lazygit'
 
-# git for ~/dotfiles
-alias config '/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
+# git for ~/.cfg
+alias config '/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
-# lazygit for ~/dotfiles
-alias lc 'lazygit --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
+# lazygit for ~/.cfg
+alias lc 'lazygit --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
 # (mons is POSIX, bass runs it in bash)
 alias mons 'bass mons'
