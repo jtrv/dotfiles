@@ -19,10 +19,10 @@ cpu() {
 ram() {
   used="$(free | grep Mem: | awk '{print $3}')"
   total="$(free | grep Mem: | awk '{print $2}')"
-  
+
   percent=$(( 200 * $used/$total - 100 * $used/$total ))
   ram=$(printf %3d $percent)
-  
+
   echo -e "$ram%"
 }
 ##############################
