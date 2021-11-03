@@ -1,0 +1,57 @@
+/* Hide the tab bar at the top */
+#main-window[tabsintitlebar="true"]:not([extradragspace="true"]) #TabsToolbar > .toolbar-items {
+  opacity: 0;
+  pointer-events: none;
+}
+#main-window:not([tabsintitlebar="true"]) #TabsToolbar {
+    visibility: collapse !important;
+}
+#nav-bar:not([customizing="true"]):not([inFullscreen]) {
+	min-height: 1px !important;
+	max-height: 0px !important;
+	margin-top: 1px !important;
+	margin-bottom: -1px !important;
+	transition: all 50ms linear 0s !important;
+	z-index: -5 !important;
+}
+#navigator-toolbox:hover:not([inFullscreen]) :-moz-any(#nav-bar),
+#navigator-toolbox:focus-within :-moz-any(#nav-bar) {
+	min-height: 32px !important;
+	max-height: 32px !important;
+	margin-top: 1px !important;
+	margin-bottom: -32px !important;
+	transition: all 50ms linear 0s !important;
+	z-index: 5 !important;
+}
+#urlbar {
+	--urlbar-toolbar-height: 32px !important;
+}
+
+/* Hide sidebar on fullscreen */
+#main-window[inFullscreen] #sidebar-box,
+#main-window[inFullscreen] #sidebar-splitter {
+  display: none !important;
+  width: 0px !important;
+}
+
+/* Collapse sidebar + transition */
+#sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"] {
+  overflow: hidden;
+  min-width: 10px;
+  max-width: 10px;
+  border-right: 1px solid #0c0c0d;
+  z-index: 2;
+  opacity: 0;
+}
+#sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"]:hover,
+#sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"] #sidebar {
+  min-width: 240px !important;
+  max-width: 240px !important;
+  z-index: 1;
+  opacity: 1;
+}
+
+/*** Hide Tab Close buttons ***/
+.tabbrowser-tab .tab-close-button {
+  visibility: collapse !important;
+}
