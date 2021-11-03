@@ -51,7 +51,7 @@
   opacity: 1;
 }
 
-/* hide the tab close icon */
-tab-item tab-item-substance tab-closebox {
-  display: none !important;
+/*** Hide Tab Close buttons ***/
+.tabbrowser-tab .tab-close-button {
+  visibility: collapse !important;
 }
