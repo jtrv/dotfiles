@@ -2,7 +2,6 @@
 success_symbol = "[❯](bold green)"
 error_symbol = "[](bold red)"
 vicmd_symbol = "[](bold green)"
-use_symbol_for_status = true
 
 [battery]
 full_symbol = "🔋"
@@ -39,8 +38,7 @@ stashed = "📦"
 modified = "📝"
 staged.value = "++"
 staged.style = "green"
-staged_count.enabled = true
-staged_count.style = "green"
+staged.enabled = true
 renamed = "👅"
 deleted = "🗑"
 
