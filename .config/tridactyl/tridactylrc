@@ -6,6 +6,9 @@ unbind --mode=ex <C-c>
 " space to enter cmd
 bind <space><space> fillcmdline_notrail
 "
+" ! to open a new tab with a duckduckgo !bang
+bind ! fillcmdline_notrail tabopen !
+"
 " g keys to match kakoune
 bind gj scrollto 100
 bind gk scrollto 0
