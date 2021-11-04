@@ -7,11 +7,11 @@ set -gx GREETING "/home/sugimoto/.config/greeting"
 set -gx EDITOR "/usr/bin/kak"
 set -gx VISUAL "/usr/bin/kak"
 
-set -gx GOPATH         "/home/sugimoto/build/go"
-set -gx CARGO_HOME     "/home/sugimoto/build/cargo"
+set -gx GOPATH         "/home/sugimoto/.go"
+set -gx CARGO_HOME     "/home/sugimoto/.cargo"
+set -gx RUSTC_WRAPPER  "/home/sugimoto/.cargo/bin/sccache"
 set -gx VOLTA_HOME     "/home/sugimoto/.volta"
 set -gx PATH           "/home/sugimoto/.volta/bin" $PATH
-set -gx RUSTC_WRAPPER  "/home/sugimoto/build/cargo/bin/sccache"
 
 set -gx NPM_CONFIG_USERCONFIG  "/home/sugimoto/.config/npm/npmrc"
 set     NAVI_CONFIG_YAML       "/home/sugimoto/.config/navi/config.yaml"
