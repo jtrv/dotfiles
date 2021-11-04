@@ -1,16 +1,7 @@
 # Defined via `source`
 function warehouse
-
-    echo -e "--paru\n"                   > ~/.config/.warehouse
-        paru -Qetq | sd "^x[d|f|o].*\n" "" >> ~/.config/.warehouse
-
-    echo -e "\n\n\n--cargo\n"            >> ~/.config/.warehouse
-        cargo install --list |\
-        sd "\sv\d.*\n" "\n" |\
-        sd "^\s.*\n" ""                  >> ~/.config/.warehouse
-
-    echo -e "\n\n\n--fish-plugins\n" 	 >> ~/.config/.warehouse
-    /bin/cat ~/.config/fish/fish_plugins >> ~/.config/.warehouse
-
-    config diff ~/.config/.warehouse
+  paru -Qetq | sd "^x[d|f|o].*\n" "" > ~/.config/warehouse/pacman
+  cargo install --list | sd "\sv\d.*\n" "\n" | sd "^\s.*\n" "" > ~/.config/warehouse/cargo
+  /bin/cat ~/.config/fish/fish_plugins > ~/.config/warehouse/fish
+  config diff ~/.config/warehouse/*
 end
