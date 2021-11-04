@@ -95,9 +95,14 @@ map r
 
 # goto shortcuts
 map gd cd ~/downloads/
-map gs cd ~/pictures/screenshots/
+map gD cd ~/mxs/drive/Manufacturers\ &\ Clients/
+map gF cd ~/mxs/ftp/
 map gm cd ~/pictures/memes/
+map gM cd /run/media/sugimoto/
 map gn cd ~/notes/
+map gP cd ~/mxs/projects/
+map gp cd ~/projects/
+map gs cd ~/pictures/screenshots/
 map gt cd ~/tmp/
 map gw cd ~/pictures/wallpapers/
 
