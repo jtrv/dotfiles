@@ -6,7 +6,7 @@ sysresources=/etc/X11/xinit/.Xresources
 sysmodmap=/etc/X11/xinit/.Xmodmap
 
 # prepare greeting
-~/bin/set-greeting.sh &
+~/scripts/set-greeting.sh &
 
 # merge in defaults and keymaps
 
@@ -41,7 +41,7 @@ picom -f &                          # allow for opacities
 ntpd start &                        # time-sync
 dunst &                             # notifications
 redshift -l 34:-119 -b 1.0:0.6 &    # bluelight filter
-~/bin/low-battery.sh &              # low-battery notifications
+~/scripts/low-battery.sh &              # low-battery notifications
 udiskie -An --terminal=lf &         # notify mountable drives
 rclone mount mxsftp: ~/mxs/ftp --daemon &
 rclone mount mxsdrive: ~/mxs/drive --daemon --fast-list &
