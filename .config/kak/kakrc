@@ -81,10 +81,11 @@ declare-user-mode dev
   map global dev k -docstring "prev lint"   ':lint-previous-message <ret>'
 
 # linting and formating per language
-source "~/.config/kak/languages/javascript"
-source "~/.config/kak/languages/html"
 source "~/.config/kak/languages/css"
+source "~/.config/kak/languages/html"
+source "~/.config/kak/languages/javascript"
 source "~/.config/kak/languages/json"
+source "~/.config/kak/languages/markdown"
 
 # Emmet completions using npm emmet-cli
 hook global WinSetOption filetype=(javascript|html) %{
