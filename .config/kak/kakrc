@@ -63,7 +63,7 @@ plug "alexherbo2/show-whitespaces.kak" %{
 ############### FORMAT/LINT ###############
 
 # Empty scratch buffer
-hook global WinDisplay '\*scratch\*' %{ execute-keys '%<a-d>' }
+hook global WinCreate '\*scratch\*' %{ execute-keys '%<a-d>' }
 
 plug "alexherbo2/indent.kak" %{
   enable-detect-indent
