@@ -28,7 +28,7 @@ plug "evanrelf/number-toggle.kak" config %{
 }
 
 # Rainbow delimiters + current scope
-plug "crizan/kak-rainbower" %{
+plug "JacobTravers/kak-rainbower" %{
   hook global WinCreate .* %{ rainbow-enable-window }
 }
 
