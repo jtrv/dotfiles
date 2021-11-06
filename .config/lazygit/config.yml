@@ -5,6 +5,7 @@ gui:
   sidePanelWidth: 0.3333 # number from 0 to 1
   expandFocusedSidePanel: false
   mainPanelSplitMode: 'flexible' # one of 'horizontal' | 'flexible' | 'vertical'
+  language: 'auto' # one of 'auto' | 'en' | 'zh' | 'pl' | 'nl'
   theme:
     lightTheme: false # For terminals with a light background
     activeBorderColor:
@@ -18,32 +19,51 @@ gui:
       - default
     selectedRangeBgColor:
       - blue
+    cherryPickedCommitBgColor:
+      - blue
+    cherryPickedCommitFgColor:
+      - cyan
   commitLength:
     show: true
   mouseEvents: true
   skipUnstageLineWarning: false
-  skipStashWarning: false
+  skipStashWarning: true
   showFileTree: false # for rendering changes files in a tree format
   showRandomTip: false
+  showListFooter: true # for seeing the '5 of 20' message in list panels
   showCommandLog: true
   commandLogSize: 2
+  authorColors: # in case you're not happy with the randomly assigned colour
+    'John Smith': '#ff0000'
 git:
   paging:
     colorArg: always
     pager: delta --dark --paging=never --24-bit-color=never
+    useConfig: false
   merging:
     # only applicable to unix users
     manualCommit: false
     # extra args passed to `git merge`, e.g. --no-ff
     args: ''
-  pull:
-    mode: 'merge' # one of 'merge' | 'rebase' | 'ff-only'
+  log:
+    # one of date-order, author-date-order, topo-order.
+    # topo-order makes it easier to read the git log graph, but commits may not
+    # appear chronologically. See https://git-scm.com/docs/git-log#_commit_ordering
+    order: 'topo-order'
+    # one of always, never, when-maximised
+    # this determines whether the git graph is rendered in the commits panel
+    showGraph: 'when-maximised'
   skipHookPrefix: WIP
   autoFetch: true
   branchLogCmd: 'git log --graph --color=always --abbrev-commit --decorate --date=relative --pretty=medium {{branchName}} --'
   allBranchesLogCmd: 'git log --graph --all --color=always --abbrev-commit --decorate --date=relative  --pretty=medium'
   overrideGpg: false # prevents lazygit from spawning a separate process when using GPG
   disableForcePushing: false
+  parseEmoji: false
+os:
+  editCommand: '' # see 'Configuring File Editing' section
+  editCommandTemplate: '{{editor}} {{filename}}'
+  openCommand: ''
 refresher:
   refreshInterval: 10 # file/submodule refresh interval in seconds
   fetchInterval: 60 # re-fetch interval in seconds
@@ -71,16 +91,20 @@ keybinding:
     nextPage: '.' # go to previous page in list
     gotoTop: '<' # go to top of list
     gotoBottom: '>' # go to bottom of list
+    scrollLeft: 'H' # scroll left within list view
+    scrollRight: 'L' # scroll right within list view
     prevBlock: '<left>' # goto the previous block / panel
     nextBlock: '<right>' # goto the next block / panel
     prevBlock-alt: 'h' # goto the previous block / panel
     nextBlock-alt: 'l' # goto the next block / panel
+    jumpToBlock: ['1', '2', '3', '4', '5'] # goto the Nth block / panel
     nextMatch: 'n'
     prevMatch: 'N'
     optionMenu: 'x' # show help menu
     optionMenu-alt1: '?' # show help menu
     select: '<space>'
     goInto: '<enter>'
+    openRecentRepos: '<c-r>'
     confirm: '<enter>'
     confirm-alt1: 'y'
     remove: 'd'
@@ -110,7 +134,9 @@ keybinding:
     diffingMenu-alt: '<c-e>' # deprecated
     copyToClipboard: '<c-o>'
     submitEditorText: '<enter>'
-    appendNewline: '<tab>'
+    appendNewline: '<a-enter>'
+    extrasMenu: '@'
+    toggleWhitespaceInDiffView: '<c-w>'
   status:
     checkForUpdate: '<c-z>'
     recentRepos: '<enter>'
@@ -129,6 +155,7 @@ keybinding:
     toggleTreeView: '`'
   branches:
     createPullRequest: 'o'
+    viewPullRequestOptions: 'O'
     checkoutBranchByName: 'c'
     forceCheckoutBranch: 'F'
     rebaseBranch: 'r'
@@ -158,6 +185,7 @@ keybinding:
     checkoutCommit: '<space>'
     resetCherryPick: '<c-R>'
     copyCommitMessageToClipboard: '<c-y>'
+    openLogMenu: '<c-l>'
   stash:
     popStash: 'g'
   commitFiles:
