@@ -38,3 +38,6 @@ command discardall jsb browser.tabs.query({}).then(ts => browser.tabs.discard(ts
 "
 " Defaults to 300ms but I'd rather move fast and break things
 set hintdelay 100
+"
+" theme
+colors midnight
