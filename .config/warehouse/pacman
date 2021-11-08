@@ -1,6 +1,7 @@
 acpi
 alacritty
 alsa-utils
+amd-ucode
 arch-wiki-docs
 archiver
 aspell-en
@@ -76,7 +77,6 @@ redshift
 reflector
 ripgrep-all
 rofi
-rustup
 sad
 signal-desktop
 slack-desktop
