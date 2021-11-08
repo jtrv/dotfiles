@@ -138,5 +138,3 @@ map t     push $touch<space>      # new file
 map x     $$f                     # execute current file (must be executable)
 map X     !$f                     # execute current file (must be executable)
 map Y     :yank-path              # copy path
-
-# map i    $LESSOPEN='| ~/.config/lf/pv.sh %s' less -R $f
