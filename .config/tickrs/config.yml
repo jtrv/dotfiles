@@ -19,12 +19,12 @@ symbols:
 # Chart type to start app with
 # Default is line
 # Possible values: line, candle, kagi
-chart_type: kagi
+chart_type: line
 
 # Use specified time frame when starting program and when new stocks are added
 # Default is 1D
 # Possible values: 1D, 1W, 1M, 3M, 6M, 1Y, 5Y
-time_frame: 1D
+time_frame: 3M
 
 # Interval to update data from API (seconds)
 # Default is 1
@@ -46,7 +46,7 @@ hide_help: true
 show_volumes: true
 
 # Show x-axis labels
-show_x_labels: true
+show_x_labels: false
 
 # Start in summary mode
 #summary: true
