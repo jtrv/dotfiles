@@ -56,7 +56,7 @@ plug "alexherbo2/window.kak"
 
 # show whitespaces and highlight errors
 plug "alexherbo2/show-whitespaces.kak" %{
-  show-whitespaces -spc ᛫
+  show-whitespaces
 }
 
 
