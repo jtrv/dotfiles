@@ -6,8 +6,7 @@ I run [Arch Linux](https://wiki.archlinux.org/title/Arch_Linux) on the
 utilizing incremental snapshots in
 [Snapper](https://www.wikiwand.com/en/Btrfs#/Features) and
 [grub-btrfs](https://github.com/Antynea/grub-btrfs) in case I need to
-revert breaking changes from the grub menu on my machine. (haven't
-needed to yet so :fingers_crossed:)
+revert breaking changes from the grub menu on my machine.
 
 # dotfiles
 
@@ -25,11 +24,11 @@ aliases in
 
 ## warehouse
 
-[warehouse](https://github.com/JacobTravers/dotfiles/blob/main/.config/fish/functions/warehouse.fish)
+[warehouse](https://github.com/JacobTravers/dotfiles/blob/morpheus/.config/fish/functions/warehouse.fish)
 is a fish script I made to keep a record of the installed packages on my
 machine, it concatenates package names from various locations to
-[.warehouse](https://github.com/JacobTravers/dotfiles/blob/main/.warehouse)
-in my home directory. This also serves as a quick resource for anybody
+[warehouse](https://github.com/JacobTravers/dotfiles/blob/morpheus/warehouse)
+in my `.config`. This also serves as a quick resource for anybody
 curious about the packages on my system.
 
 ## kakrc
