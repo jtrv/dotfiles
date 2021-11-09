@@ -1,7 +1,8 @@
 # Defined via `source`
 function warehouse
-  paru -Qetq | sd "^x[d|f|o].*\n" "" > ~/.config/warehouse/pacman
-  cargo install --list | sd "\sv\d.*\n" "\n" | sd "^\s.*\n" "" > ~/.config/warehouse/cargo
+  paru -Qqet > ~/.config/warehouse/pacman
+  cargo install --list | rg -o '^(\w.+)\s' -r '$1' > ~/.config/warehouse/cargo
   /bin/cat ~/.config/fish/fish_plugins > ~/.config/warehouse/fish
+  npm list -g | rg -o '(\w.+)@' -r '$1' > ~/.config/warehouse/npm
   config diff ~/.config/warehouse/*
 end
