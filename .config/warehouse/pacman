@@ -1,5 +1,7 @@
 acpi
-alacritty
+alacritty-ligatures-git
+alsa-card-profiles
+alsa-firmware
 alsa-utils
 amd-ucode
 arch-wiki-docs
@@ -21,6 +23,7 @@ ctags
 curseofwar
 dialog
 discord
+docker
 duf
 dunst
 exa
@@ -40,6 +43,7 @@ highlight
 hors
 inkscape
 intel-ucode
+jq
 kakoune-git
 lazygit
 lf
@@ -56,6 +60,7 @@ mons
 mullvad-vpn-bin
 navi
 neofetch
+nerd-fonts-fira-code
 nerd-fonts-source-code-pro
 nethack
 network-manager-applet
@@ -71,6 +76,7 @@ pkgconf
 powertop
 progress
 pueue
+pulsemixer
 qbittorrent
 rclone
 redshift
@@ -91,6 +97,7 @@ tidy
 tlp
 torbrowser-launcher
 trash-cli
+ttf-ubraille
 udiskie
 ufw
 veracrypt
@@ -100,5 +107,10 @@ wireguard-tools
 wttr
 xcape
 xclip
+xf86-video-amdgpu
+xf86-video-ati
+xorg-server
+xorg-xinit
+xorg-xinput
 yarn
 zoom
