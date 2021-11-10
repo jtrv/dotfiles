@@ -36,7 +36,7 @@ command discardall jsb browser.tabs.query({}).then(ts => browser.tabs.discard(ts
 "
 " MISC SETTINGS
 " replace default newtab behavior
-set newtab duckduckgo.com
+set newtab about:newtab
 "
 " Defaults to 300ms but I'd rather move fast and break things
 set hintdelay 100
