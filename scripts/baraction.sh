@@ -3,13 +3,11 @@
 #    CPU
 ##############################
 cpu() {
-  read cpu a b c previdle rest < /proc/stat
-  prevtotal=$((a+b+c+previdle))
-    sleep 0.5
-  read cpu a b c idle rest < /proc/stat
-  total=$((a+b+c+idle))
-  percent=$((100*( (total-prevtotal) - (idle-previdle) ) / (total-prevtotal) ))
-
+  percent="$(\
+  awk '{u=$2+$4; t=$2+$4+$5; \
+  if (NR==1){u1=u; t1=t;} \
+  else print ($2+$4-u1) * 100 / (t-t1) "%"; }' \
+  <(grep 'cpu ' /proc/stat) <(sleep 1;grep 'cpu ' /proc/stat))"
   cpu=$(printf %3d $percent)
   echo -e "$cpu%"
 }
