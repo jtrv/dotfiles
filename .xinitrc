@@ -41,8 +41,9 @@ picom -f &                          # allow for opacities
 ntpd start &                        # time-sync
 dunst &                             # notifications
 redshift -l 34:-119 -b 1.0:0.6 &    # bluelight filter
-~/scripts/low-battery.sh &              # low-battery notifications
+~/scripts/low-battery.sh &          # low-battery notifications
 udiskie -An --terminal=lf &         # notify mountable drives
+noisetorch -i &                     # enable noise filter for mic
 rclone mount mxsftp: ~/mxs/ftp --daemon &
 rclone mount mxsdrive: ~/mxs/drive --daemon --fast-list &
 setxkbmap us -option ctrl:nocaps && # *holding* capslock = ctrl
