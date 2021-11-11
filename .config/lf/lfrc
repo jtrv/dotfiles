@@ -109,6 +109,7 @@ map gw cd ~/pictures/wallpapers/
 # kakoune-like bindings
 map A rename                      # at the very end
 map a push A<a-b><a-b><a-f>       # before extention
+map b push A.bak<enter>           # at the very beginning
 map i push A<c-a>                 # at the very beginning
 map r push A<a-b><a-b><a-f><c-u>  # empty w/extention
 map gj    bottom
