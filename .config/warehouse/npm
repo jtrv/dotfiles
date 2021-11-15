@@ -3,6 +3,7 @@ eslint
 gatsby
 live-server
 node-gyp
+nodemon
 nopt
 npm
 prettier
