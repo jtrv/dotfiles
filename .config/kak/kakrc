@@ -209,10 +209,11 @@ map global normal +     -docstring "New popup"      ':connect popup <ret>'
 map global normal <c-h> -docstring "lf"        ':connect terminal lf <ret>'
 map global normal <c-l> -docstring "lazygit"   ':connect terminal lazygit <ret>'
 
-map global normal <c-f> -docstring "file picker"           ': connect terminal-popup kcr fzf files<ret>'
-map global normal <c-b> -docstring "buffer picker"         ': connect terminal-popup kcr fzf buffers<ret>'
+map global normal B     -docstring "buffer picker"         ': connect terminal-popup kcr fzf buffers<ret>'
+map global normal <c-k> -docstring "file picker"           ': connect terminal-popup kcr fzf files<ret>'
 map global normal <c-g> -docstring "grep picker"           ': connect terminal-popup kcr fzf grep<ret>'
 map global normal <c-s> -docstring "grep picker (buffer)"  ': connect terminal-popup kcr fzf grep %val{buflist}<ret>'
+
 ################# MODES ##################
 
 hook global WinSetOption filetype=(man) %{
@@ -286,13 +287,12 @@ define-command peneira-grep -params 1 %{
   }
 }
   declare-user-mode find
-  map global user f -docstring "find"               ':enter-user-mode find <ret>'
-  map global find s -docstring "symbol"             ':peneira-symbols <ret>'
-  map global find h -docstring "here"               ':peneira-lines <ret>'
-  map global find f -docstring "file"               ':peneira-file <ret>'
-  map global find l -docstring "local"              ':peneira-local-files <ret>'
-  map global normal B     -docstring "buffer"       ':peneira-buffers <ret>'
-  map global normal <c-k> -docstring "Open files"   ':peneira-file <ret>'
+  map global user f -docstring "find"    ':enter-user-mode find <ret>'
+  map global find b -docstring "buffer"  ':peneira-buffers <ret>'
+  map global find f -docstring "file"    ':peneira-file <ret>'
+  map global find h -docstring "here"    ':peneira-lines <ret>'
+  map global find l -docstring "local"   ':peneira-local-files <ret>'
+  map global find s -docstring "symbol"  ':peneira-symbols <ret>'
 }
 
 declare-user-mode grep
