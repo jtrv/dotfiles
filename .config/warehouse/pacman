@@ -1,6 +1,5 @@
 acpi
 alacritty-ligatures-git
-alsa-card-profiles
 alsa-firmware
 alsa-utils
 amd-ucode
@@ -27,6 +26,7 @@ crystal
 ctags
 curseofwar
 ddh-git
+deno
 dialog
 discord
 docker
@@ -74,7 +74,9 @@ make
 man-db
 materia-gtk-theme
 mdcat
+mongodb-bin
 mons
+mpd
 mpv
 mullvad-vpn-bin
 navi

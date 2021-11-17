@@ -1,4 +1,5 @@
 emmet-cli
+eslint-config-standard
 eslint
 gatsby
 live-server
@@ -10,4 +11,7 @@ prettier
 semver
 stylelint-config-standard
 stylelint
+vscode-css-languageserver-bin
+vscode-html-languageserver-bin
+vscode-json-languageserver-bin
 yarn
