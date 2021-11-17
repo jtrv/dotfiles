@@ -16,7 +16,7 @@ set -gx PATH           "/home/sugimoto/.volta/bin" $PATH
 set -gx NPM_CONFIG_USERCONFIG  "/home/sugimoto/.config/npm/npmrc"
 set     NAVI_CONFIG_YAML       "/home/sugimoto/.config/navi/config.yaml"
 
-set -gx FZF_DEFAULT_OPTS          "--ansi --multi --tabstop=2 --color=dark --preview='bat --color=always {}'"
+set -gx FZF_DEFAULT_OPTS          "--ansi --color=dark --multi --tabstop=2  --preview='bat --color=always {}' --preview-window border-vertical"
 set -gx CALIBRE_USE_DARK_PALETTE  "yes"
 set -gx HORS_ENGINE               "google"
 
