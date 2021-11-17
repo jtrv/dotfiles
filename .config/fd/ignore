@@ -3,12 +3,11 @@
 .bash_profile/
 .cache/
 .cargo/
+.go/
 .git/
 .node-gyp/
 .npm/
 aws/
-build/
-go/
 mxs/drive/
 mxs/ftp/
 node_modules/
