@@ -56,7 +56,7 @@ plug "alexherbo2/window.kak"
 
 # show whitespaces and highlight errors
 plug "alexherbo2/show-whitespaces.kak" %{
-  show-whitespaces -spc ᛫
+  show-whitespaces
 }
 
 
@@ -129,7 +129,6 @@ plug "eburghar/kakpipe" do %{
 }
 require-module kakpipe
 
-plug "https://gitlab.com/Screwtapello/kakoune-repl-buffer"
 plug "JacobTravers/kakoune-sudo-write" %{
   alias global sw 'sudo-write'
   alias global swq 'sudo-write-quit'
