@@ -41,10 +41,11 @@ plug "kak-lsp/kak-lsp" do %{
   set global lsp_diagnostic_line_warning_sign '┊'
   set global lsp_hover_max_lines 20
   define-command lsp-restart -docstring 'restart lsp server' %{ lsp-stop; lsp-start }
-  hook global WinSetOption filetype=(python|rust|html|css|sass|scss|json|yaml|sql) %{
+  hook global WinSetOption filetype=(css|html|javascript|json|python|rust|sass|scss|sql|yaml) %{
     set-option window lsp_auto_highlight_references true
     set-option window lsp_hover_anchor true
     lsp-auto-hover-enable
+    lsp-auto-hover-insert-mode-enable
     echo -debug "Enabling LSP for filtetype %opt{filetype}"
     lsp-enable-window
   }
@@ -308,8 +309,6 @@ map global user   k     -docstring "kakboard"     ':kakboard-toggle <ret>'
 map global user l -docstring "LSP" %{:enter-user-mode lsp <ret>}
   map global lsp <minus> -docstring "disable"   ':lsp-disable-window <ret>'
   map global lsp <plus>  -docstring "enable"    ':lsp-enable-window <ret>'
-
-map global user l -docstring "LSP" %{:enter-user-mode lsp <ret>}
 
 # Dynamic match mode
 map global user m  -docstring "dmatch"   ':enter-user-mode -lock dmatch <ret>'
