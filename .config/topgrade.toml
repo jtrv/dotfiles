@@ -32,15 +32,17 @@ assume_yes = true
 #set_title = false
 
 # Cleanup temporary or old files
-#cleanup = true
+cleanup = true
 
 [git]
-#max_concurrency = 5
+max_concurrency = 5
 # Additional git repositories to pull
-#repos = [
-#    "~/src/*/",
-#    "~/.config/something"
-#]
+repos = [
+    "~/.config/kak/kakoune.cr/",
+    "~/.config/kak/plugins/*",
+    "~/mxs/projects/*",
+    "~/projects/*"
+]
 
 # Don't pull the predefined git repos
 #predefined_repos = false
