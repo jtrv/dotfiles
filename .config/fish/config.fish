@@ -8,8 +8,10 @@ set -gx EDITOR "/usr/bin/kak"
 set -gx VISUAL "/usr/bin/kak"
 
 set -gx GOPATH         "/home/sugimoto/.go"
+
+set -gx RUSTC_WRAPPER  "/usr/bin/sccache"
 set -gx CARGO_HOME     "/home/sugimoto/.cargo"
-set -gx RUSTC_WRAPPER  "/home/sugimoto/.cargo/bin/sccache"
+
 set -gx VOLTA_HOME     "/home/sugimoto/.volta"
 set -gx PATH           "/home/sugimoto/.volta/bin" $PATH
 
