@@ -146,7 +146,13 @@ alias newbg 'feh --randomize --bg-scale --no-fehbg ~/pictures/wallpapers/'
 
 # kakoune as manpager
 function man
-  kak -e "man $argv"; 
+set HAS_MANUAL (/usr/bin/man $argv | rg "No manual entry for $argv" | wc -l)
+  if [ $HAS_MANUAL = 0 ]
+    kak -e "kakpipe -n $argv -- $argv --help"
+  end
+  if [ $HAS_MANUAL = 1 ]
+    kak -e "man $argv"
+  end
 end
 
 # kakoune grep
