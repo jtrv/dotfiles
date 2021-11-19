@@ -74,12 +74,14 @@ plug "alexherbo2/indent.kak" %{
 
 # lint/format etc mode
 declare-user-mode dev
-  map global dev f -docstring "format"      ':format <ret>'
-  map global dev l -docstring "lint"        ':lint <ret>'
-  map global dev F -docstring "format sel"  ':format <ret>'
-  map global dev L -docstring "lint sel"    ':lint <ret>'
-  map global dev j -docstring "next lint"   ':lint-next-message <ret>'
-  map global dev k -docstring "prev lint"   ':lint-previous-message <ret>'
+  map global dev d -docstring "diagnostic"   ':lsp-diagnostics <ret>'
+  map global dev D -docstring "lint-buffer"  ':buffer *lint-output* <ret>'
+  map global dev f -docstring "format"       ':format <ret>'
+  map global dev F -docstring "format sel"   ':format <ret>'
+  map global dev j -docstring "next lint"    ':lint-next-message <ret>'
+  map global dev k -docstring "prev lint"    ':lint-previous-message <ret>'
+  map global dev l -docstring "lint"         ':lint <ret>'
+  map global dev L -docstring "lint sel"     ':lint <ret>'
 
 # linting and formating per language
 source "~/.config/kak/languages/css"
