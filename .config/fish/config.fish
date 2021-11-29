@@ -100,9 +100,10 @@ end
 ### ABBREVIATIONS ###
 
 if status --is-interactive
-  abbr --add --global cp   'cp -i' 
-  abbr --add --global mv   'mv -i' 
+  abbr --add --global cp   'cp -i'
+  abbr --add --global mv   'mv -i'
   abbr --add --global sudo 'doas'
+  abbr --add --global npin 'license MIT && gitignore node && covgen jtravers@tutanota.com && npm init -y && volta pin node@lts && git init'
 end
 
 
