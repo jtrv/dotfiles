@@ -1,4 +1,5 @@
-#!/usr/bin/env sh
+#!/bin/bash
+
 wttr > $GREETING &&
 iching >> $GREETING &&
 printf "\nHACKER_NEWS:\n\n" >> $GREETING

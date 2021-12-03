@@ -1,2 +1,3 @@
-#!/usr/bin/env sh
+#!/bin/bash
+
 doas tee /proc/acpi/ibm/lcdshadow <<< 0
