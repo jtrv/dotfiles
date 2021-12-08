@@ -86,6 +86,9 @@ end
 
 ######## ALIASES ########
 
+# q to exit
+alias q 'exit'
+
 # root privileges
 alias doas 'doas --'
 alias d    'doas --'
