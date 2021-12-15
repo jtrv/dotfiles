@@ -1,22 +1,12 @@
 {
-    "env": {
-        "browser": true,
-        "es2021": true,
-        "node": true
-    },
-    "extends": [
-        "standard",
-        "prettier"
-    ],
-    "plugins": [
-        "prettier"
-    ],
-    "parserOptions": {
-        "ecmaVersion": 13
-    },
-    "rules": {
-        "prettier/prettier": "error",
-        "arrow-body-style": "off",
-        "prefer-arrow-callback": "off"
-    }
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
+  "extends": ["eslint:recommended"],
+  "parserOptions": {
+    "ecmaVersion": 13
+  },
+  "rules": {}
 }
