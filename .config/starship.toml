@@ -1,9 +1,8 @@
 [aws]
-format = 'on [$symbol($profile )($region )]($style)'
+format = 'on [($profile )($region)$symbol]($style)'
 style = "bold yellow"
-symbol = "☁️ "
-[aws.region_aliases]
-us-east-2 = "ohio"
+symbol = "☁️  "
+disabled = true
 
 [battery]
 full_symbol = "🔋"
