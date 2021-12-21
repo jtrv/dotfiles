@@ -3,5 +3,6 @@ hook global WinSetOption filetype=javascript %{
   lint
 }
 hook global BufSetOption filetype=javascript %{
-  set-option buffer formatcmd "deno fmt - "
+  set-option buffer formatcmd 'deno fmt -'
+  map -docstring "comment" buffer normal <#> ':comment-line <ret>'
 }

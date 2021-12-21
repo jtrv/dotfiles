@@ -1,28 +1,6 @@
 fish_vi_key_bindings
 
-### EXPORT ###
-set -gx fish_greeting
-set -gx GREETING "/home/sugimoto/.config/greeting"
-
-set -gx EDITOR "/usr/bin/kak"
-set -gx VISUAL "/usr/bin/kak"
-
-set -gx GOPATH         "/home/sugimoto/.go"
-
-set -gx RUSTC_WRAPPER  "/usr/bin/sccache"
-set -gx CARGO_HOME     "/home/sugimoto/.cargo"
-
-set -gx VOLTA_HOME     "/home/sugimoto/.volta"
-set -gx PATH           "/home/sugimoto/.volta/bin" $PATH
-
-set -gx NPM_CONFIG_USERCONFIG  "/home/sugimoto/.config/npm/npmrc"
-set     NAVI_CONFIG_YAML       "/home/sugimoto/.config/navi/config.yaml"
-
-set -gx FZF_DEFAULT_OPTS          "--ansi --color=dark --multi --tabstop=2  --preview='bat --color=always {}' --preview-window border-vertical"
-set -gx CALIBRE_USE_DARK_PALETTE  "yes"
-set -gx HORS_ENGINE               "google"
-
-### SOURCE ###
+######## SOURCE ########
 
 # better prompt
 starship init fish | source
@@ -33,10 +11,8 @@ zoxide init fish | source
 # cli cheatsheet widget
 navi widget fish | source
 
-# fish completion daemon
-cod init $fish_pid fish | source
 
-### FUNCTIONS ###
+######## FUNCTIONS ########
 
 # needed for !! and !$
 function __history_previous_command
@@ -98,24 +74,26 @@ function md
 end
 
 
-### ABBREVIATIONS ###
+######## ABBREVIATIONS ########
 
 if status --is-interactive
-  abbr --add --global cp   'cp -i' 
-  abbr --add --global mv   'mv -i' 
+  abbr --add --global cp   'cp -i'
+  abbr --add --global mv   'mv -i'
   abbr --add --global sudo 'doas'
+  abbr --add --global npin 'license MIT && gitignore node && covgen jtravers@tutanota.com && npm init -y && volta pin node@lts && git init'
 end
 
 
+######## ALIASES ########
 
-### ALIASES ###
+# q to exit
+alias q 'exit'
 
 # root privileges
 alias doas 'doas --'
 alias d    'doas --'
 
 alias bc  'kalk'
-alias btm 'btm --battery'
 alias cat 'bat'
 alias j   'lf'
 alias lg  'lazygit'
@@ -139,25 +117,26 @@ alias lt 'exa -aT --color=always --group-directories-first --git --icons' # tree
 # get fastest mirrors
 alias mirror  "doas reflector --save /etc/pacman.d/mirrorlist --protocol https --country US --latest 200 --sort age"
 
-# change bg 
-alias newbg 'feh --randomize --bg-scale --no-fehbg ~/pictures/wallpapers/' 
+# change bg
+alias newbg 'feh --randomize --bg-scale --no-fehbg ~/pictures/wallpapers/'
 
 
-### KAKOUNE ###
+######## KAKOUNE ########
 
 # kakoune as manpager
 function man
-set HAS_MANUAL (/usr/bin/man $argv | rg "No manual entry" | wc -l)
+set HAS_MANUAL (/usr/bin/man $argv | rg "No manual entry for $argv" | wc -l)
   if [ $HAS_MANUAL = 0 ]
-    kak -e "man $argv"
-  else if [ $HAS_MANUAL = 1 ]
     kak -e "kakpipe -n $argv -- $argv --help"
+  end
+  if [ $HAS_MANUAL = 1 ]
+    kak -e "man $argv"
   end
 end
 
 # kakoune grep
 function kg
-  kak -e "grep $argv"; 
+  kak -e "grep $argv";
 end
 
 # kakoune coderunner
@@ -181,6 +160,29 @@ if status is-login
     exec startx -- -keeptty
   end
 end
+
+
+######## EXPORTS ########
+
+set -gx fish_greeting
+
+set -gx CALIBRE_USE_DARK_PALETTE "yes"
+set -gx FZF_DEFAULT_OPTS         "--ansi --color=dark --multi --tabstop=2  --preview='bat --color=always {}' --preview-window border-vertical"
+set -gx GREETING                 "/home/sugimoto/.config/greeting"
+set -gx HORS_ENGINE              "google"
+set     NAVI_CONFIG_YAML         "/home/sugimoto/.config/navi/config.yaml"
+set -gx NPM_CONFIG_USERCONFIG    "/home/sugimoto/.config/npm/npmrc"
+
+set -gx EDITOR "/usr/bin/kak"
+set -gx VISUAL "/usr/bin/kak"
+
+set -gx GOPATH "/home/sugimoto/.go"
+
+set -gx CARGO_HOME    "/home/sugimoto/.cargo"
+set -gx RUSTC_WRAPPER "/usr/bin/sccache"
+
+set -gx VOLTA_HOME "/home/sugimoto/.volta"
+set -gx PATH       "/home/sugimoto/.volta/bin" $PATH
 
 set -gx LF_ICONS "\
 di=:\

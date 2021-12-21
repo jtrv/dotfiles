@@ -50,9 +50,9 @@ mic() {
 ##############################
 #    NETWORK
 ##############################
-network() {
+net() {
   wire="$(mullvad status | rg Connected | wc -l)"
-  wifi="$(ip a | grep wlp61s0 | grep UP | wc -l)"
+  wifi="$(ip a | grep 'wlp4s0|enp6s0' | grep 'state UP' | wc -l)"
 
   if [ $wire = 1 ]; then
     echo ""
@@ -66,7 +66,7 @@ network() {
 ##############################
 #    BLUETOOTH
 ##############################
-bluetooth() {
+blu() {
   bluetoothStatus="$(bluetoothctl info | rg 'Connected: yes' | wc -l)"
 
   if [ $bluetoothStatus = 1 ]; then
@@ -79,28 +79,28 @@ bluetooth() {
 ##############################
 #    BATTERY
 ##############################
-bat() {
-  batstat="$(cat /sys/class/power_supply/BAT0/status)"
-  percent="$(cat /sys/class/power_supply/BAT0/capacity)"
-  if [ $batstat = 'Unknown' ]; then
-    batstat=""
-  elif [ $batstat = "Charging" ]; then
-    batstat=""
-  elif [[ $percent -ge 5 ]] && [[ $percent -le 19 ]]; then
-    batstat=""
-  elif [[ $percent -ge 20 ]] && [[ $percent -le 39 ]]; then
-    batstat=""
-  elif [[ $percent -ge 40 ]] && [[ $percent -le 59 ]]; then
-    batstat=""
-  elif [[ $percent -ge 60 ]] && [[ $percent -le 79 ]]; then
-    batstat=""
-  elif [[ $percent -ge 80 ]] && [[ $percent -le 95 ]]; then
-    batstat=""
-  elif [[ $percent -ge 96 ]] && [[ $percent -le 100 ]]; then
-    batstat=""
-  fi
+# bat() {
+#   batstat="$(cat /sys/class/power_supply/BAT0/status)"
+#   percent="$(cat /sys/class/power_supply/BAT0/capacity)"
+#   if [ $batstat = 'Unknown' ]; then
+#     batstat=""
+#   elif [ $batstat = "Charging" ]; then
+#     batstat=""
+#   elif [[ $percent -ge 5 ]] && [[ $percent -le 19 ]]; then
+#     batstat=""
+#   elif [[ $percent -ge 20 ]] && [[ $percent -le 39 ]]; then
+#     batstat=""
+#   elif [[ $percent -ge 40 ]] && [[ $percent -le 59 ]]; then
+#     batstat=""
+#   elif [[ $percent -ge 60 ]] && [[ $percent -le 79 ]]; then
+#     batstat=""
+#   elif [[ $percent -ge 80 ]] && [[ $percent -le 95 ]]; then
+#     batstat=""
+#   elif [[ $percent -ge 96 ]] && [[ $percent -le 100 ]]; then
+#     batstat=""
+#   fi
 
-  battery=$(printf %3d $percent)
+#   battery=$(printf %3d $percent)
 
   echo "$batstat$battery%"
 }
@@ -152,6 +152,6 @@ bat() {
 SLEEP_SEC=2
 #loops forever outputting a line every SLEEP_SEC secs
 while :; do
-  echo "$(cpu) $(ram) $(ssd) | $(mic) $(network) $(bluetooth) | $(bat) |"
+  echo "$(cpu)   $(ram)   $(ssd)   | $(vol) | $(mic) $(net) $(blu) |"
   sleep $sleep_sec
 done
