@@ -38,9 +38,7 @@ cleanup = true
 max_concurrency = 5
 # Additional git repositories to pull
 repos = [
-    "~/.config/kak/kakoune.cr/",
     "~/.config/kak/plugins/*",
-    "~/mxs/projects/*",
     "~/projects/*"
 ]
 
