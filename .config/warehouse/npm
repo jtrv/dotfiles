@@ -1,12 +1,2 @@
-emmet-cli
-eslint
-gatsby
-live-server
-node-gyp
-nopt
+corepack
 npm
-prettier
-semver
-stylelint-config-standard
-stylelint
-yarn
