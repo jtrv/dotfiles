@@ -3,5 +3,5 @@ hook global WinSetOption filetype=javascript %{
   lint
 }
 hook global BufSetOption filetype=javascript %{
-  set-option buffer formatcmd "prettier --stdin-filepath %val{buffile}"
+  set-option buffer formatcmd "deno fmt - "
 }
