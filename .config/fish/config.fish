@@ -33,7 +33,8 @@ zoxide init fish | source
 # cli cheatsheet widget
 navi widget fish | source
 
-
+# fish completion daemon
+cod init $fish_pid fish | source
 
 ### FUNCTIONS ###
 
@@ -146,12 +147,11 @@ alias newbg 'feh --randomize --bg-scale --no-fehbg ~/pictures/wallpapers/'
 
 # kakoune as manpager
 function man
-set HAS_MANUAL (/usr/bin/man $argv | rg "No manual entry for $argv" | wc -l)
+set HAS_MANUAL (/usr/bin/man $argv | rg "No manual entry" | wc -l)
   if [ $HAS_MANUAL = 0 ]
-    kak -e "kakpipe -n $argv -- $argv --help"
-  end
-  if [ $HAS_MANUAL = 1 ]
     kak -e "man $argv"
+  else if [ $HAS_MANUAL = 1 ]
+    kak -e "kakpipe -n $argv -- $argv --help"
   end
 end
 
