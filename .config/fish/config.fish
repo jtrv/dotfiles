@@ -94,6 +94,7 @@ alias doas 'doas --'
 alias d    'doas --'
 
 alias bc  'kalk'
+alias btm 'btm --battery'
 alias cat 'bat'
 alias j   'lf'
 alias lg  'lazygit'
