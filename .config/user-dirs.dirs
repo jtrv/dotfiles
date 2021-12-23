@@ -1,0 +1,4 @@
+XDG_DOCUMENTS_DIR="$HOME/downloads"
+XDG_DOWNLOAD_DIR="$HOME/downloads"
+XDG_MUSIC_DIR="$HOME/media/music"
+XDG_PICTURES_DIR="$HOME/pictures"
