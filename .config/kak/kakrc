@@ -149,7 +149,15 @@ plug "eburghar/kakship" do %{
 # Use ripgrep instead of grep
 set global grepcmd 'rg --column'
 
-hook global WinDisplay '\*greeting\*' %{
+define-command tldr -docstring "print a cheatsheet for the given console command" -shell-completion -params 1.. %{
+  kakpipe -n tldr -- tldr --color always %arg{@}
+}
+
+define-command how -docstring "print an answer for the given question from stackoverflow etc" -params 1.. %{
+  kakpipe -n how -- hors -a -n 2 -p never %arg{@}
+}
+
+hook global WinDisplay '\*greeting\*|\*tldr\*' %{
   hide-whitespaces
 }
 
