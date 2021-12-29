@@ -138,6 +138,14 @@ plug "JacobTravers/kakoune-sudo-write" %{
   alias global swq 'sudo-write-quit'
 }
 
+# Starship for kakoune modeline
+plug "eburghar/kakship" do %{
+  cargo install --force --path . --root ~/.local
+  [ ! -e $kak_config/starship.toml ] && cp starship.toml $kak_config/
+} config %{
+  kakship-enable
+}
+
 # Use ripgrep instead of grep
 set global grepcmd 'rg --column'
 
