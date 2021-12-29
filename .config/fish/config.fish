@@ -120,6 +120,11 @@ alias mirror  "doas reflector --save /etc/pacman.d/mirrorlist --protocol https -
 # change bg
 alias newbg 'feh --randomize --bg-scale --no-fehbg ~/pictures/wallpapers/'
 
+# use pnpm instead of npm
+alias npm 'pnpm'
+alias npg 'npm i -g '
+alias npx 'pnpm dlx'
+
 
 ######## KAKOUNE ########
 
