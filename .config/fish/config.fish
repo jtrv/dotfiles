@@ -80,6 +80,7 @@ if status --is-interactive
   abbr --add --global cp   'cp -i'
   abbr --add --global mv   'mv -i'
   abbr --add --global sudo 'doas'
+  abbr --add --global npm  'pnpm'
   abbr --add --global npin 'license MIT && gitignore node && covgen jtravers@tutanota.com && npm init -y && volta pin node@lts && git init'
 end
 
@@ -346,3 +347,7 @@ ex=:\
 *.pdf=:\
 *.nix=:\
 "
+
+# tabtab source for packages
+# uninstall by removing these lines
+[ -f ~/.config/tabtab/fish/__tabtab.fish ]; and . ~/.config/tabtab/fish/__tabtab.fish; or true
