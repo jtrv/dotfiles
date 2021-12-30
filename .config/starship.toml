@@ -1,7 +1,8 @@
-[character]
-success_symbol = "[❯](bold green)"
-error_symbol = "[](bold red)"
-vicmd_symbol = "[](bold green)"
+[aws]
+format = 'on [($profile )($region)$symbol]($style)'
+style = "bold yellow"
+symbol = "☁️  "
+disabled = true
 
 [battery]
 full_symbol = "🔋"
@@ -15,6 +16,11 @@ style = "bold red"
 [[battery.display]]
 threshold = 30
 style = "bold yellow"
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[](bold red)"
+vicmd_symbol = "[](bold green)"
 
 [directory]
 fish_style_pwd_dir_length = 1

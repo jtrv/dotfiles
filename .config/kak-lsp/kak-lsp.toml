@@ -1,0 +1,398 @@
+snippet_support = false
+verbosity = 2
+
+[server]
+# exit session if no requests were received during given period in seconds
+# works only in unix sockets mode (-s/--session)
+# set to 0 to disable
+timeout = 1800 # seconds = 30 minutes
+
+[language.bash]
+filetypes = ["sh"]
+roots = [".git", ".hg"]
+command = "bash-language-server"
+args = ["start"]
+
+[language.c_cpp]
+filetypes = ["c", "cpp"]
+roots = ["compile_commands.json", ".clangd", ".git", ".hg"]
+command = "clangd"
+offset_encoding = "utf-8"
+
+[language.crystal]
+filetypes = ["crystal"]
+roots = ["shard.yml"]
+command = "scry"
+
+[language.css]
+filetypes = ["css", "scss"]
+roots = ["package.json", ".git", ".hg"]
+command = "css-languageserver"
+args = ["--stdio"]
+
+[language.less]
+filetypes = ["less"]
+roots = ["package.json", ".git", ".hg"]
+command = "css-languageserver"
+args = ["--stdio"]
+
+[language.scss]
+filetypes = ["scss"]
+roots = ["package.json", ".git", ".hg"]
+command = "css-languageserver"
+args = ["--stdio"]
+
+[language.d]
+filetypes = ["d", "di"]
+roots = [".git", "dub.sdl", "dub.json"]
+command = "dls"
+
+[language.dart]
+# start shell to find path to dart analysis server source
+filetypes = ["dart"]
+roots = ["pubspec.yaml", ".git", ".hg"]
+command = "sh"
+args = ["-c", "dart $(dirname $(command -v dart))/snapshots/analysis_server.dart.snapshot --lsp"]
+
+[language.elixir]
+filetypes = ["elixir"]
+roots = ["mix.exs"]
+command = "elixir-ls"
+settings_section = "elixirLS"
+[language.elixir.settings.elixirLS]
+# See https://github.com/elixir-lsp/elixir-ls/blob/master/apps/language_server/lib/language_server/server.ex
+# dialyzerEnable = true
+
+[language.elm]
+filetypes = ["elm"]
+roots = ["elm.json"]
+command = "elm-language-server"
+args = ["--stdio"]
+settings_section = "elmLS"
+[language.elm.settings.elmLS]
+# See https://github.com/elm-tooling/elm-language-server#server-settings
+runtime = "node"
+elmPath = "elm"
+elmFormatPath = "elm-format"
+elmTestPath = "elm-test"
+
+[language.erlang]
+filetypes = ["erlang"]
+# See https://github.com/erlang-ls/erlang_ls.git for more information and
+# how to configure. This default config should work in most cases though.
+roots = ["rebar.config", "erlang.mk", ".git", ".hg"]
+command = "erlang_ls"
+
+[language.go]
+filetypes = ["go"]
+roots = ["Gopkg.toml", "go.mod", ".git", ".hg"]
+command = "gopls"
+offset_encoding = "utf-8"
+settings_section = "gopls"
+[language.go.settings.gopls]
+# See https://github.com/golang/tools/blob/master/gopls/doc/settings.md
+# "build.buildFlags" = []
+
+[language.haskell]
+filetypes = ["haskell"]
+roots = ["Setup.hs", "stack.yaml", "*.cabal"]
+command = "haskell-language-server-wrapper"
+args = ["--lsp"]
+settings_section = "haskell"
+[language.haskell.settings.haskell]
+# See https://github.com/latex-lsp/texlab/blob/e1ee8495b0f54b4411a1ffacf787efa621d8f826/src/options.rs
+# formattingProvider = "ormolu"
+
+[language.html]
+filetypes = ["html"]
+roots = ["package.json"]
+command = "html-languageserver"
+args = ["--stdio"]
+
+# # Commented out by default because you still need to set the paths in the JDT
+# # Language Server arguments below before this can become a valid configuration.
+# [language.java]
+# filetypes = ["java"]
+# roots = [".git", "mvnw", "gradlew"]
+# command = "java"
+# args = [
+#     "-Declipse.application=org.eclipse.jdt.ls.core.id1",
+#     "-Dosgi.bundles.defaultStartLevel=4",
+#     "-Declipse.product=org.eclipse.jdt.ls.core.product",
+#     "-Dlog.level=ALL",
+#     "-Dfile.encoding=utf-8",
+#     "--add-modules=ALL-SYSTEM",
+#     "--add-opens",
+#     "java.base/java.util=ALL-UNNAMED",
+#     "--add-opens",
+#     "java.base/java.lang=ALL-UNNAMED",
+#     "-noverify",
+#     "-Xmx1G",
+#     "-jar",
+#     "/path/to/eclipse.jdt.ls/repository/plugins/org.eclipse.equinox.launcher_1.6.100.v20201223-0822.jar",
+#     "-configuration",
+#     "/path/to/eclipse.jdt.ls/repository/config_linux",
+#     "-data",
+#     "/path/to/eclipse-workspace",
+# ]
+# [language.java.settings]
+# # See https://github.dev/eclipse/eclipse.jdt.ls
+# # "java.format.insertSpaces" = true
+
+[language.javascript]
+filetypes = ["javascript"]
+roots = ["package.json", ".git"]
+command = "deno"
+args = ["lsp"]
+[language.javascript.settings.deno]
+enable = true
+lint = true
+
+[language.json]
+filetypes = ["json"]
+roots = ["package.json"]
+command = "json-languageserver"
+args = ["--stdio"]
+
+# Requires Julia packages "LanguageServer", "StaticLint" and "SymbolServer"
+[language.julia]
+filetypes = ["julia"]
+roots = ["Project.toml", ".git", ".hg"]
+command = "julia"
+args = [
+    "--startup-file=no",
+    "--history-file=no",
+    "-e",
+    """
+        using LanguageServer;
+        using Pkg;
+        import StaticLint;
+        import SymbolServer;
+        import REPL;
+        env_path = dirname(Pkg.Types.Context().env.project_file);
+        server = LanguageServer.LanguageServerInstance(stdin, stdout, env_path, "");
+        server.runlinter = true;
+        run(server);
+    """,
+]
+[language.julia.settings]
+# See https://github.com/julia-vscode/LanguageServer.jl/blob/master/src/requests/workspace.jl
+# Format options. See https://github.com/julia-vscode/DocumentFormat.jl/blob/master/src/DocumentFormat.jl
+# "julia.format.indent" = 4
+# Lint options. See https://github.com/julia-vscode/StaticLint.jl/blob/master/src/linting/checks.jl
+# "julia.lint.call" = true
+# Other options, see https://github.com/julia-vscode/LanguageServer.jl/blob/master/src/requests/workspace.jl
+# "julia.lint.run" = "true"
+
+[language.latex]
+filetypes = ["latex"]
+roots = [".git", ".hg"]
+command = "texlab"
+settings_section = "texlab"
+[language.latex.settings.texlab]
+# See https://github.com/latex-lsp/texlab/blob/master/docs/options.md
+forwardSearch.executable = "zathura"
+forwardSearch.args = ["--synctex-forward", "%l:1:%f", "%p"]
+
+[language.lua]
+filetypes = ["lua"]
+roots = [".git", ".hg"]
+command = "lua-language-server"
+[language.lua.settings.Lua]
+# See https://github.com/sumneko/vscode-lua/blob/master/setting/schema.json
+# diagnostics.enable = true
+
+[language.nim]
+filetypes = ["nim"]
+roots = ["*.nimble", ".git", ".hg"]
+command = "nimlsp"
+
+[language.nix]
+filetypes = ["nix"]
+roots = ["flake.nix", "shell.nix", ".git", ".hg"]
+command = "rnix-lsp"
+
+[language.ocaml]
+filetypes = ["ocaml"]
+roots = ["Makefile", "opam", "*.opam", "dune"]
+command = "ocamllsp"
+
+[language.php]
+filetypes = ["php"]
+roots = [".htaccess", "composer.json"]
+command = "intelephense"
+args = ["--stdio"]
+settings_section = "intelephense"
+[language.php.settings]
+intelephense.storagePath = "/tmp/intelephense"
+
+[language.python]
+filetypes = ["python"]
+roots = ["requirements.txt", "setup.py", ".git", ".hg"]
+command = "pyls"
+offset_encoding = "utf-8"
+workaround_server_sends_plaintext_labeled_as_markdown = true
+settings_section = "_"
+[language.python.settings._]
+# See https://github.com/palantir/python-language-server#configuration
+# and https://github.com/palantir/python-language-server/blob/develop/vscode-client/package.json
+# pyls.configurationSources = ["flake8"]
+
+[language.r]
+filetypes = ["r"]
+roots = ["DESCRIPTION", ".git", ".hg"]
+command = "R"
+args = ["--slave", "-e", "languageserver::run()"]
+
+[language.racket]
+filetypes = ["racket"]
+roots = ["info.rkt"]
+command = "racket"
+args = ["-l", "racket-langserver"]
+
+[language.reason]
+filetypes = ["reason"]
+roots = ["package.json", "Makefile", ".git", ".hg"]
+command = "ocamllsp"
+
+[language.ruby]
+filetypes = ["ruby"]
+roots = ["Gemfile"]
+command = "solargraph"
+args = ["stdio"]
+[language.ruby.settings]
+# See https://github.com/castwide/solargraph/blob/master/lib/solargraph/language_server/host.rb
+# "solargraph.completion" = true
+
+[language.rust]
+filetypes = ["rust"]
+roots = ["Cargo.toml"]
+command = "sh"
+args = [
+    "-c",
+    """
+        if path=$(rustup which rls 2>/dev/null); then
+            "$path"
+        else
+            rls
+        fi
+    """,
+]
+[language.rust.settings.rust]
+# See https://github.com/rust-lang/rls#configuration
+# features = []
+
+# [language.rust]
+# filetypes = ["rust"]
+# roots = ["Cargo.toml"]
+# command = "sh"
+# args = [
+#     "-c",
+#     """
+#         if path=$(rustup which rust-analyzer 2>/dev/null); then
+#             "$path"
+#         else
+#             rust-analyzer
+#         fi
+#     """,
+# ]
+# settings_section = "rust-analyzer"
+# [language.rust.settings.rust-analyzer]
+# hoverActions.enable = false # kak-lsp doesn't support this at the moment
+# # cargo.features = []
+# # See https://rust-analyzer.github.io/manual.html#configuration
+# # If you get 'unresolved proc macro' warnings, you have two options
+# # 1. The safe choice is two disable the warning:
+# diagnostics.disabled = ["unresolved-proc-macro"]
+# # 2. Or you can opt-in for proc macro support
+# procMacro.enable = true
+# cargo.loadOutDirsFromCheck = true
+# # See https://github.com/rust-analyzer/rust-analyzer/issues/6448
+
+[language.terraform]
+filetypes = ["terraform"]
+roots = ["*.tf"]
+command = "terraform-ls"
+args = ["serve"]
+[language.terraform.settings.terraform-ls]
+# See https://github.com/hashicorp/terraform-ls/blob/main/docs/SETTINGS.md
+# rootModulePaths = []
+
+[language.typescript]
+filetypes = ["typescript"]
+roots = ["package.json", "tsconfig.json", ".git", ".hg"]
+command = "deno"
+args = ["lsp"]
+[language.typescript.settings.deno]
+enable = true
+lint = true
+
+[language.yaml]
+filetypes = ["yaml"]
+roots = [".git", ".hg"]
+command = "yaml-language-server"
+args = ["--stdio"]
+[language.yaml.settings]
+# See https://github.com/redhat-developer/yaml-language-server#language-server-settings
+# Defaults are at https://github.com/redhat-developer/yaml-language-server/blob/master/src/yamlSettings.ts
+# yaml.format.enable = true
+
+[language.zig]
+filetypes = ["zig"]
+roots = ["build.zig"]
+command = "zls"
+
+# Semantic tokens support
+# See https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_semanticTokens
+# for the default list of tokens and modifiers.
+# However, many language servers implement their own values.
+# Make sure to check the output of `lsp-capabilities` and each server's documentation and source code as well.
+# Examples:
+# - TypeScript: https://github.com/microsoft/vscode-languageserver-node/blob/2645fb54ea1e764aff71dee0ecc8aceff3aabf56/client/src/common/semanticTokens.ts#L58
+# - Rust Analyzer: https://github.com/rust-analyzer/rust-analyzer/blob/f6da603c7fe56c19a275dc7bab1f30fe1ad39707/crates/ide/src/syntax_highlighting.rs#L42
+[[semantic_tokens]]
+token = "comment"
+face = "documentation"
+modifiers = ["documentation"]
+
+[[semantic_tokens]]
+token = "comment"
+face = "comment"
+
+[[semantic_tokens]]
+token = "function"
+face = "function"
+
+[[semantic_tokens]]
+token = "keyword"
+face = "keyword"
+
+[[semantic_tokens]]
+token = "namespace"
+face = "module"
+
+[[semantic_tokens]]
+token = "operator"
+face = "operator"
+
+[[semantic_tokens]]
+token = "string"
+face = "string"
+
+[[semantic_tokens]]
+token = "type"
+face = "type"
+
+[[semantic_tokens]]
+token = "variable"
+face = "default+d"
+modifiers = ["readonly"]
+
+[[semantic_tokens]]
+token = "variable"
+face = "default+d"
+modifiers = ["constant"]
+
+[[semantic_tokens]]
+token = "variable"
+face = "variable"
