@@ -39,6 +39,7 @@ dunst &                             # notifications
 ntpd start &                        # time-sync
 picom -f &                          # allow for opacities
 redshift -l 34:-119 -b 1.0:0.6 &    # bluelight filter
+syncthing &                         # sync logseq notes
 udiskie -An --terminal=lf &         # notify mountable drives
 ~/scripts/low-battery.sh &          # low-battery notifications
 ~/scripts/rclone-init.sh &          # start rclone daemons
