@@ -80,8 +80,8 @@ if status --is-interactive
   abbr --add --global cp   'cp -i'
   abbr --add --global mv   'mv -i'
   abbr --add --global sudo 'doas'
-  abbr --add --global npm  'pnpm'
   abbr --add --global npin 'license MIT && gitignore node && covgen jtravers@tutanota.com && npm init -y && volta pin node@lts && git init'
+  abbr --add --global gitbit 'git commit --amend --no-edit --date "Sat 01 Jan 2022 16:20:07 PST"'
 end
 
 
@@ -121,6 +121,11 @@ alias mirror  "doas reflector --save /etc/pacman.d/mirrorlist --protocol https -
 
 # change bg
 alias newbg 'feh --randomize --bg-scale --no-fehbg ~/pictures/wallpapers/'
+
+# use pnpm instead of npm
+alias npm 'pnpm'
+alias npg 'npm i -g '
+alias npx 'pnpm dlx'
 
 
 ######## KAKOUNE ########
