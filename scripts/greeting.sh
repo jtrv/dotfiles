@@ -14,4 +14,8 @@ for HN_ID in $HN_TOP10; do
   xh -b "https://hacker-news.firebaseio.com/v0/item/$HN_ID.json" | \
     jq -r '.title, .url' >> $GREETING
   printf "https://news.ycombinator.com/item?id=$HN_ID\n\n" >> $GREETING
-done &
+done &&
+
+kak -e "kakpipe -n greeting -- bat $GREETING" &&
+topgrade &&
+btm

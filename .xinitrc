@@ -1,8 +1,5 @@
 #!/bin/sh
 
-# prepare greeting
-~/scripts/set-greeting.sh &
-
 userresources=$HOME/.config/.Xresources
 usermodmap=$HOME/.config/.Xmodmap
 sysresources=/etc/X11/xinit/.Xresources
