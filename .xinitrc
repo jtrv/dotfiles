@@ -1,8 +1,5 @@
 #!/bin/sh
 
-# prepare greeting
-~/scripts/set-greeting.sh &
-
 userresources=$HOME/.config/.Xresources
 usermodmap=$HOME/.config/.Xmodmap
 sysresources=/etc/X11/xinit/.Xresources
@@ -45,7 +42,6 @@ redshift -l 34:-119 -b 1.0:0.6 &    # bluelight filter
 syncthing &                         # sync logseq notes
 udiskie -An --terminal=lf &         # notif for mountable drives
 ~/scripts/rclone-init.sh &          # start rclone daemons
-~/scripts/set-greeting.sh &         # prepare greeting
 setxkbmap us -option ctrl:nocaps && # *holding* capslock = ctrl
 xcape -e 'Control_L=Escape' &       # *tapping* capslock = escape
 
