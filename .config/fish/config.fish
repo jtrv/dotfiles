@@ -98,6 +98,7 @@ alias bc  'kalk'
 alias cat 'bat'
 alias j   'lf'
 alias lg  'lazygit'
+alias pom 'potato'
 
 # git for ~/.cfg
 alias config '/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
