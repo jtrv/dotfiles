@@ -47,7 +47,7 @@ mic() {
 ##############################
 net() {
   wire="$(mullvad status | rg Connected | wc -l)"
-  wifi="$(ip a | grep 'wlp4s0|enp6s0' | grep 'state UP' | wc -l)"
+  wifi="$(ip a | grep 'enp6s0' | grep 'state UP' | wc -l)"
 
   if [ $wire = 1 ]; then
     echo ""
