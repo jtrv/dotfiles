@@ -94,6 +94,7 @@ alias q 'exit'
 alias doas 'doas --'
 alias d    'doas --'
 
+alias ani 'ani-cli -q high'
 alias bc  'kalk'
 alias cat 'bat'
 alias j   'lf'
