@@ -29,12 +29,6 @@ fi
 
 xrandr --output virtual-1 --mode 3440x1440
 
-# randomized wallpapers
-feh --randomize --bg-scale --no-fehbg ~/pictures/wallpapers/ &
-
-# software noise-filter for microphone
-noisetorch -i alsa_input.usb-FIFINE_Microphones_FIFINE_K780A_Microphone_REV1.0-00.analog-stereo &
-
 dunst &                             # notifications
 ntpd start &                        # time-sync
 picom -f &                          # allow for opacities
@@ -44,5 +38,11 @@ udiskie -An --terminal=lf &         # notif for mountable drives
 ~/scripts/rclone-init.sh &          # start rclone daemons
 setxkbmap us -option ctrl:nocaps && # *holding* capslock = ctrl
 xcape -e 'Control_L=Escape' &       # *tapping* capslock = escape
+
+# randomized wallpapers
+feh --randomize --bg-scale --no-fehbg ~/pictures/wallpapers/ &
+
+# software noise-filter for microphone
+noisetorch -i alsa_input.usb-FIFINE_Microphones_FIFINE_K780A_Microphone_REV1.0-00.analog-stereo &
 
 exec spectrwm
