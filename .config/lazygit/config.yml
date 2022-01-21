@@ -199,3 +199,20 @@ keybinding:
     init: 'i'
     update: 'u'
     bulkMenu: 'b'
+customCommands:
+  - key: '<c-c>'
+    description: 'commit as non-default author'
+    command: 'git commit -m "{{index .PromptResponses 0}}" --author="{{index .PromptResponses 1}} <{{index .PromptResponses 2}}>"'
+    context: 'files'
+    prompts:
+      - type: 'input'
+        title: 'Commit Message'
+        initialValue: ''
+      - type: 'input'
+        title: 'Author Name'
+        initialValue: ''
+      - type: 'input'
+        title: 'Email Address'
+        initialValue: ''
+    loadingText: 'commiting'
+
