@@ -293,18 +293,19 @@ plug "gustavo-hms/peneira" %{
     }
   }
   define-command peneira-file %{
+    peneira-files-configure-buffer
     peneira 'files: ' %{ fd -t f . } %{
       edit %arg{1}
     }
   }
-define-command peneira-grep -params 1 %{
-  peneira 'line: ' "rg -n %arg{1}" %{
-    lua %arg{1} %{
-      local file, line = arg[1]:match("([^:]+):(%d+):")
-      kak.edit(file, line)
+  define-command peneira-grep -params 1 %{
+    peneira 'line: ' "rg -n %arg{1}" %{
+      lua %arg{1} %{
+        local file, line = arg[1]:match("([^:]+):(%d+):")
+        kak.edit(file, line)
+      }
     }
   }
-}
   declare-user-mode find
   map global user f -docstring "find"    ':enter-user-mode find <ret>'
   map global find b -docstring "buffer"  ':peneira-buffers <ret>'
