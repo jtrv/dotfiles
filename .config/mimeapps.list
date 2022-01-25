@@ -1,1 +1,7 @@
+[Added Associations]
+image/jpeg=feh.desktop;
+text/plaintext=kcr.desktop;
+video/h264=mpv.desktop;
 
+[Default Applications]
+x-scheme-handler/terminal=Alacritty.desktop;
