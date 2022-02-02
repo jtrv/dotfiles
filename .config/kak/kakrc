@@ -157,8 +157,14 @@ define-command how -docstring "print an answer for the given question from stack
   kakpipe -n how -- hors -a -n 2 -p never %arg{@}
 }
 
-hook global WinDisplay '\*greeting\*|\*tldr\*' %{
+define-command reader-mode -docstring "enables settings for better reading" %{
   hide-whitespaces
+  map buffer normal d <c-d>
+  map buffer normal u <c-u>
+  map buffer normal q ':quit<ret>'
+}
+hook global WinDisplay '\*greeting\*|\*tldr\*|\*man \w+\*' %{
+  reader-mode
 }
 
 ###################### NORMAL MODE ###################### 
@@ -234,12 +240,6 @@ map global normal <c-g> -docstring "grep picker"           ': connect terminal k
 map global normal <c-s> -docstring "grep picker (buffer)"  ': connect terminal kcr fzf grep %val{buflist}<ret>'
 
 ################# MODES ##################
-
-hook global WinSetOption filetype=(man) %{
-  hide-whitespaces
-  map buffer normal d <c-d>
-  map buffer normal u <c-u>
-}
 
 # Plugin manager
 map global user = -docstring "plug"   ':plug-list <ret>'
