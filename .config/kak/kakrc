@@ -175,6 +175,10 @@ hook global WinDisplay '\*greeting\*|\*tldr\*|\*man \w+\*' %{
 map global normal <space> , -docstring "leader-key"
 map global user   <space> : -docstring "prompt"
 
+map global prompt <c-n> <tab>   -docstring "next completion"
+map global prompt <c-p> <s-tab> -docstring "previous completion"
+
+
 map global normal w b         -docstring "select previous word"
 map global normal W B         -docstring "extend previous word"
 map global normal <a-w> <a-b> -docstring "select previous BIG-WORD"
