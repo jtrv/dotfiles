@@ -8,8 +8,6 @@ starship init fish | source
 # smarter 'cd' (z)
 zoxide init fish | source
 
-# cli cheatsheet widget
-navi widget fish | source
 
 
 ######## FUNCTIONS ########
@@ -176,7 +174,6 @@ set -gx fish_greeting
 set -gx CALIBRE_USE_DARK_PALETTE "yes"
 set -gx FZF_DEFAULT_OPTS         "--ansi --color=dark --multi --tabstop=2  --preview='bat --color=always {}' --preview-window border-vertical"
 set -gx HORS_ENGINE              "google"
-set     NAVI_CONFIG_YAML         "/home/sugimoto/.config/navi/config.yaml"
 set -gx NPM_CONFIG_USERCONFIG    "/home/sugimoto/.config/npm/npmrc"
 
 set -gx EDITOR   "/usr/bin/kak"
