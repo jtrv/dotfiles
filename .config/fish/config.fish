@@ -88,50 +88,33 @@ end
 
 ######## ALIASES ########
 
-# q to exit
-alias q 'exit'
-
-# root privileges
-alias doas 'doas --'
-alias d    'doas --'
-
-alias ani 'ani-cli -q high'
-alias bc  'kalk'
-alias cat 'bat'
-alias j   'lf'
-alias lg  'lazygit'
-alias pom 'potato'
-
-# git for ~/.cfg
-alias config '/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
-
-# lazygit for ~/.cfg
-alias lc 'lazygit --git-dir=$HOME/.cfg/ --work-tree=$HOME'
-
-# (mons is POSIX, bass runs it in bash)
-alias mons 'bass mons'
-
-# Changing "ls" to "exa"
-alias ls 'exa -l --color=always --group-directories-first --git --icons' # my preferred listing
-alias la 'exa -al --color=always --group-directories-first --git --icons'  # all files and dirs
-alias lh 'exa -al --color=always --group-directories-first --git --icons --ignore-glob="[a-z]*|[A-Z]*|[0-9]*"'
-alias ll 'exa -l --color=always --group-directories-first --git --icons'  # long format
-alias lt 'exa -aT --color=always --group-directories-first --git --icons' # tree listing
-
-# get fastest mirrors
-alias mirror  "doas reflector --save /etc/pacman.d/mirrorlist --protocol https --country US --latest 200 --sort age"
-
-# change bg
-alias newbg 'feh --randomize --bg-scale --no-fehbg ~/pictures/wallpapers/'
-
-# use pnpm instead of npm
-alias np  'pnpm'
-alias npx 'pnpm dlx'
+alias ani   'ani-cli -q high' # watch anime in super ultra HD
+alias bc    'kalk'
+alias cat   'bat'
+alias conf  '/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME' # git for config files
+alias doas  'doas --'
+alias j     'lf'
+alias la    'exa -al --color=always --group-directories-first --git --icons' # all files and dirs
+alias lc    'lazygit --git-dir=$HOME/.cfg/ --work-tree=$HOME' # lazygit for config files
+alias lg    'lazygit'
+alias lh    'exa -al --color=always --group-directories-first --git --icons --ignore-glob="[a-z]*|[A-Z]*|[0-9]*"' # hidden
+alias ll    'exa -l --color=always --group-directories-first --git --icons'  # long format
+alias ls    'exa -l --color=always --group-directories-first --git --icons' # my preferred listing
+alias lt    'exa -aT --color=always --group-directories-first --git --icons' # tree listing
+alias mirr  'doas reflector --save /etc/pacman.d/mirrorlist --protocol https --country US --latest 200 --sort age' # update mirrorlist
+alias mons  'bass mons' # use bash for mons (monitor scripts)
+alias new   'alacritty --working-directory (pwd) &' # open a new term in the same dir
+alias newbg 'feh --randomize --bg-scale --no-fehbg ~/pictures/wallpapers/' # change bg
+alias np    'pnpm'
+alias npx   'pnpm dlx'
+alias off   'systemctl suspend' # save state, enter low-power mode
+alias pom   'potato' # shell pomodoro timer
+alias q     'exit'
 
 
 ######## KAKOUNE ########
 
-# kakoune as manpager
+# man with fallbacks in kakoune
 function man
   if /usr/bin/man -w $argv > /dev/null
     kak -e "man $argv"
