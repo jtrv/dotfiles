@@ -96,10 +96,6 @@ hook global WinSetOption filetype=(javascript|html) %{
   map buffer dev e -docstring "emmet" ':emmet <ret>'
 }
 
-hook global WinSetOption filetype=(markdown) %{
-  autowrap-enable
-}
-
 hook global BufCreate 'COMMIT_EDITMSG' %{
   execute-keys ":autowrap-enable<ret>"
 }
