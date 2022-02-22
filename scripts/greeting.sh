@@ -1,8 +1,10 @@
 #!/bin/bash
 
+GREETING=$HOME/.config/greeting
+
 wttr > $GREETING &&
 iching >> $GREETING &&
-printf "\nHACKER_NEWS:\n\n" >> $GREETING
+printf "\nHACKER_NEWS:\n\n" >> $GREETING &&
 
 HN_TOP10=$(\
   xh -b "https://hacker-news.firebaseio.com/v0/topstories.json?prettyprint=true" |\
