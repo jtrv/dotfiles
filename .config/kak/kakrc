@@ -96,10 +96,6 @@ hook global BufCreate filetype=(javascript|html) %{
   map buffer dev e -docstring "emmet" ':emmet <ret>'
 }
 
-hook global WinSetOption filetype=(markdown) %{
-  autowrap-enable
-}
-
 hook global BufCreate 'COMMIT_EDITMSG' %{
   execute-keys ":autowrap-enable<ret>"
 }
@@ -156,8 +152,14 @@ define-command how -docstring "print an answer for the given question from stack
   kakpipe -n how -- hors -a -n 2 -p never %arg{@}
 }
 
-hook global WinDisplay '\*greeting\*|\*tldr\*|\*man\*' %{
+define-command reader-mode -docstring "enables settings for better reading" %{
   hide-whitespaces
+  map buffer normal d <c-d>
+  map buffer normal u <c-u>
+  map buffer normal q ':quit<ret>'
+}
+hook global WinDisplay '\*greeting\*|\*tldr\*|\*man \w+\*' %{
+  reader-mode
 }
 
 ###################### NORMAL MODE ###################### 
@@ -168,8 +170,9 @@ hook global WinDisplay '\*greeting\*|\*tldr\*|\*man\*' %{
 map global normal <space> , -docstring "leader-key"
 map global user   <space> : -docstring "prompt"
 
-map global prompt <c-n> <tab>
-map global prompt <c-p> <s-tab>
+map global prompt <c-n> <tab>   -docstring "next completion"
+map global prompt <c-p> <s-tab> -docstring "previous completion"
+
 
 map global normal w b         -docstring "select previous word"
 map global normal W B         -docstring "extend previous word"
@@ -237,12 +240,6 @@ map global normal <c-s> -docstring "grep picker (buffer)"  ': connect terminal k
 
 ################# MODES ##################
 
-hook global WinSetOption filetype=(man) %{
-  hide-whitespaces
-  map buffer normal d <c-d>
-  map buffer normal u <c-u>
-}
-
 # Plugin manager
 map global user = -docstring "plug"   ':plug-list <ret>'
 
@@ -295,18 +292,19 @@ plug "gustavo-hms/peneira" %{
     }
   }
   define-command peneira-file %{
+    peneira-files-configure-buffer
     peneira 'files: ' %{ fd -t f . } %{
       edit %arg{1}
     }
   }
-define-command peneira-grep -params 1 %{
-  peneira 'line: ' "rg -n %arg{1}" %{
-    lua %arg{1} %{
-      local file, line = arg[1]:match("([^:]+):(%d+):")
-      kak.edit(file, line)
+  define-command peneira-grep -params 1 %{
+    peneira 'line: ' "rg -n %arg{1}" %{
+      lua %arg{1} %{
+        local file, line = arg[1]:match("([^:]+):(%d+):")
+        kak.edit(file, line)
+      }
     }
   }
-}
   declare-user-mode find
   map global user f -docstring "find"    ':enter-user-mode find <ret>'
   map global find b -docstring "buffer"  ':peneira-buffers <ret>'
