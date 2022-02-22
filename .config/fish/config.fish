@@ -132,12 +132,12 @@ alias npx 'pnpm dlx'
 
 # kakoune as manpager
 function man
-set HAS_MANUAL (/usr/bin/man $argv | rg "No manual entry for $argv" | wc -l)
-  if [ $HAS_MANUAL = 0 ]
-    kak -e "kakpipe -n $argv -- $argv --help"
-  end
-  if [ $HAS_MANUAL = 1 ]
+  if /usr/bin/man -w $argv > /dev/null
     kak -e "man $argv"
+  else if /usr/bin/tldr $argv > /dev/null
+    kak -e "kakpipe -n tldr -- tldr --color=always $argv"
+  else
+    kak -e "kakpipe -n help -- $argv --help"
   end
 end
 
