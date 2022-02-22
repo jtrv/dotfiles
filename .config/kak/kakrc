@@ -64,7 +64,7 @@ plug "alexherbo2/show-whitespaces.kak" %{
 ############### FORMAT/LINT ###############
 
 # Empty scratch buffer
-hook global WinCreate '\*scratch\*' %{ execute-keys '%<a-d>' }
+hook global WinDisplay '\*scratch\*' %{ execute-keys '%<a-d>' }
 
 plug "alexherbo2/indent.kak" %{
   enable-detect-indent
@@ -91,7 +91,7 @@ source "~/.config/kak/languages/json"
 source "~/.config/kak/languages/markdown"
 
 # Emmet completions using npm emmet-cli
-hook global WinSetOption filetype=(javascript|html) %{
+hook global BufCreate filetype=(javascript|html) %{
   define-command emmet %{ execute-keys "giGl| emmet <ret>" }
   map buffer dev e -docstring "emmet" ':emmet <ret>'
 }
@@ -156,7 +156,7 @@ define-command how -docstring "print an answer for the given question from stack
   kakpipe -n how -- hors -a -n 2 -p never %arg{@}
 }
 
-hook global WinDisplay '\*greeting\*|\*tldr\*' %{
+hook global WinDisplay '\*greeting\*|\*tldr\*|\*man\*' %{
   hide-whitespaces
 }
 
@@ -168,6 +168,9 @@ hook global WinDisplay '\*greeting\*|\*tldr\*' %{
 map global normal <space> , -docstring "leader-key"
 map global user   <space> : -docstring "prompt"
 
+map global prompt <c-n> <tab>
+map global prompt <c-p> <s-tab>
+
 map global normal w b         -docstring "select previous word"
 map global normal W B         -docstring "extend previous word"
 map global normal <a-w> <a-b> -docstring "select previous BIG-WORD"
@@ -177,8 +180,8 @@ map global normal <esc> <space> -docstring "deselect all but current selection"
 
 #########AUGMENTATION
 
-map global normal D -docstring "vim D"         'Gld'
-map global normal Y -docstring "yank to end"   'Gly'
+map global normal D -docstring "Delete to end" ';Gld'
+map global normal Y -docstring "yank to end"   ';Gly'
 
 map global normal J -docstring "select next line"       'J<a-x>'
 map global normal K -docstring "select previous line"   'K<a-x>'
@@ -422,3 +425,5 @@ plug "JacobTravers/kakoune-grep-write"%{
   }
 }
 map global user / -docstring "search"   ':grep '
+
+plug "occivink/kakoune-snippets"
