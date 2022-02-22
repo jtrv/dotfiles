@@ -1,10 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env sh
 
 GREETING=$HOME/.config/greeting
-
-wttr > $GREETING &&
-iching >> $GREETING &&
-printf "\nHACKER_NEWS:\n\n" >> $GREETING &&
 
 HN_TOP10=$(\
   xh -b "https://hacker-news.firebaseio.com/v0/topstories.json?prettyprint=true" |\
@@ -12,9 +8,13 @@ HN_TOP10=$(\
   head --lines=7 -
 )
 
+wttr > $GREETING &&
+iching >> $GREETING &&
+printf "\nHACKER_NEWS:\n\n" >> $GREETING
+
 for HN_ID in $HN_TOP10; do
   xh -b "https://hacker-news.firebaseio.com/v0/item/$HN_ID.json" | \
-    jq -r '.title, .url' >> $GREETING
+  jq -r '.title' >> $GREETING
   printf "https://news.ycombinator.com/item?id=$HN_ID\n\n" >> $GREETING
 done &&
 
