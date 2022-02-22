@@ -29,9 +29,6 @@ fi
 
 xrandr --output virtual-1 --mode 1920x1080
 
-# randomized wallpapers
-feh --randomize --bg-scale --no-fehbg ~/pictures/wallpapers/ &
-
 dunst &                             # notifications
 ntpd start &                        # time-sync
 picom -f &                          # allow for opacities
@@ -42,5 +39,8 @@ udiskie -An --terminal=lf &         # notify mountable drives
 ~/scripts/rclone-init.sh &          # start rclone daemons
 setxkbmap us -option ctrl:nocaps && # *holding* capslock = ctrl
 xcape -e 'Control_L=Escape' &       # *tapping* capslock = escape
+
+# randomized wallpapers
+feh --randomize --bg-scale --no-fehbg ~/pictures/wallpapers/ &
 
 exec spectrwm
