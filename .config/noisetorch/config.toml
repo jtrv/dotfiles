@@ -1,0 +1,8 @@
+Threshold = 20
+DisplayMonitorSources = true
+EnableUpdates = true
+GuiltTripped = false
+FilterInput = true
+FilterOutput = false
+LastUsedInput = "alsa_input.usb-FIFINE_Microphones_FIFINE_K780A_Microphone_REV1.0-00.analog-stereo"
+LastUsedOutput = ""
