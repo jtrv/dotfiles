@@ -29,15 +29,17 @@ fi
 
 xrandr --output virtual-1 --mode 3440x1440
 
-dunst &                             # notifications
-ntpd start &                        # time-sync
-picom -f &                          # allow for opacities
-redshift -l 34:-119 -b 1.0:0.6 &    # bluelight filter
-syncthing &                         # sync logseq notes
-udiskie -An --terminal=lf &         # notif for mountable drives
-~/scripts/rclone-init.sh &          # start rclone daemons
-setxkbmap us -option ctrl:nocaps && # *holding* capslock = ctrl
-xcape -e 'Control_L=Escape' &       # *tapping* capslock = escape
+clipcatd &                           # clipboard cache
+dunst &                              # notifications
+easyeffects --gapplication-service & # autoEQ service
+ntpd start &                         # time-sync
+picom -f &                           # allow for opacities
+redshift -l 34:-119 -b 1.0:0.6 &     # bluelight filter
+syncthing &                          # sync logseq notes
+udiskie -An --terminal=lf &          # notif for mountable drives
+~/scripts/rclone-init.sh &           # start rclone daemons
+setxkbmap us -option ctrl:nocaps &&  # *holding* capslock = ctrl
+xcape -e 'Control_L=Escape' &        # *tapping* capslock = escape
 
 # randomized wallpapers
 feh --randomize --bg-scale --no-fehbg ~/pictures/wallpapers/ &
