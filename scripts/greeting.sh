@@ -8,7 +8,7 @@ HN_TOP10=$(\
   head --lines=7 -
 )
 
-wttr > $GREETING &&
+~/scripts/weather.sh > $GREETING &&
 iching >> $GREETING &&
 printf "\nHACKER_NEWS:\n\n" >> $GREETING
 
