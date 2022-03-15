@@ -155,11 +155,12 @@ define-command how -docstring "print an answer for the given question from stack
 
 define-command reader-mode -docstring "enables settings for better reading" %{
   hide-whitespaces
+  rainbow-disable-window
   map buffer normal d <c-d>
   map buffer normal u <c-u>
   map buffer normal q ':quit<ret>'
 }
-hook global WinDisplay '\*greeting\*|\*tldr\*|\*man \w+\*' %{
+hook global WinDisplay '\*greeting\*|\*tldr\*|\*man \w+\*|\*help\*' %{
   reader-mode
 }
 
