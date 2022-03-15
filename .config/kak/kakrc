@@ -143,7 +143,7 @@ plug "eburghar/kakship" do %{
 }
 
 # Use ripgrep instead of grep
-set global grepcmd 'rg --column'
+set global grepcmd 'rg --column --smart-case'
 
 define-command tldr -docstring "print a cheatsheet for the given console command" -shell-completion -params 1.. %{
   kakpipe -n tldr -- tldr --color always %arg{@}
