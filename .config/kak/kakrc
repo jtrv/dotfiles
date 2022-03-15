@@ -68,7 +68,6 @@ hook global WinCreate '\*scratch\*' %{ execute-keys '%<a-d>' }
 
 plug "alexherbo2/indent.kak" %{
   enable-detect-indent
-  enable-auto-indent
   set-indent global 2
 }
 
