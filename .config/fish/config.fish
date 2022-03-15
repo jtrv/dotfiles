@@ -114,14 +114,27 @@ alias q      'exit'
 
 ######## KAKOUNE ########
 
-# man with fallbacks in kakoune
-function man
-  if /usr/bin/man -w $argv > /dev/null
-    kak -e "man $argv"
-  else if /usr/bin/tldr $argv > /dev/null
-    kak -e "kakpipe -n tldr -- tldr --color=always $argv"
+# view manpage
+function kakman
+  kak -e "man $argv"
+end
+
+# view '--help' output
+function kelp
+  kak -e "kakpipe -n help -- $argv --help"
+end
+
+# view tldr
+function kldr
+  kak -e "kakpipe -n tldr -- tldr --color=always $argv"
+end
+
+# manpage with fallback to help output
+function kan
+  if man -w $argv > /dev/null
+    kakman $argv
   else
-    kak -e "kakpipe -n help -- $argv --help"
+    kelp $argv
   end
 end
 
@@ -164,7 +177,7 @@ set -gx NPM_CONFIG_USERCONFIG    "/home/sugimoto/.config/npm/npmrc"
 
 set -gx EDITOR   "/usr/bin/kak"
 set -gx VISUAL   "/usr/bin/kak"
-set -gx MANPAGER "/usr/bin/cat" # see 'man' function
+set -gx MANPAGER "/usr/bin/bat" # see 'kan' function
 
 set -gx GOPATH "/home/sugimoto/.go"
 
