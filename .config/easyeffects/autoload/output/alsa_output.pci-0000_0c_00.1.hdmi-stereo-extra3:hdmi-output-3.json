@@ -1,0 +1,6 @@
+{
+    "device": "alsa_output.pci-0000_0c_00.1.hdmi-stereo-extra3",
+    "device-description": "Navi 10 HDMI Audio Digital Stereo (HDMI 4)",
+    "device-profile": "hdmi-output-3",
+    "preset-name": "DIRECT"
+}
