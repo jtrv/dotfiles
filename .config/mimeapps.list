@@ -3,6 +3,12 @@ image/jpeg=feh.desktop;
 image/png=feh.desktop;
 text/plaintext=kcr.desktop;
 video/h264=mpv.desktop;
+text/html=kcr.desktop;
 
 [Default Applications]
 x-scheme-handler/terminal=Alacritty.desktop;
+text/html=firefox.desktop
+x-scheme-handler/http=firefox.desktop
+x-scheme-handler/https=firefox.desktop
+x-scheme-handler/about=firefox.desktop
+x-scheme-handler/unknown=firefox.desktop
