@@ -1,5 +1,6 @@
 add_newline = false
 format = """\
+${custom.kaklsp_progress}\
 ${custom.kakcursor}\
 ${custom.kakposition}\
 ${custom.kakmode}\
@@ -9,6 +10,8 @@ ${custom.kakfile}\
 ${custom.kakfiletype}\
 ${custom.kaklsp_err}\
 ${custom.kaklsp_warn}\
+${custom.kaklsp_hint}\
+${custom.kaklsp_code_actions}\
 $package\
 $git_branch\
 $git_commit\
@@ -21,32 +24,32 @@ $time\
 ${custom.kaktime}"""
 
 [time]
-format = "[]($style)[  $time ]($style)"
-style = "fg:black bg:purple"
+format = "[]($style)[  $time ]($style)"
+style = "fg:#1E2227 bg:#B1A3DF"
 time_format = "%H:%M"
 disabled = false
 
 [git_branch]
-format = '[  $branch]($style)'
-style = 'fg:yellow dimmed italic'
-truncation_length = 9223372036854775807
+format = '[  $branch ]($style)'
+style = 'fg:#5C8EC7'
+truncation_length = 12
 truncation_symbol = '…'
 only_attached = false
 always_show_remote = true
 disabled = false
 
 [git_commit]
-format = '[ \($hash$tag\)]($style)'
-style = 'fg:yellow dimmed'
+style = 'fg:#BB8E67'
+format = '[ $hash$tag ]($style)'
 commit_hash_length = 7
 only_detached = false
-tag_symbol = '笠'
+tag_symbol = ' 笠'
 tag_disabled = false
 disabled = false
 
 [git_state]
 format = '\( [$state($progress_current/$progress_total)]($style)\)'
-style = 'fg:yellow dimmed'
+style = 'fg:#BB8E67'
 rebase = 'REBASING'
 merge = 'MERGING'
 revert = 'REVERTING'
@@ -57,8 +60,8 @@ am_or_rebase = 'AM/REBASE'
 disabled = false
 
 [git_status]
-format = '[ \[$all_status$ahead_behind\]]($style)[  ]($style)'
-style = 'fg:yellow dimmed bold'
+style = 'fg:#8BBE67 bold'
+format = '[ \[$all_status$ahead_behind\] ]($style)'
 stashed = '\$'
 ahead = '⇡${count}'
 behind = '⇣${count}'
@@ -72,123 +75,120 @@ untracked = '?'
 disabled = false
 
 [directory]
-format = '[]($style)[$read_only]($read_only_style)[$path]($style)'
+format = '[]($style)[$read_only]($read_only_style)[$path]($style)'
 truncation_length = 3
 truncate_to_repo = false
 fish_style_pwd_dir_length = 0
 use_logical_path = true
-style = 'bg:purple fg:black'
-read_only_style = 'bg:blue fg:200'
+style = 'bg:#B1A3DF fg:#1E2227'
+read_only_style = 'bg:#5C8EC7 fg:200'
 read_only = '[]'
-truncation_symbol = ' '
+truncation_symbol = '…'
 disabled = false
 
 [directory.substitutions]
-"~/.config" = "CFG"
-"~/mxs/drive" = "MXS"
-"~/mxs/ftp" = "MXS"
-"~/mxs/projects" = "MXS"
+"~/.config" = ""
 "~" = " "
 
 [package]
 format = '[  $version]($style)[ ]($style)'
-style = 'cyan'
+style = '#5CBE97'
 display_private = true
 disabled = false
 
 [battery]
-format = "[ $symbol $percentage ]($style)"
+format = "[ $symbol$percentage]($style) "
 charging_symbol = ' '
 discharging_symbol = ' '
 disabled = false
 
 [[battery.display]]
 threshold = 10
-style = "red dimmed"
+style = "#E07093"
 charging_symbol = ' '
 discharging_symbol = ' '
 
 [[battery.display]]
 threshold = 20
-style = "red dimmed"
+style = "#E07093"
 charging_symbol = ' '
 discharging_symbol = ' '
 
 [[battery.display]]
 threshold = 30
-style = "yellow dimmed"
+style = "#BB8E67"
 charging_symbol = ' '
 discharging_symbol = ' '
 
 [[battery.display]]
 threshold = 40
-style = "yellow dimmed"
-charging_symbol = ''
-discharging_symbol = ''
+style = "#BB8E67"
+charging_symbol = ' '
+discharging_symbol = ' '
 
 [[battery.display]]
 threshold = 50
-style = "blue dimmed"
-charging_symbol = ''
-discharging_symbol = ''
+style = "#5C8EC7"
+charging_symbol = ' '
+discharging_symbol = ' '
 
 [[battery.display]]
 threshold = 60
-style = "blue dimmed"
-charging_symbol = ''
-discharging_symbol = ''
+style = "#5C8EC7"
+charging_symbol = ' '
+discharging_symbol = ' '
 
 [[battery.display]]
 threshold = 70
-style = "blue dimmed"
-charging_symbol = ''
-discharging_symbol = ''
+style = "#5C8EC7"
+charging_symbol = ' '
+discharging_symbol = ' '
 
 [[battery.display]]
 threshold = 80
-style = "green dimmed"
-charging_symbol = ''
-discharging_symbol = ''
+style = "#8BBE67"
+charging_symbol = ' '
+discharging_symbol = ' '
 
 [[battery.display]]
 threshold = 90
-style = "green dimmed"
-charging_symbol = ''
-discharging_symbol = ''
+style = "#8BBE67"
+charging_symbol = ' '
+discharging_symbol = ' '
 
 [[battery.display]]
 threshold = 100
-style = "green dimmed"
-charging_symbol = ''
-discharging_symbol = ''
+style = "#8BBE67"
+charging_symbol = ' '
+discharging_symbol = ' '
 
 [memory_usage]
 format = "[  ${ram}]($style)"
-style = "fg:bright-cyan"
+style = "fg:#A0C4BD"
 threshold = -1
 disabled = true
 
 [custom.kakfile]
 description = 'The current Kakoune buffername'
-format = '[/$output]($style)[](fg:purple)'
-style = 'bg:purple fg:black bold'
-command = 'basename $kak_buffile'
+style = 'bg:#B1A3DF fg:#1E2227 bold'
+format = '[/$output ]($style)[]($style inverted)'
+command = 'echo -n ${kak_buffile##*/}'
 when = 'true'
 shell = ['sh']
 disabled = false
 
 [custom.kaksession]
 description = 'The current Kakoune session'
-format = '[]($style)[  %val{client}:%val{session} ]($style)[]($style inverted)'
-style = 'bg:yellow fg:black italic'
+style = 'bg:#BB8E67 fg:#1E2227 italic'
+format = '[]($style)[  %val{client}:%val{session} ]($style)[]($style inverted)'
 when = ''
 shell = ['true']
 disabled = true
 
 [custom.kakcursor]
 description = 'The current Kakoune cursor position'
-format = '[%val{cursor_line}:%val{cursor_char_column}]($style)[ ]($style)'
-style = 'fg:green dimmed'
+style = 'fg:#8BBE67'
+format = '[%val{cursor_line}:%val{cursor_char_column} ]($style)'
 when = ''
 shell = ['true']
 disabled = false
@@ -216,9 +216,8 @@ disabled = true
 
 [custom.kakposition]
 description = 'Relative position of the cursor inside the buffer'
-format = '[$symbol$output]($style)[ ]($style)'
-style = 'fg:yellow dimmed'
-symbol = '  '
+style = 'fg:#BB8E67'
+format = '[  $output]($style)[ ]($style)'
 command = 'echo -n $(($kak_cursor_line * 100 / $kak_buf_line_count))%'
 when = '[ -n "$kak_cursor_line" ]'
 shell = ['sh']
@@ -226,24 +225,48 @@ disabled = false
 
 [custom.kaktime]
 description = "Alternate time segment using kakoune evaluation"
-format = "[]($style)[  %sh{date +%T} ]($style)"
-style = "fg:black bg:bright-green"
+format = "[]($style)[  %sh{date +%T} ]($style)"
+style = "fg:#1E2227 bg:bright-green"
 when = ''
 shell = ['true']
 disabled = true
 
 [custom.kaklsp_err]
-description = "Show errors number from kak-lsp"
+description = "Show errors number from kak-lsp if any"
 format = "[  %opt{lsp_diagnostic_error_count}]($style)"
-style = "red bold"
+style = "fg:#E07093 bold"
 when = '[ -n "$kak_opt_lsp_diagnostic_error_count" -a "$kak_opt_lsp_diagnostic_error_count" -ne 0 ]'
 shell = ['sh']
 disabled = false
 
 [custom.kaklsp_warn]
-description = "Show warnings number from kak-lsp"
-format = "[  %opt{lsp_diagnostic_warning_count}]($style)"
-style = "yellow bold"
+description = "Show warnings number from kak-lsp if any"
+format = "[  %opt{lsp_diagnostic_warning_count} ]($style)"
+style = "#C3B470 bold"
 when = '[ -n "$kak_opt_lsp_diagnostic_warning_count" -a "$kak_opt_lsp_diagnostic_warning_count" -ne 0 ]'
+shell = ['sh']
+disabled = false
+
+[custom.kaklsp_hint]
+description = "Show hints number from kak-lsp if any"
+format = "[ %opt{lsp_diagnostic_hint_count} ﯦ ]($style)"
+style = "#A0A4AA bold"
+when = '[ -n "$kak_opt_lsp_diagnostic_hint_count" -a "$kak_opt_lsp_diagnostic_hint_count" -ne 0 ]'
+shell = ['sh']
+disabled = false
+
+[custom.kaklsp_code_actions]
+description = "Show lsp code actions"
+format = "[ %opt{lsp_modeline_code_actions} ]($style)"
+style = "fg:#BB8E67 bold"
+when = '[ -n "$kak_opt_lsp_modeline_code_actions" ]'
+shell = ['sh']
+disabled = true
+
+[custom.kaklsp_progress]
+description = "Show activity of kak-lsp if any"
+format = "[ ]($style)"
+style = "#A0A4AA bold"
+when = '[ -n "$kak_opt_lsp_modeline_progress" ]'
 shell = ['sh']
 disabled = false
