@@ -17,19 +17,27 @@
     # will be ignored.
     follow = mouse
 
-    # The geometry of the window:
-    #   [{width}]x{height}[+/-{x}+/-{y}]
-    # The geometry of the message window.
-    # The height is measured in number of notifications everything else
-    # in pixels.  If the width is omitted but the height is given
-    # ("-geometry x2"), the message window expands over the whole screen
-    # (dmenu-like).  If width is 0, the window expands to the longest
-    # message displayed.  A positive x is measured from the left, a
-    # negative from the right side of the screen.  Y is measured from
-    # the top and down respectively.
-    # The width can be negative.  In this case the actual width is the
-    # screen width minus the width defined in within the geometry option.
-    geometry = "500x0-30+20"
+    ### Geometry ###
+
+    # dynamic width from 0 to 300
+    # width = (0, 300)
+    # constant width of 300
+    width = 300
+
+    # The maximum height of a single notification, excluding the frame.
+    height = 500
+
+    # Position the notification in the top right corner
+    origin = top
+
+    # Offset from the origin
+    offset = 0
+
+    # Scale factor. It is auto-detected if value is 0.
+    scale = 0
+
+    # Maximum number of notification (0 means no limit)
+    notification_limit = 0
 
     # Show how many messages are currently hidden (because of geometry).
     indicate_hidden = yes
@@ -131,6 +139,10 @@
     # Possible values are "left", "center" and "right".
     alignment = center
 
+    # Vertical alignment of message text and icon.
+    # Possible values are "top", "center" and "bottom".
+    vertical_alignment = center
+
     # Show age of message if message is older than show_age_threshold
     # seconds.
     # Set to -1 to disable.
@@ -161,6 +173,9 @@
     # Align icons left/right/off
     icon_position = left
 
+    # Vertical alignment of message text and icon.
+    # Possible values are "top", "center" and "bottom".
+    vertical_alignment = center
     # Scale larger icons down to this size, set to 0 to disable
     max_icon_size = 32
 
@@ -182,7 +197,7 @@
     dmenu = /usr/bin/dmenu -p dunst:
 
     # Browser for opening urls in context menu.
-    browser = /usr/bin/firefox-developer-edition
+    browser = /usr/bin/xdg-open
 
     # Always run rule-defined scripts, even if the notification is suppressed
     always_run_script = true
@@ -249,28 +264,6 @@
     # where there are multiple screens with very different dpi values.
     per_monitor_dpi = false
 
-[shortcuts]
-
-    # Shortcuts are specified as [modifier+][modifier+]...key
-    # Available modifiers are "ctrl", "mod1" (the alt-key), "mod2",
-    # "mod3" and "mod4" (windows-key).
-    # Xev might be helpful to find names for keys.
-
-    # Close notification.
-    close = ctrl+space
-
-    # Close all notifications.
-    close_all = ctrl+shift+space
-
-    # Redisplay last message(s).
-    # On the US keyboard layout "grave" is normally above TAB and left
-    # of "1". Make sure this key actually exists on your keyboard layout,
-    # e.g. check output of 'xmodmap -pke'
-    history = ctrl+grave
-
-    # Context menu.
-    context = ctrl+shift+period
-
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
@@ -278,13 +271,13 @@
     foreground = "#ffffff"
     timeout = 7
     # Icon for notifications with low urgency, uncomment to enable
-    
+
 [urgency_normal]
     background = "#2b2b2b"
     foreground = "#ffffff"
     timeout = 7
     # Icon for notifications with normal urgency, uncomment to enable
-    
+
 [urgency_critical]
     background = "#900000"
     foreground = "#ffffff"
