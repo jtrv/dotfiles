@@ -1,3 +1,16 @@
+/* dark background in new tabs without a white flash (with tridactyl newtab) @see: https://github.com/tridactyl/tridactyl/issues/2510 */
+:root {
+  --tridactyl-bg: #1d1b19 !important;
+  --tridactyl-fg: white !important;
+}
+
+/* set the background color of the new tab page (without tridactyl or with tridactyl without newtab) */
+@-moz-document url-prefix(about:home), url-prefix(about:newtab) {
+  body {
+    background: #1d1b19;
+  }
+}
+
 /* Hide the tab bar at the top */
 #main-window[tabsintitlebar="true"]:not([extradragspace="true"]) #TabsToolbar > .toolbar-items {
   opacity: 0;
@@ -7,24 +20,24 @@
     visibility: collapse !important;
 }
 #nav-bar:not([customizing="true"]):not([inFullscreen]) {
-	min-height: 1px !important;
-	max-height: 0px !important;
-	margin-top: 1px !important;
-	margin-bottom: -1px !important;
-	transition: all 50ms linear 0s !important;
-	z-index: -5 !important;
+  min-height: 1px !important;
+  max-height: 0px !important;
+  margin-top: 1px !important;
+  margin-bottom: -1px !important;
+  transition: all 50ms linear 0s !important;
+  z-index: -5 !important;
 }
 #navigator-toolbox:hover:not([inFullscreen]) :-moz-any(#nav-bar),
 #navigator-toolbox:focus-within :-moz-any(#nav-bar) {
-	min-height: 32px !important;
-	max-height: 32px !important;
-	margin-top: 1px !important;
-	margin-bottom: -32px !important;
-	transition: all 50ms linear 0s !important;
-	z-index: 5 !important;
+  min-height: 32px !important;
+  max-height: 32px !important;
+  margin-top: 1px !important;
+  margin-bottom: -32px !important;
+  transition: all 50ms linear 0s !important;
+  z-index: 5 !important;
 }
 #urlbar {
-	--urlbar-toolbar-height: 32px !important;
+  --urlbar-toolbar-height: 32px !important;
 }
 
 /* Hide sidebar on fullscreen */
