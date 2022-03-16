@@ -9,6 +9,10 @@ bind <space><space> fillcmdline_notrail
 " ! to open a new tab with a duckduckgo !bang
 bind ! fillcmdline_notrail tabopen !
 "
+" JK for tree style tabs
+bind J tabnext
+bind K tabprev
+"
 " g keys to match kakoune
 bind gj scrollto 100
 bind gk scrollto 0
@@ -35,8 +39,9 @@ command discardall jsb browser.tabs.query({}).then(ts => browser.tabs.discard(ts
 "
 "
 " MISC SETTINGS
+"
 " replace default newtab behavior
-set newtab about:newtab
+set newtab about:blank
 "
 " Defaults to 300ms but I'd rather move fast and break things
 set hintdelay 100
