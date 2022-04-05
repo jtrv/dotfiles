@@ -30,6 +30,12 @@ fish_style_pwd_dir_length = 1
 symbol = "🐋 "
 disabled = false
 
+[gcloud]
+format = 'on [$symbol$account(@$domain)(\($project\))]($style) '
+style = "bold yellow"
+symbol = "☁️  "
+disabled = true
+
 # git
 [git_commit]
 commit_hash_length = 4
