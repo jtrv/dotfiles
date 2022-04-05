@@ -145,9 +145,9 @@ complete -c kldr -w man
 
 # manpage with fallback to help output
 function kan
-  if man -w $argv > /dev/null
+  if man -w $argv &> /dev/null
     kakman $argv
-  else
+  else if $argv --help &> /dev/null
     kelp $argv
   end
 end
