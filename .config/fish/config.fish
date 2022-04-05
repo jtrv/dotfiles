@@ -128,16 +128,20 @@ alias rm     'rm -i'
 function kakman
   kak -e "man $argv"
 end
+complete -c kakman -w man
 
 # view '--help' output
 function kelp
   kak -e "kakpipe -n help -- $argv --help"
 end
+complete -c kelp -w man
 
 # view tldr
 function kldr
   kak -e "kakpipe -n tldr -- tldr --color=always $argv"
 end
+complete -c kldr -w man
+
 
 # manpage with fallback to help output
 function kan
@@ -147,6 +151,7 @@ function kan
     kelp $argv
   end
 end
+complete -c kan -w man
 
 # kakoune grep
 function kg
