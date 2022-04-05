@@ -72,6 +72,13 @@ plug "alexherbo2/indent.kak" %{
   set-indent global 2
 }
 
+plug "andreyorst/smarttab.kak" %{
+  hook global BufCreate .* %{
+      editorconfig-load
+      autoconfigtab
+  }
+}
+
 # lint/format etc mode
 declare-user-mode dev
   map global dev d -docstring "diagnostic"   ':lsp-diagnostics <ret>'
@@ -129,6 +136,7 @@ plug "eburghar/kakpipe" do %{
 require-module kakpipe
 
 plug "https://gitlab.com/Screwtapello/kakoune-repl-buffer"
+
 plug "JacobTravers/kakoune-sudo-write" %{
   alias global sw 'sudo-write'
   alias global swq 'sudo-write-quit'
