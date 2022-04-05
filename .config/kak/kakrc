@@ -5,9 +5,9 @@
 source "~/.config/kak/plugins/plug.kak/rc/plug.kak"
 plug "andreyorst/plug.kak" noload
 
-# interface for external programs (kakoune.cr)
+# interface for external programs (kampliment)
 evaluate-commands %sh{
-  kcr init kakoune
+  kamp init -a -e EDITOR='kamp edit'
 }
 
 # extend kak with lua
@@ -236,10 +236,10 @@ map global normal +     -docstring "New popup"      ':connect popup <ret>'
 map global normal <c-h> -docstring "lf"        ':connect terminal lf <ret>'
 map global normal <c-l> -docstring "lazygit"   ':connect terminal lazygit <ret>'
 
-map global normal B     -docstring "buffer picker"         ': connect terminal kcr fzf buffers<ret>'
-map global normal <c-k> -docstring "file picker"           ': connect terminal kcr fzf files<ret>'
-map global normal <c-g> -docstring "grep picker"           ': connect terminal kcr fzf grep<ret>'
-map global normal <c-s> -docstring "grep picker (buffer)"  ': connect terminal kcr fzf grep %val{buflist}<ret>'
+map global normal B     -docstring "buffer picker"         ': connect terminal kamp-buffers<ret>'
+map global normal <c-k> -docstring "file picker"           ': connect terminal kamp-files<ret>'
+map global normal <c-g> -docstring "grep picker"           ': connect terminal kamp-grep<ret>'
+map global normal <c-s> -docstring "grep picker (buffer)"  ': connect terminal kamp-grep %val{buflist}<ret>'
 
 ################# MODES ##################
 
