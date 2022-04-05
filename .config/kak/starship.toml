@@ -88,7 +88,7 @@ disabled = false
 
 [directory.substitutions]
 "~/.config" = ""
-"~" = " "
+"~" = ""
 
 [package]
 format = '[  $version]($style)[ ]($style)'
