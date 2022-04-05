@@ -2,10 +2,13 @@ fish_vi_key_bindings
 
 ######## SOURCE ########
 
+# better history
+mcfly init fish | source
+
 # better prompt
 starship init fish | source
 
-# smarter 'cd' (z)
+# better 'cd' (z)
 zoxide init fish | source
 
 # tabtab source for packages
@@ -87,7 +90,6 @@ end
 if status --is-interactive
   abbr --add --global cp   'cp -i'
   abbr --add --global mv   'mv -i'
-  abbr --add --global rm   'rm -i'
   abbr --add --global npin 'license MIT && gitignore node && covgen jtravers@tutanota.com && npm init -y && volta pin node@lts && git init'
   abbr --add --global gitbit 'git commit --amend --no-edit --date "Sat 01 Jan 2022 16:20:07 PST"'
 end
@@ -117,6 +119,7 @@ alias npx    'pnpm dlx'
 alias off    'systemctl suspend' # save state, enter low-power mode
 alias pom    'potato' # shell pomodoro timer
 alias q      'exit'
+alias rm     'rm -i'
 
 
 ######## KAKOUNE ########
@@ -150,20 +153,13 @@ function kg
   kak -e "grep $argv";
 end
 
-# kakoune coderunner
-alias k    'kcr edit'
-alias K    'kcr-fzf-shell'
-alias KK   'K --working-directory .'
-alias ks   'kcr shell --session'
-alias kl   'kcr list'
-alias a    'kcr attach'
-alias :    'kcr send'
-alias :br  'KK broot'
-alias :cat 'kcr cat --raw'
-
-alias val 'kcr get --value'
-alias opt 'kcr get --option'
-alias reg 'kcr get --register'
+alias k       'kamp edit'
+alias kval    'kamp get val'
+alias kopt    'kamp get opt'
+alias kreg    'kamp get reg'
+alias kcd-pwd 'cd "(kamp get sh pwd)"'
+alias kcd-buf 'cd "(dirname (kamp get val buffile))"'
+alias kft     'kamp get -b \* opt filetype | sort | uniq' # list file types you're working on
 
 # Start X at login
 if status is-login
@@ -176,6 +172,7 @@ end
 ######## EXPORTS ########
 
 set -gx fish_greeting
+set -gx MCFLY_FUZZY 2
 
 set -gx CALIBRE_USE_DARK_PALETTE "yes"
 set -gx FZF_DEFAULT_OPTS         "--ansi --color=dark --multi --tabstop=2  --preview='bat --color=always {}' --preview-window border-vertical"
