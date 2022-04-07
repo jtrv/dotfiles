@@ -65,7 +65,7 @@ plug "alexherbo2/show-whitespaces.kak" %{
 ############### FORMAT/LINT ###############
 
 # Empty scratch buffer
-hook global WinCreate '\*scratch\*' %{ execute-keys '%<a-d>' }
+hook global WinDisplay '\*scratch\*' %{ execute-keys '%<a-d>' }
 
 plug "alexherbo2/indent.kak" %{
   enable-detect-indent
@@ -98,7 +98,7 @@ source "~/.config/kak/languages/json"
 source "~/.config/kak/languages/markdown"
 
 # Emmet completions using npm emmet-cli
-hook global WinSetOption filetype=(javascript|html) %{
+hook global BufCreate filetype=(javascript|html) %{
   define-command emmet %{ execute-keys "giGl| emmet <ret>" }
   map buffer dev e -docstring "emmet" ':emmet <ret>'
 }
@@ -194,8 +194,8 @@ map global normal <esc> <space> -docstring "deselect all but current selection"
 
 #########AUGMENTATION
 
-map global normal D -docstring "vim D"         'Gld'
-map global normal Y -docstring "yank to end"   'Gly'
+map global normal D -docstring "Delete to end" ';Gld'
+map global normal Y -docstring "yank to end"   ';Gly'
 
 map global normal J -docstring "select next line"       'J<a-x>'
 map global normal K -docstring "select previous line"   'K<a-x>'
@@ -435,3 +435,5 @@ plug "JacobTravers/kakoune-grep-write"%{
   }
 }
 map global user / -docstring "search"   ':grep '
+
+plug "occivink/kakoune-snippets"
