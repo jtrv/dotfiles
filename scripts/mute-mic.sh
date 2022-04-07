@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # With icon indicating the state of the mic
 state=`amixer -D pulse set Capture toggle | gawk 'match($0, /(Front Left|Mono).*\[(.*)\]/, a) {print a[2]}'`

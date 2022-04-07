@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 amixer -D pulse sset Master toggle;
 VOLUME_LEVEL="$(amixer get Master | awk -F'[][]' 'END{ print $4 }')";
