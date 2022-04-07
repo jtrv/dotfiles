@@ -1,4 +1,5 @@
 #!/bin/bash
+
 ##############################
 #    CPU
 ##############################
@@ -11,6 +12,7 @@ cpu() {
   cpu=$(printf %3d $percent)
   echo -e "$cpu%"
 }
+
 ##############################
 #    RAM
 ##############################
@@ -23,6 +25,7 @@ ram() {
 
   echo -e "$ram%"
 }
+
 ##############################
 #    STORAGE
 ##############################
@@ -30,6 +33,7 @@ ssd() {
   SSD="$(df -h /home | grep /dev | awk '{print $5}')"
     echo -e " $SSD"
 }
+
 ##############################
 #    MIC
 ##############################
@@ -42,12 +46,13 @@ mic() {
     echo ""
   fi
 }
+
 ##############################
 #    NETWORK
 ##############################
-net() {
+network() {
   wire="$(mullvad status | rg Connected | wc -l)"
-  wifi="$(ip a | grep 'enp6s0' | grep 'state UP' | wc -l)"
+  wifi="$(ip a | grep wlp61s0 | grep UP | wc -l)"
 
   if [ $wire = 1 ]; then
     echo ""
@@ -57,10 +62,11 @@ net() {
     echo "睊"
   fi
 }
+
 ##############################
 #    BLUETOOTH
 ##############################
-blu() {
+bluetooth() {
   bluetoothStatus="$(bluetoothctl info | rg 'Connected: yes' | wc -l)"
 
   if [ $bluetoothStatus = 1 ]; then
@@ -69,42 +75,61 @@ blu() {
     echo ""
   fi
 }
+
 ##############################
 #    BATTERY
 ##############################
-# bat() {
-#   batstat="$(cat /sys/class/power_supply/BAT0/status)"
-#   percent="$(cat /sys/class/power_supply/BAT0/capacity)"
-#   if [ $batstat = 'Unknown' ]; then
-#     batstat=""
-#   elif [ $batstat = "Charging" ]; then
-#     batstat=""
-#   elif [[ $percent -ge 5 ]] && [[ $percent -le 19 ]]; then
-#     batstat=""
-#   elif [[ $percent -ge 20 ]] && [[ $percent -le 39 ]]; then
-#     batstat=""
-#   elif [[ $percent -ge 40 ]] && [[ $percent -le 59 ]]; then
-#     batstat=""
-#   elif [[ $percent -ge 60 ]] && [[ $percent -le 79 ]]; then
-#     batstat=""
-#   elif [[ $percent -ge 80 ]] && [[ $percent -le 95 ]]; then
-#     batstat=""
-#   elif [[ $percent -ge 96 ]] && [[ $percent -le 100 ]]; then
-#     batstat=""
-#   fi
+bat() {
+  batstat="$(cat /sys/class/power_supply/BAT0/status)"
+  percent="$(cat /sys/class/power_supply/BAT0/capacity)"
+  if [ $batstat = 'Unknown' ]; then
+    batstat=""
+  elif [ $batstat = "Charging" ]; then
+    batstat=""
+  elif [[ $percent -ge 5 ]] && [[ $percent -le 19 ]]; then
+    batstat=""
+  elif [[ $percent -ge 20 ]] && [[ $percent -le 39 ]]; then
+    batstat=""
+  elif [[ $percent -ge 40 ]] && [[ $percent -le 59 ]]; then
+    batstat=""
+  elif [[ $percent -ge 60 ]] && [[ $percent -le 79 ]]; then
+    batstat=""
+  elif [[ $percent -ge 80 ]] && [[ $percent -le 95 ]]; then
+    batstat=""
+  elif [[ $percent -ge 96 ]] && [[ $percent -le 100 ]]; then
+    batstat=""
+  fi
 
-#   battery=$(printf %3d $percent)
+  battery=$(printf %3d $percent)
 
-#   echo "$batstat$battery%"
-# }
+  echo "$batstat$battery%"
+}
+
 ##############################
 #    VOLUME
 ##############################
-vol() {
-  percent="$(amixer get Master | awk -F'[][]' 'END{ print $2 }')"
-  vol=$(printf %3d $percent)
-  echo -e "$vol%"
-}
+# vol() {
+#   percent="$(amixer get Master | awk -F'[][]' 'END{ print $2 }')"
+#   vol=$(printf %3d $percent)
+#   echo -e "$vol%"
+# }
+
+##############################
+#    WEATHER
+##############################
+# weather() {
+#   wthr="$(sed 20q ~/.config/weather.txt | grep value | awk '{print $2 $3}' | sed 's/"//g')"
+#   echo " $wthr"
+# }
+
+##############################
+#    TEMP
+##############################
+# temp() {
+#   tmp="$(grep temp_F ~/.config/weather.txt | awk '{print $2}' | sed 's/"//g' | sed 's/,/ F/g')"
+#   echo " $tmp"
+# }
+
 ##############################
 #    PACKAGES
 ##############################
@@ -112,6 +137,7 @@ vol() {
 #   pkgs="$(pacman -Q | wc -l)"
 #   echo -e "$pkgs"
 # }
+
 ##############################
 #    UPGRADES
 ##############################
@@ -119,12 +145,13 @@ vol() {
 #   upgrades="$(pacman -Qu | wc -l)"
 #   echo -e "$upgrades"
 # }
+
 ##############################
 #    BAR RENDER
 ##############################
 SLEEP_SEC=2
 #loops forever outputting a line every SLEEP_SEC secs
 while :; do
-  echo "$(cpu)   $(ram)   $(ssd)   | $(vol) | $(mic) $(net) $(blu) |"
+  echo "$(cpu) $(ram) $(ssd) | $(mic) $(network) $(bluetooth) | $(bat) |"
   sleep $sleep_sec
 done

@@ -27,7 +27,7 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
   unset f
 fi
 
-xrandr --output virtual-1 --mode 3440x1440
+xrandr --output virtual-1 --mode 1920x1080
 
 clipcatd &                           # clipboard cache
 dunst &                              # notifications
@@ -43,8 +43,5 @@ xcape -e 'Control_L=Escape' &        # *tapping* capslock = escape
 
 # randomized wallpapers
 feh --randomize --bg-scale --no-fehbg ~/pictures/wallpapers/ &
-
-# software noise-filter for microphone
-noisetorch -i alsa_input.usb-FIFINE_Microphones_FIFINE_K780A_Microphone_REV1.0-00.analog-stereo &
 
 exec spectrwm

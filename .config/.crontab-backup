@@ -6,4 +6,5 @@
 #│ └─────── Hour     (0..23)
 #└───────── Minute   (0..59)
 
+*/5 * * * * ~/bin/low-battery.sh
 */15 * * * * DISPLAY=:0.0 feh --randomize --bg-scale --no-fehbg ~/Pictures/wallpapers/

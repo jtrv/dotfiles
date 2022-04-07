@@ -139,14 +139,19 @@ args = ["--stdio"]
 # # See https://github.dev/eclipse/eclipse.jdt.ls
 # # "java.format.insertSpaces" = true
 
+# [language.javascript]
+# filetypes = ["javascript"]
+# roots = ["package.json", ".git"]
+# command = "deno"
+# args = ["lsp"]
+# [language.javascript.settings.deno]
+# enable = true
+# lint = true
+
 [language.javascript]
 filetypes = ["javascript"]
-roots = ["package.json", ".git"]
-command = "deno"
-args = ["lsp"]
-[language.javascript.settings.deno]
-enable = true
-lint = true
+roots = ["package.json"]
+command = "language-server-stdio"
 
 [language.json]
 filetypes = ["json"]
