@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 MON="eDP1"    # Discover monitor name with: xrandr | grep " connected"
 STEP=5          # Step Up/Down brightnes by: 5 = ".05", 10 = ".10", etc.
