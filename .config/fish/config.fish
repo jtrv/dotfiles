@@ -141,6 +141,7 @@ complete -c kan -w man
 function kg
   kak -e "grep $argv";
 end
+complete -c kg -w rg
 
 alias k       'kamp edit'
 alias kval    'kamp get val'
