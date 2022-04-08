@@ -96,6 +96,7 @@ source "~/.config/kak/languages/html"
 source "~/.config/kak/languages/javascript"
 source "~/.config/kak/languages/json"
 source "~/.config/kak/languages/markdown"
+source "~/.config/kak/languages/sh"
 
 # Emmet completions using npm emmet-cli
 hook global WinSetOption filetype=(javascript|html) %{
