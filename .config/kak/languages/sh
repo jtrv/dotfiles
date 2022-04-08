@@ -1,0 +1,6 @@
+hook global WinSetOption filetype=sh %{
+  set-option window lintcmd "shellcheck -fgcc -Cnever"
+}
+hook global WinSetOption filetype=sh %{
+  set-option buffer formatcmd "shfmt"
+}
