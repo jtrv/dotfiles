@@ -48,8 +48,10 @@ else
 end
 
 # Function for creating a backup file
-function bak --argument filename
-  cp $filename $filename.bak
+function bak
+  for file in $argv
+    cp $file $file.bak
+  end
 end
 
 function how
