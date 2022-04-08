@@ -12,7 +12,6 @@ cpu() {
   cpu=$(printf %3d $percent)
   echo -e "$cpu%"
 }
-
 ##############################
 #    RAM
 ##############################
@@ -25,7 +24,6 @@ ram() {
 
   echo -e "$ram%"
 }
-
 ##############################
 #    STORAGE
 ##############################
@@ -33,7 +31,6 @@ ssd() {
   SSD="$(df -h /home | grep /dev | awk '{print $5}')"
     echo -e " $SSD"
 }
-
 ##############################
 #    MIC
 ##############################
@@ -46,11 +43,10 @@ mic() {
     echo ""
   fi
 }
-
 ##############################
 #    NETWORK
 ##############################
-network() {
+net() {
   wire="$(mullvad status | rg Connected | wc -l)"
   wifi="$(ip a | grep wlp61s0 | grep UP | wc -l)"
 
@@ -62,11 +58,10 @@ network() {
     echo "睊"
   fi
 }
-
 ##############################
 #    BLUETOOTH
 ##############################
-bluetooth() {
+blu() {
   bluetoothStatus="$(bluetoothctl info | rg 'Connected: yes' | wc -l)"
 
   if [ $bluetoothStatus = 1 ]; then
@@ -75,7 +70,6 @@ bluetooth() {
     echo ""
   fi
 }
-
 ##############################
 #    BATTERY
 ##############################
@@ -104,32 +98,14 @@ bat() {
 
   echo "$batstat$battery%"
 }
-
 ##############################
 #    VOLUME
 ##############################
-# vol() {
-#   percent="$(amixer get Master | awk -F'[][]' 'END{ print $2 }')"
-#   vol=$(printf %3d $percent)
-#   echo -e "$vol%"
-# }
-
-##############################
-#    WEATHER
-##############################
-# weather() {
-#   wthr="$(sed 20q ~/.config/weather.txt | grep value | awk '{print $2 $3}' | sed 's/"//g')"
-#   echo " $wthr"
-# }
-
-##############################
-#    TEMP
-##############################
-# temp() {
-#   tmp="$(grep temp_F ~/.config/weather.txt | awk '{print $2}' | sed 's/"//g' | sed 's/,/ F/g')"
-#   echo " $tmp"
-# }
-
+vol() {
+  percent="$(amixer get Master | awk -F'[][]' 'END{ print $2 }')"
+  vol=$(printf %3d $percent)
+  echo -e "$vol%"
+}
 ##############################
 #    PACKAGES
 ##############################
@@ -137,7 +113,6 @@ bat() {
 #   pkgs="$(pacman -Q | wc -l)"
 #   echo -e "$pkgs"
 # }
-
 ##############################
 #    UPGRADES
 ##############################
@@ -145,13 +120,12 @@ bat() {
 #   upgrades="$(pacman -Qu | wc -l)"
 #   echo -e "$upgrades"
 # }
-
 ##############################
 #    BAR RENDER
 ##############################
 SLEEP_SEC=2
 #loops forever outputting a line every SLEEP_SEC secs
 while :; do
-  echo "$(cpu) $(ram) $(ssd) | $(mic) $(network) $(bluetooth) | $(bat) |"
+  echo "$(cpu)  $(ram)  $(ssd)  | $(vol) | $(mic) $(net) $(blu) | $(bat)"
   sleep $sleep_sec
 done
