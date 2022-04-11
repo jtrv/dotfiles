@@ -3,71 +3,75 @@
 #    CPU
 ##############################
 cpu() {
-  percent="$(\
-  awk '{u=$2+$4; t=$2+$4+$5; \
+	percent="$(
+		awk '{u=$2+$4; t=$2+$4+$5; \
   if (NR==1){u1=u; t1=t;} \
   else print ($2+$4-u1) * 100 / (t-t1) "%"; }' \
-  <(grep 'cpu ' /proc/stat) <(sleep 1;grep 'cpu ' /proc/stat))"
-  cpu=$(printf %3d $percent)
-  echo -e "$cpu%"
+			<(grep 'cpu ' /proc/stat) <(
+				sleep 1
+				grep 'cpu ' /proc/stat
+			)
+	)"
+	cpu=$(printf %3d "$percent")
+	echo "$cpu%"
 }
 ##############################
 #    RAM
 ##############################
 ram() {
-  used="$(free | grep Mem: | awk '{print $3}')"
-  total="$(free | grep Mem: | awk '{print $2}')"
+	used="$(free | grep Mem: | awk '{print $3}')"
+	total="$(free | grep Mem: | awk '{print $2}')"
 
-  percent=$(( 200 * $used/$total - 100 * $used/$total ))
-  ram=$(printf %3d $percent)
+	percent=$((200 * used / total - 100 * used / total))
+	ram=$(printf %3d $percent)
 
-  echo -e "$ram%"
+	echo " $ram%"
 }
 ##############################
 #    STORAGE
 ##############################
 ssd() {
-  SSD="$(df -h /home | grep /dev | awk '{print $5}')"
-    echo -e " $SSD"
+	SSD="$(df -h /home | grep /dev | awk '{print $5}')"
+	echo " $SSD"
 }
 ##############################
 #    MIC
 ##############################
 mic() {
-  state=`amixer -D pulse get Capture toggle | gawk 'match($0, /(Front Left|Mono).*\[(.*)\]/, a) {print a[2]}'`
+	state=$(amixer -D pulse get Capture toggle | gawk 'match($0, /(Front Left|Mono).*\[(.*)\]/, a) {print a[2]}')
 
-  if [ "$state" = "on" ]; then
-    echo ""
-  else
-    echo ""
-  fi
+	if [ "$state" = "on" ]; then
+		echo ""
+	else
+		echo ""
+	fi
 }
 ##############################
 #    NETWORK
 ##############################
 net() {
-  wire="$(mullvad status | rg Connected | wc -l)"
-  wifi="$(ip a | grep 'enp6s0' | grep 'state UP' | wc -l)"
+	wire="$(mullvad status | rg Connected | wc -l)"
+	wifi="$(ip a | grep 'enp6s0' | grep -c 'state UP')"
 
-  if [ $wire = 1 ]; then
-    echo ""
-  elif [ $wifi = 1 ]; then
-    echo ""
-  else
-    echo "睊"
-  fi
+	if [ "$wire" = 1 ]; then
+		echo ""
+	elif [ "$wifi" = 1 ]; then
+		echo ""
+	else
+		echo "睊"
+	fi
 }
 ##############################
 #    BLUETOOTH
 ##############################
 blu() {
-  bluetoothStatus="$(bluetoothctl info | rg 'Connected: yes' | wc -l)"
+	bluetoothStatus="$(bluetoothctl info | rg 'Connected: yes' | wc -l)"
 
-  if [ $bluetoothStatus = 1 ]; then
-    echo ""
-  else
-    echo ""
-  fi
+	if [ "$bluetoothStatus" = 1 ]; then
+		echo ""
+	else
+		echo ""
+	fi
 }
 ##############################
 #    BATTERY
@@ -93,7 +97,7 @@ blu() {
 #     batstat=""
 #   fi
 
-#   battery=$(printf %3d $percent)
+#   battery=$(printf %3s $percent)
 
 #   echo "$batstat$battery%"
 # }
@@ -101,30 +105,30 @@ blu() {
 #    VOLUME
 ##############################
 vol() {
-  percent="$(amixer get Master | awk -F'[][]' 'END{ print $2 }')"
-  vol=$(printf %3d $percent)
-  echo -e "$vol%"
+	percent=$(amixer get Master | awk -F'[][]' 'END{ print $2 }')
+	vol=$(printf %2d "$percent")
+	echo " $vol%"
 }
 ##############################
 #    PACKAGES
 ##############################
 # pkgs() {
 #   pkgs="$(pacman -Q | wc -l)"
-#   echo -e "$pkgs"
+#   echo "$pkgs"
 # }
 ##############################
 #    UPGRADES
 ##############################
 # upgrades() {
 #   upgrades="$(pacman -Qu | wc -l)"
-#   echo -e "$upgrades"
+#   echo "$upgrades"
 # }
 ##############################
 #    BAR RENDER
 ##############################
-SLEEP_SEC=2
+SLEEP_SEC=1
 #loops forever outputting a line every SLEEP_SEC secs
 while :; do
-  echo "$(cpu)   $(ram)   $(ssd)   | $(vol) | $(mic) $(net) $(blu) |"
-  sleep $sleep_sec
+	echo "$(cpu)  $(ram)  $(ssd)  | $(vol) | $(mic) $(net)  $(blu) |"
+	sleep "$SLEEP_SEC"
 done
