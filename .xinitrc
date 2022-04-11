@@ -20,8 +20,8 @@ if [ -f "$usermodmap" ]; then
 fi
 
 # start some nice programs
-if [ -d /etc/X11/xinit/xinitrc.d ] ; then
-  for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
+if [ -d /etc/X11/xinit/xinitrc.d ]; then
+  for f in /etc/X11/xinit/xinitrc.d/?*.sh; do
     [ -x "$f" ] && . "$f"
   done
   unset f
@@ -39,7 +39,7 @@ syncthing &                          # sync logseq notes
 udiskie -An --terminal=lf &          # notif for mountable drives
 ~/scripts/rclone-init.sh &           # start rclone daemons
 setxkbmap us -option ctrl:nocaps &&  # *holding* capslock = ctrl
-xcape -e 'Control_L=Escape' &        # *tapping* capslock = escape
+  xcape -e 'Control_L=Escape' &      # *tapping* capslock = escape
 
 # randomized wallpapers
 feh --randomize --bg-scale --no-fehbg ~/pictures/wallpapers/ &
