@@ -3,5 +3,6 @@ hook global WinSetOption filetype=json %{
   lint
 }
 hook global BufSetOption filetype=json %{
-  set-option buffer formatcmd "prettier --stdin-filepath=%val{buffile}"
+  set-option buffer formatcmd "jq --indent %opt{tabstop} ."
+  format
 }
