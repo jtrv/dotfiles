@@ -18,7 +18,7 @@ zoxide init fish | source
 
 ######## FUNCTIONS ########
 
-# needed for !! and !$
+# add '!!' functionality
 function __history_previous_command
   switch (commandline -t)
   case "!"
@@ -27,7 +27,9 @@ function __history_previous_command
     commandline -i !
   end
 end
+bind -Minsert ! __history_previous_command
 
+# add '!$' functionality
 function __history_previous_command_arguments
   switch (commandline -t)
   case "!"
@@ -37,24 +39,19 @@ function __history_previous_command_arguments
     commandline -i '$'
   end
 end
-
-# The bindings for !! and !$
-bind -Minsert ! __history_previous_command
 bind -Minsert '$' __history_previous_command_arguments
 
-# Function for creating a backup file
+# create backup files
 function bak
   for file in $argv
     cp $file $file.bak
   end
 end
 
+# ask questions, get answers
 function how
   kak -e "kakpipe -n how -- hors -a -n 2 -p never $argv"
 end
-
-end
-
 
 ######## ABBREVIATIONS ########
 
