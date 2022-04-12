@@ -74,38 +74,40 @@ end
 ######## ABBREVIATIONS ########
 
 if status --is-interactive
-  abbr --add --global cp   'cp -i'
-  abbr --add --global mv   'mv -i'
-  abbr --add --global npin 'license MIT && gitignore node && covgen jtravers@tutanota.com && npm init -y && volta pin node@lts && git init'
+  abbr --add --global cp     'cp -i'
+  abbr --add --global mv     'mv -i'
+  abbr --add --global npin   'license MIT && gitignore node && covgen jtravers@tutanota.com && npm init -y && volta pin node@lts && git init'
   abbr --add --global gitbit 'git commit --amend --no-edit --date "Sat 01 Jan 2022 16:20:07 PST"'
 end
 
 
 ######## ALIASES ########
 
-alias ani    'ani-cli -q high' # watch anime in super ultra HD 8k lossless greenray
-alias bc     'kalk'
-alias cat    'bat'
-alias config '/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME' # git for config files
-alias doas   'doas --'
-alias j      'lf'
-alias kish   'k ~/.config/fish/config.fish'
-alias konf   'k ~/.config/kak/kakrc'
-alias la     'exa -al --color=always --group-directories-first --git --icons' # all files and dirs
-alias lc     'lazygit --git-dir=$HOME/.cfg/ --work-tree=$HOME' # lazygit for config files
-alias lg     'lazygit'
-alias lh     'exa -al --color=always --group-directories-first --git --icons --ignore-glob="[a-z]*|[A-Z]*|[0-9]*"' # hidden
-alias ll     'exa -l --color=always --group-directories-first --git --icons'  # long format
-alias ls     'exa -l --color=always --group-directories-first --git --icons' # preferred listing
-alias lt     'exa -aT --color=always --group-directories-first --git --icons' # tree listing
-alias mons   'bass mons' # use bash for mons (monitor scripts)
-alias newbg  'feh --randomize --bg-scale --no-fehbg ~/pictures/wallpapers/' # change bg
-alias np     'pnpm'
-alias npx    'pnpm dlx'
-alias off    'systemctl suspend' # save state, enter low-power mode
-alias pom    'potato' # shell pomodoro timer
-alias q      'exit'
-alias rm     'rm -i'
+alias ani     'ani-cli -q high' # watch anime in super ultra HD 8k lossless greenray
+alias bc      'kalk'
+alias bls     '/bin/ls' # for piping
+alias cat     'bat'
+alias config  '/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME' # git for config files
+alias doas    'doas --'
+alias j       'lf'
+alias kish    'k ~/.config/fish/config.fish'
+alias konf    'k ~/.config/kak/kakrc'
+alias la      'exa -al --color=always --group-directories-first --git --icons' # all files and dirs
+alias lc      'lazygit --git-dir=$HOME/.cfg/ --work-tree=$HOME' # lazygit for config files
+alias lg      'lazygit'
+alias lh      'exa -al --color=always --group-directories-first --git --icons --ignore-glob="[a-z]*|[A-Z]*|[0-9]*"' # hidden
+alias ll      'exa -l --color=always --group-directories-first --git --icons' # long format
+alias ls      'exa -l --color=always --group-directories-first --git --icons' # preferred listing
+alias lt      'exa -aT --color=always --group-directories-first --git --icons' # tree listing
+alias mons    'bass mons' # use bash for mons (monitor scripts)
+alias newbg   'feh --randomize --bg-scale --no-fehbg ~/pictures/wallpapers/' # change bg
+alias np      'pnpm'
+alias npm     'dum'
+alias npx     'pnpm dlx'
+alias off     'systemctl suspend' # save state, enter low-power mode
+alias pom     'potato' # shell pomodoro timer
+alias q       'exit'
+alias rm      'rm -i'
 
 
 ######## KAKOUNE ########
