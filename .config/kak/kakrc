@@ -113,8 +113,8 @@ hook global BufCreate 'COMMIT_EDITMSG' %{
 
 
 # Alacritty integration
-plug "alexherbo2/alacritty.kak" commit "856ebc65b18c08b3e2aa82f89ed8709648a2fedf" %{
-  alias global terminal alacritty-terminal
+plug "alexherbo2/alacritty.kak" %{
+  alias global terminal alacritty-terminal-window
   alias global popup alacritty-terminal-popup
 }
 
