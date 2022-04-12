@@ -116,7 +116,6 @@ function kldr
 end
 complete -c kldr -w man
 
-
 # manpage with fallback to help output
 function kan
   if man -w $argv &> /dev/null
@@ -128,10 +127,14 @@ end
 complete -c kan -w man
 
 # kakoune grep
-function kg
+function kak-grep
   kak -e "grep $argv";
 end
 complete -c kg -w rg
+alias kg      'kak-grep'
+
+alias kf      'kamp-files'
+alias kgi     'kamp-grep'
 
 alias k       'kamp edit'
 alias kval    'kamp get val'
