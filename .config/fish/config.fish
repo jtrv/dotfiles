@@ -63,13 +63,6 @@ function md
   kak -e "kakpipe -n mdcat -- mdcat $argv"
 end
 
-function mirrors
-  set TMPFILE (mktemp); \
-    rate-mirrors --save="$TMPFILE" arch --max-delay=43200 \
-      && doas mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist-backup \
-      && doas mv $TMPFILE /etc/pacman.d/mirrorlist \
-      && paru -Syy
-end
 
 ######## ABBREVIATIONS ########
 
@@ -99,6 +92,7 @@ alias lh      'exa -al --color=always --group-directories-first --git --icons --
 alias ll      'exa -l --color=always --group-directories-first --git --icons' # long format
 alias ls      'exa -l --color=always --group-directories-first --git --icons' # preferred listing
 alias lt      'exa -aT --color=always --group-directories-first --git --icons' # tree listing
+alias mirrors '~/scripts/update-mirrors.sh' # update mirrors / database
 alias mons    'bass mons' # use bash for mons (monitor scripts)
 alias newbg   'feh --randomize --bg-scale --no-fehbg ~/pictures/wallpapers/' # change bg
 alias np      'pnpm'
