@@ -136,6 +136,8 @@ plug "JacobTravers/kakoune-sudo-write" %{
   alias global swq 'sudo-write-quit'
 }
 
+plug 'delapouite/kakoune-auto-percent'
+
 # Starship for kakoune modeline
 plug "eburghar/kakship" do %{
   cargo install --force --path . --root ~/.local
