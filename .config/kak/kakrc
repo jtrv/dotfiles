@@ -146,7 +146,8 @@ plug "eburghar/kakship" do %{
   kakship-enable
 }
 
-# Use ripgrep instead of grep
+plug "natasky/kakoune-multi-file"
+
 set global grepcmd 'rg --column --smart-case'
 
 define-command tldr -docstring "print a cheatsheet for the given console command" -shell-completion -params 1.. %{
