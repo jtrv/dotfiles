@@ -123,12 +123,22 @@ function kan
 end
 complete -c kan -w man
 
+# view tldr
+function kldr
+  kak -e "kakpipe -n tldr -- tldr --color=always $argv"
+end
+
+# view mdn docs
+function kdn
+  kak -e "kakpipe -n mdn -- mdn $argv"
+end
+
 # kakoune grep
 function kak-grep
   kak -e "grep $argv";
 end
-complete -c kg -w rg
-alias kg      'kak-grep'
+alias kg 'kak-grep'
+complete -c kak-grep -w rg
 
 alias kf      'kamp-files'
 alias kgi     'kamp-grep'
