@@ -1,6 +1,8 @@
 # Don't ask for confirmations
 assume_yes = true
 
+notify_each_step = true
+
 # Disable specific steps - same options as the command line flag
 disable = ["containers", "gcloud"]
 
