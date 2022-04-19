@@ -84,9 +84,6 @@ alias lt      'exa -aT --color=always --group-directories-first --git --icons' #
 alias mirrors '~/scripts/update-mirrors.sh' # update mirrors / database
 alias mons    'bass mons' # use bash for mons (monitor scripts)
 alias newbg   'feh --randomize --bg-scale --no-fehbg ~/pictures/wallpapers/' # change bg
-alias np      'pnpm'
-alias npm     'dum'
-alias npx     'pnpm dlx'
 alias off     'systemctl suspend' # save state, enter low-power mode
 alias pom     'potato' # shell pomodoro timer
 alias q       'exit'
