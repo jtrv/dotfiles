@@ -89,6 +89,9 @@ alias pom     'potato' # shell pomodoro timer
 alias q       'exit'
 alias rm      'rm -i'
 
+alias awman   'wiki-docs-search'
+complete -c wiki-docs-search -a '(fd html "/usr/share/doc/arch-wiki/html/en/" | rg -o \'/(\w*).html$\' -r \'$1\')'
+
 
 ######## KAKOUNE ########
 
