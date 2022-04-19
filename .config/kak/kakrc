@@ -170,7 +170,7 @@ define-command reader-mode -docstring "enables settings for better reading" %{
   map buffer normal u <c-u>
   map buffer normal q ':quit<ret>'
 }
-hook global WinDisplay '\*greeting\*|\*tldr\*|\*man \w+\*|\*help\*' %{
+hook global WinDisplay '\*(greeting|help|man \w+|mdn|tldr)\*' %{
   reader-mode
 }
 
