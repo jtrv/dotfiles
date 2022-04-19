@@ -154,8 +154,12 @@ define-command tldr -docstring "print a cheatsheet for the given console command
   kakpipe -n tldr -- tldr --color always %arg{@}
 }
 
-define-command how -docstring "print an answer for the given question from stackoverflow etc" -params 1.. %{
+define-command how -docstring "print an answer for the query from stackoverflow etc" -params 1.. %{
   kakpipe -n how -- hors -a -n 2 -p never %arg{@}
+}
+
+define-command mdn -docstring "print mdn docs for the query" -params 1.. %{
+  kakpipe -n mdn -- mdn %arg{@}
 }
 
 define-command reader-mode -docstring "enables settings for better reading" %{
