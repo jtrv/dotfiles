@@ -44,7 +44,4 @@ setxkbmap us -option ctrl:nocaps &&  # *holding* capslock = ctrl
 # randomized wallpapers
 feh --randomize --bg-scale --no-fehbg ~/pictures/wallpapers/ &
 
-# software noise-filter for microphone
-noisetorch -i alsa_input.usb-FIFINE_Microphones_FIFINE_K780A_Microphone_REV1.0-00.analog-stereo &
-
 exec spectrwm
