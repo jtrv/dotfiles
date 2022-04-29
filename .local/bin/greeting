@@ -1,7 +1,7 @@
 #!/bin/sh
 GREETING=~/.config/greeting
 {
-	~/scripts/weather.sh &&
+	~/.local/bin/weather &&
 		iching
 } >"$GREETING" &&
 	kak -e "kakpipe -n greeting -- bat $GREETING" &&

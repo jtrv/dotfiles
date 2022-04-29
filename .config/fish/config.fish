@@ -87,7 +87,7 @@ alias lh      'exa -al --color=always --group-directories-first --git --icons --
 alias ll      'exa -l --color=always --group-directories-first --git --icons' # long format
 alias ls      'exa -l --color=always --group-directories-first --git --icons' # preferred listing
 alias lt      'exa -aT --color=always --group-directories-first --git --icons' # tree listing
-alias mirrors '~/scripts/update-mirrors.sh' # update mirrors / database
+alias mirrors '~/.local/bin/update-mirrors' # update mirrors / database
 alias mons    'bass mons' # use bash for mons (monitor scripts)
 alias nbg     'feh --randomize --bg-scale --no-fehbg ~/pictures/wallpapers/' # change bg
 alias off     'systemctl suspend' # save state, enter low-power mode
