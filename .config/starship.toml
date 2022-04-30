@@ -48,9 +48,7 @@ diverged = "😵"
 untracked = "🤷‍"
 stashed = "📦"
 modified = "📝"
-staged.value = "++"
-staged.style = "green"
-staged.enabled = true
+staged = '[++\($count\)](green)'
 renamed = "👅"
 deleted = "🗑"
 
