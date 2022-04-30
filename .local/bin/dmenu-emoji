@@ -9,14 +9,14 @@ case "$1" in
     ;;
   "copy")
     input=$(tee)
-    if [ ! -z "$input" ]; then
+    if [ -n "$input" ]; then
       emoji=${input: -1}
-      echo -n "$emoji" | xclip -selection c
+      echo "$emoji" | xclip -selection c
       command -v notify-send > /dev/null && notify-send -t 200 "$emoji copied!"
     fi
     ;;
   "")
-    bash $0 list | dmenu -fn 'SauceCodePro Nerd Font Mono:pixelsize=18:antialias=true' -nb 'black' -nf 'green' -sb 'magenta' -sf 'black' -p 'Emoji: ' | bash $0 copy
+    sh "$0" list | dmenu -fn 'SauceCodePro Nerd Font Mono:pixelsize=18:antialias=true' -nb 'black' -nf 'green' -sb 'magenta' -sf 'black' -p 'Emoji: ' | sh "$0" copy
     ;;
 esac
 

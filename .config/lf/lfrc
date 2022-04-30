@@ -4,6 +4,7 @@
 
 set drawbox on
 set icons on
+set mouse on
 set relativenumber on
 set scrolloff 10
 set shellopts '-eu'
@@ -78,10 +79,11 @@ cmd rename-blank ${{
 	lf -remote "send $id push :rename<space>"
 }}
 
-cmd open-with %"$@" $fx
+cmd drag $IFS="`printf '\n\t'`"; drag $fx &
+cmd open-with %"$@" "$fx" &disown
 cmd renamer $IFS="`printf '\n\t'`"; renamer $fx
 cmd rip $IFS="`printf '\n\t'`"; rip $fx
-cmd yank-basename $basename -a -- $fx | head -c-1 | xclip -selection clipboard
+cmd yank-basename $basename -a -- "$fx" | head -c-1 | xclip -selection clipboard
 cmd yank-dirname $dirname -- "$f" | head -c-1 | xclip -selection clipboard
 cmd yank-path $printf '%s' "$fx" | xclip -selection clipboard
 
@@ -122,6 +124,11 @@ map <a-N> :toggle; search-prev
 map N     :toggle; search-next
 map S     push :glob-select<space>
 map <a-S> push :glob-unselect<space>
+
+# mouse bindings
+map <m-1>    drag "$fx"
+map <m-down> down
+map <m-up>   up
 
 # misc bindings
 map .        set hidden!

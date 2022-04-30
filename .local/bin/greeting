@@ -1,0 +1,8 @@
+#!/bin/sh
+GREETING=~/.config/greeting
+{
+	~/.local/bin/weather &&
+		iching
+} >"$GREETING" &&
+	kak -e "kakpipe -n greeting -- bat $GREETING" &&
+	topgrade
