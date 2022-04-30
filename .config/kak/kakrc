@@ -54,13 +54,6 @@ plug "kak-lsp/kak-lsp" do %{
 # swap client windows etc
 plug "alexherbo2/window.kak"
 
-# show whitespaces and highlight errors
-plug "alexherbo2/show-whitespaces.kak" %{
-  add-highlighter global/whitespace ref whitespace
-}
-
-
-
 ############### FORMAT/LINT ###############
 
 # Empty scratch buffer
@@ -112,8 +105,8 @@ hook global BufCreate 'COMMIT_EDITMSG' %{
 
 
 # Alacritty integration
-plug "alexherbo2/alacritty.kak" commit "856ebc65b18c08b3e2aa82f89ed8709648a2fedf" %{
-  alias global terminal alacritty-terminal
+plug "alexherbo2/alacritty.kak" %{
+  alias global terminal alacritty-terminal-window
   alias global popup alacritty-terminal-popup
 }
 
@@ -140,6 +133,8 @@ plug "JacobTravers/kakoune-sudo-write" %{
   alias global swq 'sudo-write-quit'
 }
 
+plug 'delapouite/kakoune-auto-percent'
+
 # Starship for kakoune modeline
 plug "eburghar/kakship" do %{
   cargo install --force --path . --root ~/.local
@@ -148,15 +143,20 @@ plug "eburghar/kakship" do %{
   kakship-enable
 }
 
-# Use ripgrep instead of grep
+plug "natasky/kakoune-multi-file"
+
 set global grepcmd 'rg --column --smart-case'
 
 define-command tldr -docstring "print a cheatsheet for the given console command" -shell-completion -params 1.. %{
   kakpipe -n tldr -- tldr --color always %arg{@}
 }
 
-define-command how -docstring "print an answer for the given question from stackoverflow etc" -params 1.. %{
+define-command how -docstring "print an answer for the query from stackoverflow etc" -params 1.. %{
   kakpipe -n how -- hors -a -n 2 -p never %arg{@}
+}
+
+define-command mdn -docstring "print mdn docs for the query" -params 1.. %{
+  kakpipe -n mdn -- mdn %arg{@}
 }
 
 define-command reader-mode -docstring "enables settings for better reading" %{
@@ -167,7 +167,7 @@ define-command reader-mode -docstring "enables settings for better reading" %{
   map buffer normal u <c-u>
   map buffer normal q ':quit<ret>'
 }
-hook global WinDisplay '\*(greeting|help|man \w+|tldr)\*' %{
+hook global WinDisplay '\*(greeting|help|man \w+|mdn|tldr)\*' %{
   reader-mode
 }
 
