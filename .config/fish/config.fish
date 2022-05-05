@@ -77,7 +77,7 @@ alias bls     '/bin/ls' # for piping
 alias cat     'bat'
 alias config  '/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME' # git for config files
 alias doas    'doas --'
-alias j       'lf'
+alias j       '~/.config/lf/wrapper'
 alias kish    'k ~/.config/fish/config.fish'
 alias konf    'k ~/.config/kak/kakrc'
 alias la      'exa -al --color=always --group-directories-first --git --icons' # all files and dirs
