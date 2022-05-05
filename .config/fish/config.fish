@@ -139,12 +139,8 @@ function kdn
   kak -e "kakpipe -n mdn -- mdn $argv"
 end
 
-# kakoune grep
-function kak-grep
-  kak -e "grep $argv";
-end
-alias kg 'kak-grep'
 complete -c kak-grep -w rg
+alias kg 'kak-grep'
 
 alias kf      'kamp-files'
 alias kgi     'kamp-grep'
