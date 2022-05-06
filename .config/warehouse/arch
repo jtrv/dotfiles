@@ -2,10 +2,9 @@ alsa-firmware
 amd-ucode
 ani-cli-git
 arch-wiki-docs-search
+archivemount
 asciinema
 aspell-en
-autoconf
-automake
 aws-cli
 bandwhich
 barrier
@@ -22,6 +21,7 @@ ccache
 choose
 clipcat
 cmake
+croc
 crystal
 ctags
 curseofwar
@@ -34,11 +34,13 @@ duf
 dunst
 dust
 easyeffects
+epub-thumbnailer-git
 exa
 fakeroot
 fclones
 fcp-bin
 fd
+ffmpegthumbnailer
 filebot
 firefox-developer-edition-firefox-symlink-latest
 firefox-tridactyl
@@ -50,6 +52,7 @@ gifsicle
 gimp
 github-cli
 gitui
+glow
 go
 google-cloud-sdk
 gpg-tui
@@ -57,15 +60,16 @@ gping
 grex
 gron
 hors
-htmlq-bin
+htmlq
 hub
 hyperfine
 inkscape
 intel-ucode
-itch
+itch-bin
 jid-bin
 jless
 jpegoptim
+jq
 just
 kondo-bin
 lazygit
@@ -87,7 +91,6 @@ minigalaxy
 mongodb-bin
 mons
 mullvad-vpn-bin
-ncmpcpp
 neofetch
 nerd-fonts-fira-code
 nethack
@@ -96,7 +99,6 @@ noto-fonts-cjk
 noto-fonts-emoji
 nsxiv
 ntp
-nvm
 onefetch
 opendoas
 ouch
@@ -105,7 +107,6 @@ paru
 pastel
 patch
 pavucontrol
-pcmanfm-qt
 peek
 playerctl
 plocate
@@ -117,6 +118,7 @@ procs
 pueue
 pulsemixer
 qbittorrent
+qrcp-bin
 rate-mirrors
 rclone
 redshift
@@ -136,10 +138,11 @@ skim
 sl
 slack-desktop
 sniffglue
+soundux
 spectrwm
 starship
 steam
-steamtinkerlaunch
+strace
 syncthing
 sysz
 tealdeer
@@ -153,8 +156,9 @@ tokei
 topgrade
 torbrowser-launcher
 ttf-ubraille
-tutanota-desktop
+tutanota-desktop-bin
 udiskie
+ueberzug
 ufw
 veracrypt
 video2x
@@ -164,6 +168,7 @@ vivaldi
 volta-bin
 watchexec
 wego
+winetricks
 wireguard-tools
 xcape
 xcwd-git
