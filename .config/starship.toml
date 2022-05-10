@@ -48,7 +48,7 @@ diverged = "😵"
 untracked = "🤷‍"
 stashed = "📦"
 modified = "📝"
-staged = '[++\($count\)](green)'
+staged = '[$countﰃ](bold green)'
 renamed = "👅"
 deleted = "🗑"
 
