@@ -1,6 +1,6 @@
 #!/bin/sh
 
-ARCH_PACKAGES=$(paru -Qqet)
+ARCH_PACKAGES=$(paru -Qqe)
 CARGO_PACKAGES=$(cargo install --list | rg -o '^(\w.+)\sv' -r '$1')
 FISH_PLUGINS=$(cat ~/.config/fish/fish_plugins)
 KAKOUNE_PLUGINS=$(rg -o "^plug\s\"(.*?)\"" -r '$1' <~/.config/kak/kakrc | sort)
