@@ -58,7 +58,7 @@ plug "alexherbo2/window.kak"
 ############### FORMAT/LINT ###############
 
 # Empty scratch buffer
-hook global WinCreate '\*scratch\*' %{ execute-keys '%<a-d>' }
+hook global BufCreate '\*scratch\*' %{ execute-keys '%<a-d>' }
 
 plug "alexherbo2/indent.kak" %{
   enable-detect-indent
