@@ -72,11 +72,14 @@ end
 ######## ALIASES ########
 
 alias ani     'ani-cli -q high' # watch anime in super ultra HD 8k lossless greenray
+alias awman   'wiki-docs-search'
+complete -c wiki-docs-search -a '(fd html "/usr/share/doc/arch-wiki/html/en/" | rg -o \'/(\w*).html$\' -r \'$1\')'
 alias bc      'kalk'
 alias bls     '/bin/ls' # for piping
 alias cat     'bat'
 alias config  '/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME' # git for config files
 alias doas    'doas --'
+alias glow    'glow -p'
 alias j       '~/.config/lf/wrapper'
 alias kish    'k ~/.config/fish/config.fish'
 alias konf    'k ~/.config/kak/kakrc'
@@ -94,9 +97,6 @@ alias off     'systemctl suspend' # save state, enter low-power mode
 alias pom     'potato' # shell pomodoro timer
 alias q       'exit'
 alias rm      'rm -i'
-
-alias awman   'wiki-docs-search'
-complete -c wiki-docs-search -a '(fd html "/usr/share/doc/arch-wiki/html/en/" | rg -o \'/(\w*).html$\' -r \'$1\')'
 
 
 ######## KAKOUNE ########
