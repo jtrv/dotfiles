@@ -72,12 +72,15 @@ end
 ######## ALIASES ########
 
 alias ani     'ani-cli -q high' # watch anime in super ultra HD 8k lossless greenray
+alias awman   'wiki-docs-search'
+complete -c wiki-docs-search -a '(fd html "/usr/share/doc/arch-wiki/html/en/" | rg -o \'/(\w*).html$\' -r \'$1\')'
 alias bc      'kalk'
 alias bls     '/bin/ls' # for piping
 alias cat     'bat'
 alias config  '/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME' # git for config files
 alias doas    'doas --'
-alias j       'lf'
+alias glow    'glow -p'
+alias j       '~/.config/lf/wrapper'
 alias kish    'k ~/.config/fish/config.fish'
 alias konf    'k ~/.config/kak/kakrc'
 alias la      'exa -al --color=always --group-directories-first --git --icons' # all files and dirs
@@ -94,9 +97,6 @@ alias off     'systemctl suspend' # save state, enter low-power mode
 alias pom     'potato' # shell pomodoro timer
 alias q       'exit'
 alias rm      'rm -i'
-
-alias awman   'wiki-docs-search'
-complete -c wiki-docs-search -a '(fd html "/usr/share/doc/arch-wiki/html/en/" | rg -o \'/(\w*).html$\' -r \'$1\')'
 
 
 ######## KAKOUNE ########
@@ -139,12 +139,8 @@ function kdn
   kak -e "kakpipe -n mdn -- mdn $argv"
 end
 
-# kakoune grep
-function kak-grep
-  kak -e "grep $argv";
-end
-alias kg 'kak-grep'
 complete -c kak-grep -w rg
+alias kg 'kak-grep'
 
 alias kf      'kamp-files'
 alias kgi     'kamp-grep'
@@ -158,12 +154,6 @@ alias kcd-buf 'cd "(dirname (kamp get val buffile))"'
 alias kft     'kamp get -b \* opt filetype | sort | uniq' # list file types you're working on
 
 
-# Start X at login
-if status is-login
-  if test -z "$DISPLAY" -a "$XDG_VTNR" = 1
-    exec startx -- -keeptty
-  end
-end
 
 ######## EXPORTS ########
 

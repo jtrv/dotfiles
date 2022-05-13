@@ -1,6 +1,6 @@
 %[ $LF_LEVEL -eq 1 ] || echo "Warning: You're in a nested lf instance!"
 
-##### BASIC SETTINGS #####
+############### BASIC SETTINGS ###############
 
 set drawbox on
 set icons on
@@ -11,8 +11,8 @@ set shellopts '-eu'
 set shell sh
 set tabstop 2
 
-# previewer script
-# set previewer ~/.config/lf/pv.sh
+set previewer ~/.config/lf/preview
+set cleaner ~/.config/lf/cleaner
 
 # dynamic columns for view width
 %{{
@@ -26,15 +26,36 @@ set tabstop 2
   fi
 }}
 
+############### UTILITY ###############
+
+# use archivemount to browse archives like directories
+cmd open ${{
+  case "$f" in
+    *.tar.bz|*.tar.bz2|*.tbz|*.tbz2|*.tar.gz|*.tgz|*.tar.xz|*.txz|*.zip|*.rar|*.iso)
+      mntdir="$f-archivemount"
+      [ ! -d "$mntdir" ] && {
+        mkdir "$mntdir"
+        archivemount "$f" "$mntdir"
+        echo "$mntdir" >> "/tmp/__lf_archivemount_$id"
+      }
+      lf -remote "send $id cd \"$mntdir\""
+      lf -remote "send $id reload"
+      ;;
+    *)
+      for f in $fx; do
+        $OPENER $f > /dev/null 2> /dev/null &
+      done;;
+  esac
+}}
 
 
-##### CUSTOM COMMANDS #####
+############### CUSTOM COMMANDS ###############
 
 # jump to dir with zoxide
-cmd autojump %lf -remote "send $id cd '$(zoxide query $1)'"
+cmd zoxide %lf -remote "send $id cd '$(zoxide query $1)'"
 
 # jump to file from fzf
-cmd jump ${{
+cmd fuzzy_file ${{
   res="$(fd . -H -d 4 | fzf | sed 's/\\/\\\\/g;s/"/\\"/g')"
   if [ -d "$res" ]; then
     cmd="cd"
@@ -42,6 +63,18 @@ cmd jump ${{
     cmd="select"
   fi
   lf -remote "send $id $cmd \"$res\""
+}}
+
+cmd fuzzy_content ${{
+  res="$( \
+    RG_PREFIX="rg --column --line-number --no-heading --color=always \
+      --smart-case "
+    FZF_DEFAULT_COMMAND="$RG_PREFIX ''" \
+      fzf --bind "change:reload:$RG_PREFIX {q} || true" \
+      --ansi --layout=reverse --header 'Search in files' \
+      | cut -d':' -f1
+  )"
+  [ ! -z "$res" ] && lf -remote "send $id select \"$res\""
 }}
 
 cmd link %{{
@@ -89,7 +122,7 @@ cmd yank-path $printf '%s' "$fx" | xclip -selection clipboard
 
 
 
-##### KEY BINDINGS #####
+############### KEY BINDINGS ###############
 
 # unbind defaults
 map m
@@ -137,8 +170,9 @@ map <enter>  open
 map o        push :open-with<space>
 
 map D     rip                     # safer remove function (rip)
-map f     :jump                   # jump to file with fzf choice
-map F     push :autojump<space>'  # jump to dir with zoxide guess
+map f     :fuzzy_file             # jump to file with fzf choice
+map F     push :zoxide<space>'    # jump to dir with zoxide guess
+map G     :fuzzy_content          # search files by grepping contents
 map m     push %mkdir<space>      # create new dir
 map M     mkdirfromsels           # create new dir with selections
 map R     renamer                 # rename files using $EDITOR (pipe-rename)

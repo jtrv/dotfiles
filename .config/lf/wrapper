@@ -1,0 +1,49 @@
+#!/bin/sh
+
+# requires:
+#   - ueberzug for image previews
+#   - archivemount for exploring archives like directories
+
+lfcd() {
+	tmp="$(mktemp)"
+	fid="$(mktemp)"
+	lf -command '$printf $id > '"$fid"'' -last-dir-path="$tmp" "$@"
+	id="$(cat "$fid")"
+	archivemount_dir="/tmp/__lf_archivemount_$id"
+	if [ -f "$archivemount_dir" ]; then
+		cat "$archivemount_dir" |
+			while read -r line; do
+				doas umount "$line"
+				rmdir "$line"
+			done
+		rm -f "$archivemount_dir"
+	fi
+	if [ -f "$tmp" ]; then
+		dir="$(cat "$tmp")"
+		rm -f "$tmp"
+		if [ -d "$dir" ]; then
+			if [ "$dir" != "$(pwd)" ]; then
+				cd "$dir"
+			fi
+		fi
+	fi
+}
+
+set -e
+
+cleanup() {
+	exec 3>&-
+	rm "$FIFO_UEBERZUG"
+}
+
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+	lfcd "$@"
+else
+	[ ! -d "$HOME/.cache/lf" ] && mkdir --parents "$HOME/.cache/lf"
+	export FIFO_UEBERZUG="$HOME/.cache/lf/ueberzug-$$"
+	mkfifo "$FIFO_UEBERZUG"
+	ueberzug layer -s -p json <"$FIFO_UEBERZUG" &
+	exec 3>"$FIFO_UEBERZUG"
+	trap cleanup EXIT
+	lfcd "$@" 3>&-
+fi
