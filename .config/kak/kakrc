@@ -93,11 +93,6 @@ source "~/.config/kak/languages/json"
 source "~/.config/kak/languages/markdown"
 source "~/.config/kak/languages/sh"
 
-# Emmet completions using npm emmet-cli
-hook global WinSetOption filetype=(javascript|html) %{
-  define-command emmet %{ execute-keys "giGl| emmet <ret>" }
-  map buffer dev e -docstring "emmet" ':emmet <ret>'
-}
 
 hook global BufCreate 'COMMIT_EDITMSG' %{
   execute-keys ":autowrap-enable<ret>"
