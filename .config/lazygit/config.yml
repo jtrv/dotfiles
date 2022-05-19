@@ -61,8 +61,8 @@ git:
   disableForcePushing: false
   parseEmoji: false
 os:
-  editCommand: '' # see 'Configuring File Editing' section
-  editCommandTemplate: '{{editor}} {{filename}}'
+  editCommand: 'kak' # see 'Configuring File Editing' section
+  editCommandTemplate: '{{editor}} +{{line}} -- {{filename}}'
   openCommand: ''
 refresher:
   refreshInterval: 10 # file/submodule refresh interval in seconds
