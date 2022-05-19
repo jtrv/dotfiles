@@ -1,6 +1,7 @@
 hook global WinSetOption filetype=(css|scss) %{
   set-option window lintcmd "stylelint --config ~/.config/.stylelintrc --stdin --stdin-filename %val{buffile}"
   lint
+  map window dev m -docstring "minify" '%|minify --type css <ret><a-j>'
 }
 hook global BufSetOption filetype=(css|scss) %{
   set-option buffer formatcmd "prettier --stdin-filepath=%val{buffile}"

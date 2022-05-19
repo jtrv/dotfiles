@@ -1,6 +1,7 @@
 hook global WinSetOption filetype=html %{
   set-option window lintcmd "tidy -e --gnu-emacs yes --quiet yes 2>&1"
   lint
+  map window dev m -docstring "minify" '%|minify --type html <ret><a-j>'
 }
 hook global BufSetOption filetype=(html) %{
   set-option buffer formatcmd "prettier --stdin-filepath=%val{buffile}"
