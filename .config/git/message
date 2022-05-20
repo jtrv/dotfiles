@@ -1,28 +1,19 @@
-################################################
+# <type>(<scope>)!: <description> ##############
 
-################################################
-
-######################################################################
-Why?
-
-######################################################################
-
-######################################################################
-How?
-
-######################################################################
+# \n BREAKING CHANGE: [context -> why? how? etc] #####################
+# \n [footer -> ref:, reviewed by:, etc] 
 #
-# [FIX]  an issue
-# [ADD]  a capability
-# [DROP] a capability
-# [BUMP] the version of dependancy
-# [MAKE] build process, tools, infrastructure.
-# [START] doing something; enable a toggle, feature flag
-# [STOP]  doing something; disable a toggle, feature flag
-# [OPTIMIZE] Must be just about performance
-# [DOCUMENT] Must be only in the documentation
-# [REFACTOR] Must be just refactoring
-# [REFORMAT] Must be just format; indent line, trim space
-# [REPHRASE] Must be just textual; edit a comment, doc
 #
+#
+######################################################################
+#                              TYPES:                                #
+#       feat:       new feature                                      #
+#       fix:        bug fix                                          #
+#       refactor:   code refactor                                    #
+#       style:      formatting change (markup, white-space, ...)     #
+#       build:      build related change                             #
+#       ci:         ci change                                        #
+#       test:       add/fix test                                     #
+#       chore:      no production code change                        #
+#       docs:       documentation change                             #
 ######################################################################
