@@ -45,6 +45,6 @@ udiskie -An --terminal=lf &          # notif for mountable drives
 feh --randomize --bg-scale --no-fehbg ~/pictures/wallpapers/ &
 
 # startup sound
-mpv --no-video ~/.config/sounds/ps2-start.ogg &
+mpv --no-video ~/.config/sounds/ps2.flac &
 
 exec spectrwm
