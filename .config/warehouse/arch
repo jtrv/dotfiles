@@ -62,12 +62,14 @@ firefox-tridactyl-native
 fisher
 flameshot-git
 fzf
+gamehub-bin
 gamemode
 gawk
 gcc
 gdrive-search
 gettext
 gifsicle
+gifski
 gimp
 git
 git-delta
@@ -75,7 +77,6 @@ github-cli
 glow
 gnu-free-fonts
 go
-google-cloud-sdk
 gpg-tui
 gping
 grep
@@ -90,6 +91,7 @@ htmlq
 hub
 hyperfine
 inkscape
+innoextract
 intel-ucode
 itch-bin
 jack2
@@ -100,7 +102,8 @@ jq
 just
 kak-lsp
 kakoune-git
-kondo-bin
+kicad
+kondo
 lazygit
 lf
 lib32-giflib
@@ -147,6 +150,7 @@ nerd-fonts-fira-code
 nethack
 network-manager-applet
 networkmanager
+nextdns-bin
 noto-fonts-cjk
 noto-fonts-emoji
 npm
@@ -164,6 +168,7 @@ patch
 pavucontrol
 pcmanfm
 peek
+perl-image-exiftool
 picom
 pipewire
 pipewire-alsa
@@ -173,7 +178,7 @@ playerctl
 plocate
 pm2
 pngquant
-pnpm
+pnpm-bin
 podman
 podman-compose
 potato
@@ -205,6 +210,7 @@ sl
 slack-desktop
 sniffglue
 soundux
+sox
 spectrwm
 starship
 steam
@@ -223,8 +229,9 @@ timeshift
 timeshift-autosnap
 tiny
 tokei
-topgrade
+topgrade-git
 torbrowser-launcher
+ttf-mac-fonts
 ttf-ubraille
 tutanota-desktop-bin
 udiskie
