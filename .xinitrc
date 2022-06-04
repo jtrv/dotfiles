@@ -37,11 +37,14 @@ picom -f &                           # allow for opacities
 redshift -l 34:-119 -b 1.0:0.6 &     # bluelight filter
 syncthing &                          # sync logseq notes
 udiskie -An --terminal=lf &          # notif for mountable drives
+~/.local/bin/map-keys &              # map caps to ctrl/esc
 ~/.local/bin/rclone-init &           # start rclone daemons
-setxkbmap us -option ctrl:nocaps &&  # *holding* capslock = ctrl
-  xcape -e 'Control_L=Escape' &       # *tapping* capslock = escape
+~/.local/bin/trackball-speed &       # set trackball speed
 
 # randomized wallpapers
 feh --randomize --bg-scale --no-fehbg ~/pictures/wallpapers/ &
+
+# startup sound
+mpv --no-video ~/.config/sounds/ps2-start.ogg &
 
 exec spectrwm

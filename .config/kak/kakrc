@@ -57,7 +57,7 @@ plug "alexherbo2/window.kak"
 ############### FORMAT/LINT ###############
 
 # Empty scratch buffer
-hook global WinDisplay '\*scratch\*' %{ execute-keys '%<a-d>' }
+hook global BufCreate '\*scratch\*' %{ execute-keys '%<a-d>' }
 
 plug "alexherbo2/indent.kak" %{
   enable-detect-indent
@@ -84,23 +84,14 @@ declare-user-mode dev
   map global dev s -docstring "set filetype" ':set buffer filetype '
 
 # linting and formating per language
-source "~/.config/kak/languages/css"
-source "~/.config/kak/languages/fish"
-source "~/.config/kak/languages/html"
-source "~/.config/kak/languages/javascript"
-source "~/.config/kak/languages/json"
-source "~/.config/kak/languages/markdown"
-source "~/.config/kak/languages/sh"
-
-# Emmet completions using npm emmet-cli
-hook global BufCreate filetype=(javascript|html) %{
-  define-command emmet %{ execute-keys "giGl| emmet <ret>" }
-  map buffer dev e -docstring "emmet" ':emmet <ret>'
-}
-
-hook global BufCreate 'COMMIT_EDITMSG' %{
-  execute-keys ":autowrap-enable<ret>"
-}
+source "~/.config/kak/languages/commit.kak"
+source "~/.config/kak/languages/css.kak"
+source "~/.config/kak/languages/fish.kak"
+source "~/.config/kak/languages/html.kak"
+source "~/.config/kak/languages/javascript.kak"
+source "~/.config/kak/languages/json.kak"
+source "~/.config/kak/languages/markdown.kak"
+source "~/.config/kak/languages/sh.kak"
 
 
 ###################### UTILITY ######################

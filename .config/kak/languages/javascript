@@ -1,8 +1,0 @@
-hook global WinSetOption filetype=javascript %{
-  set-option window lintcmd 'run() { cat "$1" | eslint -c ~/.config/.eslintrc.json -f unix --stdin --stdin-filename "$kak_buffile";} && run '
-  lint
-}
-hook global BufSetOption filetype=javascript %{
-  set-option buffer formatcmd 'deno fmt -'
-  map -docstring "comment" buffer normal <#> ':comment-line <ret>'
-}
