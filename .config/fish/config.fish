@@ -139,6 +139,13 @@ function kdn
   kak -e "kakpipe -n mdn -- mdn $argv"
 end
 
+function kak-grep
+  set grepargs
+  for x in $argv
+    set -a grepargs (echo $x | sed -e "s/'/''/g" -e "s/^/'/" -e "s/\$/'/")
+  end
+  kak -e "grep $(string join -- " " $grepargs)"
+end
 complete -c kak-grep -w rg
 alias kg 'kak-grep'
 
@@ -154,12 +161,6 @@ alias kcd-buf 'cd "(dirname (kamp get val buffile))"'
 alias kft     'kamp get -b \* opt filetype | sort | uniq' # list file types you're working on
 
 
-# Start X at login
-if status is-login
-  if test -z "$DISPLAY" -a "$XDG_VTNR" = 1
-    exec startx -- -keeptty
-  end
-end
 
 ######## EXPORTS ########
 
