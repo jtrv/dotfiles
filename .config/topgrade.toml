@@ -4,7 +4,7 @@ assume_yes = true
 notify_each_step = true
 
 # Disable specific steps - same options as the command line flag
-disable = ["containers", "gcloud", "pnpm"]
+disable = ["containers", "gcloud"]
 
 # Ignore failures for these steps
 #ignore_failures = ["powershell"]
