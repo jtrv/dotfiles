@@ -87,14 +87,14 @@ declare-user-mode dev
   map global dev s -docstring "set filetype" ':set buffer filetype '
 
 # linting and formating per language
-source "~/.config/kak/languages/commit.kak"
-source "~/.config/kak/languages/css.kak"
-source "~/.config/kak/languages/fish.kak"
-source "~/.config/kak/languages/html.kak"
-source "~/.config/kak/languages/javascript.kak"
-source "~/.config/kak/languages/json.kak"
-source "~/.config/kak/languages/markdown.kak"
-source "~/.config/kak/languages/sh.kak"
+source "~/.config/kak/contexts/commit.kak"
+source "~/.config/kak/contexts/css.kak"
+source "~/.config/kak/contexts/fish.kak"
+source "~/.config/kak/contexts/html.kak"
+source "~/.config/kak/contexts/javascript.kak"
+source "~/.config/kak/contexts/json.kak"
+source "~/.config/kak/contexts/markdown.kak"
+source "~/.config/kak/contexts/sh.kak"
 
 
 ###################### UTILITY ######################
