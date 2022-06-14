@@ -162,6 +162,10 @@ define-command tldr -docstring "print a cheatsheet for the given console command
   kakpipe -n tldr -- tldr --color always %arg{@};
 }
 
+define-command helpp -docstring "print an answer for the query from stackoverflow etc" -params 1.. %{
+  kakpipe -n help -- %arg{@} --help;
+}
+
 define-command how -docstring "print an answer for the query from stackoverflow etc" -params 1.. %{
   kakpipe -n how -- hors -a -n 2 -p never %arg{@};
 }
