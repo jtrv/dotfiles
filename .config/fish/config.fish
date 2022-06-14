@@ -54,9 +54,9 @@ function bak
   end
 end
 
-# ask questions, get answers
+# ask questions, get answers in kakoune
 function how
-  kak -e "kakpipe -n how -- hors -a -n 2 -p never $argv"
+  kak -e "how $argv"
 end
 
 ######## ABBREVIATIONS ########
@@ -110,13 +110,13 @@ complete -c kakman -w man
 
 # view '--help' output
 function kelp
-  kak -e "kakpipe -n help -- $argv --help"
+  kak -e "helpp $argv"
 end
 complete -c kelp -w man
 
 # view tldr
 function kldr
-  kak -e "kakpipe -n tldr -- tldr --color=always $argv"
+  kak -e "tldr $argv"
 end
 complete -c kldr -w man
 
@@ -130,25 +130,37 @@ function kan
 end
 complete -c kan -w man
 
-# view tldr
-function kldr
-  kak -e "kakpipe -n tldr -- tldr --color=always $argv"
-end
-
 # view mdn docs
 function kdn
-  kak -e "kakpipe -n mdn -- mdn $argv"
+  kak -e "mdn $argv"
 end
 
-function kak-grep
-  set grepargs
+function kakgrep
+  set arg_list
   for x in $argv
     set -a grepargs (echo $x | sed -e "s/'/''/g" -e "s/^/'/" -e "s/\$/'/")
   end
-  kak -e "grep $(string join -- " " $grepargs)"
+  set grep_args (string join -- " " $arg_list)
+  kak -e "grep $grep_args"
 end
-complete -c kak-grep -w rg
-alias kg 'kak-grep'
+complete -c kakgrep -w rg
+alias kg 'kakgrep'
+
+# diff in kak
+function kakdiff
+  kak -e "diff $argv"
+end
+alias kd 'kakdiff'
+
+function kifft
+  kak -e "difft $argv"
+end
+alias kdt 'kifft'
+
+function kelta
+  kak -e "delta $argv"
+end
+alias kda 'kelta'
 
 alias kf      'kamp-files'
 alias kgi     'kamp-grep'
