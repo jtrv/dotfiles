@@ -89,6 +89,7 @@ declare-user-mode dev
 # linting and formating per language
 source "~/.config/kak/contexts/commit.kak"
 source "~/.config/kak/contexts/css.kak"
+source "~/.config/kak/contexts/diff.kak"
 source "~/.config/kak/contexts/fish.kak"
 source "~/.config/kak/contexts/html.kak"
 source "~/.config/kak/contexts/javascript.kak"
