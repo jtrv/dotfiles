@@ -146,16 +146,28 @@ plug "natasky/kakoune-multi-file"
 
 set global grepcmd 'rg --column --smart-case'
 
+define-command delta -docstring "view diff with delta" -shell-completion -params 1.. %{
+  kakpipe -n delta -- delta %arg{@};
+}
+
+define-command diff -docstring "view diff" -shell-completion -params 1.. %{
+  kakpipe -n diff -- diff -u %arg{@}; set buffer filetype diff;
+}
+
+define-command difft -docstring "view diff with difftastic" -shell-completion -params 1.. %{
+  kakpipe -n difft -- difft --width %val{window_width} --color always %arg{@};
+}
+
 define-command tldr -docstring "print a cheatsheet for the given console command" -shell-completion -params 1.. %{
-  kakpipe -n tldr -- tldr --color always %arg{@}
+  kakpipe -n tldr -- tldr --color always %arg{@};
 }
 
 define-command how -docstring "print an answer for the query from stackoverflow etc" -params 1.. %{
-  kakpipe -n how -- hors -a -n 2 -p never %arg{@}
+  kakpipe -n how -- hors -a -n 2 -p never %arg{@};
 }
 
 define-command mdn -docstring "print mdn docs for the query" -params 1.. %{
-  kakpipe -n mdn -- mdn %arg{@}
+  kakpipe -n mdn -- mdn %arg{@};
 }
 
 define-command reader-mode -docstring "enables settings for better reading" %{
@@ -166,7 +178,7 @@ define-command reader-mode -docstring "enables settings for better reading" %{
   map buffer normal u <c-u>
   map buffer normal q ':quit<ret>'
 }
-hook global WinDisplay '\*(greeting|help|man \w+|mdn|tldr)\*' %{
+hook global WinDisplay '\*(delta|diff|difft|greeting|help|man \w+|mdn|tldr)\*' %{
   reader-mode
 }
 
