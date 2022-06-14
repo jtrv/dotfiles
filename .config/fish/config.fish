@@ -64,6 +64,7 @@ end
 if status --is-interactive
   abbr --add --global cp     'cp -i'
   abbr --add --global mv     'mv -i'
+  abbr --add --global rm     'rm -i'
   abbr --add --global npin   'license MIT && gitignore node && covgen jtravers@tutanota.com && npm init -y && volta pin node@lts && git init'
   abbr --add --global gitbit 'git commit --amend --no-edit --date "Sat 01 Jan 2022 16:20:07 PST"'
 end
@@ -96,7 +97,7 @@ alias nbg     'feh --randomize --bg-scale --no-fehbg ~/pictures/wallpapers/' # c
 alias off     'systemctl suspend' # save state, enter low-power mode
 alias pom     'potato' # shell pomodoro timer
 alias q       'exit'
-alias rm      'rm -i'
+
 
 
 ######## KAKOUNE ########
