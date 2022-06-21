@@ -1,7 +1,7 @@
 # play some internet radio streams with mpv
 
 function rad-play
-  mpv --no-terminal "$argv" & disown
+  mpv --no-config --no-video "$argv"
 end
 
 function rad
