@@ -137,12 +137,11 @@ function kdn
 end
 
 function kakgrep
-  set arg_list
-  for x in $argv
-    set -a grepargs (echo $x | sed -e "s/'/''/g" -e "s/^/'/" -e "s/\$/'/")
-  end
-  set grep_args (string join -- " " $arg_list)
-  kak -e "grep $grep_args"
+    set grepargs
+    for x in $argv
+        set -a grepargs (echo $x | sed -e "s/'/''/g" -e "s/^/'/" -e "s/\$/'/")
+    end
+    kak -e "grep $(string join -- " " $grepargs)"
 end
 complete -c kakgrep -w rg
 alias kg 'kakgrep'
