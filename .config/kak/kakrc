@@ -38,13 +38,15 @@ plug "kak-lsp/kak-lsp" do %{
 } config %{
   set global lsp_diagnostic_line_error_sign '║'
   set global lsp_diagnostic_line_warning_sign '┊'
-  set global lsp_hover_max_lines 20
+  set global lsp_hover_max_lines 40
   define-command lsp-restart -docstring 'restart lsp server' %{ lsp-stop; lsp-start }
   hook global WinSetOption filetype=(css|html|javascript|json|python|rust|sass|scss|sql|yaml) %{
     set-option window lsp_auto_highlight_references true
     set-option window lsp_hover_anchor true
     lsp-auto-hover-enable
     lsp-auto-hover-insert-mode-enable
+    lsp-inlay-hints-enable window
+    lsp-inlay-diagnostics-enable window
     echo -debug "Enabling LSP for filtetype %opt{filetype}"
     lsp-enable-window
   }
@@ -66,8 +68,7 @@ plug "alexherbo2/indent.kak" %{
 
 plug "andreyorst/smarttab.kak" %{
   hook global BufCreate .* %{
-      editorconfig-load
-      autoconfigtab
+    autoconfigtab
   }
 }
 
@@ -84,14 +85,15 @@ declare-user-mode dev
   map global dev s -docstring "set filetype" ':set buffer filetype '
 
 # linting and formating per language
-source "~/.config/kak/languages/commit.kak"
-source "~/.config/kak/languages/css.kak"
-source "~/.config/kak/languages/fish.kak"
-source "~/.config/kak/languages/html.kak"
-source "~/.config/kak/languages/javascript.kak"
-source "~/.config/kak/languages/json.kak"
-source "~/.config/kak/languages/markdown.kak"
-source "~/.config/kak/languages/sh.kak"
+source "~/.config/kak/contexts/commit.kak"
+source "~/.config/kak/contexts/css.kak"
+source "~/.config/kak/contexts/diff.kak"
+source "~/.config/kak/contexts/fish.kak"
+source "~/.config/kak/contexts/html.kak"
+source "~/.config/kak/contexts/javascript.kak"
+source "~/.config/kak/contexts/json.kak"
+source "~/.config/kak/contexts/markdown.kak"
+source "~/.config/kak/contexts/sh.kak"
 
 
 ###################### UTILITY ######################
@@ -140,16 +142,32 @@ plug "natasky/kakoune-multi-file"
 
 set global grepcmd 'rg --column --smart-case'
 
+define-command delta -docstring "view diff with delta" -shell-completion -params 1.. %{
+  kakpipe -n delta -- delta %arg{@};
+}
+
+define-command diff -docstring "view diff" -shell-completion -params 1.. %{
+  kakpipe -n diff -- diff -u %arg{@}; set buffer filetype diff;
+}
+
+define-command difft -docstring "view diff with difftastic" -shell-completion -params 1.. %{
+  kakpipe -n difft -- difft --width %val{window_width} --color always %arg{@};
+}
+
 define-command tldr -docstring "print a cheatsheet for the given console command" -shell-completion -params 1.. %{
-  kakpipe -n tldr -- tldr --color always %arg{@}
+  kakpipe -n tldr -- tldr --color always %arg{@};
+}
+
+define-command helpp -docstring "print an answer for the query from stackoverflow etc" -params 1.. %{
+  kakpipe -n help -- %arg{@} --help;
 }
 
 define-command how -docstring "print an answer for the query from stackoverflow etc" -params 1.. %{
-  kakpipe -n how -- hors -a -n 2 -p never %arg{@}
+  kakpipe -n how -- hors -a -n 2 -p never %arg{@};
 }
 
 define-command mdn -docstring "print mdn docs for the query" -params 1.. %{
-  kakpipe -n mdn -- mdn %arg{@}
+  kakpipe -n mdn -- mdn %arg{@};
 }
 
 define-command reader-mode -docstring "enables settings for better reading" %{
@@ -160,7 +178,7 @@ define-command reader-mode -docstring "enables settings for better reading" %{
   map buffer normal u <c-u>
   map buffer normal q ':quit<ret>'
 }
-hook global WinDisplay '\*(greeting|help|man \w+|mdn|tldr)\*' %{
+hook global WinDisplay '\*(delta|diff|difft|greeting|help|man \w+|mdn|tldr)\*' %{
   reader-mode
 }
 
@@ -176,16 +194,18 @@ define-command node-eval -docstring "evaluate current js file, print result to a
 map global normal <space> , -docstring "leader-key"
 map global user   <space> : -docstring "prompt"
 
+map global normal <esc> <space>   -docstring "clear multi-selection and keep (nth)"
+map global normal , <space>       -docstring "clear multi-selection and keep (nth)"
+map global normal <a-,> <a-space> -docstring "remove selection (nth)"
+
 map global prompt <c-n> <tab>   -docstring "next completion"
 map global prompt <c-p> <s-tab> -docstring "previous completion"
-
 
 map global normal w b         -docstring "select previous word"
 map global normal W B         -docstring "extend previous word"
 map global normal <a-w> <a-b> -docstring "select previous BIG-WORD"
 map global normal <a-W> <a-B> -docstring "extend prevous BIG-WORD"
 
-map global normal <esc> <space> -docstring "deselect all but current selection"
 
 #########AUGMENTATION
 

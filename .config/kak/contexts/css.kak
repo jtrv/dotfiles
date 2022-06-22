@@ -3,7 +3,7 @@ hook global WinSetOption filetype=(css|scss) %{
   lint
   define-command emmet %{ execute-keys "giGl| emmet <ret>" }
   map window dev e -docstring "emmet" ':emmet <ret>'
-  define-command minify %{ execute-keys "%|minify --type html <ret><a-j>" }
+  define-command minify %{ execute-keys "<percent>|minify --type html <ret><a-j>" }
   map window dev m -docstring "minify" ':minify <ret>'
 }
 hook global BufSetOption filetype=(css|scss) %{

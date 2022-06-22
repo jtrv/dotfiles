@@ -48,7 +48,7 @@
 }
 
 /* Collapse sidebar + transition */
-#sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"] {
+/*#sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"] {
   overflow: hidden;
   min-width: 10px;
   max-width: 10px;
@@ -62,7 +62,7 @@
   max-width: 240px !important;
   z-index: 1;
   opacity: 1;
-}
+}*/
 
 /*** Hide Tab Close buttons ***/
 .tabbrowser-tab .tab-close-button {

@@ -1,5 +1,5 @@
 gui:
-  # stuff relating to the UI
+  showIcons: true  # stuff relating to the UI
   scrollHeight: 3 # how many lines you scroll by
   scrollPastBottom: true # enable scrolling past the bottom
   sidePanelWidth: 0.3333 # number from 0 to 1
@@ -215,4 +215,55 @@ customCommands:
         title: 'Email Address'
         initialValue: ''
     loadingText: 'commiting'
-
+  - key: '<c-f>'
+    description: 'fetch a remote branch as a new local branch'
+    command: "git fetch {{index .SelectedRemote.Name }} {{index .PromptResponses 0}}:{{index .PromptResponses 1}}"
+    context: 'remotes'
+    prompts:
+      - type: 'input'
+        title: 'Remote Branch Name'
+        initialValue: ''
+      - type: 'input'
+        title: 'New Local Branch Name'
+        initialValue: ''
+    loadingText: 'fetching branch'
+  - key: 'b'
+    command: 'tig blame -- {{.SelectedFile.Name}}'
+    context: 'files'
+    description: 'blame file at tree'
+    subprocess: yes
+  - key: 'b'
+    command: 'tig blame {{.SelectedSubCommit.Sha}} -- {{.SelectedCommitFile.Name}}'
+    context: 'commitFiles'
+    description: 'blame file at revision'
+    subprocess: yes
+  - key: 'B'
+    command: 'tig blame -- {{.SelectedCommitFile.Name}}'
+    context: 'commitFiles'
+    description: 'blame file at tree'
+    subprocess: yes
+  - key: 't'
+    command: 'tig show {{.SelectedSubCommit.Sha}}'
+    context: 'subCommits'
+    description: 'tig commit (`t` again to browse files at revision)'
+    subprocess: yes
+  - key: 't'
+    command: 'tig show {{.SelectedLocalBranch.Name}}'
+    context: 'localBranches'
+    description: 'tig branch (`t` again to browse files at revision)'
+    subprocess: yes
+  - key: 't'
+    command: 'tig show {{.SelectedRemoteBranch.RemoteName}}/{{.SelectedRemoteBranch.Name}}'
+    context: 'remoteBranches'
+    description: 'tig branch (`t` again to browse files at revision)'
+    subprocess: yes
+  - key: 't'
+    command: 'tig {{.SelectedSubCommit.Sha}} -- {{.SelectedCommitFile.Name}}'
+    context: 'commitFiles'
+    description: 'tig file (history of commits affecting file)'
+    subprocess: yes
+  - key: 't'
+    command: 'tig -- {{.SelectedFile.Name}}'
+    context: 'files'
+    description: 'tig file (history of commits affecting file)'
+    subprocess: yes

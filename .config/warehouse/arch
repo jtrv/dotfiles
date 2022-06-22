@@ -73,6 +73,7 @@ hub
 hyperfine
 inetutils
 inkscape
+innoextract
 intel-ucode
 kakoune.cr-git
 kalker
@@ -153,6 +154,7 @@ signal-desktop
 slack-desktop
 sniffglue
 soundux
+sox
 spectrwm
 starship
 syncthing
@@ -168,8 +170,9 @@ timeshift
 timeshift-autosnap
 tiny
 tokei
-topgrade
+topgrade-git
 torbrowser-launcher
+ttf-mac-fonts
 ttf-ubraille
 udiskie
 ueberzug

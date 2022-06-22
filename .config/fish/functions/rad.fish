@@ -1,7 +1,7 @@
 # play some internet radio streams with mpv
 
 function rad-play
-  mpv --no-terminal "$argv" & disown
+  mpv --no-config --no-video "$argv"
 end
 
 function rad
@@ -35,7 +35,7 @@ function rad
     case "majestic-jukebox"
       rad-play "http://uk3.internet-radio.com:8405/live"
     case "megaton-radio"
-      rad-play "https://us2.internet-radio.com/proxy/megatoncafe?mp=/stream"
+      rad-play "http://45.79.186.124/stream/megatoncafe.pls"
     case "milano-lounge"
       rad-play "http://centova.wlservices.org:8003/autodj"
     case "mi-soul"
