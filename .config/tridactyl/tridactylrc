@@ -32,7 +32,7 @@ bind ;C composite hint_focus; !s xdotool key Menu
 " COMMANDS
 "
 " set editor to kakoune
-set editorcmd alacritty --class popup --command kak
+set editorcmd alacritty --command kak
 "
 " Suspend / "discard" all tabs - handy for stretching out battery life
 command discardall jsb browser.tabs.query({}).then(ts => browser.tabs.discard(ts.map(t=>t.id)))
