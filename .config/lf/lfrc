@@ -112,6 +112,7 @@ cmd rename-blank ${{
 	lf -remote "send $id push :rename<space>"
 }}
 
+cmd bak $IFS="`printf '\n\t'`"; bak $fx
 cmd drag $IFS="`printf '\n\t'`"; drag $fx &
 cmd open-with %"$@" "$fx" &disown
 cmd renamer $IFS="`printf '\n\t'`"; renamer $fx
@@ -145,7 +146,7 @@ map gw cd ~/pictures/wallpapers/
 # kakoune-like bindings
 map A rename                      # at the very end
 map a push A<a-b><a-b><a-f>       # before extention
-map b push A.bak<enter>           # at the very beginning
+map b bak                         # at the very beginning
 map i push A<c-a>                 # at the very beginning
 map r push A<a-b><a-b><a-f><c-u>  # empty w/extention
 map gj    bottom
