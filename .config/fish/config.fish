@@ -47,13 +47,6 @@ function __history_previous_command_arguments
 end
 bind -Minsert '$' __history_previous_command_arguments
 
-# create backup files
-function bak
-  for file in $argv
-    cp $file $file.bak
-  end
-end
-
 # ask questions, get answers in kakoune
 function how
   kak -e "how $argv"
