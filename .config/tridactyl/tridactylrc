@@ -3,7 +3,7 @@
 " Allow Ctrl-c to copy in the commandline
 unbind --mode=ex <C-c>
 "
-" space to enter cmd
+" Space to enter cmd
 bind <space><space> fillcmdline_notrail
 "
 " ! to open a new tab with a duckduckgo !bang
@@ -19,7 +19,7 @@ bind gk scrollto 0
 bind gl scrollto 100 x
 bind gh scrollto 0 x
 "
-" space to enter cmd
+" Space to enter cmd
 bind ? fillcmdline find
 bind n findnext
 "
@@ -31,20 +31,24 @@ bind ;C composite hint_focus; !s xdotool key Menu
 "
 " COMMANDS
 "
-" set editor to kakoune
+" Ret editor to kakoune
 set editorcmd alacritty --command kak
 "
 " Suspend / "discard" all tabs - handy for stretching out battery life
 command discardall jsb browser.tabs.query({}).then(ts => browser.tabs.discard(ts.map(t=>t.id)))
 "
 "
-" MISC SETTINGS
+" MISC
 "
-" replace default newtab behavior
+" Replace default newtab behavior
 set newtab about:blank
 "
 " Defaults to 300ms but I'd rather move fast and break things
 set hintdelay 100
 "
-" theme
+" Theme
 colors midnight
+"
+"
+" URL SPECIFIC
+autocmd DocStart https://ssh.cloud.google.com mode ignore
