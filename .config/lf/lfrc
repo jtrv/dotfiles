@@ -134,14 +134,14 @@ map gc cd ~/.config/
 map gd cd ~/downloads/
 map gD cd ~/mxs/drive/Manufacturers\ &\ Clients/
 map gF cd ~/mxs/ftp/
-map gm cd ~/pictures/memes/
+map gm cd ~/media/pictures/memes/
 map gM cd /run/media/sugimoto/
 map gn cd ~/notes/
 map gP cd ~/mxs/projects/
-map gp cd ~/pictures/
-map gs cd ~/pictures/screenshots/
+map gp cd ~/media/pictures/
+map gs cd ~/media/pictures/screenshots/
 map gt cd ~/tmp/
-map gw cd ~/pictures/wallpapers/
+map gw cd ~/media/pictures/wallpapers/
 
 # kakoune-like bindings
 map A rename                      # at the very end
