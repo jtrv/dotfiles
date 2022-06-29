@@ -113,9 +113,6 @@ plug "alexherbo2/auto-pairs.kak" %{
 # Clipboard integration
 plug "lePerdu/kakboard" %{
   hook global WinCreate .* %{ kakboard-enable }
-  map global normal <a-y> -docstring "multi-yank"         ':kakboard-multi-yank <ret>'
-  map global normal <a-p> -docstring "multi-append"       ':kakboard-multi-append <ret>'
-  map global normal <a-P> -docstring "multi-append-all"   ':kakboard-multi-append-all <ret>'
 }
 
 # display text with ansi color-codes inside a fifo
@@ -347,8 +344,8 @@ declare-user-mode grep
   map global grep k -docstring "prev match"    ':grep-previous-match <ret>'
   map global grep w -docstring "write edits"   ':grep-write <ret>'
 
-map global normal <a-y> -docstring "multi-yank"   ':kakboard-toggle <ret>y'
-map global user   k     -docstring "kakboard"     ':kakboard-toggle <ret>'
+map global user   k     -docstring "klip off"     ':kakboard-disable; kakboard-disable <ret>'
+map global user   K     -docstring "klip on"      ':kakboard-enable <ret>'
 
 map global user l -docstring "LSP" %{:enter-user-mode lsp <ret>}
   map global lsp <minus> -docstring "disable"   ':lsp-disable-window <ret>'
