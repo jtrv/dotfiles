@@ -376,10 +376,10 @@ plug "caksoylar/kakoune-focus" config %{
 plug "occivink/kakoune-phantom-selection" %{
   declare-user-mode phantom
   map global user p -docstring "phantom"       ':enter-user-mode phantom <ret>'
-  map global phantom a -docstring "Add"        ':phantom-selection-add-selection <ret>'
-  map global phantom c -docstring "Clear"      ':phantom-selection-select-all; phantom-selection-clear <ret>'
-  map global phantom n -docstring "Next"       ':phantom-selection-iterate-next <ret>'
-  map global phantom p -docstring "Previous"   ':phantom-selection-iterate-prev <ret>'
+  map global phantom a -docstring "add"        ':phantom-selection-add-selection <ret>'
+  map global phantom c -docstring "clear"      ':phantom-selection-select-all; phantom-selection-clear <ret>'
+  map global phantom n -docstring "next"       ':phantom-selection-iterate-next <ret>'
+  map global phantom p -docstring "previous"   ':phantom-selection-iterate-prev <ret>'
 }
 
 # Select/edit surrounding chars and tags
