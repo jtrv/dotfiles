@@ -91,6 +91,8 @@ alias nbg     'feh --randomize --bg-scale --no-fehbg ~/media/pictures/wallpapers
 alias off     'systemctl suspend' # save state, enter low-power mode
 alias pom     'potato' # shell pomodoro timer
 alias q       'exit'
+alias wget    "wget --hsts-file=\"$XDG_DATA_HOME/wget-hsts\""
+alias yarn    "yarn --use-yarnrc \"$XDG_CONFIG_HOME\"/yarn/config"
 
 
 
@@ -170,25 +172,36 @@ alias kft     'kamp get -b \* opt filetype | sort | uniq' # list file types you'
 
 ######## EXPORTS ########
 
-set -gx fish_greeting
-set -gx MCFLY_FUZZY 2
-
 set -gx CALIBRE_USE_DARK_PALETTE "yes"
-set -gx FZF_DEFAULT_OPTS         "--ansi --color=dark --multi --tabstop=2  --preview='bat --color=always {}' --preview-window border-vertical"
-set -gx HORS_ENGINE              "google"
-set -gx NPM_CONFIG_USERCONFIG    "/home/sugimoto/.config/npm/npmrc"
-
-set -gx EDITOR   "/usr/bin/kak"
-set -gx VISUAL   "/usr/bin/kak"
+set -gx EDITOR "/usr/bin/kak"
+set -gx fish_greeting
+set -gx FZF_DEFAULT_OPTS "--ansi --color=dark --multi --tabstop=2  --preview='bat --color=always {}' --preview-window border-vertical"
+set -gx HORS_ENGINE "google"
 set -gx MANPAGER "/usr/bin/bat" # see 'kan' function
-
-set -gx GOPATH "/home/sugimoto/.go"
-
-set -gx CARGO_HOME    "/home/sugimoto/.cargo"
+set -gx MCFLY_FUZZY 2
+set -gx PATH "$VOLTA_HOME/bin" $PATH
 set -gx RUSTC_WRAPPER "/usr/bin/sccache"
+set -gx VISUAL "/usr/bin/kak"
 
-set -gx VOLTA_HOME "/home/sugimoto/.volta"
-set -gx PATH       "/home/sugimoto/.volta/bin" $PATH
+set -gx LESSHISTFILE "$XDG_CACHE_HOME"/less/history
+
+set -gx AWS_CONFIG_FILE             "$XDG_CONFIG_HOME"/aws/config
+set -gx AWS_SHARED_CREDENTIALS_FILE "$XDG_CONFIG_HOME"/aws/credentials
+set -gx GTK2_RC_FILES               "$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
+set -gx NPM_CONFIG_USERCONFIG       "$XDG_CONFIG_HOME"/npm/npmrc
+set -gx PYTHONSTARTUP               "$XDG_CONFIG_HOME"/python/pythonrc
+set -gx _JAVA_OPTIONS -Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
+
+set -gx ANDROID_HOME      "$XDG_DATA_HOME"/android
+set -gx CARGO_HOME        "$XDG_DATA_HOME"/cargo
+set -gx GOPATH            "$XDG_DATA_HOME"/go
+set -gx GNUPGHOME         "$XDG_DATA_HOME"/gnupg
+set -gx NODE_REPL_HISTORY "$XDG_DATA_HOME"/node_repl_history
+set -gx NVM_DIR           "$XDG_DATA_HOME"/nvm
+set -gx RUSTUP_HOME       "$XDG_DATA_HOME"/rustup
+set -gx VOLTA_HOME        "$XDG_DATA_HOME"/volta
+
+set -gx HISTFILE "$XDG_STATE_HOME"/bash/history
 
 set -gx LF_ICONS "\
 di=:\
