@@ -1,0 +1,8 @@
+#!/bin/sh
+# requires xh, jql, sd, wego
+
+OWM_API_KEY=$(cat "$HOME"/.config/.owm-api-key)
+
+lat_lon=$(xh -b 'https://ip-api.io/json' | jql -i '."latitude",."longitude"' | sd '\[|\]' '')
+
+wego -b openweathermap -owm-api-key "$OWM_API_KEY" -l "$lat_lon" -d 7 -u imperial
