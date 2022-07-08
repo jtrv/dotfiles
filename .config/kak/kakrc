@@ -197,12 +197,10 @@ hook global WinDisplay '\*(delta|diff|difft|greeting|help|man \w+|mdn|tldr)\*' %
 
 ##########REMAPPINGS
 
-map global normal <space> , -docstring "leader-key"
-map global user   <space> : -docstring "prompt"
+map global user <space> : -docstring "prompt"
 
-map global normal <esc> <space>   -docstring "clear multi-selection and keep (nth)"
-map global normal , <space>       -docstring "clear multi-selection and keep (nth)"
-map global normal <a-,> <a-space> -docstring "remove selection (nth)"
+map global normal <a-space> <a-,> -docstring "clear current (or nth) selection"
+map global normal <esc> ,         -docstring "clear multi-selection and keep (nth)"
 
 map global prompt <c-n> <tab>   -docstring "next completion"
 map global prompt <c-p> <s-tab> -docstring "previous completion"
@@ -218,8 +216,8 @@ map global normal <a-W> <a-B> -docstring "extend prevous BIG-WORD"
 map global normal D -docstring "vim D"         'Gld'
 map global normal Y -docstring "yank to end"   'Gly'
 
-map global normal J -docstring "select next line"       'J<a-x>'
-map global normal K -docstring "select previous line"   'K<a-x>'
+map global normal J -docstring "select next line"       'Jx'
+map global normal K -docstring "select previous line"   'Kx'
 
 map global normal x     -docstring "select inner"          '<a-i>'
 map global normal X     -docstring "select outer"          '<a-a>'
