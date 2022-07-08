@@ -52,3 +52,4 @@ colors midnight
 "
 " URL SPECIFIC
 autocmd DocStart https://ssh.cloud.google.com mode ignore
+autocmd DocStart https://monkeytype.com mode ignore
