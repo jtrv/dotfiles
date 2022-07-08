@@ -366,8 +366,8 @@ define-command math -docstring 'do the maths' %{
 }
 map global user M -docstring "math"   ':math <ret>'
 
-plug "caksoylar/kakoune-focus" config %{
-  map global user n -docstring "narrow"   ':focus-toggle <ret>'
+plug "caksoylar/kakoune-focus" branch "kak-master" config %{
+  map global normal : -docstring "narrow"   ':focus-toggle <ret>'
 }
 
 # Edit/extend/trim selections one by one
