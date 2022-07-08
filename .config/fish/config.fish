@@ -151,6 +151,8 @@ function kelta
 end
 alias kda 'kelta'
 
+alias kr      'kak -e "mru-files-list"'
+alias kl      'kak -e "mru-files-session-load"'
 alias kf      'kamp-files'
 alias kgi     'kamp-grep'
 
