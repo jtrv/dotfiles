@@ -20,7 +20,9 @@ evaluate-commands %sh{
 # extend kak with lua
 plug "gustavo-hms/luar" %{
   require-module luar
+  set-option global luar_interpreter luajit
 }
+
 
 ################### DISPLAY ###################
 
