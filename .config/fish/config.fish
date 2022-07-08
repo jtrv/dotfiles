@@ -183,6 +183,16 @@ set -gx PATH "$VOLTA_HOME/bin" $PATH
 set -gx RUSTC_WRAPPER "/usr/bin/sccache"
 set -gx VISUAL "/usr/bin/kak"
 
+set -gx XDG_CACHE_HOME "$HOME"/.cache
+set -gx XDG_CONFIG_HOME "$HOME"/.config
+set -gx XDG_DATA_HOME "$HOME"/.local/share
+set -gx XDG_DESKTOP_DIR "$HOME"/
+set -gx XDG_DOCUMENTS_DIR "$HOME"/documents
+set -gx XDG_DOWNLOAD_DIR "$HOME"/downloads
+set -gx XDG_MUSIC_DIR "$HOME"/media/music
+set -gx XDG_PICTURES_DIR "$HOME"/media/pictures
+set -gx XDG_STATE_HOME "$HOME"/.local/state
+
 set -gx LESSHISTFILE "$XDG_CACHE_HOME"/less/history
 
 set -gx AWS_CONFIG_FILE             "$XDG_CONFIG_HOME"/aws/config
