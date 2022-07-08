@@ -270,18 +270,25 @@ plug "useredsa/dynamic-matching.kak" %{
   map global normal M -docstring "add dynamic match"      ':enter-user-mode Dmatch <ret>'
 }
 
-# Kakoune.cr (coderunner) implementations
+# kampliment (coderunner) bindings
 map global normal <c-t> -docstring "New client"     ':new <ret>'
 map global normal <c-n> -docstring "New terminal"   ':connect terminal <ret>'
 map global normal +     -docstring "New popup"      ':connect popup <ret>'
 
 map global normal <c-h> -docstring "lf"        ':connect terminal lf <ret>'
-map global normal <c-l> -docstring "lazygit"   ':connect terminal lazygit <ret>'
+map global normal <c-v> -docstring "lazygit"   ':connect terminal lazygit <ret>'
 
-map global normal B     -docstring "buffer picker"         ': connect terminal kamp-buffers<ret>'
-map global normal <c-k> -docstring "file picker"           ': connect terminal kamp-files<ret>'
-map global normal <c-g> -docstring "grep picker"           ': connect terminal kamp-grep<ret>'
-map global normal <c-s> -docstring "grep picker (buffer)"  ': connect terminal kamp-grep %val{buflist}<ret>'
+map global normal B     -docstring "buffer picker"   ': connect terminal kamp-buffers<ret>'
+map global normal <c-k> -docstring "file picker"     ': connect terminal kamp-files<ret>'
+map global normal <c-g> -docstring "grep picker"     ': connect terminal kamp-grep<ret>'
+
+# kakoune fuzzy finder with fzy algorithm
+plug "gustavo-hms/peneira" %{
+  require-module peneira
+  map global normal <c-l> -docstring "search lines"     ': peneira-lines<ret>'
+  map global normal <c-s> -docstring "search symbols"   ': peneira-symbols<ret>'
+}
+
 
 ################# MODES ##################
 
@@ -326,37 +333,6 @@ plug "danr/kakoune-easymotion" %{
     map global e-motion k -docstring "↑ line"   ':easy-motion-k <ret>'
     map global e-motion w -docstring "← word"   ':easy-motion-b <ret>'
     map global e-motion W -docstring "← WORD"   ':easy-motion-B <ret>'
-}
-
-# kakoune fuzzy finder with fzy algorithm
-plug "gustavo-hms/peneira" %{
-  require-module peneira
-  define-command peneira-buffers %{
-    peneira 'buffers: ' %( printf '%s\n' $kak_quoted_buflist ) %{
-      buffer %arg{1}
-    }
-  }
-  define-command peneira-file %{
-    peneira-files-configure-buffer
-    peneira 'files: ' %{ fd -t f . } %{
-      edit %arg{1}
-    }
-  }
-  define-command peneira-grep -params 1 %{
-    peneira 'line: ' "rg -n %arg{1}" %{
-      lua %arg{1} %{
-        local file, line = arg[1]:match("([^:]+):(%d+):")
-        kak.edit(file, line)
-      }
-    }
-  }
-  declare-user-mode find
-  map global user f -docstring "find"    ':enter-user-mode find <ret>'
-  map global find b -docstring "buffer"  ':peneira-buffers <ret>'
-  map global find f -docstring "file"    ':peneira-file <ret>'
-  map global find h -docstring "here"    ':peneira-lines <ret>'
-  map global find l -docstring "local"   ':peneira-local-files <ret>'
-  map global find s -docstring "symbol"  ':peneira-symbols <ret>'
 }
 
 declare-user-mode grep
