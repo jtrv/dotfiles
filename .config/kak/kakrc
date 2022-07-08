@@ -397,7 +397,13 @@ plug 'https://gitlab.com/kstr0k/mru-files.kak.git' %{
   require-module kakhist
   kakhist-init
 } demand mru-files %{
-  map global user r -docstring "recent"   ':mru-files <ret>'
+  map global normal <c-r> -docstring "recent files" ':mru-files <ret>'
+  declare-user-mode recent
+  map global user r -docstring "recent" ':enter-user-mode recent<ret>'
+  map global recent f -docstring "files"           ':mru-files <ret>'
+  map global recent r -docstring "related files"   ':mru-files-related <ret>'
+  map global recent l -docstring "load session"    ':mru-files-session-load <ret>'
+  map global recent s -docstring "save session"    ':mru-files-session-save <ret>'
 }
 
 # Spelling and grammar checking
