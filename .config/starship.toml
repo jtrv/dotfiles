@@ -41,7 +41,7 @@ disabled = true
 commit_hash_length = 4
 
 [git_status]
-conflicted = "🏳"
+conflicted = "🏳 "
 ahead = "🏎💨"
 behind = "😰"
 diverged = "😵"
@@ -50,7 +50,7 @@ stashed = "📦"
 modified = "📝"
 staged = '[$countﰃ](bold green)'
 renamed = "👅"
-deleted = "🗑"
+deleted = "🗑 "
 
 # hostname
 [hostname]
