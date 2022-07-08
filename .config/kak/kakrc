@@ -5,6 +5,13 @@
 source "~/.config/kak/plugins/plug.kak/rc/plug.kak"
 plug "andreyorst/plug.kak" noload
 
+plug "JacobTravers/kampliment" noload do %sh{
+  cargo install --path . --root $CARGO_HOME
+  for script in $(ls ~/.config/kak/plugins/kampliment/scripts/); do
+    ln -fs ~/.config/kak/plugins/kampliment/scripts/$script ~/.local/bin/$script
+  done
+}
+
 # interface for external programs (kampliment)
 evaluate-commands %sh{
   kamp init -a -e EDITOR='kamp edit'
