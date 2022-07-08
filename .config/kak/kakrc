@@ -92,7 +92,7 @@ declare-user-mode dev
   map global dev k -docstring "prev lint"    ':lint-previous-message <ret>'
   map global dev l -docstring "lint"         ':lint <ret>'
   map global dev L -docstring "lint sel"     ':lint <ret>'
-  map global dev s -docstring "set filetype" ':set buffer filetype '
+  map global dev s -docstring "set filetype" ':connect terminal kamp-filetypes <ret>'
 
 # linting and formating per language
 source "~/.config/kak/contexts/commit.kak"
