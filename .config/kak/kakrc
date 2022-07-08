@@ -66,6 +66,7 @@ plug "kak-lsp/kak-lsp" do %{
 # swap client windows etc
 plug "alexherbo2/window.kak"
 
+
 ############### FORMAT/LINT ###############
 
 # Empty scratch buffer
@@ -107,7 +108,6 @@ source "~/.config/kak/contexts/sh.kak"
 
 
 ###################### UTILITY ######################
-
 
 # Alacritty integration
 plug "alexherbo2/alacritty.kak" %{
@@ -163,10 +163,6 @@ define-command difft -docstring "view diff with difftastic" -shell-completion -p
   kakpipe -n difft -- difft --width %val{window_width} --color always %arg{@};
 }
 
-define-command tldr -docstring "print a cheatsheet for the given console command" -shell-completion -params 1.. %{
-  kakpipe -n tldr -- tldr --color always %arg{@};
-}
-
 define-command helpp -docstring "print an answer for the query from stackoverflow etc" -params 1.. %{
   kakpipe -n help -- %arg{@} --help;
 }
@@ -177,6 +173,10 @@ define-command how -docstring "print an answer for the query from stackoverflow 
 
 define-command mdn -docstring "print mdn docs for the query" -params 1.. %{
   kakpipe -n mdn -- mdn %arg{@};
+}
+
+define-command tldr -docstring "print a cheatsheet for the given console command" -shell-completion -params 1.. %{
+  kakpipe -n tldr -- tldr --color always %arg{@};
 }
 
 define-command reader-mode -docstring "enables settings for better reading" %{
@@ -237,7 +237,7 @@ map global normal ?     -docstring "(extend) search"             '?(?i)'
 map global normal <a-?> -docstring "(extend) search backwards"   '<a-?>(?i)'
 
 # paste in insert mode
-map global insert <c-v> -docstring "insert mode paste" '<esc>Pi'
+map global insert <c-v> -docstring "insert mode paste"   '<esc>Pi'
 
 # (un)Comment Lines
 define-command comment %{
@@ -447,7 +447,7 @@ plug "JacobTravers/kakoune-grep-write"%{
   hook global WinDisplay '\*grep\*' %{
     alias buffer w grep-write
     alias buffer wq grep-write-quit
-    map buffer user w -docstring "write" ':grep-write <ret>'
+    map buffer user w -docstring "write"   ':grep-write <ret>'
   }
 }
 map global user / -docstring "search"   ':grep '
