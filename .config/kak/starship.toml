@@ -24,7 +24,7 @@ $time\
 ${custom.kaktime}"""
 
 [time]
-format = "[]($style)[  $time ]($style)"
+format = "[]($style)[ $time ]($style)"
 style = "fg:#1E2227 bg:#B1A3DF"
 time_format = "%H:%M"
 disabled = false
@@ -75,7 +75,7 @@ untracked = '?'
 disabled = false
 
 [directory]
-format = '[]($style)[$read_only]($read_only_style)[$path]($style)'
+format = '[ ]($style)[$read_only]($read_only_style)[$path]($style)'
 truncation_length = 3
 truncate_to_repo = false
 fish_style_pwd_dir_length = 0
@@ -87,8 +87,8 @@ truncation_symbol = '…'
 disabled = false
 
 [directory.substitutions]
+"~"         = ""
 "~/.config" = ""
-"~" = ""
 
 [package]
 format = '[  $version]($style)[ ]($style)'
@@ -225,7 +225,7 @@ disabled = false
 
 [custom.kaktime]
 description = "Alternate time segment using kakoune evaluation"
-format = "[]($style)[  %sh{date +%T} ]($style)"
+format = "[]($style)[ %sh{date +%T} ]($style)"
 style = "fg:#1E2227 bg:bright-green"
 when = ''
 shell = ['true']

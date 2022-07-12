@@ -11,12 +11,6 @@ set fish_cursor_visual block blink
 # better history
 mcfly init fish | source
 
-# better prompt
-starship init fish | source
-
-# better 'cd' (z)
-zoxide init fish | source
-
 # tabtab source for packages
 # uninstall by removing these lines
 [ -f ~/.config/tabtab/fish/__tabtab.fish ]; and . ~/.config/tabtab/fish/__tabtab.fish; or true
@@ -46,13 +40,6 @@ function __history_previous_command_arguments
   end
 end
 bind -Minsert '$' __history_previous_command_arguments
-
-# create backup files
-function bak
-  for file in $argv
-    cp $file $file.bak
-  end
-end
 
 # ask questions, get answers in kakoune
 function how
@@ -94,10 +81,12 @@ alias lt      'exa -aT --color=always --group-directories-first --git --icons' #
 alias m       'math'
 alias mirrors '~/.local/bin/update-mirrors' # update mirrors / database
 alias mons    'bass mons' # use bash for mons (monitor scripts)
-alias nbg     'feh --randomize --bg-scale --no-fehbg ~/pictures/wallpapers/' # change bg
+alias nbg     'feh --randomize --bg-scale --no-fehbg ~/media/pictures/wallpapers/' # change bg
 alias off     'systemctl suspend' # save state, enter low-power mode
 alias pom     'potato' # shell pomodoro timer
 alias q       'exit'
+alias wget    "wget --hsts-file=\"$XDG_DATA_HOME/wget-hsts\""
+alias yarn    "yarn --use-yarnrc \"$XDG_CONFIG_HOME\"/yarn/config"
 
 
 
@@ -137,12 +126,11 @@ function kdn
 end
 
 function kakgrep
-  set arg_list
-  for x in $argv
-    set -a grepargs (echo $x | sed -e "s/'/''/g" -e "s/^/'/" -e "s/\$/'/")
-  end
-  set grep_args (string join -- " " $arg_list)
-  kak -e "grep $grep_args"
+    set grepargs
+    for x in $argv
+        set -a grepargs (echo $x | sed -e "s/'/''/g" -e "s/^/'/" -e "s/\$/'/")
+    end
+    kak -e "grep $(string join -- " " $grepargs)"
 end
 complete -c kakgrep -w rg
 alias kg 'kakgrep'
@@ -163,6 +151,8 @@ function kelta
 end
 alias kda 'kelta'
 
+alias kr      'kak -e "mru-files-list"'
+alias kl      'kak -e "mru-files-session-load"'
 alias kf      'kamp-files'
 alias kgi     'kamp-grep'
 
@@ -170,33 +160,54 @@ alias k       'kamp edit'
 alias kval    'kamp get val'
 alias kopt    'kamp get opt'
 alias kreg    'kamp get reg'
-alias kcd-pwd 'cd "(kamp get sh pwd)"'
-alias kcd-buf 'cd "(dirname (kamp get val buffile))"'
+alias kcd-pwd 'cd (kamp get sh pwd)'
+alias kcd-buf 'cd (dirname (kamp get val buffile))'
 alias kft     'kamp get -b \* opt filetype | sort | uniq' # list file types you're working on
 
 
 
 ######## EXPORTS ########
 
-set -gx fish_greeting
-set -gx MCFLY_FUZZY 2
-
 set -gx CALIBRE_USE_DARK_PALETTE "yes"
-set -gx FZF_DEFAULT_OPTS         "--ansi --color=dark --multi --tabstop=2  --preview='bat --color=always {}' --preview-window border-vertical"
-set -gx HORS_ENGINE              "google"
-set -gx NPM_CONFIG_USERCONFIG    "/home/sugimoto/.config/npm/npmrc"
-
-set -gx EDITOR   "/usr/bin/kak"
-set -gx VISUAL   "/usr/bin/kak"
+set -gx EDITOR "/usr/bin/kak"
+set -gx fish_greeting
+set -gx FZF_DEFAULT_OPTS "--ansi --color=dark --multi --tabstop=2  --preview='bat --color=always {}' --preview-window border-vertical"
+set -gx HORS_ENGINE "google"
 set -gx MANPAGER "/usr/bin/bat" # see 'kan' function
-
-set -gx GOPATH "/home/sugimoto/.go"
-
-set -gx CARGO_HOME    "/home/sugimoto/.cargo"
+set -gx MCFLY_FUZZY 2
+set -gx PATH "$VOLTA_HOME/bin" $PATH
 set -gx RUSTC_WRAPPER "/usr/bin/sccache"
+set -gx VISUAL "/usr/bin/kak"
 
-set -gx VOLTA_HOME "/home/sugimoto/.volta"
-set -gx PATH       "/home/sugimoto/.volta/bin" $PATH
+set -gx XDG_CACHE_HOME "$HOME"/.cache
+set -gx XDG_CONFIG_HOME "$HOME"/.config
+set -gx XDG_DATA_HOME "$HOME"/.local/share
+set -gx XDG_DESKTOP_DIR "$HOME"/
+set -gx XDG_DOCUMENTS_DIR "$HOME"/documents
+set -gx XDG_DOWNLOAD_DIR "$HOME"/downloads
+set -gx XDG_MUSIC_DIR "$HOME"/media/music
+set -gx XDG_PICTURES_DIR "$HOME"/media/pictures
+set -gx XDG_STATE_HOME "$HOME"/.local/state
+
+set -gx LESSHISTFILE "$XDG_CACHE_HOME"/less/history
+
+set -gx AWS_CONFIG_FILE             "$XDG_CONFIG_HOME"/aws/config
+set -gx AWS_SHARED_CREDENTIALS_FILE "$XDG_CONFIG_HOME"/aws/credentials
+set -gx GTK2_RC_FILES               "$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
+set -gx NPM_CONFIG_USERCONFIG       "$XDG_CONFIG_HOME"/npm/npmrc
+set -gx PYTHONSTARTUP               "$XDG_CONFIG_HOME"/python/pythonrc
+set -gx _JAVA_OPTIONS -Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
+
+set -gx ANDROID_HOME      "$XDG_DATA_HOME"/android
+set -gx CARGO_HOME        "$XDG_DATA_HOME"/cargo
+set -gx GOPATH            "$XDG_DATA_HOME"/go
+set -gx GNUPGHOME         "$XDG_DATA_HOME"/gnupg
+set -gx NODE_REPL_HISTORY "$XDG_DATA_HOME"/node_repl_history
+set -gx NVM_DIR           "$XDG_DATA_HOME"/nvm
+set -gx RUSTUP_HOME       "$XDG_DATA_HOME"/rustup
+set -gx VOLTA_HOME        "$XDG_DATA_HOME"/volta
+
+set -gx HISTFILE "$XDG_STATE_HOME"/bash/history
 
 set -gx LF_ICONS "\
 di=:\

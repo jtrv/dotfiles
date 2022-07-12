@@ -5,14 +5,24 @@
 source "~/.config/kak/plugins/plug.kak/rc/plug.kak"
 plug "andreyorst/plug.kak" noload
 
-plug "vbauerster/kampliment" do %{
-  cargo install --path .
+plug "JacobTravers/kampliment" noload do %sh{
+  cargo install --path . --root $CARGO_HOME
+  for script in $(ls ~/.config/kak/plugins/kampliment/scripts/); do
+    ln -fs ~/.config/kak/plugins/kampliment/scripts/$script ~/.local/bin/$script
+  done
 }
 
 # interface for external programs (kampliment)
 evaluate-commands %sh{
   kamp init -a -e EDITOR='kamp edit'
 }
+
+# extend kak with lua
+plug "gustavo-hms/luar" %{
+  require-module luar
+  set-option global luar_interpreter luajit
+}
+
 
 ################### DISPLAY ###################
 
@@ -56,6 +66,7 @@ plug "kak-lsp/kak-lsp" do %{
 # swap client windows etc
 plug "alexherbo2/window.kak"
 
+
 ############### FORMAT/LINT ###############
 
 # Empty scratch buffer
@@ -82,7 +93,7 @@ declare-user-mode dev
   map global dev k -docstring "prev lint"    ':lint-previous-message <ret>'
   map global dev l -docstring "lint"         ':lint <ret>'
   map global dev L -docstring "lint sel"     ':lint <ret>'
-  map global dev s -docstring "set filetype" ':set buffer filetype '
+  map global dev s -docstring "set filetype" ':connect terminal kamp-filetypes <ret>'
 
 # linting and formating per language
 source "~/.config/kak/contexts/commit.kak"
@@ -98,7 +109,6 @@ source "~/.config/kak/contexts/sh.kak"
 
 ###################### UTILITY ######################
 
-
 # Alacritty integration
 plug "alexherbo2/alacritty.kak" %{
   alias global terminal alacritty-terminal-window
@@ -112,9 +122,6 @@ plug "alexherbo2/auto-pairs.kak" %{
 # Clipboard integration
 plug "lePerdu/kakboard" %{
   hook global WinCreate .* %{ kakboard-enable }
-  map global normal <a-y> -docstring "multi-yank"         ':kakboard-multi-yank <ret>'
-  map global normal <a-p> -docstring "multi-append"       ':kakboard-multi-append <ret>'
-  map global normal <a-P> -docstring "multi-append-all"   ':kakboard-multi-append-all <ret>'
 }
 
 # display text with ansi color-codes inside a fifo
@@ -154,10 +161,6 @@ define-command difft -docstring "view diff with difftastic" -shell-completion -p
   kakpipe -n difft -- difft --width %val{window_width} --color always %arg{@};
 }
 
-define-command tldr -docstring "print a cheatsheet for the given console command" -shell-completion -params 1.. %{
-  kakpipe -n tldr -- tldr --color always %arg{@};
-}
-
 define-command helpp -docstring "print an answer for the query from stackoverflow etc" -params 1.. %{
   kakpipe -n help -- %arg{@} --help;
 }
@@ -170,9 +173,14 @@ define-command mdn -docstring "print mdn docs for the query" -params 1.. %{
   kakpipe -n mdn -- mdn %arg{@};
 }
 
+define-command tldr -docstring "print a cheatsheet for the given console command" -shell-completion -params 1.. %{
+  kakpipe -n tldr -- tldr --color always %arg{@};
+}
+
 define-command reader-mode -docstring "enables settings for better reading" %{
   remove-highlighter global/whitespace
   ui-whitespaces-toggle
+  ui-wrap-toggle
   rainbow-disable-window
   map buffer normal d <c-d>
   map buffer normal u <c-u>
@@ -191,12 +199,10 @@ define-command node-eval -docstring "evaluate current js file, print result to a
 
 ##########REMAPPINGS
 
-map global normal <space> , -docstring "leader-key"
-map global user   <space> : -docstring "prompt"
+map global user <space> : -docstring "prompt"
 
-map global normal <esc> <space>   -docstring "clear multi-selection and keep (nth)"
-map global normal , <space>       -docstring "clear multi-selection and keep (nth)"
-map global normal <a-,> <a-space> -docstring "remove selection (nth)"
+map global normal <a-space> <a-,> -docstring "clear current (or nth) selection"
+map global normal <esc> ,         -docstring "clear multi-selection and keep (nth)"
 
 map global prompt <c-n> <tab>   -docstring "next completion"
 map global prompt <c-p> <s-tab> -docstring "previous completion"
@@ -212,8 +218,8 @@ map global normal <a-W> <a-B> -docstring "extend prevous BIG-WORD"
 map global normal D -docstring "Delete to end" ';Gld'
 map global normal Y -docstring "yank to end"   ';Gly'
 
-map global normal J -docstring "select next line"       'J<a-x>'
-map global normal K -docstring "select previous line"   'K<a-x>'
+map global normal J -docstring "select next line"       'Jx'
+map global normal K -docstring "select previous line"   'Kx'
 
 map global normal x     -docstring "select inner"          '<a-i>'
 map global normal X     -docstring "select outer"          '<a-a>'
@@ -233,7 +239,7 @@ map global normal ?     -docstring "(extend) search"             '?(?i)'
 map global normal <a-?> -docstring "(extend) search backwards"   '<a-?>(?i)'
 
 # paste in insert mode
-map global insert <c-v> -docstring "insert mode paste" '<esc>Pi'
+map global insert <c-v> -docstring "insert mode paste"   '<esc>Pi'
 
 # (un)Comment Lines
 define-command comment %{
@@ -244,6 +250,21 @@ define-command comment %{
 }
 map -docstring "comment" global normal <#> %{:comment <ret>}
 
+define-command diff-buffers -override -params 2 %{
+  evaluate-commands %sh{
+    file1=$(mktemp)
+    file2=$(mktemp)
+    echo "
+      evaluate-commands -buffer '$1' write -force $file1
+      evaluate-commands -buffer '$2' write -force $file2
+      edit! -scratch *diff-buffers*
+      set buffer filetype diff
+      set-register | 'diff -u $file1 $file2; rm $file1 $file2'
+      execute-keys !<ret>gg
+    "
+}}
+complete-command diff-buffers buffer
+
 # Better match function
 plug "useredsa/dynamic-matching.kak" %{
   dynamic-matching-dmatch-conf
@@ -251,18 +272,25 @@ plug "useredsa/dynamic-matching.kak" %{
   map global normal M -docstring "add dynamic match"      ':enter-user-mode Dmatch <ret>'
 }
 
-# Kakoune.cr (coderunner) implementations
+# kampliment (coderunner) bindings
 map global normal <c-t> -docstring "New client"     ':new <ret>'
 map global normal <c-n> -docstring "New terminal"   ':connect terminal <ret>'
 map global normal +     -docstring "New popup"      ':connect popup <ret>'
 
 map global normal <c-h> -docstring "lf"        ':connect terminal lf <ret>'
-map global normal <c-l> -docstring "lazygit"   ':connect terminal lazygit <ret>'
+map global normal <c-v> -docstring "lazygit"   ':connect terminal lazygit <ret>'
 
-map global normal B     -docstring "buffer picker"         ': connect terminal kamp-buffers<ret>'
-map global normal <c-k> -docstring "file picker"           ': connect terminal kamp-files<ret>'
-map global normal <c-g> -docstring "grep picker"           ': connect terminal kamp-grep<ret>'
-map global normal <c-s> -docstring "grep picker (buffer)"  ': connect terminal kamp-grep %val{buflist}<ret>'
+map global normal B     -docstring "buffer picker"   ': connect terminal kamp-buffers<ret>'
+map global normal <c-k> -docstring "file picker"     ': connect terminal kamp-files<ret>'
+map global normal <c-g> -docstring "grep picker"     ': connect terminal kamp-grep<ret>'
+
+# kakoune fuzzy finder with fzy algorithm
+plug "gustavo-hms/peneira" %{
+  require-module peneira
+  map global normal <c-l> -docstring "search lines"     ': peneira-lines<ret>'
+  map global normal <c-s> -docstring "search symbols"   ': peneira-symbols<ret>'
+}
+
 
 ################# MODES ##################
 
@@ -316,8 +344,8 @@ declare-user-mode grep
   map global grep k -docstring "prev match"    ':grep-previous-match <ret>'
   map global grep w -docstring "write edits"   ':grep-write <ret>'
 
-map global normal <a-y> -docstring "multi-yank"   ':kakboard-toggle <ret>y'
-map global user   k     -docstring "kakboard"     ':kakboard-toggle <ret>'
+map global user   k     -docstring "klip off"     ':kakboard-disable; kakboard-disable <ret>'
+map global user   K     -docstring "klip on"      ':kakboard-enable <ret>'
 
 map global user l -docstring "LSP" %{:enter-user-mode lsp <ret>}
   map global lsp <minus> -docstring "disable"   ':lsp-disable-window <ret>'
@@ -340,18 +368,18 @@ define-command math -docstring 'do the maths' %{
 }
 map global user M -docstring "math"   ':math <ret>'
 
-plug "caksoylar/kakoune-focus" config %{
-  map global user n -docstring "narrow"   ':focus-toggle <ret>'
+plug "caksoylar/kakoune-focus" branch "kak-master" config %{
+  map global normal : -docstring "narrow"   ':focus-toggle <ret>'
 }
 
 # Edit/extend/trim selections one by one
 plug "occivink/kakoune-phantom-selection" %{
   declare-user-mode phantom
   map global user p -docstring "phantom"       ':enter-user-mode phantom <ret>'
-  map global phantom a -docstring "Add"        ':phantom-selection-add-selection <ret>'
-  map global phantom c -docstring "Clear"      ':phantom-selection-select-all; phantom-selection-clear <ret>'
-  map global phantom n -docstring "Next"       ':phantom-selection-iterate-next <ret>'
-  map global phantom p -docstring "Previous"   ':phantom-selection-iterate-prev <ret>'
+  map global phantom a -docstring "add"        ':phantom-selection-add-selection <ret>'
+  map global phantom c -docstring "clear"      ':phantom-selection-select-all; phantom-selection-clear <ret>'
+  map global phantom n -docstring "next"       ':phantom-selection-iterate-next <ret>'
+  map global phantom p -docstring "previous"   ':phantom-selection-iterate-prev <ret>'
 }
 
 # Select/edit surrounding chars and tags
@@ -371,7 +399,13 @@ plug 'https://gitlab.com/kstr0k/mru-files.kak.git' %{
   require-module kakhist
   kakhist-init
 } demand mru-files %{
-  map global user r -docstring "recent"   ':mru-files <ret>'
+  map global normal <c-r> -docstring "recent files" ':mru-files <ret>'
+  declare-user-mode recent
+  map global user r -docstring "recent" ':enter-user-mode recent<ret>'
+  map global recent f -docstring "files"           ':mru-files <ret>'
+  map global recent r -docstring "related files"   ':mru-files-related <ret>'
+  map global recent l -docstring "load session"    ':mru-files-session-load <ret>'
+  map global recent s -docstring "save session"    ':mru-files-session-save <ret>'
 }
 
 # Spelling and grammar checking
@@ -415,7 +449,7 @@ plug "JacobTravers/kakoune-grep-write"%{
   hook global WinDisplay '\*grep\*' %{
     alias buffer w grep-write
     alias buffer wq grep-write-quit
-    map buffer user w -docstring "write" ':grep-write <ret>'
+    map buffer user w -docstring "write"   ':grep-write <ret>'
   }
 }
 map global user / -docstring "search"   ':grep '
