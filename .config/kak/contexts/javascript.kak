@@ -7,6 +7,6 @@ hook global WinSetOption filetype=javascript %{
   map global dev m -docstring "minify" ':minify <ret>'
 }
 hook global BufSetOption filetype=javascript %{
-  set-option buffer formatcmd 'deno fmt -'
+  set-option buffer formatcmd "prettier --stdin-filepath=%val{buffile}"
   map -docstring "comment" buffer normal <#> ':comment-line <ret>'
 }
