@@ -361,7 +361,7 @@ define-command execute-keys-with-register -params 2 -docstring 'execute keys wit
 } 
 define-command math -docstring 'do the maths' %{
   prompt math: %{
-    execute-keys-with-register 'a<c-r>"<esc>|kalk <ret>' %val{text}
+    execute-keys-with-register 'a<c-r>"<esc>|bc <ret>' %val{text}
   }
 }
 map global user M -docstring "math"   ':math <ret>'
