@@ -29,7 +29,7 @@ function rad
     case "kcrw"
       rad-play "http://kcrw.streamguys1.com/kcrw_192k_mp3_e24_internet_radio"
     case "kexp"
-      rad-play "http://50.31.180.202/"
+      rad-play "https://kexp-mp3-128.streamguys1.com/kexp128.mp3"
     case "kutx"
       rad-play "https://kut.streamguys1.com/kutx-free"
     case "majestic-jukebox"
