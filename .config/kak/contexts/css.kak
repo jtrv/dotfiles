@@ -7,5 +7,5 @@ hook global WinSetOption filetype=(css|scss) %{
   map global dev m -docstring "minify" ':minify <ret>'
 }
 hook global BufSetOption filetype=(css|scss) %{
-  set-option buffer formatcmd "prettier --stdin-filepath=%val{buffile}"
+  set-option buffer formatcmd "prettierd %val{buffile}"
 }
