@@ -7,5 +7,5 @@ hook global WinSetOption filetype=html %{
   map global dev m -docstring "minify" ':minify <ret>'
 }
 hook global BufSetOption filetype=(html) %{
-  set-option buffer formatcmd "prettier --stdin-filepath=%val{buffile}"
+  set-option buffer formatcmd "prettierd %val{buffile}"
 }
