@@ -151,6 +151,13 @@ plug "natasky/kakoune-multi-file"
 
 set global grepcmd 'rg --column --smart-case'
 
+define-command comment -docstring "(un)comment lines" %{
+  try %{
+    execute-keys _
+    comment-block
+  } catch comment-line
+}
+
 define-command delta -docstring "view diff with delta" -shell-completion -params 1.. %{
   kakpipe -n delta -- delta %arg{@};
 }
@@ -162,6 +169,21 @@ define-command diff -docstring "view diff" -shell-completion -params 1.. %{
 define-command difft -docstring "view diff with difftastic" -shell-completion -params 1.. %{
   kakpipe -n difft -- difft --width %val{window_width} --color always %arg{@};
 }
+
+define-command diff-buffers -override -params 2 %{
+  evaluate-commands %sh{
+    file1=$(mktemp)
+    file2=$(mktemp)
+    echo "
+      evaluate-commands -buffer '$1' write -force $file1
+      evaluate-commands -buffer '$2' write -force $file2
+      edit! -scratch *diff-buffers*
+      set buffer filetype diff
+      set-register | 'diff -u $file1 $file2; rm $file1 $file2'
+      execute-keys !<ret>gg
+    "
+}}
+complete-command diff-buffers buffer
 
 define-command helpp -docstring "print an answer for the query from stackoverflow etc" -params 1.. %{
   kakpipe -n help -- %arg{@} --help;
@@ -213,6 +235,9 @@ map global normal <a-W> <a-B> -docstring "extend prevous BIG-WORD"
 
 #########AUGMENTATION
 
+# paste in insert mode
+map global insert <c-v> -docstring "insert mode paste"   '<esc>Pi'
+
 map global normal D -docstring "vim D"         'Gld'
 map global normal Y -docstring "yank to end"   'Gly'
 
@@ -236,32 +261,8 @@ map global normal <a-/> -docstring "search backwards"            '<a-/>(?i)'
 map global normal ?     -docstring "(extend) search"             '?(?i)'
 map global normal <a-?> -docstring "(extend) search backwards"   '<a-?>(?i)'
 
-# paste in insert mode
-map global insert <c-v> -docstring "insert mode paste"   '<esc>Pi'
-
 # (un)Comment Lines
-define-command comment %{
-  try %{
-    execute-keys _
-    comment-block
-  } catch comment-line
-}
-map -docstring "comment" global normal <#> %{:comment <ret>}
-
-define-command diff-buffers -override -params 2 %{
-  evaluate-commands %sh{
-    file1=$(mktemp)
-    file2=$(mktemp)
-    echo "
-      evaluate-commands -buffer '$1' write -force $file1
-      evaluate-commands -buffer '$2' write -force $file2
-      edit! -scratch *diff-buffers*
-      set buffer filetype diff
-      set-register | 'diff -u $file1 $file2; rm $file1 $file2'
-      execute-keys !<ret>gg
-    "
-}}
-complete-command diff-buffers buffer
+map global normal <#> -docstring "comment"   ':comment <ret>'
 
 # Better match function
 plug "useredsa/dynamic-matching.kak" %{
