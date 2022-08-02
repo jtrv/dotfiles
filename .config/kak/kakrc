@@ -158,6 +158,13 @@ define-command comment -docstring "(un)comment lines" %{
   } catch comment-line
 }
 
+define-command cd-to-buffer %{
+  evaluate-commands %sh{
+    echo "cd $(dirname $kak_buffile)"
+  }
+}
+alias global cdb cd-to-buffer
+
 define-command delta -docstring "view diff with delta" -shell-completion -params 1.. %{
   kakpipe -n delta -- delta %arg{@};
 }
