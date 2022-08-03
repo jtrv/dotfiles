@@ -1,5 +1,12 @@
 #!/bin/sh
 
-amixer set Master 5%
-VOLUME_LEVEL="$(amixer get Master | awk -F'[][]' 'END{ print $2 }')"
-notify-send -t 2500 "Volume" "Lowered: $VOLUME_LEVEL"
+if [ $# -eq 0 ]; then
+	pulsemixer --change-volume -5
+fi
+
+if [ $# -eq 1 ]; then
+	pulsemixer --change-volume -"$1"
+fi
+
+VOLUME_LEVEL=$(pulsemixer --get-volume | cut -d ' ' -f 1)
+notify-send -t 200 "Volume - $VOLUME_LEVEL%"
