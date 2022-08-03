@@ -107,9 +107,16 @@ bat() {
 #    VOLUME
 ##############################
 vol() {
-  percent="$(amixer get Master | awk -F'[][]' 'END{ print $2 }')"
-  vol=$(printf %3d "$percent")
-  echo "$vol%"
+  percent=$(pulsemixer --get-volume | cut -d ' ' -f 1)
+  vol=$(printf %2d "$percent")
+  mute=$(pulsemixer --get-mute)
+  if [ "$mute" -eq "1" ]; then
+    icon=""
+  fi
+  if [ "$mute" -eq "0" ]; then
+    icon=""
+  fi
+  echo " $icon $vol%"
 }
 ##############################
 #    PACKAGES
@@ -131,6 +138,6 @@ vol() {
 SLEEP_SEC=2
 #loops forever outputting a line every SLEEP_SEC secs
 while :; do
-  echo "$(ram)  $(ssd)  | $(vol) | $(mic) $(net) $(blu) | $(bat)"
+  echo "$(ram)  $(ssd)  | $(vol) | $(mic) $(net) $(blu) | $(bat)"
   sleep $SLEEP_SEC
 done

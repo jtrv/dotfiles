@@ -1,5 +1,15 @@
 #!/bin/sh
 
-amixer -D pulse sset Master toggle
-VOLUME_LEVEL="$(amixer get Master | awk -F'[][]' 'END{ print $4 }')"
-notify-send -t 2500 "Volume" "Toggled $VOLUME_LEVEL"
+pulsemixer --toggle-mute
+
+MUTE_VALUE=$(pulsemixer --get-mute)
+
+if [ "$MUTE_VALUE" -eq "1" ]; then
+	MUTE_STATUS="On"
+fi
+
+if [ "$MUTE_VALUE" -eq "0" ]; then
+	MUTE_STATUS="Off"
+fi
+
+notify-send -t 2500 "Mute Toggled $MUTE_STATUS"
