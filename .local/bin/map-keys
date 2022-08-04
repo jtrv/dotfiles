@@ -1,3 +1,4 @@
 #!/bin/sh
+xbindkeys -f .config/.xbindkeysrc 
 setxkbmap us -option ctrl:nocaps &&
 	xcape -e 'Control_L=Escape'
