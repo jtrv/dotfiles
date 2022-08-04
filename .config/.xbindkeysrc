@@ -61,6 +61,9 @@
 # End of xbindkeys Tutorial #
 #############################
 
+"volume-mute"
+    Mod4 + b:2
+
 "volume-increase 1"
     Mod4 + b:4
 
