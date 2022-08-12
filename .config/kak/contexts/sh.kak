@@ -4,5 +4,4 @@ hook global WinSetOption filetype=sh %{
 }
 hook global WinSetOption filetype=sh %{
   set-option buffer formatcmd "shfmt"
-  format
 }
