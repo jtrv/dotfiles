@@ -165,13 +165,6 @@ define-command comment -docstring "(un)comment lines" %{
   } catch comment-line
 }
 
-define-command cd-to-buffer %{
-  evaluate-commands %sh{
-    echo "cd $(dirname $kak_buffile)"
-  }
-}
-alias global cdb cd-to-buffer
-
 define-command delta -docstring "view diff with delta" -shell-completion -params 1.. %{
   kakpipe -n delta -- delta %arg{@};
 }
@@ -326,6 +319,14 @@ plug "delapouite/kakoune-buffers" %{
     alias global bo! buffer-only-force
 }
 
+plug 'delapouite/kakoune-cd' %{
+  # Suggested mapping
+  map global user c ': enter-user-mode cd<ret>' -docstring 'cd'
+  # Suggested aliases
+  alias global cdb change-directory-current-buffer
+  alias global cdr change-directory-project-root
+  alias global ecd edit-current-buffer-directory
+  alias global pwd print-working-directory
 }
 
 map global user d -docstring "dev"  ':enter-user-mode dev <ret>'
