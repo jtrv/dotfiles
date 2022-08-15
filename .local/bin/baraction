@@ -99,9 +99,15 @@ bat() {
     batstat=""
   fi
 
-  battery=$(printf %3d "$percent")
+  battery=$(
+    if [ "$percent" -eq 100 ]; then
+      printf %3d "99"
+    else
+      printf %3d "$percent"
+    fi
+  )
 
-  echo "$batstat$battery%"
+  echo "$batstat $battery%"
 }
 ##############################
 #    VOLUME
