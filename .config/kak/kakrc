@@ -326,17 +326,6 @@ plug "delapouite/kakoune-buffers" %{
     alias global bo! buffer-only-force
 }
 
-plug 'https://gitlab.com/kstr0k/fast-context.kak.git' \
-demand fast-context %{
-  set-option global fast_context_max_width 100
-  set-option global fast_context_max_context 10
-  set-option global fast_context_max_backlines 200
-
-  declare-user-mode context
-  map global user c -docstring "context"     ':enter-user-mode context <ret>'
-  map global context s -docstring "show"     ':fast-context-show <ret>'
-  map global context l -docstring "lock"     ':fast-context-lock <ret>'
-  map global context u -docstring "unlock"   ':fast-context-unlock <ret>'
 }
 
 map global user d -docstring "dev"  ':enter-user-mode dev <ret>'
