@@ -118,6 +118,9 @@ source "~/.config/kak/contexts/sh.kak"
 
 ###################### UTILITY ######################
 
+map global prompt <a-.> -docstring "buffer directory"     '%sh{dirname "$kak_buffile"}<a-!>/'
+map global prompt <a-,> -docstring "gir root directory"   '%sh{git rev-parse --show-toplevel}<a-!>/'
+
 # Alacritty integration
 plug "alexherbo2/alacritty.kak" %{
   alias global terminal alacritty-terminal-window
