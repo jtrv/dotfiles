@@ -1,70 +1,77 @@
 # mysticaltutor color scheme
-# Color name           GUI          Base16
-# Color: black         rgb:1E2227   Black
-# Color: darkgray      rgb:30343C   DarkGray
-# Color: gray          rgb:A0A4AA   Gray
-# Color: red           rgb:E07093   DarkRed
-# Color: brightred     rgb:DFB4C9   Red
-# Color: green         rgb:8BBE67   DarkGreen
-# Color: brightgreen   rgb:B1C6AC   Green
-# Color: yellow        rgb:BB8E67   DarkYellow
-# Color: brightyellow  rgb:C3B470   Yellow
-# Color: darkblue      rgb:304A68   DarkBlue
-# Color: blue          rgb:5C8EC7   DarkBlue
-# Color: brightblue    rgb:A0B4CF   Blue
-# Color: magenta       rgb:8B5FC7   DarkMagenta
-# Color: brightmagenta rgb:B1A3DF   Magenta
-# Color: cyan          rgb:5CBE97   DarkCyan
-# Color: brightcyan    rgb:A0C4BD   Cyan
-# Color: white         rgb:D9D9D9   Gray
-# Color: brightwhite   rgb:FFFFFF   White
+declare-option -hidden str mt_black          'rgba:000000'
+declare-option -hidden str mt_blue           'rgba:5C8EC7'
+declare-option -hidden str mt_blue_bright    'rgba:A0B4CF'
+declare-option -hidden str mt_dark_blue      'rgba:304A68'
+declare-option -hidden str mt_cyan           'rgba:5CBE97'
+declare-option -hidden str mt_cyan_bright    'rgba:A0C4BD'
+declare-option -hidden str mt_gray           'rgba:A0A4AA'
+declare-option -hidden str mt_gray_darker    'rgba:30343C'
+declare-option -hidden str mt_gray_darkest   'rgba:1E2227'
+declare-option -hidden str mt_green          'rgba:8BBE67'
+declare-option -hidden str mt_green_bright   'rgba:B1C6AC'
+declare-option -hidden str mt_magenta        'rgba:8B5FC7'
+declare-option -hidden str mt_magenta_bright 'rgba:B1A3DF'
+declare-option -hidden str mt_red            'rgba:E07093'
+declare-option -hidden str mt_red_bright     'rgba:DFB4C9'
+declare-option -hidden str mt_white          'rgba:D9D9D9'
+declare-option -hidden str mt_white_bright   'rgba:FFFFFF'
+declare-option -hidden str mt_yellow         'rgba:BB8E67'
+declare-option -hidden str mt_yellow_bright  'rgba:C3B470'
 
-# For code
-face global value     rgba:E07093FF
-face global type      rgba:8B5FC7FF
-face global variable  rgba:5CBE97FF
-face global module    rgba:B1C6ACFF
-face global function  rgba:B1A3DFFF
-face global string    rgba:8BBE67FF
-face global keyword   rgba:5C8EC7FF
-face global operator  rgba:5C8EC7FF
-face global attribute rgba:BB8E67FF
-face global comment   rgba:A0A4AAFF
-face global meta      rgba:B1C6ACFF
-face global builtin   rgba:B1A3DFFF
+# Code
+set-face global value     "%opt{mt_red}FF"
+set-face global type      "%opt{mt_magenta}FF"
+set-face global variable  "%opt{mt_cyan}FF"
+set-face global module    "%opt{mt_green_bright}FF"
+set-face global function  "%opt{mt_magenta_bright}FF"
+set-face global string    "%opt{mt_green}FF"
+set-face global keyword   "%opt{mt_blue}FF"
+set-face global operator  "%opt{mt_blue}FF"
+set-face global attribute "%opt{mt_yellow}FF"
+set-face global comment   "%opt{mt_gray}FF"
+set-face global meta      "%opt{mt_green_bright}FF"
+set-face global builtin   "%opt{mt_magenta_bright}FF"
 
-# For markup
-face global title  rgba:5C8EC7FF
-face global header rgba:5CBE97FF
-face global mono   rgba:8BBE67FF
-face global block  rgba:8B5FC7FF
-face global link   rgba:5CBE97FF
-face global bullet rgba:5CBE97FF
-face global list   rgba:BB8E67FF
+# Markup
+set-face global title  "%opt{mt_blue}FF"
+set-face global header "%opt{mt_cyan}FF"
+set-face global mono   "%opt{mt_green}FF"
+set-face global block  "%opt{mt_magenta}FF"
+set-face global link   "%opt{mt_cyan}FF"
+set-face global bullet "%opt{mt_cyan}FF"
+set-face global list   "%opt{mt_yellow}FF"
 
 # Builtin faces
-face global Default            rgba:D9D9D9FF,default
-face global PrimarySelection   rgba:D9D9D980,rgba:49719EFF+g
-face global SecondarySelection rgba:D9D9D966,rgba:304A68FF+g
-face global PrimaryCursor      rgba:1E2227FF,rgba:D9D9D9FF+fg
-face global SecondaryCursor    rgba:1E2227FF,rgba:A0A4AAFF+fg
-face global PrimaryCursorEol   rgba:1E2227FF,rgba:B1A3DFFF+fg
-face global SecondaryCursorEol rgba:1E2227FF,rgba:8B5FC7FF+fg
-face global LineNumbers        rgba:A0A4AAFF@Default
-face global LineNumberCursor   +b@LineNumbers
-face global LineNumbersWrapped +d@LineNumbers
-face global MenuForeground     rgba:5C8EC7FF,default+b@MenuBackground
-face global MenuBackground     default,rgba:30343CFF@Default
-face global MenuInfo           +i
-face global Information        default,rgba:30343CFF@Default
-face global Error              rgba:E07093FF+b@Default
-face global StatusLine         @Default
-face global StatusLineMode     rgba:BB8E67FF@Default
-face global StatusLineInfo     rgba:5C8EC7FF@Default
-face global StatusLineValue    rgba:8BBE67FF@Default
-face global StatusCursor       rgba:1E2227FF,rgba:5CBE97FF
-face global Prompt             rgba:BB8E67FF
-face global MatchingChar       +b
-face global Whitespace         rgba:000000FF+d
-face global BufferPadding      rgba:A0A4AAFF
-face global WrapMarker         rgba:A0A4AAFF+f
+set-face global Default            "%opt{mt_white}FF,default"
+
+set-face global Information        "default,%opt{mt_gray_darker}FF@Default"
+set-face global Error              "%opt{mt_red}FF+b@Default"
+
+set-face global MatchingChar       "+b"
+set-face global Whitespace         "%opt{mt_black}FF+d"
+set-face global BufferPadding      "%opt{mt_gray}FF"
+set-face global WrapMarker         "%opt{mt_gray}FF+f"
+
+set-face global LineNumbers        "%opt{mt_gray}FF@Default"
+set-face global LineNumberCursor   "+b@LineNumbers"
+set-face global LineNumbersWrapped "+d@LineNumbers"
+
+set-face global MenuForeground     "%opt{mt_blue}FF,default+b@MenuBackground"
+set-face global MenuBackground     "default,%opt{mt_gray_darker}FF@Default"
+set-face global MenuInfo           "+i"
+
+set-face global StatusLine         "@Default"
+set-face global StatusLineMode     "%opt{mt_yellow}FF@Default"
+set-face global StatusLineInfo     "%opt{mt_blue}FF@Default"
+set-face global StatusLineValue    "%opt{mt_green}FF@Default"
+set-face global StatusCursor       "%opt{mt_gray_darkest}FF,%opt{mt_cyan}FF"
+set-face global Prompt             "%opt{mt_yellow}FF"
+
+set-face global PrimarySelection   "%opt{mt_white}80,rgba:49719EFF+g"
+set-face global SecondarySelection "%opt{mt_white}66,rgba:304A68FF+g"
+set-face global PrimaryCursor      "%opt{mt_gray_darkest}FF,%opt{mt_white}FF+fg"
+
+set-face global SecondaryCursor    "%opt{mt_gray_darkest}FF,%opt{mt_gray}FF+fg"
+set-face global PrimaryCursorEol   "%opt{mt_gray_darkest}FF,%opt{mt_magenta_bright}FF+fg"
+set-face global SecondaryCursorEol "%opt{mt_gray_darkest}FF,%opt{mt_magenta}FF+fg"
