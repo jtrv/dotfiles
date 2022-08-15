@@ -4,5 +4,4 @@ hook global WinSetOption filetype=json %{
 }
 hook global BufSetOption filetype=json %{
   set-option buffer formatcmd "jq --indent %opt{tabstop} ."
-  format
 }
