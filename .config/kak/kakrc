@@ -449,6 +449,7 @@ plug "kkga/ui.kak" %{
     ui-lint-toggle
     ui-git-diff-toggle
     ui-whitespaces-toggle
+    ui-trailing-spaces-toggle
   }
 }
 
