@@ -78,6 +78,7 @@ alias lh      'exa -al --color=always --group-directories-first --git --icons --
 alias ll      'exa -l --color=always --group-directories-first --git --icons' # long format
 alias ls      'exa -l --color=always --group-directories-first --git --icons' # preferred listing
 alias lt      'exa -aT --color=always --group-directories-first --git --icons' # tree listing
+alias loc     'plocate'
 alias m       'math'
 alias mirrors '~/.local/bin/update-mirrors' # update mirrors / database
 alias mons    'bass mons' # use bash for mons (monitor scripts)
