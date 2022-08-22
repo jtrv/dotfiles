@@ -61,7 +61,13 @@
 # End of xbindkeys Tutorial #
 #############################
 
-"volume-mute"
+"playerctl next"
+    b:7
+
+"playerctl previous"
+    b:6
+
+"playerctl play-pause"
     Mod4 + b:2
 
 "volume-increase 1"
