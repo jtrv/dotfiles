@@ -3,10 +3,10 @@
 
 TMP=$(mktemp)
 
-notify-send -t 2500 "Update-Mirrors" "evaluating mirrors..."
+notify-send -t 3000 "Update-Mirrors" "evaluating mirrors..."
 
 rate-mirrors --save="$TMP" arch --max-delay=43200 &&
-	notify-send -t 2500 "Update-Mirrors" "doas authentication required"
+	notify-send -t 3000 "Update-Mirrors" "doas authentication required"
 
 doas mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist-backup &&
 	doas mv "$TMP" /etc/pacman.d/mirrorlist &&
