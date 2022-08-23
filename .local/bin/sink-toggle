@@ -1,0 +1,18 @@
+#!/bin/sh
+
+headphones="alsa_output.pci-0000_0e_00.4.analog-stereo"
+monitor="alsa_output.pci-0000_0c_00.1.hdmi-stereo-extra4"
+speakers="alsa_output.usb-ZhuHai-JieLi-Technology_USB_AUDIO_20180105-01.analog-stereo"
+
+default_sink=$(pactl get-default-sink)
+
+if [ "$default_sink" = "$headphones" ]; then
+  pactl set-default-sink "$speakers"
+
+elif [ "$default_sink" = "$monitor" ]; then
+  pactl set-default-sink $headphones
+
+elif [ "$default_sink" = "$speakers" ]; then
+  pactl set-default-sink "$headphones"
+fi
+

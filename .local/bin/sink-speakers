@@ -1,0 +1,3 @@
+#!/bin/sh
+speakers="alsa_output.usb-ZhuHai-JieLi-Technology_USB_AUDIO_20180105-01.analog-stereo"
+pactl set-default-sink "$speakers"

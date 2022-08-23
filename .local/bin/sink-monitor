@@ -1,0 +1,3 @@
+#!/bin/sh
+monitor="alsa_output.pci-0000_0c_00.1.hdmi-stereo-extra4"
+pactl set-default-sink "$monitor"
