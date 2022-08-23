@@ -1,10 +1,15 @@
 #!/bin/sh
-# With icon indicating the state of the mic
 
-state=$(amixer -D pulse set Capture toggle | gawk 'match($0, /(Front Left|Mono).*\[(.*)\]/, a) {print a[2]}')
-if [ "$state" = "off" ]; then
-	icon="microphone-sensitivity-muted-symbolic"
+default_source=$(pactl get-default-source)
+
+pactl set-source-mute "$default_source" toggle
+
+state=$(pactl get-source-mute "$default_source" | cut -d " " -f 2)
+
+if [ "$state" = "yes" ]; then
+	status="Muted"
 else
-	icon="audio-input-microphone-symbolic"
+	status="Live"
 fi
-notify-send --hint=int:transient:1 -i $icon "Mic switched: $state"
+
+notify-send -t 2000 "Microphone $status"
