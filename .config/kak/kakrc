@@ -26,10 +26,10 @@ plug "gustavo-hms/luar" %{
 
 ################### DISPLAY ###################
 
+colorscheme kalolo
+
 set-option global ui_options terminal_assistant=none
 set-option global scrolloff 1,3
-
-plug "caksoylar/kakoune-mysticaltutor" theme %{ colorscheme mysticaltutor-trans }
 
 # Toggle relative line numbers with insert mode
 plug "evanrelf/number-toggle.kak" config %{

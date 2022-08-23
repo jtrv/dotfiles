@@ -24,14 +24,14 @@ $time\
 ${custom.kaktime}"""
 
 [time]
-format = "[]($style)[ $time ]($style)"
-style = "fg:#1E2227 bg:#B1A3DF"
+format = "[ $time ]($style inverted)"
+style = ""
 time_format = "%H:%M"
 disabled = false
 
 [git_branch]
-format = '[  $branch ]($style)'
-style = 'fg:#5C8EC7'
+format = '[ $branch ]($style inverted)'
+style = ''
 truncation_length = 12
 truncation_symbol = '…'
 only_attached = false
@@ -39,8 +39,8 @@ always_show_remote = true
 disabled = false
 
 [git_commit]
-style = 'fg:#BB8E67'
-format = '[ $hash$tag ]($style)'
+style = ''
+format = '[ $hash$tag ]($style inverted)'
 commit_hash_length = 7
 only_detached = false
 tag_symbol = ' 笠'
@@ -48,8 +48,8 @@ tag_disabled = false
 disabled = false
 
 [git_state]
-format = '\( [$state($progress_current/$progress_total)]($style)\)'
-style = 'fg:#BB8E67'
+format = '\( [$state($progress_current/$progress_total)]($style inverted)\)'
+style = ''
 rebase = 'REBASING'
 merge = 'MERGING'
 revert = 'REVERTING'
@@ -60,8 +60,8 @@ am_or_rebase = 'AM/REBASE'
 disabled = false
 
 [git_status]
-style = 'fg:#8BBE67 bold'
-format = '[ \[$all_status$ahead_behind\] ]($style)'
+style = 'bold'
+format = '[ \[$all_status$ahead_behind\] ]($style inverted)'
 stashed = '\$'
 ahead = '⇡${count}'
 behind = '⇣${count}'
@@ -75,13 +75,13 @@ untracked = '?'
 disabled = false
 
 [directory]
-format = '[ ]($style)[$read_only]($read_only_style)[$path]($style)'
+format = '($style inverted)[$read_only]($read_only_style)[ $path]($style inverted)'
 truncation_length = 3
 truncate_to_repo = false
 fish_style_pwd_dir_length = 0
 use_logical_path = true
-style = 'bg:#B1A3DF fg:#1E2227'
-read_only_style = 'bg:#5C8EC7 fg:200'
+style = ''
+read_only_style = 'fg:200'
 read_only = '[]'
 truncation_symbol = '…'
 disabled = false
@@ -91,87 +91,87 @@ disabled = false
 "~/.config" = ""
 
 [package]
-format = '[  $version]($style)[ ]($style)'
-style = '#5CBE97'
+format = '[  $version]($style inverted)[ ]($style inverted)'
+style = ''
 display_private = true
 disabled = false
 
 [battery]
-format = "[ $symbol$percentage]($style) "
+format = "[ $symbol$percentage]($style inverted) "
 charging_symbol = ' '
 discharging_symbol = ' '
 disabled = false
 
 [[battery.display]]
 threshold = 10
-style = "#E07093"
+style = ""
 charging_symbol = ' '
 discharging_symbol = ' '
 
 [[battery.display]]
 threshold = 20
-style = "#E07093"
+style = ""
 charging_symbol = ' '
 discharging_symbol = ' '
 
 [[battery.display]]
 threshold = 30
-style = "#BB8E67"
+style = ""
 charging_symbol = ' '
 discharging_symbol = ' '
 
 [[battery.display]]
 threshold = 40
-style = "#BB8E67"
+style = ""
 charging_symbol = ' '
 discharging_symbol = ' '
 
 [[battery.display]]
 threshold = 50
-style = "#5C8EC7"
+style = ""
 charging_symbol = ' '
 discharging_symbol = ' '
 
 [[battery.display]]
 threshold = 60
-style = "#5C8EC7"
+style = ""
 charging_symbol = ' '
 discharging_symbol = ' '
 
 [[battery.display]]
 threshold = 70
-style = "#5C8EC7"
+style = ""
 charging_symbol = ' '
 discharging_symbol = ' '
 
 [[battery.display]]
 threshold = 80
-style = "#8BBE67"
+style = ""
 charging_symbol = ' '
 discharging_symbol = ' '
 
 [[battery.display]]
 threshold = 90
-style = "#8BBE67"
+style = ""
 charging_symbol = ' '
 discharging_symbol = ' '
 
 [[battery.display]]
 threshold = 100
-style = "#8BBE67"
+style = ""
 charging_symbol = ' '
 discharging_symbol = ' '
 
 [memory_usage]
-format = "[  ${ram}]($style)"
-style = "fg:#A0C4BD"
+format = "[  ${ram}]($style inverted)"
+style = ""
 threshold = -1
 disabled = true
 
 [custom.kakfile]
 description = 'The current Kakoune buffername'
-style = 'bg:#B1A3DF fg:#1E2227 bold'
-format = '[/$output ]($style)[]($style inverted)'
+style = 'bold'
+format = '[/$output  ]($style inverted)'
 command = 'echo -n ${kak_buffile##*/}'
 when = 'true'
 shell = ['sh']
@@ -179,16 +179,16 @@ disabled = false
 
 [custom.kaksession]
 description = 'The current Kakoune session'
-style = 'bg:#BB8E67 fg:#1E2227 italic'
-format = '[]($style)[  %val{client}:%val{session} ]($style)[]($style inverted)'
+style = 'italic'
+format = '[]($style inverted)[  %val{client}:%val{session} ]($style inverted)[]'
 when = ''
 shell = ['true']
 disabled = true
 
 [custom.kakcursor]
 description = 'The current Kakoune cursor position'
-style = 'fg:#8BBE67'
-format = '[%val{cursor_line}:%val{cursor_char_column} ]($style)'
+style = ''
+format = '[ %val{cursor_line}:%val{cursor_char_column} ]($style inverted)'
 when = ''
 shell = ['true']
 disabled = false
@@ -209,15 +209,15 @@ disabled = false
 
 [custom.kakfiletype]
 description = 'The current buffer filetype'
-format = '\[%opt{filetype}\] '
+format = '\[%opt{filetype}\]'
 when = ''
 shell = ['true']
 disabled = true
 
 [custom.kakposition]
 description = 'Relative position of the cursor inside the buffer'
-style = 'fg:#BB8E67'
-format = '[  $output]($style)[ ]($style)'
+style = ''
+format = '[  $output ]($style inverted)'
 command = 'echo -n $(($kak_cursor_line * 100 / $kak_buf_line_count))%'
 when = '[ -n "$kak_cursor_line" ]'
 shell = ['sh']
@@ -225,48 +225,48 @@ disabled = false
 
 [custom.kaktime]
 description = "Alternate time segment using kakoune evaluation"
-format = "[]($style)[ %sh{date +%T} ]($style)"
-style = "fg:#1E2227 bg:bright-green"
+format = "[%sh{date +%T} ]($style inverted)"
+style = "bg:bright-green"
 when = ''
 shell = ['true']
 disabled = true
 
 [custom.kaklsp_err]
 description = "Show errors number from kak-lsp if any"
-format = "[  %opt{lsp_diagnostic_error_count}]($style)"
-style = "fg:#E07093 bold"
+format = "[  %opt{lsp_diagnostic_error_count}]($style inverted)"
+style = "bold"
 when = '[ -n "$kak_opt_lsp_diagnostic_error_count" -a "$kak_opt_lsp_diagnostic_error_count" -ne 0 ]'
 shell = ['sh']
 disabled = false
 
 [custom.kaklsp_warn]
 description = "Show warnings number from kak-lsp if any"
-format = "[  %opt{lsp_diagnostic_warning_count} ]($style)"
-style = "#C3B470 bold"
+format = "[  %opt{lsp_diagnostic_warning_count} ]($style inverted)"
+style = "bold"
 when = '[ -n "$kak_opt_lsp_diagnostic_warning_count" -a "$kak_opt_lsp_diagnostic_warning_count" -ne 0 ]'
 shell = ['sh']
 disabled = false
 
 [custom.kaklsp_hint]
 description = "Show hints number from kak-lsp if any"
-format = "[ %opt{lsp_diagnostic_hint_count} ﯦ ]($style)"
-style = "#A0A4AA bold"
+format = "[ %opt{lsp_diagnostic_hint_count} ﯦ ]($style inverted)"
+style = "bold"
 when = '[ -n "$kak_opt_lsp_diagnostic_hint_count" -a "$kak_opt_lsp_diagnostic_hint_count" -ne 0 ]'
 shell = ['sh']
 disabled = false
 
 [custom.kaklsp_code_actions]
 description = "Show lsp code actions"
-format = "[ %opt{lsp_modeline_code_actions} ]($style)"
-style = "fg:#BB8E67 bold"
+format = "[ %opt{lsp_modeline_code_actions} ]($style inverted)"
+style = "bold"
 when = '[ -n "$kak_opt_lsp_modeline_code_actions" ]'
 shell = ['sh']
 disabled = true
 
 [custom.kaklsp_progress]
 description = "Show activity of kak-lsp if any"
-format = "[ ]($style)"
-style = "#A0A4AA bold"
+format = "[ ]($style inverted)"
+style = "bold"
 when = '[ -n "$kak_opt_lsp_modeline_progress" ]'
 shell = ['sh']
 disabled = false
