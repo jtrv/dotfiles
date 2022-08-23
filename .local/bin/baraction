@@ -105,13 +105,14 @@ blu() {
 #    VOLUME
 ##############################
 vol() {
-  percent=$(pulsemixer --get-volume | cut -d ' ' -f 1)
+  default_sink=$(pactl get-default-sink)
+  percent=$(pactl get-sink-volume "$default_sink" | cut -d ' ' -f 6)
   vol=$(printf %2d "$percent")
-  mute=$(pulsemixer --get-mute)
-  if [ "$mute" -eq "1" ]; then
+  mute=$(pactl get-sink-mute "$default_sink" | cut -d " " -f 2)
+  if [ "$mute" = "yes" ]; then
     icon=""
   fi
-  if [ "$mute" -eq "0" ]; then
+  if [ "$mute" = "no" ]; then
     icon=""
   fi
   echo " $icon $vol%"

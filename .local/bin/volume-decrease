@@ -1,12 +1,13 @@
 #!/bin/sh
 
 if [ $# -eq 0 ]; then
-	pulsemixer --change-volume -5
+	pactl -- set-sink-volume 0 -5%
 fi
 
 if [ $# -eq 1 ]; then
-	pulsemixer --change-volume -"$1"
+	pactl -- set-sink-volume 0 -"$1"%
 fi
 
-VOLUME_LEVEL=$(pulsemixer --get-volume | cut -d ' ' -f 1)
-notify-send -t 200 "Volume - $VOLUME_LEVEL%"
+DEFAULT_SINK=$(pactl get-default-sink)
+VOLUME_LEVEL=$(pactl get-sink-volume "$DEFAULT_SINK" | cut -d ' ' -f 6)
+notify-send -t 200 "Volume - $VOLUME_LEVEL"

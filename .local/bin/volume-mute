@@ -1,14 +1,14 @@
 #!/bin/sh
 
-pulsemixer --toggle-mute
+DEFAULT_SINK=$(pactl get-default-sink)
 
-MUTE_VALUE=$(pulsemixer --get-mute)
+pactl set-sink-mute "$DEFAULT_SINK" toggle
 
-if [ "$MUTE_VALUE" -eq "1" ]; then
+MUTE_VALUE=$(pactl get-sink-mute "$DEFAULT_SINK" | cut -d " " -f 2)
+
+if [ "$MUTE_VALUE" = "yes" ]; then
 	MUTE_STATUS="On"
-fi
-
-if [ "$MUTE_VALUE" -eq "0" ]; then
+	else
 	MUTE_STATUS="Off"
 fi
 
