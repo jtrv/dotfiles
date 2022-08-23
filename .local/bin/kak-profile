@@ -1,0 +1,2 @@
+#!/bin/sh
+kak -debug 'profile|shell' -e 'b *debug*'
