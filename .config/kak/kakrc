@@ -1,24 +1,15 @@
 # Kakoune with Kakhis
 # Author: Jacob Travers
 
-# plugin manager
-source "~/.config/kak/plugins/plug.kak/rc/plug.kak"
-plug "andreyorst/plug.kak" noload
-
-plug "JacobTravers/kampliment" noload do %{
-  cargo install --force --path . --root $CARGO_HOME
-  for script in $(ls ~/.config/kak/plugins/kampliment/scripts/); do
-    ln -fs ~/.config/kak/plugins/kampliment/scripts/$script ~/.local/bin/$script
-  done
-}
-
-# interface for external programs (kampliment)
 evaluate-commands %sh{
+  cork init
   kamp init -a -e EDITOR='kamp edit'
 }
 
+cork kampliment https://github.com/vbauerster/kampliment
+
 # extend kak with lua
-plug "gustavo-hms/luar" %{
+cork luar https://github.com/gustavo-hms/luar %{
   require-module luar
   set-option global luar_interpreter luajit
 }
@@ -32,20 +23,17 @@ set-option global ui_options terminal_assistant=none
 set-option global scrolloff 1,3
 
 # Toggle relative line numbers with insert mode
-plug "evanrelf/number-toggle.kak" config %{
+cork number-toggle-kak https://github.com/evanrelf/number-toggle.kak %{
   require-module "number-toggle"
 }
 
 # Rainbow delimiters + current scope
-plug "JacobTravers/kak-rainbower" %{
+cork kak-rainbower https://github.com/JacobTravers/kak-rainbower %{
   hook global WinCreate .* %{ rainbow-enable-window }
 }
 
 # LSP Magic
-plug "kak-lsp/kak-lsp" do %{
-  cargo build --release --locked
-  cargo install --force --path . --root $CARGO_HOME
-} config %{
+cork kak-lsp https://github.com/kak-lsp/kak-lsp %{
   set global lsp_diagnostic_line_error_sign '║'
   set global lsp_diagnostic_line_warning_sign '┊'
   set global lsp_hover_max_lines 40
@@ -73,7 +61,7 @@ plug "kak-lsp/kak-lsp" do %{
 }
 
 # swap client windows etc
-plug "alexherbo2/window.kak"
+cork window-kak https://github.com/alexherbo2/window.kak
 
 
 ############### FORMAT/LINT ###############
@@ -81,12 +69,12 @@ plug "alexherbo2/window.kak"
 # Empty scratch buffer
 hook global BufCreate '\*scratch\*' %{ execute-keys '%<a-d>' }
 
-plug "alexherbo2/indent.kak" %{
+cork indent-kak https://github.com/alexherbo2/indent.kak %{
   enable-detect-indent
   set-indent global 2
 }
 
-plug "andreyorst/smarttab.kak" %{
+cork smarttab-kak https://github.com/andreyorst/smarttab.kak %{
   hook global BufCreate .* %{
     autoconfigtab
   }
@@ -122,42 +110,40 @@ map global prompt <a-.> -docstring "buffer directory"     '%sh{dirname "$kak_buf
 map global prompt <a-,> -docstring "gir root directory"   '%sh{git rev-parse --show-toplevel}<a-!>/'
 
 # Alacritty integration
-plug "alexherbo2/alacritty.kak" %{
+cork alacritty-kak https://github.com/alexherbo2/alacritty.kak %{
   alias global terminal alacritty-terminal-window
   alias global popup alacritty-terminal-popup
 }
 
-plug "alexherbo2/auto-pairs.kak" %{
+cork auto-pairs-kak https://github.com/alexherbo2/auto-pairs.kak %{
   enable-auto-pairs
 }
 
 # Clipboard integration
-plug "lePerdu/kakboard" %{
+cork kakboard https://github.com/lePerdu/kakboard %{
   hook global WinCreate .* %{ kakboard-enable }
 }
 
 # display text with ansi color-codes inside a fifo
-plug "eburghar/kakpipe" do %{
-  cargo install --force --path . --root $CARGO_HOME
+cork kakpipe https://github.com/eburghar/kakpipe %{
+  require-module kakpipe
 }
-require-module kakpipe
 
-plug "JacobTravers/kakoune-sudo-write" %{
+cork kakoune-repl-buffer https://gitlab.com/Screwtapello/kakoune-repl-buffer.git
+
+cork kakoune-sudo-write https://github.com/JacobTravers/kakoune-sudo-write %{
   alias global sw 'sudo-write'
   alias global swq 'sudo-write-quit'
 }
 
-plug 'delapouite/kakoune-auto-percent'
+cork kakoune-auto-percent https://github.com/delapouite/kakoune-auto-percent
 
 # Starship for kakoune modeline
-plug "eburghar/kakship" do %{
-  cargo install --force --path . --root $CARGO_HOME
-  [ ! -e $kak_config/starship.toml ] && cp starship.toml $kak_config/
-} config %{
+cork kakship https://github.com/eburghar/kakship %{
   kakship-enable
 }
 
-plug "natasky/kakoune-multi-file"
+cork kakoune-multi-file https://github.com/natasky/kakoune-multi-file
 
 set global grepcmd 'rg --column --smart-case'
 
@@ -275,7 +261,7 @@ map global normal <a-?> -docstring "(extend) search backwards"   '<a-?>(?i)'
 map global normal <#> -docstring "comment"   ':comment <ret>'
 
 # Better match function
-plug "useredsa/dynamic-matching.kak" %{
+cork dynamic-matching https://github.com/useredsa/dynamic-matching.kak %{
   dynamic-matching-dmatch-conf
   map global normal m -docstring "select dynamic match"   ':enter-user-mode dmatch <ret>'
   map global normal M -docstring "add dynamic match"      ':enter-user-mode Dmatch <ret>'
@@ -294,7 +280,7 @@ map global normal <c-k> -docstring "file picker"     ': connect terminal kamp-fi
 map global normal <c-g> -docstring "grep picker"     ': connect terminal kamp-grep<ret>'
 
 # kakoune fuzzy finder with fzy algorithm
-plug "gustavo-hms/peneira" %{
+cork peneira https://github.com/gustavo-hms/peneira %{
   require-module peneira
   map global normal <c-l> -docstring "search lines"     ': peneira-lines<ret>'
   map global normal <c-s> -docstring "search symbols"   ': peneira-symbols<ret>'
@@ -303,11 +289,8 @@ plug "gustavo-hms/peneira" %{
 
 ################# MODES ##################
 
-# Plugin manager
-map global user = -docstring "plug"   ':plug-list <ret>'
-
 # Navigate buffers
-plug "delapouite/kakoune-buffers" %{
+cork kakoune-buffers https://github.com/delapouite/kakoune-buffers %{
   hook global WinDisplay .* info-buffers
     map global normal b ":enter-buffers-mode <ret>"
     alias global bd delete-buffer
@@ -318,7 +301,7 @@ plug "delapouite/kakoune-buffers" %{
     alias global bo! buffer-only-force
 }
 
-plug 'delapouite/kakoune-cd' %{
+cork kakoune-cd https://github.com/delapouite/kakoune-cd %{
   # Suggested mapping
   map global user c ': enter-user-mode cd<ret>' -docstring 'cd'
   # Suggested aliases
@@ -330,7 +313,7 @@ plug 'delapouite/kakoune-cd' %{
 
 map global user d -docstring "dev"  ':enter-user-mode dev <ret>'
 
-plug "danr/kakoune-easymotion" %{
+cork kakoune-easymotion https://github.com/danr/kakoune-easymotion %{
   declare-user-mode e-motion
   map global user e -docstring "e-motion" ':enter-user-mode e-motion <ret>'
     map global e-motion e -docstring "→ word"   ':easy-motion-w <ret>'
@@ -374,12 +357,12 @@ define-command math -docstring 'do the maths' %{
 }
 map global user M -docstring "math"   ':math <ret>'
 
-plug "caksoylar/kakoune-focus" branch "kak-master" config %{
+cork kakoune-focus "https://github.com/caksoylar/kakoune-focus" %{
   map global normal : -docstring "narrow"   ':focus-toggle <ret>'
 }
 
 # Edit/extend/trim selections one by one
-plug "occivink/kakoune-phantom-selection" %{
+cork kakoune-phantom-selection https://github.com/occivink/kakoune-phantom-selection %{
   declare-user-mode phantom
   map global user p -docstring "phantom"       ':enter-user-mode phantom <ret>'
   map global phantom a -docstring "add"        ':phantom-selection-add-selection <ret>'
@@ -389,7 +372,7 @@ plug "occivink/kakoune-phantom-selection" %{
 }
 
 # Select/edit surrounding chars and tags
-plug "h-youhei/kakoune-surround"
+cork kakoune-surround https://github.com/h-youhei/kakoune-surround
   declare-user-mode surround
   map global normal <'> ":enter-user-mode surround <ret>"
   map global surround d -docstring "delete"              ':delete-surround <ret>'
@@ -401,10 +384,9 @@ plug "h-youhei/kakoune-surround"
   map global surround R -docstring "replace tag"         ':change-surrounding-tag <ret>'
   map global surround S -docstring "select tag"          ':select-surrounding-tag <ret>'
 
-plug 'https://gitlab.com/kstr0k/mru-files.kak.git' %{
+cork mru-files-kak https://gitlab.com/kstr0k/mru-files.kak.git %{
   require-module kakhist
   kakhist-init
-} demand mru-files %{
   map global normal <c-r> -docstring "recent files" ':mru-files <ret>'
   declare-user-mode recent
   map global user r -docstring "recent" ':enter-user-mode recent<ret>'
@@ -425,7 +407,7 @@ declare-user-mode spell
   declare-option str language en-US
 
 # Tree-sitter syntax parsing and functionality
-plug "ul/kak-tree" %{
+cork kak-tree https://github.com/ul/kak-tree %{
   declare-user-mode tree
   map global user t -docstring "tree"          ':enter-user-mode tree <ret>'
   map global tree t -docstring "syntax tree"   ':tree-node-sexp <ret>'
@@ -437,7 +419,7 @@ plug "ul/kak-tree" %{
   map global tree . -docstring "lock"          ':enter-user-mode -lock tree <ret>'
 }
 
-plug "kkga/ui.kak" %{
+cork ui-kak https://github.com/kkga/ui.kak %{
   map global user u -docstring "ui mode"   ':enter-user-mode ui <ret>'
   set-option global ui_wrap_flags -word -indent -marker ~~
   hook global WinCreate .* %{
@@ -452,7 +434,7 @@ plug "kkga/ui.kak" %{
 # write to file
 map global user w -docstring "write"   ':w <ret>'
 
-plug "JacobTravers/kakoune-grep-write"%{
+cork kakoune-grep-write https://github.com/JacobTravers/kakoune-grep-write %{
   hook global WinDisplay '\*grep\*' %{
     alias buffer w grep-write
     alias buffer wq grep-write-quit
