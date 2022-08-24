@@ -13,15 +13,16 @@ eburghar/kakship
 evanrelf/number-toggle.kak
 gustavo-hms/luar
 gustavo-hms/peneira
-https://gitlab.com/Screwtapello/kakoune-repl-buffer
 h-youhei/kakoune-surround
 JacobTravers/kakoune-grep-write
 JacobTravers/kakoune-sudo-write
 JacobTravers/kak-rainbower
+JacobTravers/kampliment
 kak-lsp/kak-lsp
 kkga/ui.kak
 lePerdu/kakboard
 natasky/kakoune-multi-file
 occivink/kakoune-phantom-selection
+occivink/kakoune-snippets
 ul/kak-tree
 useredsa/dynamic-matching.kak
