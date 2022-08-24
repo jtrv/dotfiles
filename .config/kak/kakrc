@@ -226,7 +226,7 @@ hook global WinDisplay '\*(delta|diff|difft|greeting|help|man \w+|mdn|tldr)\*' %
   reader-mode
 }
 
-###################### NORMAL MODE ###################### 
+###################### NORMAL MODE ######################
 
 
 ##########REMAPPINGS
