@@ -6,7 +6,7 @@ source "~/.config/kak/plugins/plug.kak/rc/plug.kak"
 plug "andreyorst/plug.kak" noload
 
 plug "JacobTravers/kampliment" noload do %{
-  cargo install --path . --root $CARGO_HOME
+  cargo install --force --path . --root $CARGO_HOME
   for script in $(ls ~/.config/kak/plugins/kampliment/scripts/); do
     ln -fs ~/.config/kak/plugins/kampliment/scripts/$script ~/.local/bin/$script
   done
@@ -44,7 +44,7 @@ plug "JacobTravers/kak-rainbower" %{
 # LSP Magic
 plug "kak-lsp/kak-lsp" do %{
   cargo build --release --locked
-  cargo install --force --path .
+  cargo install --force --path . --root $CARGO_HOME
 } config %{
   set global lsp_diagnostic_line_error_sign '║'
   set global lsp_diagnostic_line_warning_sign '┊'
@@ -138,7 +138,7 @@ plug "lePerdu/kakboard" %{
 
 # display text with ansi color-codes inside a fifo
 plug "eburghar/kakpipe" do %{
-  cargo install --force --path . --root ~/.local
+  cargo install --force --path . --root $CARGO_HOME
 }
 require-module kakpipe
 
@@ -153,7 +153,7 @@ plug 'delapouite/kakoune-auto-percent'
 
 # Starship for kakoune modeline
 plug "eburghar/kakship" do %{
-  cargo install --force --path . --root ~/.local
+  cargo install --force --path . --root $CARGO_HOME
   [ ! -e $kak_config/starship.toml ] && cp starship.toml $kak_config/
 } config %{
   kakship-enable
