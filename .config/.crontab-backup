@@ -1,10 +1,6 @@
-#1 2 3 4 5 command to be executed
-#┬ ┬ ┬ ┬ ┬
-#│ │ │ │ └─ Weekday  (0=Sun .. 6=Sat)
-#│ │ │ └─── Month    (1..12)
-#│ │ └───── Day      (1..31)
-#│ └─────── Hour     (0..23)
-#└───────── Minute   (0..59)
-
-*/5 * * * * ~/bin/low-battery.sh
-*/15 * * * * DISPLAY=:0.0 feh --randomize --bg-scale --no-fehbg ~/Pictures/wallpapers/
+#Min     ┌Hour    ┌Day     ┌Month   ┌Weekday  ┌Command
+#0-59    ├0-23    ├1-31    ├1-12    ├0=Sunday │
+*/15     *        *        *        *         DISPLAY=:0 feh --randomize --bg-scale --no-fehbg ~/media/pictures/wallpapers/
+0        */3      *        *        *         updatedb
+0        9        *        *        *         volta install node@latest npm@latest
+*/5      *        *        *        *         low-battery
