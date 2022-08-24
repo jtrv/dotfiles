@@ -97,7 +97,7 @@ display_private = true
 disabled = false
 
 [battery]
-format = "[ $symbol$percentage]($style inverted) "
+format = "[ $symbol$percentage ]($style inverted)"
 charging_symbol = ' '
 discharging_symbol = ' '
 disabled = false
