@@ -40,7 +40,7 @@ cleanup = true
 max_concurrency = 5
 # Additional git repositories to pull
 repos = [
-    "~/.config/kak/plugins/*",
+    "~/.local/share/kak/cork/plugins/*/repo",
     "~/mxs/projects/*",
     "~/projects/*"
 ]
