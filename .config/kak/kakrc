@@ -256,8 +256,8 @@ map global normal <a-?> -docstring "(extend) search backwards"   '<a-?>(?i)'
 map global normal <#> -docstring "comment"   ':comment <ret>'
 
 # Kampliment bindings
-map global normal <c-t> -docstring "New client"     ':new <ret>'
-map global normal <c-n> -docstring "New terminal"   ':connect terminal <ret>'
+map global normal <c-n> -docstring "New client"     ':new <ret>'
+map global normal <c-t> -docstring "New terminal"   ':connect terminal <ret>'
 map global normal +     -docstring "New popup"      ':connect popup <ret>'
 
 map global normal <c-h> -docstring "lf"        ':connect terminal lf <ret>'
