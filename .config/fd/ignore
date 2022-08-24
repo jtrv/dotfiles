@@ -2,9 +2,6 @@
 .bash_logout/
 .bash_profile/
 .cache/
-.cargo/
-.config/
-.go/
 .git/
 .node-gyp/
 .npm/
