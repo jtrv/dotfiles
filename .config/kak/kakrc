@@ -6,15 +6,6 @@ evaluate-commands %sh{
   kamp init -a -e EDITOR='kamp edit'
 }
 
-cork kampliment https://github.com/vbauerster/kampliment
-
-# extend kak with lua
-cork luar https://github.com/gustavo-hms/luar %{
-  require-module luar
-  set-option global luar_interpreter luajit
-}
-
-
 ################### DISPLAY ###################
 
 colorscheme kalolo
@@ -105,6 +96,8 @@ source "~/.config/kak/contexts/sh.kak"
 
 
 ###################### UTILITY ######################
+
+cork kampliment https://github.com/vbauerster/kampliment
 
 map global prompt <a-.> -docstring "buffer directory"     '%sh{dirname "$kak_buffile"}<a-!>/'
 map global prompt <a-,> -docstring "gir root directory"   '%sh{git rev-parse --show-toplevel}<a-!>/'
@@ -260,13 +253,6 @@ map global normal <a-?> -docstring "(extend) search backwards"   '<a-?>(?i)'
 # (un)Comment Lines
 map global normal <#> -docstring "comment"   ':comment <ret>'
 
-# Better match function
-cork dynamic-matching https://github.com/useredsa/dynamic-matching.kak %{
-  dynamic-matching-dmatch-conf
-  map global normal m -docstring "select dynamic match"   ':enter-user-mode dmatch <ret>'
-  map global normal M -docstring "add dynamic match"      ':enter-user-mode Dmatch <ret>'
-}
-
 # kampliment (coderunner) bindings
 map global normal <c-t> -docstring "New client"     ':new <ret>'
 map global normal <c-n> -docstring "New terminal"   ':connect terminal <ret>'
@@ -278,13 +264,6 @@ map global normal <c-v> -docstring "lazygit"   ':connect terminal lazygit <ret>'
 map global normal B     -docstring "buffer picker"   ': connect terminal kamp-buffers<ret>'
 map global normal <c-k> -docstring "file picker"     ': connect terminal kamp-files<ret>'
 map global normal <c-g> -docstring "grep picker"     ': connect terminal kamp-grep<ret>'
-
-# kakoune fuzzy finder with fzy algorithm
-cork peneira https://github.com/gustavo-hms/peneira %{
-  require-module peneira
-  map global normal <c-l> -docstring "search lines"     ': peneira-lines<ret>'
-  map global normal <c-s> -docstring "search symbols"   ': peneira-symbols<ret>'
-}
 
 
 ################# MODES ##################
@@ -340,16 +319,13 @@ map global user l -docstring "LSP" %{:enter-user-mode lsp <ret>}
   map global lsp <minus> -docstring "disable"   ':lsp-disable-window <ret>'
   map global lsp <plus>  -docstring "enable"    ':lsp-enable-window <ret>'
 
-# Dynamic match mode
-map global user m  -docstring "dmatch"   ':enter-user-mode -lock dmatch <ret>'
-
 # script for applying math
 define-command execute-keys-with-register -params 2 -docstring 'execute keys with register' %{
   evaluate-commands -save-regs '"' %{
     set-register '"' %arg{2}
     execute-keys '""' %arg{1}
   }
-} 
+}
 define-command math -docstring 'do the maths' %{
   prompt math: %{
     execute-keys-with-register 'a<c-r>"<esc>|bc <ret>' %val{text}
@@ -405,19 +381,6 @@ declare-user-mode spell
   map global spell n -docstring "next"      ':spell-next <ret>'
   map global spell r -docstring "replace"   ':spell-replace <ret>'
   declare-option str language en-US
-
-# Tree-sitter syntax parsing and functionality
-cork kak-tree https://github.com/ul/kak-tree %{
-  declare-user-mode tree
-  map global user t -docstring "tree"          ':enter-user-mode tree <ret>'
-  map global tree t -docstring "syntax tree"   ':tree-node-sexp <ret>'
-  map global tree c -docstring "children"      ':tree-select-children <ret>'
-  map global tree h -docstring "parent"        ':tree-select-parent-node <ret>'
-  map global tree j -docstring "next"          ':tree-select-next-node <ret>'
-  map global tree k -docstring "previous"      ':tree-select-previous-node <ret>'
-  map global tree l -docstring "first child"   ':tree-select-first-child <ret>'
-  map global tree . -docstring "lock"          ':enter-user-mode -lock tree <ret>'
-}
 
 cork ui-kak https://github.com/kkga/ui.kak %{
   map global user u -docstring "ui mode"   ':enter-user-mode ui <ret>'
