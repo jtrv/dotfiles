@@ -23,6 +23,20 @@ cork kak-rainbower https://github.com/JacobTravers/kak-rainbower %{
   hook global WinCreate .* %{ rainbow-enable-window }
 }
 
+
+############### FORMAT/LINT ###############
+
+# Linting and formating per language
+source "~/.config/kak/contexts/commit.kak"
+source "~/.config/kak/contexts/css.kak"
+source "~/.config/kak/contexts/diff.kak"
+source "~/.config/kak/contexts/fish.kak"
+source "~/.config/kak/contexts/html.kak"
+source "~/.config/kak/contexts/javascript.kak"
+source "~/.config/kak/contexts/json.kak"
+source "~/.config/kak/contexts/markdown.kak"
+source "~/.config/kak/contexts/sh.kak"
+
 # LSP Magic
 cork kak-lsp https://github.com/kak-lsp/kak-lsp %{
   set global lsp_diagnostic_line_error_sign '║'
@@ -51,14 +65,17 @@ cork kak-lsp https://github.com/kak-lsp/kak-lsp %{
   hook global KakEnd .* lsp-exit
 }
 
-# swap client windows etc
-cork window-kak https://github.com/alexherbo2/window.kak
-
-
-############### FORMAT/LINT ###############
-
-# Empty scratch buffer
-hook global BufCreate '\*scratch\*' %{ execute-keys '%<a-d>' }
+# Lint/format etc mode
+declare-user-mode dev
+  map global dev d -docstring "diagnostic"   ':lsp-diagnostics <ret>'
+  map global dev D -docstring "lint-buffer"  ':buffer *lint-output* <ret>'
+  map global dev f -docstring "format"       ':format <ret>'
+  map global dev F -docstring "format sel"   ':format <ret>'
+  map global dev j -docstring "next lint"    ':lint-next-message <ret>'
+  map global dev k -docstring "prev lint"    ':lint-previous-message <ret>'
+  map global dev l -docstring "lint"         ':lint <ret>'
+  map global dev L -docstring "lint sel"     ':lint <ret>'
+  map global dev s -docstring "set filetype" ':connect terminal kamp-filetypes <ret>'
 
 cork indent-kak https://github.com/alexherbo2/indent.kak %{
   enable-detect-indent
@@ -71,36 +88,13 @@ cork smarttab-kak https://github.com/andreyorst/smarttab.kak %{
   }
 }
 
-# lint/format etc mode
-declare-user-mode dev
-  map global dev d -docstring "diagnostic"   ':lsp-diagnostics <ret>'
-  map global dev D -docstring "lint-buffer"  ':buffer *lint-output* <ret>'
-  map global dev f -docstring "format"       ':format <ret>'
-  map global dev F -docstring "format sel"   ':format <ret>'
-  map global dev j -docstring "next lint"    ':lint-next-message <ret>'
-  map global dev k -docstring "prev lint"    ':lint-previous-message <ret>'
-  map global dev l -docstring "lint"         ':lint <ret>'
-  map global dev L -docstring "lint sel"     ':lint <ret>'
-  map global dev s -docstring "set filetype" ':connect terminal kamp-filetypes <ret>'
-
-# linting and formating per language
-source "~/.config/kak/contexts/commit.kak"
-source "~/.config/kak/contexts/css.kak"
-source "~/.config/kak/contexts/diff.kak"
-source "~/.config/kak/contexts/fish.kak"
-source "~/.config/kak/contexts/html.kak"
-source "~/.config/kak/contexts/javascript.kak"
-source "~/.config/kak/contexts/json.kak"
-source "~/.config/kak/contexts/markdown.kak"
-source "~/.config/kak/contexts/sh.kak"
-
 
 ###################### UTILITY ######################
 
-cork kampliment https://github.com/vbauerster/kampliment
+set global grepcmd 'rg --column --smart-case'
 
-map global prompt <a-.> -docstring "buffer directory"     '%sh{dirname "$kak_buffile"}<a-!>/'
-map global prompt <a-,> -docstring "gir root directory"   '%sh{git rev-parse --show-toplevel}<a-!>/'
+# Empty scratch buffer
+hook global BufCreate '\*scratch\*' %{ execute-keys '%<a-d>' }
 
 # Alacritty integration
 cork alacritty-kak https://github.com/alexherbo2/alacritty.kak %{
@@ -108,19 +102,14 @@ cork alacritty-kak https://github.com/alexherbo2/alacritty.kak %{
   alias global popup alacritty-terminal-popup
 }
 
-cork auto-pairs-kak https://github.com/alexherbo2/auto-pairs.kak %{
-  enable-auto-pairs
-}
+cork auto-pairs-kak https://github.com/alexherbo2/auto-pairs.kak %{ enable-auto-pairs }
 
-# Clipboard integration
-cork kakboard https://github.com/lePerdu/kakboard %{
-  hook global WinCreate .* %{ kakboard-enable }
-}
+# Clipboard Integration
+cork kakboard https://github.com/lePerdu/kakboard %{ hook global WinCreate .* %{ kakboard-enable } }
 
-# display text with ansi color-codes inside a fifo
-cork kakpipe https://github.com/eburghar/kakpipe %{
-  require-module kakpipe
-}
+cork kakoune-auto-percent https://github.com/delapouite/kakoune-auto-percent
+
+cork kakoune-multi-file https://github.com/natasky/kakoune-multi-file
 
 cork kakoune-repl-buffer https://gitlab.com/Screwtapello/kakoune-repl-buffer.git
 
@@ -129,16 +118,21 @@ cork kakoune-sudo-write https://github.com/JacobTravers/kakoune-sudo-write %{
   alias global swq 'sudo-write-quit'
 }
 
-cork kakoune-auto-percent https://github.com/delapouite/kakoune-auto-percent
+# Display text with ansi color-codes inside a fifo
+cork kakpipe https://github.com/eburghar/kakpipe %{ require-module kakpipe }
 
 # Starship for kakoune modeline
 cork kakship https://github.com/eburghar/kakship %{
   kakship-enable
 }
 
-cork kakoune-multi-file https://github.com/natasky/kakoune-multi-file
+# Interact with external programs
+cork kampliment https://github.com/vbauerster/kampliment
 
-set global grepcmd 'rg --column --smart-case'
+# Swap client windows etc
+cork window-kak https://github.com/alexherbo2/window.kak
+
+###################### COMMANDS ######################
 
 define-command comment -docstring "(un)comment lines" %{
   try %{
@@ -174,6 +168,13 @@ define-command diff-buffers -override -params 2 %{
 }}
 complete-command diff-buffers buffer
 
+define-command execute-keys-with-register -params 2 -docstring 'execute keys with register' %{
+  evaluate-commands -save-regs '"' %{
+    set-register '"' %arg{2}
+    execute-keys '""' %arg{1}
+  }
+}
+
 define-command helpp -docstring "print an answer for the query from stackoverflow etc" -params 1.. %{
   kakpipe -n help -- %arg{@} --help;
 }
@@ -182,12 +183,14 @@ define-command how -docstring "print an answer for the query from stackoverflow 
   kakpipe -n how -- hors -a -n 2 -p never %arg{@};
 }
 
-define-command mdn -docstring "print mdn docs for the query" -params 1.. %{
-  kakpipe -n mdn -- mdn %arg{@};
+define-command math -docstring 'do the maths' %{
+  prompt math: %{
+    execute-keys-with-register 'a<c-r>"<esc>|bc <ret>' %val{text}
+  }
 }
 
-define-command tldr -docstring "print a cheatsheet for the given console command" -shell-completion -params 1.. %{
-  kakpipe -n tldr -- tldr --color always %arg{@};
+define-command mdn -docstring "print mdn docs for the query" -params 1.. %{
+  kakpipe -n mdn -- mdn %arg{@};
 }
 
 define-command reader-mode -docstring "enables settings for better reading" %{
@@ -203,12 +206,14 @@ hook global WinDisplay '\*(delta|diff|difft|greeting|help|man \w+|mdn|tldr)\*' %
   reader-mode
 }
 
-###################### NORMAL MODE ######################
+define-command tldr -docstring "print a cheatsheet for the given console command" -shell-completion -params 1.. %{
+  kakpipe -n tldr -- tldr --color always %arg{@};
+}
 
+###################### KEYS ######################
 
-##########REMAPPINGS
-
-map global user <space> : -docstring "prompt"
+map global prompt <a-.> -docstring "insert buffer directory"     '%sh{dirname "$kak_buffile"}<a-!>/'
+map global prompt <a-,> -docstring "insert git root directory"   '%sh{git rev-parse --show-toplevel}<a-!>/'
 
 map global normal <a-space> <a-,> -docstring "clear current (or nth) selection"
 map global normal <esc> ,         -docstring "clear multi-selection and keep (nth)"
@@ -221,10 +226,7 @@ map global normal W B         -docstring "extend previous word"
 map global normal <a-w> <a-b> -docstring "select previous BIG-WORD"
 map global normal <a-W> <a-B> -docstring "extend prevous BIG-WORD"
 
-
-#########AUGMENTATION
-
-# paste in insert mode
+# Paste in insert mode
 map global insert <c-v> -docstring "insert mode paste"   '<esc>Pi'
 
 map global normal D -docstring "vim D"         'Gld'
@@ -244,16 +246,16 @@ map global normal <a-v> -docstring "deselect current sel"   '*<a-n>'
 map global normal V     -docstring "add next match"         '*N'
 map global normal <a-V> -docstring "add previous match"     '*<a-N>'
 
-# case insensitive search
+# Case insensitive search
 map global normal /     -docstring "search"                      '/(?i)'
 map global normal <a-/> -docstring "search backwards"            '<a-/>(?i)'
 map global normal ?     -docstring "(extend) search"             '?(?i)'
 map global normal <a-?> -docstring "(extend) search backwards"   '<a-?>(?i)'
 
-# (un)Comment Lines
+# (Un)Comment Lines
 map global normal <#> -docstring "comment"   ':comment <ret>'
 
-# kampliment (coderunner) bindings
+# Kampliment bindings
 map global normal <c-t> -docstring "New client"     ':new <ret>'
 map global normal <c-n> -docstring "New terminal"   ':connect terminal <ret>'
 map global normal +     -docstring "New popup"      ':connect popup <ret>'
@@ -268,6 +270,8 @@ map global normal <c-g> -docstring "grep picker"     ': connect terminal kamp-gr
 
 ################# MODES ##################
 
+map global user <space> : -docstring "prompt"
+
 # Navigate buffers
 cork kakoune-buffers https://github.com/delapouite/kakoune-buffers %{
   hook global WinDisplay .* info-buffers
@@ -281,9 +285,7 @@ cork kakoune-buffers https://github.com/delapouite/kakoune-buffers %{
 }
 
 cork kakoune-cd https://github.com/delapouite/kakoune-cd %{
-  # Suggested mapping
   map global user c ': enter-user-mode cd<ret>' -docstring 'cd'
-  # Suggested aliases
   alias global cdb change-directory-current-buffer
   alias global cdr change-directory-project-root
   alias global ecd edit-current-buffer-directory
@@ -315,22 +317,10 @@ declare-user-mode grep
 map global user   k     -docstring "klip off"     ':kakboard-disable; kakboard-disable <ret>'
 map global user   K     -docstring "klip on"      ':kakboard-enable <ret>'
 
-map global user l -docstring "LSP" %{:enter-user-mode lsp <ret>}
+map global user l -docstring "lsp" %{:enter-user-mode lsp <ret>}
   map global lsp <minus> -docstring "disable"   ':lsp-disable-window <ret>'
   map global lsp <plus>  -docstring "enable"    ':lsp-enable-window <ret>'
 
-# script for applying math
-define-command execute-keys-with-register -params 2 -docstring 'execute keys with register' %{
-  evaluate-commands -save-regs '"' %{
-    set-register '"' %arg{2}
-    execute-keys '""' %arg{1}
-  }
-}
-define-command math -docstring 'do the maths' %{
-  prompt math: %{
-    execute-keys-with-register 'a<c-r>"<esc>|bc <ret>' %val{text}
-  }
-}
 map global user M -docstring "math"   ':math <ret>'
 
 cork kakoune-focus "https://github.com/caksoylar/kakoune-focus" %{
@@ -394,7 +384,7 @@ cork ui-kak https://github.com/kkga/ui.kak %{
   }
 }
 
-# write to file
+# Write to file
 map global user w -docstring "write"   ':w <ret>'
 
 cork kakoune-grep-write https://github.com/JacobTravers/kakoune-grep-write %{
