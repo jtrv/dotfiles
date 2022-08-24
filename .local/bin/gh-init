@@ -1,0 +1,11 @@
+#!/bin/sh
+
+CWD_NAME=${PWD##*/}
+
+gh repo create --private "$CWD_NAME"
+git init
+git add .
+git commit -m "git in'it"
+git remote add origin "git@github.com:JacobTravers/$CWD_NAME.git"
+git branch -M main
+git push -u origin main
