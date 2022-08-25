@@ -1,19 +1,18 @@
-# <type>(<scope>)!: <description> ##############
+#────────────type(scope)!: description─────────┐
 
-# \n BREAKING CHANGE: [context -> why? how? etc] #####################
-# \n [footer -> ref:, reviewed by:, etc] 
+#───────────────────(\n) BREAKING CHANGE: why? how?──────────────────┐
 #
+#───────────────────(\n\n) ref:, reviewed by:, etc───────────────────┐
 #
+#┌───────────────────────────────TYPES───────────────────────────────┐
+#│      build:      build related change                             │
+#│      chore:      no production code change                        │
+#│      ci:         ci change                                        │
+#│      docs:       documentation change                             │
+#│      feat:       new feature                                      │
+#│      fix:        bug fix                                          │
+#│      refactor:   code refactor                                    │
+#│      style:      formatting change (markup, white-space, ...)     │
+#│      test:       add/fix test                                     │
+#└───────────────────────────────────────────────────────────────────┘
 #
-######################################################################
-#                              TYPES:                                #
-#       feat:       new feature                                      #
-#       fix:        bug fix                                          #
-#       refactor:   code refactor                                    #
-#       style:      formatting change (markup, white-space, ...)     #
-#       build:      build related change                             #
-#       ci:         ci change                                        #
-#       test:       add/fix test                                     #
-#       chore:      no production code change                        #
-#       docs:       documentation change                             #
-######################################################################
