@@ -61,7 +61,7 @@ git:
   disableForcePushing: false
   parseEmoji: false
 os:
-  editCommand: 'kak' # see 'Configuring File Editing' section
+  editCommand: 'kamp edit' # see 'Configuring File Editing' section
   editCommandTemplate: '{{editor}} +{{line}} -- {{filename}}'
   openCommand: ''
 refresher:
