@@ -1,3 +1,4 @@
 hook global WinSetOption filetype=diff %{
-    map global normal <ret> ': diff-jump<ret>'
+    hook buffer -group diff-hooks NormalKey <ret> diff-jump
+    hook -once -always window WinSetOption filetype=.* %{ remove-hooks buffer diff-hooks }
 }
