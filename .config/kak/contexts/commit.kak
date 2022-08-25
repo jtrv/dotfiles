@@ -1,5 +1,6 @@
 hook global WinSetOption filetype=git-commit %{
-  execute-keys ":autowrap-enable<ret>"
+  ui-whitespaces-toggle
+  autowrap-enable
   set-option window lintcmd "commitlint <"
   lint
 }
