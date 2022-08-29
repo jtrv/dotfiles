@@ -113,6 +113,7 @@ cmd rename-blank ${{
 }}
 
 cmd bak $IFS="`printf '\n\t'`"; bak $fx
+cmd touch-edit $IFS=" "; kamp edit "$*"; lf -remote "send $id select \"$*\""
 cmd drag $IFS="`printf '\n\t'`"; drag $fx &
 cmd open-with %"$@" "$fx" &disown
 cmd renamer $IFS="`printf '\n\t'`"; renamer $fx
@@ -179,6 +180,7 @@ map M     mkdirfromsels           # create new dir with selections
 map R     renamer                 # rename files using $EDITOR (pipe-rename)
 map P     :link                   # press 'y->P' soft-link; press 'd->P' hard-link
 map t     push $touch<space>      # new file
+map T     push :touch-edit<space> # edit new file in kakoune
 map x     $$f                     # execute current file (must be executable)
 map X     !$f                     # execute current file (must be executable)
 map Y     :yank-path              # copy path
