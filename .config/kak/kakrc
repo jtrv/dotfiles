@@ -196,6 +196,7 @@ define-command mdn -docstring "print mdn docs for the query" -params 1.. %{
 define-command reader-mode -docstring "enables settings for better reading" %{
   remove-highlighter global/whitespace
   ui-whitespaces-toggle
+  ui-trailing-spaces-toggle
   ui-wrap-toggle
   rainbow-disable-window
   map buffer normal d <c-d>
