@@ -195,10 +195,10 @@ define-command mdn -docstring "print mdn docs for the query" -params 1.. %{
 
 define-command reader-mode -docstring "enables settings for better reading" %{
   remove-highlighter global/whitespace
-  ui-whitespaces-toggle
-  ui-trailing-spaces-toggle
-  ui-wrap-toggle
   rainbow-disable-window
+  ui-trailing-spaces-toggle
+  ui-whitespaces-toggle
+  ui-wrap-toggle
   map buffer normal d <c-d>
   map buffer normal u <c-u>
   map buffer normal q ':quit<ret>'
@@ -213,14 +213,14 @@ define-command tldr -docstring "print a cheatsheet for the given console command
 
 ###################### KEYS ######################
 
+map global prompt <c-n> <tab>   -docstring "next completion"
+map global prompt <c-p> <s-tab> -docstring "previous completion"
+
 map global prompt <a-.> -docstring "insert buffer directory"     '%sh{dirname "$kak_buffile"}<a-!>/'
 map global prompt <a-,> -docstring "insert git root directory"   '%sh{git rev-parse --show-toplevel}<a-!>/'
 
 map global normal <a-space> <a-,> -docstring "clear current (or nth) selection"
 map global normal <esc> ,         -docstring "clear multi-selection and keep (nth)"
-
-map global prompt <c-n> <tab>   -docstring "next completion"
-map global prompt <c-p> <s-tab> -docstring "previous completion"
 
 map global normal w b         -docstring "select previous word"
 map global normal W B         -docstring "extend previous word"
@@ -377,11 +377,11 @@ cork ui-kak https://github.com/kkga/ui.kak %{
   map global user u -docstring "ui mode"   ':enter-user-mode ui <ret>'
   set-option global ui_wrap_flags -word -indent -marker ~~
   hook global WinCreate .* %{
-    ui-todos-toggle
-    ui-lint-toggle
     ui-git-diff-toggle
-    ui-whitespaces-toggle
+    ui-lint-toggle
+    ui-todos-toggle
     ui-trailing-spaces-toggle
+    ui-whitespaces-toggle
   }
 }
 
