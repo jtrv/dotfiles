@@ -32,6 +32,7 @@ xrandr --output virtual-1 --mode 3440x1440
 dunst &                              # notifications
 easyeffects --gapplication-service & # autoEQ service
 ntpd start &                         # time-sync
+pcmanfm --daemon-mode &              # file-manager daemon
 picom -f &                           # allow for opacities
 redshift -l 34:-119 -b 1.0:0.6 &     # bluelight filter
 syncthing &                          # sync logseq notes
