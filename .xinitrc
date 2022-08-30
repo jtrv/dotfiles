@@ -29,7 +29,6 @@ fi
 
 xrandr --output virtual-1 --mode 3440x1440
 
-clipcatd &                           # clipboard cache
 dunst &                              # notifications
 easyeffects --gapplication-service & # autoEQ service
 ntpd start &                         # time-sync
