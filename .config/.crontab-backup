@@ -1,6 +1,7 @@
 #Min     ┌Hour    ┌Day     ┌Month   ┌Weekday  ┌Command
 #0-59    ├0-23    ├1-31    ├1-12    ├0=Sunday │
 */15     *        *        *        *         DISPLAY=:0 feh --randomize --bg-scale --no-fehbg ~/media/pictures/wallpapers/
-0        */3      *        *        *         updatedb
+0        */2      *        *        *         find $XDG_DATA_HOME/graveyard/ -delete -atime +45
+29       */3      *        *        *         updatedb
 0        9        *        *        *         volta install node@latest npm@latest
 */5      *        *        *        *         low-battery
