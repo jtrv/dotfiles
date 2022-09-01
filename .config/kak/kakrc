@@ -23,7 +23,6 @@ cork kak-rainbower https://github.com/JacobTravers/kak-rainbower %{
   hook global WinCreate .* %{ rainbow-enable-window }
 }
 
-
 ############### FORMAT/LINT ###############
 
 # Linting and formating per language
@@ -88,7 +87,6 @@ cork smarttab-kak https://github.com/andreyorst/smarttab.kak %{
     autoconfigtab
   }
 }
-
 
 ###################### UTILITY ######################
 
@@ -212,35 +210,29 @@ define-command tldr -docstring "print a cheatsheet for the given console command
   kakpipe -n tldr -- tldr --color always %arg{@};
 }
 
-###################### KEYS ######################
+###################### NORMAL KEYS ######################
 
-map global prompt <c-n> <tab>   -docstring "next completion"
-map global prompt <c-p> <s-tab> -docstring "previous completion"
-
-map global prompt <a-.> -docstring "insert buffer directory"     '%sh{dirname "$kak_buffile"}<a-!>/'
-map global prompt <a-,> -docstring "insert git root directory"   '%sh{git rev-parse --show-toplevel}<a-!>/'
-
+# Clear selections
 map global normal <a-space> <a-,> -docstring "clear current (or nth) selection"
 map global normal <esc> ,         -docstring "clear multi-selection and keep (nth)"
 
+# Use W as a more ergonomic 'previous word'
 map global normal w b         -docstring "select previous word"
 map global normal W B         -docstring "extend previous word"
 map global normal <a-w> <a-b> -docstring "select previous BIG-WORD"
 map global normal <a-W> <a-B> -docstring "extend prevous BIG-WORD"
 
-# Paste in insert mode
-map global insert <c-v> -docstring "insert mode paste"   '<esc>Pi'
 
-map global normal D -docstring "vim D"         'Gld'
-map global normal Y -docstring "yank to end"   'Gly'
-
+# Select whole lines
 map global normal J -docstring "select next line"       'Jx'
 map global normal K -docstring "select previous line"   'Kx'
 
-map global normal x     -docstring "select inner"          '<a-i>'
-map global normal X     -docstring "select outer"          '<a-a>'
-map global normal <a-x> -docstring "select all matches"    '*%s<ret>)'
-map global normal <a-X> -docstring "select buffer"         <percent>
+# Make x/X inner and outer object selection
+map global normal x     -docstring "select inner"         '<a-i>'
+map global normal X     -docstring "select outer"         '<a-a>'
+
+# Select all matches
+map global normal <a-x> -docstring "select all matches"   '*%s<ret>)'
 
 # Select/add next match
 map global normal v     -docstring "select next match"      '*n'
@@ -257,18 +249,31 @@ map global normal <a-?> -docstring "(extend) search backwards"   '<a-?>(?i)'
 # (Un)Comment Lines
 map global normal <#> -docstring "comment"   ':comment <ret>'
 
-# Kampliment bindings
-map global normal <c-n> -docstring "New client"     ':new <ret>'
-map global normal <c-t> -docstring "New terminal"   ':connect terminal <ret>'
-map global normal +     -docstring "New popup"      ':connect popup <ret>'
+# New windows
+map global normal <c-n> -docstring "new client"     ':new <ret>'
+map global normal <c-t> -docstring "new terminal"   ':connect terminal <ret>'
+map global normal +     -docstring "new popup"      ':connect popup <ret>'
 
-map global normal <c-h> -docstring "lf"        ':connect terminal lf <ret>'
-map global normal <c-v> -docstring "lazygit"   ':connect terminal lazygit <ret>'
-
+# Pickers
 map global normal B     -docstring "buffer picker"   ': connect terminal kamp-buffers<ret>'
 map global normal <c-k> -docstring "file picker"     ': connect terminal kamp-files<ret>'
 map global normal <c-g> -docstring "grep picker"     ': connect terminal kamp-grep<ret>'
 
+# External Programs
+map global normal <c-h> -docstring "lf"        ':connect terminal lf <ret>'
+map global normal <c-v> -docstring "lazygit"   ':connect terminal lazygit <ret>'
+
+###################### PROMPT KEYS ######################
+
+map global prompt <c-n> <tab>   -docstring "next completion"
+map global prompt <c-p> <s-tab> -docstring "previous completion"
+
+map global prompt <a-.> -docstring "insert buffer directory"     '%sh{dirname "$kak_buffile"}<a-!>/'
+map global prompt <a-,> -docstring "insert git root directory"   '%sh{git rev-parse --show-toplevel}<a-!>/'
+
+###################### INSERT KEYS ######################
+
+map global insert <c-v> -docstring "insert mode paste"   '<esc>Pi'
 
 ################# MODES ##################
 
