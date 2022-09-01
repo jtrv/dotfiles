@@ -301,11 +301,10 @@ cork kakoune-easymotion https://github.com/danr/kakoune-easymotion %{
 }
 
 declare-user-mode grep
-  map global user g -docstring "grep"          ':enter-user-mode grep <ret>'
-  map global grep g -docstring "grep"          ':grep '
-  map global grep j -docstring "next match"    ':grep-next-match <ret>'
-  map global grep k -docstring "prev match"    ':grep-previous-match <ret>'
-  map global grep w -docstring "write edits"   ':grep-write <ret>'
+  map global user g -docstring "grep"            ':enter-user-mode grep <ret>'
+  map global grep g -docstring "grep"            ':grep '
+  map global grep j -docstring "next match"      ':grep-next-match <ret>'
+  map global grep k -docstring "prev match"      ':grep-previous-match <ret>'
 
 map global user   k     -docstring "klip off"     ':kakboard-disable; kakboard-disable <ret>'
 map global user   K     -docstring "klip on"      ':kakboard-enable <ret>'
@@ -380,11 +379,6 @@ cork ui-kak https://github.com/kkga/ui.kak %{
 # Write to file
 map global user w -docstring "write"   ':w <ret>'
 
-cork kakoune-grep-write https://github.com/JacobTravers/kakoune-grep-write %{
-  hook global WinDisplay '\*grep\*' %{
-    alias buffer w grep-write
-    alias buffer wq grep-write-quit
-    map buffer user w -docstring "write"   ':grep-write <ret>'
-  }
-}
+cork kakoune-grep-write https://github.com/JacobTravers/kakoune-grep-write
+
 map global user / -docstring "search"   ':grep '
