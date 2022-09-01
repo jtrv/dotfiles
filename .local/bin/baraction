@@ -107,7 +107,7 @@ bat() {
     fi
   )
 
-  echo "$batstat $battery%"
+  echo "$batstat$battery%"
 }
 ##############################
 #    VOLUME
@@ -123,7 +123,7 @@ vol() {
   if [ "$mute" = "no" ]; then
     icon=""
   fi
-  echo " $icon $vol%"
+  echo "$icon $vol%"
 }
 ##############################
 #    PACKAGES
@@ -145,6 +145,6 @@ vol() {
 SLEEP_SEC=2
 #loops forever outputting a line every SLEEP_SEC secs
 while :; do
-  echo "$(ram)  $(ssd)  | $(vol) | $(mic) $(net) $(blu) | $(bat)"
+  echo "$(ram)  $(ssd) | $(vol) | $(mic) $(net) $(blu) | $(bat) |"
   sleep $SLEEP_SEC
 done
