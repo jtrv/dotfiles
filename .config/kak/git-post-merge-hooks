@@ -1,22 +1,25 @@
-# kampliment
+#kampliment
+#$XDG_DATA_HOME/kak/cork/plugins/kampliment/repo/.git/hooks/post-merge
 # #!/bin/sh
 # cargo install --force --path . --root "$CARGO_HOME"
 # for script in $(basename -a ./scripts/*); do
 #   ln -fs "$(pwd)"/scripts/"$script" "$HOME"/.local/bin/"$script"
 # done
-#
-# kak-lsp
+
+#kak-lsp
+#$XDG_DATA_HOME/kak/cork/plugins/kak-lsp/repo/.git/hooks/post-merge
 # #!/bin/sh
 # cargo build --release --locked
 # cargo install --force --path . --root "$CARGO_HOME"
-#
-# kakpipe
+
+#kakpipe
+#$XDG_DATA_HOME/kak/cork/plugins/kakpipe/repo/.git/hooks/post-merge
 # #!/bin/sh
 # cargo install --force --path . --root $CARGO_HOME
-#
-# kakship
-# #!/bin/sh
+
+#kakship
+#$XDG_DATA_HOME/kak/cork/plugins/kakship/repo/.git/hooks/post-merge
+##!/bin/sh
 # kak_config="$XDG_CONFIG_HOME"/kak
 # cargo install --force --path . --root "$CARGO_HOME"
-# [ ! -e "$kak_config"/starship.toml ] && cp starship.toml "$kak_config"/
-
+# [ ! -e "$kak_config"/starship.toml ] && cp starship.toml "$kak_config"
