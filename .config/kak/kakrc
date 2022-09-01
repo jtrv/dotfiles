@@ -285,14 +285,6 @@ cork kakoune-buffers https://github.com/delapouite/kakoune-buffers %{
     alias global bo! buffer-only-force
 }
 
-cork kakoune-cd https://github.com/delapouite/kakoune-cd %{
-  map global user c ': enter-user-mode cd<ret>' -docstring 'cd'
-  alias global cdb change-directory-current-buffer
-  alias global cdr change-directory-project-root
-  alias global ecd edit-current-buffer-directory
-  alias global pwd print-working-directory
-}
-
 map global user d -docstring "dev"  ':enter-user-mode dev <ret>'
 
 cork kakoune-easymotion https://github.com/danr/kakoune-easymotion %{
