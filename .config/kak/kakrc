@@ -239,6 +239,9 @@ map global normal <a-v> -docstring "deselect current sel"   '*<a-n>'
 map global normal V     -docstring "add next match"         '*N'
 map global normal <a-V> -docstring "add previous match"     '*<a-N>'
 
+# View Mode
+map global normal Y v -docstring "view mode"
+
 # Case insensitive search
 map global normal /     -docstring "search"                      '/(?i)'
 map global normal <a-/> -docstring "search backwards"            '<a-/>(?i)'
