@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+# requires:
+# fzf,
+# rg (ripgrep),
+# rip (rm-improved)
+
+FZF_DEFAULT_OPTS="--ansi --color=dark --multi --bind='alt-a:select-all'"
+
+if [ $# -eq 0 ]; then
+	rip -s | fzf | xargs -I {} rip -u {}
+else
+	rip -s | rg "$@" | fzf | xargs -I {} rip -u {}
+fi
