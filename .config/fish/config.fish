@@ -9,7 +9,11 @@ set fish_cursor_visual block blink
 ######## SOURCE ########
 
 # better history
-mcfly init fish | source
+set -gx ATUIN_NOBIND "true"
+atuin init fish | source
+# bind to ctrl-r in normal and insert mode
+bind \cr _atuin_search
+bind -M insert \cr _atuin_search
 
 # tabtab source for packages
 # uninstall by removing these lines
@@ -175,7 +179,6 @@ set -gx fish_greeting
 set -gx FZF_DEFAULT_OPTS "--ansi --color=dark --multi --tabstop=2  --preview='bat --color=always {}' --preview-window border-vertical --bind='alt-a:select-all,alt-d:deselect-all,ctrl-l:preview-down,ctrl-h:preview-up,alt-j:jump'"
 set -gx HORS_ENGINE "google"
 set -gx MANPAGER "/usr/bin/bat" # see 'kan' function
-set -gx MCFLY_FUZZY 2
 set -gx PATH "$VOLTA_HOME/bin" $PATH
 set -gx RUSTC_WRAPPER "/usr/bin/sccache"
 set -gx VISUAL "/usr/bin/kak"
