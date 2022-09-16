@@ -120,9 +120,7 @@ cork kakoune-sudo-write https://github.com/JacobTravers/kakoune-sudo-write %{
 cork kakpipe https://github.com/eburghar/kakpipe %{ require-module kakpipe }
 
 # Starship for kakoune modeline
-cork kakship https://github.com/eburghar/kakship %{
-  kakship-enable
-}
+cork kakship https://github.com/eburghar/kakship %{ kakship-enable }
 
 # Interact with external programs
 cork kampliment https://github.com/vbauerster/kampliment
