@@ -1,0 +1,3 @@
+#!/bin/sh
+# view '--help' output
+kak -e "helpp $*"

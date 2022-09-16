@@ -6,10 +6,14 @@ set fish_cursor_insert line blink
 set fish_cursor_replace_one underscore blink
 set fish_cursor_visual block blink
 
+
+
 ######## SOURCE ########
 
+set -gx XDG_CONFIG_HOME "$HOME"/.config
+source "$XDG_CONFIG_HOME"/fish/env.fish
+
 # better history
-set -gx ATUIN_NOBIND "true"
 atuin init fish | source
 # bind to ctrl-r in normal and insert mode
 bind \cr _atuin_search
@@ -18,6 +22,7 @@ bind -M insert \cr _atuin_search
 # tabtab source for packages
 # uninstall by removing these lines
 [ -f ~/.config/tabtab/fish/__tabtab.fish ]; and . ~/.config/tabtab/fish/__tabtab.fish; or true
+
 
 
 ######## FUNCTIONS ########
@@ -45,10 +50,9 @@ function __history_previous_command_arguments
 end
 bind -Minsert '$' __history_previous_command_arguments
 
-# ask questions, get answers in kakoune
-function how
-  kak -e "how $argv"
-end
+# other functions can be found in ./functions/
+
+
 
 ######## ABBREVIATIONS ########
 
@@ -57,8 +61,9 @@ if status --is-interactive
   abbr --add --global mv     'mv -i'
   abbr --add --global rm     'rm -i'
   abbr --add --global npin   'license MIT && gitignore node && covgen jtravers@tutanota.com && npm init -y && volta pin node@lts && git init'
-  abbr --add --global gitbit 'git commit --amend --no-edit --date "Sat 01 Jan 2022 16:20:07 PST"'
+  abbr --add --global gitbit 'git commit --amend --no-edit --date "Sat 01 Jan 2022 16:20:00 PST"'
 end
+
 
 
 ######## ALIASES ########
@@ -69,7 +74,6 @@ complete -c wiki-docs-search -a '(fd html "/usr/share/doc/arch-wiki/html/en/" | 
 alias bc      'kalk'
 alias bls     '/bin/ls' # for piping
 alias cat     'bat'
-alias config  '/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME' # git for config files
 alias doas    'doas --'
 alias glow    'glow -p'
 alias j       '~/.config/lf/wrapper'
@@ -96,39 +100,6 @@ alias yarn    "yarn --use-yarnrc \"$XDG_CONFIG_HOME\"/yarn/config"
 
 
 ######## KAKOUNE ########
-
-# view manpage
-function kakman
-  kak -e "man $argv"
-end
-complete -c kakman -w man
-
-# view '--help' output
-function kelp
-  kak -e "helpp $argv"
-end
-complete -c kelp -w man
-
-# view tldr
-function kldr
-  kak -e "tldr $argv"
-end
-complete -c kldr -w man
-
-# manpage with fallback to help output
-function kan
-  if man -w $argv &> /dev/null
-    kakman $argv
-  else if $argv --help &> /dev/null
-    kelp $argv
-  end
-end
-complete -c kan -w man
-
-# view mdn docs
-function kdn
-  kak -e "mdn $argv"
-end
 
 function kakgrep
     set grepargs
@@ -168,210 +139,3 @@ alias kreg    'kamp get reg'
 alias kcd-pwd 'cd (kamp get sh pwd)'
 alias kcd-buf 'cd (dirname (kamp get val buffile))'
 alias kft     'kamp get -b \* opt filetype | sort | uniq' # list file types you're working on
-
-
-
-######## EXPORTS ########
-
-set -gx CALIBRE_USE_DARK_PALETTE "yes"
-set -gx EDITOR "/usr/bin/kak"
-set -gx fish_greeting
-set -gx FZF_DEFAULT_OPTS "--ansi --color=dark --multi --tabstop=2  --preview='bat --color=always {}' --preview-window border-vertical --bind='alt-a:select-all,alt-d:deselect-all,ctrl-l:preview-down,ctrl-h:preview-up,alt-j:jump'"
-set -gx HORS_ENGINE "google"
-set -gx MANPAGER "/usr/bin/bat" # see 'kan' function
-set -gx PATH "$VOLTA_HOME/bin" $PATH
-set -gx RUSTC_WRAPPER "/usr/bin/sccache"
-set -gx VISUAL "/usr/bin/kak"
-
-set -gx XDG_CACHE_HOME "$HOME"/.cache
-set -gx XDG_CONFIG_HOME "$HOME"/.config
-set -gx XDG_DATA_HOME "$HOME"/.local/share
-set -gx XDG_DESKTOP_DIR "$HOME"/
-set -gx XDG_DOCUMENTS_DIR "$HOME"/documents
-set -gx XDG_DOWNLOAD_DIR "$HOME"/downloads
-set -gx XDG_MUSIC_DIR "$HOME"/media/music
-set -gx XDG_PICTURES_DIR "$HOME"/media/pictures
-set -gx XDG_STATE_HOME "$HOME"/.local/state
-
-set -gx LESSHISTFILE "$XDG_CACHE_HOME"/less/history
-
-set -gx AWS_CONFIG_FILE             "$XDG_CONFIG_HOME"/aws/config
-set -gx AWS_SHARED_CREDENTIALS_FILE "$XDG_CONFIG_HOME"/aws/credentials
-set -gx GTK2_RC_FILES               "$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
-set -gx NETRC                       "$XDG_CONFIG_HOME"/.netrc
-set -gx NPM_CONFIG_USERCONFIG       "$XDG_CONFIG_HOME"/npm/npmrc
-set -gx PYTHONSTARTUP               "$XDG_CONFIG_HOME"/python/pythonrc
-set -gx _JAVA_OPTIONS -Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
-
-set -gx ANDROID_HOME      "$XDG_DATA_HOME"/android
-set -gx CARGO_HOME        "$XDG_DATA_HOME"/cargo
-set -gx GOPATH            "$XDG_DATA_HOME"/go
-set -gx GNUPGHOME         "$XDG_DATA_HOME"/gnupg
-set -gx NODE_REPL_HISTORY "$XDG_DATA_HOME"/node_repl_history
-set -gx NVM_DIR           "$XDG_DATA_HOME"/nvm
-set -gx RUSTUP_HOME       "$XDG_DATA_HOME"/rustup
-set -gx VOLTA_HOME        "$XDG_DATA_HOME"/volta
-
-set -gx HISTFILE "$XDG_STATE_HOME"/bash/history
-
-set -gx LF_ICONS "\
-di=:\
-fi=:\
-ln=:\
-or=:\
-ex=:\
-*.vimrc=:\
-*.viminfo=:\
-*.gitignore=:\
-*.c=:\
-*.cc=:\
-*.clj=:\
-*.coffee=:\
-*.cpp=:\
-*.css=:\
-*.d=:\
-*.dart=:\
-*.erl=:\
-*.exs=:\
-*.fs=:\
-*.go=:\
-*.h=:\
-*.hh=:\
-*.hpp=:\
-*.hs=:\
-*.html=:\
-*.java=:\
-*.jl=:\
-*.js=:\
-*.json=:\
-*.lua=:\
-*.md=:\
-*.php=:\
-*.pl=:\
-*.pro=:\
-*.py=:\
-*.rb=:\
-*.rs=:\
-*.scala=:\
-*.ts=:\
-*.vim=:\
-*.cmd=:\
-*.ps1=:\
-*.sh=:\
-*.bash=:\
-*.zsh=:\
-*.fish=:\
-*.tar=:\
-*.tgz=:\
-*.arc=:\
-*.arj=:\
-*.taz=:\
-*.lha=:\
-*.lz4=:\
-*.lzh=:\
-*.lzma=:\
-*.tlz=:\
-*.txz=:\
-*.tzo=:\
-*.t7z=:\
-*.zip=:\
-*.z=:\
-*.dz=:\
-*.gz=:\
-*.lrz=:\
-*.lz=:\
-*.lzo=:\
-*.xz=:\
-*.zst=:\
-*.tzst=:\
-*.bz2=:\
-*.bz=:\
-*.tbz=:\
-*.tbz2=:\
-*.tz=:\
-*.deb=:\
-*.rpm=:\
-*.jar=:\
-*.war=:\
-*.ear=:\
-*.sar=:\
-*.rar=:\
-*.alz=:\
-*.ace=:\
-*.zoo=:\
-*.cpio=:\
-*.7z=:\
-*.rz=:\
-*.cab=:\
-*.wim=:\
-*.swm=:\
-*.dwm=:\
-*.esd=:\
-*.jpg=:\
-*.jpeg=:\
-*.mjpg=:\
-*.mjpeg=:\
-*.gif=:\
-*.bmp=:\
-*.pbm=:\
-*.pgm=:\
-*.ppm=:\
-*.tga=:\
-*.xbm=:\
-*.xpm=:\
-*.tif=:\
-*.tiff=:\
-*.png=:\
-*.svg=:\
-*.svgz=:\
-*.mng=:\
-*.pcx=:\
-*.mov=:\
-*.mpg=:\
-*.mpeg=:\
-*.m2v=:\
-*.mkv=:\
-*.webm=:\
-*.ogm=:\
-*.mp4=:\
-*.m4v=:\
-*.mp4v=:\
-*.vob=:\
-*.qt=:\
-*.nuv=:\
-*.wmv=:\
-*.asf=:\
-*.rm=:\
-*.rmvb=:\
-*.flc=:\
-*.avi=:\
-*.fli=:\
-*.flv=:\
-*.gl=:\
-*.dl=:\
-*.xcf=:\
-*.xwd=:\
-*.yuv=:\
-*.cgm=:\
-*.emf=:\
-*.ogv=:\
-*.ogx=:\
-*.aac=:\
-*.au=:\
-*.flac=:\
-*.m4a=:\
-*.mid=:\
-*.midi=:\
-*.mka=:\
-*.mp3=:\
-*.mpc=:\
-*.ogg=:\
-*.ra=:\
-*.wav=:\
-*.oga=:\
-*.opus=:\
-*.spx=:\
-*.xspf=:\
-*.pdf=:\
-*.nix=:\
-"
