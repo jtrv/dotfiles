@@ -141,12 +141,9 @@ args = ["--stdio"]
 
 [language.javascript]
 filetypes = ["javascript"]
-roots = ["package.json", ".git"]
-command = "deno"
-args = ["lsp"]
-[language.javascript.settings.deno]
-enable = true
-lint = true
+roots = ["package.json"]
+command = "typescript-language-server"
+args = ["--stdio"]
 
 [language.json]
 filetypes = ["json"]
@@ -320,12 +317,9 @@ args = ["serve"]
 
 [language.typescript]
 filetypes = ["typescript"]
-roots = ["package.json", "tsconfig.json", ".git", ".hg"]
-command = "deno"
-args = ["lsp"]
-[language.typescript.settings.deno]
-enable = true
-lint = true
+roots = ["package.json", "tsconfig.json"]
+command = "typescript-language-server"
+args = ["--stdio"]
 
 [language.yaml]
 filetypes = ["yaml"]
