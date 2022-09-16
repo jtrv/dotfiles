@@ -1,0 +1,3 @@
+#!/bin/sh
+# view mdn docs
+kak -e "mdn $*"

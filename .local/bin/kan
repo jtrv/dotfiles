@@ -1,0 +1,7 @@
+#!/bin/sh
+# manpage with fallback to '--help' output
+if man -w "$1" > /dev/null; then
+  kakman "$1"
+elif  "$1" --help > /dev/null; then
+  kelp "$1"
+fi
