@@ -9,6 +9,7 @@ arch-wiki-docs-search
 archivemount
 asciinema
 aspell-en
+atuin
 autoconf
 automake
 aws-cli
@@ -20,6 +21,7 @@ bc
 binutils
 bison
 bluez
+bluez-plugins
 bluez-utils
 bottom
 breeze-icons
@@ -34,6 +36,8 @@ certbot
 choose
 clipmenu
 cmake
+comby-bin
+cork.kak-git
 croc
 cronie
 ctags
@@ -51,8 +55,8 @@ dust
 easyeffects
 electron11-bin
 epub-thumbnailer-git
-eslint_d
 exa
+exfat-utils
 expac
 fakeroot
 fclones
@@ -72,7 +76,7 @@ fisher
 flameshot-git
 frawk
 fzf
-gamehub-bin
+gamehub-git
 gamemode
 gawk
 gcc
@@ -85,12 +89,12 @@ git
 git-delta
 github-cli
 glow
+glslang
 gnu-free-fonts
 go
 gpg-tui
 gping
 grep
-grex
 groff
 gron
 grub
@@ -103,10 +107,11 @@ hyperfine
 inkscape
 innoextract
 intel-ucode
-itch-bin
 jack2
+jaq
 jid-bin
 jira-cli
+jitsi-meet-desktop-bin
 jless
 jpegoptim
 jq
@@ -147,8 +152,9 @@ man-db
 mangadesk
 materia-gtk-theme
 mcfly
+mdcat
 mesa
-minify
+minify-html-bin
 minigalaxy
 mongodb-bin
 mongodb-compass
@@ -158,9 +164,11 @@ mons
 moreutils
 mprocs
 mpv
+mpv-thumbnail-script
 mullvad-vpn-bin
 namcap
 neofetch
+neovim
 nerd-fonts-fira-code
 nethack
 network-manager-applet
@@ -175,9 +183,7 @@ ocl-icd
 onefetch
 opendoas
 ouch
-oxipng
 pacman
-pamixer
 pandoc-bin
 paru
 pastel
@@ -200,7 +206,6 @@ pnpm-bin
 podman
 podman-compose
 potato
-prettierd
 procs
 pueue
 pulsemixer
@@ -209,6 +214,9 @@ qbittorrent
 qrcp-bin
 rate-mirrors
 rclone
+realcugan-ncnn-vulkan-git
+realesrgan-ncnn-vulkan-bin
+realsr-ncnn-vulkan-bin
 redshift
 rescrobbled-git
 ripgrep-all
@@ -232,6 +240,7 @@ soundux
 sox
 spectrwm
 speedtest++
+srmd-ncnn-vulkan-bin
 starship
 steam
 strace
@@ -267,6 +276,7 @@ volta-bin
 vulkan-radeon
 waifu2x-ncnn-vulkan
 watchexec
+webcord
 weechat
 wego
 which
@@ -293,6 +303,7 @@ xorg-xinput
 xournalpp
 yarn
 yt-dlp
+yuzu-mainline-bin
 zoxide
 zram-generator
 zx
