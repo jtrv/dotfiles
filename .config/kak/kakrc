@@ -91,8 +91,8 @@ cork smarttab-kak https://github.com/andreyorst/smarttab.kak %{
 
 set global grepcmd 'rg --column --smart-case'
 
-# Empty scratch buffer
-hook global BufCreate '\*scratch\*' %{ execute-keys '%<a-d>' }
+# Empty scratch buffer(s)
+hook global BufCreate '\*scratch(-\d+)?\*' %{ execute-keys -draft '%<a-d>' }
 
 # Alacritty integration
 cork alacritty-kak https://github.com/alexherbo2/alacritty.kak %{
