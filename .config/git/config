@@ -11,7 +11,7 @@
   editor = kak
   pager = delta
 [diff]
-  color-moved = dimmed_zebra
+  colorMoved = default
 [interactive]
   diffFilter = delta --color-only
 [delta]
