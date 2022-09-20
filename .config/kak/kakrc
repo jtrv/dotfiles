@@ -161,7 +161,7 @@ define-command difft -docstring "view diff with difftastic" -shell-completion -p
   kakpipe -n difft -- difft --width %val{window_width} --color always %arg{@};
 }
 
-define-command diff-buffers -override -params 2 %{
+define-command diff-buffers -buffer-completion -override -params 2 %{
   evaluate-commands %sh{
     file1=$(mktemp)
     file2=$(mktemp)
@@ -177,7 +177,7 @@ define-command diff-buffers -override -params 2 %{
       execute-keys !<ret>gg
     "
 }}
-complete-command diff-buffers buffer
+
 
 define-command execute-keys-with-register -params 2 -docstring 'execute keys with register' %{
   evaluate-commands -save-regs '"' %{
