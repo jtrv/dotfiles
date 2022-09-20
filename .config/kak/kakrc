@@ -25,18 +25,6 @@ cork kak-rainbower https://github.com/JacobTravers/kak-rainbower %{
 
 ############### FORMAT/LINT ###############
 
-# Linting and formating per language
-source "~/.config/kak/contexts/commit.kak"
-source "~/.config/kak/contexts/css.kak"
-source "~/.config/kak/contexts/diff.kak"
-source "~/.config/kak/contexts/fish.kak"
-source "~/.config/kak/contexts/grep.kak"
-source "~/.config/kak/contexts/html.kak"
-source "~/.config/kak/contexts/javascript.kak"
-source "~/.config/kak/contexts/json.kak"
-source "~/.config/kak/contexts/markdown.kak"
-source "~/.config/kak/contexts/sh.kak"
-
 # LSP Magic
 cork kak-lsp https://github.com/kak-lsp/kak-lsp %{
   set global lsp_diagnostic_line_error_sign '║'
@@ -87,6 +75,18 @@ cork smarttab-kak https://github.com/andreyorst/smarttab.kak %{
     autoconfigtab
   }
 }
+
+# Contextual Scripts
+source "~/.config/kak/contexts/commit.kak"
+source "~/.config/kak/contexts/css.kak"
+source "~/.config/kak/contexts/diff.kak"
+source "~/.config/kak/contexts/fish.kak"
+source "~/.config/kak/contexts/grep.kak"
+source "~/.config/kak/contexts/html.kak"
+source "~/.config/kak/contexts/javascript.kak"
+source "~/.config/kak/contexts/json.kak"
+source "~/.config/kak/contexts/markdown.kak"
+source "~/.config/kak/contexts/sh.kak"
 
 ###################### UTILITY ######################
 
@@ -300,11 +300,11 @@ map global user <space> : -docstring "prompt"
 cork kakoune-buffers https://github.com/delapouite/kakoune-buffers %{
   hook global WinDisplay .* info-buffers
     map global normal b ":enter-buffers-mode <ret>"
-    alias global bd delete-buffer
+    alias global bd  delete-buffer
     alias global bd! delete-buffer!
-    alias global bf buffer-first
-    alias global bl buffer-last
-    alias global bo buffer-only
+    alias global bf  buffer-first
+    alias global bl  buffer-last
+    alias global bo  buffer-only
     alias global bo! buffer-only-force
 }
 
