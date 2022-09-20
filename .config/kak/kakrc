@@ -111,6 +111,19 @@ cork kakoune-multi-file https://github.com/natasky/kakoune-multi-file
 
 cork kakoune-repl-buffer https://gitlab.com/Screwtapello/kakoune-repl-buffer.git
 
+cork kakoune-state-save https://gitlab.com/Screwtapello/kakoune-state-save %{
+  hook global KakBegin .* %{
+      state-save-reg-load colon
+      state-save-reg-load pipe
+      state-save-reg-load slash
+  }
+  hook global KakEnd .* %{
+      state-save-reg-save colon
+      state-save-reg-save pipe
+      state-save-reg-save slash
+  }
+}
+
 cork kakoune-sudo-write https://github.com/JacobTravers/kakoune-sudo-write %{
   alias global sw 'sudo-write'
   alias global swq 'sudo-write-quit'
