@@ -14,7 +14,7 @@ set-option global ui_options terminal_assistant=none
 set-option global scrolloff 1,3
 
 # Toggle relative line numbers with insert mode
-cork number-toggle-kak https://github.com/evanrelf/number-toggle.kak %{
+cork number-toggle https://github.com/evanrelf/number-toggle.kak %{
   require-module "number-toggle"
 }
 
@@ -65,12 +65,12 @@ declare-user-mode dev
   map global dev L -docstring "lint sel"     ':lint <ret>'
   map global dev s -docstring "set filetype" ':connect terminal kamp-filetypes <ret>'
 
-cork indent-kak https://github.com/alexherbo2/indent.kak %{
+cork indent https://github.com/alexherbo2/indent.kak %{
   enable-detect-indent
   set-indent global 2
 }
 
-cork smarttab-kak https://github.com/andreyorst/smarttab.kak %{
+cork smarttab https://github.com/andreyorst/smarttab.kak %{
   hook global BufCreate .* %{
     autoconfigtab
   }
@@ -96,21 +96,19 @@ set global grepcmd 'rg --column --smart-case'
 hook global BufCreate '\*scratch(-\d+)?\*' %{ execute-keys -draft '%<a-d>' }
 
 # Alacritty integration
-cork alacritty-kak https://github.com/alexherbo2/alacritty.kak %{
+cork alacritty https://github.com/alexherbo2/alacritty.kak %{
   alias global terminal alacritty-terminal-window
   alias global popup alacritty-terminal-popup
 }
 
-cork auto-pairs-kak https://github.com/alexherbo2/auto-pairs.kak %{ enable-auto-pairs }
+cork auto-pairs https://github.com/alexherbo2/auto-pairs.kak %{ enable-auto-pairs }
 
 # Clipboard Integration
 cork kakboard https://github.com/lePerdu/kakboard %{ hook global WinCreate .* %{ kakboard-enable } }
 
 cork kakoune-auto-percent https://github.com/delapouite/kakoune-auto-percent
 
-cork kakoune-multi-file https://github.com/natasky/kakoune-multi-file
-
-cork kakoune-repl-buffer https://gitlab.com/Screwtapello/kakoune-repl-buffer.git
+cork kakoune-repl-buffer https://gitlab.com/Screwtapello/kakoune-repl-buffer
 
 cork kakoune-state-save https://gitlab.com/Screwtapello/kakoune-state-save %{
   hook global KakBegin .* %{
@@ -125,7 +123,7 @@ cork kakoune-state-save https://gitlab.com/Screwtapello/kakoune-state-save %{
   }
 }
 
-cork kakoune-sudo-write https://github.com/JacobTravers/kakoune-sudo-write %{
+cork sudo-write https://github.com/JacobTravers/sudo-write.kak %{
   alias global sw 'sudo-write'
   alias global swq 'sudo-write-quit'
 }
@@ -140,7 +138,7 @@ cork kakship https://github.com/eburghar/kakship %{ kakship-enable }
 cork kampliment https://github.com/vbauerster/kampliment
 
 # Swap client windows etc
-cork window-kak https://github.com/alexherbo2/window.kak
+cork window https://github.com/alexherbo2/window.kak
 
 ###################### COMMANDS ######################
 
@@ -346,7 +344,7 @@ map global user l -docstring "lsp" %{:enter-user-mode lsp <ret>}
 
 map global user M -docstring "math"   ':math <ret>'
 
-cork kakoune-focus "https://github.com/caksoylar/kakoune-focus" %{
+cork kakoune-focus https://github.com/caksoylar/kakoune-focus %{
   map global normal : -docstring "narrow"   ':focus-toggle <ret>'
 }
 
@@ -373,7 +371,7 @@ cork kakoune-surround https://github.com/h-youhei/kakoune-surround
   map global surround R -docstring "replace tag"         ':change-surrounding-tag <ret>'
   map global surround S -docstring "select tag"          ':select-surrounding-tag <ret>'
 
-cork mru-files-kak https://gitlab.com/kstr0k/mru-files.kak.git %{
+cork mru-files https://gitlab.com/kstr0k/mru-files.kak %{
   require-module kakhist
   kakhist-init
   map global normal <c-r> -docstring "recent files" ':mru-files <ret>'
@@ -395,7 +393,7 @@ declare-user-mode spell
   map global spell r -docstring "replace"   ':spell-replace <ret>'
   declare-option str language en-US
 
-cork ui-kak https://github.com/kkga/ui.kak %{
+cork ui https://github.com/kkga/ui.kak %{
   map global user u -docstring "ui mode"   ':enter-user-mode ui <ret>'
   set-option global ui_wrap_flags -word -indent -marker ~~
   hook global WinCreate .* %{
@@ -410,6 +408,6 @@ cork ui-kak https://github.com/kkga/ui.kak %{
 # Write to file
 map global user w -docstring "write"   ':w <ret>'
 
-cork kakoune-grep-write https://github.com/JacobTravers/kakoune-grep-write
+cork grep-write https://github.com/JacobTravers/grep-write.kak
 
 map global user / -docstring "search"   ':grep '
