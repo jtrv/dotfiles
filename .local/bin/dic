@@ -1,0 +1,6 @@
+#!/bin/sh
+if [ -z "$2" ]; then
+    sdcv "$1" | w3m -dump -T text/html -cols "$COLUMNS"
+else
+    sdcv "$1" | w3m -dump -T text/html -cols "$2"
+fi
