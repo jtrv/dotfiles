@@ -188,8 +188,15 @@ define-command execute-keys-with-register -params 2 -docstring 'execute keys wit
   }
 }
 
-define-command helpp -docstring "print an answer for the query from stackoverflow etc" -params 1.. %{
+define-command helpp -docstring "print the --help output for the given command" -shell-completion -params 0.. %{
   kakpipe -n help -- %arg{@} --help;
+  evaluate-commands %sh{
+    if [ $# -eq 0 ]; then
+      echo "kakpipe -n help -- %val{selection} --help"
+    else
+      echo "kakpipe -n help -- %arg{@} --help"
+    fi
+  }
 }
 
 define-command how -docstring "print an answer for the query from stackoverflow etc" -params 1.. %{
@@ -202,8 +209,14 @@ define-command math -docstring 'do the maths' %{
   }
 }
 
-define-command mdn -docstring "print mdn docs for the query" -params 1.. %{
-  kakpipe -n mdn -- mdn %arg{@};
+define-command mdn -docstring "print mdn docs for the query" -params 0.. %{
+  evaluate-commands %sh{
+    if [ $# -eq 0 ]; then
+      echo "kakpipe -n mdn -- mdn %val{selection}"
+    else
+      echo "kakpipe -n mdn -- mdn %arg{@}"
+    fi
+  }
 }
 
 define-command reader-mode -docstring "enables settings for better reading" %{
@@ -220,9 +233,17 @@ hook global WinDisplay '\*(delta|diff|difft|greeting|help|man \w+|mdn|tldr)\*' %
   reader-mode
 }
 
-define-command tldr -docstring "print a cheatsheet for the given console command" -shell-completion -params 1.. %{
-  kakpipe -n tldr -- tldr --color always %arg{@};
+define-command tldr -docstring "print a cheatsheet for the given console command" -shell-completion -params 0.. %{
+  evaluate-commands %sh{
+    if [ $# -eq 0 ]; then
+      echo "kakpipe -n tldr -- tldr --color always %val{selection}"
+    else
+      echo "kakpipe -n tldr -- tldr --color always %arg{@}"
+    fi
+  }
 }
+
+
 
 ###################### NORMAL KEYS ######################
 
