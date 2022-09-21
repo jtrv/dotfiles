@@ -215,18 +215,6 @@ customCommands:
         title: 'Email Address'
         initialValue: ''
     loadingText: 'commiting'
-  - key: '<c-f>'
-    description: 'fetch a remote branch as a new local branch'
-    command: "git fetch {{index .SelectedRemote.Name }} {{index .PromptResponses 0}}:{{index .PromptResponses 1}}"
-    context: 'remotes'
-    prompts:
-      - type: 'input'
-        title: 'Remote Branch Name'
-        initialValue: ''
-      - type: 'input'
-        title: 'New Local Branch Name'
-        initialValue: ''
-    loadingText: 'fetching branch'
   - key: 'b'
     command: 'tig blame -- {{.SelectedFile.Name}}'
     context: 'files'
