@@ -153,6 +153,16 @@ define-command delta -docstring "view diff with delta" -shell-completion -params
   kakpipe -n delta -- delta %arg{@};
 }
 
+define-command dic -docstring "dictionary buffer for the given query" -params 0..2 %{
+  evaluate-commands %sh{
+    if [ $# -eq 0 ]; then
+      echo "kakpipe -n dic -- dic %val{selection} %val{window_width}"
+    else
+      echo "kakpipe -n dic -- dic %arg{@} %val{window_width}"
+    fi
+  }
+}
+
 define-command diff -docstring "view diff" -shell-completion -params 1.. %{
   kakpipe -n diff -- diff -u %arg{@}; set buffer filetype diff;
 }
