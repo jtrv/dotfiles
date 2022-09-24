@@ -19,10 +19,6 @@ atuin init fish | source
 bind \cr _atuin_search
 bind -M insert \cr _atuin_search
 
-# tabtab source for packages
-# uninstall by removing these lines
-[ -f ~/.config/tabtab/fish/__tabtab.fish ]; and . ~/.config/tabtab/fish/__tabtab.fish; or true
-
 
 
 ######## FUNCTIONS ########
@@ -71,7 +67,6 @@ end
 alias ani     'ani-cli -q high' # watch anime in super ultra HD 8k lossless greenray
 alias awman   'wiki-docs-search'
 complete -c wiki-docs-search -a '(fd html "/usr/share/doc/arch-wiki/html/en/" | rg -o \'/(\w*).html$\' -r \'$1\')'
-alias bc      'kalk'
 alias bls     '/bin/ls' # for piping
 alias cat     'bat'
 alias doas    'doas --'
