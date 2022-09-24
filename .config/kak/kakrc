@@ -103,6 +103,8 @@ cork alacritty https://github.com/alexherbo2/alacritty.kak %{
 
 cork auto-pairs https://github.com/alexherbo2/auto-pairs.kak %{ enable-auto-pairs }
 
+cork grep-expand https://github.com/JacobTravers/grep-expand.kak
+
 # Clipboard Integration
 cork kakboard https://github.com/lePerdu/kakboard %{ hook global WinCreate .* %{ kakboard-enable } }
 
