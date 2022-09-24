@@ -351,6 +351,24 @@ cork kakoune-cd https://github.com/delapouite/kakoune-cd %{
   alias global pwd print-working-directory
 }
 
+cork case https://gitlab.com/FlyingWombat/case.kak %{
+  declare-user-mode case
+  map global user C -docstring "case"   ': enter-user-mode case<ret>'
+  map global case u '~' -docstring "upper"
+  map global case l '`' -docstring "lower"
+  map global case i '<a-`>' -docstring "invert"
+  map global case s       -docstring "snake_case"      ': case-to-snake<ret>'
+  map global case d       -docstring "dash-case"       ': case-to-dash<ret>'
+  map global case .       -docstring "dot.case"        ': case-to-dot<ret>'
+  map global case <space> -docstring "space case"      ': case-to-space<ret>'
+  map global case t       -docstring "Title Case"      ': case-to-title<ret>'
+  map global case c       -docstring "camelCase"       ': case-to-camel<ret>'
+  map global case p       -docstring "PascalCase"      ': case-to-pascal<ret>'
+  map global case j       -docstring "select joints"   ': case-select-joints<ret>'
+  map global case J       -docstring "unify joints"    ': case-unify-joints<ret>'
+  map global case w       -docstring "select words"    ': case-select-words<ret>'
+}
+
 map global user d -docstring "dev"  ':enter-user-mode dev <ret>'
 
 cork kakoune-easymotion https://github.com/danr/kakoune-easymotion %{
