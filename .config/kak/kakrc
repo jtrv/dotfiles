@@ -230,12 +230,11 @@ define-command mdn -docstring "print mdn docs for the query" -params 0.. %{
 define-command reader-mode -docstring "enables settings for better reading" %{
   remove-highlighter global/whitespace
   rainbow-disable-window
-  ui-trailing-spaces-toggle
-  ui-whitespaces-toggle
-  ui-wrap-toggle
+  ui-trailing-spaces-disable
+  ui-whitespaces-disable
+  ui-wrap-disable
   map buffer normal d <c-d>
   map buffer normal u <c-u>
-  map buffer normal q ':quit<ret>'
 }
 hook global WinDisplay '\*(delta|diff|difft|greeting|help|man \w+|mdn|tldr)\*' %{
   reader-mode
@@ -428,11 +427,11 @@ cork ui https://github.com/kkga/ui.kak %{
   map global user u -docstring "ui mode"   ':enter-user-mode ui <ret>'
   set-option global ui_wrap_flags -word -indent -marker ~~
   hook global WinCreate .* %{
-    ui-git-diff-toggle
-    ui-lint-toggle
-    ui-todos-toggle
-    ui-trailing-spaces-toggle
-    ui-whitespaces-toggle
+    ui-git-diff-enable
+    ui-lint-enable
+    ui-todos-enable
+    ui-trailing-spaces-enable
+    ui-whitespaces-enable
   }
 }
 
