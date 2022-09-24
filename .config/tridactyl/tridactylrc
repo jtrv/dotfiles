@@ -22,11 +22,12 @@ bind gh scrollto 0 x
 " Space to enter cmd
 bind ? fillcmdline find
 bind n findnext
+bind <A-n> findnext -1
 "
 bind <A-e> editor
 "
 " Open right click menu on links
-bind ;C composite hint_focus; !s xdotool key Menu
+bind ;c composite hint; !s xdotool key Menu
 "
 "
 " COMMANDS
@@ -34,7 +35,7 @@ bind ;C composite hint_focus; !s xdotool key Menu
 " Ret editor to kakoune
 set editorcmd alacritty --command kak
 "
-" Suspend / "discard" all tabs - handy for stretching out battery life
+" Suspend / "discard" all tabs - handy for stretching out battery life / memory
 command discardall jsb browser.tabs.query({}).then(ts => browser.tabs.discard(ts.map(t=>t.id)))
 "
 "
@@ -44,7 +45,7 @@ command discardall jsb browser.tabs.query({}).then(ts => browser.tabs.discard(ts
 set newtab about:blank
 "
 " Defaults to 300ms but I'd rather move fast and break things
-set hintdelay 100
+set hintdelay 50
 "
 " Theme
 colors midnight
