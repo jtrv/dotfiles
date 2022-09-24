@@ -106,31 +106,32 @@ function kakgrep
     for x in $argv
         set -a grepargs (echo $x | sed -e "s/'/''/g" -e "s/^/'/" -e "s/\$/'/")
     end
-    kak -e "grep $(string join -- " " $grepargs)"
+    kak -e "grep $(string join -- " " $grepargs); buffer-only; echo; info-buffers"
 end
 complete -c kakgrep -w rg
 alias kg 'kakgrep'
 
 # diff in kak
 function kakdiff
-  kak -e "diff $argv"
+  kak -e "diff $argv; buffer-only; echo; info-buffers"
 end
 alias kd 'kakdiff'
 
 function kifft
-  kak -e "difft $argv"
+  kak -e "difft $argv; buffer-only; echo; info-buffers"
 end
 alias kdt 'kifft'
 
 function kelta
-  kak -e "delta $argv"
+  kak -e "delta $argv; buffer-only; echo; info-buffers"
 end
 alias kda 'kelta'
 
-alias kr      'kak -e "mru-files-list"'
-alias kl      'kak -e "mru-files-session-load"'
+alias kr      'kak -e "mru-files-list; buffer-only; echo; info-buffers"'
+alias kl      'kak -e "mru-files-session-load; buffer-only; echo; info-buffers"'
 alias kf      'kamp-files'
 alias kgi     'kamp-grep'
+alias kgl     'kak -e "live-grep; buffer-only;echo "live-grep"; info-buffers"'
 
 alias k       'kamp edit'
 alias kval    'kamp get val'
