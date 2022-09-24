@@ -125,6 +125,11 @@ cork kakoune-state-save https://gitlab.com/Screwtapello/kakoune-state-save %{
   }
 }
 
+cork kak-live-grep https://git.sr.ht/~raiguard/kak-live-grep %{
+  set-face global LiveGrepMatch +u
+  map global grep l -docstring "live-grep" live-grep
+}
+
 cork sudo-write https://github.com/JacobTravers/sudo-write.kak %{
   alias global sw 'sudo-write'
   alias global swq 'sudo-write-quit'
