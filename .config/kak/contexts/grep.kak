@@ -4,6 +4,7 @@ hook global WinSetOption filetype=grep %{
   map buffer grep e -docstring "get context"     ':grep-expand <ret>'
   map buffer grep w -docstring "write changes"   ':grep-write <ret>'
   map buffer user e -docstring "get context"     ':grep-expand <ret>'
+  map buffer user l -docstring "live-grep"       ':live-grep <ret>'
   map buffer user w -docstring "write changes"   ':grep-write <ret>'
 }
 
