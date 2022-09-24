@@ -374,7 +374,7 @@ map global user l -docstring "lsp" %{:enter-user-mode lsp <ret>}
 map global user M -docstring "math"   ':math <ret>'
 
 cork kakoune-focus https://github.com/caksoylar/kakoune-focus %{
-  map global normal : -docstring "narrow"   ':focus-toggle <ret>'
+  map global user f -docstring "focus"   ':focus-toggle <ret>'
 }
 
 # Edit/extend/trim selections one by one
