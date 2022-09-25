@@ -1,5 +1,5 @@
 #!/bin/sh
 for file in "$@"; do
-  cp "$file" "$file.bak"
+  cp -r "$file" "$file.bak"
 done
 
