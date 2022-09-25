@@ -1,14 +1,17 @@
 #!/bin/sh
+WAREHOUSE="$XDG_CONFIG_HOME"/warehouse
 
 ARCH_PACKAGES=$(paru -Qqe)
 CARGO_PACKAGES=$(cargo install --list | rg -o '^(\w.+)\sv' -r '$1')
-FISH_PLUGINS=$(cat ~/.config/fish/fish_plugins)
-KAKOUNE_PLUGINS=$(rg -o '^cork.*(https.*?)("|\s|$)' -r '$1' <~/.config/kak/kakrc)
+FISH_PLUGINS=$(cat "$XDG_CONFIG_HOME"/fish/fish_plugins)
+KAKOUNE_PLUGINS=$(rg -o '^cork.*(https.*?)("|\s|$)' -r '$1' <"$XDG_CONFIG_HOME"/kak/kakrc)
+VOLTA_PACKAGES=$("$HOME"/.local/bin/volta_list_global.mjs | rg -o '(^\S+)\s')
 
-echo "$ARCH_PACKAGES" >~/.config/warehouse/arch
-echo "$CARGO_PACKAGES" >~/.config/warehouse/cargo
-echo "$FISH_PLUGINS" >~/.config/warehouse/fish
-echo "$KAKOUNE_PLUGINS" >~/.config/warehouse/kakoune
+echo "$ARCH_PACKAGES" >"$WAREHOUSE"/arch
+echo "$CARGO_PACKAGES" >"$WAREHOUSE"/cargo
+echo "$FISH_PLUGINS" >"$WAREHOUSE"/fish
+echo "$KAKOUNE_PLUGINS" >"$WAREHOUSE"/kakoune
+echo "$VOLTA_PACKAGES" >"$WAREHOUSE"/volta
 
 ARCH_PACKAGE_LINKS=$(
 	for package in $ARCH_PACKAGES; do
@@ -32,6 +35,10 @@ KAKOUNE_PLUGIN_LINKS=$(
 		name=$(echo "$repo" | rg -o '.*/(.*?)$' -r '$1')
 		echo " - [$name]($repo)"
 	done | sort
+)
+VOLTA_PACKAGE_LINKS=$(
+  echo "$VOLTA_PACKAGES" | \
+  rg -o '(^\S+)' -r '- [$1](https://www.npmjs.com/package/$1)'
 )
 
 echo "
@@ -57,7 +64,10 @@ My kakoune config is almost entirely in [kakrc](https://github.com/JacobTravers/
 
 # Warehouse
 
-This is a record of all the packages I keep on my machine, the main lists sit in [warehouse](https://github.com/JacobTravers/.cfg/blob/morpheus/.config/warehouse) so I can easily reinstall my packages using \`paru -S (cat ~/.config/warehouse/arch)\` etc. It has since grown into a part of the [config-doc](https://github.com/JacobTravers/.cfg/tree/morpheus/.local/bin/config-doc) script so you can view the packages with links in this README.
+This is a record of all the packages I keep on my machine, the main lists sit in [warehouse](https://github.com/JacobTravers/.cfg/blob/morpheus/.config/warehouse) so I can easily reinstall my packages using \`paru -S (cat \"$XDG_CONFIG_HOME\"/warehouse/arch)\` etc. It has since grown into a part of the [config-doc](https://github.com/JacobTravers/.cfg/tree/morpheus/.local/bin/config-doc) script so you can view the packages with links in this README.
+
+### Cargo
+$CARGO_PACKAGE_LINKS
 
 ### Fish
 $FISH_PLUGIN_LINKS
@@ -65,11 +75,11 @@ $FISH_PLUGIN_LINKS
 ### Kakoune
 $KAKOUNE_PLUGIN_LINKS
 
-### Cargo
-$CARGO_PACKAGE_LINKS
+### Volta
+$VOLTA_PACKAGE_LINKS
 
 ### Arch
 $ARCH_PACKAGE_LINKS
 " >~/README.md
 
-git --git-dir="$HOME/.cfg/" --work-tree="$HOME" diff ~/.config/warehouse/*
+git --git-dir="$HOME/.cfg/" --work-tree="$HOME" diff "$XDG_CONFIG_HOME"/warehouse/*
