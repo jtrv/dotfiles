@@ -1,0 +1,14 @@
+@fsouza/prettierd 
+commitlint 
+cross-env 
+gatsby 
+prettier 
+purgecss 
+run-pty 
+sass 
+stylelint_d 
+typescript 
+typescript-language-server 
+vscode-css-languageserver-bin 
+vscode-html-languageserver-bin 
+vscode-json-languageserver-bin 
