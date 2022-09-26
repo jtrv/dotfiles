@@ -8,6 +8,7 @@ arch-wiki-docs
 arch-wiki-docs-search
 asciinema
 aspell-en
+atuin
 autoconf
 automake
 avahi
@@ -27,11 +28,11 @@ calibre
 cargo-geiger
 cargo-udeps
 cargo-update
-ccache
 checkbashisms
 choose
 clipmenu
 cmake
+cork.kak-git
 croc
 cronie
 ctags
@@ -54,9 +55,14 @@ fclones-bin
 fcp-bin
 fd
 feh
+firefox-dark-reader
+firefox-decentraleyes
 firefox-developer-edition
 firefox-developer-edition-firefox-symlink-latest
+firefox-tree-style-tab
+firefox-tridactyl
 firefox-tridactyl-native
+firefox-ublock-origin
 fisher
 flameshot
 flex
@@ -95,6 +101,7 @@ kalker
 kondo-bin
 lazygit
 lf
+libqalculate
 libtool
 linux-firmware
 linux-headers
