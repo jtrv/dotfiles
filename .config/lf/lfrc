@@ -112,6 +112,10 @@ cmd rename-blank ${{
 	lf -remote "send $id push :rename<space>"
 }}
 
+cmd set-wallpaper ${{
+	feh --no-fehbg --bg-scale $f
+}}
+
 cmd bak $IFS="`printf '\n\t'`"; bak $fx
 cmd touch-edit $IFS=" "; kamp edit "$*"; lf -remote "send $id select \"$*\""
 cmd drag $IFS="`printf '\n\t'`"; drag $fx &
@@ -184,3 +188,4 @@ map T     push :touch-edit<space> # edit new file in kakoune
 map x     $$f                     # execute current file (must be executable)
 map X     !$f                     # execute current file (must be executable)
 map Y     :yank-path              # copy path
+map w     :set-wallpaper          # set wallpaper to current file
