@@ -306,7 +306,7 @@ map global normal +     -docstring "new popup"      ':connect popup <ret>'
 
 # Pickers
 map global normal B     -docstring "buffer picker"   ': connect terminal kamp-buffers<ret>'
-map global normal <c-k> -docstring "file picker"     ': connect terminal kamp-files<ret>'
+map global normal <c-p> -docstring "file picker"     ': connect terminal kamp-files<ret>'
 map global normal <c-g> -docstring "grep picker"     ': connect terminal kamp-grep<ret>'
 
 # External Programs
