@@ -1,16 +1,9 @@
-hook global BufSetOption filetype=html %{
-  set-option buffer formatcmd "prettierd %val{buffile}"
-
-  define-command emmet -override %{ execute-keys "giGl| emmet <ret>" }
-  define-command minify -override %{ execute-keys "<percent>| minify-html --minify-css --minify-js <ret><percent>" }
-
-  map buffer dev e -docstring "emmet" ':emmet <ret>'
-  map buffer dev m -docstring "minify" ':minify <ret>'
+hook global BufSetOption filetype=python %{
+  set-option buffer formatcmd 'black -'
 }
 
-hook global WinSetOption filetype=html %{
-  set-option window lintcmd "tidy -e --gnu-emacs yes --quiet yes 2>&1"
-  lint
+hook global WinSetOption filetype=python %{
+  set-option window lintcmd %{ run() { pylint --msg-template='{path}:{line}:{column}: {category}: {msg_id}: {msg} ({symbol})' "$1" | awk -F: 'BEGIN { OFS=":" } { if (NF == 6) { $3 += 1; print } }'; } && run }
 
 ###### LSP ######
   set-option window lsp_auto_highlight_references true
@@ -24,5 +17,6 @@ hook global WinSetOption filetype=html %{
 
   map global object a     -docstring 'LSP any symbol'                    '<a-semicolon>lsp-object<ret>'
   map global object e     -docstring 'LSP function or method'            '<a-semicolon>lsp-object Function Method<ret>'
+  map global object k     -docstring 'LSP class interface or struct'     '<a-semicolon>lsp-object Class Interface Struct<ret>'
   map global insert <tab> -docstring 'Select next snippet placeholder'   '<a-;>:try lsp-snippets-select-next-placeholders catch %{ execute-keys -with-hooks <lt>tab> }<ret>'
 }
