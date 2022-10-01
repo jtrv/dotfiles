@@ -1,11 +1,8 @@
-hook global BufSetOption filetype=html %{
-  set-option buffer formatcmd "prettierd %val{buffile}"
+hook global BufSetOption filetype=rust %{
+  set-option buffer formatcmd 'rustfmt'
 }
 
-hook global WinSetOption filetype=html %{
-  set-option window lintcmd "tidy -e --gnu-emacs yes --quiet yes 2>&1"
-  lint
-
+hook global WinSetOption filetype=rust %{
 ###### LSP ######
   set-option window lsp_auto_highlight_references true
   set-option window lsp_hover_anchor true
@@ -18,5 +15,6 @@ hook global WinSetOption filetype=html %{
 
   map global object a     -docstring 'LSP any symbol'                    '<a-semicolon>lsp-object<ret>'
   map global object e     -docstring 'LSP function or method'            '<a-semicolon>lsp-object Function Method<ret>'
+  map global object k     -docstring 'LSP class interface or struct'     '<a-semicolon>lsp-object Class Interface Struct<ret>'
   map global insert <tab> -docstring 'Select next snippet placeholder'   '<a-;>:try lsp-snippets-select-next-placeholders catch %{ execute-keys -with-hooks <lt>tab> }<ret>'
 }
