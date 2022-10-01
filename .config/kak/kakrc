@@ -336,7 +336,6 @@ cork kakoune-cd https://github.com/delapouite/kakoune-cd %{
 }
 
 cork case https://gitlab.com/FlyingWombat/case.kak %{
-  declare-user-mode case
   map global user C -docstring "case"   ': enter-user-mode case<ret>'
   map global case u '~' -docstring "upper"
   map global case l '`' -docstring "lower"
