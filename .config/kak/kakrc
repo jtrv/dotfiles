@@ -98,14 +98,14 @@ cork kakoune-repl-buffer https://gitlab.com/Screwtapello/kakoune-repl-buffer
 
 cork kakoune-state-save https://gitlab.com/Screwtapello/kakoune-state-save %{
   hook global KakBegin .* %{
-      state-save-reg-load colon
-      state-save-reg-load pipe
-      state-save-reg-load slash
+    state-save-reg-load colon
+    state-save-reg-load pipe
+    state-save-reg-load slash
   }
   hook global KakEnd .* %{
-      state-save-reg-save colon
-      state-save-reg-save pipe
-      state-save-reg-save slash
+    state-save-reg-save colon
+    state-save-reg-save pipe
+    state-save-reg-save slash
   }
 }
 
@@ -372,6 +372,9 @@ declare-user-mode grep
   map global grep j -docstring "next match"   ':grep-next-match <ret>'
   map global grep k -docstring "prev match"   ':grep-previous-match <ret>'
   map global grep l -docstring "live-grep"    ':live-grep <ret>'
+
+map global user k -docstring "klip off"   ':kakboard-disable; kakboard-disable <ret>'
+map global user K -docstring "klip on"    ':kakboard-enable <ret>'
 
 map global user l -docstring "lsp" %{:enter-user-mode lsp <ret>}
   map global lsp <minus> -docstring "disable"   ':lsp-disable-window <ret>'
