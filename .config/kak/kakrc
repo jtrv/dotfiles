@@ -27,29 +27,10 @@ cork kak-rainbower https://github.com/JacobTravers/kak-rainbower %{
 
 # LSP Magic
 cork kak-lsp https://github.com/kak-lsp/kak-lsp %{
+  define-command lsp-restart -docstring 'restart lsp server' %{ lsp-stop; lsp-start }
   set global lsp_diagnostic_line_error_sign '║'
   set global lsp_diagnostic_line_warning_sign '┊'
   set global lsp_hover_max_lines 40
-  define-command lsp-restart -docstring 'restart lsp server' %{ lsp-stop; lsp-start }
-  hook global WinSetOption filetype=(css|html|javascript|json|go|python|rust|scss|sql|yaml) %{
-    set-option window lsp_auto_highlight_references true
-    set-option window lsp_hover_anchor true
-    lsp-auto-hover-enable
-    lsp-auto-hover-insert-mode-enable
-    lsp-inlay-diagnostics-enable window
-    echo -debug "Enabling LSP for filtetype %opt{filetype}"
-    lsp-enable-window
-
-    map global insert <tab> '<a-;>:try lsp-snippets-select-next-placeholders catch %{ execute-keys -with-hooks <lt>tab> }<ret>' -docstring 'Select next snippet placeholder'
-    map global object a '<a-semicolon>lsp-object<ret>' -docstring 'LSP any symbol'
-    map global object <a-a> '<a-semicolon>lsp-object<ret>' -docstring 'LSP any symbol'
-    map global object e '<a-semicolon>lsp-object Function Method<ret>' -docstring 'LSP function or method'
-    map global object k '<a-semicolon>lsp-object Class Interface Struct<ret>' -docstring 'LSP class interface or struct'
-    map global insert <tab> '<a-;>:try lsp-snippets-select-next-placeholders catch %{ execute-keys -with-hooks <lt>tab> }<ret>' -docstring 'Select next snippet placeholder'
-  }
-  hook global WinSetOption filetype=(javascript|json|go|python|rust|sql) %{
-    lsp-inlay-hints-enable window
-  }
   hook global KakEnd .* lsp-exit
 }
 
@@ -81,11 +62,14 @@ source "~/.config/kak/contexts/commit.kak"
 source "~/.config/kak/contexts/css.kak"
 source "~/.config/kak/contexts/diff.kak"
 source "~/.config/kak/contexts/fish.kak"
+source "~/.config/kak/contexts/go.kak"
 source "~/.config/kak/contexts/grep.kak"
 source "~/.config/kak/contexts/html.kak"
 source "~/.config/kak/contexts/javascript.kak"
 source "~/.config/kak/contexts/json.kak"
 source "~/.config/kak/contexts/markdown.kak"
+source "~/.config/kak/contexts/python.kak"
+source "~/.config/kak/contexts/rust.kak"
 source "~/.config/kak/contexts/sh.kak"
 
 ###################### UTILITY ######################
