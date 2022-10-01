@@ -111,7 +111,6 @@ cork kakoune-state-save https://gitlab.com/Screwtapello/kakoune-state-save %{
 
 cork kak-live-grep https://git.sr.ht/~raiguard/kak-live-grep %{
   set-face global LiveGrepMatch +u
-  map global grep l -docstring "live-grep" live-grep
 }
 
 cork sudo-write https://github.com/JacobTravers/sudo-write.kak %{
@@ -368,13 +367,11 @@ cork kakoune-easymotion https://github.com/danr/kakoune-easymotion %{
 }
 
 declare-user-mode grep
-  map global user g -docstring "grep"            ':enter-user-mode grep <ret>'
-  map global grep g -docstring "grep"            ':grep '
-  map global grep j -docstring "next match"      ':grep-next-match <ret>'
-  map global grep k -docstring "prev match"      ':grep-previous-match <ret>'
-
-map global user   k     -docstring "klip off"     ':kakboard-disable; kakboard-disable <ret>'
-map global user   K     -docstring "klip on"      ':kakboard-enable <ret>'
+  map global user g -docstring "grep"         ':enter-user-mode grep <ret>'
+  map global grep g -docstring "grep"         ':grep '
+  map global grep j -docstring "next match"   ':grep-next-match <ret>'
+  map global grep k -docstring "prev match"   ':grep-previous-match <ret>'
+  map global grep l -docstring "live-grep"    ':live-grep <ret>'
 
 map global user l -docstring "lsp" %{:enter-user-mode lsp <ret>}
   map global lsp <minus> -docstring "disable"   ':lsp-disable-window <ret>'
