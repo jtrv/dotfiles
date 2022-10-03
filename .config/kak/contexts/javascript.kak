@@ -23,8 +23,8 @@ hook global WinSetOption filetype=javascript %{
   echo -debug "Enabling LSP for filtetype %opt{filetype}"
   lsp-enable-window
 
-  map global object a     -docstring 'LSP any symbol'                    '<a-semicolon>lsp-object<ret>'
-  map global object e     -docstring 'LSP function or method'            '<a-semicolon>lsp-object Function Method<ret>'
-  map global object k     -docstring 'LSP class interface or struct'     '<a-semicolon>lsp-object Class Interface Struct<ret>'
-  map global insert <tab> -docstring 'Select next snippet placeholder'   '<a-;>:try lsp-snippets-select-next-placeholders catch %{ execute-keys -with-hooks <lt>tab> }<ret>'
+  map window object a     -docstring 'LSP any symbol'                    '<a-semicolon>lsp-object<ret>'
+  map window object e     -docstring 'LSP function or method'            '<a-semicolon>lsp-object Function Method<ret>'
+  map window object k     -docstring 'LSP class interface or struct'     '<a-semicolon>lsp-object Class Interface Struct<ret>'
+  map window insert <tab> -docstring 'Select next snippet placeholder'   '<a-;>:try lsp-snippets-select-next-placeholders catch %{ execute-keys -with-hooks <lt>tab> }<ret>'
 }
