@@ -1,10 +1,10 @@
 hook global BufSetOption filetype=html %{
   set-option buffer formatcmd "prettierd %val{buffile}"
 
-  define-command emmet -override %{ execute-keys "giGl| emmet <ret>" }
+  define-command emmet -override %{ execute-keys  "giGl| emmet <ret>" }
   define-command minify -override %{ execute-keys "<percent>| minify-html --minify-css --minify-js <ret><percent>" }
 
-  map buffer dev e -docstring "emmet" ':emmet <ret>'
+  map buffer dev e -docstring "emmet"  ':emmet <ret>'
   map buffer dev m -docstring "minify" ':minify <ret>'
 }
 
@@ -22,7 +22,7 @@ hook global WinSetOption filetype=html %{
   echo -debug "Enabling LSP for filtetype %opt{filetype}"
   lsp-enable-window
 
-  map global object a     -docstring 'LSP any symbol'                    '<a-semicolon>lsp-object<ret>'
-  map global object e     -docstring 'LSP function or method'            '<a-semicolon>lsp-object Function Method<ret>'
-  map global insert <tab> -docstring 'Select next snippet placeholder'   '<a-;>:try lsp-snippets-select-next-placeholders catch %{ execute-keys -with-hooks <lt>tab> }<ret>'
+  map window object a     -docstring 'LSP any symbol'                    '<a-semicolon>lsp-object<ret>'
+  map window object e     -docstring 'LSP function or method'            '<a-semicolon>lsp-object Function Method<ret>'
+  map window insert <tab> -docstring 'Select next snippet placeholder'   '<a-;>:try lsp-snippets-select-next-placeholders catch %{ execute-keys -with-hooks <lt>tab> }<ret>'
 }

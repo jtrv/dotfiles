@@ -16,5 +16,5 @@ hook global WinSetOption filetype=json %{
   echo -debug "Enabling LSP for filtetype %opt{filetype}"
   lsp-enable-window
 
-  map global object a     -docstring 'LSP any symbol'                    '<a-semicolon>lsp-object<ret>'
+  map window object a     -docstring 'LSP any symbol'                    '<a-semicolon>lsp-object<ret>'
 }
