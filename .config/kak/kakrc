@@ -201,6 +201,24 @@ define-command how -docstring "print an answer for the query from stackoverflow 
   kakpipe -n how -- hors -a -n 2 -p never %arg{@};
 }
 
+define-command kan -docstring "helper for man" -params 0.. %{
+  evaluate-commands %sh{
+    if [ $# -eq 0 ]; then
+      if man -w "$kak_selection" > /dev/null; then
+        echo "man $kak_selection"
+      elif "$kak_selection" --help > /dev/null || "$kak_selection" -h > /dev/null; then
+        echo "helpp $kak_selection"
+      fi
+    else
+      if man -w "$1" > /dev/null; then
+        echo "man $1"
+      elif "$1" --help > /dev/null || "$1" -h > /dev/null; then
+        echo "helpp $1"
+      fi
+    fi
+  }
+}
+
 define-command math -docstring 'do the maths' %{
   prompt math: %{
     execute-keys-with-register 'a<c-r>"<esc>|bc <ret>' %val{text}
