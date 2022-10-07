@@ -186,7 +186,7 @@ define-command execute-keys-with-register -params 2 -docstring 'execute keys wit
   }
 }
 
-define-command helpp -docstring "print the --help output for the given command" -shell-completion -params 0.. %{
+define-command kelp -docstring "print the --help output for the given command" -shell-completion -params 0.. %{
   evaluate-commands %sh{
     if [ $# -eq 0 ] && "$kak_selection" --help > /dev/null; then
       echo "kakpipe -n help -- \"$kak_selection\" --help"
@@ -209,11 +209,11 @@ define-command kan -docstring "helper for man" -params 0.. %{
     if [ $# -eq 0 ] && man -w "$kak_selection" > /dev/null; then
       echo "man \"$kak_selection\""
     elif [ $# -eq 0 ] && $("$kak_selection" --help > /dev/null || "$kak_selection" -h > /dev/null); then
-      echo "helpp \"$kak_selection\""
+      echo "kelp \"$kak_selection\""
     elif man -w "$*" > /dev/null; then
       echo "man \"$*\""
     elif "$*" --help > /dev/null || "$*" -h > /dev/null; then
-      echo "helpp \"$*\""
+      echo "kelp \"$*\""
     fi
   }
 }
