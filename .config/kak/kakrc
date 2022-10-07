@@ -187,12 +187,15 @@ define-command execute-keys-with-register -params 2 -docstring 'execute keys wit
 }
 
 define-command helpp -docstring "print the --help output for the given command" -shell-completion -params 0.. %{
-  kakpipe -n help -- %arg{@} --help;
   evaluate-commands %sh{
-    if [ $# -eq 0 ]; then
-      echo "kakpipe -n help -- %val{selection} --help"
-    else
-      echo "kakpipe -n help -- %arg{@} --help"
+    if [ $# -eq 0 ] && "$kak_selection" --help > /dev/null; then
+      echo "kakpipe -n help -- \"$kak_selection\" --help"
+    elif [ $# -eq 0 ] && "$kak_selection" -h > /dev/null; then
+      echo "kakpipe -n help -- \"$kak_selection\" -h"
+    elif "$*" --help > /dev/null; then
+      echo "kakpipe -n help -- \"$*\" --help"
+    elif "$*" -h > /dev/null; then
+      echo "kakpipe -n help -- \"$*\" -h"
     fi
   }
 }
@@ -203,18 +206,14 @@ define-command how -docstring "print an answer for the query from stackoverflow 
 
 define-command kan -docstring "helper for man" -params 0.. %{
   evaluate-commands %sh{
-    if [ $# -eq 0 ]; then
-      if man -w "$kak_selection" > /dev/null; then
-        echo "man $kak_selection"
-      elif "$kak_selection" --help > /dev/null || "$kak_selection" -h > /dev/null; then
-        echo "helpp $kak_selection"
-      fi
-    else
-      if man -w "$1" > /dev/null; then
-        echo "man $1"
-      elif "$1" --help > /dev/null || "$1" -h > /dev/null; then
-        echo "helpp $1"
-      fi
+    if [ $# -eq 0 ] && man -w "$kak_selection" > /dev/null; then
+      echo "man \"$kak_selection\""
+    elif [ $# -eq 0 ] && $("$kak_selection" --help > /dev/null || "$kak_selection" -h > /dev/null); then
+      echo "helpp \"$kak_selection\""
+    elif man -w "$*" > /dev/null; then
+      echo "man \"$*\""
+    elif "$*" --help > /dev/null || "$*" -h > /dev/null; then
+      echo "helpp \"$*\""
     fi
   }
 }
