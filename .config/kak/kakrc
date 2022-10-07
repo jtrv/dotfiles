@@ -94,8 +94,6 @@ cork kakboard https://github.com/lePerdu/kakboard %{ hook global WinCreate .* %{
 
 cork kakoune-auto-percent https://github.com/delapouite/kakoune-auto-percent
 
-cork kakoune-repl-buffer https://gitlab.com/Screwtapello/kakoune-repl-buffer
-
 cork kakoune-state-save https://gitlab.com/Screwtapello/kakoune-state-save %{
   hook global KakBegin .* %{
     state-save-reg-load colon
@@ -370,19 +368,6 @@ cork case https://gitlab.com/FlyingWombat/case.kak %{
 
 map global user d -docstring "dev"  ':enter-user-mode dev <ret>'
 
-cork kakoune-easymotion https://github.com/danr/kakoune-easymotion %{
-  declare-user-mode e-motion
-  map global user e -docstring "e-motion" ':enter-user-mode e-motion <ret>'
-    map global e-motion e -docstring "→ word"   ':easy-motion-w <ret>'
-    map global e-motion E -docstring "→ WORD"   ':easy-motion-W <ret>'
-    map global e-motion f -docstring "→ char"   ':easy-motion-f <ret>'
-    map global e-motion b -docstring "← char"   ':easy-motion-alt-f <ret>'
-    map global e-motion j -docstring "↓ line"   ':easy-motion-j <ret>'
-    map global e-motion k -docstring "↑ line"   ':easy-motion-k <ret>'
-    map global e-motion w -docstring "← word"   ':easy-motion-b <ret>'
-    map global e-motion W -docstring "← WORD"   ':easy-motion-B <ret>'
-}
-
 declare-user-mode grep
   map global user g -docstring "grep"         ':enter-user-mode grep <ret>'
   map global grep g -docstring "grep"         ':grep '
@@ -425,18 +410,6 @@ cork kakoune-surround https://github.com/h-youhei/kakoune-surround
   map global surround I -docstring "surround with tag"   ':surround-with-tag <ret>'
   map global surround R -docstring "replace tag"         ':change-surrounding-tag <ret>'
   map global surround S -docstring "select tag"          ':select-surrounding-tag <ret>'
-
-cork mru-files https://gitlab.com/kstr0k/mru-files.kak %{
-  require-module kakhist
-  kakhist-init
-  map global normal <c-r> -docstring "recent files" ':mru-files <ret>'
-  declare-user-mode recent
-  map global user r -docstring "recent" ':enter-user-mode recent<ret>'
-  map global recent f -docstring "files"           ':mru-files <ret>'
-  map global recent r -docstring "related files"   ':mru-files-related <ret>'
-  map global recent l -docstring "load session"    ':mru-files-session-load <ret>'
-  map global recent s -docstring "save session"    ':mru-files-session-save <ret>'
-}
 
 # Spelling and grammar checking
 declare-user-mode spell
