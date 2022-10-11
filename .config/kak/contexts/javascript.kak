@@ -10,7 +10,7 @@ hook global BufSetOption filetype=javascript %{
 }
 
 hook global WinSetOption filetype=javascript %{
-  set-option window lintcmd 'run() { cat "$1" | eslint_d -c ~/.config/.eslintrc.js -f unix --stdin --stdin-filename "$kak_buffile";} && run '
+  set-option window lintcmd 'run() { cat "$1" | eslint_d -c ~/.config/.js.eslintrc.js -f unix --stdin --stdin-filename "$kak_buffile";} && run '
   lint
 
 ###### LSP ######
