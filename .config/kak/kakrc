@@ -71,6 +71,7 @@ source "~/.config/kak/contexts/markdown.kak"
 source "~/.config/kak/contexts/python.kak"
 source "~/.config/kak/contexts/rust.kak"
 source "~/.config/kak/contexts/sh.kak"
+source "~/.config/kak/contexts/typescript.kak"
 
 ###################### UTILITY ######################
 
@@ -93,6 +94,8 @@ cork grep-expand https://github.com/JacobTravers/grep-expand.kak
 cork kakboard https://github.com/lePerdu/kakboard %{ hook global WinCreate .* %{ kakboard-enable } }
 
 cork kakoune-auto-percent https://github.com/delapouite/kakoune-auto-percent
+
+cork kakoune-snippets https://github.com/occivink/kakoune-snippets
 
 cork kakoune-state-save https://gitlab.com/Screwtapello/kakoune-state-save %{
   hook global KakBegin .* %{
