@@ -69,6 +69,7 @@ alias awman   'wiki-docs-search'
 complete -c wiki-docs-search -a '(fd html "/usr/share/doc/arch-wiki/html/en/" | rg -o \'/(\w*).html$\' -r \'$1\')'
 alias bls     '/bin/ls' # for piping
 alias cat     'bat'
+alias cdr     'cd (git rev-parse --show-toplevel)'
 alias doas    'doas --'
 alias glow    'glow -p'
 alias j       '~/.config/lf/wrapper'
