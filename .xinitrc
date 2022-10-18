@@ -29,13 +29,10 @@ fi
 
 xrandr --output virtual-1 --mode 1920x1080
 
-clipmenud &                          # clipboard history daemon
-dunst &                              # notifications
 easyeffects --gapplication-service & # autoEQ service
-ntpd start &                         # time-sync
 pcmanfm --daemon-mode &              # file-manager daemon
 picom -f &                           # allow for opacities
-redshift -l 34:-119 -b 1.0:0.6 &     # bluelight filter
+redshift &                           # bluelight filter
 udiskie -An --terminal=lf &          # notif for mountable drives
 ~/.local/bin/map-keys &              # map caps to ctrl/esc
 ~/.local/bin/rclone-init &           # start rclone daemons
