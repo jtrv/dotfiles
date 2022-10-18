@@ -28,13 +28,6 @@ module.exports = {
           "object",
           "type",
         ],
-        pathGroups: [
-          {
-            pattern: "@/**/**",
-            group: "parent",
-            position: "before",
-          },
-        ],
         alphabetize: { order: "asc" },
       },
     ],
