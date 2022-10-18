@@ -135,6 +135,7 @@ map m
 map r
 
 # goto shortcuts
+map gb cd ~/.local/bin/
 map gc cd ~/.config/
 map gd cd ~/downloads/
 map gD cd ~/mxs/drive/Manufacturers\ &\ Clients/
@@ -143,12 +144,12 @@ map gg cd ~/games/
 map gm cd ~/media/pictures/memes/
 map gM cd /run/media/sugimoto/
 map gn cd ~/notes/
-map gP cd ~/mxs/projects/
 map gp cd ~/media/pictures/
+map gP cd ~/mxs/projects/
 map gs cd ~/media/pictures/screenshots/
 map gt cd ~/tmp/
-map gw cd ~/work/
 map gW cd ~/media/pictures/wallpapers/
+map gw cd ~/work/
 
 # kakoune-like bindings
 map A rename                      # at the very end
