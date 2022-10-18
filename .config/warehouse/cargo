@@ -1,4 +1,5 @@
 cl-wordle
+fls
 gobang
 hashgood
 iching
@@ -8,4 +9,3 @@ kampliment
 mdn
 pipe-rename
 sd
-wordle-suggest
