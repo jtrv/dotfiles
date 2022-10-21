@@ -67,7 +67,6 @@ end
 alias ani     'ani-cli -q high' # watch anime in super ultra HD 8k lossless greenray
 alias awman   'wiki-docs-search'
 complete -c wiki-docs-search -a '(fd html "/usr/share/doc/arch-wiki/html/en/" | rg -o \'/(\w*).html$\' -r \'$1\')'
-alias bls     '/bin/ls' # for piping
 alias cat     'bat'
 alias cdr     'cd (git rev-parse --show-toplevel)'
 alias doas    'doas --'
@@ -75,12 +74,13 @@ alias glow    'glow -p'
 alias j       '~/.config/lf/wrapper'
 alias kish    'k ~/.config/fish/config.fish'
 alias konf    'k ~/.config/kak/kakrc'
-alias la      'exa -al --color=always --group-directories-first --git --icons' # all files and dirs
+alias la      'fls -al --color=always' # all files and dirs
 alias lc      'lazygit --git-dir=$HOME/.cfg/ --work-tree=$HOME' # lazygit for config files
 alias lg      'lazygit'
-alias lh      'exa -al --color=always --group-directories-first --git --icons --ignore-glob="[a-z]*|[A-Z]*|[0-9]*"' # hidden
-alias ll      'exa -l --color=always --group-directories-first --git --icons' # long format
-alias ls      'exa -l --color=always --group-directories-first --git --icons' # preferred listing
+alias lh      'exa -la --color=always --ignore-glob="[a-z]*|[A-Z]*|[0-9]*"' # hidden only
+alias ll      'fls -l --color=always' # long format
+alias ls      'fls -l --color=always' # preferred listing
+alias lsn     'fls' # normal ls for piping
 alias lt      'exa -aT --color=always --group-directories-first --git --icons' # tree listing
 alias loc     'plocate'
 alias m       'math'
