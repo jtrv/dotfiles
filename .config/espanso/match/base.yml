@@ -1,0 +1,220 @@
+matches:
+
+
+# ENGLISH PROGRAMMING LANGUAGE
+
+
+  - trigger: ",,idk"
+    replace: "I don't know"
+
+  - trigger: ",,ijrn"
+    replace: "I'll join right now,"
+
+  - trigger: ",,insb"
+    replace: "I'm not sure, but I can find out"
+
+  - trigger: ",,lmc"
+    replace: "Let me check..."
+
+  - trigger: ",,np"
+    replace: "No problem"
+
+  - trigger: ",,tia"
+    replace: "Thanks, I appreciate it"
+
+  - trigger: ",,ty"
+    replace: "Thank you"
+
+  - trigger: ",,yw"
+    replace: "You're welcome"
+
+
+
+# HTML
+
+
+  - trigger: ",,hdoc"
+    replace: >-
+      <!DOCTYPE html>
+
+  - trigger: ",,hchar"
+    replace: >-
+      <meta charset="UTF-8">
+
+  - trigger: ",,hview"
+    replace: >-
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  - trigger: ",,hauth"
+    replace: >-
+      <meta name="author" content="$|$">
+
+  - trigger: ",,hdesc"
+    replace: >-
+      <meta name="description" content="$|$">
+
+  - trigger: ",,hkey"
+    replace: >-
+      <meta name="keywords" content="$|$">
+
+  - trigger: ",,htit"
+    replace: >-
+      <title>$|$</title>
+
+  - trigger: ",,hdi"
+    replace: >-
+      <div>$|$</div>
+
+  - trigger: ",,html"
+    replace: >-
+      <html>$|$</html>
+
+  - trigger: ",,hhe"
+    replace: >-
+      <head>$|$</head>
+
+  - trigger: ",,hbo"
+    replace: >-
+      <body>$|$</body>
+
+  - trigger: ",,hat"
+    replace: >-
+      <a href="">$|$</a>
+
+  - trigger: ",,hbtn"
+    replace: >-
+      <button type="button">$|$</button>
+
+  - trigger: ",,hstyle"
+    replace: >-
+      <style>$|$</style>
+
+  - trigger: ",,hstlink"
+    replace: >-
+      <link rel="stylesheet" type="text/css" href="$|$">
+
+  - trigger: ",,hscript"
+    replace: >-
+      <script>$|$</script>
+
+  - trigger: ",,hsclink"
+    replace: >-
+      <script type="text/javascript" src="$|$"></script>
+
+  - trigger: ",,hform"
+    replace: >-
+      <form action="" method="">$|$</form>
+
+  - trigger: ",,hlab"
+    replace: >-
+      <label for="">$|$</label>
+
+  - trigger: ",,hsub"
+    replace: >-
+      <input type="submit" value="$|$">
+
+  - trigger: ",,hintex"
+    replace: >-
+      <input type="text" name="" id="">
+
+  - trigger: ",,hinpw"
+    replace: >-
+      <input type="password" name="" id="">
+
+  - trigger: ",,hinr"
+    replace: >-
+      <input type="radio" name="" id="" value="">
+
+  - trigger: ",,hinch"
+    replace: >-
+      <input type="checkbox" name="" id="" value="">
+
+  - trigger: ",,hinfi"
+    replace: >-
+      <input type="file" name="" id="">
+
+
+# JAVASCRIPT
+
+
+  - trigger: ",,jsfn"
+    replace: >-
+      function $|$() { }
+
+  - trigger: ",,jsaf"
+    replace: >-
+      const $|$ = () => 
+
+  - trigger: ",,jswl"
+    replace: >-
+      while ($|$){ }
+
+  - trigger: ",,jsfu"
+    replace: >-
+      for (let i = 0; i < $|$.length; i++){ }
+
+  - trigger: ",,jsfd"
+    replace: >-
+      for (let i = 0; i >= 0; i--){ }
+
+  - trigger: ",,jsfi"
+    replace: >-
+      for (let $|$ in ){ }
+
+  - trigger: ",,jsfo"
+    replace: >-
+      for (let $|$ of ){ }
+
+  - trigger: ",,jscl"
+    replace: >-
+      console.log($|$)
+
+  - trigger: ",,jsce"
+    replace: >-
+      console.error($|$)
+
+  - trigger: ",,jscatch"
+    replace: >-
+      .catch((err) => console.error(err))
+
+  - trigger: ",,jsgetid"
+    replace: >-
+      document.getElementById("$|$")
+
+  - trigger: ",,jsqs"
+    replace: >-
+      document.querySelectorAll("$|$")
+
+  - trigger: ",,jsfr"
+    replace: >-
+      document.createDocumentFragment("$|$")
+
+  - trigger: ",,jstr"
+    replace: >-
+      JSON.stringify("$|$")
+
+  - trigger: ",,jspe"
+    replace: >-
+      process.exit("$|$")
+
+
+# DYNAMIC / SHELL
+
+
+  # Print the current date
+  - trigger: ",,date"
+    replace: "{{mydate}}"
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%m/%d/%Y"
+
+  # Print the output of a shell command
+  - trigger: ",,shell"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "echo 'Hello from your shell'"
