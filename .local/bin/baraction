@@ -115,7 +115,7 @@ vol() {
   if [ "$mute" = "no" ]; then
     icon=""
   fi
-  echo " $icon $vol%"
+  echo "$icon $vol%"
 }
 ##############################
 #    PACKAGES
