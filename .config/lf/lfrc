@@ -138,7 +138,7 @@ map r
 map gb cd ~/.local/bin/
 map gc cd ~/.config/
 map gd cd ~/downloads/
-map gD cd ~/mxs/drive/Manufacturers\ &\ Clients/
+map gD cd ~/mxs/drive/
 map gF cd ~/mxs/ftp/
 map gg cd ~/games/
 map gm cd ~/media/pictures/memes/
@@ -148,6 +148,7 @@ map gp cd ~/media/pictures/
 map gr cd ~/repos/
 map gR cd ~/mxs/repos/
 map gs cd ~/media/pictures/screenshots/
+map gS cd ~/repos/study/
 map gt cd ~/tmp/
 map gW cd ~/media/pictures/wallpapers/
 map gw cd ~/work/
