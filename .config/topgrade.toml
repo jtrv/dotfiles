@@ -41,8 +41,8 @@ max_concurrency = 5
 # Additional git repositories to pull
 repos = [
     "~/.local/share/kak/cork/plugins/*/repo",
-    "~/mxs/projects/*",
-    "~/projects/*"
+    "~/mxs/repos/*",
+    "~/repos/*"
 ]
 
 # Don't pull the predefined git repos
