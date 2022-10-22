@@ -432,7 +432,6 @@ cork ui https://github.com/kkga/ui.kak %{
     ui-lint-enable
     ui-todos-enable
     ui-trailing-spaces-enable
-    ui-whitespaces-enable
   }
 }
 
