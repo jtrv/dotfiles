@@ -36,7 +36,7 @@ set -gx HISTFILE "$XDG_STATE_HOME"/bash/history
 
 set -gx ATUIN_NOBIND "true"
 set -gx CALIBRE_USE_DARK_PALETTE "yes"
-set -gx EDITOR "/usr/bin/kak"
+set -gx EDITOR "/usr/bin/env kak"
 set -gx fish_greeting
 set -gx FZF_DEFAULT_OPTS "--ansi --color=dark --multi --tabstop=2  --preview='bat --color=always {}' --preview-window border-vertical --bind='alt-a:select-all,alt-d:deselect-all,ctrl-l:preview-down,ctrl-h:preview-up,alt-j:jump'"
 set -gx HORS_ENGINE "google"
@@ -44,7 +44,7 @@ set -gx MANPAGER "/usr/bin/bat" # see 'kan' function
 set -gx MOZ_X11_EGL 1
 set -gx PATH "$VOLTA_HOME/bin" $PATH
 set -gx RUSTC_WRAPPER "/usr/bin/sccache"
-set -gx VISUAL "/usr/bin/kak"
+set -gx VISUAL "/usr/bin/env kak"
 
 set -gx LF_ICONS "\
 di=:\
