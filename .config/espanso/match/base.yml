@@ -28,6 +28,9 @@ matches:
   - trigger: ",,yw"
     replace: "You're welcome"
 
+  - trigger: ",,mtcw"
+    replace: "This should be good to go now, moving this task to check-work."
+
 
 
 # HTML
