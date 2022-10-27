@@ -150,6 +150,7 @@ map gR cd ~/mxs/repos/
 map gs cd ~/media/pictures/screenshots/
 map gS cd ~/repos/study/
 map gt cd ~/tmp/
+map gT cd ~/mxs/tasks/
 map gW cd ~/media/pictures/wallpapers/
 map gw cd ~/work/
 
