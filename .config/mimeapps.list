@@ -1,18 +1,19 @@
 [Default Applications]
-text/html=firefox.desktop
 image/jpeg=feh.desktop;
 image/png=feh.desktop;
 inode/directory=pcmanfm.desktop;
+model/stl=fstl.desktop;
+text/html=firefox.desktop;
 text/html=kamp.desktop;
 text/javascript=kamp.desktop;
+text/plain=kamp.desktop;
 text/plaintext=kamp.desktop;
 video/h264=mpv.desktop;
-text/plain=kamp.desktop;
-x-scheme-handler/about=firefox.desktop
-x-scheme-handler/http=firefox.desktop
-x-scheme-handler/https=firefox.desktop
+x-scheme-handler/about=firefox.desktop;
+x-scheme-handler/http=firefox.desktop;
+x-scheme-handler/https=firefox.desktop;
+x-scheme-handler/nxm-protocol=vortex-downloads-handler.desktop;
+x-scheme-handler/nxm=vortex-downloads-handler.desktop;
 x-scheme-handler/terminal=Alacritty.desktop;
-x-scheme-handler/unknown=firefox.desktop
 x-scheme-handler/tidal=tidal-hifi.desktop
-x-scheme-handler/nxm=vortex-downloads-handler.desktop
-x-scheme-handler/nxm-protocol=vortex-downloads-handler.desktop
+x-scheme-handler/unknown=firefox.desktop;
