@@ -1,53 +1,21 @@
-fish_vi_key_bindings
-
-# Emulates vim's cursor shape behavior
-set fish_cursor_default block blink
-set fish_cursor_insert line blink
-set fish_cursor_replace_one underscore blink
-set fish_cursor_visual block blink
-
-
+fish_default_key_bindings
+set fish_cursor_insert block blink
 
 ######## SOURCE ########
 
 set -gx XDG_CONFIG_HOME "$HOME"/.config
 source "$XDG_CONFIG_HOME"/fish/env.fish
 
-# better history
 atuin init fish | source
-# bind to ctrl-r in normal and insert mode
+
+
+######## KEY-BINDINGS ########
+
+bind ! __history_previous_command             # add '!!' functionality, req ./functions/__history_previous_command.fish
+bind '$' __history_previous_command_arguments # add '!$' functionality, req ./functions/__history_previous_command_arguments.fish
+
 bind \cr _atuin_search
-bind -M insert \cr _atuin_search
-
-
-
-######## FUNCTIONS ########
-
-# add '!!' functionality
-function __history_previous_command
-  switch (commandline -t)
-  case "!"
-    commandline -t $history[1]; commandline -f repaint
-  case "*"
-    commandline -i !
-  end
-end
-bind -Minsert ! __history_previous_command
-
-# add '!$' functionality
-function __history_previous_command_arguments
-  switch (commandline -t)
-  case "!"
-    commandline -t ""
-    commandline -f history-token-search-backward
-  case "*"
-    commandline -i '$'
-  end
-end
-bind -Minsert '$' __history_previous_command_arguments
-
-# other functions can be found in ./functions/
-
+bind \e edit_command_buffer
 
 
 ######## ABBREVIATIONS ########
@@ -61,10 +29,9 @@ if status --is-interactive
 end
 
 
-
 ######## ALIASES ########
 
-alias ani     'ani-cli -q high' # watch anime in super ultra HD 8k lossless greenray
+alias ani     'ani-cli -q high' # weeb out in S-rank ultra-fidelity 8k lossless greenray
 alias awman   'wiki-docs-search'
 complete -c wiki-docs-search -a '(fd html "/usr/share/doc/arch-wiki/html/en/" | rg -o \'/(\w*).html$\' -r \'$1\')'
 alias cat     'bat'
@@ -92,7 +59,6 @@ alias pom     'potato' # shell pomodoro timer
 alias q       'exit'
 alias wget    "wget --hsts-file=\"$XDG_DATA_HOME/wget-hsts\""
 alias yarn    "yarn --use-yarnrc \"$XDG_CONFIG_HOME\"/yarn/config"
-
 
 
 ######## KAKOUNE ########
