@@ -152,11 +152,11 @@ matches:
     replace: >-
       while ($|$){ }
 
-  - trigger: ",,jsfu"
+  - trigger: ",,jsf+"
     replace: >-
       for (let i = 0; i < $|$.length; i++){ }
 
-  - trigger: ",,jsfd"
+  - trigger: ",,jsf-"
     replace: >-
       for (let i = 0; i >= 0; i--){ }
 
