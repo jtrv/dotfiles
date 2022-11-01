@@ -7,7 +7,7 @@ notify_each_step = true
 disable = ["containers", "gcloud"]
 
 # Ignore failures for these steps
-ignore_failures = ["git_repos"]
+ignore_failures = ["git_repos", "distrobox"]
 
 # Run specific steps - same options as the command line flag
 #only = ["system", "emacs"]
