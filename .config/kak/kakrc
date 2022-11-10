@@ -211,17 +211,14 @@ define-command kan -docstring "helper for man" -params 0.. %{
   }
 }
 
-define-command mdn -docstring "print mdn docs for the query" -params 0.. %{
-  evaluate-commands %sh{
-    if [ $# -eq 0 ]; then
-      echo "kakpipe -n mdn -- mdn %val{selection}"
-    else
-      echo "kakpipe -n mdn -- mdn %arg{@}"
-    fi
 define-command math -docstring 'Replace each selection with the output of a given expression, selections are represented as {} in the expression.' %{
   prompt 'math:' -init '{}' %{
     execute-keys "| xargs -I {} qalc -t '%val{text}' <ret>"
   }
+}
+
+define-command mdn -docstring 'Open MDN docs with fzf and mdcat' %{
+  terminal mdn
 }
 
 define-command reader-mode -docstring "enables settings for better reading" %{

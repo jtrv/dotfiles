@@ -1,0 +1,14 @@
+#!/bin/sh
+
+fzf_preview_command="
+  echo {}	|	sd ' > ' '/' |
+  xargs -I % mdcat --local %/index.md
+"
+
+cd "$HOME"/.local/share/mdn/content/files/en-us/web &&
+	fd index.md | sd '/index.md' '' |
+	sd '/(\w)' ' > $1' |
+		fzf --preview "$fzf_preview_command" |
+		sd ' > ' '/' |
+		xargs -I % kak -e "kakpipe -n mdn -- mdcat --local %/index.md" &&
+	cd - >/dev/null || exit
