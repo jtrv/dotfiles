@@ -179,14 +179,6 @@ define-command diff-buffers -buffer-completion -override -params 2 %{
     "
 }}
 
-
-define-command execute-keys-with-register -params 2 -docstring 'execute keys with register' %{
-  evaluate-commands -save-regs '"' %{
-    set-register '"' %arg{2}
-    execute-keys '""' %arg{1}
-  }
-}
-
 define-command kelp -docstring "print the --help output for the given command" -shell-completion -params 0.. %{
   evaluate-commands %sh{
     if [ $# -eq 0 ] && "$kak_selection" --help > /dev/null; then
@@ -219,12 +211,6 @@ define-command kan -docstring "helper for man" -params 0.. %{
   }
 }
 
-define-command math -docstring 'do the maths' %{
-  prompt math: %{
-    execute-keys-with-register 'a<c-r>"<esc>|bc <ret>' %val{text}
-  }
-}
-
 define-command mdn -docstring "print mdn docs for the query" -params 0.. %{
   evaluate-commands %sh{
     if [ $# -eq 0 ]; then
@@ -232,6 +218,9 @@ define-command mdn -docstring "print mdn docs for the query" -params 0.. %{
     else
       echo "kakpipe -n mdn -- mdn %arg{@}"
     fi
+define-command math -docstring 'Replace each selection with the output of a given expression, selections are represented as {} in the expression.' %{
+  prompt 'math:' -init '{}' %{
+    execute-keys "| xargs -I {} qalc -t '%val{text}' <ret>"
   }
 }
 
@@ -258,6 +247,11 @@ define-command tldr -docstring "print a cheatsheet for the given console command
   }
 }
 
+define-command xargs-pipe -docstring 'Execute a command with each selection, selections are represented with {} as a placeholder' %{
+  prompt 'command:' %{
+    execute-keys "| xargs -I {} %val{text} <ret>"
+  }
+}
 
 
 ###################### NORMAL KEYS ######################
@@ -441,6 +435,9 @@ cork ui https://github.com/kkga/ui.kak %{
 
 # Write to file
 map global user w -docstring "write"   ':w <ret>'
+
+  # Write to file
+map global user x -docstring "xargs"   ':xargs-pipe <ret>'
 
 cork grep-write https://github.com/JacobTravers/grep-write.kak
 
