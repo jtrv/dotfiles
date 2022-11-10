@@ -272,6 +272,10 @@ map global normal W B         -docstring "extend previous word"
 map global normal <a-w> <a-b> -docstring "select previous BIG-WORD"
 map global normal <a-W> <a-B> -docstring "extend prevous BIG-WORD"
 
+# Use <c-k>/<c-l> as more ergonomic undo/redo selction
+map global normal <c-k> <c-h> -docstring "undo selection change"
+map global normal <c-l> <c-k> -docstring "redo selection change"
+
 
 # Select whole lines
 map global normal J -docstring "select next line"       'Jx'
