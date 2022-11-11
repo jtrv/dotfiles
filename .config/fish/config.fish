@@ -37,6 +37,7 @@ complete -c wiki-docs-search -a '(fd html "/usr/share/doc/arch-wiki/html/en/" | 
 alias cat     'bat'
 alias cdr     'cd (git rev-parse --show-toplevel)'
 alias doas    'doas --'
+alias feh     'feh --scale-down --image-bg black'
 alias glow    'glow -p'
 alias j       '~/.config/lf/wrapper'
 alias kish    'k ~/.config/fish/config.fish'
