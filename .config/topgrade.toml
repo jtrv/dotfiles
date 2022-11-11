@@ -41,6 +41,7 @@ max_concurrency = 5
 # Additional git repositories to pull
 repos = [
     "~/.local/share/kak/cork/plugins/*/repo",
+    "~/.local/share/mdn/content",
     "~/mxs/repos/*",
     "~/repos/*"
 ]
