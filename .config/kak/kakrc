@@ -211,8 +211,8 @@ define-command kan -docstring "helper for man" -params 0.. %{
   }
 }
 
-define-command math -docstring 'Replace each selection with the output of a given expression, selections are represented as {} in the expression.' %{
-  prompt 'math:' -init '{}' %{
+define-command maths -docstring 'Replace each selection with the output of a given expression, selections are represented as {} in the expression.' %{
+  prompt 'maths:' -init '{}' %{
     execute-keys "| xargs -I {} qalc -t '%val{text}' <ret>"
   }
 }
@@ -380,7 +380,7 @@ map global user l -docstring "lsp" %{:enter-user-mode lsp <ret>}
   map global lsp <minus> -docstring "disable"   ':lsp-disable-window <ret>'
   map global lsp <plus>  -docstring "enable"    ':lsp-enable-window <ret>'
 
-map global user M -docstring "math"   ':math <ret>'
+map global user M -docstring "maths"   ':maths <ret>'
 
 cork kakoune-focus https://github.com/caksoylar/kakoune-focus %{
   map global user f -docstring "focus"   ':focus-toggle <ret>'
