@@ -8,5 +8,6 @@
     "width": 1728,
     "height": 709
   },
-  "SKIP_HOST_UPDATE": true
+  "SKIP_HOST_UPDATE": true,
+  "debugLogging": false
 }
