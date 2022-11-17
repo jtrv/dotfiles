@@ -8,5 +8,6 @@
     "width": 960,
     "height": 264
   },
-  "SKIP_HOST_UPDATE": true
+  "SKIP_HOST_UPDATE": true,
+  "debugLogging": false
 }
