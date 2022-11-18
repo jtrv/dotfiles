@@ -1,6 +1,7 @@
 [Default Applications]
 image/jpeg=feh.desktop;
 image/png=feh.desktop;
+image/webp=feh.desktop;
 inode/directory=pcmanfm.desktop;
 model/stl=fstl.desktop;
 text/html=firefox.desktop;
