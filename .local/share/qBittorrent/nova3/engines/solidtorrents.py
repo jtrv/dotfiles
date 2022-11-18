@@ -1,4 +1,4 @@
-# VERSION: 1.00
+# VERSION: 2.1
 # AUTHORS: nKlido
 
 # LICENSING INFORMATION
@@ -20,9 +20,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from helpers import download_file, retrieve_url
+from helpers import retrieve_url
 from novaprinter import prettyPrinter
-import json
+from html.parser import HTMLParser
+import math
 
 
 class solidtorrents(object):
@@ -30,40 +31,124 @@ class solidtorrents(object):
     name = 'Solid Torrents'
     supported_categories = {'all': 'all', 'music': 'Audio', 'books': 'eBook'}
 
-    def print_torrents(self, torrents):
-        for torrent in torrents:
-            prettyPrinter({
-                "link": torrent['magnet'],
-                "name": torrent['title'],
-                "size": str(torrent['size'])+" B",
-                "seeds": str(torrent['swarm']["seeders"]),
-                "leech": str(torrent['swarm']["leechers"]),
-                "engine_url": self.url,
-                "desc_link": str(-1),
-            })
+    class TorrentInfoParser(HTMLParser):
 
-    def request(self, searchTerm, category, skip):
-        datastr = retrieve_url(self.url + '/api/v1/search?sort=seeders&q=' +
-                               searchTerm+'&category='+category+'&skip='+str(skip)+'&fuv=yes')
-        data = json.loads(datastr)
+        def __init__(self, url):
+            HTMLParser.__init__(self)
+            self.url = url
+            self.foundResult = False
+            self.foundTitle = False
+            self.parseTitle = False
+            self.foundStats = False
+            self.parseSeeders = False
+            self.parseLeechers = False
+            self.parseSize = False
+            self.column = 0
+            self.torrentReady = False
+            self.foundSearchStats = False
+            self.parseTotalResults = False
+            self.totalResults = 0
 
-        totalHits = data['hits']['value']
-        resultsLength = len(data['results'])
-        results = data['results']
-        return totalHits, resultsLength, results
+            self.torrent_info = self.empty_torrent_info()
+
+        def empty_torrent_info(self):
+            return {
+                'link': '',
+                'name': '',
+                'size': '-1',
+                'seeds': '-1',
+                'leech': '-1',
+                'engine_url': self.url,
+                'desc_link': ''
+            }
+
+        def handle_starttag(self, tag, attrs):
+            params = dict(attrs)
+
+            if 'search-stats' in params.get('class', ''):
+                self.foundSearchStats = True
+
+            if (self.foundSearchStats and tag == 'b'):
+                self.parseTotalResults = True
+                self.foundSearchStats = False
+
+            if 'search-result' in params.get('class', ''):
+                self.foundResult = True
+                return
+
+            if (self.foundResult and 'title' in params.get('class', '') and tag == 'h5'):
+                self.foundTitle = True
+
+            if (self.foundTitle and tag == 'a'):
+                self.torrent_info['desc_link'] = self.url + params.get('href')
+                self.parseTitle = True
+
+            if (self.foundResult and 'stats' in params.get('class', '')):
+                self.foundStats = True
+                self.column = -1
+
+            if (self.foundStats and tag == 'div'):
+                self.column = self.column + 1
+
+                if (self.column == 2):
+                    self.parseSize = True
+
+            if (self.foundStats and tag == 'font' and self.column == 3):
+                self.parseSeeders = True
+
+            if (self.foundStats and tag == 'font' and self.column == 4):
+                self.parseLeechers = True
+
+            if (self.foundResult and 'dl-magnet' in params.get('class', '') and tag == 'a'):
+                self.torrent_info['link'] = params.get('href')
+                self.foundResult = False
+                self.torrentReady = True
+
+        def handle_endtag(self, tag):
+            if (self.torrentReady):
+                prettyPrinter(self.torrent_info)
+                self.torrentReady = False
+                self.torrent_info = self.empty_torrent_info()
+
+        def handle_data(self, data):
+
+            if (self.parseTotalResults):
+                self.totalResults = int(data.strip())
+                self.parseTotalResults = False
+
+            if (self.parseTitle):
+                if (bool(data.strip()) and data != '\n'):
+                    self.torrent_info['name'] = data
+                self.parseTitle = False
+                self.foundTitle = False
+
+            if (self.parseSize):
+                self.torrent_info['size'] = data
+                self.parseSize = False
+
+            if (self.parseSeeders):
+                self.torrent_info['seeds'] = data
+                self.parseSeeders = False
+
+            if (self.parseLeechers):
+                self.torrent_info['leech'] = data
+                self.parseLeechers = False
+                self.foundStats = False
+
+    def request(self, searchTerm, category, page=1):
+        return retrieve_url(
+            self.url + '/search?q=' + searchTerm + '&category=' + category
+            + '&sort=seeders&sort=desc&page=' + str(page))
 
     def search(self, what, cat='all'):
         category = self.supported_categories[cat]
-        total, step, results = self.request(what, category, 0)
 
-        self.print_torrents(results)
-        totalTorrents = step
+        parser = self.TorrentInfoParser(self.url)
+        parser.feed(self.request(what, category, 1))
 
-        while(totalTorrents < total):
-            total, step, results = self.request(
-                what, category, totalTorrents + step)
-            if(step == 0):
-                break
-            self.print_torrents(results)
-            totalTorrents += step
-            print(totalTorrents)
+        totalPages = min(math.ceil(parser.totalResults / 20), 5)
+
+        for page in range(2, totalPages + 1):
+            parser.feed(self.request(what, category, page))
+
+        parser.close()
