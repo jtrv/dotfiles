@@ -1,30 +1,24 @@
-#VERSION: 1.1
+#VERSION: 1.2
 #AUTHORS: mauricci
 
 from helpers import retrieve_url
-from helpers import download_file, retrieve_url
 from novaprinter import prettyPrinter
 import re
 
-try:
-    # python3
-    from html.parser import HTMLParser
-    from urllib.parse import unquote
-except ImportError:
-    # python2
-    from HTMLParser import HTMLParser
+from html.parser import HTMLParser
+from urllib.parse import unquote
 
 
 class torrentproject(object):
-    url = 'https://torrentproject2.se/'
+    url = 'https://torrentproject2.se'
     name = 'TorrentProject'
     supported_categories = {'all': '0'}
 
     class MyHTMLParser(HTMLParser):
 
-        def __init__(self):
+        def __init__(self, url):
             HTMLParser.__init__(self)
-            self.url = 'https://torrentproject2.se'
+            self.url = url
             self.insideResults = False
             self.insideDataDiv = False
             self.pageComplete = False
@@ -32,27 +26,34 @@ class torrentproject(object):
             self.infoMap = {'name': 0, 'torrLink': 0, 'size': 5, 'seeds': 2, 'leech': 3}
             self.fullResData = []
             self.pageRes = []
-            self.singleResData = self.getSingleData()
+            self.singleResData = self.get_single_data()
 
-        def getSingleData(self):
-            return {'name': '-1', 'seeds': '-1', 'leech': '-1', 'size': '-1', 'link': '-1', 'desc_link': '-1',
-                    'engine_url': self.url}
+        def get_single_data(self):
+            return {
+                'name': '-1',
+                'seeds': '-1',
+                'leech': '-1',
+                'size': '-1',
+                'link': '-1',
+                'desc_link': '-1',
+                'engine_url': self.url
+            }
 
         def handle_starttag(self, tag, attrs):
-            Dict = dict(attrs)
-            if tag == 'div' and 'nav' in Dict.get('id', ''):
+            attributes = dict(attrs)
+            if tag == 'div' and 'nav' in attributes.get('id', ''):
                 self.pageComplete = True
-            if tag == 'div' and Dict.get('id', '') == 'similarfiles':
+            if tag == 'div' and attributes.get('id', '') == 'similarfiles':
                 self.insideResults = True
-            if tag == 'div' and self.insideResults and 'gac_bb' not in Dict.get('class', ''):
+            if tag == 'div' and self.insideResults and 'gac_bb' not in attributes.get('class', ''):
                 self.insideDataDiv = True
-            elif tag == 'span' and self.insideDataDiv and 'verified' != Dict.get('title', ''):
+            elif tag == 'span' and self.insideDataDiv and 'verified' != attributes.get('title', ''):
                 self.spanCount += 1
             if self.insideDataDiv and tag == 'a' and len(attrs) > 0:
-                if self.infoMap['torrLink'] == self.spanCount and 'href' in Dict:
-                    self.singleResData['link'] = self.url + Dict['href']
-                if self.infoMap['name'] == self.spanCount and 'href' in Dict:
-                    self.singleResData['desc_link'] = self.url + Dict['href']
+                if self.infoMap['torrLink'] == self.spanCount and 'href' in attributes:
+                    self.singleResData['link'] = self.url + attributes['href']
+                if self.infoMap['name'] == self.spanCount and 'href' in attributes:
+                    self.singleResData['desc_link'] = self.url + attributes['href']
 
         def handle_endtag(self, tag):
             if not self.pageComplete:
@@ -61,28 +62,30 @@ class torrentproject(object):
                     self.spanCount = -1
                     if len(self.singleResData) > 0:
                         # ignore trash stuff
-                        if self.singleResData['name'] != '-1' and self.singleResData['size'] != '-1' \
+                        if self.singleResData['name'] != '-1' \
+                                and self.singleResData['size'] != '-1' \
                                 and self.singleResData['name'].lower() != 'nome':
                             # ignore those with link and desc_link equals to -1
-                            if self.singleResData['desc_link'] != '-1' or self.singleResData['link'] != '-1':
+                            if self.singleResData['desc_link'] != '-1' \
+                                    or self.singleResData['link'] != '-1':
                                 try:
                                     prettyPrinter(self.singleResData)
-                                except:
+                                except Exception:
                                     print(self.singleResData)
                                 self.pageRes.append(self.singleResData)
                                 self.fullResData.append(self.singleResData)
-                        self.singleResData = self.getSingleData()
+                        self.singleResData = self.get_single_data()
 
         def handle_data(self, data):
             if self.insideDataDiv:
                 for key, val in self.infoMap.items():
                     if self.spanCount == val:
-                        currKey = key
-                        if currKey in self.singleResData and data.strip() != '':
-                            if self.singleResData[currKey] == '-1':
-                                self.singleResData[currKey] = data.strip()
-                            elif currKey != 'name':
-                                self.singleResData[currKey] += data.strip()
+                        curr_key = key
+                        if curr_key in self.singleResData and data.strip() != '':
+                            if self.singleResData[curr_key] == '-1':
+                                self.singleResData[curr_key] = data.strip()
+                            elif curr_key != 'name':
+                                self.singleResData[curr_key] += data.strip()
 
         def feed(self, html):
             HTMLParser.feed(self, html)
@@ -91,22 +94,18 @@ class torrentproject(object):
             self.insideDataDiv = False
             self.spanCount = -1
 
-    # DO NOT CHANGE the name and parameters of this function
-    # This function will be the one called by nova2.py
     def search(self, what, cat='all'):
-        currCat = self.supported_categories[cat]
-        parser = self.MyHTMLParser()
+        # curr_cat = self.supported_categories[cat]
+        parser = self.MyHTMLParser(self.url)
         what = what.replace('%20', '+')
-        # analyze firt 10 pages of results
-        for currPage in range(0, 10):
+        # analyze first 5 pages of results
+        for currPage in range(0, 5):
             url = self.url + '?t={0}&p={1}'.format(what, currPage)
-            # print(url)
             html = retrieve_url(url)
             parser.feed(html)
             if len(parser.pageRes) <= 0:
                 break
             del parser.pageRes[:]
-        # print(parser.fullResData)
         parser.close()
 
     def download_torrent(self, info):
@@ -116,9 +115,3 @@ class torrentproject(object):
         if m and len(m.groups()) > 0:
             magnet = unquote(m.group(1))
             print(magnet + ' ' + info)
-
-
-if __name__ == "__main__":
-    t = torrentproject()
-    t.search('tomb%20raider')
-    #t.download_torrent("https://torrentproject2.com/t3-196464/Che-Bella-Giornata-2011-iTALiAN-BDRip-XviD-TRL-gogt-torrent.html")
