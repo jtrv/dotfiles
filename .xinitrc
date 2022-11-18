@@ -42,7 +42,7 @@ udiskie -An --terminal=lf &          # notif for mountable drives
 ~/.local/bin/trackball-speed &       # set trackball speed
 
 # randomized wallpapers
-feh --randomize --bg-scale --no-fehbg ~/media/pictures/wallpapers/ &
+feh --randomize --bg-scale --no-fehbg ~/media/pictures/nature/ &
 
 # startup sound
 mpv --no-config --no-video ~/.config/sounds/ps2.flac &
