@@ -32,7 +32,7 @@ xrandr --output virtual-1 --mode 1920x1080
 easyeffects --gapplication-service & # autoEQ service
 mons -a &                            # fallback on main monitor
 pcmanfm --daemon-mode &              # file-manager daemon
-picom -f &                           # allow for opacities
+picom &                              # window opacity / blur
 redshift &                           # bluelight filter
 udiskie -An --terminal=lf &          # notif for mountable drives
 ~/.local/bin/map-keys &              # map caps to ctrl/esc
