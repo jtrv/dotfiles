@@ -34,7 +34,7 @@ dunst &                              # notifications
 easyeffects --gapplication-service & # autoEQ service
 ntpd start &                         # time-sync
 pcmanfm --daemon-mode &              # file-manager daemon
-picom -f &                           # allow for opacities
+picom &                              # window opacity / blur
 redshift -l 34:-119 -b 1.0:0.6 &     # bluelight filter
 udiskie -An --terminal=lf &          # notif for mountable drives
 ~/.local/bin/map-keys &              # map caps to ctrl/esc
