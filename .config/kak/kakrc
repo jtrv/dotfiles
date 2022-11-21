@@ -8,7 +8,7 @@ evaluate-commands %sh{
 
 ################### DISPLAY ###################
 
-colorscheme kalolo
+colorscheme calo-nord
 
 set-option global ui_options terminal_assistant=none
 set-option global scrolloff 1,3
@@ -94,8 +94,6 @@ cork grep-expand https://github.com/JacobTravers/grep-expand.kak
 cork kakboard https://github.com/lePerdu/kakboard %{ hook global WinCreate .* %{ kakboard-enable } }
 
 cork kakoune-auto-percent https://github.com/delapouite/kakoune-auto-percent
-
-cork kakoune-snippets https://github.com/occivink/kakoune-snippets
 
 cork kakoune-state-save https://gitlab.com/Screwtapello/kakoune-state-save %{
   hook global KakBegin .* %{
