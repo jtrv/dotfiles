@@ -91,8 +91,6 @@ function kelta
 end
 alias kda 'kelta'
 
-alias kr      'kak -e "mru-files-list; buffer-only; echo; info-buffers"'
-alias kl      'kak -e "mru-files-session-load; buffer-only; echo; info-buffers"'
 alias kf      'kamp-files'
 alias kgi     'kamp-grep'
 alias kgl     'kak -e "live-grep; buffer-only;echo "live-grep"; info-buffers"'
