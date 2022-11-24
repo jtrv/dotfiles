@@ -6,9 +6,17 @@
 # rip (rm-improved)
 
 FZF_DEFAULT_OPTS="--ansi --color=dark --multi --bind='alt-a:select-all'"
+FZF_PREVIEW="bat --color=always $XDG_DATA_HOME/graveyard{}"
 
 if [ $# -eq 0 ]; then
-	rip -s | fzf | xargs -I {} rip -u {}
+	rip -s |
+		sd "$XDG_DATA_HOME/graveyard" '' |
+		fzf --preview "$FZF_PREVIEW" |
+		xargs -I {} rip -u "$XDG_DATA_HOME/graveyard{}"
 else
-	rip -s | rg "$@" | fzf | xargs -I {} rip -u {}
+	rip -s |
+		sd "$XDG_DATA_HOME/graveyard" '' |
+		rg "$@" |
+		fzf --preview "$FZF_PREVIEW" |
+		xargs -I {} rip -u "$XDG_DATA_HOME/graveyard{}"
 fi
