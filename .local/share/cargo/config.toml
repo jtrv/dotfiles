@@ -1,2 +1,5 @@
+[build]
+rustc-wrapper = "/usr/bin/sccache"
+
 [target.x86_64-unknown-linux-gnu]
 rustflags = ["-C", "link-arg=-fuse-ld=/usr/bin/mold"]

@@ -44,7 +44,6 @@ set -gx FZF_DEFAULT_OPTS         "--ansi --color=dark --multi --tabstop=2  --pre
 set -gx HORS_ENGINE              "google"
 set -gx MANPAGER                 "/usr/bin/bat"
 set -gx PATH                     "$VOLTA_HOME/bin" $PATH
-set -gx RUSTC_WRAPPER            "/usr/bin/sccache"
 set -gx VISUAL                   "/usr/bin/kak"
 
 set -gx LF_ICONS "\
