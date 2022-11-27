@@ -2,6 +2,6 @@
 #0-59    ├0-23    ├1-31    ├1-12    ├0=Sunday │
 */15     *        *        *        *         DISPLAY=:0 feh --randomize --bg-scale --no-fehbg ~/media/pictures/nature/
 0        */2      *        *        *         find ~.local/share/graveyard/ -delete -atime +30
+0        */3      *        *        *         VOLTA_HOME=~/.local/share/volta volta install node@latest npm@latest yarn@latest
 29       */3      *        *        *         updatedb
-0        9        *        *        *         VOLTA_HOME=~/.local/share/volta volta install node@latest npm@latest yarn@latest
-*/5      *        *        *        *         low-battery
+*/2      *        *        *        *         ~/.local/bin/low-battery
