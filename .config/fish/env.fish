@@ -14,6 +14,7 @@ set -gx LESSHISTFILE "$XDG_CACHE_HOME"/less/history
 # Config
 set -gx AWS_CONFIG_FILE             "$XDG_CONFIG_HOME"/aws/config
 set -gx AWS_SHARED_CREDENTIALS_FILE "$XDG_CONFIG_HOME"/aws/credentials
+set -gx BROWSER                     /usr/bin/firefox
 set -gx GTK2_RC_FILES               "$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
 set -gx NETRC                       "$XDG_CONFIG_HOME"/.netrc
 set -gx NPM_CONFIG_USERCONFIG       "$XDG_CONFIG_HOME"/npm/npmrc
@@ -44,7 +45,6 @@ set -gx HORS_ENGINE              "google"
 set -gx MANPAGER                 "/usr/bin/bat"
 set -gx MOZ_X11_EGL              1
 set -gx PATH                     "$VOLTA_HOME/bin" $PATH
-set -gx RUSTC_WRAPPER            "/usr/bin/sccache"
 set -gx VISUAL                   "/usr/bin/kak"
 
 set -gx LF_ICONS "\
