@@ -29,6 +29,7 @@ fi
 
 xrandr --output virtual-1 --mode 1920x1080
 
+clipmenud &                          # clipboard history daemon
 easyeffects --gapplication-service & # autoEQ service
 mons -a &                            # fallback on main monitor
 pcmanfm --daemon-mode &              # file-manager daemon
