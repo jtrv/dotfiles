@@ -1,4 +1,5 @@
 [Default Applications]
+application/pdf=com.github.xournalpp.xournalpp.desktop;
 image/jpeg=feh.desktop;
 image/png=feh.desktop;
 image/webp=feh.desktop;
