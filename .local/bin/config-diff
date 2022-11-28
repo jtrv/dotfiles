@@ -1,0 +1,3 @@
+#!/bin/sh
+git --git-dir="$HOME"/.cfg/ --work-tree="$HOME" diff morpheus thiccpad > "$XDG_CONFIG_HOME"/config.diff
+kamp edit "$XDG_CONFIG_HOME"/config.diff
