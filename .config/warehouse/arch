@@ -7,6 +7,7 @@ alsa-utils
 amd-ucode
 amf-amdgpu-pro
 ananicy-cpp
+android-tools
 ani-cli-git
 arch-audit
 arch-wiki-docs-search
@@ -57,6 +58,7 @@ dog
 downgrade
 dprint
 dragon-drop
+droidcam
 duf
 dunst
 dust
@@ -150,8 +152,8 @@ libtool
 libva-mesa-driver
 libva-utils
 linux-firmware
-linux-headers
 linux-zen
+linux-zen-headers
 lobster
 logseq-desktop-bin
 lutris
@@ -242,6 +244,7 @@ rofi
 rustup
 sad
 sccache
+scrcpy
 screenkey
 sd
 sdcv
@@ -264,6 +267,7 @@ sudo
 sunshine
 syncthing
 sysz
+t-rec
 tealdeer
 termshark
 termtosvg
@@ -291,6 +295,7 @@ udiskie
 ueberzug
 ufw
 ugrep
+v4l2loopback-utils
 veracrypt
 video2x
 visual-studio-code-bin
