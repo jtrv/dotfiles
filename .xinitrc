@@ -30,8 +30,6 @@ fi
 xrandr --output virtual-1 --mode 3440x1440
 
 clipmenud &                          # clipboard history daemon
-dunst &                              # notifications
-ntpd start &                         # time-sync
 pcmanfm --daemon-mode &              # file-manager daemon
 picom &                              # window opacity / blur
 redshift &                           # bluelight filter
