@@ -1,0 +1,10 @@
+[Unit]
+Description=easyeffects autostart config
+
+[Service]
+Restart=always
+ExecStart=/usr/bin/easyeffects --gapplication-service
+RestartSec=3
+
+[Install]
+WantedBy=default.target
