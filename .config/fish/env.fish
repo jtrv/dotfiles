@@ -37,7 +37,6 @@ set -gx HISTFILE "$XDG_STATE_HOME"/bash/history
 
 # Misc
 set -gx ATUIN_NOBIND             "true"
-set -gx CALIBRE_USE_DARK_PALETTE "yes"
 set -gx EDITOR                   "/usr/bin/kak"
 set -gx fish_greeting
 set -gx FZF_DEFAULT_OPTS         "--ansi --color=dark --multi --tabstop=2  --preview='bat --color=always {}' --preview-window border-vertical --bind='alt-a:select-all,alt-d:deselect-all,ctrl-l:preview-down,ctrl-h:preview-up,alt-j:jump'"
