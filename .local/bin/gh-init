@@ -1,6 +1,6 @@
 #!/bin/sh
 
-CWD_NAME=${PWD##*/%/}
+CWD_NAME=$(basename "$PWD")
 
 gh repo create --private "$CWD_NAME"
 git init
