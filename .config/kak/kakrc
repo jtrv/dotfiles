@@ -72,6 +72,8 @@ source "~/.config/kak/contexts/python.kak"
 source "~/.config/kak/contexts/rust.kak"
 source "~/.config/kak/contexts/sh.kak"
 source "~/.config/kak/contexts/typescript.kak"
+source "~/.config/kak/contexts/yaml.kak"
+
 
 ###################### UTILITY ######################
 
