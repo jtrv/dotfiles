@@ -5,10 +5,10 @@ fzf_preview_command="
   xargs -I % mdcat --local %/index.md
 "
 
-cd "$HOME"/.local/share/mdn/content/files/en-us/web &&
+cd "$XDG_DATA_HOME"/mdn/content/files/en-us/web &&
 	fd index.md | sd '/index.md' '' |
 	sd '/(\w)' ' > $1' |
-		fzf --preview "$fzf_preview_command" |
+		fzf --preview "$fzf_preview_command" --query "$*" |
 		sd ' > ' '/' |
 		xargs -I % kak -e "kakpipe -n mdn -- mdcat --local %/index.md" &&
 	cd - >/dev/null || exit
