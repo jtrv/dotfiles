@@ -5,6 +5,6 @@ paru -Qqe >"$WAREHOUSE"/arch
 cargo install --list | rg -o '^(\w.+)\sv' -r '$1' >"$WAREHOUSE"/cargo
 cat "$XDG_CONFIG_HOME"/fish/fish_plugins >"$WAREHOUSE"/fish
 rg -o '^cork.*(https.*?)("|\s|$)' -r '$1' < "$XDG_CONFIG_HOME"/kak/kakrc >"$WAREHOUSE"/kakoune
-"$HOME"/.local/bin/volta_list_global.mjs | rg -o '(^\S+)\s' > "$WAREHOUSE"/volta
+volta list --format plain | rg -o 'package\s(\S+)@' -r '$1' > "$WAREHOUSE"/volta
 
 config diff "$WAREHOUSE"/*
