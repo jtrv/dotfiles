@@ -1,0 +1,18 @@
+#!/bin/sh
+# requires secli, xh, jql, sd, ipinfo.io token
+
+ipinfo_token=$(secli get ipinfo_token)
+
+coordinates=$(xh -Fb "https://ipinfo.io/?token=$ipinfo_token" |
+	jql -r '."loc"')
+
+weather_office=$(xh -Fb "https://api.weather.gov/points/$coordinates" |
+	jql -r '."properties"."cwa"')
+
+area_forecast_discussion_url=$(xh -Fb "https://api.weather.gov/products/types/AFD/locations/$weather_office" |
+	jql -r '."@graph"[0]."@id"')
+
+xh -Fb "$area_forecast_discussion_url" |
+	jql -r '."productText"' |
+	sd '(\n| \n)' '
+'

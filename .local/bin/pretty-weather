@@ -1,0 +1,11 @@
+#!/bin/sh
+# requires secli, xh, jql, wego, ipinfo.io token, owm api key
+
+ipinfo_token=$(secli get ipinfo_token)
+
+owm_api_key=$(secli get owm_api_key)
+
+coordinates=$(xh -Fb "https://ipinfo.io/?token=$ipinfo_token" |
+	jql -r '."loc"')
+
+wego -b openweathermap -owm-api-key "$owm_api_key" -l "$coordinates" -d 7 -u imperial
