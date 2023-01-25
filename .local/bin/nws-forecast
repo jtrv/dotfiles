@@ -1,0 +1,14 @@
+#!/bin/sh
+# requires secli, xh, jql, rg, ipinfo.io token
+
+ipinfo_token=$(secli get ipinfo_token)
+
+coordinates=$(xh -Fb "https://ipinfo.io/?token=$ipinfo_token" | jql -r '."loc"')
+
+forecast_url=$(xh -Fb "https://api.weather.gov/points/$coordinates" | jql -r '."properties"."forecast"')
+
+xh -Fb "$forecast_url" |
+	jql -i '."properties"."periods"|{"name","detailedForecast"}' |
+	rg --color never -o 'name":"(\w+)","detailedForecast":"(.*?)"' -r '
+$1 $2
+' | rg -i --passthru 'with | with a| as high as| around| near' -r ''
