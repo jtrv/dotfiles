@@ -1,1 +1,7 @@
-provider: duckduckgo
+customProviders [
+  {
+    name: kagi
+    url: "https://kagi.com/search?q=%s"
+  }
+]
+provider: kagi
