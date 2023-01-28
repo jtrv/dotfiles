@@ -3,7 +3,7 @@ hook global BufSetOption filetype=python %{
 }
 
 hook global WinSetOption filetype=python %{
-  set-option window lintcmd %{ run() { pylint --msg-template='{path}:{line}:{column}: {category}: {msg_id}: {msg} ({symbol})' "$1" | awk -F: 'BEGIN { OFS=":" } { if (NF == 6) { $3 += 1; print } }'; } && run }
+  set-option window lintcmd 'ruff'
 
 ###### LSP ######
   set-option window lsp_auto_highlight_references true
