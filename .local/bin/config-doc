@@ -1,44 +1,37 @@
 #!/bin/sh
+
+warehouse
+
 WAREHOUSE="$XDG_CONFIG_HOME"/warehouse
 
-ARCH_PACKAGES=$(paru -Qqe)
-CARGO_PACKAGES=$(cargo install --list | rg -o '^(\w.+)\sv' -r '$1')
-FISH_PLUGINS=$(cat "$XDG_CONFIG_HOME"/fish/fish_plugins)
-KAKOUNE_PLUGINS=$(rg -o '^cork.*(https.*?)("|\s|$)' -r '$1' <"$XDG_CONFIG_HOME"/kak/kakrc)
-VOLTA_PACKAGES=$("$HOME"/.local/bin/volta_list_global.mjs | rg -o '(^\S+)\s')
-
-echo "$ARCH_PACKAGES" >"$WAREHOUSE"/arch
-echo "$CARGO_PACKAGES" >"$WAREHOUSE"/cargo
-echo "$FISH_PLUGINS" >"$WAREHOUSE"/fish
-echo "$KAKOUNE_PLUGINS" >"$WAREHOUSE"/kakoune
-echo "$VOLTA_PACKAGES" >"$WAREHOUSE"/volta
-
 ARCH_PACKAGE_LINKS=$(
-	for package in $ARCH_PACKAGES; do
+	cat "$WAREHOUSE"/arch | while read -r package; do
 		link=$(paru -Si "$package" | rg "^URL\s+:\s(.*?)" -r '$1')
 		echo " - [$package]($link)"
 	done
 )
+
 CARGO_PACKAGE_LINKS=$(
-	for package in $CARGO_PACKAGES; do
+	cat "$WAREHOUSE"/cargo | while read -r package; do
 		echo " - [$package](https://crates.io/crates/$package)"
 	done
 )
+
 FISH_PLUGIN_LINKS=$(
-	for repo in $FISH_PLUGINS; do
+	cat "$WAREHOUSE"/fish | while read -r repo; do
 		name=$(echo "$repo" | rg -o ".*/(.*?)$" -r '$1')
 		echo " - [$name](https://github.com/$repo)"
 	done | sort
 )
 KAKOUNE_PLUGIN_LINKS=$(
-	for repo in $KAKOUNE_PLUGINS; do
+	cat "$WAREHOUSE"/kakoune | while read -r repo; do
 		name=$(echo "$repo" | rg -o '.*/(.*?)$' -r '$1')
 		echo " - [$name]($repo)"
 	done | sort
 )
 VOLTA_PACKAGE_LINKS=$(
-  echo "$VOLTA_PACKAGES" | \
-  rg -o '(^\S+)' -r '- [$1](https://www.npmjs.com/package/$1)'
+	cat "$WAREHOUSE"/volta |
+		rg -o '(^\S+)' -r '- [$1](https://www.npmjs.com/package/$1)'
 )
 
 echo "
@@ -82,4 +75,4 @@ $VOLTA_PACKAGE_LINKS
 $ARCH_PACKAGE_LINKS
 " >~/README.md
 
-git --git-dir="$HOME/.cfg/" --work-tree="$HOME" diff "$XDG_CONFIG_HOME"/warehouse/*
+config diff "$WAREHOUSE"/*
