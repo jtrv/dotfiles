@@ -1,5 +1,5 @@
 #!/bin/sh
-# requires secli, xh, jql, rg, ipinfo.io token
+# requires secli, xh, jql, rg, sd, ipinfo.io token
 
 ipinfo_token=$(secli get ipinfo_token)
 
@@ -8,7 +8,13 @@ coordinates=$(xh -Fb "https://ipinfo.io/?token=$ipinfo_token" | jql -r '."loc"')
 forecast_url=$(xh -Fb "https://api.weather.gov/points/$coordinates" | jql -r '."properties"."forecast"')
 
 xh -Fb "$forecast_url" |
-	jql -i '."properties"."periods"|{"name","detailedForecast"}' |
-	rg --color never -o 'name":"(\w+)","detailedForecast":"(.*?)"' -r '
-$1 $2
-' | rg -i --passthru 'with | with a| as high as| around| near' -r ''
+	jql -i -r '."properties"."periods"|{"name","detailedForecast"}' |
+	rg --color never -o 'name":"(\w+)","detailedForecast":"(.*?)"' -r '$1: $2
+' |
+	sd -f i 'with | with a| as high as| around| near' '' |
+	sd -f i 'north' 'N' |
+	sd -f i 'south' 'S' |
+	sd -f i 'east' 'E' |
+	sd -f i 'west' 'W' |
+	sd -f i ' to ' '-' |
+	rg '(N|S|E|W) (NW|NE|SE|SW)' -r '$1/$2' --color never --passthru
