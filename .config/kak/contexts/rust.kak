@@ -1,5 +1,5 @@
 hook global BufSetOption filetype=rust %{
-  set-option buffer formatcmd 'rustfmt'
+  set-option buffer formatcmd 'rustfmt --edition 2021'
 }
 
 hook global WinSetOption filetype=rust %{
