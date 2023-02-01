@@ -260,7 +260,7 @@ map global normal <esc> ,         -docstring "clear multi-selection and keep (nt
 map global normal w b         -docstring "select previous word"
 map global normal W B         -docstring "extend previous word"
 map global normal <a-w> <a-b> -docstring "select previous BIG-WORD"
-map global normal <a-W> <a-B> -docstring "extend prevous BIG-WORD"
+map global normal <a-W> <a-B> -docstring "extend previous BIG-WORD"
 
 # Use <c-k>/<c-l> as more ergonomic undo/redo selction
 map global normal <c-k> <c-h> -docstring "undo selection change"
