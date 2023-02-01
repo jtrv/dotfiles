@@ -1,8 +1,13 @@
 #!/bin/sh
-GREETING=~/.config/greeting
+
+GREETING="$XDG_DATA_HOME"/greeting
+
 {
-	~/.local/bin/weather &&
-		iching
+	iching &&
+		if [ "$(date +%a)" = "Mon" ]; then
+			nws-discussion
+		else
+			nws-forecast
+		fi
 } >"$GREETING" &&
-	kak -e "kakpipe -n greeting -- bat $GREETING" &&
-	topgrade
+	kak -e "kakpipe -n greeting -- bat $GREETING"
