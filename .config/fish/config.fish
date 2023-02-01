@@ -42,6 +42,7 @@ alias doas    'doas --'
 alias feh     'feh --scale-down --image-bg black'
 alias glow    'glow -p'
 alias j       '~/.config/lf/wrapper'
+alias kenv    'k ~/.config/fish/env.fish'
 alias kish    'k ~/.config/fish/config.fish'
 alias konf    'k ~/.config/kak/kakrc'
 alias la      'fls -al --color=always' # all files and dirs
