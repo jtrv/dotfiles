@@ -1,0 +1,3 @@
+firewall = "ufw"
+provider = "Mullvad"
+protocol = "Wireguard"
