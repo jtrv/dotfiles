@@ -1,3 +1,6 @@
 #!/bin/sh
-git --git-dir="$HOME"/.cfg/ --work-tree="$HOME" diff morpheus thiccpad > "$XDG_CONFIG_HOME"/config.diff
-kamp edit "$XDG_CONFIG_HOME"/config.diff
+CONFIG_DIFF=$(mktemp).diff
+
+config diff morpheus thiccpad > "$CONFIG_DIFF"
+
+"$EDITOR" "$CONFIG_DIFF"
