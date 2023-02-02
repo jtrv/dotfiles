@@ -1,5 +1,4 @@
 acme.sh
-alacritty-sixel-git
 alsa-card-profiles
 alsa-firmware
 alsa-utils
@@ -8,11 +7,14 @@ amf-amdgpu-pro
 ananicy-cpp
 android-tools
 ani-cli-git
+anime4k
 arch-audit
 arch-wiki-docs-search
+arch4edu-keyring
 archivemount
 asciinema
 aspell-en
+attractorr
 atuin
 autoconf
 automake
@@ -26,6 +28,7 @@ blender
 bluez
 bluez-plugins
 bluez-utils
+bottles
 bottom
 breeze-icons
 btrfs-progs
@@ -45,12 +48,14 @@ clang
 clipmenu
 cmake
 comby-bin
+comgr
 compiler-rt
 cork.kak-git
 croc
 cronie
 dart-sass
 dash
+deno
 devour
 difftastic
 discord
@@ -112,6 +117,7 @@ github-cli
 glow
 glslang
 gnu-free-fonts
+gnuplot
 go
 gpg-tui
 gping
@@ -129,10 +135,12 @@ imagemagick
 innoextract
 intel-ucode
 iotop
+iptables
 jack2
 jaq
 javascript-typescript-langserver
 jless
+jp2a
 jpegoptim
 jq
 jql
@@ -166,6 +174,7 @@ linux-zen
 linux-zen-headers
 lld
 llvm
+lnav
 lobster
 logseq-desktop-bin
 lostfiles
@@ -173,6 +182,7 @@ lutris
 lxappearance
 lychee-link-checker
 m4
+macchina
 make
 man-db
 mangal-bin
@@ -193,6 +203,7 @@ mons
 moreutils
 mprocs
 mpv
+mpv-sponsorblock
 mpv-thumbnail-script
 mullvad-vpn-bin
 namcap
@@ -203,6 +214,7 @@ network-manager-applet
 networkmanager
 nextdns
 nmap
+noseyparker-git
 noto-fonts-cjk
 noto-fonts-emoji
 npm
@@ -212,6 +224,7 @@ obs-studio
 ocl-icd
 odt2txt
 onefetch
+opencl-amd
 opencl-mesa
 opendoas
 ouch
@@ -225,6 +238,7 @@ patch
 pavucontrol
 pcmanfm
 peek
+peep
 perl-image-exiftool
 picom
 pijul
@@ -257,8 +271,8 @@ ripgrep-all
 rm-improved
 rnr
 rocm-llvm
-rocm-opencl-runtime
 rofi
+ruff
 rustscan
 rustup
 sad
@@ -278,7 +292,9 @@ soundux
 sox
 spectrwm
 speedtest++
+spirv-headers
 spirv-llvm-translator
+spirv-tools
 srmd-ncnn-vulkan-bin
 sshfs
 starship
@@ -288,8 +304,10 @@ streamlink
 sudo
 sunshine
 syncthing
+systeroid
 sysz
 t-rec
+taplo-cli
 tealdeer
 termshark
 termtosvg
@@ -307,12 +325,15 @@ tiny
 tokei
 topgrade
 torbrowser-launcher
+transmission-cli
+tree
 ts-node
 ttf-firacode-nerd
+ttf-ibmplex-mono-nerd
 ttf-mac-fonts
 ttf-ubraille
+ttyper
 typescript-language-server
-typioca-git
 udict-bin
 udiskie
 ueberzug
@@ -321,9 +342,11 @@ ugrep
 v4l2loopback-utils
 veracrypt
 video2x
+visidata
 visual-studio-code-bin
 vivaldi
 volta-bin
+vopono
 vulkan-radeon
 w3m
 waifu2x-ncnn-vulkan
@@ -344,7 +367,7 @@ xclip
 xcolor
 xcwd-git
 xdg-ninja-git
-xdg-utils
+xdg-utils-handlr
 xdotool
 xf86-video-amdgpu
 xf86-video-ati
