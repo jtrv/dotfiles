@@ -47,7 +47,7 @@ hints:
         enabled: true
         mods: None
       binding:
-        key: J
+        key: K
         mods: Control|Shift
 
 # key_bindings:
