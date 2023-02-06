@@ -1,0 +1,3 @@
+#!/bin/sh
+
+"$EDITOR" "$XDG_CONFIG_HOME/fish/completions/$1.fish"
