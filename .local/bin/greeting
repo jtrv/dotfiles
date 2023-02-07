@@ -3,8 +3,10 @@
 GREETING="$XDG_DATA_HOME"/greeting
 
 {
-	iching &&
+	iching --color always divine &&
+	echo
 		if [ "$(date +%a)" = "Mon" ]; then
+			nws-forecast
 			nws-discussion
 		else
 			nws-forecast
