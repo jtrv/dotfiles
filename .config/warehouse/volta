@@ -1,7 +1,9 @@
-covgen 
-emmet-cli 
-eslint 
-eslint_d 
-javascript-typescript-langserver 
-live-server 
-stylelint_d 
+covgen
+create-vite-app
+emmet-cli
+eslint
+eslint_d
+javascript-typescript-langserver
+live-server
+stylelint_d
+webtorrent-mpv-hook
