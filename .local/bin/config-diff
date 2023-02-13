@@ -1,6 +1,12 @@
 #!/bin/sh
 CONFIG_DIFF=$(mktemp).diff
 
-config diff morpheus thiccpad > "$CONFIG_DIFF"
+BRANCH=$(config status -bsu no | rg -o '(\w+)\.\.\.' -r '$1')
+
+if [ "$BRANCH" = "thiccpad" ]; then
+  config diff morpheus > "$CONFIG_DIFF"
+elif [ "$BRANCH" = "morpheus" ]; then
+  config diff thiccpad > "$CONFIG_DIFF"
+fi
 
 "$EDITOR" "$CONFIG_DIFF"
