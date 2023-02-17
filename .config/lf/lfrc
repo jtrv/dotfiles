@@ -152,7 +152,6 @@ map gS cd ~/study/
 map gt cd ~/tmp/
 map gT cd ~/mxs/tasks/
 map gW cd ~/media/pictures/wallpapers/
-map gw cd ~/work/
 
 # kakoune-like bindings
 map A rename                      # at the very end
