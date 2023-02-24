@@ -38,7 +38,7 @@ cork kak-lsp https://github.com/kak-lsp/kak-lsp %{
 declare-user-mode dev
   map global dev d -docstring "diagnostic"   ':lsp-diagnostics <ret>'
   map global dev f -docstring "format"       ':format <ret>'
-  map global dev F -docstring "format sel"   ':format <ret>'
+  map global dev F -docstring "format sel"   ':format-selections <ret>'
   map global dev j -docstring "next lint"    ':lint-next-message <ret>'
   map global dev k -docstring "prev lint"    ':lint-previous-message <ret>'
   map global dev l -docstring "lint"         ':lint <ret>'
