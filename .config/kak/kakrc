@@ -76,7 +76,7 @@ source "~/.config/kak/contexts/yaml.kak"
 
 ###################### UTILITY ######################
 
-set global grepcmd 'rg --column --smart-case'
+set global grepcmd 'rg --smart-case --vimgrep'
 
 # Empty scratch buffer(s)
 hook global BufCreate '\*scratch(-\d+)?\*' %{ execute-keys -draft '%<a-d>' }
