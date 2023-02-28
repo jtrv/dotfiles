@@ -11,7 +11,9 @@
 #│      docs:       documentation change                             │
 #│      feat:       new feature                                      │
 #│      fix:        bug fix                                          │
+#│      perf:       performance improvements                         │
 #│      refactor:   code refactor                                    │
+#│      revert:     reverts a previous commit                        │
 #│      style:      formatting change (markup, white-space, ...)     │
 #│      test:       add/fix test                                     │
 #└───────────────────────────────────────────────────────────────────┘
