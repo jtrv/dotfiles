@@ -43,7 +43,7 @@ cmd open ${{
       ;;
     *)
       for f in $fx; do
-        $OPENER $f > /dev/null 2> /dev/null &
+        "$OPENER" "$f" > /dev/null 2> /dev/null &
       done;;
   esac
 }}
