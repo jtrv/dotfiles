@@ -135,6 +135,7 @@ map m
 map r
 
 # goto shortcuts
+map gb cd ~/.local/bin/
 map gc cd ~/.config/
 map gd cd ~/downloads/
 map gD cd ~/mxs/drive/
