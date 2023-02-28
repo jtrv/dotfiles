@@ -1,21 +1,15 @@
 [Default Applications]
-application/pdf=com.github.xournalpp.xournalpp.desktop;
-image/jpeg=feh.desktop;
-image/png=feh.desktop;
-image/webp=feh.desktop;
-inode/directory=pcmanfm.desktop;
+application/pdf=org.pwmt.zathura.desktop;
+image/*=feh.desktop;
+inode/*=pcmanfm-desktop-pref.desktop;
 model/stl=fstl.desktop;
-text/html=firefox.desktop;
-text/html=kamp.desktop;
-text/javascript=kamp.desktop;
-text/plain=kamp.desktop;
-text/plaintext=kamp.desktop;
-video/h264=mpv.desktop;
+text/*=kamp.desktop;
+video/*=mpv.desktop;
 x-scheme-handler/about=firefox.desktop;
 x-scheme-handler/http=firefox.desktop;
 x-scheme-handler/https=firefox.desktop;
-x-scheme-handler/nxm-protocol=/home/sugimoto/.local/share/applications/vortex-downloads-handler.desktop
 x-scheme-handler/nxm=/home/sugimoto/.local/share/applications/vortex-downloads-handler.desktop
+x-scheme-handler/nxm-protocol=/home/sugimoto/.local/share/applications/vortex-downloads-handler.desktop
 x-scheme-handler/terminal=Alacritty.desktop;
 x-scheme-handler/tidal=tidal-hifi.desktop
 x-scheme-handler/unknown=firefox.desktop;
