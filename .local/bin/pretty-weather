@@ -8,4 +8,8 @@ owm_api_key=$(secli get owm_api_key)
 coordinates=$(xh -Fb "https://ipinfo.io/?token=$ipinfo_token" |
 	jql -r '."loc"')
 
-wego -b openweathermap -owm-api-key "$owm_api_key" -l "$coordinates" -d 7 -u imperial
+if [ $# -eq 0 ]; then
+	wego -b openweathermap -owm-api-key "$owm_api_key" -l "$coordinates" -d 7 -u imperial
+else
+  wego -b openweathermap -owm-api-key "$owm_api_key" -l "$@" -d 7 -u imperial
+fi
