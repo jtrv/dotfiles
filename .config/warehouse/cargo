@@ -1,5 +1,12 @@
+attractorr
+cargo-audit
+cargo-bloat
+cargo-fix
+cargo-nextest
+cargo-spellcheck
 cl-wordle
 fls
+gdrive-search
 gobang
 hashgood
 iching
@@ -11,7 +18,10 @@ osintui
 pipe-rename
 rusty-rain
 scaphandre
+sd
 secli
 shellclear
 skanuvaty
+skyspell
+skyspell_kak
 transgression-tui

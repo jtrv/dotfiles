@@ -21,6 +21,7 @@ automake
 aws-cli
 bandwhich
 base
+base-devel
 bat
 binutils
 bison
@@ -48,7 +49,6 @@ clang
 clipmenu
 cmake
 comby-bin
-comgr
 compiler-rt
 cork.kak-git
 croc
@@ -128,6 +128,7 @@ gron
 grub
 grub-btrfs
 gzip
+handlr-regex
 hors
 htmlq
 huniq-git
@@ -182,7 +183,7 @@ logseq-desktop-bin
 lostfiles
 lutris
 lxappearance
-lychee-link-checker
+lychee
 m4
 macchina
 make
@@ -206,7 +207,6 @@ moreutils
 mprocs
 mpv
 mpv-sponsorblock
-mpv-thumbnail-script
 mullvad-vpn-bin
 namcap
 needrestart
@@ -227,8 +227,8 @@ ocl-icd
 odt2txt
 onefetch
 opencl-amd
-opencl-mesa
 opendoas
+osv-scanner
 ouch
 oxipng
 pacman
@@ -264,6 +264,7 @@ qrcp-bin
 radeontop
 rate-mirrors
 rclone
+read-edid
 realcugan-ncnn-vulkan-git
 realesrgan-ncnn-vulkan-bin
 realsr-ncnn-vulkan-bin
@@ -272,7 +273,6 @@ rescrobbled-git
 ripgrep-all
 rm-improved
 rnr
-rocm-llvm
 rofi
 ruff
 rustscan
@@ -281,7 +281,6 @@ sad
 sccache
 scrcpy
 screenkey
-sd
 sdcv
 sed
 shellcheck-bin
@@ -323,7 +322,6 @@ tidy
 tig
 timeshift
 timeshift-autosnap
-tiny
 tokei
 topgrade
 torbrowser-launcher
@@ -384,6 +382,8 @@ yamllint
 yarn
 yt-dlp
 yuzu-mainline-bin
+zathura
+zathura-pdf-poppler
 zola
 zoxide
 zram-generator
