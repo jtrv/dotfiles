@@ -3,6 +3,7 @@
 
 evaluate-commands %sh{
   cork init
+  skyspell-kak init
   kamp init -a -e EDITOR='kamp edit'
 }
 
@@ -410,13 +411,14 @@ cork kakoune-surround https://github.com/h-youhei/kakoune-surround
 
 # Spelling and grammar checking
 declare-user-mode spell
-  map global user s -docstring "spell"      ':spell <ret>:enter-user-mode -lock spell <ret>'
-  map global spell a -docstring "add"       ':spell-add <ret>'
-  map global spell c -docstring "clear"     ':spell-clear <ret>'
-  map global spell e -docstring "enable"    ':spell <ret>'
-  map global spell n -docstring "next"      ':spell-next <ret>'
-  map global spell r -docstring "replace"   ':spell-replace <ret>'
-  declare-option str language en-US
+  map global user s  -docstring "spell"      ': enter-user-mode spell<ret>'
+  map global spell d -docstring "clear"      ': skyspell-disable<ret>'
+  map global spell e -docstring "enable"     ': skyspell-enable en_US<ret>'
+  map global spell l -docstring "list"       ': skyspell-list <ret>'
+  map global spell h -docstring "help"       ': skyspell-help <ret>'
+  map global spell n -docstring "next"       ': skyspell-next<ret>'
+  map global spell p -docstring "previous"   ': skyspell-previous<ret>'
+  map global spell r -docstring "replace"    ': skyspell-replace<ret>'
 
 cork ui https://github.com/kkga/ui.kak %{
   map global user u -docstring "ui mode"   ':enter-user-mode ui <ret>'
