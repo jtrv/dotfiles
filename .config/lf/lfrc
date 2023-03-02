@@ -181,8 +181,8 @@ map <enter>  open
 map o        push :open-with<space>
 
 map D     rip                     # safer remove function (rip)
-map f     :fuzzy_file             # jump to file with fzf choice
-map F     push :zoxide<space>'    # jump to dir with zoxide guess
+map <a-d> delete                  # actually delete
+map F     :fuzzy_file             # jump to file with fzf choice
 map G     :fuzzy_content          # search files by grepping contents
 map m     push :mkdir<space>      # create new dir
 map M     mkdirfromsels           # create new dir with selections
@@ -194,3 +194,4 @@ map x     $$f                     # execute current file (must be executable)
 map X     !$f                     # execute current file (must be executable)
 map Y     :yank-path              # copy path
 map w     :set-wallpaper          # set wallpaper to current file
+map Z     push :zoxide<space>'    # jump to dir with zoxide guess
