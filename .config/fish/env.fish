@@ -24,8 +24,8 @@ set -gx _JAVA_OPTIONS -Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
 # Data
 set -gx ANDROID_HOME      "$XDG_DATA_HOME"/android
 set -gx CARGO_HOME        "$XDG_DATA_HOME"/cargo
-set -gx GOPATH            "$XDG_DATA_HOME"/go
 set -gx GNUPGHOME         "$XDG_DATA_HOME"/gnupg
+set -gx GOPATH            "$XDG_DATA_HOME"/go
 set -gx NODE_REPL_HISTORY "$XDG_DATA_HOME"/node_repl_history
 set -gx NVM_DIR           "$XDG_DATA_HOME"/nvm
 set -gx RUSTUP_HOME       "$XDG_DATA_HOME"/rustup
@@ -43,8 +43,9 @@ set -gx fish_greeting
 set -gx FZF_DEFAULT_OPTS         "--ansi --color=dark --multi --tabstop=2  --preview='bat --color=always {}' --preview-window border-vertical --bind='alt-a:select-all,alt-d:deselect-all,ctrl-l:preview-down,ctrl-h:preview-up,alt-j:jump'"
 set -gx HORS_ENGINE              "google"
 set -gx MANPAGER                 "/usr/bin/bat"
-set -gx PATH                     "$VOLTA_HOME/bin" $PATH
+set -gx MOZ_X11_EGL              1
 set -gx PAGER                    "/usr/bin/moar"
+set -gx PATH                     "$VOLTA_HOME/bin" $PATH
 set -gx VISUAL                   "/usr/bin/kak"
 
 set -gx LF_ICONS "\
