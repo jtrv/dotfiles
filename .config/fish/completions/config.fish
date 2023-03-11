@@ -1,2 +1,3 @@
-complete -c 'config' -w 'git --git-dir="$HOME"/.cfg/ --work-tree="$HOME"'
-complete -c 'config-add' -F
+complete -c 'config' -w 'git'
+complete -c 'config-add' -w 'git add' -F
+complete -c "config-diff" -w "git diff"
