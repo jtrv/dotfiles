@@ -7,7 +7,6 @@ set -gx XDG_CONFIG_HOME "$HOME"/.config
 source "$XDG_CONFIG_HOME"/fish/env.fish
 
 atuin init fish | source
-shellclear --init-shell | source
 
 
 ######## KEY-BINDINGS ########
