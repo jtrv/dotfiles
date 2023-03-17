@@ -17,6 +17,7 @@ set-option global scrolloff 1,3
 # Toggle relative line numbers with insert mode
 cork number-toggle https://github.com/evanrelf/number-toggle.kak %{
   require-module "number-toggle"
+  set-option global number_toggle_params -hlcursor -cursor-separator '┼'
 }
 
 # Rainbow delimiters + current scope
