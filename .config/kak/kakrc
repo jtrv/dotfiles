@@ -264,6 +264,12 @@ map global normal W B         -docstring "extend previous word"
 map global normal <a-w> <a-b> -docstring "select previous BIG-WORD"
 map global normal <a-W> <a-B> -docstring "extend previous BIG-WORD"
 
+# swap [] <a-[]>
+map global normal <a-[> [     -docstring "select to previous object end"
+map global normal [ <a-[>     -docstring "select upto previous object end"
+map global normal ] <a-]>     -docstring "select upto next object end"
+map global normal <a-]> ]     -docstring "select to next object end"
+
 # Use <c-k>/<c-l> as more ergonomic undo/redo selction
 map global normal <c-k> <c-h> -docstring "undo selection change"
 map global normal <c-l> <c-k> -docstring "redo selection change"
