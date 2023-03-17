@@ -30,6 +30,7 @@ fi
 xrandr --output virtual-1 --mode 3440x1440
 
 clipmenud &                          # clipboard history daemon
+/usr/lib/kdeconnectd &               # kdeconnect daemon
 pcmanfm --daemon-mode &              # file-manager daemon
 picom &                              # window opacity / blur
 redshift &                           # bluelight filter
