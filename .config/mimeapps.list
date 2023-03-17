@@ -1,7 +1,7 @@
 [Default Applications]
 application/pdf=org.pwmt.zathura.desktop;
 image/*=feh.desktop;
-inode/*=pcmanfm-desktop-pref.desktop;
+inode/*=pcmanfm.desktop;
 model/stl=fstl.desktop;
 text/*=kamp.desktop;
 video/*=mpv.desktop;
