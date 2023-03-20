@@ -1,14 +1,17 @@
 attractorr
 cargo-audit
 cargo-bloat
+cargo-cache
 cargo-fix
 cargo-nextest
 cargo-spellcheck
+cargo-trend
 cl-wordle
 fls
 gdrive-search
 gobang
 hashgood
+heygpt
 iching
 kak-lsp
 kakpipe
@@ -24,4 +27,6 @@ shellclear
 skanuvaty
 skyspell
 skyspell_kak
+thesauromatic
 transgression-tui
+zet

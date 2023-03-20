@@ -1,4 +1,5 @@
 acme.sh
+adobe-source-sans-fonts
 alsa-card-profiles
 alsa-firmware
 alsa-utils
@@ -64,10 +65,10 @@ docker
 docx2txt
 dog
 downgrade
-dprint
 dragon-drop
 droidcam
 duf
+dum
 dunst
 dust
 easyeffects
@@ -120,6 +121,7 @@ glslang
 gnu-free-fonts
 gnuplot
 go
+google-chrome
 gpg-tui
 gping
 grep
@@ -129,6 +131,7 @@ grub
 grub-btrfs
 gzip
 handlr-regex
+helix
 hors
 htmlq
 huniq-git
@@ -173,6 +176,7 @@ libtool
 libva-mesa-driver
 libva-utils
 linux-firmware
+linux-headers
 linux-zen
 linux-zen-headers
 lld
@@ -207,6 +211,8 @@ moreutils
 mprocs
 mpv
 mpv-sponsorblock
+mpv-thumbfast-git
+mpv-uosc-git
 mullvad-vpn-bin
 namcap
 needrestart
@@ -247,6 +253,7 @@ pijul
 pipewire
 pipewire-alsa
 pipewire-pulse
+pipewire-v4l2
 pkgconf
 playerctl
 plocate
@@ -329,6 +336,7 @@ transmission-cli
 tree
 ts-node
 ttf-firacode-nerd
+ttf-ibm-plex
 ttf-ibmplex-mono-nerd
 ttf-mac-fonts
 ttf-ubraille
@@ -339,7 +347,6 @@ udiskie
 ueberzug
 ufw
 ugrep
-v4l2loopback-utils
 veracrypt
 video2x
 visidata

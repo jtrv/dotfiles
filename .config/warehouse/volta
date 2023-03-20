@@ -1,6 +1,7 @@
 @fsouza/prettierd
 @typescript-eslint/eslint-plugin
 @typescript-eslint/parser
+bun
 commitlint
 cross-env
 eslint-plugin-autofix
