@@ -1,3 +1,3 @@
 #!/bin/sh
-speakers="alsa_output.usb-ZhuHai-JieLi-Technology_USB_AUDIO_20180105-01.analog-stereo"
-pactl set-default-sink "$speakers"
+pactl set-card-profile alsa_card.pci-0000_0e_00.4 output:iec958-stereo
+pactl set-default-sink "alsa_output.pci-0000_0e_00.4.iec958-stereo"
