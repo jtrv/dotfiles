@@ -223,8 +223,10 @@ networkmanager
 nextdns
 nmap
 noseyparker-git
+noto-fonts
 noto-fonts-cjk
 noto-fonts-emoji
+noto-fonts-extra
 npm
 ntfs-3g
 ntp
@@ -339,7 +341,6 @@ ttf-firacode-nerd
 ttf-ibm-plex
 ttf-ibmplex-mono-nerd
 ttf-mac-fonts
-ttf-ubraille
 ttyper
 typescript-language-server
 udict-bin
@@ -359,7 +360,6 @@ w3m
 waifu2x-ncnn-vulkan
 watchexec
 weechat
-wego
 which
 whois
 wine-staging

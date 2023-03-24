@@ -4,6 +4,7 @@
 bun
 commitlint
 cross-env
+depcheck
 eslint-plugin-autofix
 eslint-plugin-react-hooks
 gatsby
