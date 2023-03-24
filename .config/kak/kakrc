@@ -135,6 +135,10 @@ cork window https://github.com/alexherbo2/window.kak
 
 ###################### COMMANDS ######################
 
+define-command bun -docstring "Launch bun with the given parameters inside kakoune" -params 1.. %{
+	kakpipe -S -- bun %arg{@}
+}
+
 define-command comment -docstring "(Un)Comment lines" %{
   try %{
     execute-keys _
