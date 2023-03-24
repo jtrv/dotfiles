@@ -139,6 +139,10 @@ define-command bun -docstring "Launch bun with the given parameters inside kakou
 	kakpipe -S -- bun %arg{@}
 }
 
+define-command cargo -docstring "Launch cargo with the given parameters inside kakoune" -params 1.. %{
+	kakpipe -S -- cargo --color=always %arg{@}
+}
+
 define-command comment -docstring "(Un)Comment lines" %{
   try %{
     execute-keys _
