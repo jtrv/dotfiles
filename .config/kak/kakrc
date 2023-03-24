@@ -213,9 +213,19 @@ define-command kan -docstring "Either show a man-page or the --help text for the
   }
 }
 
-define-command maths -docstring 'Replace each selection with the output of a given expression, selections are represented as {} in the expression.' %{
-  prompt 'maths:' -init '{}' %{
-    execute-keys "| xargs -I {} qalc -t '%val{text}' <ret>"
+define-command calc -docstring "Replace the selection with the result a given expression (X represents current selection)"  -params 0.. %{
+  evaluate-commands %sh{
+    if [ $# -eq 0 ]; then
+      printf %s\\n "
+        prompt 'expression:' -init 'X' %{
+          execute-keys \"| xargs -I X qalc -t '%val{text}' <ret>\"
+        }
+      "
+    else
+      printf %s\\n "
+        execute-keys \"| xargs -I X qalc -t '$*' <ret>\"
+      "
+    fi
   }
 }
 
