@@ -45,6 +45,8 @@ set -gx FZF_DEFAULT_OPTS         "--ansi --color=dark --multi --tabstop=2  --pre
 set -gx HORS_ENGINE              "google"
 set -gx MANPAGER                 "/usr/bin/bat"
 set -gx MOZ_X11_EGL              1
+set -gx OPENAI_API_KEY           (secli get openai_api_key)
+set -gx OPENAI_API_BASE          "https://api.openai.com/v1"
 set -gx PAGER                    "/usr/bin/moar"
 set -gx PATH                     "$VOLTA_HOME/bin" $PATH
 set -gx VISUAL                   "/usr/bin/kak"
