@@ -262,6 +262,16 @@ hook global WinDisplay '\*(delta|diff|difft|greeting|help|man \w+|mdn|tldr)\*' %
   reader-mode
 }
 
+define-command rman -docstring 'show a rustdoc page' -params 1 %{
+  evaluate-commands %sh{
+    if [ $# -eq 0 ]; then
+    	echo "kakpipe -n %val{selection} -- rusty-man --viewer rich %val{selection}"
+    else
+    	echo "kakpipe -n %arg{1} -- rusty-man --viewer rich %arg{@}"
+    fi
+  }
+}
+
 define-command thes -docstring "Generate thesaurus results for the given query" -params 0..2 %{
   evaluate-commands %sh{
     if [ $# -eq 0 ]; then
