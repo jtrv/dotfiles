@@ -58,7 +58,6 @@ docx2txt
 dog
 dosfstools
 downgrade
-dprint
 dragon-drop
 droidcam
 duf
@@ -92,7 +91,6 @@ firefox-ublock-origin
 fisher
 flameshot-git
 flex
-frawk
 fstl
 fwupd
 fzf
@@ -121,7 +119,6 @@ hub
 huniq-git
 hyperfine
 inetutils
-inkscape
 innoextract
 intel-ucode
 iotop
@@ -181,8 +178,10 @@ networkmanager
 nextdns-unprivileged
 nfs-utils
 noseyparker-git
+noto-fonts
 noto-fonts-cjk
 noto-fonts-emoji
+noto-fonts-extra
 npm
 ntfs-3g
 ntp
@@ -240,7 +239,6 @@ rustup
 sad
 sccache
 screenkey
-sd
 sdcv
 shellcheck-bin
 shfmt
@@ -252,6 +250,7 @@ sox
 spectrwm
 speedtest++
 starship
+strace
 stylelint
 sudo
 syncthing
@@ -281,7 +280,6 @@ tree
 ts-node
 ttf-firacode-nerd
 ttf-ibmplex-mono-nerd
-ttf-ubraille
 ttyper
 typescript
 typescript-language-server
@@ -304,10 +302,10 @@ w3m
 watchexec
 waydroid
 weechat
-wego
 weston
 which
 whois
+wikiman
 wireguard-tools
 wireplumber
 wpa_supplicant
