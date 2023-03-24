@@ -241,6 +241,10 @@ define-command mdn -docstring "Search through MDN documentation with fzf and mdc
   terminal mdn
 }
 
+define-command npm -docstring "Launch npm with the given parameters inside kakoune" -params 1.. %{
+	kakpipe -S -- npm %arg{@}
+}
+
 define-command reader-mode -docstring "Enables settings for better reading" %{
   remove-highlighter global/whitespace
   rainbow-disable-window
