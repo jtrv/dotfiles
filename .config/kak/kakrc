@@ -246,6 +246,16 @@ hook global WinDisplay '\*(delta|diff|difft|greeting|help|man \w+|mdn|tldr)\*' %
   reader-mode
 }
 
+define-command thes -docstring "Generate thesaurus results for the given query" -params 0..2 %{
+  evaluate-commands %sh{
+    if [ $# -eq 0 ]; then
+      echo "kakpipe -n thes -- thesauromatic %val{selection} | col %val{window_width}"
+    else
+      echo "kakpipe -n thes -- thesauromatic %arg{@} | col %val{window_width}"
+    fi
+  }
+}
+
 define-command tldr -docstring "Cheatsheet for the given command" -shell-completion -params 0.. %{
   evaluate-commands %sh{
     if [ $# -eq 0 ]; then
