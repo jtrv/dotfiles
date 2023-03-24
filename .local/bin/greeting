@@ -1,15 +1,9 @@
 #!/bin/sh
-
-GREETING="$XDG_DATA_HOME"/greeting
-
-{
-	iching --color always divine &&
+iching --color always divine &&
 	echo
-		if [ "$(date +%a)" = "Mon" ]; then
-			nws-forecast
-			nws-discussion
-		else
-			nws-forecast
-		fi
-} >"$GREETING" &&
-	kak -e "kakpipe -n greeting -- bat $GREETING"
+if [ "$(date +%a)" = "Mon" ]; then
+	wthrr
+	nws-discussion
+else
+	wthrr
+fi
