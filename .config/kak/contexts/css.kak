@@ -1,5 +1,5 @@
 hook global BufSetOption filetype=(css|scss) %{
-  set-option buffer formatcmd "prettierd %val{buffile}"
+  set-option buffer formatcmd "prettierd format.scss"
 
   define-command emmet -override %{ execute-keys  "giGl| emmet <ret>" }
   define-command minify -override %{ execute-keys "<percent>| minify-html <ret><percent>" }
