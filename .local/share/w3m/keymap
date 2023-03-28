@@ -1,0 +1,114 @@
+# kakoune-ish keybindings
+
+keymap C-u NULL
+keymap C-d NULL
+keymap gk NULL
+keymap gj NULL
+keymap C-f NULL
+keymap d NULL
+keymap C-b NULL
+keymap u NULL
+keymap z NULL
+keymap L NULL
+keymap H NULL
+keymap gh NULL
+keymap gl NULL
+keymap e NULL
+keymap w NULL
+keymap U NULL
+keymap u NULL
+keymap f NULL
+keymap F NULL
+keymap C-n NULL
+keymap C-p NULL
+keymap :l NULL
+keymap r NULL
+keymap :w NULL
+keymap :W NULL
+keymap :o NULL
+keymap :e NULL
+keymap p NULL
+keymap i NULL
+keymap I NULL
+keymap v NULL
+keymap / NULL
+keymap ? NULL
+keymap n NULL
+keymap N NULL
+keymap a NULL
+keymap :b NULL
+keymap x NULL
+keymap C-t NULL
+keymap bn NULL
+keymap bp NULL
+keymap bb NULL
+keymap B NULL
+keymap q NULL
+
+########## scrolling ##########
+keymap C-u DOWN
+keymap C-d UP
+keymap gk BEGIN
+keymap gj END
+keymap C-f NEXT_PAGE
+keymap d NEXT_PAGE
+keymap C-b PREV_PAGE
+keymap u PREV_PAGE
+keymap z CENTER_V
+
+########## cursor ##########
+keymap L NEXT_TAB
+keymap H PREV_TAB
+keymap gh LINE_BEGIN
+keymap gl LINE_END
+keymap e NEXT_WORD
+keymap w PREV_WORD
+
+
+########## cursor history ##########
+keymap U REDO
+keymap u UNDO
+
+
+########## navigation ##########
+keymap f MOVE_LIST_MENU
+keymap F LIST_MENU
+keymap C-n NEXT_LINK
+keymap C-p PREV_LINK
+keymap :l PEEK_LINK
+
+# reload
+keymap r RELOAD
+
+# save/load
+keymap :w SAVE
+keymap :W PRINT
+keymap :o GOTO
+keymap :e LOAD
+
+########## info ##########
+keymap p PEEK
+keymap i INFO
+keymap I LINE_INFO
+keymap v VIEW
+
+########## search ##########
+keymap / ISEARCH
+keymap ? ISEARCH_BACK
+keymap n SEARCH_NEXT
+keymap N SEARCH_PREV
+
+########## bookmarks ##########
+keymap a ADD_BOOKMARK
+keymap :b VIEW_BOOKMARK
+
+########## tab ##########
+keymap x CLOSE_TAB
+keymap C-t NEW_TAB
+keymap bn NEXT_TAB
+keymap bp PREV_TAB
+keymap bb TAB_MENU
+keymap B TAB_GOTO
+
+########## quit ##########
+keymap q EXIT
