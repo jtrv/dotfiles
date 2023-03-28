@@ -1,5 +1,5 @@
 hook global BufSetOption filetype=html %{
-  set-option buffer formatcmd "prettierd %val{buffile}"
+  set-option buffer formatcmd "prettierd format.html"
 
   define-command emmet -override %{ execute-keys  "giGl| emmet <ret>" }
   define-command minify -override %{ execute-keys "<percent>| minify-html --minify-css --minify-js <ret><percent>" }
