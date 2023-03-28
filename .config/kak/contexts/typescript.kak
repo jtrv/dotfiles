@@ -1,5 +1,5 @@
 hook global BufSetOption filetype=typescript %{
-  set-option buffer formatcmd "prettierd %val{buffile}"
+  set-option buffer formatcmd "dprint fmt --stdin format.ts --config $XDG_CONFIG_HOME/dprint/dprint.json"
 
   define-command emmet -override %{ execute-keys  "giGl| emmet <ret>" }
   define-command minify -override %{ execute-keys "<percent>| minify-html <ret><percent>" }
@@ -9,7 +9,7 @@ hook global BufSetOption filetype=typescript %{
 }
 
 hook global WinSetOption filetype=typescript %{
-  set-option window lintcmd 'run() { cat "$1" | eslint_d -c ~/.config/.ts.eslintrc.js -f unix --stdin --stdin-filename "$kak_buffile";} && run '
+  set-option window lintcmd 'deno lint -'
   lint
 
 ###### LSP ######
