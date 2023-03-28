@@ -1,9 +1,9 @@
 hook global BufSetOption filetype=python %{
-  set-option buffer formatcmd 'black -'
+  set-option buffer formatcmd "black -"
 }
 
 hook global WinSetOption filetype=python %{
-  set-option window lintcmd 'ruff'
+  set-option window lintcmd "ruff check -q %val{buffile}"
 
 ###### LSP ######
   set-option window lsp_auto_highlight_references true
