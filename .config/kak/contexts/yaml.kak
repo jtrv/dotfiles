@@ -1,5 +1,5 @@
 hook global BufSetOption filetype=yaml %{
-  set-option buffer formatcmd "prettierd %val{buffile}"
+  set-option buffer formatcmd "prettierd format.yml"
 }
 
 hook global WinSetOption filetype=yaml %{
