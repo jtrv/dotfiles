@@ -474,7 +474,7 @@ declare-user-mode spell
 
 cork ui https://github.com/kkga/ui.kak %{
   map global user u -docstring "ui mode"   ':enter-user-mode ui <ret>'
-  set-option global ui_wrap_flags -word -indent -marker ~~
+  set-option global ui_wrap_flags -width 100 -word -indent -marker ~~
   hook global WinCreate .* %{
     ui-git-diff-enable
     ui-lint-enable
