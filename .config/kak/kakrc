@@ -319,7 +319,7 @@ define-command npm -docstring "
 	kakpipe -S -- npm %arg{@}
 }
 
-  define-command reader-mode -docstring "Enables settings for better reading" %{
+define-command reader-mode -docstring "Enables settings for better reading" %{
   remove-highlighter global/whitespace
   rainbow-disable-window
   ui-trailing-spaces-disable
@@ -502,7 +502,7 @@ map global user d -docstring "dev"  ':enter-user-mode dev <ret>'
 
 declare-user-mode grep
   map global user g -docstring "grep"         ':enter-user-mode grep <ret>'
-  map global grep g -docstring "grep"         ':grep '
+  map global grep g -docstring "grep"         ':grep <ret>'
   map global grep n -docstring "next match"   ':grep-next-match <ret>'
   map global grep p -docstring "prev match"   ':grep-previous-match <ret>'
   map global grep l -docstring "live-grep"    ':live-grep <ret>'
