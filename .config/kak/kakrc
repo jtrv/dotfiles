@@ -227,7 +227,15 @@ define-command diff-buffers -docstring "
         rm $file1 $file2'
       execute-keys !<ret>gg
     "
-}}
+  }
+}
+
+define-command glow -docstring "
+  glow [<files>]: glow utility wrapper
+  Open a glow formatted view of the provided files
+" -file-completion -params 1.. %{
+  kakpipe -n glow -- glow -s dark %arg{@};
+}
 
 define-command grep -docstring "
   grep [<arguments>]: grep utility wrapper
