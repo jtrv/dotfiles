@@ -1,5 +1,5 @@
 hook global BufSetOption filetype=python %{
-  set-option buffer formatcmd "black -"
+  set-option buffer formatcmd "black -q -"
 }
 
 hook global WinSetOption filetype=python %{
