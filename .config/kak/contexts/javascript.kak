@@ -10,9 +10,6 @@ hook global BufSetOption filetype=javascript %{
 }
 
 hook global WinSetOption filetype=javascript %{
-  set-option window lintcmd 'deno lint -'
-  lint
-
 ###### LSP ######
   set-option window lsp_auto_highlight_references true
   set-option window lsp_hover_anchor true
