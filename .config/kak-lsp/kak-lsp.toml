@@ -351,6 +351,12 @@ settings_section = "rust-analyzer"
 hoverActions.enable = false # kak-lsp doesn't support this at the moment
 # cargo.features = []
 
+[language.svelte]
+filetypes = ["svelte"]
+roots = ["package.json"]
+command = "svelteserver"
+args = ["--stdio"]
+
 [language.terraform]
 filetypes = ["terraform"]
 roots = ["*.tf"]
