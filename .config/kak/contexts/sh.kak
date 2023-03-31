@@ -1,7 +1,5 @@
 hook global WinSetOption filetype=sh %{
-  set-option window lintcmd "shellcheck -fgcc -Cnever"
   set-option buffer formatcmd "shfmt"
-  lint
 
 ###### LSP ######
   set-option window lsp_auto_highlight_references true
