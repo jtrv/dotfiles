@@ -387,9 +387,7 @@ roots = [".git", ".hg"]
 command = "yaml-language-server"
 args = ["--stdio"]
 [language.yaml.settings]
-# See https://github.com/redhat-developer/yaml-language-server#language-server-settings
-# Defaults are at https://github.com/redhat-developer/yaml-language-server/blob/master/src/yamlSettings.ts
-# yaml.format.enable = true
+yaml.format.enable = true
 
 [language.zig]
 filetypes = ["zig"]
