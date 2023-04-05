@@ -18,6 +18,7 @@ set -gx BROWSER                     /usr/bin/firefox
 set -gx GTK2_RC_FILES               "$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
 set -gx NETRC                       "$XDG_CONFIG_HOME"/.netrc
 set -gx NPM_CONFIG_USERCONFIG       "$XDG_CONFIG_HOME"/npm/npmrc
+set -gx PARALLEL_HOME               "$XDG_CONFIG_HOME"/parallel
 set -gx PYTHONSTARTUP               "$XDG_CONFIG_HOME"/python/pythonrc
 set -gx _JAVA_OPTIONS -Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
 
