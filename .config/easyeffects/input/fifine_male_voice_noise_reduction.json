@@ -105,12 +105,12 @@
             "threshold": -1.0
         },
         "plugins_order": [
+            "deesser#0",
             "gate#0",
             "compressor#0",
             "filter#0",
-            "deesser#0",
-            "rnnoise#0",
-            "limiter#0"
+            "limiter#0",
+            "rnnoise#0"
         ],
         "rnnoise#0": {
             "bypass": false,
