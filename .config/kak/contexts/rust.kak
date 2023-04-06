@@ -3,6 +3,8 @@ hook global BufSetOption filetype=rust %{
 }
 
 hook global WinSetOption filetype=rust %{
+  map window dev c -docstring "clippy"  ':cargo clippy --color always<ret>'
+
 ###### LSP ######
   set-option window lsp_auto_highlight_references true
   set-option window lsp_hover_anchor true
