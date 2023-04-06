@@ -16,7 +16,7 @@ HOURS=$(jql -r '"hours"' "$JSON")
 MINUTES=$(jql -r '"minutes"' "$JSON")
 
 if [ "$STATUS" = "Discharging" ]; then
-	if [ "$PERCENT" -lt "25" ]; then
+	if [ "$PERCENT" -lt "30" ]; then
 		if [ "$HOURS" -gt "0" ]; then
 			MSG_HOURS="${HOURS}h"
 		fi
@@ -27,9 +27,10 @@ if [ "$STATUS" = "Discharging" ]; then
 			MSG_AND=" and "
 		fi
 		LOW_BAT_MSG="$MSG_HOURS$MSG_AND$MSG_MINUTES remaining"
+
 		notify-send \
 			--urgency critical \
-		  --expire-time 20000 \
+			--expire-time 20000 \
 			"LOW BATTERY" \
 			"$LOW_BAT_MSG"
 	fi
