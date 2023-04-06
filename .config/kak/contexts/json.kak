@@ -1,5 +1,5 @@
 hook global BufSetOption filetype=json %{
-  set-option buffer formatcmd "dprint fmt --stdin format.json --config $XDG_CONFIG_HOME/dprint/dprint.json"
+  set-option buffer formatcmd "jaq --indent %opt{tabstop} ."
 }
 
 hook global WinSetOption filetype=json %{
