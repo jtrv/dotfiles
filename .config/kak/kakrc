@@ -45,7 +45,7 @@ declare-user-mode dev
   map global dev p -docstring "prev lint"    ':lint-previous-message <ret>'
   map global dev l -docstring "lint"         ':lint <ret>'
   map global dev L -docstring "lint-buffer"  ':buffer *lint-output* <ret>'
-  map global dev s -docstring "set filetype" ':connect terminal kamp-filetypes <ret>'
+  map global dev s -docstring "set filetype" ':connect popup kamp-filetypes <ret>'
 
 cork indent https://github.com/alexherbo2/indent.kak %{
   enable-detect-indent
@@ -317,7 +317,7 @@ define-command mdn -docstring "
   mdn <query>: mdn utility wrapper
   Search through MDN documentation with fzf and mdcat
 " %{
-  terminal mdn
+  popup mdn
 }
 
 define-command npm -docstring "
@@ -445,13 +445,13 @@ map global normal <c-t> -docstring "new terminal"   ':connect terminal <ret>'
 map global normal +     -docstring "new popup"      ':connect popup <ret>'
 
 # Pickers
-map global normal B     -docstring "buffer picker"   ': connect terminal kamp-buffers<ret>'
-map global normal <c-p> -docstring "file picker"     ': connect terminal kamp-files<ret>'
-map global normal <c-g> -docstring "grep picker"     ': connect terminal kamp-grep<ret>'
+map global normal B     -docstring "buffer picker"   ': connect popup kamp-buffers<ret>'
+map global normal <c-p> -docstring "file picker"     ': connect popup kamp-files<ret>'
+map global normal <c-g> -docstring "grep picker"     ': connect popup kamp-grep<ret>'
 
 # External Programs
-map global normal <c-h> -docstring "lf"        ':connect terminal lf <ret>'
-map global normal <c-v> -docstring "lazygit"   ':connect terminal lazygit <ret>'
+map global normal <c-h> -docstring "lf"        ':connect popup lf <ret>'
+map global normal <c-v> -docstring "lazygit"   ':connect popup lazygit <ret>'
 
 ###################### PROMPT KEYS ######################
 
