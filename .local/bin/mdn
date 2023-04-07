@@ -10,5 +10,5 @@ cd "$XDG_DATA_HOME"/mdn/content/files/en-us/web &&
 	sd '/(\w)' ' > $1' |
 		fzf --preview "$fzf_preview_command" --query "$*" |
 		sd ' > ' '/' |
-		xargs -I % kak -e "kakpipe -n mdn -- mdcat --local %/index.md" &&
+		xargs -I{} kak -e "glow {}/index.md" &&
 	cd - >/dev/null || exit
