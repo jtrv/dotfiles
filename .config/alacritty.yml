@@ -26,8 +26,8 @@ cursor:
     shape: Block
     blinking: On
   vi_mode_style: Block
-  blink_interval: 750
-  blink_timeout: 5
+  blink_interval: 200
+  blink_timeout: 6
   unfocused_hollow: true
 
 live_config_reload: true
