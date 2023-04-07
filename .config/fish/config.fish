@@ -1,5 +1,4 @@
 fish_default_key_bindings
-set fish_cursor_insert block blink
 
 ######## SOURCE ########
 
