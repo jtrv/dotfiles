@@ -77,16 +77,21 @@ end
 complete -c kakgrep -w rg
 alias kg 'kakgrep'
 
-# diff in kak
+function kakfd
+  k (fd $argv)
+end
+alias kd 'kakfd'
+complete -c kakfd -w fd
+
 function kakdiff
   kak -e "diff $argv; buffer-only; echo; info-buffers"
 end
-alias kd 'kakdiff'
+alias kif 'kakdiff'
 
-function kifft
+function kakdifft
   kak -e "difft $argv; buffer-only; echo; info-buffers"
 end
-alias kdt 'kifft'
+alias kift 'kakdifft'
 
 function kelta
   kak -e "delta $argv; buffer-only; echo; info-buffers"
