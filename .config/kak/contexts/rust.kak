@@ -1,5 +1,6 @@
 hook global BufSetOption filetype=rust %{
   set-option buffer formatcmd 'rustfmt --edition 2021'
+  map global dev c -docstring "clippy"   ':cargo clippy --color always <ret>'
 }
 
 hook global WinSetOption filetype=rust %{
