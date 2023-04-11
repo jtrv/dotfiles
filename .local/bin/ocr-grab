@@ -1,0 +1,10 @@
+#!/bin/sh
+flameshot gui --raw | tesseract stdin stdout > /tmp/ocr-grab.txt
+
+if [ "$(wc -l </tmp/ocr-grab.txt)" -eq 0 ]; then
+	notify-send "ocr-grab" "No text was detected!"
+	exit 1
+fi
+
+xclip -selection clipboard /tmp/ocr-grab.txt
+notify-send "ocr-grab" "$(cat /tmp/ocr-grab.txt)"
