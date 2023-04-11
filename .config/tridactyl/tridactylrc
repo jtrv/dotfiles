@@ -33,7 +33,7 @@ bind ;c composite hint; !s xdotool key Menu
 " COMMANDS
 "
 " Ret editor to kakoune
-set editorcmd alacritty --command kak
+set editorcmd alacritty msg create-window --class=popup --command kamp edit
 "
 " Suspend / "discard" all tabs - handy for stretching out battery life / memory
 command discardall jsb browser.tabs.query({}).then(ts => browser.tabs.discard(ts.map(t=>t.id)))
