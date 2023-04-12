@@ -2,10 +2,10 @@
 
 ############### BASIC SETTINGS ###############
 
-set drawbox on
-set icons on
-set mouse on
-set relativenumber on
+set drawbox true
+set icons true
+set mouse true
+set relativenumber true
 set scrolloff 10
 set shellopts '-eu'
 set shell sh
