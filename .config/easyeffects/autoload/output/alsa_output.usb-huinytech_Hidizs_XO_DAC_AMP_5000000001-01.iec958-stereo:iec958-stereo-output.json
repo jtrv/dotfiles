@@ -1,0 +1,6 @@
+{
+    "device": "alsa_output.usb-huinytech_Hidizs_XO_DAC_AMP_5000000001-01.iec958-stereo",
+    "device-description": "Hidizs XO DAC&AMP Digital Stereo (IEC958)",
+    "device-profile": "iec958-stereo-output",
+    "preset-name": "thieaudio_l3_ciem_crinacle_hidizs_XO"
+}
