@@ -30,7 +30,6 @@ fi
 xrandr --output virtual-1 --mode 1920x1080
 
 clipmenud &                          # clipboard history daemon
-easyeffects --gapplication-service & # autoEQ service
 pcmanfm --daemon-mode &              # file-manager daemon
 picom &                              # window opacity / blur
 redshift &                           # bluelight filter
