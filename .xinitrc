@@ -35,7 +35,6 @@ picom &                              # window opacity / blur
 redshift &                           # bluelight filter
 udiskie -An --terminal=lf &          # notif for mountable drives
 ~/.local/bin/map-keys &              # map caps to ctrl/esc
-~/.local/bin/rclone-init &           # start rclone daemons
 ~/.local/bin/trackball-speed &       # set trackball speed
 
 # randomized wallpapers
