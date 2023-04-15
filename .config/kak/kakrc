@@ -38,14 +38,14 @@ cork kak-lsp https://github.com/kak-lsp/kak-lsp %{
 
 # Lint/format etc mode
 declare-user-mode dev
-  map global dev d -docstring "diagnostic"   ':lsp-diagnostics <ret>'
-  map global dev f -docstring "format"       ':format <ret>'
-  map global dev F -docstring "format sel"   ':format-selections <ret>'
-  map global dev n -docstring "next lint"    ':lint-next-message <ret>'
-  map global dev p -docstring "prev lint"    ':lint-previous-message <ret>'
-  map global dev l -docstring "lint"         ':lint <ret>'
-  map global dev L -docstring "lint-buffer"  ':buffer *lint-output* <ret>'
-  map global dev s -docstring "set filetype" ':connect popup kamp-filetypes <ret>'
+  map global dev d -docstring "diagnostic"   ': lsp-diagnostics <ret>'
+  map global dev f -docstring "format"       ': format <ret>'
+  map global dev F -docstring "format sel"   ': format-selections <ret>'
+  map global dev n -docstring "next lint"    ': lint-next-message <ret>'
+  map global dev p -docstring "prev lint"    ': lint-previous-message <ret>'
+  map global dev l -docstring "lint"         ': lint <ret>'
+  map global dev L -docstring "lint-buffer"  ': buffer *lint-output* <ret>'
+  map global dev s -docstring "set filetype" ': set-filetype<ret>'
 
 cork indent https://github.com/alexherbo2/indent.kak %{
   enable-detect-indent
@@ -327,6 +327,34 @@ define-command npm -docstring "
 	kakpipe -S -- npm %arg{@}
 }
 
+define-command open-file-picker -docstring "
+  Open-file-picker: Opens file picker.
+" %{
+  prompt file: -shell-script-candidates 'fd --type file' %{
+    edit %val{text}
+  }
+}
+
+define-command open-buffer-picker -docstring "
+  open-buffer-picker: Opens buffer picker.
+" %{
+  prompt buffer: -buffer-completion %{
+    buffer %val{text}
+  }
+}
+map global goto b -docstring "buffer"   '<a-;>: open-buffer-picker<ret>'
+
+define-command open-global-picker -docstring 'open-global-picker: Opens global search picker.' %{
+  # Provides word completion
+  prompt grep: -shell-script-candidates %{
+    echo "write '$kak_response_fifo'" > "$kak_command_fifo"
+    cat "$kak_response_fifo" | kak -f 's[\w-]{4,}<ret>y%<a-R>a<ret>'
+  } %{
+    grep %val{text}
+  }
+}
+map global user / -docstring "global search"   '<a-;>: open-global-picker<ret>'
+
 define-command reader-mode -docstring "Enables settings for better reading" %{
   remove-highlighter global/whitespace
   rainbow-disable-window
@@ -350,6 +378,20 @@ define-command rman -docstring "
     else
     	echo "kakpipe -n %arg{1} -- rusty-man --viewer rich %arg{@}"
     fi
+  }
+}
+
+define-command save-macro-as -docstring "
+  save-macro-as <command-name>: define-command with macro register
+" -params 1 %{
+  define-command %arg{1} -override %{ execute-keys "%reg{@}" }
+}
+
+define-command set-filetype -docstring "prompt to set filetype" %{
+  prompt filetype: -shell-script-candidates %{
+      fd --base-directory "$kak_runtime/rc/filetype" -t f -x basename -s .kak {}
+    } %{
+      set buffer filetype %val{text}
   }
 }
 
@@ -445,8 +487,8 @@ map global normal <c-t> -docstring "new terminal"   ':connect terminal <ret>'
 map global normal +     -docstring "new popup"      ':connect popup <ret>'
 
 # Pickers
-map global normal B     -docstring "buffer picker"   ': connect popup kamp-buffers<ret>'
-map global normal <c-p> -docstring "file picker"     ': connect popup kamp-files<ret>'
+map global normal B     -docstring "buffer picker"   ': open-buffer-picker<ret>'
+map global normal <c-p> -docstring "file picker"     ': open-file-picker<ret>'
 map global normal <c-g> -docstring "grep picker"     ': connect popup kamp-grep<ret>'
 
 # External Programs
@@ -575,9 +617,5 @@ cork ui https://github.com/kkga/ui.kak %{
 # Write to file
 map global user w -docstring "write"   ':w <ret>'
 
-  # Write to file
+# pipe selections as args with xargs
 map global user x -docstring "xargs"   ':xargs-pipe <ret>'
-
-cork grep-write https://github.com/JacobTravers/grep-write.kak
-
-map global user / -docstring "search"   ':grep '
