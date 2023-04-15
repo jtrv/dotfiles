@@ -53,7 +53,7 @@ alias ls      'fls -l --color=always' # preferred listing
 alias lsn     'fls' # normal ls for piping
 alias lt      'exa -aT --color=always --group-directories-first --git --icons' # tree listing
 alias loc     'plocate'
-alias m       'math'
+alias m       'qalc'
 alias mirrors '~/.local/bin/update-mirrors' # update mirrors / database
 alias mkdir   'mkdir -p'
 alias nbg     'feh --randomize --bg-scale --no-fehbg ~/media/pictures/wallpapers/' # change bg
