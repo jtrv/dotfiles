@@ -618,4 +618,4 @@ cork ui https://github.com/kkga/ui.kak %{
 map global user w -docstring "write"   ':w <ret>'
 
 # pipe selections as args with xargs
-map global user x -docstring "xargs"   ':xargs-pipe <ret>'
+map global user x -docstring "xargs"   ':xargs <ret>'
