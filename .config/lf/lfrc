@@ -138,19 +138,15 @@ map r
 map gb cd ~/.local/bin/
 map gc cd ~/.config/
 map gd cd ~/downloads/
-map gD cd ~/mxs/drive/
-map gF cd ~/mxs/ftp/
 map gg cd ~/games/
 map gm cd ~/media/pictures/memes/
 map gM cd /run/media/sugimoto/
 map gn cd ~/notes/
 map gp cd ~/media/pictures/
 map gr cd ~/repos/
-map gR cd ~/mxs/repos/
 map gs cd ~/media/pictures/screenshots/
 map gS cd ~/study/
 map gt cd ~/tmp/
-map gT cd ~/mxs/tasks/
 map gW cd ~/media/pictures/wallpapers/
 
 # kakoune-like bindings
