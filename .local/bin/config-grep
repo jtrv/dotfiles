@@ -1,0 +1,2 @@
+#!/bin/sh
+config ls-files | xargs -I {} rg --vimgrep "$@" {} | kak -e "set buffer filetype grep"
