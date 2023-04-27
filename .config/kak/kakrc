@@ -244,7 +244,17 @@ define-command grep -docstring "
 " -override -params .. %{
   evaluate-commands %sh{
     if [ $# -eq 0 ]; then
-       set -- -F "${kak_selection}"
+      case "$kak_opt_grepcmd" in
+      ag\ * | git\ grep\ * | grep\ * | rg\ * | ripgrep\ * | ugrep\ * | ug\ *)
+        set -- -F "${kak_selection}"
+        ;;
+      ack\ *)
+        set -- -Q "${kak_selection}"
+        ;;
+      *)
+        set -- "${kak_selection}"
+        ;;
+      esac
     fi
 
     output=$(mktemp -d "${TMPDIR:-/tmp}"/kak-grep.XXXXXXXX)/fifo
