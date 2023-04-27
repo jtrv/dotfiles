@@ -275,11 +275,26 @@ define-command hey -docstring "
   hey <query>: heygpt utility wrapper
   Query ChatGPT and stream the response in a FIFO buffer
 " -params 1.. %{
-  kakpipe -n hey -- heygpt %arg{@};
+  kakpipe -w -n hey-response -- heygpt %arg{@};
 }
 hook global WinDisplay '\*hey\*' %{
   ui-wrap-enable
-  set-option buffer readonly false
+}
+define-command hey-buffer -docstring "
+  opens a *hey-prompt* buffer for writing prompts to pass to hey
+" %{
+  edit -scratch *hey-prompt*
+  set-option buffer filetype hey-prompt
+}
+define-command hey-buffer-write -docstring "
+  send the *hey-prompt* buffer to hey
+" -hidden %[
+  buffer *hey-prompt*
+  execute-keys '%: hey %val{selection} <ret>'
+]
+hook global BufSetOption filetype=hey-prompt %{
+  alias buffer write hey-buffer-write
+  alias buffer w hey-buffer-write
 }
 
 define-command how -docstring "
@@ -566,6 +581,8 @@ declare-user-mode grep
   map global grep n -docstring "next match"   ':grep-next-match <ret>'
   map global grep p -docstring "prev match"   ':grep-previous-match <ret>'
   map global grep l -docstring "live-grep"    ':live-grep <ret>'
+
+map global user h -docstring "hey"   ':hey-buffer <ret>'
 
 map global user k -docstring "klip off"   ':kakboard-disable; kakboard-disable <ret>'
 map global user K -docstring "klip on"    ':kakboard-enable <ret>'
