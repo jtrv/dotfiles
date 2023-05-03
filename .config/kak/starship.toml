@@ -43,7 +43,7 @@ style = ''
 format = '[ $hash$tag ]($style inverted)'
 commit_hash_length = 7
 only_detached = false
-tag_symbol = ' 笠'
+tag_symbol = ' 󰓹'
 tag_disabled = false
 disabled = false
 
@@ -98,72 +98,72 @@ disabled = false
 
 [battery]
 format = "[ $symbol$percentage ]($style inverted)"
-charging_symbol = ' '
-discharging_symbol = ' '
+charging_symbol = '󰂅 '
+discharging_symbol = '󰁹 '
 disabled = false
 
 [[battery.display]]
 threshold = 10
 style = ""
-charging_symbol = ' '
-discharging_symbol = ' '
+charging_symbol = '󰂆 '
+discharging_symbol = '󰂃 '
 
 [[battery.display]]
 threshold = 20
 style = ""
-charging_symbol = ' '
-discharging_symbol = ' '
+charging_symbol = '󰂆 '
+discharging_symbol = '󰁻 '
 
 [[battery.display]]
 threshold = 30
 style = ""
-charging_symbol = ' '
-discharging_symbol = ' '
+charging_symbol = '󰂇 '
+discharging_symbol = '󰁼 '
 
 [[battery.display]]
 threshold = 40
 style = ""
-charging_symbol = ' '
-discharging_symbol = ' '
+charging_symbol = '󰂈 '
+discharging_symbol = '󰁽 '
 
 [[battery.display]]
 threshold = 50
 style = ""
-charging_symbol = ' '
-discharging_symbol = ' '
+charging_symbol = '󰂈 '
+discharging_symbol = '󰁾 '
 
 [[battery.display]]
 threshold = 60
 style = ""
-charging_symbol = ' '
-discharging_symbol = ' '
+charging_symbol = '󰂉 '
+discharging_symbol = '󰁿 '
 
 [[battery.display]]
 threshold = 70
 style = ""
-charging_symbol = ' '
-discharging_symbol = ' '
+charging_symbol = '󰂉 '
+discharging_symbol = '󰂀 '
 
 [[battery.display]]
 threshold = 80
 style = ""
-charging_symbol = ' '
-discharging_symbol = ' '
+charging_symbol = '󰂊 '
+discharging_symbol = '󰂁 '
 
 [[battery.display]]
 threshold = 90
 style = ""
-charging_symbol = ' '
-discharging_symbol = ' '
+charging_symbol = '󰂋 '
+discharging_symbol = '󰂂 '
 
 [[battery.display]]
 threshold = 100
 style = ""
-charging_symbol = ' '
-discharging_symbol = ' '
+charging_symbol = '󰂅 '
+discharging_symbol = '󰁹 '
 
 [memory_usage]
-format = "[  ${ram}]($style inverted)"
+format = "[ 󰍛 ${ram}]($style inverted)"
 style = ""
 threshold = -1
 disabled = true
@@ -217,7 +217,7 @@ disabled = true
 [custom.kakposition]
 description = 'Relative position of the cursor inside the buffer'
 style = ''
-format = '[  $output ]($style inverted)'
+format = '[ 󰍜 $output ]($style inverted)'
 command = 'echo -n $(($kak_cursor_line * 100 / $kak_buf_line_count))%'
 when = '[ -n "$kak_cursor_line" ]'
 shell = ['sh']
@@ -249,7 +249,7 @@ disabled = false
 
 [custom.kaklsp_hint]
 description = "Show hints number from kak-lsp if any"
-format = "[ %opt{lsp_diagnostic_hint_count} ﯦ ]($style inverted)"
+format = "[ %opt{lsp_diagnostic_hint_count} 󰛨 ]($style inverted)"
 style = "bold"
 when = '[ -n "$kak_opt_lsp_diagnostic_hint_count" -a "$kak_opt_lsp_diagnostic_hint_count" -ne 0 ]'
 shell = ['sh']

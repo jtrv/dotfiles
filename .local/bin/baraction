@@ -60,7 +60,7 @@ net() {
   elif [ "$wifi" = "1" ]; then
     echo ""
   else
-    echo "睊"
+    echo "󰖪"
   fi
 }
 ##############################
@@ -69,10 +69,10 @@ net() {
 blu() {
   bluetoothStatus="$(bluetoothctl info | rg 'Connected: yes' | wc -l)"
 
-  if [ "$bluetoothStatus" = "1" ]; then
-    echo ""
+  if [ "$bluetoothStatus" = 1 ]; then
+    echo "󰂱"
   else
-    echo ""
+    echo "󰂲"
   fi
 }
 ##############################
@@ -145,6 +145,6 @@ vol() {
 SLEEP_SEC=2
 #loops forever outputting a line every SLEEP_SEC secs
 while :; do
-  echo "$(ram)  $(ssd) | $(vol) | $(mic) $(net) $(blu) | $(bat) |"
+  echo "$(ram)  󰋊$(ssd) | $(vol) | $(mic) $(net) $(blu) | $(bat) |"
   sleep $SLEEP_SEC
 done
