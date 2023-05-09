@@ -284,7 +284,7 @@ command = "pylsp"
 settings_section = "_"
 [language.python.settings._]
 # See https://github.com/python-lsp/python-lsp-server#configuration
-# pylsp.configurationSources = ["flake8"]
+pylsp.configurationSources = ["flake8"]
 
 [language.r]
 filetypes = ["r"]
