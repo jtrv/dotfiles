@@ -10,7 +10,7 @@ android-tools
 ani-cli-git
 anime4k
 arch-audit
-arch-wiki-docs-search
+arch-wiki-docs
 arch4edu-keyring
 archivemount
 asciinema
@@ -23,6 +23,7 @@ aws-cli
 bandwhich
 base
 base-devel
+bash-language-server
 bat
 binutils
 bison
@@ -48,12 +49,14 @@ checkbashisms
 choose
 clang
 clipmenu
+clojure-lsp-bin
 cmake
 comby-bin
 compiler-rt
 cork.kak-git
 croc
 cronie
+crystalline-bin
 czkawka-cli
 dart-sass
 dash
@@ -76,7 +79,7 @@ epub-thumbnailer-git
 eslint_d
 espanso
 exa
-exercism-bin
+exercism
 exfat-utils
 expac
 fakeroot
@@ -100,6 +103,7 @@ firefox-ublock-origin
 fisher
 flameshot-git
 flex
+flow-bin
 forkgram
 frawk
 fstl
@@ -113,6 +117,7 @@ gettext
 gifsicle
 gifski
 gimp
+gimp-devel-noconflict
 git
 git-delta
 github-cli
@@ -122,6 +127,7 @@ gnu-free-fonts
 gnuplot
 go
 google-chrome
+gopls
 gpg-tui
 gping
 grep
@@ -129,8 +135,10 @@ groff
 gron
 grub
 grub-btrfs
+gtk-engine-murrine
 gzip
 handlr-regex
+haskell-language-server-static
 helix
 hors
 htmlq
@@ -144,7 +152,6 @@ iotop
 iptables
 jack2
 jaq
-javascript-typescript-langserver
 jless
 jp2a
 jpegoptim
@@ -154,7 +161,6 @@ just
 kdeconnect
 kicad
 kondo
-lazygit
 leanify-git
 lf-sixel-git
 lib32-giflib
@@ -185,11 +191,11 @@ lnav
 lobster
 logseq-desktop-bin
 lostfiles
+lua-language-server
 lutris
 lxappearance
 lychee
 m4
-macchina
 make
 man-db
 mangal-bin
@@ -221,6 +227,7 @@ neovim
 network-manager-applet
 networkmanager
 nextdns
+nim
 nmap
 noseyparker-git
 noto-fonts
@@ -267,6 +274,9 @@ profanity
 profile-sync-daemon
 pueue
 pulsemixer
+python-lsp-black
+python-lsp-ruff
+python-lsp-server
 python-pip
 qbittorrent
 qrcp-bin
@@ -279,9 +289,9 @@ realesrgan-ncnn-vulkan-bin
 realsr-ncnn-vulkan-bin
 redshift
 rescrobbled-git
+revive
 ripgrep-all
 rm-improved
-rnr
 rofi
 ruff
 rustscan
@@ -320,7 +330,6 @@ t-rec
 taplo-cli
 tealdeer
 termshark
-termtosvg
 termv
 tesseract
 texinfo
@@ -336,13 +345,10 @@ topgrade
 torbrowser-launcher
 transmission-cli
 tree
-ts-node
 ttf-firacode-nerd
 ttf-ibm-plex
 ttf-ibmplex-mono-nerd
-ttf-mac-fonts
 ttyper
-typescript-language-server
 udict-bin
 udiskie
 ueberzug
@@ -351,7 +357,6 @@ ugrep
 veracrypt
 video2x
 visidata
-visual-studio-code-bin
 vivaldi
 volta-bin
 vopono
@@ -362,10 +367,12 @@ watchexec
 weechat
 which
 whois
+wikiman
 wine-staging
 winetricks
 wireguard-tools
 wireplumber
+wmctrl
 xarchiver
 xbindkeys
 xboxdrv
@@ -387,10 +394,12 @@ xorg-xinput
 xournalpp
 yamllint
 yarn
+yq
 yt-dlp
 yuzu-mainline-bin
 zathura
 zathura-pdf-poppler
+zls
 zola
 zoxide
 zram-generator

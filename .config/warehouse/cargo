@@ -7,9 +7,16 @@ cargo-nextest
 cargo-spellcheck
 cargo-trend
 cl-wordle
+dprint
+erdtree
+erdtree
 fls
 gdrive-search
 gobang
+gprepo
+gptrepo
+grep-write
+grug
 hashgood
 heygpt
 iching
@@ -17,6 +24,9 @@ kak-lsp
 kakpipe
 kakship
 kamp
+macchina
+mullion
+nerdfix
 osintui
 pipe-rename
 rusty-man
@@ -28,6 +38,7 @@ shellclear
 skanuvaty
 skyspell
 skyspell_kak
+starship
 thesauromatic
 transgression-tui
 wthrr

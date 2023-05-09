@@ -10,7 +10,13 @@ eslint-plugin-react-hooks
 gatsby
 gitignore
 jest
+oxidation-compiler
 purgecss
 run-pty
 stylelint_d
+svelte-language-server
+ts-node
+typescript
+typescript-language-server
 webtorrent-mpv-hook
+yaml-language-server
