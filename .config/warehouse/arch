@@ -3,6 +3,7 @@ acpi_call
 acpid
 adobe-source-sans-fonts
 alacritty-sixel-git
+alacritty-themes
 alsa-firmware
 alsa-utils
 ananicy-cpp
@@ -51,6 +52,7 @@ cups
 czkawka-cli
 dart-sass
 dash
+deno
 devour
 difftastic
 discord
@@ -189,6 +191,7 @@ odt2txt
 onefetch
 opendoas
 openssh
+ormolu-bin
 osv-scanner
 ouch
 oxipng
@@ -263,6 +266,19 @@ termshark
 termv
 tesseract
 texinfo
+texlab
+texlive-bibtexextra
+texlive-core
+texlive-fontsextra
+texlive-formatsextra
+texlive-games
+texlive-humanities
+texlive-latexextra
+texlive-music
+texlive-pictures
+texlive-pstricks
+texlive-publishers
+texlive-science
 thefuck
 throttled
 tickrs
@@ -330,6 +346,7 @@ xorg-xinput
 xournalpp
 yamllint
 yarn
+yin-yang
 yt-dlp
 zathura
 zathura-pdf-poppler
