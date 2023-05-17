@@ -237,40 +237,6 @@ define-command glow -docstring "
   kakpipe -n glow -- glow -s dark %arg{@};
 }
 
-define-command grep -docstring "
-  grep [<arguments>]: grep utility wrapper
-  All optional arguments are forwarded to the grep utility
-  Pass no argument to grep literal string matches for the current selection
-" -override -params .. %{
-  evaluate-commands %sh{
-    if [ $# -eq 0 ]; then
-      case "$kak_opt_grepcmd" in
-      ag\ * | git\ grep\ * | grep\ * | rg\ * | ripgrep\ * | ugrep\ * | ug\ *)
-        set -- -F "${kak_selection}"
-        ;;
-      ack\ *)
-        set -- -Q "${kak_selection}"
-        ;;
-      *)
-        set -- "${kak_selection}"
-        ;;
-      esac
-    fi
-
-    output=$(mktemp -d "${TMPDIR:-/tmp}"/kak-grep.XXXXXXXX)/fifo
-    mkfifo ${output}
-    ( ${kak_opt_grepcmd} "$@" | tr -d '\r' > ${output} 2>&1 & ) > /dev/null 2>&1 < /dev/null
-
-    printf %s\\n "evaluate-commands -try-client '$kak_opt_toolsclient' %{
-      edit! -fifo ${output} *grep*
-      set-option buffer filetype grep
-      set-option buffer grep_current_line 0
-      hook -always -once buffer BufCloseFifo .* %{ nop %sh{ rm -r $(dirname ${output}) } }
-    }"
-  }
-}
-complete-command grep file
-
 define-command hey -docstring "
   hey <query>: heygpt utility wrapper
   Query ChatGPT and stream the response in a FIFO buffer
