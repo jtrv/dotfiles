@@ -145,7 +145,6 @@ map gn cd ~/notes/
 map gp cd ~/media/pictures/
 map gr cd ~/repos/
 map gs cd ~/media/pictures/screenshots/
-map gS cd ~/study/
 map gt cd ~/tmp/
 map gW cd ~/media/pictures/wallpapers/
 
