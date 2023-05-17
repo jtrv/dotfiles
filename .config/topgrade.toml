@@ -39,7 +39,7 @@ ignore_failures = ["git_repos"]
 cleanup = true
 
 [git]
-max_concurrency = 5
+max_concurrency = 10
 # Additional git repositories to pull
 repos = [
     "~/.local/share/kak/cork/plugins/*/repo",
