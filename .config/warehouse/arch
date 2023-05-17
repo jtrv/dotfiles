@@ -1,5 +1,5 @@
-acme.sh
 adobe-source-sans-fonts
+alacritty-sixel-git
 alsa-card-profiles
 alsa-firmware
 alsa-utils
@@ -11,7 +11,6 @@ ani-cli-git
 anime4k
 arch-audit
 arch-wiki-docs
-arch4edu-keyring
 archivemount
 asciinema
 aspell-en
@@ -19,7 +18,6 @@ attractorr
 atuin
 autoconf
 automake
-aws-cli
 bandwhich
 base
 base-devel
@@ -105,7 +103,6 @@ flameshot-git
 flex
 flow-bin
 forkgram
-frawk
 fstl
 fwupd
 fzf
@@ -123,7 +120,6 @@ git-delta
 github-cli
 glow
 glslang
-gnu-free-fonts
 gnuplot
 go
 google-chrome
@@ -139,7 +135,6 @@ gtk-engine-murrine
 gzip
 handlr-regex
 haskell-language-server-static
-helix
 hors
 htmlq
 huniq-git
@@ -150,6 +145,7 @@ innoextract
 intel-ucode
 iotop
 iptables
+irqbalance
 jack2
 jaq
 jless
@@ -161,6 +157,7 @@ just
 kdeconnect
 kicad
 kondo
+lazygit
 leanify-git
 lf-sixel-git
 lib32-giflib
@@ -285,8 +282,8 @@ rate-mirrors
 rclone
 read-edid
 realcugan-ncnn-vulkan-git
-realesrgan-ncnn-vulkan-bin
-realsr-ncnn-vulkan-bin
+realesrgan-ncnn-vulkan
+realsr-ncnn-vulkan
 redshift
 rescrobbled-git
 revive
@@ -294,6 +291,7 @@ ripgrep-all
 rm-improved
 rofi
 ruff
+rust-analyzer
 rustscan
 rustup
 sad
@@ -333,6 +331,18 @@ termshark
 termv
 tesseract
 texinfo
+texlab
+texlive-bibtexextra
+texlive-core
+texlive-formatsextra
+texlive-games
+texlive-humanities
+texlive-latexextra
+texlive-music
+texlive-pictures
+texlive-pstricks
+texlive-publishers
+texlive-science
 thefuck
 tickrs
 tidal-hifi-bin
