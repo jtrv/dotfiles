@@ -22,8 +22,7 @@ bind \cj edit_command_buffer
 if status --is-interactive
   abbr --add --global cp     'cp -i'
   abbr --add --global mv     'mv -i'
-  abbr --add --global rm     'rm -i'
-  abbr --add --global npin   'license MIT && gitignore node && covgen jtravers@tutanota.com && npm init -y && volta pin node@lts && git init'
+  abbr --add --global rm     'rip'
   abbr --add --global gitbit 'git commit --amend --no-edit --date "Sat 01 Jan 2022 16:20:00 PST"'
 end
 
