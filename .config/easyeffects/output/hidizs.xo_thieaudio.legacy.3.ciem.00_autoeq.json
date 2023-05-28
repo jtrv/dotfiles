@@ -1,0 +1,16 @@
+{
+    "output": {
+        "blocklist": [],
+        "convolver#0": {
+            "autogain": true,
+            "bypass": false,
+            "input-gain": 0.0,
+            "ir-width": 100,
+            "kernel-path": "/home/sugimoto/.config/easyeffects/irs/ThieAudio Legacy 3 (CIEM, 00 setting) minimum phase 48000 Hz.irs",
+            "output-gain": -10.0
+        },
+        "plugins_order": [
+            "convolver#0"
+        ]
+    }
+}

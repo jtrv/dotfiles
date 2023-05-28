@@ -1,0 +1,6 @@
+{
+    "device": "alsa_output.usb-huinytech_Hidizs_XO_DAC_AMP_5000000001-01.analog-stereo",
+    "device-description": "Hidizs XO DAC&AMP Analog Stereo",
+    "device-profile": "analog-output",
+    "preset-name": "hidizs.xo_sennheiser.hd.560s_autoeq"
+}
