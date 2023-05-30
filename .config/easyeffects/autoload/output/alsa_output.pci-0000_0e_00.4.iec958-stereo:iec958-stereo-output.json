@@ -1,6 +1,0 @@
-{
-    "device": "alsa_output.pci-0000_0e_00.4.iec958-stereo",
-    "device-description": "Starship/Matisse HD Audio Controller Digital Stereo (IEC958)",
-    "device-profile": "iec958-stereo-output",
-    "preset-name": "out_direct"
-}
