@@ -1,0 +1,10 @@
+#!/bin/sh
+SOUNDCARD=$(pactl list short cards | cut -f 2 | rg -o '(pci-0000_0e_00.*)' -r '$1')
+
+pactl set-card-profile "alsa_card.$SOUNDCARD" output:iec958-stereo
+
+SINK=$(pactl list short sinks | cut -f 2 | rg -F "alsa_output.$SOUNDCARD.iec958-stereo")
+
+pactl set-default-sink "$SINK"
+
+easyeffects -l out_direct
