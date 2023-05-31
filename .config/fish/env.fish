@@ -27,6 +27,7 @@ set -gx ANDROID_HOME      "$XDG_DATA_HOME"/android
 set -gx CARGO_HOME        "$XDG_DATA_HOME"/cargo
 set -gx GNUPGHOME         "$XDG_DATA_HOME"/gnupg
 set -gx GOPATH            "$XDG_DATA_HOME"/go
+set -gx GRADLE_USER_HOME  "$XDG_DATA_HOME"/gradle
 set -gx NODE_REPL_HISTORY "$XDG_DATA_HOME"/node_repl_history
 set -gx NVM_DIR           "$XDG_DATA_HOME"/nvm
 set -gx RUSTUP_HOME       "$XDG_DATA_HOME"/rustup
