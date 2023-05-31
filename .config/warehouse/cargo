@@ -1,44 +1,76 @@
-attractorr
-cargo-audit
-cargo-bloat
-cargo-cache
-cargo-fix
-cargo-nextest
-cargo-spellcheck
-cargo-trend
-cl-wordle
-dprint
-erdtree
-erdtree
-fls
-gdrive-search
-gobang
-gprepo
-grug
-hashgood
-heygpt
-iching
-kak-lsp
-kakpipe
-kakship
-kamp
-macchina
-mullscan
-nerdfix
-osintui
-pipe-rename
-protonup-rs
-rusty-man
-rusty-rain
-scaphandre
-sd
-secli
-shellclear
-skanuvaty
-skyspell
-skyspell_kak
-starship
-thesauromatic
-transgression-tui
-wthrr
-zet
+attractorr -> https://github.com/rust-lang/crates.io-index
+atuin -> https://github.com/ellie/atuin
+bandwhich -> https://github.com/imsnif/bandwhich
+bottom -> https://github.com/ClementTsang/bottom
+broot -> https://github.com/Canop/broot
+cargo-audit -> https://github.com/rustsec/rustsec
+cargo-bloat -> https://github.com/RazrFalcon/cargo-bloat
+cargo-cache -> https://github.com/matthiaskrgr/cargo-cache
+cargo-fix -> https://github.com/rust-lang/crates.io-index
+cargo-geiger -> https://github.com/rust-secure-code/cargo-geiger
+cargo-nextest -> https://github.com/nextest-rs/nextest
+cargo-spellcheck -> https://github.com/drahnr/cargo-spellcheck
+cargo-trend -> https://github.com/rust-lang/crates.io-index
+cargo-udeps -> https://github.com/est31/cargo-udeps
+cargo-update -> https://github.com/nabijaczleweli/cargo-update
+cl-wordle -> https://github.com/rust-lang/crates.io-index
+cpz -> https://github.com/SUPERCILEX/fuc
+crabz -> https://github.com/sstadick/crabz
+dog -> https://github.com/ogham/dog
+dprint -> https://github.com/dprint/dprint
+du-dust -> https://github.com/bootandy/dust
+erdtree -> https://github.com/solidiquis/erdtree
+espanso -> https://github.com/espanso/espanso
+exa -> https://github.com/ogham/exa
+fclones -> https://github.com/pkolaczk/fclones
+fd-find -> https://github.com/sharkdp/fd
+flamegraph -> https://github.com/flamegraph-rs/flamegraph
+fls -> https://github.com/saethlin/fls
+git-delta -> https://github.com/dandavison/delta
+gobang -> https://github.com/TaKO8Ki/gobang
+gpg-tui -> https://github.com/orhun/gpg-tui
+gprepo -> /home/sugimoto/repos/gprepo
+grug -> /home/sugimoto/repos/grug
+hashgood -> https://github.com/thombles/hashgood.git
+heygpt -> https://github.com/fuyufjh/heygpt
+hors -> https://github.com/WindSoilder/hors
+htmlq -> https://github.com/mgdm/htmlq
+huniq -> https://github.com/koraa/huniq
+hyperfine -> https://github.com/sharkdp/hyperfine
+iching -> https://github.com/Velfi/i-ching
+jless -> https://github.com/PaulJuliusMartinez/jless
+jql -> https://github.com/yamafaktory/jql
+just -> https://github.com/casey/just
+kak-lsp -> /home/sugimoto/.local/share/kak/cork/plugins/kak-lsp/repo
+kakpipe -> /home/sugimoto/.local/share/kak/cork/plugins/kakpipe/repo
+kakship -> /home/sugimoto/.local/share/kak/cork/plugins/kakship/repo
+kamp -> /home/sugimoto/.local/share/kak/cork/plugins/kampliment/repo
+kondo -> https://github.com/tbillington/kondo
+lychee -> https://github.com/lycheeverse/lychee
+macchina -> https://github.com/Macchina-CLI/macchina
+mullscan -> /home/sugimoto/repos/mullscan
+nerdfix -> https://github.com/loichyan/nerdfix.git
+noseyparker-cli -> https://github.com/praetorian-inc/noseyparker
+onefetch -> https://github.com/o2sh/onefetch
+osintui -> https://github.com/wssheldon/osintui
+ouch -> https://github.com/ouch-org/ouch
+oxipng -> https://github.com/shssoichiro/oxipng
+pastel -> https://github.com/sharkdp/pastel
+pipe-rename -> https://github.com/marcusbuffett/pipe-rename
+protonup-rs -> https://github.com/auyer/Protonup-rs
+rmz -> https://github.com/SUPERCILEX/fuc
+rusty-man -> https://git.sr.ht/~ireas/rusty-man
+rusty-rain -> https://github.com/cowboy8625/rusty-rain
+scaphandre -> https://github.com/hubblo-org/scaphandre
+sd -> https://github.com/chmln/sd
+secli -> https://github.com/AnishDe12020/secli
+shellclear -> https://github.com/rusty-ferris-club/shellclear
+skanuvaty -> https://github.com/Esc4iCEscEsc/skanuvaty
+skyspell -> https://github.com/your-tools/skyspell
+skyspell_kak -> https://github.com/your-tools/skyspell
+starship -> https://github.com/starship/starship
+thesauromatic -> https://github.com/cjrh/thesauromatic
+transgression-tui -> https://github.com/PanAeon/transg-tui
+trippy -> https://github.com/fujiapple852/trippy
+wthrr -> https://github.com/tobealive/wthrr-the-weathercrab
+zet -> https://github.com/yarrow/zet
