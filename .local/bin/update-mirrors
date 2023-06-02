@@ -29,9 +29,9 @@ rate-mirrors \
 	notify-send -t 3000 "Update Mirrors" "Doas authentication required"
 
 {
-	doas mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist-backup &&
-		doas mv "$ARCH_RESULTS" /etc/pacman.d/mirrorlist
-	doas mv /etc/pacman.d/chaotic-mirrorlist /etc/pacman.d/chaotic-mirrorlist-backup &&
-		doas mv "$CHAOTIC_RESULTS" /etc/pacman.d/chaotic-mirrorlist
+	mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist-backup &&
+		mv "$ARCH_RESULTS" /etc/pacman.d/mirrorlist
+	mv /etc/pacman.d/chaotic-mirrorlist /etc/pacman.d/chaotic-mirrorlist-backup &&
+		mv "$CHAOTIC_RESULTS" /etc/pacman.d/chaotic-mirrorlist
 } &&
 	paru -Syy
