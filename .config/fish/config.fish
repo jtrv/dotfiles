@@ -53,7 +53,7 @@ alias lsn     'fls' # normal ls for piping
 alias lt      'exa -aT --color=always --group-directories-first --git --icons' # tree listing
 alias loc     'plocate'
 alias m       'qalc'
-alias mirrors '~/.local/bin/update-mirrors' # update mirrors / database
+alias mirrors 'doas ~/.local/bin/update-mirrors' # update mirrors / database
 alias mkdir   'mkdir -p'
 alias nbg     'feh --randomize --bg-scale --no-fehbg ~/media/pictures/wallpapers/' # change bg
 alias off     'systemctl suspend' # save state, enter low-power mode
