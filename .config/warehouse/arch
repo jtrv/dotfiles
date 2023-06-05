@@ -179,6 +179,7 @@ network-manager-applet
 networkmanager
 nextdns-unprivileged
 nfs-utils
+nim
 noseyparker-git
 noto-fonts
 noto-fonts-cjk
@@ -351,6 +352,7 @@ yt-dlp
 zathura
 zathura-pdf-poppler
 zet
+zig
 zola
 zoom
 zoxide
