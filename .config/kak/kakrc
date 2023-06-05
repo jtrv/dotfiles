@@ -83,12 +83,6 @@ set global grepcmd 'rg --smart-case --vimgrep'
 # Empty scratch buffer(s)
 hook global BufCreate '\*scratch(-\d+)?\*' %{ execute-keys -draft '%<a-d>' }
 
-# Alacritty integration
-cork alacritty https://github.com/alexherbo2/alacritty.kak %{
-  alias global terminal alacritty-terminal-window
-  alias global popup alacritty-terminal-popup
-}
-
 cork auto-pairs https://github.com/alexherbo2/auto-pairs.kak %{ enable-auto-pairs }
 
 cork grep-expand https://github.com/JacobTravers/grep-expand.kak
@@ -356,6 +350,15 @@ define-command open-global-picker -docstring 'open-global-picker: Opens global s
   }
 }
 map global user / -docstring "global search"   '<a-;>: open-global-picker<ret>'
+
+define-command popup -docstring "
+popup [<program>] [<arguments>]: Creates a new terminal as an Alacritty window (class: popup).
+"  -params ..  %{
+  nop %sh{
+    alacritty msg create-window --class=popup --working-directory "$PWD" --command sh -c 'export KAKOUNE_SESSION=$1 KAKOUNE_CLIENT=$2 && shift 2 && exec "$@"' -- "$kak_session" "$kak_client" "${@:-$SHELL}"
+  }
+}
+complete-command popup shell
 
 define-command reader-mode -docstring "Enables settings for better reading" %{
   remove-highlighter global/whitespace
