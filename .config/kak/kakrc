@@ -548,6 +548,11 @@ cork kakoune-buffers https://github.com/delapouite/kakoune-buffers %{
     alias global bo! buffer-only-force
 }
 
+cork kakoune-buffer-manager https://github.com/theowenyoung/kakoune-buffer-manager %{
+  map global normal <a-B> -docstring "open buffer manager"   ': buffer-manager <ret>'
+  map global buffers B    -docstring "buffer manager"        ': buffer-manager <ret>'
+}
+
 cork kakoune-cd https://github.com/delapouite/kakoune-cd %{
   map global user c ': enter-user-mode cd<ret>' -docstring 'cd'
   alias global cdb change-directory-current-buffer
