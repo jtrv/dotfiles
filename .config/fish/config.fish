@@ -107,3 +107,10 @@ alias kreg    'kamp get reg'
 alias kcd-pwd 'cd (kamp get sh pwd)'
 alias kcd-buf 'cd (dirname (kamp get val buffile))'
 alias kft     'kamp get -b \* opt filetype | sort | uniq' # list file types you're working on
+
+# Start X at login
+if status is-login
+  if test -z "$DISPLAY" -a "$XDG_VTNR" = 1
+    exec startx -- -keeptty
+  end
+end
