@@ -1,40 +1,40 @@
-attractorr
-cargo-audit
-cargo-bloat
-cargo-cache
-cargo-fix
-cargo-nextest
-cargo-spellcheck
-cargo-trend
-cl-wordle
-colorlog
-dprint
-erdtree
-fls
-gdrive-search
-gobang
-gprepo
-handlr-regex
-hashgood
-heygpt
-iching
-kak-lsp
-kak_grep_write
-kakpipe
-kakship
-kamp
-noseyparker-bin
-osintui
-pipe-rename
-rusty-man
-rusty-rain
-scaphandre
-sd
-secli
-shellclear
-skanuvaty
-skyspell
-skyspell_kak
-thesauromatic
-wthrr
-zet
+attractorr -> https://github.com/rnestler/attractorr
+cargo-audit -> https://github.com/rust-lang/crates.io-index
+cargo-bloat -> https://github.com/rust-lang/crates.io-index
+cargo-cache -> https://github.com/rust-lang/crates.io-index
+cargo-fix -> https://github.com/rust-lang/crates.io-index
+cargo-nextest -> https://github.com/rust-lang/crates.io-index
+cargo-spellcheck -> https://github.com/rust-lang/crates.io-index
+cargo-trend -> https://github.com/rust-lang/crates.io-index
+cl-wordle -> https://github.com/rust-lang/crates.io-index
+colorlog -> /home/sugimoto/repos/colorlog
+dprint -> https://github.com/rust-lang/crates.io-index
+erdtree -> https://github.com/rust-lang/crates.io-index
+fls -> https://github.com/rust-lang/crates.io-index
+gdrive-search -> https://github.com/rust-lang/crates.io-index
+gobang -> https://github.com/TaKO8Ki/gobang
+gprepo -> /home/sugimoto/repos/gprepo
+handlr-regex -> https://github.com/rust-lang/crates.io-index
+hashgood -> https://github.com/thombles/hashgood
+heygpt -> https://github.com/rust-lang/crates.io-index
+iching -> https://github.com/rust-lang/crates.io-index
+kak-lsp -> /home/sugimoto/.local/share/kak/cork/plugins/kak-lsp/repo
+kak_grep_write -> /home/sugimoto/repos/grep-gamelle.kak/kak_grep_write
+kakpipe -> /home/sugimoto/.local/share/kak/cork/plugins/kakpipe/repo
+kakship -> /home/sugimoto/.local/share/kak/cork/plugins/kakship/repo
+kamp -> /home/sugimoto/.local/share/kak/cork/plugins/kampliment/repo
+noseyparker-bin -> https://github.com/praetorian-inc/noseyparker
+osintui -> https://github.com/rust-lang/crates.io-index
+pipe-rename -> https://github.com/rust-lang/crates.io-index
+rusty-man -> https://github.com/rust-lang/crates.io-index
+rusty-rain -> https://github.com/rust-lang/crates.io-index
+scaphandre -> https://github.com/rust-lang/crates.io-index
+sd -> https://github.com/chmln/sd.git
+secli -> https://github.com/rust-lang/crates.io-index
+shellclear -> https://github.com/rusty-ferris-club/shellclear
+skanuvaty -> https://github.com/Esc4iCEscEsc/skanuvaty
+skyspell -> https://github.com/rust-lang/crates.io-index
+skyspell_kak -> https://github.com/rust-lang/crates.io-index
+thesauromatic -> https://github.com/rust-lang/crates.io-index
+wthrr -> https://github.com/rust-lang/crates.io-index
+zet -> https://github.com/rust-lang/crates.io-index
