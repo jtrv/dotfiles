@@ -1,3 +1,0 @@
-#!/bin/sh
-
-pactl set-default-sink alsa_output.usb-Apple__Inc._USB-C_to_3.5mm_Headphone_Jack_Adapter_DWH152406TUJKLTAZ-00.analog-stereo
