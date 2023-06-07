@@ -229,6 +229,7 @@ define-command doc-grep -docstring "
 " -params .. %sh{
   fd \
     --absolute-path \
+    --exclude '*changelog*' \
     --search-path "$(dirname $(dirname $kak_runtime))" \
     --search-path "$XDG_DATA_HOME/kak/" \
     --extension asciidoc |
