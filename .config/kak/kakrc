@@ -224,6 +224,17 @@ define-command diff-buffers -docstring "
   }
 }
 
+define-command doc-grep -docstring "
+  grep documentation files
+" -params .. %sh{
+  fd \
+    --absolute-path \
+    --search-path "$(dirname $(dirname $kak_runtime))" \
+    --search-path "$XDG_DATA_HOME/kak/" \
+    --extension asciidoc |
+      xargs echo "grep %arg{@}"
+}
+
 define-command glow -docstring "
   glow [<files>]: glow utility wrapper
   Open a glow formatted view of the provided files
