@@ -425,6 +425,13 @@ define-command tldr -docstring "
   }
 }
 
+define-command view-pdf -docstring "
+  view-pdf [<file.pdf>]: Watch .tex and view the pdf in zathura.
+" -file-completion -params .. %{
+  terminal devour zathura %arg{@}
+}
+alias global pdf view-pdf
+
 define-command xargs -docstring "
   xargs [<arguments>]: xargs utility wrapper
   Execute a command with each selection, selections are represented with {} as a placeholder
