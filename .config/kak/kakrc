@@ -238,7 +238,7 @@ define-command grep-buffers -docstring "
   if [ $# -eq 0 ]; then
     echo "grep -F %val{selection} %val{buflist}"
   else
-    echo  "grep %arg{@} %val{buflist}"
+    echo "grep %arg{@} %val{buflist}"
   fi
 }
 
@@ -320,7 +320,7 @@ define-command npm -docstring "
   npm [<arguments>]: npm utility wrapper
   Launch npm with the given parameters inside kakoune
 " -params 1.. %{
-	kakpipe -S -- npm %arg{@}
+  kakpipe -S -- npm %arg{@}
 }
 
 define-command open-file-picker -docstring "
@@ -352,13 +352,12 @@ define-command open-global-picker -docstring 'open-global-picker: Opens global s
 map global user / -docstring "global search"   '<a-;>: open-global-picker<ret>'
 
 define-command popup -docstring "
-popup [<program>] [<arguments>]: Creates a new terminal as an Alacritty window (class: popup).
-"  -params ..  %{
+  popup [<program>] [<arguments>]: Creates a new terminal as an Alacritty window (class: popup).
+" -shell-completion -params .. %{
   nop %sh{
     alacritty msg create-window --class=popup --working-directory "$PWD" --command sh -c 'export KAKOUNE_SESSION=$1 KAKOUNE_CLIENT=$2 && shift 2 && exec "$@"' -- "$kak_session" "$kak_client" "${@:-$SHELL}"
   }
 }
-complete-command popup shell
 
 define-command reader-mode -docstring "Enables settings for better reading" %{
   remove-highlighter global/whitespace
@@ -379,9 +378,9 @@ define-command rman -docstring "
 " -params 1 %{
   evaluate-commands %sh{
     if [ $# -eq 0 ]; then
-    	echo "kakpipe -n %val{selection} -- rusty-man --viewer rich %val{selection}"
+      echo "kakpipe -n %val{selection} -- rusty-man --viewer rich %val{selection}"
     else
-    	echo "kakpipe -n %arg{1} -- rusty-man --viewer rich %arg{@}"
+      echo "kakpipe -n %arg{1} -- rusty-man --viewer rich %arg{@}"
     fi
   }
 }
