@@ -94,7 +94,7 @@ cork kakboard https://github.com/lePerdu/kakboard %{ hook global WinCreate .* %{
 
 cork kakoune-auto-percent https://github.com/delapouite/kakoune-auto-percent
 
-cork kakoune-state-save https://gitlab.com/Screwtapello/kakoune-state-save %{
+cork kakoune-state-save https://gitlab.com/Screwtapello/kakoune-state-save.git %{
   hook global KakBegin .* %{
     state-save-reg-load colon
     state-save-reg-load pipe
@@ -561,7 +561,7 @@ cork kakoune-cd https://github.com/delapouite/kakoune-cd %{
   alias global pwd print-working-directory
 }
 
-cork case https://gitlab.com/FlyingWombat/case.kak %{
+cork case https://gitlab.com/FlyingWombat/case.kak.git %{
   map global user C -docstring "case"   ': enter-user-mode case<ret>'
   map global case u '~' -docstring "upper"
   map global case l '`' -docstring "lower"
