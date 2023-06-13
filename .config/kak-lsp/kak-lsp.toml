@@ -216,10 +216,10 @@ filetypes = ["latex"]
 roots = [".git", ".hg"]
 command = "texlab"
 settings_section = "texlab"
-[language.latex.build]
-onSave=true
-args=["-pdf","-pdflatex\=lualatex","-interaction\=nonstopmode","-synctex\=1","%f"]
+
 [language.latex.settings.texlab]
+build.onSave = true
+build.args = ["-pdf","-pdflatex=lualatex","-interaction=nonstopmode","-synctex=1","%f"]
 # See https://github.com/latex-lsp/texlab/blob/master/docs/options.md
 #
 # Preview configuration for zathura with SyncTeX search.
