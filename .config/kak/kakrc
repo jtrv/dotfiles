@@ -47,7 +47,7 @@ declare-user-mode dev
   map global dev L -docstring "lint-buffer"  ': buffer *lint-output* <ret>'
   map global dev s -docstring "set filetype" ': set-filetype<ret>'
 
-cork indent https://github.com/alexherbo2/indent.kak %{
+cork indent https://github.com/kirusfg/indent.kak %{
   enable-detect-indent
   set-indent global 2
 }
@@ -124,9 +124,6 @@ cork kakship https://github.com/eburghar/kakship %{ kakship-enable }
 
 # Interact with external programs
 cork kampliment https://github.com/vbauerster/kampliment
-
-# Swap client windows etc
-cork window https://github.com/alexherbo2/window.kak
 
 ###################### COMMANDS ######################
 
