@@ -31,8 +31,6 @@ end
 
 alias acme    "acme.sh --home \"$XDG_CONFIG_HOME\"/acme.sh/"
 alias ani     'ani-cli -q best' # weeb out in S-rank ultra-fidelity 8k lossless greenray
-alias awman   'wiki-docs-search'
-complete -c wiki-docs-search -a '(fd html "/usr/share/doc/arch-wiki/html/en/" | rg -o \'/(\w*).html$\' -r \'$1\')'
 alias cat     'bat'
 alias cdr     'cd (git rev-parse --show-toplevel)'
 alias cols    'column -c $COLUMNS'
