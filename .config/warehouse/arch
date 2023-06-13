@@ -16,6 +16,7 @@ asciinema
 aspell-en
 autoconf
 automake
+b3sum
 base
 base-devel
 bash-language-server
@@ -64,6 +65,7 @@ dunst
 easyeffects
 epub-thumbnailer-git
 eslint_d
+espanso-bin
 exercism
 exfat-utils
 expac
@@ -106,7 +108,6 @@ gnuplot
 go
 google-chrome
 gopls
-gping
 grep
 groff
 gron
@@ -122,7 +123,6 @@ innoextract
 intel-ucode
 iptables
 irqbalance
-jack2
 jaq
 jp2a
 jpegoptim
@@ -149,6 +149,7 @@ lib32-v4l-utils
 libclc
 libgit2-glib
 libqalculate
+libressl
 libtool
 libva-mesa-driver
 libva-utils
@@ -159,7 +160,7 @@ linux-zen-headers
 lld
 llvm
 lnav
-lobster
+lobster-git
 logseq-desktop-bin
 lostfiles
 lua-language-server
@@ -228,6 +229,7 @@ picom
 pijul
 pipewire
 pipewire-alsa
+pipewire-jack
 pipewire-pulse
 pipewire-v4l2
 pkgconf
@@ -238,7 +240,6 @@ pngquant
 polly
 potato
 prettier
-procs
 profanity
 profile-sync-daemon
 pueue
@@ -250,7 +251,6 @@ python-pip
 qbittorrent
 qrcp-bin
 radeontop
-rate-mirrors
 rclone
 read-edid
 realcugan-ncnn-vulkan-git
@@ -259,11 +259,8 @@ realsr-ncnn-vulkan
 redshift
 rescrobbled-git
 revive
-ripgrep-all
-rm-improved
 ruff
 rust-analyzer
-rustscan
 rustup
 sad
 sccache
@@ -275,7 +272,6 @@ shellcheck-bin
 shfmt
 signal-desktop
 sl
-sniffglue
 soundux
 sox
 spectrwm
@@ -343,6 +339,7 @@ w3m
 waifu2x-ncnn-vulkan
 watchexec
 weechat
+wget2
 which
 whois
 wikiman
