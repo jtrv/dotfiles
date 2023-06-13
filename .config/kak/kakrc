@@ -83,6 +83,11 @@ set global grepcmd 'rg --smart-case --vimgrep'
 # Empty scratch buffer(s)
 hook global BufCreate '\*scratch(-\d+)?\*' %{ execute-keys -draft '%<a-d>' }
 
+# Only color active window cursor
+cork active-window https://github.com/greenfork/active-window.kak %{
+  set-face global InactiveCursor default,rgba:5d5d5dFF
+}
+
 cork auto-pairs https://github.com/alexherbo2/auto-pairs.kak %{ enable-auto-pairs }
 
 cork grep-expand https://github.com/jtrv/grep-expand.kak
