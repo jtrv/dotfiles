@@ -229,7 +229,7 @@ define-command diff-buffers -docstring "
 }
 
 define-command doc-grep -docstring "
-  grep documentation files
+  doc-grep <query>: grep kakoune and plugin docs
 " -params .. %sh{
   fd \
     --absolute-path \
