@@ -110,13 +110,28 @@
             "compressor#0",
             "filter#0",
             "limiter#0",
-            "rnnoise#0"
+            "rnnoise#0",
+            "speex#0"
         ],
         "rnnoise#0": {
             "bypass": false,
             "input-gain": 0.0,
             "model-path": "",
             "output-gain": 0.0
+        },
+        "speex#0": {
+            "bypass": false,
+            "enable-agc": false,
+            "enable-denoise": false,
+            "enable-dereverb": false,
+            "input-gain": 0.0,
+            "noise-suppression": -70,
+            "output-gain": 0.0,
+            "vad": {
+                "enable": true,
+                "probability-continue": 90,
+                "probability-start": 95
+            }
         }
     }
 }
