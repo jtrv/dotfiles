@@ -10,6 +10,7 @@ set -gx XDG_STATE_HOME    "$HOME"/.local/state
 
 # Cache
 set -gx LESSHISTFILE "$XDG_CACHE_HOME"/less/history
+set -gx TEXMFVAR     "$XDG_CACHE_HOME"/texlive/texmf-var
 
 # Config
 set -gx AWS_CONFIG_FILE             "$XDG_CONFIG_HOME"/aws/config
