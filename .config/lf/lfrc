@@ -175,8 +175,8 @@ map <esc>    clear
 map <enter>  open
 map o        push :open-with<space>
 
-map D     rip                     # safer remove function (rip)
-map <a-d> delete                  # actually delete
+map <a-d> rip                     # safer remove function (rip)
+map D     delete                  # actually delete
 map F     :fuzzy_file             # jump to file with fzf choice
 map G     :fuzzy_content          # search files by grepping contents
 map m     push :mkdir<space>      # create new dir
