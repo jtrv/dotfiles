@@ -62,7 +62,7 @@ self_update = true
 
 # Custom commands
 [commands]
-"proton" = "protonup-rs -q -l"
+"proton" = "protonup-rs -q"
 
 [linux]
 # Arguments to pass yay when updating packages
