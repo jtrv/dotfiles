@@ -1,7 +1,5 @@
 #!/bin/sh
 
-VOLTA_HOME=~/.local/share/volta
-
 volta install node@latest npm@latest yarn@latest &&
 	volta list --format plain |
 	rg -o 'package\s(\S+)@' -r '$1' |
