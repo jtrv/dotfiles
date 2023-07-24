@@ -91,7 +91,7 @@ firefox-tridactyl
 firefox-tridactyl-native
 firefox-ublock-origin
 fisher
-flameshot-git
+flameshot
 flex
 fstl
 fwupd
@@ -133,11 +133,13 @@ jpegoptim
 jql
 just
 kondo
-lazygit
+lazygit-git
 leanify-git
 lf-sixel-git
 libqalculate
 libtool
+libva-vdpau-driver
+libvdpau-va-gl
 linux-firmware
 linux-headers
 linux-zen
@@ -146,6 +148,7 @@ lnav
 lobster
 logseq-desktop-bin
 lostfiles
+lsp-plugins
 lutris
 lxappearance
 lychee
@@ -157,7 +160,9 @@ mangal-bin
 materia-gtk-theme
 mcomix
 mdcat
+mdp
 mediainfo
+mesa-vdpau
 minify-html-bin
 moar
 mold
@@ -209,7 +214,9 @@ picom
 pipe-rename
 pipewire
 pipewire-alsa
+pipewire-jack
 pipewire-pulse
+pipewire-v4l2
 pkgconf
 playerctl
 plocate
@@ -220,6 +227,7 @@ prettier
 procs
 profanity
 profile-sync-daemon
+progress
 pueue
 pulsemixer
 python-black
@@ -235,6 +243,7 @@ revive
 ripgrep-all
 rm-improved
 rofi
+roomeqwizard
 rsync
 ruff
 rust-analyzer
@@ -268,18 +277,18 @@ termv
 tesseract
 texinfo
 texlab
+texlive-basic
 texlive-bibtexextra
-texlive-core
 texlive-fontsextra
 texlive-formatsextra
 texlive-games
 texlive-humanities
 texlive-latexextra
+texlive-mathscience
 texlive-music
 texlive-pictures
 texlive-pstricks
 texlive-publishers
-texlive-science
 thefuck
 throttled
 tickrs
@@ -305,6 +314,7 @@ udiskie
 ueberzug
 ufw
 ugrep
+vdpauinfo
 veracrypt
 video2x
 visidata
@@ -351,7 +361,6 @@ yin-yang
 yt-dlp
 zathura
 zathura-pdf-poppler
-zet
 zig
 zola
 zoom
