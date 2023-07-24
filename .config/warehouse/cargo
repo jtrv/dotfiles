@@ -1,5 +1,6 @@
 attractorr -> https://github.com/rnestler/attractorr
 cargo-audit -> https://github.com/rust-lang/crates.io-index
+cargo-binstall -> https://github.com/rust-lang/crates.io-index
 cargo-bloat -> https://github.com/rust-lang/crates.io-index
 cargo-cache -> https://github.com/rust-lang/crates.io-index
 cargo-fix -> https://github.com/rust-lang/crates.io-index
@@ -8,6 +9,7 @@ cargo-spellcheck -> https://github.com/rust-lang/crates.io-index
 cargo-trend -> https://github.com/rust-lang/crates.io-index
 cl-wordle -> https://github.com/rust-lang/crates.io-index
 colorlog -> /home/sugimoto/repos/colorlog
+cpz -> https://github.com/rust-lang/crates.io-index
 dprint -> https://github.com/rust-lang/crates.io-index
 erdtree -> https://github.com/rust-lang/crates.io-index
 fls -> https://github.com/rust-lang/crates.io-index
@@ -26,15 +28,19 @@ kamp -> /home/sugimoto/.local/share/kak/cork/plugins/kampliment/repo
 noseyparker-bin -> https://github.com/praetorian-inc/noseyparker
 osintui -> https://github.com/rust-lang/crates.io-index
 pipe-rename -> https://github.com/rust-lang/crates.io-index
+rate_mirrors -> https://github.com/westandskif/rate-mirrors
+rmz -> https://github.com/rust-lang/crates.io-index
 rusty-man -> https://github.com/rust-lang/crates.io-index
 rusty-rain -> https://github.com/rust-lang/crates.io-index
 scaphandre -> https://github.com/rust-lang/crates.io-index
+sccache -> https://github.com/mozilla/sccache
 sd -> https://github.com/chmln/sd.git
 secli -> https://github.com/rust-lang/crates.io-index
 shellclear -> https://github.com/rusty-ferris-club/shellclear
 skanuvaty -> https://github.com/Esc4iCEscEsc/skanuvaty
 skyspell -> https://github.com/rust-lang/crates.io-index
 skyspell_kak -> https://github.com/rust-lang/crates.io-index
+speedtest-rs -> https://github.com/rust-lang/crates.io-index
 thesauromatic -> https://github.com/rust-lang/crates.io-index
 wthrr -> https://github.com/rust-lang/crates.io-index
 zet -> https://github.com/rust-lang/crates.io-index
