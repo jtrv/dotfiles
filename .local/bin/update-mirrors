@@ -9,26 +9,26 @@ TOP_MIRRORS_NUMBER_TO_RETEST=10
 RESULTS="$XDG_DATA_HOME"/rate-mirrors/results
 LOGS="$XDG_DATA_HOME"/rate-mirrors/logs
 
-mkdir -p "$RESULTS" "$LOGS" 2>&1 >/dev/null
+{ mkdir -p "$RESULTS" "$LOGS" >/dev/null; } 2>&1
 
 echo "Evaluating mirrors..."
 
-rate_mirrors \
+{ rate_mirrors \
 	--concurrency "$CONCURRENCY" \
 	--per-mirror-timeout "$PER_MIRROR_TIMEOUT" \
 	--top-mirrors-number-to-retest "$TOP_MIRRORS_NUMBER_TO_RETEST" \
 	--save "$RESULTS"/mirrorlist \
 	arch \
-	--max-delay "$MAX_DELAY" 2>&1 >"$LOGS"/arch.log &&
+	--max-delay "$MAX_DELAY" >"$LOGS"/arch.log; } 2>&1 &&
 	echo "Arch mirrors evaluated, view log in $LOGS/arch.log" &&
 	notify-send -t 3000 "Update Mirrors" "Arch mirrors evaluated." &
 
-rate_mirrors \
+{ rate_mirrors \
 	--concurrency "$CONCURRENCY" \
 	--per-mirror-timeout "$PER_MIRROR_TIMEOUT" \
 	--top-mirrors-number-to-retest "$TOP_MIRRORS_NUMBER_TO_RETEST" \
 	--save "$RESULTS"/chaotic-mirrorlist \
-	chaotic-aur 2>&1 >"$LOGS"/chaotic.log &&
+	chaotic-aur >"$LOGS"/chaotic.log; } 2>&1 &&
 	echo "Chaotic mirrors evaluated, view log in $LOGS/chaotic.log" &&
 	notify-send -t 3000 "Update Mirrors" "Chaotic mirrors evaluated." &
 
@@ -42,8 +42,8 @@ Input password to continue."
 
 doas sh -c "
 mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist-backup
-cp '"$RESULTS"'/mirrorlist /etc/pacman.d/
+cp '$RESULTS'/mirrorlist /etc/pacman.d/
 mv /etc/pacman.d/chaotic-mirrorlist /etc/pacman.d/chaotic-mirrorlist-backup
-cp '"$RESULTS"'/chaotic-mirrorlist /etc/pacman.d/
+cp '$RESULTS'/chaotic-mirrorlist /etc/pacman.d/
 paru -Syy
 "
