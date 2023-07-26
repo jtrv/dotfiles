@@ -1,37 +1,19 @@
 #!/bin/sh
-JSON="/tmp/low-battery.json"
+#!/bin/bash
 
-acpi --battery |
-	rg '^Battery 0: (?P<status>\w+), (?P<percent>\d+)%, (?P<hours>\d+):(?P<minutes>\d+)' \
-		-o -r '{
-  "status":  "$status",
-  "percent": "$percent",
-  "hours":   "$hours",
-  "minutes": "$minutes"
-}' >"$JSON"
+AC=$(cat "/sys/class/power_supply/AC/online")
+BAT=$(cat "/sys/class/power_supply/BAT0/capacity")
+ENERGY_NOW=$(cat "/sys/class/power_supply/BAT0/energy_now")
+POWER_NOW=$(cat "/sys/class/power_supply/BAT0/power_now")
 
-STATUS=$(jql -r '"status"' "$JSON")
-PERCENT=$(jql -r '"percent"' "$JSON")
-HOURS=$(jql -r '"hours"' "$JSON")
-MINUTES=$(jql -r '"minutes"' "$JSON")
-
-if [ "$STATUS" = "Discharging" ]; then
-	if [ "$PERCENT" -lt "30" ]; then
-		if [ "$HOURS" -gt "0" ]; then
-			MSG_HOURS="${HOURS}h"
-		fi
-		if [ "$MINUTES" -gt "0" ]; then
-			MSG_MINUTES="${MINUTES}m"
-		fi
-		if [ "$HOURS" -gt "0" ] && [ "$MINUTES" -gt "0" ]; then
-			MSG_AND=" and "
-		fi
-		LOW_BAT_MSG="$MSG_HOURS$MSG_AND$MSG_MINUTES remaining"
-
+if [ "$AC" -eq 0 ]; then
+	if [ "$BAT" -le 30 ]; then
+		TIME_LEFT=$(echo "scale=2; $ENERGY_NOW/$POWER_NOW" | bc)
+		MINUTES=$(echo "$TIME_LEFT * 60" | bc | cut -d'.' -f 1)
 		notify-send \
-			--urgency critical \
-			--expire-time 20000 \
-			"LOW BATTERY" \
-			"$LOW_BAT_MSG"
+			-u critical \
+			-t 60000\
+			"LOW BATTERY"\
+			"${BAT}% or ~${MINUTES}m remain\n Plug in charger soon"
 	fi
 fi

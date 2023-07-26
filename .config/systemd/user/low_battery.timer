@@ -1,0 +1,9 @@
+[Unit]
+Description=Run check_battery.service every 15 minutes if battery level is below 20% and not charging
+
+[Timer]
+OnUnitActiveSec=15min
+Unit=low_battery.service
+
+[Install]
+WantedBy=timers.target
