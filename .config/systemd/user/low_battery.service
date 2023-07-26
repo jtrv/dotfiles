@@ -1,0 +1,6 @@
+[Unit]
+Description=Notifications for low battery
+
+[Service]
+Type=oneshot
+ExecStart=/home/sugimoto/.local/bin/low-battery
