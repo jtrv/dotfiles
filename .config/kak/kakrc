@@ -92,8 +92,6 @@ cork auto-pairs https://github.com/alexherbo2/auto-pairs.kak %{ enable-auto-pair
 
 cork grep-expand https://github.com/jtrv/grep-expand.kak
 
-cork grep-write https://github.com/jtrv/grep-write.kak
-
 # Clipboard Integration
 cork kakboard https://github.com/lePerdu/kakboard %{ hook global WinCreate .* %{ kakboard-enable } }
 
@@ -277,6 +275,21 @@ define-command grep -override -docstring "
     else
       echo "kakpipe -w -n grep -- $kak_opt_grepcmd --color=always %arg{@}; set-option buffer filetype grep"
     fi
+  }
+}
+
+define-command grep-write -docstring "
+  grep-write: pipes the current grep-buffer to grug -w and prints the results
+" %{
+  evaluate-commands -draft %{
+    execute-keys '%'
+    evaluate-commands %sh{
+      printf %s "$kak_selection" | grug -w > "$XDG_DATA_HOME"/kak/grug
+    }
+  }
+  evaluate-commands %sh{
+    output=$(cat "$XDG_DATA_HOME"/kak/grug)
+    echo "echo -markup {Information} '$output'; echo -debug '$output';"
   }
 }
 
