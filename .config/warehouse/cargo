@@ -23,6 +23,7 @@ du-dust -> https://github.com/bootandy/dust
 erdtree -> https://github.com/solidiquis/erdtree
 exa -> https://github.com/rust-lang/crates.io-index
 fclones -> https://github.com/rust-lang/crates.io-index
+fclones-gui -> https://github.com/rust-lang/crates.io-index
 fd-find -> https://github.com/rust-lang/crates.io-index
 flamegraph -> https://github.com/rust-lang/crates.io-index
 fls -> https://github.com/rust-lang/crates.io-index
@@ -39,6 +40,7 @@ htmlq -> https://github.com/rust-lang/crates.io-index
 huniq -> https://github.com/rust-lang/crates.io-index
 hyperfine -> https://github.com/rust-lang/crates.io-index
 iching -> https://github.com/rust-lang/crates.io-index
+jaq -> https://github.com/rust-lang/crates.io-index
 jless -> https://github.com/rust-lang/crates.io-index
 jql -> https://github.com/rust-lang/crates.io-index
 just -> https://github.com/rust-lang/crates.io-index
@@ -46,11 +48,14 @@ kak-lsp -> /home/sugimoto/.local/share/kak/cork/plugins/kak-lsp/repo
 kakpipe -> /home/sugimoto/.local/share/kak/cork/plugins/kakpipe/repo
 kakship -> /home/sugimoto/.local/share/kak/cork/plugins/kakship/repo
 kamp -> /home/sugimoto/.local/share/kak/cork/plugins/kampliment/repo
+kmon -> https://github.com/rust-lang/crates.io-index
 kondo -> https://github.com/rust-lang/crates.io-index
 lychee -> https://github.com/rust-lang/crates.io-index
 macchina -> https://github.com/rust-lang/crates.io-index
+magnetfinder -> https://github.com/rust-lang/crates.io-index
 mdcat -> https://github.com/rust-lang/crates.io-index
 mullscan -> /home/sugimoto/repos/mullscan
+nerdfix -> https://github.com/loichyan/nerdfix.git
 noseyparker-cli -> https://github.com/praetorian-inc/noseyparker
 onefetch -> https://github.com/rust-lang/crates.io-index
 osintui -> https://github.com/wssheldon/osintui
@@ -60,12 +65,12 @@ pastel -> https://github.com/rust-lang/crates.io-index
 pipe-rename -> https://github.com/rust-lang/crates.io-index
 procs -> https://github.com/rust-lang/crates.io-index
 protonup-rs -> https://github.com/rust-lang/crates.io-index
+rage -> https://github.com/rust-lang/crates.io-index
 rate_mirrors -> https://github.com/westandskif/rate-mirrors
 ripgrep -> https://github.com/rust-lang/crates.io-index
 ripgrep_all -> https://github.com/rust-lang/crates.io-index
 rm-improved -> https://github.com/rust-lang/crates.io-index
 rmz -> https://github.com/rust-lang/crates.io-index
-rust-analyzer -> https://github.com/rust-lang/rust-analyzer
 rustscan -> https://github.com/rust-lang/crates.io-index
 rusty-man -> https://github.com/rust-lang/crates.io-index
 rusty-rain -> https://github.com/rust-lang/crates.io-index

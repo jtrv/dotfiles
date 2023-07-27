@@ -31,6 +31,8 @@ bottles
 breeze-icons
 btrfs-progs
 calibre
+calibre-plugin-dedrm
+calibre-plugin-goodreads
 ccache
 chafa
 chaotic-keyring
@@ -188,6 +190,7 @@ mons
 moreutils
 mprocs
 mpv
+mpv-mpris
 mpv-sponsorblock
 mpv-thumbfast-git
 mpv-uosc-git
@@ -213,6 +216,7 @@ opencl-amd
 opendoas
 openmp
 osv-scanner
+otf-font-awesome
 pacman
 pacman-cleanup-hook
 pandoc-bin
@@ -226,7 +230,6 @@ peep
 perf
 perl-image-exiftool
 picom
-pijul
 pipewire
 pipewire-alsa
 pipewire-jack
@@ -239,7 +242,6 @@ plzip
 pngquant
 polly
 potato
-prettier
 profanity
 profile-sync-daemon
 pueue
@@ -297,17 +299,18 @@ termv
 tesseract
 texinfo
 texlab
+texlive-basic
 texlive-bibtexextra
-texlive-core
+texlive-fonts-fontawesome
 texlive-formatsextra
 texlive-games
 texlive-humanities
 texlive-latexextra
+texlive-mathscience
 texlive-music
 texlive-pictures
 texlive-pstricks
 texlive-publishers
-texlive-science
 thefuck
 tickrs
 tidal-hifi-bin
@@ -319,11 +322,13 @@ tokei
 topgrade
 torbrowser-launcher
 ttf-firacode-nerd
+ttf-font-awesome
 ttf-ibm-plex
 ttf-ibmplex-mono-nerd
 ttyper
 udict-bin
 udiskie
+ueberzugpp
 ufw
 ugrep
 upx
