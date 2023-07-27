@@ -365,7 +365,7 @@ define-command open-global-picker -docstring 'open-global-picker: Opens global s
     grep %val{text}
   }
 }
-map global user / -docstring "global search"   '<a-;>: open-global-picker<ret>'
+map global user / -docstring "search"   '<a-;>: open-global-picker<ret>'
 
 define-command popup -docstring "
   popup [<program>] [<arguments>]: Creates a new terminal as an Alacritty window (class: popup).
@@ -653,3 +653,4 @@ map global user w -docstring "write"   ':w <ret>'
 
 # pipe selections as args with xargs
 map global user x -docstring "xargs"   ':xargs <ret>'
+
