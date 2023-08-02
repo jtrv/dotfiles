@@ -250,12 +250,14 @@ define-command glow -docstring "
 define-command grep-buffers -docstring "
   grep-buffers [<pattern>]: search for a pattern in all buffers
   If <pattern> is not specified, the content of the main selection is used
-" -params .. %sh{
-  if [ $# -eq 0 ]; then
-    echo "grep -F %val{selection} %val{buflist}"
-  else
-    echo "grep %arg{@} %val{buflist}"
-  fi
+" -params .. %{
+  evaluate-commands %sh{
+    if [ $# -eq 0 ]; then
+      echo "grep -F %val{selection} %val{buflist}"
+    else
+      echo "grep %arg{@} %val{buflist}"
+    fi
+  }
 }
 
 define-command hey -docstring "
