@@ -1,5 +1,5 @@
 #!/bin/sh
-killall xbindkeys xcape >/dev/null
+{ killall xbindkeys xcape >/dev/null; } 2>&1
 xbindkeys -f .config/.xbindkeysrc
 setxkbmap us -option ctrl:nocaps &&
 	xcape -e 'Control_L=Escape'
