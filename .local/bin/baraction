@@ -74,34 +74,6 @@ blu() {
   fi
 }
 ##############################
-#    BATTERY
-##############################
-# bat() {
-#   batstat="$(cat /sys/class/power_supply/BAT0/status)"
-#   percent="$(cat /sys/class/power_supply/BAT0/capacity)"
-#   if [ $batstat = 'Unknown' ]; then
-#     batstat=""
-#   elif [ $batstat = "Charging" ]; then
-#     batstat=""
-#   elif [[ $percent -ge 5 ]] && [[ $percent -le 19 ]]; then
-#     batstat=""
-#   elif [[ $percent -ge 20 ]] && [[ $percent -le 39 ]]; then
-#     batstat=""
-#   elif [[ $percent -ge 40 ]] && [[ $percent -le 59 ]]; then
-#     batstat=""
-#   elif [[ $percent -ge 60 ]] && [[ $percent -le 79 ]]; then
-#     batstat=""
-#   elif [[ $percent -ge 80 ]] && [[ $percent -le 95 ]]; then
-#     batstat=""
-#   elif [[ $percent -ge 96 ]] && [[ $percent -le 100 ]]; then
-#     batstat=""
-#   fi
-
-#   battery=$(printf %3s $percent)
-
-#   echo "$batstat$battery%"
-# }
-##############################
 #    VOLUME
 ##############################
 vol() {
@@ -117,20 +89,6 @@ vol() {
   fi
   echo "$icon $vol%"
 }
-##############################
-#    PACKAGES
-##############################
-# pkgs() {
-#   pkgs="$(pacman -Q | wc -l)"
-#   echo "$pkgs"
-# }
-##############################
-#    UPGRADES
-##############################
-# upgrades() {
-#   upgrades="$(pacman -Qu | wc -l)"
-#   echo "$upgrades"
-# }
 ##############################
 #    BAR RENDER
 ##############################
