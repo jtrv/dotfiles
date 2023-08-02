@@ -293,6 +293,20 @@ define-command grep-write -docstring "
   }
 }
 
+define-command grep -override -docstring "
+  grep [<arguments>]: grep utility wrapper
+  All optional arguments are forwarded to grep utility and kakpipe
+  Passing no argument will perform a literal-string grep for the current selection
+" -params .. %{
+  evaluate-commands %sh{
+    if [ $# -eq 0 ]; then
+      echo "kakpipe -w -n grep -- $kak_opt_grepcmd --color=always -F %val{selection}; set-option buffer filetype grep"
+    else
+      echo "kakpipe -w -n grep -- $kak_opt_grepcmd --color=always %arg{@}; set-option buffer filetype grep"
+    fi
+  }
+}
+
 define-command grep-buffers -docstring "
   grep-buffers [<pattern>]: search for a pattern in all buffers
   If <pattern> is not specified, the content of the main selection is used
