@@ -21,130 +21,121 @@
 #    RAM
 ##############################
 ram() {
-  used="$(free | grep Mem: | awk '{print $3}')"
-  total="$(free | grep Mem: | awk '{print $2}')"
+	used="$(free | grep Mem: | awk '{print $3}')"
+	total="$(free | grep Mem: | awk '{print $2}')"
 
-  percent=$((200 * used / total - 100 * used / total))
-  ram=$(printf %3d $percent)
+	percent=$((200 * used / total - 100 * used / total))
+	ram=$(printf %3d $percent)
 
-  echo "$ram%"
+	echo "$ram%"
 }
 ##############################
 #    STORAGE
 ##############################
 ssd() {
-  SSD="$(df -h /home | grep /dev | awk '{print $5}')"
-  echo " $SSD"
+	SSD="$(df -h /home | grep /dev | awk '{print $5}')"
+	echo " $SSD"
 }
 ##############################
 #    MIC
 ##############################
 mic() {
-  state=$(amixer -D pulse get Capture toggle | gawk 'match($0, /(Front Left|Mono).*\[(.*)\]/, a) {print a[2]}')
+	state=$(amixer -D pulse get Capture toggle | gawk 'match($0, /(Front Left|Mono).*\[(.*)\]/, a) {print a[2]}')
 
-  if [ "$state" = "on" ]; then
-    echo ""
-  else
-    echo ""
-  fi
+	if [ "$state" = "on" ]; then
+		echo ""
+	else
+		echo ""
+	fi
 }
 ##############################
 #    NETWORK
 ##############################
 net() {
-  wire="$(mullvad status | rg Connected | wc -l)"
-  wifi="$(ip a | grep wlp61s0 | grep -c UP)"
+	wire="$(mullvad status | rg Connected | wc -l)"
+	wifi="$(ip a | grep wlp61s0 | grep -c UP)"
 
-  if [ "$wire" = "1" ]; then
-    echo ""
-  elif [ "$wifi" = "1" ]; then
-    echo ""
-  else
-    echo "󰖪"
-  fi
+	if [ "$wire" = "1" ]; then
+		echo ""
+	elif [ "$wifi" = "1" ]; then
+		echo ""
+	else
+		echo "󰖪"
+	fi
 }
 ##############################
 #    BLUETOOTH
 ##############################
 blu() {
-  bluetoothStatus="$(bluetoothctl info | rg 'Connected: yes' | wc -l)"
+	bluetoothStatus="$(bluetoothctl info | rg 'Connected: yes' | wc -l)"
 
-  if [ "$bluetoothStatus" = 1 ]; then
-    echo "󰂱"
-  else
-    echo "󰂲"
-  fi
+	if [ "$bluetoothStatus" = 1 ]; then
+		echo "󰂱"
+	else
+		echo "󰂲"
+	fi
 }
 ##############################
 #    BATTERY
 ##############################
 bat() {
-  batstat="$(cat /sys/class/power_supply/BAT0/status)"
-  percent="$(cat /sys/class/power_supply/BAT0/capacity)"
-  if [ "$batstat" = "Unknown" ]; then
-    batstat=""
-  elif [ "$batstat" = "Charging" ]; then
-    batstat=""
-  elif [ "$percent" -ge 5 ] && [ "$percent" -le 19 ]; then
-    batstat=""
-  elif [ "$percent" -ge 20 ] && [ "$percent" -le 39 ]; then
-    batstat=""
-  elif [ "$percent" -ge 40 ] && [ "$percent" -le 59 ]; then
-    batstat=""
-  elif [ "$percent" -ge 60 ] && [ "$percent" -le 79 ]; then
-    batstat=""
-  elif [ "$percent" -ge 80 ] && [ "$percent" -le 95 ]; then
-    batstat=""
-  elif [ "$percent" -ge 96 ] && [ "$percent" -le 100 ]; then
-    batstat=""
-  fi
+	charging="$(cat /sys/class/power_supply/AC/online)"
+	percent="$(cat /sys/class/power_supply/BAT0/capacity)"
 
-  battery=$(
-    if [ "$percent" -eq 100 ]; then
-      printf %3d "99"
-    else
-      printf %3d "$percent"
-    fi
-  )
+	case "$percent" in
+	[1-9])
+		batstat=""
+		;;
+	1[0-9])
+		batstat=""
+		;;
+	[2-3][0-9] | [4-5][0-9])
+		batstat=""
+		;;
+	[6-7][0-9] | 8[0-9])
+		batstat=""
+		;;
+	9[6-9] | 100)
+		batstat=""
+		;;
+	esac
 
-  echo "$batstat$battery%"
+	if [ "$charging" = "1" ]; then
+		batstat=""
+	fi
+
+	battery=$(
+		if [ "$percent" -eq 100 ]; then
+			printf %3d "99"
+		else
+			printf %3d "$percent"
+		fi
+	)
+
+	echo "$batstat$battery%"
 }
 ##############################
 #    VOLUME
 ##############################
 vol() {
-  default_sink=$(pactl get-default-sink)
-  percent=$(pactl get-sink-volume "$default_sink" | cut -d ' ' -f 6)
-  vol=$(printf %2d "$percent")
-  mute=$(pactl get-sink-mute "$default_sink" | cut -d " " -f 2)
-  if [ "$mute" = "yes" ]; then
-    icon=""
-  fi
-  if [ "$mute" = "no" ]; then
-    icon=""
-  fi
-  echo "$icon $vol%"
+	default_sink=$(pactl get-default-sink)
+	percent=$(pactl get-sink-volume "$default_sink" | cut -d ' ' -f 6)
+	vol=$(printf %2d "$percent")
+	mute=$(pactl get-sink-mute "$default_sink" | cut -d " " -f 2)
+	if [ "$mute" = "yes" ]; then
+		icon=""
+	fi
+	if [ "$mute" = "no" ]; then
+		icon=""
+	fi
+	echo "$icon $vol%"
 }
-##############################
-#    PACKAGES
-##############################
-# pkgs() {
-#   pkgs="$(pacman -Q | wc -l)"
-#   echo "$pkgs"
-# }
-##############################
-#    UPGRADES
-##############################
-# upgrades() {
-#   upgrades="$(pacman -Qu | wc -l)"
-#   echo "$upgrades"
-# }
 ##############################
 #    BAR RENDER
 ##############################
 SLEEP_SEC=2
 #loops forever outputting a line every SLEEP_SEC secs
 while :; do
-  echo "$(ram)  󰋊$(ssd) | $(vol) | $(mic) $(net) $(blu) | $(bat) |"
-  sleep $SLEEP_SEC
+	echo "$(ram)  󰋊$(ssd) | $(vol) | $(mic) $(net) $(blu) | $(bat) |"
+	sleep $SLEEP_SEC
 done
