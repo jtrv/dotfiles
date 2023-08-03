@@ -1,3 +1,4 @@
 #!/bin/sh
 
-"$EDITOR" "$HOME"/.local/bin/"$1"
+"$EDITOR" "$HOME"/.local/bin/"$1" &&
+chmod +x "$HOME"/.local/bin/"$1"
