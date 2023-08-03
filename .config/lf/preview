@@ -1,7 +1,8 @@
 #!/bin/sh
 
 image() {
-	chafa "$1" -f sixel -s "$(($2 - 2))x$3" | sed 's/#/\n#/g'
+	geometry="$(($2 - 2))x$3"
+	chafa "$1" -f sixel -s "$geometry" --animate false
 }
 
 batorcat() {
@@ -62,7 +63,7 @@ case "$(printf "%s\n" "$(readlink -f "$1")" | awk '{print tolower($0)}')" in
 		ffmpegthumbnailer -i "$1" -o "${CACHE}.jpg" -s 0 -q 5
 	image "${CACHE}.jpg" "$2" "$3" "$4" "$5"
 	;;
-*.bmp | *.jpg | *.jpeg | *.png | *.xpm | *.webp | *.gif | *.jfif)
+*.bmp | *.jpg | *.jpeg | *.png | *.xpm | *.webp | *.tiff | *.gif | *.jfif | *.ico)
 	image "$1" "$2" "$3" "$4" "$5"
 	;;
 *.svg)
