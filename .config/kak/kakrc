@@ -228,14 +228,16 @@ define-command diff-buffers -docstring "
 
 define-command doc-grep -docstring "
   doc-grep <query>: grep kakoune and plugin docs
-" -params .. %sh{
-  fd \
+" -params .. %{
+  evaluate-commands %sh{
+    fd \
     --absolute-path \
-    --exclude '*changelog*' \
-    --search-path "$(dirname $(dirname $kak_runtime))" \
-    --search-path "$XDG_DATA_HOME/kak/" \
-    --extension asciidoc |
-      xargs echo "grep %arg{@}"
+      --exclude '*changelog*' \
+      --search-path "$(dirname $(dirname $kak_runtime))" \
+      --search-path "$XDG_DATA_HOME/kak/" \
+      --extension asciidoc |
+        xargs echo "grep %arg{@}"
+  }
 }
 
 define-command glow -docstring "
