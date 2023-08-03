@@ -18,9 +18,9 @@ cl-wordle -> https://github.com/rust-lang/crates.io-index
 cpz -> https://github.com/rust-lang/crates.io-index
 crabz -> https://github.com/sstadick/crabz
 dog -> https://github.com/ogham/dog
-dprint -> https://github.com/dprint/dprint
+dprint -> https://github.com/rust-lang/crates.io-index
 du-dust -> https://github.com/bootandy/dust
-erdtree -> https://github.com/solidiquis/erdtree
+erdtree -> https://github.com/rust-lang/crates.io-index
 exa -> https://github.com/rust-lang/crates.io-index
 fclones -> https://github.com/rust-lang/crates.io-index
 fclones-gui -> https://github.com/rust-lang/crates.io-index

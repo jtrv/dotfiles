@@ -71,6 +71,7 @@ espanso-bin
 exercism
 exfat-utils
 expac
+fail2ban
 fakeroot
 feh
 ff2mpv-native-messaging-host-git
@@ -95,6 +96,7 @@ fstl
 fwupd
 fzf
 gamemode
+gamescope
 gawk
 gcc
 gettext
@@ -125,7 +127,7 @@ innoextract
 intel-ucode
 iptables
 irqbalance
-jaq
+j4-dmenu-desktop
 jp2a
 jpegoptim
 jq
@@ -222,7 +224,6 @@ pacman-cleanup-hook
 pandoc-bin
 paru-git
 patch
-pavucontrol
 pbzip2
 pcmanfm
 peek
@@ -242,6 +243,7 @@ plzip
 pngquant
 polly
 potato
+preload
 profanity
 profile-sync-daemon
 pueue
