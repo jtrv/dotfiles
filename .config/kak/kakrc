@@ -246,6 +246,10 @@ define-command glow -docstring "
 " -file-completion -params 1.. %{
   kakpipe -n glow -- glow -s dark %arg{@};
 }
+hook global WinDisplay '\*glow\*' %{
+  ui-trailing-spaces-disable
+}
+
 
 define-command grep-write -docstring "
   grep-write: pipes the current grep-buffer to grug -w and prints the results
