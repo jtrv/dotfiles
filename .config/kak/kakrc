@@ -248,51 +248,6 @@ hook global WinDisplay '\*glow\*' %{
   ui-trailing-spaces-disable
 }
 
-
-define-command grep-write -docstring "
-  grep-write: pipes the current grep-buffer to grug -w and prints the results
-" %{
-  evaluate-commands -draft %{
-    execute-keys '%'
-    evaluate-commands %sh{
-      printf %s "$kak_selection" | grug -w > "$XDG_DATA_HOME"/kak/grug
-    }
-  }
-  evaluate-commands %sh{
-    output=$(cat "$XDG_DATA_HOME"/kak/grug)
-    echo "echo -markup {Information} '$output'; echo -debug '$output';"
-  }
-}
-
-define-command grep -override -docstring "
-  grep [<arguments>]: grep utility wrapper
-  All optional arguments are forwarded to grep utility and kakpipe
-  Passing no argument will perform a literal-string grep for the current selection
-" -params .. %{
-  evaluate-commands %sh{
-    if [ $# -eq 0 ]; then
-      echo "kakpipe -w -n grep -- $kak_opt_grepcmd --color=always -F %val{selection}; set-option buffer filetype grep"
-    else
-      echo "kakpipe -w -n grep -- $kak_opt_grepcmd --color=always %arg{@}; set-option buffer filetype grep"
-    fi
-  }
-}
-
-define-command grep-write -docstring "
-  grep-write: pipes the current grep-buffer to grug -w and prints the results
-" %{
-  evaluate-commands -draft %{
-    execute-keys '%'
-    evaluate-commands %sh{
-      printf %s "$kak_selection" | grug -w > "$XDG_DATA_HOME"/kak/grug
-    }
-  }
-  evaluate-commands %sh{
-    output=$(cat "$XDG_DATA_HOME"/kak/grug)
-    echo "echo -markup {Information} '$output'; echo -debug '$output';"
-  }
-}
-
 define-command grep -override -docstring "
   grep [<arguments>]: grep utility wrapper
   All optional arguments are forwarded to grep utility and kakpipe
@@ -317,6 +272,21 @@ define-command grep-buffers -docstring "
     else
       echo "grep %arg{@} %val{buflist}"
     fi
+  }
+}
+
+define-command grep-write -docstring "
+  grep-write: pipes the current grep-buffer to grug -w and prints the results
+" %{
+  evaluate-commands -draft %{
+    execute-keys '%'
+    evaluate-commands %sh{
+      printf %s "$kak_selection" | grug -w > "$XDG_DATA_HOME"/kak/grug
+    }
+  }
+  evaluate-commands %sh{
+    output=$(cat "$XDG_DATA_HOME"/kak/grug)
+    echo "echo -markup {Information} '$output'; echo -debug '$output';"
   }
 }
 
