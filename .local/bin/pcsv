@@ -1,0 +1,2 @@
+#!/bin/sh
+bat --style plain --color always "$@" | column -t -s,
