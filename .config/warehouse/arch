@@ -53,6 +53,7 @@ deno
 devour
 difftastic
 discord
+dmidecode
 docx2txt
 dog
 dosfstools
@@ -265,7 +266,7 @@ texlive-pictures
 texlive-pstricks
 texlive-publishers
 thefuck
-throttled
+thermald
 tickrs
 tidal-hifi-bin
 tidy
@@ -299,6 +300,7 @@ vopono
 w3m
 watchexec
 weechat
+wget2
 which
 whois
 wikiman
