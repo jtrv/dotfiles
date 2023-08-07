@@ -12,6 +12,8 @@ All my configs managed with a [git --bare repo](https://www.atlassian.com/git/tu
 
 I also have a few config related scripts that can be found in [`.local/bin/`](https://github.com/JacobTravers/.cfg/blob/main/.local/bin/) prepended with "config", as well as fish-completions in [.config/fish/completions/](https://github.com/JacobTravers/.cfg/blob/main/.config/fish/completions/).
 
+This branch runs on my thinkpad so I used the arch wiki for specific tweaks for my model as well as [auto-cpufreq](https://github.com/AdnanHodzic/auto-cpufreq), [thermald](https://wiki.debian.org/thermald), and [powertop](https://github.com/fenrus75/powertop) for optimal battery life and performance.
+
 # Kakrc
 
 My kakoune config is almost entirely in [kakrc](https://github.com/JacobTravers/.cfg/blob/main/.config/kak/kakrc), the only items outside of it are post-merge hooks for [kak-lsp](https://github.com/kak-lsp/kak-lsp), [kakpipe](https://github.com/eburghar/kakpipe), [kakship](https://github.com/eburghar/kakship), and [kampliment](https://github.com/vbauerster/kampliment).
