@@ -129,6 +129,27 @@ cork kakship https://github.com/eburghar/kakship %{ kakship-enable }
 cork kampliment https://github.com/vbauerster/kampliment
 
 ###################### COMMANDS ######################
+define-command bat -docstring "
+  bat [<files>]: bat utility wrapper
+  Print the files (or buffile) using bat and kakpipe
+" -params 1.. %{
+  evaluate-commands %sh{
+    if [ $# -eq 0 ]; then
+      echo "kakpipe -- --style plain --color always %val{buffile}"
+    else
+      echo "kakpipe -- bat --style plain --color always %arg{@}"
+    fi
+  }
+}
+
+define-command buffer-picker -docstring "
+  buffer-picker: Opens buffer picker.
+" %{
+  prompt buffer: -buffer-completion %{
+    buffer %val{text}
+  }
+}
+map global goto b -docstring "buffer"   '<a-;>: buffer-picker<ret>'
 
 define-command bun -docstring "
   bun [<arguments>]: bun utility wrapper
@@ -246,6 +267,25 @@ define-command doc-grep -docstring "
         xargs echo "grep $grep_args"
   }
 }
+
+define-command file-picker -docstring "
+  file-picker: Opens file picker.
+      " %{
+  prompt file: -shell-script-candidates 'fd --type file' %{
+    edit %val{text}
+  }
+}
+
+define-command global-picker -docstring 'global-picker: Opens global search picker.' %{
+  # Provides word completion
+  prompt grep: -shell-script-candidates %{
+    echo "write '$kak_response_fifo'" > "$kak_command_fifo"
+    cat "$kak_response_fifo" | kak -f 's[\w-]{4,}<ret>y%<a-R>a<ret>'
+  } %{
+    grep %val{text}
+  }
+}
+map global user / -docstring "search"   '<a-;>: global-picker<ret>'
 
 define-command glow -docstring "
   glow [<files>]: glow utility wrapper
@@ -380,39 +420,37 @@ define-command npm -docstring "
   kakpipe -S -- npm %arg{@}
 }
 
-define-command open-file-picker -docstring "
-  Open-file-picker: Opens file picker.
-" %{
-  prompt file: -shell-script-candidates 'fd --type file' %{
-    edit %val{text}
+define-command pcsv -docstring "
+  pcsv [<files>]: csv viewing utility
+  Print the files (or buffile) using bat and columns
+" -file-completion -params .. %{
+  evaluate-commands %sh{
+    if [ $# -eq 0 ]; then
+      echo "kakpipe -- pcsv %val{buffile}"
+    else
+      echo "kakpipe -- pcsv %arg{@}"
+    fi
   }
 }
-
-define-command open-buffer-picker -docstring "
-  open-buffer-picker: Opens buffer picker.
-" %{
-  prompt buffer: -buffer-completion %{
-    buffer %val{text}
-  }
-}
-map global goto b -docstring "buffer"   '<a-;>: open-buffer-picker<ret>'
-
-define-command open-global-picker -docstring 'open-global-picker: Opens global search picker.' %{
-  # Provides word completion
-  prompt grep: -shell-script-candidates %{
-    echo "write '$kak_response_fifo'" > "$kak_command_fifo"
-    cat "$kak_response_fifo" | kak -f 's[\w-]{4,}<ret>y%<a-R>a<ret>'
-  } %{
-    grep %val{text}
-  }
-}
-map global user / -docstring "search"   '<a-;>: open-global-picker<ret>'
 
 define-command popup -docstring "
   popup [<program>] [<arguments>]: Creates a new terminal as an Alacritty window (class: popup).
 " -shell-completion -params .. %{
   nop %sh{
     alacritty msg create-window --class=popup --working-directory "$PWD" --command sh -c 'export KAKOUNE_SESSION=$1 KAKOUNE_CLIENT=$2 && shift 2 && exec "$@"' -- "$kak_session" "$kak_client" "${@:-$SHELL}"
+  }
+}
+
+define-command ptsv -docstring "
+  pcsv [<files>]: tsv viewing utility
+  Print the files (or buffile) using bat and columns
+" -file-completion -params .. %{
+  evaluate-commands %sh{
+    if [ $# -eq 0 ]; then
+      echo "kakpipe -- ptsv %val{buffile}"
+    else
+      echo "kakpipe -- ptsv %arg{@}"
+    fi
   }
 }
 
@@ -555,8 +593,8 @@ map global normal <c-t> -docstring "new terminal"   ':connect terminal <ret>'
 map global normal +     -docstring "new popup"      ':connect popup <ret>'
 
 # Pickers
-map global normal B     -docstring "buffer picker"   ': open-buffer-picker<ret>'
-map global normal <c-p> -docstring "file picker"     ': open-file-picker<ret>'
+map global normal B     -docstring "buffer picker"   ': buffer-picker<ret>'
+map global normal <c-p> -docstring "file picker"     ': file-picker<ret>'
 map global normal <c-g> -docstring "grep picker"     ': connect popup kamp-grep<ret>'
 
 # External Programs
@@ -592,8 +630,8 @@ cork kakoune-buffers https://github.com/delapouite/kakoune-buffers %{
 }
 
 cork kakoune-buffer-manager https://github.com/theowenyoung/kakoune-buffer-manager %{
-  map global normal <a-B> -docstring "open buffer manager"   ': buffer-manager <ret>'
-  map global buffers B    -docstring "buffer manager"        ': buffer-manager <ret>'
+  map global normal <a-B> -docstring "open buffer editor"   ': buffer-manager <ret>'
+  map global buffers e    -docstring "buffer editor"         ': buffer-manager <ret>'
 }
 
 cork kakoune-cd https://github.com/delapouite/kakoune-cd %{
