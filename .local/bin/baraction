@@ -1,141 +1,112 @@
 #!/bin/sh
 
-##############################
-#    CPU
-##############################
-# TODO work on this bs
-# cpu() {
-#   percent="$(
-#     awk '{u=$2+$4; t=$2+$4+$5; \
-#   if (NR==1){u1=u; t1=t;} \
-#   else print ($2+$4-u1) * 100 / (t-t1) "%"; }' \
-#       <(grep 'cpu ' /proc/stat) <(
-#         sleep 1
-#         grep 'cpu ' /proc/stat
-#       )
-#   )"
-#   cpu=$(printf %3d "$percent")
-#   echo "$cpu%"
-# }
-##############################
-#    RAM
-##############################
+cpu() {
+        icon=
+	read -r cpu a b c previdle rest </proc/stat
+	total=$((a + b + c + previdle))
+	prev_stat_file="/tmp/prev_cpu_stat"
+	if [ -f "$prev_stat_file" ]; then
+		read -r cpu_prev a_prev b_prev c_prev previdle_prev rest_prev <"$prev_stat_file"
+		cpu_usage=$((100 * ((total - (a_prev + b_prev + c_prev + previdle_prev)) - (previdle - previdle_prev)) / (total - (a_prev + b_prev + c_prev + previdle_prev))))
+		printf "%s%3d%%" "$icon" "$cpu_usage"
+	else
+		printf "N/A" # No data available for the first run
+	fi
+	echo "$cpu $a $b $c $previdle $rest" >"$prev_stat_file"
+}
+
 ram() {
-	used="$(free | grep Mem: | awk '{print $3}')"
-	total="$(free | grep Mem: | awk '{print $2}')"
-
-	percent=$((200 * used / total - 100 * used / total))
-	ram=$(printf %3d $percent)
-
-	echo "$ram%"
+	icon=
+	used=$(free | grep Mem: | awk '{print $3}')
+	total=$(free | grep Mem: | awk '{print $2}')
+	percent=$((200 * used / total % 2 == 0 ? 100 * used / total : 101 * used / total))
+	printf "%s%3d%%" "$icon" "$percent"
 }
-##############################
-#    STORAGE
-##############################
+
 ssd() {
-	SSD="$(df -h /home | grep /dev | awk '{print $5}')"
-	echo " $SSD"
+	icon=󰋊
+	SSD=$(df -h /home | awk '/\/dev/{print $5}')
+	printf "%s%3d%%" "$icon" "$SSD"
 }
-##############################
-#    MIC
-##############################
-mic() {
-	state=$(amixer -D pulse get Capture toggle | gawk 'match($0, /(Front Left|Mono).*\[(.*)\]/, a) {print a[2]}')
 
-	if [ "$state" = "on" ]; then
-		echo ""
-	else
-		echo ""
-	fi
-}
-##############################
-#    NETWORK
-##############################
-net() {
-	wire="$(mullvad status | rg Connected | wc -l)"
-	wifi="$(ip a | grep wlp61s0 | grep -c UP)"
-
-	if [ "$wire" = "1" ]; then
-		echo ""
-	elif [ "$wifi" = "1" ]; then
-		echo ""
-	else
-		echo "󰖪"
-	fi
-}
-##############################
-#    BLUETOOTH
-##############################
-blu() {
-	bluetoothStatus="$(bluetoothctl info | rg 'Connected: yes' | wc -l)"
-
-	if [ "$bluetoothStatus" = 1 ]; then
-		echo "󰂱"
-	else
-		echo "󰂲"
-	fi
-}
-##############################
-#    BATTERY
-##############################
 bat() {
-	charging="$(cat /sys/class/power_supply/AC/online)"
-	percent="$(cat /sys/class/power_supply/BAT0/capacity)"
+	charging=$(cat /sys/class/power_supply/AC/online)
+	percent=$(cat /sys/class/power_supply/BAT0/capacity)
 
 	case "$percent" in
 	[1-9])
-		batstat=""
+		icon=""
 		;;
-	1[0-9])
-		batstat=""
+	[2-3][0-9])
+		icon=""
 		;;
-	[2-3][0-9] | [4-5][0-9])
-		batstat=""
+	[4-5][0-9])
+		icon=""
 		;;
-	[6-7][0-9] | 8[0-9])
-		batstat=""
+	[6-7][0-9])
+		icon=""
 		;;
-	9[6-9] | 100)
-		batstat=""
+	*)
+		icon=""
 		;;
 	esac
 
 	if [ "$charging" = "1" ]; then
-		batstat=""
+		icon="⚡"
 	fi
 
-	battery=$(
-		if [ "$percent" -eq 100 ]; then
-			printf %3d "99"
-		else
-			printf %3d "$percent"
-		fi
-	)
-
-	echo "$batstat$battery%"
+	printf "%s%3d%%" "$icon" "$percent"
 }
-##############################
-#    VOLUME
-##############################
+
 vol() {
-	default_sink=$(pactl get-default-sink)
-	percent=$(pactl get-sink-volume "$default_sink" | cut -d ' ' -f 6)
-	vol=$(printf %2d "$percent")
-	mute=$(pactl get-sink-mute "$default_sink" | cut -d " " -f 2)
-	if [ "$mute" = "yes" ]; then
+	volume=$(pamixer --get-volume)
+	mute=$(pamixer --get-mute)
+
+	if [ "$mute" = "true" ]; then
 		icon=""
-	fi
-	if [ "$mute" = "no" ]; then
+	else
 		icon=""
 	fi
-	echo "$icon $vol%"
+
+	printf "%s%3d%%" "$icon" "$volume"
 }
-##############################
-#    BAR RENDER
-##############################
+
+mic() {
+	state=$(amixer get Capture toggle | grep -oE '\[on\]|\[off\]')
+
+	if [ "$state" = "on" ]; then
+		printf ""
+	else
+		printf ""
+	fi
+}
+
+net() {
+	wire=$(mullvad status | grep -c 'Connected')
+	wifi=$(ip a | grep 'wlp2s0' | grep -c 'UP')
+
+	if [ "$wire" -gt 0 ]; then
+		printf ""
+	elif [ "$wifi" -gt 0 ]; then
+		printf ""
+	else
+		printf "󰖪"
+	fi
+}
+
+blu() {
+	bluetoothStatus=$(bluetoothctl info | grep -c 'Connected: yes')
+
+	if [ "$bluetoothStatus" -gt 0 ]; then
+		printf "󰂱"
+	else
+		printf "󰂲"
+	fi
+}
+
+
 SLEEP_SEC=2
-#loops forever outputting a line every SLEEP_SEC secs
 while :; do
-	echo "$(ram)  󰋊$(ssd) | $(vol) | $(mic) $(net) $(blu) | $(bat) |"
+	echo "$(cpu) $(ram) $(ssd) $(bat) $(vol) $(mic) $(blu) $(net) "
 	sleep $SLEEP_SEC
 done
