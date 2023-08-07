@@ -1,0 +1,12 @@
+#!/bin/sh
+
+link="${1}/archive/refs/heads/main.tar.gz"
+repo_name=$(echo "$1" | cut -d '/' -f 5)
+dir=$(mktemp -d)
+local_repo="${dir}/${repo_name}-main"
+
+wget2 -O - "${link}" | tar -xz -C "${dir}" > /dev/null 2>&1
+
+tokei "$local_repo"
+
+rmz "${dir}"
