@@ -1,0 +1,2 @@
+#!/bin/sh
+alacritty --command kak -e "kakpipe -- greeting"
