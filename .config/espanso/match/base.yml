@@ -1,9 +1,5 @@
 matches:
-
-
 # ENGLISH PROGRAMMING LANGUAGE
-
-
   - trigger: ",,idk"
     replace: "I don't know"
 
@@ -28,181 +24,194 @@ matches:
   - trigger: ",,yw"
     replace: "You're welcome"
 
-  - trigger: ",,mtcw"
-    replace: "This should be good to go now, moving this task to check-work."
-
-
+  - trigger: ",,mta"
+    replace: "This should be good to go now, moving this along."
 
 # HTML
-
-
   - trigger: ",,hdoc"
-    replace: >-
+    replace: |
       <!DOCTYPE html>
 
   - trigger: ",,hchar"
-    replace: >-
+    replace: |
       <meta charset="UTF-8">
 
   - trigger: ",,hview"
-    replace: >-
+    replace: |
       <meta name="viewport" content="width=device-width, initial-scale=1">
 
   - trigger: ",,hauth"
-    replace: >-
+    replace: |
       <meta name="author" content="$|$">
 
   - trigger: ",,hdesc"
-    replace: >-
+    replace: |
       <meta name="description" content="$|$">
 
   - trigger: ",,hkey"
-    replace: >-
+    replace: |
       <meta name="keywords" content="$|$">
 
   - trigger: ",,htit"
-    replace: >-
+    replace: |
       <title>$|$</title>
 
   - trigger: ",,hdi"
-    replace: >-
+    replace: |
       <div>$|$</div>
 
   - trigger: ",,html"
-    replace: >-
+    replace: |
       <html>$|$</html>
 
   - trigger: ",,hhe"
-    replace: >-
+    replace: |
       <head>$|$</head>
 
   - trigger: ",,hbo"
-    replace: >-
+    replace: |
       <body>$|$</body>
 
   - trigger: ",,hat"
-    replace: >-
+    replace: |
       <a href="">$|$</a>
 
   - trigger: ",,hbtn"
-    replace: >-
+    replace: |
       <button type="button">$|$</button>
 
   - trigger: ",,hstyle"
-    replace: >-
+    replace: |
       <style>$|$</style>
 
   - trigger: ",,hstlink"
-    replace: >-
+    replace: |
       <link rel="stylesheet" type="text/css" href="$|$">
 
   - trigger: ",,hscript"
-    replace: >-
+    replace: |
       <script>$|$</script>
 
   - trigger: ",,hsclink"
-    replace: >-
+    replace: |
       <script type="text/javascript" src="$|$"></script>
 
   - trigger: ",,hform"
-    replace: >-
+    replace: |
       <form action="" method="">$|$</form>
 
   - trigger: ",,hlab"
-    replace: >-
+    replace: |
       <label for="">$|$</label>
 
   - trigger: ",,hsub"
-    replace: >-
+    replace: |
       <input type="submit" value="$|$">
 
   - trigger: ",,hintex"
-    replace: >-
+    replace: |
       <input type="text" name="" id="">
 
   - trigger: ",,hinpw"
-    replace: >-
+    replace: |
       <input type="password" name="" id="">
 
   - trigger: ",,hinr"
-    replace: >-
+    replace: |
       <input type="radio" name="" id="" value="">
 
   - trigger: ",,hinch"
-    replace: >-
+    replace: |
       <input type="checkbox" name="" id="" value="">
 
   - trigger: ",,hinfi"
-    replace: >-
+    replace: |
       <input type="file" name="" id="">
 
-
 # JAVASCRIPT
-
-
-  - trigger: ",,jsfn"
-    replace: >-
+  - trigger: ",,jfn"
+    replace: |
       function $|$() { }
 
-  - trigger: ",,jsaf"
-    replace: >-
-      const $|$ = () => 
+  - trigger: ",,jaf"
+    replace: |
+      const $|$ = () =>
 
-  - trigger: ",,jswl"
-    replace: >-
+  - trigger: ",,jwl"
+    replace: |
       while ($|$){ }
 
-  - trigger: ",,jsf+"
-    replace: >-
+  - trigger: ",,jf+"
+    replace: |
       for (let i = 0; i < $|$.length; i++){ }
 
-  - trigger: ",,jsf-"
-    replace: >-
+  - trigger: ",,jf-"
+    replace: |
       for (let i = 0; i >= 0; i--){ }
 
-  - trigger: ",,jsfi"
-    replace: >-
+  - trigger: ",,jfi"
+    replace: |
       for (let $|$ in ){ }
 
-  - trigger: ",,jsfo"
-    replace: >-
+  - trigger: ",,jfo"
+    replace: |
       for (let $|$ of ){ }
 
-  - trigger: ",,jscl"
-    replace: >-
+  - trigger: ",,jcl"
+    replace: |
       console.log($|$)
 
-  - trigger: ",,jsce"
-    replace: >-
+  - trigger: ",,jce"
+    replace: |
       console.error($|$)
 
-  - trigger: ",,jscatch"
-    replace: >-
-      .catch((err) => console.error(err))
-
-  - trigger: ",,jsgetid"
-    replace: >-
+  - trigger: ",,jid"
+    replace: |
       document.getElementById("$|$")
 
-  - trigger: ",,jsqs"
-    replace: >-
+  - trigger: ",,jqs"
+    replace: |
       document.querySelectorAll("$|$")
 
-  - trigger: ",,jsfr"
-    replace: >-
+  - trigger: ",,jfr"
+    replace: |
       document.createDocumentFragment("$|$")
 
-  - trigger: ",,jstr"
-    replace: >-
+  - trigger: ",,jst"
+    replace: |
       JSON.stringify("$|$")
 
-  - trigger: ",,jspe"
-    replace: >-
+  - trigger: ",,jpe"
+    replace: |
       process.exit("$|$")
+
+  # ALGO TEMPLATES
+
+  - trigger: ",,jabs"
+    replace: |
+      function binarySearch(arr, target) {
+          let left = 0;
+          let right = arr.length - 1;
+          let first_true_index = -1;
+
+          function feasible(val){
+            return (val $|$ target)
+          }
+
+          while (left <= right) {
+              let mid = Math.floor((left + right) / 2);
+              if (feasible(arr[mid])) {
+                  first_true_index = mid;
+                  right = mid - 1;
+              } else {
+                  left = mid + 1;
+              }
+          }
+          return first_true_index;
+      }
 
 
 # DYNAMIC / SHELL
-
 
   # Print the current date
   - trigger: ",,date"
