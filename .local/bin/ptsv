@@ -1,3 +1,3 @@
 #!/bin/sh
 tab_char=$(printf '\t')
-bat --style plain --color always "$@" | column -t -s "$tab_char"
+bat --style=plain --color=always "$@" | column --table --separator="$tab_char"
