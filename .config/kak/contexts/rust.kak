@@ -1,9 +1,10 @@
 hook global BufSetOption filetype=rust %{
-  set-option buffer formatcmd 'rustfmt --edition 2021'
-  map global dev c -docstring "clippy"   ':cargo clippy --color always <ret>'
+  set-option buffer formatcmd 'rustfmt --edition=2021'
+  map buffer dev c -docstring "clippy"  ':cargo clippy --color=always<ret>'
 }
 
 hook global WinSetOption filetype=rust %{
+
 ###### LSP ######
   set-option window lsp_auto_highlight_references true
   set-option window lsp_hover_anchor true

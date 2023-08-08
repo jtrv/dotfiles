@@ -9,7 +9,7 @@ hook global BufSetOption filetype=html %{
 }
 
 hook global WinSetOption filetype=html %{
-  set-option window lintcmd "tidy -e --gnu-emacs yes --quiet yes 2>&1"
+  set-option window lintcmd "tidy -e --gnu-emacs=yes --quiet=yes 2>&1"
   lint
 
 ###### LSP ######

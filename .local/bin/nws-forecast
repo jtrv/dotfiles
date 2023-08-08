@@ -12,7 +12,7 @@ forecast_url=$(xh -Fb "https://api.weather.gov/points/$coordinates" | jql -r '."
 
 xh -Fb "$forecast_url" |
 	jql -i -r '."properties"."periods"|{"name","detailedForecast"}' |
-	rg --color never -o 'name":"(.*?)","detailedForecast":"(.*?)"' -r "
+	rg --color=never -o 'name":"(.*?)","detailedForecast":"(.*?)"' -r "
 $bold\$1:$normal \$2" |
 	sd -f i 'with | with a| as high as| around| near' '' |
 	sd -f i 'north' 'N' |
@@ -21,4 +21,4 @@ $bold\$1:$normal \$2" |
 	sd -f i 'west' 'W' |
 	sd -f i ' to ' '-' |
 	sd -f m '\n.*?(Night|Tonight)' "${bold}\$1" |
-	rg '(N|S|E|W) (NW|NE|SE|SW)' -r '$1/$2' --color never --passthru
+	rg '(N|S|E|W) (NW|NE|SE|SW)' -r '$1/$2' --color=never --passthru
