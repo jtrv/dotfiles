@@ -135,9 +135,9 @@ define-command bat -docstring "
 " -params 1.. %{
   evaluate-commands %sh{
     if [ $# -eq 0 ]; then
-      echo "kakpipe -- --style plain --color always %val{buffile}"
+      echo "kakpipe -- --style=plain --color=always %val{buffile}"
     else
-      echo "kakpipe -- bat --style plain --color always %arg{@}"
+      echo "kakpipe -- bat --style=plain --color=always %arg{@}"
     fi
   }
 }
@@ -223,7 +223,7 @@ define-command difft -docstring "
   difft [<arguments>]: difftastic utility wrapper
   Generate a diff with difftastic and the given arguments
 " -shell-completion -params 1.. %{
-  kakpipe -n difft -- difft --width %val{window_width} --color always %arg{@};
+  kakpipe -n difft -- difft --width=%val{window_width} --color=always %arg{@};
 }
 
 define-command diff-buffers -docstring "
@@ -263,7 +263,7 @@ define-command doc-grep -docstring "
       --exclude '*changelog*' \
       --search-path "$(dirname $(dirname $kak_runtime))" \
       --search-path "$XDG_DATA_HOME/kak/" \
-      --extension asciidoc |
+      --extension=asciidoc |
         xargs echo "grep $grep_args"
   }
 }
@@ -271,7 +271,7 @@ define-command doc-grep -docstring "
 define-command file-picker -docstring "
   file-picker: Opens file picker.
       " %{
-  prompt file: -shell-script-candidates 'fd --type file' %{
+  prompt file: -shell-script-candidates 'fd --type=file' %{
     edit %val{text}
   }
 }
@@ -437,7 +437,7 @@ define-command popup -docstring "
   popup [<program>] [<arguments>]: Creates a new terminal as an Alacritty window (class: popup).
 " -shell-completion -params .. %{
   nop %sh{
-    alacritty msg create-window --class=popup --working-directory "$PWD" --command sh -c 'export KAKOUNE_SESSION=$1 KAKOUNE_CLIENT=$2 && shift 2 && exec "$@"' -- "$kak_session" "$kak_client" "${@:-$SHELL}"
+    alacritty msg create-window --class=popup --working-directory="$PWD" --command sh -c 'export KAKOUNE_SESSION=$1 KAKOUNE_CLIENT=$2 && shift 2 && exec "$@"' -- "$kak_session" "$kak_client" "${@:-$SHELL}"
   }
 }
 
@@ -473,9 +473,9 @@ define-command rman -docstring "
 " -params 1 %{
   evaluate-commands %sh{
     if [ $# -eq 0 ]; then
-      echo "kakpipe -n %val{selection} -- rusty-man --viewer rich %val{selection}"
+      echo "kakpipe -n %val{selection} -- rusty-man --viewer=rich %val{selection}"
     else
-      echo "kakpipe -n %arg{1} -- rusty-man --viewer rich %arg{@}"
+      echo "kakpipe -n %arg{1} -- rusty-man --viewer=rich %arg{@}"
     fi
   }
 }
@@ -513,9 +513,9 @@ define-command tldr -docstring "
 " -shell-completion -params 0.. %{
   evaluate-commands %sh{
     if [ $# -eq 0 ]; then
-      echo "kakpipe -n tldr -- tldr --color always %val{selection}"
+      echo "kakpipe -n tldr -- tldr --color=always %val{selection}"
     else
-      echo "kakpipe -n tldr -- tldr --color always %arg{@}"
+      echo "kakpipe -n tldr -- tldr --color=always %arg{@}"
     fi
   }
 }

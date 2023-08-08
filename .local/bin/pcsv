@@ -1,2 +1,2 @@
 #!/bin/sh
-bat --style plain --color always "$@" | column -t -s,
+bat --style=plain --color=always "$@" | column --table --separator=','

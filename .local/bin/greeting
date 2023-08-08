@@ -1,5 +1,5 @@
 #!/bin/sh
-iching --color always divine &&
+iching --color=always divine &&
 	echo
 if [ "$(date +%a)" = "Mon" ]; then
 	wthrr

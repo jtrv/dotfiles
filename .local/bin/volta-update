@@ -1,7 +1,7 @@
 #!/bin/sh
 
 volta install node@latest npm@latest yarn@latest &&
-	volta list --format plain |
+	volta list --format=plain |
 	rg -o 'package\s(\S+)@' -r '$1' |
 		xargs -I {} \
 			volta install {}@latest

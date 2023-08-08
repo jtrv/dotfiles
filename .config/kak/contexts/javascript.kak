@@ -1,5 +1,5 @@
 hook global BufSetOption filetype=javascript %{
-  set-option buffer formatcmd "dprint fmt --stdin format.js --config $XDG_CONFIG_HOME/dprint/dprint.json"
+  set-option buffer formatcmd "dprint fmt --stdin=format.js --config=$XDG_CONFIG_HOME/dprint/dprint.json"
 
   define-command emmet -override %{ execute-keys  "giGl| emmet <ret>" }
   define-command minify -override %{ execute-keys "<percent>| minify-html <ret><percent>" }
