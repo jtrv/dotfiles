@@ -555,8 +555,8 @@ map global normal ] <a-]>     -docstring "select upto next object end"
 map global normal <a-]> ]     -docstring "select to next object end"
 
 # Use <c-k>/<c-l> as more ergonomic undo/redo selction
-map global normal <c-k> <c-h> -docstring "undo selection change"
-map global normal <c-l> <c-k> -docstring "redo selection change"
+map global normal <c-k> <a-u> -docstring "undo selection change"
+map global normal <c-l> <a-U> -docstring "redo selection change"
 
 # Select whole lines
 map global normal J -docstring "select next line"       'Jx'
