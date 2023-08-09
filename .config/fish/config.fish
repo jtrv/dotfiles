@@ -61,6 +61,7 @@ alias nbg     'feh --randomize --bg-scale --no-fehbg ~/media/pictures/wallpapers
 alias off     'systemctl suspend' # save state, enter low-power mode
 alias pom     'potato' # shell pomodoro timer
 alias q       'exit'
+alias rbt     'systemctl kexec'
 alias thes    'thesauromatic'
 alias wget    "wget --hsts-file=\"$XDG_DATA_HOME/wget-hsts\""
 alias yarn    "yarn --use-yarnrc \"$XDG_CONFIG_HOME\"/yarn/config"
