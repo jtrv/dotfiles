@@ -1,0 +1,2 @@
+#!/bin/sh
+w3m -t 2 -s -W -M "http://68k.news/"
