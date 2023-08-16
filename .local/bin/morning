@@ -1,2 +1,3 @@
 #!/bin/sh
-alacritty --command kak -e "kakpipe -- greeting"
+kak -e "kakpipe $HOME/.local/bin/greeting" &&
+		"$HOME"/.local/bin/news
