@@ -37,6 +37,7 @@ chaotic-keyring
 chaotic-mirrorlist
 checkbashisms
 choose
+circumflex-bin
 clipmenu
 clojure-lsp-bin
 cmake
@@ -49,6 +50,7 @@ cups
 czkawka-cli
 dart-sass
 dash
+dbus-broker
 deno
 devour
 difftastic
@@ -66,6 +68,7 @@ easyeffects
 efibootmgr
 epub-thumbnailer-git
 eslint_d
+espanso-bin
 exercism
 exfat-utils
 expac
@@ -104,6 +107,7 @@ groff
 gron
 grub
 grub-btrfs
+grub-holdshift
 handlr-regex
 haskell-language-server-static
 inetutils
@@ -115,6 +119,7 @@ j4-dmenu-desktop
 jp2a
 jpegoptim
 kdeconnect
+kexec-tools
 lazygit
 lbzip2
 leanify-git
@@ -164,11 +169,10 @@ mullvad-vpn-bin
 namcap
 needrestart
 network-manager-applet
-networkmanager
+networkmanager-iwd
 nextdns-unprivileged
 nfs-utils
 nim
-noseyparker-git
 noto-fonts
 noto-fonts-cjk
 noto-fonts-emoji
@@ -234,12 +238,10 @@ shellcheck-bin
 shfmt
 signal-desktop
 sl
-sniffglue
 soundux
 sox
 spectrwm
 speedtest++
-starship
 strace
 sudo
 syncthing
