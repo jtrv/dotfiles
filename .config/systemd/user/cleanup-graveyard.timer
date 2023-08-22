@@ -1,0 +1,9 @@
+[Unit]
+Description=Daily cleanup of old files and empty directories in graveyard
+
+[Timer]
+OnCalendar=daily
+Persistent=true
+
+[Install]
+WantedBy=timers.target
