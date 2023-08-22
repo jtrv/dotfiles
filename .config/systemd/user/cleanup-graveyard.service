@@ -1,0 +1,6 @@
+[Unit]
+Description=Clean old files and empty directories in graveyard
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash -c 'find /home/sugimoto/.local/share/graveyard/ -type f -atime +30 -delete && find /home/sugimoto/.local/share/graveyard/ -type d -empty -delete'
