@@ -1,0 +1,6 @@
+[Unit]
+Description=Change desktop wallpaper using feh
+
+[Service]
+Environment=DISPLAY=:0
+ExecStart=/usr/bin/feh --randomize --bg-scale --no-fehbg /home/sugimoto/media/pictures/nature/
