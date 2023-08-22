@@ -1,2 +1,3 @@
 #!/bin/sh
-config ls-files | xargs -I {} rg --vimgrep "$@" {} | kak -e "set buffer filetype grep"
+quoted_files=$(config ls-files | while read -r line; do printf "\"%s\" " "$line"; done)
+kak -e "grep $* $quoted_files"
