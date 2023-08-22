@@ -169,6 +169,7 @@ mullvad-vpn-bin
 namcap
 needrestart
 network-manager-applet
+networkmanager-dmenu-git
 networkmanager-iwd
 nextdns-unprivileged
 nfs-utils
