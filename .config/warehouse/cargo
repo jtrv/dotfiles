@@ -22,7 +22,7 @@ dog -> https://github.com/ogham/dog
 dprint -> https://github.com/rust-lang/crates.io-index
 du-dust -> https://github.com/rust-lang/crates.io-index
 erdtree -> https://github.com/rust-lang/crates.io-index
-exa -> https://github.com/rust-lang/crates.io-index
+eza -> https://github.com/rust-lang/crates.io-index
 fclones -> https://github.com/rust-lang/crates.io-index
 fclones-gui -> https://github.com/rust-lang/crates.io-index
 fd-find -> https://github.com/rust-lang/crates.io-index
@@ -90,6 +90,6 @@ starship -> https://github.com/rust-lang/crates.io-index
 thesauromatic -> https://github.com/rust-lang/crates.io-index
 trippy -> https://github.com/rust-lang/crates.io-index
 wthrr -> https://github.com/rust-lang/crates.io-index
+xsv -> https://github.com/rust-lang/crates.io-index
 xtask -> https://github.com/Anomalocaridid/handlr-regex
 zet -> https://github.com/rust-lang/crates.io-index
-xsv -> https://github.com/rust-lang/crates.io-index
