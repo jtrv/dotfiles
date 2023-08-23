@@ -1,4 +1,4 @@
-# VERSION: 1.1
+# VERSION: 1.3
 # AUTHORS: LightDestory (https://github.com/LightDestory)
 
 # Based on gitDew work (https://github.com/gitDew/qbittorrent-snowfl-search-plugin)
@@ -9,7 +9,6 @@ import random
 import re
 import string
 import time
-
 from helpers import retrieve_url
 from novaprinter import prettyPrinter
 
@@ -29,7 +28,7 @@ class snowfl(object):
         def feed(self, collection):
             for torrent in collection:
                 data = {
-                    'link': urllib.parse.quote(torrent['url']),
+                    'link': torrent['magnet'] if "magnet" in torrent else urllib.parse.quote(torrent['url']),
                     'name': torrent['name'],
                     'size': torrent['size'],
                     'seeds': torrent['seeder'],
@@ -44,7 +43,7 @@ class snowfl(object):
             file_name = re.findall(r'.+?\"(b.min.js\?.+)\"', index_html)[0]
             script = retrieve_url(self.url + file_name)
             # Retrieving the token
-            token = re.findall(r'\"([a-zA-Z0-9]+)\",step,queryId,count,sort,topx,filters=\[\],sources=\[\],nsfwFilter=!1,loadingMore=!1,resultItems=', script)[0]
+            token = re.findall(r'\"([a-zA-Z0-9]+)\";\$\(\(function\(\){var e,t,n,r,o,a,i=', script)[0]
             return token
 
         def generateQuery(self, what):
@@ -53,16 +52,16 @@ class snowfl(object):
                                                                 str(int(time.time() * 1000)))
 
     def download_torrent(self, info):
-        torrent_page = retrieve_url(urllib.parse.unquote(info))
-        magnet_match = re.search(
-            r'\"(magnet:.*?)\"', torrent_page)
-        if magnet_match and magnet_match.groups():
-            print('{0} {1}'.format(magnet_match.groups()[0], info))
+        if "magnet:?" in info:
+            print('{0} {1}'.format(info, info))
         else:
-            raise Exception('Error, please fill a bug report!')
+            torrent_page = retrieve_url(urllib.parse.unquote(info))
+            magnet_match = re.search(r'\"(magnet:.*?)\"', torrent_page)
+            if magnet_match and magnet_match.groups():
+                print('{0} {1}'.format(magnet_match.groups()[0], info))
+            else:
+                raise Exception('Error, please fill a bug report!')
 
-    # DO NOT CHANGE the name and parameters of this function
-    # This function will be the one called by nova2.py
     def search(self, what, cat='all'):
         parser = self.Parser(self.url)
         what = parser.generateQuery(what)

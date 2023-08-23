@@ -1,5 +1,5 @@
-# VERSION: 1.00
-# AUTHORS: sa3dany
+# VERSION: 2.2
+# AUTHORS: sa3dany, Alyetama, BurningMop, scadams
 
 # LICENSING INFORMATION
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -33,7 +33,7 @@ class one337x(object):
     supported_categories = {
         'all': None,
         'anime': 'Anime',
-        'software': 'Applications',
+        'software': 'Apps',
         'games': 'Games',
         'movies': 'Movies',
         'music': 'Music',
@@ -41,10 +41,11 @@ class one337x(object):
     }
 
     class MyHtmlParser(HTMLParser):
+
         def error(self, message):
             pass
 
-        A, TD, TR, HREF, TABLE = ('a', 'td', 'tr', 'href', 'tbody')
+        A, TD, TR, HREF, TBODY, TABLE = ('a', 'td', 'tr', 'href', 'tbody', 'table')
 
         def __init__(self, url):
             HTMLParser.__init__(self)
@@ -55,7 +56,6 @@ class one337x(object):
             self.foundTable = False
             self.foundResults = False
             self.parser_class = {
-                # key: className
                 'name': 'name',
                 'seeds': 'seeds',
                 'leech': 'leeches',
@@ -64,19 +64,15 @@ class one337x(object):
 
         def handle_starttag(self, tag, attrs):
             params = dict(attrs)
-
             if 'search-page' in params.get('class', ''):
                 self.foundResults = True
                 return
-
-            if self.foundResults and tag == self.TABLE:
+            if self.foundResults and tag == self.TBODY:
                 self.foundTable = True
                 return
-
             if self.foundTable and tag == self.TR:
                 self.insideRow = True
                 return
-
             if self.insideRow and tag == self.TD:
                 classList = params.get('class', None)
                 for columnName, classValue in self.parser_class.items():
@@ -91,45 +87,46 @@ class one337x(object):
                 link = params[self.HREF]
                 if link.startswith('/torrent/'):
                     link = f'{self.url}{link}'
-                    self.row['link'] = link
+                    torrent_page = retrieve_url(link)
+                    magnet_regex = r'href="magnet:.*"'
+                    matches = re.finditer(magnet_regex, torrent_page, re.MULTILINE)
+                    magnet_urls = [x.group() for x in matches]
+                    self.row['link'] = magnet_urls[0].split('"')[1]
                     self.row['engine_url'] = self.url
                     self.row['desc_link'] = link
 
         def handle_data(self, data):
             if self.insideRow and self.column:
+                if self.column == 'size':
+                    data = data.replace(',', '')
                 self.row[self.column] = data
                 self.column = None
 
         def handle_endtag(self, tag):
-            if tag == 'table':
+            if tag == self.TABLE:
                 self.foundTable = False
-
             if self.insideRow and tag == self.TR:
                 self.insideRow = False
                 self.column = None
-                array_length = len(self.row)
-                if array_length < 1:
+                if not self.row:
                     return
                 prettyPrinter(self.row)
                 self.row = {}
 
     def download_torrent(self, info):
-        info_page = retrieve_url(info)
-        magnet_match = re.search(r'href\s*\=\s*"(magnet[^"]+)"', info_page)
-        if magnet_match and magnet_match.groups():
-            print(magnet_match.groups()[0] + ' ' + info)
-        else:
-            raise Exception('Error, please fill a bug report!')
+        print(download_file(info))
 
     def search(self, what, cat='all'):
-        category = self.supported_categories[cat]
-
-        if category:
-            page_url = f'{self.url}/category-search/{what}/{category}/1/'
-        else:
-            page_url = f'{self.url}/search/{what}/1/'
-
         parser = self.MyHtmlParser(self.url)
-        html = retrieve_url(page_url)
-        parser.feed(html)
+        what = what.replace('%20', '+')
+        category = self.supported_categories[cat]
+        page = 1
+        while True:
+            page_url = f'{self.url}/category-search/{what}/{category}/{page}/' if category else f'{self.url}/search/{what}/{page}/'
+            html = retrieve_url(page_url)
+            parser.feed(html)
+            if html.find('<li class="last">') == -1:
+                # exists on every page but the last
+                break
+            page += 1
         parser.close()

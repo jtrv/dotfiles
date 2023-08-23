@@ -1,14 +1,24 @@
-# VERSION: 1.0
+# VERSION: 1.2
 # AUTHORS: LightDestory (https://github.com/LightDestory)
 
-import urllib.parse
-import json
+import sys
+from pathlib import Path
+from datetime import date
+from urllib import request
+import xml.etree.ElementTree as ET
 
-from helpers import retrieve_url, download_file
+from helpers import retrieve_url
 from novaprinter import prettyPrinter
 
-YOUR_API_KEY = ""
-YOUR_UID = ""
+DATABASE_URL = "https://academictorrents.com/database.xml"
+FILTERS = []
+home = str(Path.home())
+system_paths = {
+    'win32': f"{home}/AppData/Roaming",
+    'linux': f"{home}/.local/share",
+    'darwin': f"{home}/Library/Application Support",
+}
+cache_path = Path(f"{system_paths[sys.platform]}/qbit_plugins_data/academic_cache.xml")
 
 
 class academictorrents(object):
@@ -21,34 +31,56 @@ class academictorrents(object):
     """
     supported_categories = {'all': '0'}
 
-    def parseJSON(self, collection):
+    def _parseXML(self, collection):
         for torrent in collection:
             data = {
-                'link': urllib.parse.quote(torrent['url']),
-                'name': torrent['name'],
-                'size': torrent['size'],
-                'seeds': torrent['mirrors'],
-                'leech': torrent['downloaders'],
+                'link': f"{self.url}/download/{torrent.findtext('infohash')}.torrent",
+                'name': torrent.findtext("title"),
+                'size': torrent.findtext("size"),
+                'seeds': -1,
+                'leech': -1,
                 'engine_url': self.url,
-                'desc_link': torrent['url']
+                'desc_link': torrent.findtext("link")
             }
             prettyPrinter(data)
 
-    def download_torrent(self, info):
-        infoHash = urllib.parse.unquote(info).split("/")[-1]
-        if len(infoHash) == 40:
-            print(download_file('{0}/download/{1}.torrent'.format(self.url, infoHash)))
-        else:
-            raise Exception('Error, please fill a bug report!')
+    def _torrent_filter(self, item) -> bool:
+        global FILTERS
+        title: str = item.findtext("title").lower()
+        desc: str = item.findtext("description").lower()
+        for f in FILTERS:
+            if f in title or f in desc:
+                return True
+        return False
 
-    # DO NOT CHANGE the name and parameters of this function
-    # This function will be the one called by nova2.py
+    def _retrieve_database(self):
+        folder_path = Path(f"{system_paths[sys.platform]}/qbit_plugins_data")
+        if not folder_path.exists():
+            folder_path.mkdir()
+        self._update_database_cache()
+        with open(cache_path, encoding="utf-8") as f:
+            lines = f.readlines()[1:]
+            return ET.fromstring("".join(lines))
+
+    def _update_database_cache(self):
+        if cache_path.exists():
+            current_date = str(date.today())
+            with open(cache_path, encoding="utf-8") as f:
+                saved_date = f.readline().rstrip()
+                if current_date == saved_date:
+                    return
+        req = request.urlopen(DATABASE_URL)
+        db_local_text = req.read().decode("utf-8")
+        f = open(cache_path, "w", encoding="utf-8")
+        f.write(f"{str(date.today())}\n")
+        f.write(db_local_text)
+        f.close()
+        req.close()
+
+
     def search(self, what, cat='all'):
-        what = what.replace("%20", "+")
-        auth = "" if (not YOUR_API_KEY or not YOUR_UID) else '&uid={0}&pass={1}&limit=9999'.format(YOUR_UID,
-                                                                                                   YOUR_API_KEY)
-        url = '{0}apiv2/entries?search={1}{2}'.format(
-            self.url, what, auth)
-        # Getting JSON from API
-        collection = json.loads(retrieve_url(url))
-        self.parseJSON(collection)
+        global FILTERS
+        FILTERS = [f.lower() for f in str(what).split("%20")]
+        db = self._retrieve_database()
+        filtered = list(filter(self._torrent_filter, db.findall("channel/item")))
+        self._parseXML(filtered)
