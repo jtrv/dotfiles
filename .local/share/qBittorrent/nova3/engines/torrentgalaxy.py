@@ -1,4 +1,4 @@
-# VERSION: 0.06
+# VERSION: 0.07
 # AUTHORS: nindogo (nindogo@gmail.com)
 
 # LICENSING INFORMATION
@@ -42,27 +42,26 @@ class torrentgalaxy(object):
         def handle_starttag(self, tag, attrs):
             if tag == self.DIV:
                 my_attrs = dict(attrs)
-                if (my_attrs.get('class') == 'tgxtablerow'):
+                # if (my_attrs.get('class') == 'tgxtablerow txlight'):
+                if  my_attrs.get('class') and 'tgxtablerow' in my_attrs.get('class'):
                     self.count_div = 0
                     self.this_record = {}
                     self.this_record['engine_url'] = self.url
-                if (my_attrs.get('class') == 'tgxtablecell') and \
-                        self.count_div >= 0:
+                if  my_attrs.get('class') and ('tgxtablecell' in my_attrs.get('class')) and self.count_div >= 0:
                     self.count_div += 1
 
-            if tag == self.A and self.count_div < 9:
+            if tag == self.A and self.count_div < 13:
                 my_attrs = dict(attrs)
-                if 'title' in my_attrs and ('class' not in my_attrs):
+                if 'title' in my_attrs and ('class' in my_attrs) and 'txlight' in my_attrs.get('class') and not my_attrs.get('id'):
                     self.this_record['name'] = my_attrs['title']
-                    self.this_record['desc_link '] = \
+                    self.this_record['desc_link'] = \
                         self.url + my_attrs['href']
                 if 'role' in my_attrs and my_attrs.get('role') == 'button':
                     self.this_record['link'] = my_attrs['href']
 
             if tag == self.SPAN:
                 my_attrs = dict(attrs)
-                if 'class' in my_attrs and \
-                        my_attrs.get('class') == 'badge badge-secondary':
+                if 'class' in my_attrs and 'badge badge-secondary' in my_attrs.get('class'):
                     self.get_size = True
 
             if tag == self.FONT:
@@ -72,13 +71,13 @@ class torrentgalaxy(object):
                 elif my_attrs.get('color') == '#ff0000':
                     self.get_leechs = True
 
-            if self.count_div == 9 and tag == self.SMALL:
+            if self.count_div == 13 and tag == self.SMALL:
                 prettyPrinter(self.this_record)
                 self.this_record = {}
                 self.count_div = -1
 
         def handle_data(self, data):
-            if self.get_size is True and self.count_div < 9:
+            if self.get_size is True and self.count_div < 13:
                 self.this_record['size'] = data.strip().replace(',', '')
                 self.get_size = False
             if self.get_seeds is True:
