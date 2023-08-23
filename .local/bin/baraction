@@ -83,7 +83,7 @@ mic() {
 
 net() {
 	wire=$(mullvad status | grep -c 'Connected')
-	wifi=$(ip a | grep 'wlp2s0' | grep -c 'UP')
+	wifi=$(ip a | grep 'wlan0' | grep -c 'UP')
 
 	if [ "$wire" -gt 0 ]; then
 		printf ""
