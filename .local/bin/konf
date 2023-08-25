@@ -1,0 +1,15 @@
+#!/bin/sh
+
+if [ -z "$1" ]; then
+	echo "Please provide a path."
+	exit 1
+fi
+
+CONFIG_FILE="$XDG_CONFIG_HOME/$1"
+
+if [ ! -f "$CONFIG_FILE" ]; then
+	mkdir -p "$(dirname "$CONFIG_FILE")"
+	touch "$CONFIG_FILE"
+fi
+
+$EDITOR "$CONFIG_FILE"
