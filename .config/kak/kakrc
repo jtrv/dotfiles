@@ -717,7 +717,7 @@ declare-user-mode spell
   map global spell r -docstring "replace"    ': skyspell-replace <ret>'
 
 cork ui https://github.com/kkga/ui.kak %{
-  map global user u -docstring "ui mode"   ':enter-user-mode ui <ret>'
+  map global user u -docstring "ui"   ':enter-user-mode ui <ret>'
   set-option global ui_wrap_flags -width 100 -word -indent -marker ~~
   hook global WinCreate .* %{
     ui-git-diff-enable
@@ -726,6 +726,8 @@ cork ui https://github.com/kkga/ui.kak %{
     ui-trailing-spaces-enable
   }
 }
+
+map global user v -docstring "view" 'v'
 
 # Write to file
 map global user w -docstring "write"   ':w <ret>'
