@@ -75,6 +75,9 @@ case "$(printf "%s\n" "$(readlink -f "$1")" | awk '{print tolower($0)}')" in
 *.ino)
 	batorcat --language=cpp "$1"
 	;;
+*.json | *.jsonl)
+	batorcat --language=json "$1"
+	;;
 *)
 	file -ibL "$1" | grep -q text && batorcat "$1" || file -Lb "$1"
 	;;
