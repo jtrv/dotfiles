@@ -117,7 +117,7 @@ cmd set-wallpaper ${{
 }}
 
 cmd bak $IFS="`printf '\n\t'`"; bak $fx
-cmd touch-edit $IFS=" "; kamp edit "$*"; lf -remote "send $id select \"$*\""
+cmd touch-edit $IFS=" "; "$EDITOR" "$*"; lf -remote "send $id select \"$*\""
 cmd drag $IFS="`printf '\n\t'`"; drag $fx &
 cmd open-with %"$@" "$fx" &disown
 cmd renamer $IFS="`printf '\n\t'`"; renamer $fx
