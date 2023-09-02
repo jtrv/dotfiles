@@ -61,8 +61,8 @@ git:
   disableForcePushing: false
   parseEmoji: false
 os:
-  edit: 'kamp edit {{filename}}' # see 'Configuring File Editing' section
-  editAtLine: 'kamp edit {{filename}} +{{line}}'
+  edit: '"$EDITOR" {{filename}}' # see 'Configuring File Editing' section
+  editAtLine: '"$EDITOR" {{filename}} +{{line}}'
   openCommand: ''
 refresher:
   refreshInterval: 10 # file/submodule refresh interval in seconds
