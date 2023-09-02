@@ -73,7 +73,7 @@ color = "gruvbox"
 #mem_as_value = false
 
 # Show tree mode by default in the processes widget.
-tree = true
+tree = false
 
 
 # These are all the components that support custom theming.  Note that colour support
