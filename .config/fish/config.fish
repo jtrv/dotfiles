@@ -42,9 +42,6 @@ alias glow    'glow -p'
 alias hn      'clx -an --no-less-verify'
 alias j       '~/.config/lf/wrapper'
 alias jls     'jless -r'
-alias kenv    'k ~/.config/fish/env.fish'
-alias kish    'k ~/.config/fish/config.fish'
-alias konf    'k ~/.config/kak/kakrc'
 alias la      'fls -al --color=always' # all files and dirs
 alias lc      'lazygit --git-dir=$HOME/.cfg/ --work-tree=$HOME' # lazygit for config files
 alias lg      'lazygit'
@@ -113,6 +110,10 @@ alias kreg    'kamp get reg'
 alias kcd-pwd 'cd (kamp get sh pwd)'
 alias kcd-buf 'cd (dirname (kamp get val buffile))'
 alias kft     'kamp get -b \* opt filetype | sort | uniq' # list file types you're working on
+
+alias kakrc   'k ~/.config/kak/kakrc'
+alias kenv    'k ~/.config/fish/env.fish'
+alias kish    'k ~/.config/fish/config.fish'
 
 # Start X at login
 if status is-login
