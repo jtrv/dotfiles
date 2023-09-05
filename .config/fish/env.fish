@@ -21,6 +21,7 @@ set -gx NETRC                       "$XDG_CONFIG_HOME"/.netrc
 set -gx NPM_CONFIG_USERCONFIG       "$XDG_CONFIG_HOME"/npm/npmrc
 set -gx PARALLEL_HOME               "$XDG_CONFIG_HOME"/parallel
 set -gx PYTHONSTARTUP               "$XDG_CONFIG_HOME"/python/pythonrc
+set -gx XINITRC                     "$XDG_CONFIG_HOME"/X11/xinitrc
 set -gx _JAVA_OPTIONS -Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
 
 # Data
@@ -37,6 +38,9 @@ set -gx RUSTUP_HOME       "$XDG_DATA_HOME"/rustup
 set -gx VOLTA_HOME        "$XDG_DATA_HOME"/volta
 set -gx W3M_DIR           "$XDG_DATA_HOME"/w3m
 set -gx WINEPREFIX        "$XDG_DATA_HOME"/wine
+
+# Runtime
+set -gx XAUTHORITY "$XDG_RUNTIME_DIR"/Xauthority
 
 # State
 set -gx HISTFILE "$XDG_STATE_HOME"/bash/history
