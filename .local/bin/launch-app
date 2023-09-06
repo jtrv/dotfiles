@@ -1,2 +1,2 @@
 #!/bin/bash
-j4-dmenu-desktop --dmenu='dmenu -i -fn "Blex Mono Nerd Font:pixelsize=18:antialias=true" -nb black -nf green -sb magenta -sf black'
+eval "j4-dmenu-desktop --dmenu='dmenu $DMENU_THEME'"
