@@ -41,9 +41,10 @@ notify-send -t 3000 "Update Mirrors" "Evaluations completed.
 Input password to continue."
 
 doas sh -c "
-mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist-backup
-cp '$RESULTS'/mirrorlist /etc/pacman.d/
-mv /etc/pacman.d/chaotic-mirrorlist /etc/pacman.d/chaotic-mirrorlist-backup
-cp '$RESULTS'/chaotic-mirrorlist /etc/pacman.d/
-paru -Syy
+	PATH='$PATH:$CARGO_HOME/bin/'
+	mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist-backup
+	cp '$RESULTS'/mirrorlist /etc/pacman.d/
+	mv /etc/pacman.d/chaotic-mirrorlist /etc/pacman.d/chaotic-mirrorlist-backup
+	cp '$RESULTS'/chaotic-mirrorlist /etc/pacman.d/
+	paru -Syy
 "
