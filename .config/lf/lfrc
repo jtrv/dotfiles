@@ -118,7 +118,7 @@ cmd set-wallpaper ${{
 
 cmd bak $IFS="`printf '\n\t'`"; bak $fx
 cmd touch-edit $IFS=" "; "$EDITOR" "$*"; lf -remote "send $id select \"$*\""
-cmd drag $IFS="`printf '\n\t'`"; drag $fx &
+cmd ripdrag $IFS="`printf '\n\t'`"; ripdrag $fx &
 cmd open-with %"$@" "$fx" &disown
 cmd renamer $IFS="`printf '\n\t'`"; renamer $fx
 cmd rip $IFS="`printf '\n\t'`"; rip $fx
@@ -165,7 +165,7 @@ map S     push :glob-select<space>
 map <a-S> push :glob-unselect<space>
 
 # mouse bindings
-map <m-1>    drag "$fx"
+map <m-1>    ripdrag "$fx"
 map <m-down> down
 map <m-up>   up
 
