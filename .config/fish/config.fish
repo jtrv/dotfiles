@@ -63,7 +63,7 @@ alias rbt     'systemctl kexec'
 alias sus     'systemctl suspend'
 alias thes    'thesauromatic'
 alias tv      'lobster'
-alias wget    "wget --hsts-file=\"$XDG_DATA_HOME/wget-hsts\""
+alias wget    "wget2 --hsts-file=\"$XDG_DATA_HOME/wget-hsts\""
 alias yarn    "yarn --use-yarnrc \"$XDG_CONFIG_HOME\"/yarn/config"
 
 
