@@ -29,7 +29,6 @@ end
 
 ######## ALIASES ########
 
-alias acme    "acme.sh --home \"$XDG_CONFIG_HOME\"/acme.sh/"
 alias ani     'ani-cli -q best' # weeb out in S-rank ultra-fidelity 8k lossless greenray
 alias boi     'wikiman'
 alias cat     'bat'
