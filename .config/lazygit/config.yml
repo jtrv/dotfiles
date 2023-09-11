@@ -107,7 +107,6 @@ keybinding:
         goInto: '<enter>'
         openRecentRepos: '<c-r>'
         confirm: '<enter>'
-        confirm-alt1: 'y'
         remove: 'd'
         new: 'n'
         edit: 'e'
@@ -133,7 +132,7 @@ keybinding:
         filteringMenu: '<c-s>'
         diffingMenu: 'W'
         diffingMenu-alt: '<c-e>' # deprecated
-        copyToClipboard: '<c-o>'
+        copyToClipboard: 'y'
         submitEditorText: '<enter>'
         appendNewline: '<a-enter>'
         extrasMenu: '@'
