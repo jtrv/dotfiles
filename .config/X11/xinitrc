@@ -29,18 +29,20 @@ fi
 
 xrandr --output=virtual-1 --mode=1920x1080
 
-clipmenud &                          # clipboard history daemon
-pcmanfm --daemon-mode &              # file-manager daemon
-picom &                              # window opacity / blur
-redshift &                           # bluelight filter
-udiskie -An --terminal=lf &          # notif for mountable drives
-~/.local/bin/map-keys &              # map caps to ctrl/esc
-~/.local/bin/trackball-speed &       # set trackball speed
+/usr/bin/clipmenud &                          # clipboard history daemon
+/usr/bin/pcmanfm --daemon-mode &              # file-manager daemon
+/usr/bin/picom &                              # window opacity / blur
+/usr/bin/redshift &                           # bluelight filter
+/usr/bin/udiskie -An --terminal=lf &          # notif for mountable drives
+~/.local/bin/map-keys &                       # map caps to ctrl/esc
+~/.local/bin/trackball-speed &                # set trackball speed
 
 # randomized wallpapers
-feh --randomize --bg-scale --no-fehbg ~/media/pictures/wallpapers/ &
+/usr/bin/feh --randomize --bg-scale --no-fehbg ~/media/pictures/wallpapers/ &
 
 # startup sound
-mpv --no-config --no-video ~/.config/sounds/ps2.flac &
+/usr/bin/mpv --no-config --no-video ~/.config/sounds/ps2.flac &
+
+xhost +SI:localuser:$USER
 
 exec spectrwm
