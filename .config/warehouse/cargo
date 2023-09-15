@@ -24,7 +24,6 @@ dog -> https://github.com/ogham/dog
 dprint -> https://github.com/rust-lang/crates.io-index
 du-dust -> https://github.com/bootandy/dust
 erdtree -> https://github.com/rust-lang/crates.io-index
-exa -> https://github.com/rust-lang/crates.io-index
 eza -> https://github.com/rust-lang/crates.io-index
 fclones -> https://github.com/rust-lang/crates.io-index
 fclones-gui -> https://github.com/rust-lang/crates.io-index
@@ -52,6 +51,7 @@ kak-lsp -> /home/sugimoto/.local/share/kak/cork/plugins/kak-lsp/repo
 kakpipe -> /home/sugimoto/.local/share/kak/cork/plugins/kakpipe/repo
 kakship -> /home/sugimoto/.local/share/kak/cork/plugins/kakship/repo
 kamp -> /home/sugimoto/.local/share/kak/cork/plugins/kampliment/repo
+kanata -> https://github.com/rust-lang/crates.io-index
 kmon -> https://github.com/rust-lang/crates.io-index
 kondo -> https://github.com/rust-lang/crates.io-index
 lychee -> https://github.com/rust-lang/crates.io-index
@@ -79,10 +79,12 @@ rustscan -> https://github.com/rust-lang/crates.io-index
 rusty-man -> https://github.com/rust-lang/crates.io-index
 rusty-rain -> https://github.com/rust-lang/crates.io-index
 sad -> https://github.com/ms-jpq/sad
+samply -> https://github.com/rust-lang/crates.io-index
 scaphandre -> https://github.com/rust-lang/crates.io-index
 sccache -> https://github.com/rust-lang/crates.io-index
 sd -> https://github.com/chmln/sd
 secli -> https://github.com/rust-lang/crates.io-index
+shellcaster -> https://github.com/rust-lang/crates.io-index
 shellclear -> https://github.com/rusty-ferris-club/shellclear
 skanuvaty -> https://github.com/Esc4iCEscEsc/skanuvaty
 skyspell -> https://github.com/rust-lang/crates.io-index
