@@ -18,4 +18,4 @@ My kakoune config is almost entirely in [kakrc](https://github.com/JacobTravers/
 
 # Warehouse
 
-The [Warehouse](https://github.com/JacobTravers/.cfg/blob/morpheus/.config/warehouse) is where I log my installed packages, so I can diff them between devices ([config-diff](https://github.com/JacobTravers/.cfg/blob/morpheus/.local/bin/config-diff)) and easily reinstall them if needed with something like `paru -S (cat "/home/sugimoto/.config"/warehouse/arch)`. It's also a resource for curious config readers to see what packages I like to use.
+The [Warehouse](https://github.com/JacobTravers/.cfg/blob/morpheus/.config/warehouse) is where I log my installed packages, so I can diff them between devices ([config-diff](https://github.com/JacobTravers/.cfg/blob/morpheus/.local/bin/config-diff)) and easily reinstall them if needed with something like `paru -S (cat "/home/$USER/.config"/warehouse/arch)`. It's also a resource for curious config readers to see what packages I like to use.
