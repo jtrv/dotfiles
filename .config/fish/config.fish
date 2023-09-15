@@ -7,6 +7,7 @@ source "$XDG_CONFIG_HOME"/fish/env.fish
 
 atuin init fish | source
 
+pay-respects fish --alias f | source
 
 ######## KEY-BINDINGS ########
 
