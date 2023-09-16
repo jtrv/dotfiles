@@ -2,12 +2,12 @@
     "output": {
         "blocklist": [],
         "convolver#0": {
-            "autogain": true,
+            "autogain": false,
             "bypass": false,
             "input-gain": 0.0,
             "ir-width": 100,
             "kernel-path": "/home/sugimoto/.config/easyeffects/irs/Sennheiser HD 560S minimum phase 48000 Hz.irs",
-            "output-gain": 0.0
+            "output-gain": -12.0
         },
         "plugins_order": [
             "convolver#0"
