@@ -1,7 +1,7 @@
 acpi
 acpi_call
 acpid
-adobe-source-sans-fonts
+adapta-gtk-theme
 alacritty-sixel-git
 alacritty-themes
 alsa-firmware
@@ -22,9 +22,9 @@ base-devel
 bat
 binutils
 bison
-blender
 bluez
 bluez-utils
+breeze-gtk
 breeze-icons
 btrfs-progs
 calibre
@@ -36,7 +36,6 @@ chafa
 chaotic-keyring
 chaotic-mirrorlist
 checkbashisms
-choose
 circumflex-bin
 clipmenu
 clojure-lsp-bin
@@ -53,7 +52,6 @@ dash
 dbus-broker
 deno
 devour
-difftastic
 discord
 dmidecode
 docx2txt
@@ -64,10 +62,10 @@ dragon-drop
 droidcam
 duf
 dunst
+dwarfs
 easyeffects
 efibootmgr
 epub-thumbnailer-git
-eslint_d
 espanso-bin
 exercism
 exfat-utils
@@ -77,7 +75,6 @@ fakeroot
 feh
 ff2mpv-native-messaging-host-git
 ffmpegthumbnailer
-filebot
 firefox-dark-reader
 firefox-decentraleyes
 firefox-developer-edition
@@ -86,11 +83,14 @@ firefox-tree-style-tab
 firefox-tridactyl
 firefox-tridactyl-native
 firefox-ublock-origin
+firejail
 fisher
 flameshot-git
 flex
 flow-bin
+fortune-mod
 fstl
+fuse-overlayfs
 fwupd
 fzf
 gamemode
@@ -111,13 +111,14 @@ grub-holdshift
 handlr-regex
 haskell-language-server-static
 inetutils
-innoextract
+intel-media-driver
 intel-ucode
 iotop
 irqbalance
 j4-dmenu-desktop
 jp2a
 jpegoptim
+jre
 kdeconnect
 kexec-tools
 lazygit
@@ -127,6 +128,7 @@ lf-sixel-git
 libqalculate
 libressl
 libtool
+libva-utils
 libva-vdpau-driver
 libvdpau-va-gl
 linux-firmware
@@ -154,8 +156,6 @@ mesa-vdpau
 minify-html-bin
 moar
 mold
-mongodb-bin
-mongodb-compass
 mongosh-bin
 mons
 moreutils
@@ -171,7 +171,6 @@ needrestart
 network-manager-applet
 networkmanager-dmenu-git
 networkmanager-iwd
-nextdns-unprivileged
 nfs-utils
 nim
 noto-fonts
@@ -190,10 +189,11 @@ otf-font-awesome
 pacman-cleanup-hook
 pandoc-bin
 patch
+pay-respects-bin
 pbzip2
 pcmanfm
 peek
-peep
+perf
 perl-image-exiftool
 picom
 pipewire
@@ -278,6 +278,7 @@ timeshift
 timeshift-autosnap
 tiny
 tlp
+tmux
 tokei
 topgrade
 torbrowser-launcher
@@ -297,9 +298,9 @@ veracrypt
 vhs
 video2x
 visidata
-vivaldi
 volta-bin
 vopono
+vulkan-intel
 w3m
 watchexec
 weechat
@@ -312,6 +313,7 @@ wireplumber
 wmctrl
 wpa_supplicant
 xarchiver
+xbanish
 xbindkeys
 xboxdrv
 xcape
