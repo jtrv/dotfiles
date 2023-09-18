@@ -14,10 +14,12 @@ cargo-spellcheck -> https://github.com/rust-lang/crates.io-index
 cargo-trend -> https://github.com/rust-lang/crates.io-index
 cargo-udeps -> https://github.com/rust-lang/crates.io-index
 cargo-update -> https://github.com/rust-lang/crates.io-index
+choose -> https://github.com/rust-lang/crates.io-index
 cl-wordle -> https://github.com/rust-lang/crates.io-index
 colorlog -> /home/sugimoto/repos/colorlog
 cpz -> https://github.com/rust-lang/crates.io-index
 crabz -> https://github.com/sstadick/crabz
+difftastic -> https://github.com/rust-lang/crates.io-index
 dog -> https://github.com/ogham/dog
 dprint -> https://github.com/rust-lang/crates.io-index
 du-dust -> https://github.com/rust-lang/crates.io-index
@@ -47,6 +49,7 @@ jless -> https://github.com/rust-lang/crates.io-index
 jql -> https://github.com/rust-lang/crates.io-index
 just -> https://github.com/rust-lang/crates.io-index
 kak-lsp -> /home/sugimoto/.local/share/kak/cork/plugins/kak-lsp/repo
+kak-popup -> https://github.com/rust-lang/crates.io-index
 kakpipe -> /home/sugimoto/.local/share/kak/cork/plugins/kakpipe/repo
 kakship -> /home/sugimoto/.local/share/kak/cork/plugins/kakship/repo
 kamp -> /home/sugimoto/.local/share/kak/cork/plugins/kampliment/repo
@@ -57,7 +60,7 @@ macchina -> https://github.com/rust-lang/crates.io-index
 magnetfinder -> https://github.com/rust-lang/crates.io-index
 mdcat -> https://github.com/rust-lang/crates.io-index
 mullscan -> https://github.com/jtrv/mullscan
-noseyparker-bin -> https://github.com/praetorian-inc/noseyparker
+noseyparker-cli -> https://github.com/praetorian-inc/noseyparker
 onefetch -> https://github.com/rust-lang/crates.io-index
 osintui -> https://github.com/rust-lang/crates.io-index
 ouch -> https://github.com/rust-lang/crates.io-index
@@ -68,6 +71,7 @@ pipe-rename -> https://github.com/rust-lang/crates.io-index
 procs -> https://github.com/rust-lang/crates.io-index
 rage -> https://github.com/rust-lang/crates.io-index
 rate_mirrors -> https://github.com/westandskif/rate-mirrors
+ripdrag -> https://github.com/rust-lang/crates.io-index
 ripgrep -> https://github.com/rust-lang/crates.io-index
 ripgrep_all -> https://github.com/rust-lang/crates.io-index
 rm-improved -> https://github.com/rust-lang/crates.io-index
@@ -76,12 +80,14 @@ rust-script -> https://github.com/rust-lang/crates.io-index
 rustscan -> https://github.com/rust-lang/crates.io-index
 rusty-man -> https://github.com/rust-lang/crates.io-index
 rusty-rain -> https://github.com/rust-lang/crates.io-index
+samply -> https://github.com/rust-lang/crates.io-index
 scaphandre -> https://github.com/rust-lang/crates.io-index
 sccache -> https://github.com/rust-lang/crates.io-index
 sd -> https://github.com/chmln/sd.git
 secli -> https://github.com/rust-lang/crates.io-index
 shellclear -> https://github.com/rusty-ferris-club/shellclear
 skanuvaty -> https://github.com/Esc4iCEscEsc/skanuvaty
+skim -> https://github.com/rust-lang/crates.io-index
 skyspell -> https://github.com/rust-lang/crates.io-index
 skyspell_kak -> https://github.com/rust-lang/crates.io-index
 sniffglue -> https://github.com/rust-lang/crates.io-index
