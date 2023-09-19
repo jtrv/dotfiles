@@ -2,6 +2,7 @@
 
 ############### BASIC SETTINGS ###############
 
+set sixel true
 set drawbox true
 set icons true
 set mouse true
