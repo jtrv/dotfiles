@@ -35,6 +35,7 @@ xrandr --output=virtual-1 --mode=1920x1080
 /usr/bin/redshift &                  # bluelight filter
 /usr/bin/udiskie -An --terminal=lf & # notif for mountable drives
 /usr/bin/xbanish &                   # hide mouse when typing
+/usr/lib/kdeconnectd &               # kdeconnect daemon
 ~/.local/bin/map-keys &              # map caps to ctrl/esc
 ~/.local/bin/trackball-speed &       # set trackball speed
 
