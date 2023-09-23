@@ -726,6 +726,21 @@ cork ui https://github.com/kkga/ui.kak %{
     ui-todos-enable
     ui-trailing-spaces-enable
   }
+  define-command ui-lsp-disable -override %{
+    set-option window lsp_auto_highlight_references false
+    set-option window lsp_hover_anchor false
+    lsp-auto-hover-disable
+    lsp-auto-hover-insert-mode-disable
+    lsp-inlay-diagnostics-disable window
+    lsp-inlay-hints-disable window
+    lsp-disable-window
+    echo -debug "Enabling LSP for filtetype %opt{filetype}"
+  }
+  define-command ui-lsp-toggle -override %{
+    try %{ ui-lsp-enable } catch %{ ui-lsp-disable }
+    trigger-user-hook ui-hl-changed
+  }
+  map global ui k -docstring "toggle kak-lsp"   ':ui-lsp-toggle <ret>'
 }
 
 map global user v -docstring "view" 'v'
