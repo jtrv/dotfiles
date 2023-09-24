@@ -671,7 +671,7 @@ declare-user-mode grep
 
 map global user h -docstring "hey"   ':hey-buffer <ret>'
 
-map global user k -docstring "klip off"   ':kakboard-disable; kakboard-disable <ret>'
+map global user k -docstring "klip off"   ':kakboard-disable <ret>'
 map global user K -docstring "klip on"    ':kakboard-enable <ret>'
 
 map global user l -docstring "lsp" %{:enter-user-mode lsp <ret>}
