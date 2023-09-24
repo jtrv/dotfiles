@@ -12,7 +12,7 @@ set shellopts '-eu'
 set shell sh
 set tabstop 2
 
-set previewer ~/.config/lf/preview
+set previewer ~/.config/lf/sandbox
 set cleaner ~/.config/lf/cleaner
 
 # dynamic columns for view width
