@@ -1,8 +1,7 @@
 #!/bin/sh
 
 image() {
-	geometry="$(($2 - 2))x$3"
-	chafa "$1" -f sixel -s "$geometry" --animate=false
+	chafa -f sixel -s "$(($2 - 2))x$3" --animate=false "$1"
 }
 
 batorcat() {
