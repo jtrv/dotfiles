@@ -14,7 +14,7 @@ I also have a few config related scripts that can be found in [`.local/bin/`](ht
 
 # Kakrc
 
-My kakoune config is almost entirely in [kakrc](https://github.com/JacobTravers/.cfg/blob/main/.config/kak/kakrc), the only items outside of it are post-merge hooks for [kak-lsp](https://github.com/kak-lsp/kak-lsp), [kakpipe](https://github.com/eburghar/kakpipe), [kakship](https://github.com/eburghar/kakship), and [kampliment](https://github.com/vbauerster/kampliment).
+My kakoune config is almost entirely in [kakrc](https://github.com/JacobTravers/.cfg/blob/main/.config/kak/kakrc), with the exception of certain context related configs in [`.config/kak/contexts/`](https://github.com/JacobTravers/.cfg/blob/main/.config/kak/contexts/), and post-merge hooks for [kak-lsp](https://github.com/kak-lsp/kak-lsp), [kakpipe](https://github.com/eburghar/kakpipe), [kakship](https://github.com/eburghar/kakship), and [kampliment](https://github.com/vbauerster/kampliment), in the `$XDG_STATE_HOME/kak/cork` directory on my machine.
 
 # Warehouse
 
