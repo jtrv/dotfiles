@@ -58,7 +58,7 @@ set -gx MOZ_X11_EGL              1
 set -gx OPENAI_API_KEY           (secli get openai_api_key)
 set -gx OPENAI_API_BASE          "https://api.openai.com/v1"
 set -gx PAGER                    "/usr/bin/moar"
-set -gx PATH                     "$VOLTA_HOME/bin" "$BUN_INSTALL/bin" $PATH
+set -gx PATH                     "$BUN_INSTALL/bin" $PATH
 set -gx VISUAL                   "/usr/bin/kak"
 
 set -gx LF_ICONS "\
