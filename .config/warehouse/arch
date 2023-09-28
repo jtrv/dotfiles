@@ -5,6 +5,7 @@ alsa-utils
 amd-ucode
 ananicy-cpp
 android-tools
+ani-cli-git
 anime4k
 arch-audit
 arch-wiki-docs
@@ -16,7 +17,6 @@ automake
 b3sum
 base
 base-devel
-bash-language-server
 bindtointerface
 binutils
 bison
@@ -58,6 +58,7 @@ duf
 dunst
 dwarfs-git
 easyeffects
+element-desktop
 epub-thumbnailer-git
 espanso-bin
 eww-wayland
@@ -138,7 +139,7 @@ kwakd
 lazygit
 lbzip2
 leanify-git
-lf-sixel-git
+lf
 lib32-bindtointerface
 lib32-giflib
 lib32-gnutls
@@ -172,6 +173,7 @@ linux-zen-headers
 lld
 llvm
 lnav
+lobster-git
 logseq-desktop-bin
 lostfiles
 lua-language-server
@@ -255,6 +257,7 @@ python-lsp-server
 python-notify2
 python-pip
 qbittorrent
+qrcp-git
 radeontop
 rclone
 read-edid
@@ -275,6 +278,7 @@ shfmt
 signal-desktop
 sl
 smartmontools
+socat
 soundux
 sox
 spectrwm
@@ -303,10 +307,10 @@ tesseract
 texinfo
 texlab
 texlive-basic
-texlive-bibtexextra
+texlive-binextra
 texlive-fonts-fontawesome
-texlive-formatsextra
-texlive-mathscience
+texlive-latexextra
+texlive-latexrecommended
 tidal-hifi-bin
 tidy
 tig

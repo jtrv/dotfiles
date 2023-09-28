@@ -25,8 +25,8 @@ dprint -> https://github.com/rust-lang/crates.io-index
 du-dust -> https://github.com/bootandy/dust
 erdtree -> https://github.com/rust-lang/crates.io-index
 eza -> https://github.com/rust-lang/crates.io-index
-fclones -> https://github.com/rust-lang/crates.io-index
 fclones-gui -> https://github.com/rust-lang/crates.io-index
+fclones -> https://github.com/rust-lang/crates.io-index
 fd-find -> https://github.com/rust-lang/crates.io-index
 flamegraph -> https://github.com/rust-lang/crates.io-index
 fls -> https://github.com/rust-lang/crates.io-index
@@ -71,8 +71,8 @@ protonup-rs -> https://github.com/rust-lang/crates.io-index
 pueue -> https://github.com/rust-lang/crates.io-index
 rage -> https://github.com/rust-lang/crates.io-index
 rate_mirrors -> https://github.com/westandskif/rate-mirrors
-ripgrep -> https://github.com/rust-lang/crates.io-index
 ripgrep_all -> https://github.com/rust-lang/crates.io-index
+ripgrep -> https://github.com/rust-lang/crates.io-index
 rm-improved -> https://github.com/rust-lang/crates.io-index
 rmz -> https://github.com/rust-lang/crates.io-index
 rustscan -> https://github.com/rust-lang/crates.io-index
@@ -92,12 +92,12 @@ skyspell_kak -> https://github.com/rust-lang/crates.io-index
 sniffglue -> https://github.com/rust-lang/crates.io-index
 speedtest-rs -> https://github.com/rust-lang/crates.io-index
 starship -> https://github.com/rust-lang/crates.io-index
-t-rec -> https://github.com/rust-lang/crates.io-index
 tealdeer -> https://github.com/rust-lang/crates.io-index
 thesauromatic -> https://github.com/rust-lang/crates.io-index
 tickrs -> https://github.com/rust-lang/crates.io-index
 tokei -> https://github.com/rust-lang/crates.io-index
 topgrade -> https://github.com/rust-lang/crates.io-index
+t-rec -> https://github.com/rust-lang/crates.io-index
 trippy -> https://github.com/rust-lang/crates.io-index
 ttyper -> https://github.com/rust-lang/crates.io-index
 vopono -> https://github.com/rust-lang/crates.io-index

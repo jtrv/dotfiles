@@ -1,6 +1,7 @@
 @fsouza/prettierd
 @typescript-eslint/eslint-plugin
 @typescript-eslint/parser
+bash-language-server
 bun
 commitlint
 depcheck
