@@ -219,6 +219,8 @@ settings_section = "texlab"
 
 [language.latex.settings.texlab]
 build.onSave = true
+build.executable = "pdflatex"
+build.args = ["%f"]
 # See https://github.com/latex-lsp/texlab/blob/master/docs/options.md
 #
 # Preview configuration for zathura with SyncTeX search.
@@ -241,6 +243,7 @@ forwardSearch.args = [
         '
     """,
 ]
+chktex.onEdit = true
 
 [language.lua]
 filetypes = ["lua"]
