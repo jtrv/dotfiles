@@ -50,6 +50,9 @@ cmd open ${{
   esac
 }}
 
+cmd on-select &{{
+    lf -remote "send $id set statfmt \"$(eza -ld --color=always "$f")\""
+}}
 
 ############### CUSTOM COMMANDS ###############
 
