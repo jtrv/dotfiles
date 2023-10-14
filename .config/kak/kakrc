@@ -129,19 +129,6 @@ cork kakship https://github.com/eburghar/kakship %{ kakship-enable }
 cork kampliment https://github.com/vbauerster/kampliment
 
 ###################### COMMANDS ######################
-define-command bat -docstring "
-  bat [<files>]: bat utility wrapper
-  Print the files (or buffile) using bat and kakpipe
-" -params 1.. %{
-  evaluate-commands %sh{
-    if [ $# -eq 0 ]; then
-      echo "kakpipe -- --style=plain --color=always %val{buffile}"
-    else
-      echo "kakpipe -- bat --style=plain --color=always %arg{@}"
-    fi
-  }
-}
-
 define-command buffer-picker -docstring "
   buffer-picker: Opens buffer picker.
 " %{
@@ -181,6 +168,19 @@ define-command calc -docstring "
       printf %s\\n "
         execute-keys \"| xargs -I X qalc -t '$*' <ret>\"
       "
+    fi
+  }
+}
+
+define-command cat -docstring "
+  bat [<files>]: bat utility wrapper
+  Print the files (or buffile) using bat and kakpipe
+      " -params 1.. %{
+  evaluate-commands %sh{
+    if [ $# -eq 0 ]; then
+      echo "kakpipe -- bat --style=plain --color=always %val{buffile}"
+    else
+      echo "kakpipe -- bat --style=plain --color=always %arg{@}"
     fi
   }
 }
@@ -290,12 +290,13 @@ map global user / -docstring "search"   '<a-;>: global-picker<ret>'
 define-command glow -docstring "
   glow [<files>]: glow utility wrapper
   Open a glow formatted view of the provided files
-" -file-completion -params 1.. %{
+" -params 1.. %{
   kakpipe -n glow -- glow -s dark %arg{@};
 }
 hook global WinDisplay '\*glow\*' %{
   ui-trailing-spaces-disable
 }
+complete-command -menu glow shell-script-candidates %{fd -e md}
 
 define-command grep -override -docstring "
   grep [<arguments>]: grep utility wrapper
@@ -521,19 +522,34 @@ define-command tldr -docstring "
 }
 
 define-command view-pdf -docstring "
-  view-pdf [<file.pdf>]: Watch .tex and view the pdf in zathura.
+  view-pdf [<pdf>]: Watch .tex and view the pdf in zathura.
 " -file-completion -params .. %{
   terminal devour zathura %arg{@}
 }
+complete-command -menu view-pdf shell-script-candidates %{fd -e pdf}
 alias global pdf view-pdf
 
 define-command xargs -docstring "
   xargs [<arguments>]: xargs utility wrapper
-  Execute a command with each selection, selections are represented with {} as a placeholder
+  execute a command with each selection, selections are represented with {} as a placeholder
 " %{
   prompt 'command:' %{
     execute-keys "| xargs -I {} %val{text} <ret>"
   }
+}
+
+define-command watchexec -docstring "
+  watchexec [<args>] <command>: watchexec utility wrapper
+  execute the given command when the current directory changes 
+" -shell-completion -params 0.. %{
+  kakpipe -- watchexec %arg{@}
+}
+
+define-command watchthis -docstring "
+  watchexec [<args>] <command>: watchexec utility wrapper
+  execute the given command when the current file changes 
+" -shell-completion -params 0.. %{
+  kakpipe -- watchexec --watch %val{buffile} %arg{@}
 }
 
 ###################### NORMAL KEYS ######################
