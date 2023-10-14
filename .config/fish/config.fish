@@ -43,6 +43,7 @@ alias fzfp    'fzf --preview="bat --color=always {}"'
 alias glow    'glow -p'
 alias hn      'clx -an --no-less-verify'
 alias j       '~/.config/lf/wrapper'
+alias jd      'lfcd'
 alias jls     'jless -r'
 alias la      'fls -al --color=always' # all files and dirs
 alias lc      'lazygit --git-dir=$HOME/.cfg/ --work-tree=$HOME' # lazygit for config files
