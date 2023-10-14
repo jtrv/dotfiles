@@ -1,8 +1,5 @@
 #!/bin/sh
 
-# requires:
-# lf-sixel-git
-
 lfcd() {
 	tmp="$(mktemp)"
 	fid="$(mktemp)"
