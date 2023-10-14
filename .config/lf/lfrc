@@ -2,14 +2,15 @@
 
 ############### BASIC SETTINGS ###############
 
-set sixel true
 set drawbox true
 set icons true
+set incfilter true
 set mouse true
 set relativenumber true
 set scrolloff 10
 set shellopts '-eu'
 set shell sh
+set sixel true
 set tabstop 2
 
 set previewer ~/.config/lf/sandbox
@@ -134,6 +135,7 @@ cmd yank-path $printf '%s' "$fx" | xclip -selection clipboard
 # unbind defaults
 map m
 map r
+map f
 
 # goto shortcuts
 map gb cd ~/.local/bin/
@@ -178,6 +180,7 @@ map o        push :open-with<space>
 
 map <a-d> rip                     # safer remove function (rip)
 map D     delete                  # actually delete
+map f     filter                  # jump to file with fzf choice
 map F     :fuzzy_file             # jump to file with fzf choice
 map G     :fuzzy_content          # search files by grepping contents
 map m     push :mkdir<space>      # create new dir
