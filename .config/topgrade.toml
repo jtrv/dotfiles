@@ -5,7 +5,7 @@ assume_yes = true
 notify_each_step = true
 
 # Disable specific steps - same options as the command line flag
-disable = ["containers", "gcloud", "distrobox", "protonup"]
+disable = ["bun","containers", "gcloud", "distrobox", "protonup"]
 
 # Ignore failures for these steps
 ignore_failures = ["git_repos"]
@@ -15,21 +15,6 @@ ignore_failures = ["git_repos"]
 
 # Do not ask to retry failed steps (default: false)
 #no_retry = true
-
-# Run inside tmux
-#run_in_tmux = true
-
-# List of remote machines with Topgrade installed on them
-#remote_topgrades = ["toothless", "pi", "parnas"]
-
-# Arguments to pass SSH when upgrading remote systems
-#ssh_arguments = "-o ConnectTimeout=2"
-
-# Path to Topgrade executable on remote machines
-#remote_topgrade_path = ".cargo/bin/topgrade"
-
-# Arguments to pass tmux when pulling Repositories
-#tmux_arguments = "-S /var/tmux.sock"
 
 # Do not set the terminal title
 #set_title = false
@@ -46,9 +31,6 @@ repos = [
     "~/repos/*"
 ]
 
-# Don't pull the predefined git repos
-#predefined_repos = false
-
 # Arguments to pass Git when pulling Repositories
 #arguments = "--rebase --autostash"
 
@@ -61,13 +43,8 @@ self_update = true
 
 # Custom commands
 [commands]
-"proton" = "protonup-rs -q"
+"Bun" = "bun update -g"
+"Proton" = "protonup-rs -q"
 
 [linux]
-# Arguments to pass yay when updating packages
-#yay_arguments = "--nodevel"
-#trizen_arguments = "--devel"
-#enable_tlmgr = true
-#emerge_sync_flags = "-q"
-#emerge_update_flags = "-uDNa --with-bdeps=y world"
-#redhat_distro_sync = false
+enable_tlmgr = true
