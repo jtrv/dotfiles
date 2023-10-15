@@ -1,5 +1,4 @@
 #!/bin/sh
-#!/bin/bash
 
 AC=$(cat "/sys/class/power_supply/AC/online")
 BAT=$(cat "/sys/class/power_supply/BAT0/capacity")
