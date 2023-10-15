@@ -1,4 +1,0 @@
-#!/bin/sh
-
-bluetoothctl power on &&
-	bluetoothctl scan on
