@@ -16,7 +16,7 @@ case "$1" in
     fi
     ;;
   "")
-    sh "$0" list | dmenu -fn 'SauceCodePro Nerd Font Mono:pixelsize=18:antialias=true' -nb 'black' -nf 'green' -sb 'magenta' -sf 'black' -p 'Emoji: ' | sh "$0" copy
+    sh "$0" list | eval "dmenu $DMENU_THEME -p 'Emoji: '" | sh "$0" copy
     ;;
 esac
 
