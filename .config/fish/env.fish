@@ -59,6 +59,7 @@ set -gx OPENAI_API_KEY           (secli get openai_api_key)
 set -gx OPENAI_API_BASE          "https://api.openai.com/v1"
 set -gx PAGER                    "/usr/bin/moar"
 set -gx PATH                     "$BUN_INSTALL/bin" $PATH
+set -gx QT_STYLE_OVERRIDE        "kvantum"
 set -gx VISUAL                   "/usr/bin/kak"
 
 set -gx LF_ICONS "\
