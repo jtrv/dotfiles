@@ -1,0 +1,58 @@
+#!/usr/bin/bash
+# Download recommended exercises from an Exercism track
+
+# @license: MIT
+# @usage: exercism-dl <lang>
+# @deps: xh, jaq
+
+# Utils
+# decorators
+reset="\e[0;0m"
+strong="\e[1;39m"
+blue="\e[1;34m"
+yellow="\e[1;33m"
+green="\e[1;32m"
+
+# Main
+
+set -e
+
+pushd "${HOME}/repos/exercism" &>/dev/null || exit
+
+if [[ $# -eq 0 ]]; then
+	langs=$(ls)
+else
+	langs=$*
+fi
+
+for lang in $langs; do
+	url="https://exercism.org/api/v2/tracks/${lang}/exercises"
+	token=""
+	source ".env" # source token from env
+
+	exercises=$(
+		xh -bF "$url" -- "Authorization: Bearer ${token}" |
+			jaq -r '.[] | .[] | select(.is_unlocked == true) | select(.is_recommended == true) | .slug'
+	)
+
+	n=$(wc -l <<<"$exercises")
+	i=0
+
+	pushd "${HOME}/repos/exercism/${lang}" &>/dev/null || exit
+
+	echo -e "${strong}${yellow}Downloading ${n} ${lang} exercises...${reset}"
+	while read -r exercise; do
+		i=$((i + 1))
+
+		if [ -d "${exercise}" ]; then
+			echo -e "${strong}${i}. ${blue}${exercise}... ${yellow}Exists${reset}"
+
+		else
+			echo -e "${strong}${i}. ${blue}${exercise}... ${green}Fetched${reset}"
+			exercism download --exercise="${exercise}" --track="${lang}"
+		fi
+	done <<<"$exercises"
+	popd &>/dev/null || exit
+done
+
+popd &>/dev/null || exit
