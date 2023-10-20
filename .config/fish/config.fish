@@ -106,7 +106,7 @@ alias kf      'kamp-files'
 alias kgi     'kamp-grep'
 alias kgl     'kak -e "live-grep; buffer-only;echo "live-grep"; info-buffers"'
 
-alias k       'kamp edit'
+alias k       'kak'
 alias kval    'kamp get val'
 alias kopt    'kamp get opt'
 alias kreg    'kamp get reg'
