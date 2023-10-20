@@ -550,6 +550,18 @@ define-command watchthis -docstring "
   kakpipe -- watchexec --watch %val{buffile} %arg{@}
 }
 
+define-command zeal -docstring "
+  zeal [<args>]: zeal search '<language>:<args>'
+" -params 0.. %{
+  evaluate-commands %sh{
+    if [ $# -eq 0 ]; then
+      echo 'prompt -shell-script-candidates %{ rg -No "\p{L}+\w+" "$kak_buffile" | huniq | xargs -I {} echo "$kak_opt_filetype:{}"} -init "%opt{filetype}:" zeal %{ terminal devour zeal %val{text} }'
+    else
+      echo "terminal devour zeal $* 2&1> /dev/null"
+    fi &disown
+  }
+} -shell-script-candidates %{rg -No '\p{L}+\w+' "$kak_buffile" | huniq | xargs -I {} echo "$kak_opt_filetype:{}"}
+
 ###################### NORMAL KEYS ######################
 
 # Clear selections
@@ -764,3 +776,4 @@ map global user w -docstring "write"   ':w <ret>'
 # pipe selections as args with xargs
 map global user x -docstring "xargs"   ':xargs <ret>'
 
+map global user z -docstring "zeal"    ':zeal <ret>'
