@@ -551,16 +551,28 @@ define-command watchthis -docstring "
 }
 
 define-command zeal -docstring "
-  zeal [<args>]: zeal search '<language>:<args>'
+  zeal <query>: zeal search '<docset>:<args>'
 " -params 0.. %{
   evaluate-commands %sh{
     if [ $# -eq 0 ]; then
-      echo 'prompt -shell-script-candidates %{ rg -No "\p{L}+\w+" "$kak_buffile" | huniq | xargs -I {} echo "$kak_opt_filetype:{}"} -init "%opt{filetype}:" zeal %{ terminal devour zeal %val{text} }'
+      echo '
+        prompt -shell-script-candidates %{
+          rg -No "\p{L}+\w+" "$kak_buffile" \
+            | huniq \
+            | xargs -I {} echo "$kak_opt_filetype:{}"
+        } \
+        -init "%opt{filetype}:" \
+        zeal %{ terminal devour zeal %val{text} }
+      '
     else
       echo "terminal devour zeal $* 2&1> /dev/null"
-    fi &disown
+    fi
   }
-} -shell-script-candidates %{rg -No '\p{L}+\w+' "$kak_buffile" | huniq | xargs -I {} echo "$kak_opt_filetype:{}"}
+} -shell-script-candidates %{
+  rg -No '\p{L}+\w+' "$kak_buffile" \
+    | huniq \
+    | xargs -I {} echo "$kak_opt_filetype:{}"
+}
 
 ###################### NORMAL KEYS ######################
 
