@@ -551,7 +551,7 @@ define-command watchthis -docstring "
 }
 
 define-command zeal -docstring "
-  zeal <query>: zeal search '<docset>:<args>'
+  zeal <docset:api> : search for an api within a zeal docset
 " -params 0.. %{
   evaluate-commands %sh{
     if [ $# -eq 0 ]; then
@@ -559,19 +559,19 @@ define-command zeal -docstring "
         prompt -shell-script-candidates %{
           rg -No "\p{L}+\w+" "$kak_buffile" \
             | huniq \
-            | xargs -I {} echo "$kak_opt_filetype:{}"
+            | sed "s/^/$kak_opt_filetype:/"
         } \
         -init "%opt{filetype}:" \
         zeal %{ terminal devour zeal %val{text} }
       '
     else
-      echo "terminal devour zeal $* 2&1> /dev/null"
+      echo "terminal devour zeal $*"
     fi
   }
 } -shell-script-candidates %{
   rg -No '\p{L}+\w+' "$kak_buffile" \
     | huniq \
-    | xargs -I {} echo "$kak_opt_filetype:{}"
+    | sed "s/^/$kak_opt_filetype:/"
 }
 
 ###################### NORMAL KEYS ######################
