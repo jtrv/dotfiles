@@ -522,7 +522,7 @@ define-command tldr -docstring "
 
 define-command view-pdf -docstring "
   view-pdf [<pdf>]: Watch .tex and view the pdf in zathura.
-" -file-completion -params .. %{
+" -params .. %{
   terminal devour zathura %arg{@}
 } -menu -shell-script-candidates %{fd -e pdf}
 alias global pdf view-pdf
