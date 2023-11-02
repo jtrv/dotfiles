@@ -128,6 +128,9 @@ cork kakship https://github.com/eburghar/kakship %{ kakship-enable }
 # interact with external programs
 cork kampliment https://github.com/vbauerster/kampliment
 
+# Popups with tmux
+cork popup https://github.com/enricozb/popup.kak
+
 ###################### COMMANDS ######################
 define-command buffer-picker -docstring "
   buffer-picker: Opens buffer picker.
@@ -433,14 +436,6 @@ define-command pcsv -docstring "
   }
 }
 
-define-command popup -docstring "
-  popup [<program>] [<arguments>]: Creates a new terminal as an Alacritty window (class: popup).
-" -shell-completion -params .. %{
-  nop %sh{
-    alacritty msg create-window --class=popup --working-directory="$PWD" --command sh -c 'export KAKOUNE_SESSION=$1 KAKOUNE_CLIENT=$2 && shift 2 && exec "$@"' -- "$kak_session" "$kak_client" "${@:-$SHELL}"
-  }
-}
-
 define-command ptsv -docstring "
   pcsv [<files>]: tsv viewing utility
   Print the files (or buffile) using bat and columns
@@ -637,16 +632,16 @@ map global normal <#> -docstring "comment"   %{: comment <ret>}
 # new windows
 map global normal <c-n> -docstring "new client"     %{: new <ret>}
 map global normal <c-t> -docstring "new terminal"   %{: connect terminal <ret>}
-map global normal +     -docstring "new popup"      %{: connect popup <ret>}
+map global normal +     -docstring "new popup"      %{: popup <ret>}
 
 # pickers
 map global normal B     -docstring "buffer picker"   %{: buffer-picker <ret>}
 map global normal <c-p> -docstring "file picker"     %{: file-picker <ret>}
-map global normal <c-g> -docstring "grep picker"     %{: connect popup kamp-grep <ret>}
+map global normal <c-g> -docstring "grep picker"     %{: popup kamp-grep <ret>}
 
 # external programs
-map global normal <c-h> -docstring "lf"        %{: connect popup lf <ret>}
-map global normal <c-v> -docstring "lazygit"   %{: connect popup lazygit <ret>}
+map global normal <c-h> -docstring "lf"        %{: popup lf <ret>}
+map global normal <c-v> -docstring "lazygit"   %{: popup lazygit <ret>}
 
 ################# MODES ##################
 
