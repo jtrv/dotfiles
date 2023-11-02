@@ -128,6 +128,9 @@ cork kakship https://github.com/eburghar/kakship %{ kakship-enable }
 # Interact with external programs
 cork kampliment https://github.com/vbauerster/kampliment
 
+# popups with tmux
+cork popup https://github.com/enricozb/popup.kak
+
 ###################### COMMANDS ######################
 define-command buffer-picker -docstring "
   buffer-picker: Opens buffer picker.
@@ -433,14 +436,6 @@ define-command pcsv -docstring "
   }
 }
 
-define-command popup -docstring "
-  popup [<program>] [<arguments>]: Creates a new terminal as an Alacritty window (class: popup).
-" -shell-completion -params .. %{
-  nop %sh{
-    alacritty msg create-window --class=popup --working-directory="$PWD" --command sh -c 'export KAKOUNE_SESSION=$1 KAKOUNE_CLIENT=$2 && shift 2 && exec "$@"' -- "$kak_session" "$kak_client" "${@:-$SHELL}"
-  }
-}
-
 define-command ptsv -docstring "
   pcsv [<files>]: tsv viewing utility
   Print the files (or buffile) using bat and columns
@@ -558,7 +553,7 @@ define-command zeal -docstring "
       echo '
         prompt -shell-script-candidates %{
           rg -No "\p{L}+\w+" "$kak_buffile" \
-            | huniq \
+            | sort -u \
             | sed "s/^/$kak_opt_filetype:/"
         } \
         -init "%opt{filetype}:" \
@@ -570,7 +565,7 @@ define-command zeal -docstring "
   }
 } -shell-script-candidates %{
   rg -No '\p{L}+\w+' "$kak_buffile" \
-    | huniq \
+    | sort -u \
     | sed "s/^/$kak_opt_filetype:/"
 }
 
@@ -628,16 +623,16 @@ map global normal <#> -docstring "comment"   ':comment <ret>'
 # New windows
 map global normal <c-n> -docstring "new client"     ':new <ret>'
 map global normal <c-t> -docstring "new terminal"   ':connect terminal <ret>'
-map global normal +     -docstring "new popup"      ':connect popup <ret>'
+map global normal +     -docstring "new popup"      ':popup -- fish <ret>'
 
 # Pickers
-map global normal B     -docstring "buffer picker"   ': buffer-picker<ret>'
-map global normal <c-p> -docstring "file picker"     ': file-picker<ret>'
-map global normal <c-g> -docstring "grep picker"     ': connect popup kamp-grep<ret>'
+map global normal B     -docstring "buffer picker"   ':buffer-picker <ret>'
+map global normal <c-p> -docstring "file picker"     ':file-picker <ret>'
+map global normal <c-g> -docstring "grep picker"     ':popup -- fish -c "kamp-grep"<ret>'
 
 # External Programs
-map global normal <c-h> -docstring "lf"        ':connect popup lf <ret>'
-map global normal <c-v> -docstring "lazygit"   ':connect popup lazygit <ret>'
+map global normal <c-h> -docstring "lf"        ':popup -- lf <ret>'
+map global normal <c-v> -docstring "lazygit"   ':popup -- lazygit <ret>'
 
 ###################### PROMPT KEYS ######################
 
@@ -649,7 +644,65 @@ map global prompt <a-,> -docstring "insert git root directory"   '%sh{git rev-pa
 
 ###################### INSERT KEYS ######################
 
-map global insert <c-v> -docstring "insert mode paste"   '<esc>Pi'
+# clear selections
+map global normal <a-space> <a-,> -docstring "clear current (or nth) selection"
+map global normal <esc> ,         -docstring "clear multi-selection and keep (nth)"
+
+# use w as a more ergonomic 'previous word'
+map global normal w b         -docstring "select previous word"
+map global normal W B         -docstring "extend previous word"
+map global normal <a-w> <a-b> -docstring "select previous BIG-WORD"
+map global normal <a-W> <a-B> -docstring "extend previous BIG-WORD"
+
+# swap [] <a-[]>
+map global normal '<a-[>' '['     -docstring "select to previous object end"
+map global normal '[' '<a-[>'     -docstring "select upto previous object end"
+map global normal ']' '<a-]>'     -docstring "select upto next object end"
+map global normal '<a-]>' ']'     -docstring "select to next object end"
+
+# use <c-k>/<c-l> as more ergonomic undo/redo selction
+map global normal <c-k> <a-u> -docstring "undo selection change"
+map global normal <c-l> <a-U> -docstring "redo selection change"
+
+# select whole lines
+map global normal J -docstring "select next line"       %{Jx}
+map global normal K -docstring "select previous line"   %{Kx}
+
+# make x/X inner and outer object selection
+map global normal x     -docstring "select inner"   %{<a-i>}
+map global normal X     -docstring "select outer"   %{<a-a>}
+
+# select all matches
+map global normal <a-x> -docstring "select all matches"   %{*%s<ret>)}
+
+# select/add next match
+map global normal v     -docstring "select next match"      %{*n}
+map global normal <a-v> -docstring "deselect current sel"   %{*<a-n>}
+map global normal V     -docstring "add next match"         %{*N}
+map global normal <a-V> -docstring "add previous match"     %{*<a-N>}
+
+# case insensitive search
+map global normal /     -docstring "search"                      %{/(?i)}
+map global normal <a-/> -docstring "search backwards"            %{<a-/>(?i)}
+map global normal ?     -docstring "(extend) search"             %{?(?i)}
+map global normal <a-?> -docstring "(extend) search backwards"   %{<a-?>(?i)}
+
+# (Un)Comment Lines
+map global normal <#> -docstring "comment"   %{: comment <ret>}
+
+# new windows
+map global normal <c-n> -docstring "new client"     %{: new <ret>}
+map global normal <c-t> -docstring "new terminal"   %{: connect terminal <ret>}
+map global normal +     -docstring "new popup"      %{: popup -- fish <ret>}
+
+# pickers
+map global normal B     -docstring "buffer picker"   %{: buffer-picker <ret>}
+map global normal <c-p> -docstring "file picker"     %{: file-picker <ret>}
+map global normal <c-g> -docstring "grep picker"     %{: popup --fish -c 'kamp-grep' <ret>}
+
+# external programs
+map global normal <c-h> -docstring "lf"        %{: popup -- fish -c 'lf' <ret>}
+map global normal <c-v> -docstring "lazygit"   %{: popup -- fish -c 'lazygit' <ret>}
 
 ################# MODES ##################
 
