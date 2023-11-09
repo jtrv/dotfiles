@@ -14,13 +14,13 @@ colorscheme calo-nord
 set-option global ui_options terminal_assistant=none
 set-option global scrolloff 1,3
 
-# Toggle relative line numbers with insert mode
+# toggle relative line numbers with insert mode
 cork number-toggle https://github.com/evanrelf/number-toggle.kak %{
   require-module "number-toggle"
   set-option global number_toggle_params -hlcursor -cursor-separator '┼'
 }
 
-# Rainbow delimiters + current scope
+# rainbow delimiters + current scope
 cork kak-rainbower https://github.com/jtrv/kak-rainbower %{
   hook global WinCreate .* %{ rainbow-enable-window }
 }
@@ -29,23 +29,23 @@ cork kak-rainbower https://github.com/jtrv/kak-rainbower %{
 
 # LSP Magic
 cork kak-lsp https://github.com/kak-lsp/kak-lsp %{
-  define-command lsp-restart -docstring 'restart lsp server' %{ lsp-stop; lsp-start }
+  define-command lsp-restart -docstring "restart lsp server" %{ lsp-stop; lsp-start }
   set global lsp_diagnostic_line_error_sign '║'
   set global lsp_diagnostic_line_warning_sign '┊'
   set global lsp_hover_max_lines 40
   hook global KakEnd .* lsp-exit
 }
 
-# Lint/format etc mode
+# lint/format etc mode
 declare-user-mode dev
-  map global dev d -docstring "diagnostic"   ': lsp-diagnostics <ret>'
-  map global dev f -docstring "format"       ': format <ret>'
-  map global dev F -docstring "format sel"   ': format-selections <ret>'
-  map global dev n -docstring "next lint"    ': lint-next-message <ret>'
-  map global dev p -docstring "prev lint"    ': lint-previous-message <ret>'
-  map global dev l -docstring "lint"         ': lint <ret>'
-  map global dev L -docstring "lint-buffer"  ': buffer *lint-output* <ret>'
-  map global dev s -docstring "set filetype" ': set-filetype<ret>'
+  map global dev d -docstring "diagnostic"   %{: lsp-diagnostics <ret>}
+  map global dev f -docstring "format"       %{: format <ret>}
+  map global dev F -docstring "format sel"   %{: format-selections <ret>}
+  map global dev n -docstring "next lint"    %{: lint-next-message <ret>}
+  map global dev p -docstring "prev lint"    %{: lint-previous-message <ret>}
+  map global dev l -docstring "lint"         %{: lint <ret>}
+  map global dev L -docstring "lint-buffer"  %{: buffer *lint-output* <ret>}
+  map global dev s -docstring "set filetype" %{: set-filetype <ret>}
 
 cork indent https://github.com/kirusfg/indent.kak %{
   enable-detect-indent
@@ -58,7 +58,7 @@ cork smarttab https://github.com/andreyorst/smarttab.kak %{
   }
 }
 
-# Contextual Scripts
+# contextual scripts
 source "~/.config/kak/contexts/commit.kak"
 source "~/.config/kak/contexts/css.kak"
 source "~/.config/kak/contexts/diff.kak"
@@ -80,10 +80,10 @@ source "~/.config/kak/contexts/yaml.kak"
 
 set global grepcmd 'rg --smart-case --vimgrep'
 
-# Empty scratch buffer(s)
+# empty scratch buffer(s)
 hook global BufCreate '\*scratch(-\d+)?\*' %{ execute-keys -draft '%<a-d>' }
 
-# Only color active window cursor
+# only color active window cursor
 cork active-window https://github.com/greenfork/active-window.kak %{
   set-face global InactiveCursor default,rgba:5d5d5dFF
 }
@@ -92,7 +92,7 @@ cork auto-pairs https://github.com/alexherbo2/auto-pairs.kak %{ enable-auto-pair
 
 cork grep-expand https://github.com/jtrv/grep-expand.kak
 
-# Clipboard Integration
+# clipboard integration
 cork kakboard https://github.com/lePerdu/kakboard %{ hook global WinCreate .* %{ kakboard-enable } }
 
 cork kakoune-auto-percent https://github.com/delapouite/kakoune-auto-percent
@@ -119,13 +119,13 @@ cork sudo-write https://github.com/jtrv/sudo-write.kak %{
   alias global swq 'sudo-write-quit'
 }
 
-# Display text with ansi color-codes inside a fifo
+# display text with ansi color-codes inside a fifo
 cork kakpipe https://github.com/eburghar/kakpipe %{ require-module kakpipe }
 
-# Starship for kakoune modeline
+# starship for kakoune modeline
 cork kakship https://github.com/eburghar/kakship %{ kakship-enable }
 
-# Interact with external programs
+# interact with external programs
 cork kampliment https://github.com/vbauerster/kampliment
 
 # popups with tmux
@@ -139,7 +139,7 @@ define-command buffer-picker -docstring "
     buffer %val{text}
   }
 }
-map global goto b -docstring "buffer"   '<a-;>: buffer-picker<ret>'
+map global goto b -docstring "buffer"   %{<a-;>: buffer-picker <ret>}
 
 define-command bun -docstring "
   bun [<arguments>]: bun utility wrapper
@@ -279,8 +279,8 @@ define-command file-picker -docstring "
   }
 }
 
-define-command global-picker -docstring 'global-picker: Opens global search picker.' %{
-  # Provides word completion
+define-command global-picker -docstring "global-picker: Opens global search picker." %{
+  # provides word completion
   prompt grep: -shell-script-candidates %{
     echo "write '$kak_response_fifo'" > "$kak_command_fifo"
     cat "$kak_response_fifo" | kak -f 's[\w-]{4,}<ret>y%<a-R>a<ret>'
@@ -288,7 +288,7 @@ define-command global-picker -docstring 'global-picker: Opens global search pick
     grep %val{text}
   }
 }
-map global user / -docstring "search"   '<a-;>: global-picker<ret>'
+map global user / -docstring "search" %{<a-;>: global-picker <ret>}
 
 define-command glow -docstring "
   glow [<files>]: glow utility wrapper
@@ -569,70 +569,9 @@ define-command zeal -docstring "
     | sed "s/^/$kak_opt_filetype:/"
 }
 
-###################### NORMAL KEYS ######################
+###################### INSERT KEYS ######################
 
-# Clear selections
-map global normal <a-space> <a-,> -docstring "clear current (or nth) selection"
-map global normal <esc> ,         -docstring "clear multi-selection and keep (nth)"
-
-# Use W as a more ergonomic 'previous word'
-map global normal w b         -docstring "select previous word"
-map global normal W B         -docstring "extend previous word"
-map global normal <a-w> <a-b> -docstring "select previous BIG-WORD"
-map global normal <a-W> <a-B> -docstring "extend previous BIG-WORD"
-
-# swap [] <a-[]>
-map global normal <a-[> [     -docstring "select to previous object end"
-map global normal [ <a-[>     -docstring "select upto previous object end"
-map global normal ] <a-]>     -docstring "select upto next object end"
-map global normal <a-]> ]     -docstring "select to next object end"
-
-# Use <c-k>/<c-l> as more ergonomic undo/redo selction
-map global normal <c-k> <a-u> -docstring "undo selection change"
-map global normal <c-l> <a-U> -docstring "redo selection change"
-
-# Select whole lines
-map global normal J -docstring "select next line"       'Jx'
-map global normal K -docstring "select previous line"   'Kx'
-
-# Make x/X inner and outer object selection
-map global normal x     -docstring "select inner"         '<a-i>'
-map global normal X     -docstring "select outer"         '<a-a>'
-
-# Select all matches
-map global normal <a-x> -docstring "select all matches"   '*%s<ret>)'
-
-# Select/add next match
-map global normal v     -docstring "select next match"      '*n'
-map global normal <a-v> -docstring "deselect current sel"   '*<a-n>'
-map global normal V     -docstring "add next match"         '*N'
-map global normal <a-V> -docstring "add previous match"     '*<a-N>'
-
-# View Mode
-map global normal Y v -docstring "view mode"
-
-# Case insensitive search
-map global normal /     -docstring "search"                      '/(?i)'
-map global normal <a-/> -docstring "search backwards"            '<a-/>(?i)'
-map global normal ?     -docstring "(extend) search"             '?(?i)'
-map global normal <a-?> -docstring "(extend) search backwards"   '<a-?>(?i)'
-
-# (Un)Comment Lines
-map global normal <#> -docstring "comment"   ':comment <ret>'
-
-# New windows
-map global normal <c-n> -docstring "new client"     ':new <ret>'
-map global normal <c-t> -docstring "new terminal"   ':connect terminal <ret>'
-map global normal +     -docstring "new popup"      ':popup -- fish <ret>'
-
-# Pickers
-map global normal B     -docstring "buffer picker"   ':buffer-picker <ret>'
-map global normal <c-p> -docstring "file picker"     ':file-picker <ret>'
-map global normal <c-g> -docstring "grep picker"     ':popup -- fish -c "kamp-grep"<ret>'
-
-# External Programs
-map global normal <c-h> -docstring "lf"        ':popup -- lf <ret>'
-map global normal <c-v> -docstring "lazygit"   ':popup -- lazygit <ret>'
+map global insert <c-v> -docstring "insert mode paste"   %{<esc>Pi}
 
 ###################### PROMPT KEYS ######################
 
@@ -642,7 +581,7 @@ map global prompt <c-p> <s-tab> -docstring "previous completion"
 map global prompt <a-.> -docstring "insert buffer directory"     '%sh{dirname "$kak_buffile"}<a-!>/'
 map global prompt <a-,> -docstring "insert git root directory"   '%sh{git rev-parse --show-toplevel}<a-!>/'
 
-###################### INSERT KEYS ######################
+###################### NORMAL KEYS ######################
 
 # clear selections
 map global normal <a-space> <a-,> -docstring "clear current (or nth) selection"
@@ -708,10 +647,10 @@ map global normal <c-v> -docstring "lazygit"   %{: popup -- fish -c 'lazygit' <r
 
 map global user <space> : -docstring "prompt"
 
-# Navigate buffers
+# navigate buffers
 cork kakoune-buffers https://github.com/delapouite/kakoune-buffers %{
   hook global WinDisplay .* info-buffers
-    map global normal b ":enter-buffers-mode <ret>"
+    map global normal b -docstring "buffers" %{: enter-buffers-mode <ret>}
     alias global bd  delete-buffer
     alias global bd! delete-buffer!
     alias global bf  buffer-first
@@ -721,12 +660,12 @@ cork kakoune-buffers https://github.com/delapouite/kakoune-buffers %{
 }
 
 cork kakoune-buffer-manager https://github.com/theowenyoung/kakoune-buffer-manager %{
-  map global normal <a-B> -docstring "open buffer editor"   ': buffer-manager <ret>'
-  map global buffers e    -docstring "buffer editor"         ': buffer-manager <ret>'
+  map global normal <a-B> -docstring "buffer editor"   %{: buffer-manager <ret>}
+  map global buffers e    -docstring "buffer editor"   %{: buffer-manager <ret>}
 }
 
 cork kakoune-cd https://github.com/delapouite/kakoune-cd %{
-  map global user c ': enter-user-mode cd<ret>' -docstring 'cd'
+  map global user c -docstring "cd" %{: enter-user-mode cd <ret>}
   alias global cdb change-directory-current-buffer
   alias global cdr change-directory-project-root
   alias global ecd edit-current-buffer-directory
@@ -734,81 +673,79 @@ cork kakoune-cd https://github.com/delapouite/kakoune-cd %{
 }
 
 cork case https://gitlab.com/FlyingWombat/case.kak.git %{
-  map global user C -docstring "case"   ': enter-user-mode case<ret>'
-  map global case u '~' -docstring "upper"
-  map global case l '`' -docstring "lower"
-  map global case i '<a-`>' -docstring "invert"
-  map global case s       -docstring "snake_case"      ': case-to-snake<ret>'
-  map global case d       -docstring "dash-case"       ': case-to-dash<ret>'
-  map global case .       -docstring "dot.case"        ': case-to-dot<ret>'
-  map global case <space> -docstring "space case"      ': case-to-space<ret>'
-  map global case t       -docstring "Title Case"      ': case-to-title<ret>'
-  map global case c       -docstring "camelCase"       ': case-to-camel<ret>'
-  map global case p       -docstring "PascalCase"      ': case-to-pascal<ret>'
-  map global case j       -docstring "select joints"   ': case-select-joints<ret>'
-  map global case J       -docstring "unify joints"    ': case-unify-joints<ret>'
-  map global case w       -docstring "select words"    ': case-select-words<ret>'
+  map global user C -docstring "case" %{: enter-user-mode case <ret>}
+  map global case u       -docstring "upper"           %{~}
+  map global case l       -docstring "lower"           %{`}
+  map global case i       -docstring "invert"          %{<a-`>}
+  map global case s       -docstring "snake_case"      %{: case-to-snake <ret>}
+  map global case d       -docstring "dash-case"       %{: case-to-dash <ret>}
+  map global case .       -docstring "dot.case"        %{: case-to-dot <ret>}
+  map global case <space> -docstring "space case"      %{: case-to-space <ret>}
+  map global case t       -docstring "Title Case"      %{: case-to-title <ret>}
+  map global case c       -docstring "camelCase"       %{: case-to-camel <ret>}
+  map global case p       -docstring "PascalCase"      %{: case-to-pascal <ret>}
+  map global case j       -docstring "select joints"   %{: case-select-joints <ret>}
+  map global case J       -docstring "unify joints"    %{: case-unify-joints <ret>}
+  map global case w       -docstring "select words"    %{: case-select-words <ret>}
 }
 
-map global user d -docstring "dev"  ':enter-user-mode dev <ret>'
-
-declare-user-mode grep
-  map global user g -docstring "grep"         ':enter-user-mode grep <ret>'
-  map global grep g -docstring "grep"         ':grep <ret>'
-  map global grep n -docstring "next match"   ':grep-next-match <ret>'
-  map global grep p -docstring "prev match"   ':grep-previous-match <ret>'
-  map global grep l -docstring "live-grep"    ':live-grep <ret>'
-
-map global user h -docstring "hey"   ':hey-buffer <ret>'
-
-map global user k -docstring "klip off"   ':kakboard-disable <ret>'
-map global user K -docstring "klip on"    ':kakboard-enable <ret>'
-
-map global user l -docstring "lsp" %{:enter-user-mode lsp <ret>}
-  map global lsp <minus> -docstring "disable"   ':lsp-disable-window <ret>'
-  map global lsp <plus>  -docstring "enable"    ':lsp-enable-window <ret>'
-
-map global user M -docstring "maths"   ':maths <ret>'
+map global user d -docstring "dev" %{: enter-user-mode dev <ret>}
 
 cork kakoune-focus https://github.com/caksoylar/kakoune-focus %{
-  map global user f -docstring "focus"   ':focus-toggle <ret>'
+  map global user f -docstring "focus" %{: focus-toggle <ret>}
 }
 
-# Edit/extend/trim selections one by one
+declare-user-mode grep
+  map global user g -docstring "grep" %{: enter-user-mode grep <ret>}
+  map global grep g -docstring "grep"         %{: grep <ret>}
+  map global grep n -docstring "next match"   %{: grep-next-match <ret>}
+  map global grep p -docstring "prev match"   %{: grep-previous-match <ret>}
+  map global grep l -docstring "live-grep"    %{: live-grep <ret>}
+
+map global user h -docstring "hey" %{: hey-buffer <ret>}
+
+map global user k -docstring "klip off" %{: kakboard-disable <ret>}
+map global user K -docstring "klip on" %{: kakboard-enable <ret>}
+
+map global user l -docstring "lsp" %{: enter-user-mode lsp <ret>}
+  map global lsp <minus> -docstring "disable"   %{: lsp-disable-window <ret>}
+  map global lsp <plus>  -docstring "enable"    %{: lsp-enable-window <ret>}
+
+# edit/extend/trim selections one by one
 cork kakoune-phantom-selection https://github.com/occivink/kakoune-phantom-selection %{
-  declare-user-mode phantom
-  map global user p -docstring "phantom"       ':enter-user-mode phantom <ret>'
-  map global phantom a -docstring "add"        ':phantom-selection-add-selection <ret>'
-  map global phantom c -docstring "clear"      ':phantom-selection-select-all; phantom-selection-clear <ret>'
-  map global phantom n -docstring "next"       ':phantom-selection-iterate-next <ret>'
-  map global phantom p -docstring "previous"   ':phantom-selection-iterate-prev <ret>'
+declare-user-mode phantom
+  map global user p -docstring "phantom" %{: enter-user-mode phantom <ret>}
+  map global phantom a -docstring "add"        %{: phantom-selection-add-selection <ret>}
+  map global phantom c -docstring "clear"      %{: phantom-selection-select-all; phantom-selection-clear <ret>}
+  map global phantom n -docstring "next"       %{: phantom-selection-iterate-next <ret>}
+  map global phantom p -docstring "previous"   %{: phantom-selection-iterate-prev <ret>}
 }
 
-# Select/edit surrounding chars and tags
+# select/edit surrounding chars and tags
 cork kakoune-surround https://github.com/h-youhei/kakoune-surround
   declare-user-mode surround
-  map global normal <'> ":enter-user-mode surround <ret>"
-  map global surround d -docstring "delete"              ':delete-surround <ret>'
-  map global surround i -docstring "insert"              ':surround <ret>'
-  map global surround r -docstring "replace"             ':change-surround <ret>'
-  map global surround s -docstring "select"              ':select-surround <ret>'
-  map global surround D -docstring "delete tag"          ':delete-surrounding-tag <ret>'
-  map global surround I -docstring "surround with tag"   ':surround-with-tag <ret>'
-  map global surround R -docstring "replace tag"         ':change-surrounding-tag <ret>'
-  map global surround S -docstring "select tag"          ':select-surrounding-tag <ret>'
+  map global normal <'> -docstring "surround" %{: enter-user-mode surround <ret>}
+  map global surround d -docstring "delete"              %{: delete-surround <ret>}
+  map global surround i -docstring "insert"              %{: surround <ret>}
+  map global surround r -docstring "replace"             %{: change-surround <ret>}
+  map global surround s -docstring "select"              %{: select-surround <ret>}
+  map global surround D -docstring "delete tag"          %{: delete-surrounding-tag <ret>}
+  map global surround I -docstring "surround with tag"   %{: surround-with-tag <ret>}
+  map global surround R -docstring "replace tag"         %{: change-surrounding-tag <ret>}
+  map global surround S -docstring "select tag"          %{: select-surrounding-tag <ret>}
 
-# Spelling and grammar checking
+# spelling and grammar checking
 declare-user-mode spell
-  map global user s  -docstring "spell"      ': enter-user-mode spell <ret>'
-  map global spell e -docstring "enable"     ': skyspell-enable en_US <ret>'
-  map global spell d -docstring "disable"    ': skyspell-disable <ret>'
-  map global spell l -docstring "list"       ': skyspell-list <ret>'
-  map global spell n -docstring "next"       ': skyspell-next <ret>'
-  map global spell p -docstring "previous"   ': skyspell-previous <ret>'
-  map global spell r -docstring "replace"    ': skyspell-replace <ret>'
+  map global user s -docstring "spell" %{: enter-user-mode spell <ret>}
+  map global spell e -docstring "enable"     %{: skyspell-enable en_US <ret>}
+  map global spell d -docstring "disable"    %{: skyspell-disable <ret>}
+  map global spell l -docstring "list"       %{: skyspell-list <ret>}
+  map global spell n -docstring "next"       %{: skyspell-next <ret>}
+  map global spell p -docstring "previous"   %{: skyspell-previous <ret>}
+  map global spell r -docstring "replace"    %{: skyspell-replace <ret>}
 
 cork ui https://github.com/kkga/ui.kak %{
-  map global user u -docstring "ui"   ':enter-user-mode ui <ret>'
+  map global user u -docstring "ui" %{: enter-user-mode ui <ret>}
   set-option global ui_wrap_flags -width 100 -word -indent -marker ~~
   hook global WinCreate .* %{
     ui-git-diff-enable
@@ -830,15 +767,15 @@ cork ui https://github.com/kkga/ui.kak %{
     try %{ ui-lsp-enable } catch %{ ui-lsp-disable }
     trigger-user-hook ui-hl-changed
   }
-  map global ui k -docstring "toggle kak-lsp"   ':ui-lsp-toggle <ret>'
+  map global ui k -docstring "toggle kak-lsp"   %{: ui-lsp-toggle <ret>}
 }
 
 map global user v -docstring "view" 'v'
 
-# Write to file
-map global user w -docstring "write"   ':w <ret>'
+# write to file
+map global user w -docstring "write" %{: write <ret>}
 
 # pipe selections as args with xargs
-map global user x -docstring "xargs"   ':xargs <ret>'
+map global user x -docstring "xargs" %{: xargs <ret>}
 
-map global user z -docstring "zeal"    ':zeal <ret>'
+map global user z -docstring "zeal" %{: zeal <ret>}
