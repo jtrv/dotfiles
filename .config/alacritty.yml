@@ -3,7 +3,6 @@ env:
 
 window:
   opacity: 0.95
-  startup_mode: Maximized
 
 font:
   normal:
