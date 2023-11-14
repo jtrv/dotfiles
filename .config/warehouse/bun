@@ -12,5 +12,6 @@ prettier
 purgecss
 stylelint_d
 svelte-language-server
+typescript-language-server
 webtorrent-mpv-hook
 yaml-language-server

@@ -49,6 +49,7 @@ jql -> https://github.com/rust-lang/crates.io-index
 just -> https://github.com/rust-lang/crates.io-index
 kak-lsp -> /home/sugimoto/.local/share/kak/cork/plugins/kak-lsp/repo
 kakpipe -> /home/sugimoto/.local/share/kak/cork/plugins/kakpipe/repo
+kak-popup -> https://github.com/rust-lang/crates.io-index
 kakship -> /home/sugimoto/.local/share/kak/cork/plugins/kakship/repo
 kamp -> /home/sugimoto/.local/share/kak/cork/plugins/kampliment/repo
 kanata -> https://github.com/rust-lang/crates.io-index

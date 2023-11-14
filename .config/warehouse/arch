@@ -1,3 +1,4 @@
+aaxtomp3
 alacritty-sixel-git
 alsa-card-profiles
 alsa-firmware
@@ -44,11 +45,14 @@ clojure-lsp-bin
 cmake
 compiler-rt
 cork.kak-git
+croc
 crystalline-bin
 dart-sass
 dash
+deno
 devour
 discord
+doasedit-alternative
 docker
 docx2txt
 dog
@@ -67,7 +71,7 @@ exfat-utils
 fail2ban
 fakeroot
 feh
-ff2mpv-native-messaging-host-git
+ff2mpv-rust
 ffmpegthumbnailer
 file
 findutils
@@ -85,6 +89,7 @@ firejail
 fisher
 flameshot-git
 flex
+fortune-mod
 fstl
 fuse-overlayfs
 fuzzel
@@ -135,6 +140,8 @@ jq
 jre
 kdeconnect
 kexec-tools
+kvantum
+kvantum-theme-materia
 kwakd
 lazygit
 lbzip2
@@ -159,6 +166,7 @@ lib32-v4l-utils
 lib32-vulkan-radeon
 libclc
 libgit2-glib
+libmp4v2
 libqalculate
 libressl
 libtool
@@ -202,6 +210,7 @@ mullvad-vpn-bin
 namcap
 needrestart
 networkmanager
+networkmanager-dmenu-git
 ngrep
 nim
 nmap
@@ -255,7 +264,9 @@ python-lsp-black
 python-lsp-ruff
 python-lsp-server
 python-notify2
+python-pdm
 python-pip
+python-pytest
 qbittorrent
 qrcp-git
 radeontop
@@ -267,6 +278,8 @@ realsr-ncnn-vulkan
 redshift
 rescrobbled-git
 revive
+rkhunter
+rsync
 ruff
 rustup
 sad
@@ -301,6 +314,7 @@ syncthing
 systeroid
 sysz
 taplo-cli
+tcpdump
 termshark
 termv
 tesseract
@@ -314,6 +328,7 @@ texlive-latexrecommended
 tidal-hifi-bin
 tidy
 tig
+tmux
 tofi
 torbrowser-launcher
 ttf-font-awesome
@@ -372,5 +387,7 @@ yt-dlp
 yuzu-mainline-bin
 zathura
 zathura-pdf-poppler
+zeal
 zls
+zoom
 zram-generator
