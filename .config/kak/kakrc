@@ -409,13 +409,6 @@ define-command kelp -docstring "
   }
 }
 
-define-command mdn -docstring "
-  mdn <query>: mdn utility wrapper
-  Search through MDN documentation with fzf and mdcat
-" %{
-  popup mdn
-}
-
 define-command npm -docstring "
   npm [<arguments>]: npm utility wrapper
   Launch npm with the given parameters inside kakoune
