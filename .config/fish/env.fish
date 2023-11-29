@@ -47,12 +47,12 @@ set -gx HISTFILE "$XDG_STATE_HOME"/bash/history
 
 # Misc
 set -gx ATUIN_NOBIND             "true"
-set -gx BAT_PAGER                "/usr/bin/moar -no-linenumbers"
-set -gx DMENU_THEME              "-i -fn \"Blex Mono Nerd Font:pixelsize=18:antialias=true\" -nb black -nf green -sb magenta -sf black" # matched to spectrwm.conf
-set -gx EDITOR                   "/usr/bin/kak"
+set -gx BAT_PAGER                "moar -no-linenumbers"
 set -gx BEMOJI_PICKER_CMD        "dmenu -fn 'pixelsize=18:antialias=true' -nb black -nf green -sb magenta -sf black"
 set -gx BEMOJI_CLIP_CMD          "xclip -sel clip"
 set -gx BEMOJI_TYPE_CMD          "xdotool"
+set -gx DMENU_THEME              "-fn 'pixelsize=18:antialias=true' -nb black -nf green -sb magenta -sf black" # matched to spectrwm.conf
+set -gx EDITOR                   "kak"
 set -gx fish_greeting
 set -gx FZF_DEFAULT_OPTS         "--ansi --color=dark --multi --tabstop=2 --preview-window border-vertical --bind='alt-a:select-all,alt-d:deselect-all,ctrl-l:preview-down,ctrl-h:preview-up,alt-j:jump'"
 set -gx HORS_ENGINE              "google"
@@ -60,11 +60,12 @@ set -gx MANPAGER                 "bat"
 set -gx MOZ_X11_EGL              1
 set -gx OPENAI_API_KEY           (secli get openai_api_key)
 set -gx OPENAI_API_BASE          "https://api.openai.com/v1"
-set -gx PAGER                    "/usr/bin/moar"
+set -gx PAGER                    "moar"
 set -gx PATH                     "$BUN_INSTALL/bin" $PATH
 set -gx SCCACHE_DIRECT           "true"
 set -gx QT_STYLE_OVERRIDE        "kvantum"
-set -gx VISUAL                   "/usr/bin/kak"
+set -gx QT_QPA_PLATFORMTHEME     "qt6ct"
+set -gx VISUAL                   "kak"
 
 set -gx LF_ICONS "\
 di=:\
