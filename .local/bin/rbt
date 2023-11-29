@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo systemctl kexec
+doas systemctl kexec
