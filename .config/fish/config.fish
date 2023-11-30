@@ -59,7 +59,7 @@ alias mdc     'mdcat --columns=70'
 alias mirrors '~/.local/bin/update-mirrors' # update mirrors / database
 alias mkdir   'mkdir -p'
 alias nbg     'feh --randomize --bg-scale --no-fehbg ~/media/pictures/wallpapers/' # change bg
-alias pom     'potato' # shell pomodoro timer
+alias py      'python'
 alias q       'exit'
 alias thes    'thesauromatic'
 alias tv      'lobster'
