@@ -6,7 +6,7 @@
             "bypass": false,
             "input-gain": 0.0,
             "ir-width": 100,
-            "kernel-path": "/home/sugimoto/.config/easyeffects/irs/Sennheiser HD 560S minimum phase 192000 Hz.irs",
+            "kernel-path": "/home/sugimoto/.config/easyeffects/irs/Sennheiser HD 560S Sample:192kHz Res:12Hz (HMS II.3 Harman over-ear 2018).irs",
             "output-gain": 0.0
         },
         "plugins_order": [
