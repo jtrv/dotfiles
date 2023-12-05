@@ -23,9 +23,9 @@
 --
 -- Default bindings:
 --
--- Alt+Shift+S - toggle
--- Alt+Shift+DOWN - threshold-down
--- Alt+Shift+UP - threshold-up
+-- Alt+Z - toggle
+-- Alt+Shift+J - threshold-down
+-- Alt+Shift+K - threshold-up
 --
 -- All supported bindings (bind with 'script-binding skipsilence/<name>'):
 --
@@ -704,10 +704,10 @@ end)
 mp.enable_messages("v")
 mp.add_key_binding(nil, "enable", enable)
 mp.add_key_binding(nil, "disable", disable)
-mp.add_key_binding("Alt+Shift+S", "toggle", toggle)
+mp.add_key_binding("Alt+z", "toggle", toggle)
 mp.register_script_message("adjust-threshold-db", adjust_thresholdDB)
-mp.add_key_binding("Alt+Shift+UP", "threshold-down", function() adjust_thresholdDB(-1) end, "repeatable")
-mp.add_key_binding("Alt+Shift+DOWN", "threshold-up", function() adjust_thresholdDB(1) end, "repeatable")
+mp.add_key_binding("Alt+Shift+k", "threshold-down", function() adjust_thresholdDB(-1) end, "repeatable")
+mp.add_key_binding("Alt+Shift+j", "threshold-up", function() adjust_thresholdDB(1) end, "repeatable")
 mp.add_key_binding(nil, "info", info, "repeatable")
 mp.add_key_binding(nil, "cycle-info-style", cycle_info_style, "repeatable")
 mp.add_key_binding(nil, "toggle-arnndn", function() toggle_option("arnndn_enable") end)
