@@ -1,2 +1,2 @@
 #!/bin/sh
-alacritty --class popup -e pomshell &
+alacritty --class=popup -e pomshell &
