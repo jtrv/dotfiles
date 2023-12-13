@@ -6,8 +6,8 @@
             "bypass": false,
             "input-gain": 0.0,
             "ir-width": 100,
-            "kernel-path": "/home/sugimoto/.config/easyeffects/irs/ThieAudio Legacy 3 (CIEM, 00 setting) minimum phase 48000 Hz.irs",
-            "output-gain": -12.0
+            "kernel-path": "/home/sugimoto/.config/easyeffects/irs/ThieAudio Legacy 3 (CIEM, off-off) Sample:192kHz Res:12Hz (AutoEq in-ear).irs",
+            "output-gain": 0.0
         },
         "plugins_order": [
             "convolver#0"
