@@ -1,4 +1,3 @@
 #!/bin/sh
-wmctrl -r ':ACTIVE:' -e 1,1730,10,180,22
+wmctrl -r ':ACTIVE:' -e 1,1150,0,180,22
 potato
-wmctrl -i
