@@ -40,6 +40,7 @@ set editorcmd alacritty msg create-window --class=popup --command "$EDITOR"
 "
 " Suspend / "discard" all tabs - handy for stretching out battery life / memory
 command suspendall jsb browser.tabs.query({}).then(ts => browser.tabs.discard(ts.map(t=>t.id)))
+alias sus suspendall
 "
 "
 " MISC
