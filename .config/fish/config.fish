@@ -115,3 +115,12 @@ alias kft     'kamp get -b \* opt filetype | sort | uniq' # list file types you'
 alias kakrc   'k ~/.config/kak/kakrc'
 alias kenv    'k ~/.config/fish/env.fish'
 alias kish    'k ~/.config/fish/config.fish'
+
+# Start X at login
+if status is-login
+  if test -z "$DISPLAY" -a "$XDG_VTNR" = 1
+    echo "Starting X11. (<C-c> to cancel)"
+    sleep 2
+    exec startx -- -keeptty
+  end
+end
