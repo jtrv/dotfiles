@@ -119,6 +119,9 @@ cork sudo-write https://github.com/jtrv/sudo-write.kak %{
   alias global swq 'sudo-write-quit'
 }
 
+# enable ansi-escapes
+cork kak-ansi https://github.com/eraserhd/kak-ansi
+
 # display text with ansi color-codes inside a fifo
 cork kakpipe https://github.com/eburghar/kakpipe %{ require-module kakpipe }
 
