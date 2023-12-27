@@ -25,8 +25,7 @@ cleanup = true
 [git]
 max_concurrency = 10
 # Additional git repositories to pull
-repos = [
-    "~/.local/share/kak/cork/plugins/*/repo",
+pull_only_repos = [
     "~/repos/*"
 ]
 
@@ -43,6 +42,7 @@ self_update = true
 # Custom commands
 [commands]
 "Bun" = "bun update -g"
+"Cork.kak" = "cork update"
 "Proton" = "protonup-rs -q"
 
 [linux]
