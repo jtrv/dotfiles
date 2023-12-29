@@ -8,6 +8,9 @@ rustflags = ["-C", "link-arg=-fuse-ld=/usr/bin/mold", "-C", "opt-level=3", "-C",
 [registries.crates-io]
 protocol = "sparse"
 
+[unstable]
+gc = true
+
 [profile.profiling]
 inherits = "release"
 debug = true
