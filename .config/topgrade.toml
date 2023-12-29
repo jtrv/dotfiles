@@ -5,7 +5,7 @@ assume_yes = true
 notify_each_step = true
 
 # Disable specific steps - same options as the command line flag
-disable = ["bun","containers", "gcloud", "distrobox", "protonup"]
+disable = ["containers", "protonup"]
 
 # Ignore failures for these steps
 ignore_failures = ["git_repos"]
@@ -41,9 +41,9 @@ self_update = true
 
 # Custom commands
 [commands]
-"Bun" = "bun update -g"
-"Cork.kak" = "cork update"
-"Proton" = "protonup-rs -q"
+"bun globals" = "bun update -g"
+"cork.kak" = "cork update"
+"proton" = "protonup-rs -q"
 
 [linux]
 enable_tlmgr = true
