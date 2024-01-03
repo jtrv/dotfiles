@@ -18,6 +18,7 @@ automake
 b3sum
 base
 base-devel
+bemoji
 bindtointerface
 binutils
 bison
@@ -58,7 +59,6 @@ docx2txt
 dog
 downgrade
 droidcam
-duf
 dunst
 dwarfs-git
 easyeffects
@@ -266,6 +266,7 @@ python-lsp-server
 python-notify2
 python-pdm
 python-pip
+python-pylsp-mypy
 python-pytest
 qbittorrent
 qrcp-git
@@ -282,6 +283,7 @@ rkhunter
 rsync
 ruff
 rustup
+rye
 sad
 screenkey
 sdcv
