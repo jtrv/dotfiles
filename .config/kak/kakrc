@@ -306,16 +306,18 @@ hook global WinDisplay '\*glow\*' %{
 define-command grep-write -docstring "
   grep-write: pipes the current grep-buffer to grug -w and prints the results
 " %{
+  declare-option -hidden str grug_buf
   evaluate-commands -draft %{
-    execute-keys '%'
     evaluate-commands %sh{
-      printf %s "$kak_selection" | grug -w > "$XDG_DATA_HOME"/kak/grug
+      echo "set-option buffer grug_buf '$(mktemp /tmp/grug_buf.XXX)'"
+    }
+    write -sync -force %opt{grug_buf}
+    evaluate-commands %sh{
+      cat "$kak_opt_grug_buf" | grug -w |
+        xargs -I{} echo "echo -markup {Information} '{}'; echo -debug '{}';"
     }
   }
-  evaluate-commands %sh{
-    output=$(cat "$XDG_DATA_HOME"/kak/grug)
-    echo "echo -markup {Information} '$output'; echo -debug '$output';"
-  }
+
 }
 
 define-command grep -override -docstring "
