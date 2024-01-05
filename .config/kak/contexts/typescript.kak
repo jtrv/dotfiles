@@ -9,9 +9,6 @@ hook global BufSetOption filetype=typescript %{
 }
 
 hook global WinSetOption filetype=typescript %{
-  set-option window lintcmd 'deno lint -'
-  lint
-
 ###### LSP ######
   define-command -override ui-lsp-enable %{
     set-option window lsp_auto_highlight_references true
