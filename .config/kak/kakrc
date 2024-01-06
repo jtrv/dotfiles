@@ -486,6 +486,14 @@ define-command set-filetype -docstring "prompt to set filetype" %{
   }
 }
 
+define-command rnd -docstring "
+  rnd: go to a random line
+" %{
+  evaluate-commands %sh{
+    echo "execute-keys '$(shuf -i 1-$kak_buf_line_count)g'"
+  }
+}
+
 define-command thes -docstring "
   thes <query>: thesauromatic utility wrapper
   Generate thesaurus results for the given query
