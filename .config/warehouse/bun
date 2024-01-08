@@ -11,9 +11,11 @@ eslint-plugin-autofix
 eslint-plugin-react-hooks
 eslint_d
 gitignore
+live-server
 prettier
 purgecss
 stylelint_d
 svelte-language-server
+typescript-language-server
 webtorrent-mpv-hook
 yaml-language-server
