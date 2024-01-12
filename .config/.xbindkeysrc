@@ -52,10 +52,10 @@
 #############################
 
 "playerctl next"
-    b:7
+    Mod4 + b:7
 
 "playerctl previous"
-    b:6
+    Mod4 + b:6
 
 "playerctl play-pause"
     Mod4 + b:2
