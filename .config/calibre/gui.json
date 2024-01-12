@@ -23,6 +23,8 @@
     "__class__": "bytearray",
     "__value__": "AAAA/wAAAAEAAAACAAABAAAAAEYA/////wEAAAABAA=="
   },
+  "bulk-mde-casing-algorithm": "title_case",
+  "bulk_metadata_window_tab": 1,
   "card_a_view books view state": {
     "column_alignment": {
       "size": "center",
@@ -44,42 +46,13 @@
       "timestamp": 86,
       "title": 84
     },
+    "formats_injected": true,
     "hidden_columns": [],
+    "id_injected": true,
     "languages_injected": true,
     "last_modified_injected": true,
+    "path_injected": true,
     "sort_history": [
-      [
-        "timestamp",
-        false
-      ],
-      [
-        "inlibrary",
-        false
-      ],
-      [
-        "timestamp",
-        false
-      ],
-      [
-        "inlibrary",
-        false
-      ],
-      [
-        "timestamp",
-        false
-      ],
-      [
-        "inlibrary",
-        false
-      ],
-      [
-        "timestamp",
-        false
-      ],
-      [
-        "inlibrary",
-        false
-      ],
       [
         "timestamp",
         false
@@ -123,42 +96,13 @@
       "timestamp": 86,
       "title": 84
     },
+    "formats_injected": true,
     "hidden_columns": [],
+    "id_injected": true,
     "languages_injected": true,
     "last_modified_injected": true,
+    "path_injected": true,
     "sort_history": [
-      [
-        "timestamp",
-        false
-      ],
-      [
-        "inlibrary",
-        false
-      ],
-      [
-        "timestamp",
-        false
-      ],
-      [
-        "inlibrary",
-        false
-      ],
-      [
-        "timestamp",
-        false
-      ],
-      [
-        "inlibrary",
-        false
-      ],
-      [
-        "timestamp",
-        false
-      ],
-      [
-        "inlibrary",
-        false
-      ],
       [
         "timestamp",
         false
@@ -311,12 +255,63 @@
     false
   ],
   "font_stretch": 0,
+  "geometry-of-book-details-popup-conf-geometry": {
+    "frame_geometry": {
+      "height": 500,
+      "width": 652,
+      "x": 1392,
+      "y": 468
+    },
+    "full_screened": false,
+    "geometry": {
+      "height": 500,
+      "width": 652,
+      "x": 1392,
+      "y": 468
+    },
+    "maximized": false,
+    "normal_geometry": {
+      "height": 500,
+      "width": 652,
+      "x": 1392,
+      "y": 468
+    },
+    "qt": {
+      "__class__": "bytearray",
+      "__value__": "AdnQywADAAAAAAVwAAAB1AAAB/sAAAPHAAAFcAAAAdQAAAf7AAADxwAAAAAAAAAADXAAAAVwAAAB1AAAB/sAAAPH"
+    },
+    "screen": {
+      "depth": 24,
+      "device_pixel_ratio": 1.0,
+      "geometry_in_logical_pixels": {
+        "height": 1440,
+        "width": 3440,
+        "x": 0,
+        "y": 0
+      },
+      "index_in_screens_list": 0,
+      "manufacturer": "Acer Technologies",
+      "model": "Acer X34 P",
+      "name": "DisplayPort-0",
+      "serial": "#ASM5QKyZhW7d",
+      "size_in_logical_pixels": {
+        "height": 1440,
+        "width": 3440
+      },
+      "virtual_geometry": {
+        "height": 1440,
+        "width": 3440,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
   "geometry-of-book_info_dialog_geometry": {
     "frame_geometry": {
-      "height": 1340,
-      "width": 1670,
-      "x": 885,
-      "y": 50
+      "height": 1344,
+      "width": 1674,
+      "x": 883,
+      "y": 48
     },
     "full_screened": false,
     "geometry": {
@@ -334,7 +329,7 @@
     },
     "qt": {
       "__class__": "bytearray",
-      "__value__": "AdnQywADAAAAAAN1AAAAMgAACfoAAAVtAAADdQAAADIAAAn6AAAFbQAAAAAAAAAADXAAAAN1AAAAMgAACfoAAAVt"
+      "__value__": "AdnQywADAAAAAANzAAAAMAAACfwAAAVvAAADdQAAADIAAAn6AAAFbQAAAAAAAAAADXAAAAN1AAAAMgAACfoAAAVt"
     },
     "screen": {
       "depth": 24,
@@ -347,7 +342,58 @@
       },
       "index_in_screens_list": 0,
       "manufacturer": "Acer Technologies",
-      "model": "Acer X34 P-",
+      "model": "Acer X34 P",
+      "name": "DisplayPort-0",
+      "serial": "#ASM5QKyZhW7d",
+      "size_in_logical_pixels": {
+        "height": 1440,
+        "width": 3440
+      },
+      "virtual_geometry": {
+        "height": 1440,
+        "width": 3440,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "geometry-of-bulk_metadata_window_geometry": {
+    "frame_geometry": {
+      "height": 1394,
+      "width": 3374,
+      "x": -2,
+      "y": 32
+    },
+    "full_screened": false,
+    "geometry": {
+      "height": 1390,
+      "width": 3370,
+      "x": 0,
+      "y": 34
+    },
+    "maximized": false,
+    "normal_geometry": {
+      "height": 1390,
+      "width": 3370,
+      "x": 0,
+      "y": 34
+    },
+    "qt": {
+      "__class__": "bytearray",
+      "__value__": "AdnQywADAAD////+AAAAIAAADSsAAAWRAAAAAAAAACIAAA0pAAAFjwAAAAAAAAAADXAAAAAAAAAAIgAADSkAAAWP"
+    },
+    "screen": {
+      "depth": 24,
+      "device_pixel_ratio": 1.0,
+      "geometry_in_logical_pixels": {
+        "height": 1440,
+        "width": 3440,
+        "x": 0,
+        "y": 0
+      },
+      "index_in_screens_list": 0,
+      "manufacturer": "Acer Technologies",
+      "model": "Acer X34 P",
       "name": "DisplayPort-0",
       "serial": "#ASM5QKyZhW7d",
       "size_in_logical_pixels": {
@@ -364,28 +410,28 @@
   },
   "geometry-of-calibre_main_window_geometry": {
     "frame_geometry": {
-      "height": 1418,
-      "width": 3440,
+      "height": 1417,
+      "width": 1716,
       "x": 0,
-      "y": 22
+      "y": 23
     },
     "full_screened": false,
     "geometry": {
-      "height": 1418,
-      "width": 3440,
-      "x": 0,
-      "y": 22
+      "height": 1413,
+      "width": 1712,
+      "x": 2,
+      "y": 25
     },
     "maximized": false,
     "normal_geometry": {
-      "height": 1418,
-      "width": 3440,
-      "x": 0,
-      "y": 22
+      "height": 1413,
+      "width": 1712,
+      "x": 2,
+      "y": 25
     },
     "qt": {
       "__class__": "bytearray",
-      "__value__": "AdnQywADAAAAAAAAAAAAFgAADW8AAAWfAAAAAAAAABYAAA1vAAAFnwAAAAAAAAAADXAAAAAAAAAAFgAADW8AAAWf"
+      "__value__": "AdnQywADAAAAAAAAAAAAFwAABrMAAAWfAAAAAgAAABkAAAaxAAAFnQAAAAAAAAAADXAAAAACAAAAGQAABrEAAAWd"
     },
     "screen": {
       "depth": 24,
@@ -515,12 +561,63 @@
       }
     }
   },
+  "geometry-of-convert_single_dialog_geom": {
+    "frame_geometry": {
+      "height": 1344,
+      "width": 3374,
+      "x": 23,
+      "y": 8
+    },
+    "full_screened": false,
+    "geometry": {
+      "height": 1340,
+      "width": 3370,
+      "x": 25,
+      "y": 10
+    },
+    "maximized": false,
+    "normal_geometry": {
+      "height": 1340,
+      "width": 3370,
+      "x": 25,
+      "y": 10
+    },
+    "qt": {
+      "__class__": "bytearray",
+      "__value__": "AdnQywADAAAAAAAXAAAACAAADUQAAAVHAAAAGQAAAAoAAA1CAAAFRQAAAAAAAAAADXAAAAAZAAAACgAADUIAAAVF"
+    },
+    "screen": {
+      "depth": 24,
+      "device_pixel_ratio": 1.0,
+      "geometry_in_logical_pixels": {
+        "height": 1440,
+        "width": 3440,
+        "x": 0,
+        "y": 0
+      },
+      "index_in_screens_list": 0,
+      "manufacturer": "",
+      "model": "",
+      "name": "DisplayPort-0",
+      "serial": "",
+      "size_in_logical_pixels": {
+        "height": 1440,
+        "width": 3440
+      },
+      "virtual_geometry": {
+        "height": 1440,
+        "width": 3440,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
   "geometry-of-duplicates-question-dialog-geometry": {
     "frame_geometry": {
-      "height": 378,
-      "width": 674,
-      "x": 1413,
-      "y": 491
+      "height": 382,
+      "width": 678,
+      "x": 1411,
+      "y": 489
     },
     "full_screened": false,
     "geometry": {
@@ -538,7 +635,7 @@
     },
     "qt": {
       "__class__": "bytearray",
-      "__value__": "AdnQywADAAAAAAWFAAAB6wAACCYAAANkAAAFhQAAAesAAAgmAAADZAAAAAAAAAAADXAAAAWFAAAB6wAACCYAAANk"
+      "__value__": "AdnQywADAAAAAAWDAAAB6QAACCgAAANmAAAFhQAAAesAAAgmAAADZAAAAAAAAAAADXAAAAWFAAAB6wAACCYAAANk"
     },
     "screen": {
       "depth": 24,
@@ -568,10 +665,10 @@
   },
   "geometry-of-job-detail-view-dialog-geometry": {
     "frame_geometry": {
-      "height": 1440,
-      "width": 3440,
-      "x": 0,
-      "y": 0
+      "height": 1444,
+      "width": 3444,
+      "x": -2,
+      "y": -2
     },
     "full_screened": false,
     "geometry": {
@@ -589,7 +686,7 @@
     },
     "qt": {
       "__class__": "bytearray",
-      "__value__": "AdnQywADAAAAAAAAAAAAAAAADW8AAAWfAAAAAAAAAAAAAA1vAAAFnwAAAAAAAAAADXAAAAAAAAAAAAAADW8AAAWf"
+      "__value__": "AdnQywADAAD////+/////gAADXEAAAWhAAAAAAAAAAAAAA1vAAAFnwAAAAAAAAAADXAAAAAAAAAAAAAADW8AAAWf"
     },
     "screen": {
       "depth": 24,
@@ -601,10 +698,10 @@
         "y": 0
       },
       "index_in_screens_list": 0,
-      "manufacturer": "",
-      "model": "",
+      "manufacturer": "Acer Technologies",
+      "model": "Acer X34 P",
       "name": "DisplayPort-0",
-      "serial": "",
+      "serial": "#ASM5QKyZhW7d",
       "size_in_logical_pixels": {
         "height": 1440,
         "width": 3440
@@ -619,10 +716,10 @@
   },
   "geometry-of-jobs_dialog_geometry": {
     "frame_geometry": {
-      "height": 542,
-      "width": 1483,
-      "x": 319,
-      "y": 691
+      "height": 546,
+      "width": 1487,
+      "x": 317,
+      "y": 689
     },
     "full_screened": false,
     "geometry": {
@@ -640,7 +737,7 @@
     },
     "qt": {
       "__class__": "bytearray",
-      "__value__": "AdnQywADAAAAAAE/AAACswAABwkAAATQAAABPwAAArMAAAcJAAAE0AAAAAAAAAAADXAAAAE/AAACswAABwkAAATQ"
+      "__value__": "AdnQywADAAAAAAE9AAACsQAABwsAAATSAAABPwAAArMAAAcJAAAE0AAAAAAAAAAADXAAAAE/AAACswAABwkAAATQ"
     },
     "screen": {
       "depth": 24,
@@ -656,6 +753,57 @@
       "model": "",
       "name": "DisplayPort-0",
       "serial": "",
+      "size_in_logical_pixels": {
+        "height": 1440,
+        "width": 3440
+      },
+      "virtual_geometry": {
+        "height": 1440,
+        "width": 3440,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "geometry-of-manage-data-files-xx-geometry": {
+    "frame_geometry": {
+      "height": 504,
+      "width": 404,
+      "x": 654,
+      "y": 477
+    },
+    "full_screened": false,
+    "geometry": {
+      "height": 500,
+      "width": 400,
+      "x": 656,
+      "y": 479
+    },
+    "maximized": false,
+    "normal_geometry": {
+      "height": 500,
+      "width": 400,
+      "x": 656,
+      "y": 479
+    },
+    "qt": {
+      "__class__": "bytearray",
+      "__value__": "AdnQywADAAAAAAKOAAAB3QAABCEAAAPUAAACkAAAAd8AAAQfAAAD0gAAAAAAAAAADXAAAAKQAAAB3wAABB8AAAPS"
+    },
+    "screen": {
+      "depth": 24,
+      "device_pixel_ratio": 1.0,
+      "geometry_in_logical_pixels": {
+        "height": 1440,
+        "width": 3440,
+        "x": 0,
+        "y": 0
+      },
+      "index_in_screens_list": 0,
+      "manufacturer": "Acer Technologies",
+      "model": "Acer X34 P",
+      "name": "DisplayPort-0",
+      "serial": "#ASM5QKyZhW7d",
       "size_in_logical_pixels": {
         "height": 1440,
         "width": 3440
@@ -670,10 +818,10 @@
   },
   "geometry-of-metadata_single_gui_geom": {
     "frame_geometry": {
-      "height": 600,
-      "width": 850,
-      "x": 1295,
-      "y": 420
+      "height": 604,
+      "width": 854,
+      "x": 1293,
+      "y": 418
     },
     "full_screened": false,
     "geometry": {
@@ -691,7 +839,7 @@
     },
     "qt": {
       "__class__": "bytearray",
-      "__value__": "AdnQywADAAAAAAUPAAABpAAACGAAAAP7AAAFDwAAAaQAAAhgAAAD+wAAAAAAAAAADXAAAAUPAAABpAAACGAAAAP7"
+      "__value__": "AdnQywADAAAAAAUNAAABogAACGIAAAP9AAAFDwAAAaQAAAhgAAAD+wAAAAAAAAAADXAAAAUPAAABpAAACGAAAAP7"
     },
     "screen": {
       "depth": 24,
@@ -703,10 +851,10 @@
         "y": 0
       },
       "index_in_screens_list": 0,
-      "manufacturer": "",
-      "model": "",
+      "manufacturer": "Acer Technologies",
+      "model": "Acer X34 P",
       "name": "DisplayPort-0",
-      "serial": "",
+      "serial": "#ASM5QKyZhW7d",
       "size_in_logical_pixels": {
         "height": 1440,
         "width": 3440
@@ -721,10 +869,10 @@
   },
   "geometry-of-metasingle_window_geometry3": {
     "frame_geometry": {
-      "height": 1390,
-      "width": 3370,
-      "x": 35,
-      "y": 25
+      "height": 1394,
+      "width": 3374,
+      "x": 33,
+      "y": 23
     },
     "full_screened": false,
     "geometry": {
@@ -742,7 +890,7 @@
     },
     "qt": {
       "__class__": "bytearray",
-      "__value__": "AdnQywADAAAAAAAjAAAAGQAADUwAAAWGAAAAIwAAABkAAA1MAAAFhgAAAAAAAAAADXAAAAAjAAAAGQAADUwAAAWG"
+      "__value__": "AdnQywADAAAAAAAhAAAAFwAADU4AAAWIAAAAIwAAABkAAA1MAAAFhgAAAAAAAAAADXAAAAAjAAAAGQAADUwAAAWG"
     },
     "screen": {
       "depth": 24,
@@ -754,10 +902,10 @@
         "y": 0
       },
       "index_in_screens_list": 0,
-      "manufacturer": "",
-      "model": "",
+      "manufacturer": "Acer Technologies",
+      "model": "Acer X34 P",
       "name": "DisplayPort-0",
-      "serial": "",
+      "serial": "#ASM5QKyZhW7d",
       "size_in_logical_pixels": {
         "height": 1440,
         "width": 3440
@@ -874,10 +1022,10 @@
   },
   "geometry-of-single-cover-fetch-dialog-geometry": {
     "frame_geometry": {
-      "height": 642,
-      "width": 859,
-      "x": 1215,
-      "y": 474
+      "height": 646,
+      "width": 863,
+      "x": 1213,
+      "y": 472
     },
     "full_screened": false,
     "geometry": {
@@ -895,7 +1043,7 @@
     },
     "qt": {
       "__class__": "bytearray",
-      "__value__": "AdnQywADAAAAAAS/AAAB2gAACBkAAARbAAAEvwAAAdoAAAgZAAAEWwAAAAAAAAAADXAAAAS/AAAB2gAACBkAAARb"
+      "__value__": "AdnQywADAAAAAAS9AAAB2AAACBsAAARdAAAEvwAAAdoAAAgZAAAEWwAAAAAAAAAADXAAAAS/AAAB2gAACBkAAARb"
     },
     "screen": {
       "depth": 24,
@@ -907,10 +1055,10 @@
         "y": 0
       },
       "index_in_screens_list": 0,
-      "manufacturer": "",
-      "model": "",
+      "manufacturer": "Acer Technologies",
+      "model": "Acer X34 P",
       "name": "DisplayPort-0",
-      "serial": "",
+      "serial": "#ASM5QKyZhW7d",
       "size_in_logical_pixels": {
         "height": 1440,
         "width": 3440
@@ -938,8 +1086,37 @@
   },
   "library_usage_stats": {
     "/home/sugimoto/data/library/books": 20,
-    "/home/sugimoto/media/library/books": 28,
+    "/home/sugimoto/media/library/books": 34,
     "/home/sugimoto/media/library/manga2": 3
+  },
+  "main_window_central_widget_state": {
+    "layout": "wide",
+    "narrow_desires": {
+      "book_details_height": 0.23059617547806524,
+      "cover_browser_width": 0.35,
+      "quick_view_height": 0.25646794150731156,
+      "tag_browser_width": 0.25
+    },
+    "narrow_visibility": {
+      "book_details": true,
+      "book_list": true,
+      "cover_browser": false,
+      "quick_view": false,
+      "tag_browser": true
+    },
+    "wide_desires": {
+      "book_details_width": 0.18575581395348836,
+      "cover_browser_height": 0.17985611510791366,
+      "quick_view_height": 0.2733812949640288,
+      "tag_browser_width": 0.05813953488372093
+    },
+    "wide_visibility": {
+      "book_details": true,
+      "book_list": true,
+      "cover_browser": true,
+      "quick_view": false,
+      "tag_browser": true
+    }
   },
   "memory_view books view state": {
     "column_alignment": {
@@ -955,48 +1132,23 @@
       "title": 1
     },
     "column_sizes": {
-      "authors": 124,
+      "authors": 483,
       "collections": 142,
-      "inlibrary": 133,
+      "inlibrary": 540,
       "size": 74,
-      "timestamp": 86,
-      "title": 84
+      "timestamp": 236,
+      "title": 1061
     },
+    "formats_injected": true,
     "hidden_columns": [],
+    "id_injected": true,
     "languages_injected": true,
     "last_modified_injected": true,
+    "path_injected": true,
     "sort_history": [
       [
-        "timestamp",
-        false
-      ],
-      [
-        "inlibrary",
-        false
-      ],
-      [
-        "timestamp",
-        false
-      ],
-      [
-        "inlibrary",
-        false
-      ],
-      [
-        "timestamp",
-        false
-      ],
-      [
-        "inlibrary",
-        false
-      ],
-      [
-        "timestamp",
-        false
-      ],
-      [
-        "inlibrary",
-        false
+        "title",
+        true
       ],
       [
         "timestamp",
@@ -1035,6 +1187,9 @@
   "previous_sort_order_BooksView": {
     "authors": true,
     "pubdate": false,
+    "title": true
+  },
+  "previous_sort_order_DeviceBooksView": {
     "title": true
   },
   "quick_start_guide_added": true,
