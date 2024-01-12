@@ -29,7 +29,6 @@ fi
 
 xrandr --output=virtual-1
 
-/usr/bin/clipmenud &                  # clipboard history daemon
 /usr/lib/kdeconnectd &                # kdeconnect daemon
 /usr/bin/pcmanfm --daemon-mode &      # file-manager daemon
 /usr/bin/picom &                      # window opacity / blur
