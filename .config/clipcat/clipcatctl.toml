@@ -1,0 +1,5 @@
+[log]
+# Emit log message to systemd-journald
+emit_journald = true
+# Log level
+level = "INFO"

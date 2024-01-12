@@ -1,0 +1,43 @@
+daemonize = true
+max_history = 50
+
+[log]
+# Emit log message to systemd-journald.
+emit_journald = true
+# Log level
+level = "INFO"
+
+[watcher]
+# Enable watching X11/Wayland clipboard selection.
+enable_clipboard = true
+# Enable watching X11/Wayland primary selection.
+enable_primary = true
+# Ignore clips which match with one of the X11 `TARGETS`.
+sensitive_x11_atoms = ["x-kde-passwordManagerHint"]
+# Ignore text clips which match with one of the regular expressions.
+denied_text_regex_patterns = []
+# Ignore text clips with a length <= `filter_text_min_length`, in characters (Unicode scalar value), not in byte.
+filter_text_min_length = 1
+# Ignore text clips with a length > `filter_text_max_length`, in characters (Unicode scalar value), not in byte.
+filter_text_max_length = 20000000
+# Enable capturing image or not.
+capture_image = true
+# Ignore image clips with a size > `filter_image_max_size`, in byte.
+filter_image_max_size = 5242880
+
+[dbus]
+# Enable D-Bus.
+enable = true
+
+[desktop_notification]
+# Enable desktop notification.
+enable = true
+# Timeout duration in milliseconds.
+# This sets the time from the time the notification is displayed until it is
+# closed again by the notification server.
+timeout_ms = 2000
+# Define the length of a long plaintext,
+# if the length of a plaintext is >= `long_plaintext_length`,
+# desktop notification will be emitted.
+# If this value is 0, no desktop desktop notification will be emitted when fetched a long plaintext.
+long_plaintext_length = 2000

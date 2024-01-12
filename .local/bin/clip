@@ -1,6 +1,3 @@
 #!/bin/sh
 
-set -euf
-FZF_DEFAULT_OPTS="--ansi --color=dark --multi --tabstop=2  --preview='echo {} | bat --color=always' --preview-window border-vertical" \
-	CM_LAUNCHER="fzf" \
-	clipmenu
+clipcat-menu --finder="fzf"
