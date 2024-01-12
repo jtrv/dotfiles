@@ -51,6 +51,12 @@
 # End of xbindkeys Tutorial #
 #############################
 
+"playerctl next"
+    Mod4 + b:7
+
+"playerctl previous"
+    Mod4 + b:6
+
 "playerctl play-pause"
     Mod4 + b:2
 
