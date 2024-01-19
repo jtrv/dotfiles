@@ -189,11 +189,6 @@ filetypes = ["html"]
 roots = ["package.json"]
 command = "html-languageserver"
 args = ["--stdio"]
-settings_section = "_"
-[language_server.html-language-server.settings._]
-# quotePreference = "single"
-# javascript.format.semicolons = "insert"
-
 [language_server.intelephense]
 filetypes = ["php"]
 roots = [".htaccess", "composer.json"]
