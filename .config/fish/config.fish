@@ -69,49 +69,37 @@ alias yarn    "yarn --use-yarnrc \"$XDG_CONFIG_HOME\"/yarn/config"
 
 ######## KAKOUNE ########
 
-function kakgrep
+function kd
+  k (fd $argv)
+end
+complete -c kd -w fd
+
+function kda
+  kak -e "delta $argv; buffer-only; echo; info-buffers"
+end
+
+function kg
     set grepargs
     for x in $argv
         set -a grepargs (echo $x | sed -e "s/'/''/g" -e "s/^/'/" -e "s/\$/'/")
     end
     kak -e "grep $(string join -- " " $grepargs); buffer-only; echo; info-buffers"
 end
-complete -c kakgrep -w rg
-alias kg 'kakgrep'
+complete -c kg -w rg
 
-function kakfd
-  k (fd $argv)
+function kgl
+  kak -e 'live-grep; buffer-only;echo "live-grep"; info-buffers'
 end
-alias kd 'kakfd'
-complete -c kakfd -w fd
 
-function kakdiff
+function kif
   kak -e "diff $argv; buffer-only; echo; info-buffers"
 end
-alias kif 'kakdiff'
 
-function kakdifft
+function kift
   kak -e "difft $argv; buffer-only; echo; info-buffers"
 end
-alias kift 'kakdifft'
-
-function kelta
-  kak -e "delta $argv; buffer-only; echo; info-buffers"
-end
-alias kda 'kelta'
-
-alias kf      'kamp-files'
-alias kgi     'kamp-grep'
-alias kgl     'kak -e "live-grep; buffer-only;echo "live-grep"; info-buffers"'
 
 alias k       'kak'
-alias kval    'kamp get val'
-alias kopt    'kamp get opt'
-alias kreg    'kamp get reg'
-alias kcd-pwd 'cd (kamp get sh pwd)'
-alias kcd-buf 'cd (dirname (kamp get val buffile))'
-alias kft     'kamp get -b \* opt filetype | sort | uniq' # list file types you're working on
-
 alias kakrc   'k ~/.config/kak/kakrc'
 alias kenv    'k ~/.config/fish/env.fish'
 alias kish    'k ~/.config/fish/config.fish'

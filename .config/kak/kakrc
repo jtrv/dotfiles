@@ -4,7 +4,6 @@
 evaluate-commands %sh{
   cork init
   skyspell-kak init
-  kamp init -a -e EDITOR='kamp edit'
 }
 
 ################### DISPLAY ###################
@@ -48,14 +47,8 @@ declare-user-mode dev
   map global dev s -docstring "set filetype" %{: set-filetype <ret>}
 
 cork indent https://github.com/kirusfg/indent.kak %{
-  enable-detect-indent
   set-indent global 2
-}
-
-cork smarttab https://github.com/andreyorst/smarttab.kak %{
-  hook global BufCreate .* %{
-    autoconfigtab
-  }
+  enable-detect-indent
 }
 
 # contextual scripts
@@ -127,9 +120,6 @@ cork kakpipe https://github.com/eburghar/kakpipe %{ require-module kakpipe }
 
 # starship for kakoune modeline
 cork kakship https://github.com/eburghar/kakship %{ kakship-enable }
-
-# interact with external programs
-cork kampliment https://github.com/vbauerster/kampliment
 
 # popups with tmux
 cork popup https://github.com/enricozb/popup.kak
@@ -650,7 +640,6 @@ map global normal +     -docstring "new popup"      %{: popup -- fish <ret>}
 # pickers
 map global normal B     -docstring "buffer picker"   %{: buffer-picker <ret>}
 map global normal <c-p> -docstring "file picker"     %{: file-picker <ret>}
-map global normal <c-g> -docstring "grep picker"     %{: popup --fish -c 'kamp-grep' <ret>}
 
 # external programs
 map global normal <c-h> -docstring "lf"        %{: popup -- fish -c 'lf' <ret>}
