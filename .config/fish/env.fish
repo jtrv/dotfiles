@@ -48,10 +48,10 @@ set -gx HISTFILE "$XDG_STATE_HOME"/bash/history
 # Misc
 set -gx ATUIN_NOBIND             "true"
 set -gx BAT_PAGER                "moar -no-linenumbers"
-set -gx BEMOJI_PICKER_CMD        "dmenu -fn 'pixelsize=18:antialias=true' -nb black -nf green -sb magenta -sf black"
+set -gx BEMOJI_PICKER_CMD        "dmenu -i -fn 'pixelsize=18:antialias=true' -nb black -nf white -sb black -sf red"
 set -gx BEMOJI_CLIP_CMD          "xclip -sel clip"
 set -gx BEMOJI_TYPE_CMD          "xdotool"
-set -gx DMENU_THEME              "-fn 'pixelsize=18:antialias=true' -nb black -nf green -sb magenta -sf black" # matched to spectrwm.conf
+set -gx DMENU_THEME              "-i -fn 'pixelsize=18:antialias=true' -nb black -nf white -sb black -sf red" # matched to spectrwm.conf
 set -gx EDITOR                   "kak"
 set -gx fish_greeting
 set -gx FZF_DEFAULT_OPTS         "--ansi --color=dark --multi --tabstop=2 --preview-window border-vertical --bind='alt-a:select-all,alt-d:deselect-all,ctrl-l:preview-down,ctrl-h:preview-up,alt-j:jump'"
