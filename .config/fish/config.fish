@@ -56,7 +56,6 @@ alias loc     'plocate'
 alias lok     'xlock'
 alias m       'qalc'
 alias mdc     'mdcat --columns=70'
-alias mirrors '~/.local/bin/update-mirrors' # update mirrors / database
 alias mkdir   'mkdir -p'
 alias nbg     'feh --randomize --bg-scale --no-fehbg ~/media/pictures/wallpapers/' # change bg
 alias py      'python'
