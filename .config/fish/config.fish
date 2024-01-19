@@ -98,6 +98,10 @@ function kift
   kak -e "difft $argv; buffer-only; echo; info-buffers"
 end
 
+function kp
+  kak -e "kakpipe -- $argv"
+end
+
 alias k       'kak'
 alias kakrc   'k ~/.config/kak/kakrc'
 alias kenv    'k ~/.config/fish/env.fish'
