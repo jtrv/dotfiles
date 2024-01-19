@@ -1,2 +1,2 @@
 #!/bin/bash
-eval "j4-dmenu-desktop --dmenu='dmenu $DMENU_THEME'"
+eval "j4-dmenu-desktop --dmenu='dmenu -i $DMENU_THEME'"
