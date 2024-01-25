@@ -11,6 +11,7 @@ hook global BufSetOption filetype=(css|scss) %{
 hook global WinSetOption filetype=(css|scss) %{
   set-option window lintcmd "stylelint_d --config ~/.config/.stylelintrc --stdin --stdin-filename %val{buffile}"
   lint
+  ui-colorcol-toggle
 
 ###### LSP ######
   define-command -override ui-lsp-enable %{
