@@ -714,7 +714,7 @@ map global user l -docstring "lsp" %{: enter-user-mode lsp <ret>}
 
 # edit/extend/trim selections one by one
 cork kakoune-phantom-selection https://github.com/occivink/kakoune-phantom-selection %{
-declare-user-mode phantom
+  declare-user-mode phantom
   map global user p -docstring "phantom" %{: enter-user-mode phantom <ret>}
   map global phantom a -docstring "add"        %{: phantom-selection-add-selection <ret>}
   map global phantom c -docstring "clear"      %{: phantom-selection-select-all; phantom-selection-clear <ret>}
@@ -765,7 +765,7 @@ cork ui https://github.com/kkga/ui.kak %{
     echo -debug "Enabling LSP for filtetype %opt{filetype}"
   }
   define-command ui-lsp-toggle -override %{
-    try %{ ui-lsp-enable } catch %{ ui-lsp-disable }
+    try ui-lsp-enable catch ui-lsp-disable
     trigger-user-hook ui-hl-changed
   }
   map global ui k -docstring "toggle kak-lsp"   %{: ui-lsp-toggle <ret>}
