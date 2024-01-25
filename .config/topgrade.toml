@@ -25,7 +25,7 @@ cleanup = true
 [git]
 max_concurrency = 10
 # Additional git repositories to pull
-pull_only_repos = [
+repos = [
     "~/repos/*"
 ]
 
