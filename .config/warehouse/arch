@@ -30,7 +30,6 @@ chaotic-keyring
 chaotic-mirrorlist
 checkbashisms
 circumflex-bin
-clipmenu
 clojure-lsp-bin
 cork.kak-git
 croc
@@ -71,6 +70,7 @@ firefox-tridactyl
 firefox-tridactyl-native
 firefox-ublock-origin
 firejail
+firejail-pacman-hook
 fisher
 flameshot-git
 flow-bin

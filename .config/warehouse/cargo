@@ -15,7 +15,11 @@ cargo-spellcheck -> https://github.com/rust-lang/crates.io-index
 cargo-trend -> https://github.com/rust-lang/crates.io-index
 cargo-udeps -> https://github.com/rust-lang/crates.io-index
 cargo-update -> https://github.com/rust-lang/crates.io-index
+caser-cli -> https://github.com/jtrv/caser
 choose -> https://github.com/rust-lang/crates.io-index
+clipcatctl -> https://github.com/xrelkd/clipcat
+clipcatd -> https://github.com/xrelkd/clipcat
+clipcat-menu -> https://github.com/xrelkd/clipcat
 complgen -> https://github.com/adaszko/complgen
 cpz -> https://github.com/rust-lang/crates.io-index
 crabz -> https://github.com/rust-lang/crates.io-index
@@ -51,7 +55,6 @@ kak-lsp -> /home/sugimoto/.local/share/kak/cork/plugins/kak-lsp/repo
 kakpipe -> /home/sugimoto/.local/share/kak/cork/plugins/kakpipe/repo
 kak-popup -> https://github.com/rust-lang/crates.io-index
 kakship -> /home/sugimoto/.local/share/kak/cork/plugins/kakship/repo
-kamp -> /home/sugimoto/.local/share/kak/cork/plugins/kampliment/repo
 kanata -> https://github.com/rust-lang/crates.io-index
 kmon -> https://github.com/rust-lang/crates.io-index
 kondo -> https://github.com/rust-lang/crates.io-index
