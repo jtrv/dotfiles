@@ -14,7 +14,11 @@ cargo-spellcheck -> https://github.com/rust-lang/crates.io-index
 cargo-trend -> https://github.com/rust-lang/crates.io-index
 cargo-udeps -> https://github.com/rust-lang/crates.io-index
 cargo-update -> https://github.com/rust-lang/crates.io-index
+caser-cli -> /home/sugimoto/repos/kak-stuff/kak-subvert
 choose -> https://github.com/rust-lang/crates.io-index
+clipcatctl -> /home/sugimoto/repos/clipcat/clipcatctl
+clipcatd -> /home/sugimoto/repos/clipcat/clipcatd
+clipcat-menu -> /home/sugimoto/repos/clipcat/clipcat-menu
 complgen -> https://github.com/adaszko/complgen
 cpz -> https://github.com/rust-lang/crates.io-index
 crabz -> https://github.com/rust-lang/crates.io-index
@@ -98,6 +102,7 @@ topgrade -> https://github.com/rust-lang/crates.io-index
 t-rec -> https://github.com/rust-lang/crates.io-index
 trippy -> https://github.com/rust-lang/crates.io-index
 ttyper -> https://github.com/rust-lang/crates.io-index
+typos-cli -> https://github.com/rust-lang/crates.io-index
 vopono -> https://github.com/rust-lang/crates.io-index
 watchexec-cli -> https://github.com/rust-lang/crates.io-index
 wthrr -> https://github.com/rust-lang/crates.io-index

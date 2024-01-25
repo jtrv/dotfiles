@@ -260,6 +260,7 @@ preload
 profanity
 progress
 pulsemixer
+python-easygui
 python-lsp-black
 python-lsp-ruff
 python-lsp-server
@@ -387,6 +388,7 @@ yamllint
 yq
 yt-dlp
 yuzu-mainline-bin
+zaread-git
 zathura
 zathura-pdf-poppler
 zeal
