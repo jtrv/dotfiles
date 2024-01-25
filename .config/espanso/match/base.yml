@@ -1,13 +1,15 @@
 matches:
+
 # ENGLISH PROGRAMMING LANGUAGE
+
   - trigger: ",,idk"
     replace: "I don't know"
 
+  - trigger: ",,ins"
+    replace: "I'm not sure, but I can find out"
+
   - trigger: ",,ijrn"
     replace: "I'll join right now,"
-
-  - trigger: ",,insb"
-    replace: "I'm not sure, but I can find out"
 
   - trigger: ",,lmc"
     replace: "Let me check..."
@@ -28,41 +30,38 @@ matches:
     replace: "This should be good to go now, moving this along."
 
 # HTML
-  - trigger: ",,hdoc"
+
+  - trigger: ",,hdo"
     replace: |
       <!DOCTYPE html>
 
-  - trigger: ",,hchar"
+  - trigger: ",,hmc"
     replace: |
       <meta charset="UTF-8">
 
-  - trigger: ",,hview"
+  - trigger: ",,hmv"
     replace: |
       <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  - trigger: ",,hauth"
+  - trigger: ",,hma"
     replace: |
       <meta name="author" content="$|$">
 
-  - trigger: ",,hdesc"
+  - trigger: ",,hmd"
     replace: |
       <meta name="description" content="$|$">
 
-  - trigger: ",,hkey"
+  - trigger: ",,hmk"
     replace: |
       <meta name="keywords" content="$|$">
 
-  - trigger: ",,htit"
+  - trigger: ",,hmt"
     replace: |
       <title>$|$</title>
 
-  - trigger: ",,hdi"
+  - trigger: ",,hd"
     replace: |
       <div>$|$</div>
-
-  - trigger: ",,html"
-    replace: |
-      <html>$|$</html>
 
   - trigger: ",,hhe"
     replace: |
@@ -76,43 +75,43 @@ matches:
     replace: |
       <a href="">$|$</a>
 
-  - trigger: ",,hbtn"
+  - trigger: ",,hbt"
     replace: |
       <button type="button">$|$</button>
 
-  - trigger: ",,hstyle"
+  - trigger: ",,hsti"
     replace: |
       <style>$|$</style>
 
-  - trigger: ",,hstlink"
+  - trigger: ",,hste"
     replace: |
       <link rel="stylesheet" type="text/css" href="$|$">
 
-  - trigger: ",,hscript"
+  - trigger: ",,hsci"
     replace: |
       <script>$|$</script>
 
-  - trigger: ",,hsclink"
+  - trigger: ",,hsce"
     replace: |
       <script type="text/javascript" src="$|$"></script>
 
-  - trigger: ",,hform"
+  - trigger: ",,hfo"
     replace: |
       <form action="" method="">$|$</form>
 
-  - trigger: ",,hlab"
+  - trigger: ",,hla"
     replace: |
       <label for="">$|$</label>
 
-  - trigger: ",,hsub"
+  - trigger: ",,hsu"
     replace: |
       <input type="submit" value="$|$">
 
-  - trigger: ",,hintex"
+  - trigger: ",,hint"
     replace: |
       <input type="text" name="" id="">
 
-  - trigger: ",,hinpw"
+  - trigger: ",,hinp"
     replace: |
       <input type="password" name="" id="">
 
@@ -120,15 +119,16 @@ matches:
     replace: |
       <input type="radio" name="" id="" value="">
 
-  - trigger: ",,hinch"
+  - trigger: ",,hinc"
     replace: |
       <input type="checkbox" name="" id="" value="">
 
-  - trigger: ",,hinfi"
+  - trigger: ",,hinf"
     replace: |
       <input type="file" name="" id="">
 
 # JAVASCRIPT
+
   - trigger: ",,jfn"
     replace: |
       function $|$() { }
@@ -165,17 +165,49 @@ matches:
     replace: |
       console.error($|$)
 
-  - trigger: ",,jid"
+  - trigger: ",,jctm"
+    replace: |
+      console.time("$|$")
+
+  - trigger: ",,jcte"
+    replace: |
+      console.timeEnd("$|$")
+
+  - trigger: ",,jdo"
+    replace: |
+      const {$|$} = ;
+
+  - trigger: ",,jda"
+    replace: |
+      const [$|$] = ;
+
+  - trigger: ",,jgi"
     replace: |
       document.getElementById("$|$")
 
+  - trigger: ",,jgc"
+    replace: |
+      document.getElementByClassName("$|$")
+
   - trigger: ",,jqs"
+    replace: |
+      document.querySelector("$|$")
+
+  - trigger: ",,jqa"
     replace: |
       document.querySelectorAll("$|$")
 
-  - trigger: ",,jfr"
+  - trigger: ",,jcf"
     replace: |
       document.createDocumentFragment("$|$")
+
+  - trigger: ",,jsi"
+    replace: |
+      setInterval(() => {$|$}, interval)
+
+  - trigger: ",,jso"
+    replace: |
+      setTimeout(() => {$|$}, delay)
 
   - trigger: ",,jst"
     replace: |
@@ -185,7 +217,50 @@ matches:
     replace: |
       process.exit("$|$")
 
-  # ALGO TEMPLATES
+  - trigger: ",,jpr"
+    replace: |
+      return new Promise((resolve, reject) => {$|$}
+
+  - trigger: ",,jpl"
+    replace: |
+      $|$.then(console.log).catch(console.error)
+
+# JS - REACT
+
+  - trigger: ",,rfc"
+    replace: |
+      import React from 'react';
+
+      const $|$ = () => {
+          return (
+              <div>
+              </div>
+          );
+      };
+
+  - trigger: ",,rus"
+    replace: |
+      const [, set] = useState();
+
+  - trigger: ",,rue"
+    replace: |
+      useEffect(() => {}, []);
+
+  - trigger: ",,rrr"
+    replace: |
+      render() { return($|$) }
+
+  - trigger: ",,rmap"
+    replace: |
+      {$|$.map((val, i) => (
+        <p key={i}>{val}</p>
+      ))}
+
+  - trigger: ",,rter"
+    replace: |
+      {$|$ ? <p></p> : <p></p>}
+
+# JS - ALGORITHMS
 
   - trigger: ",,jabs"
     replace: |
