@@ -181,8 +181,8 @@ map <esc>    clear
 map <enter>  open
 map o        push :open-with<space>
 
-map <a-d> rip                     # safer remove function (rip)
-map D     delete                  # actually delete
+map <a-d> delete                  # actually delete
+map D     rip                     # safer remove function (rip)
 map f     filter                  # jump to file with fzf choice
 map F     :fuzzy_file             # jump to file with fzf choice
 map G     :fuzzy_content          # search files by grepping contents
