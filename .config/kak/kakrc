@@ -25,11 +25,14 @@ cork kak-rainbower https://github.com/jtrv/kak-rainbower %{
   hook global WinCreate .* %{ rainbow-enable-window }
 }
 
+hook -once global WinSetOption filetype=(awk|bash|bibtex|cmake|cpp|css|scss|diff|fish|git-commit|go|haskell|html|java|javascript|json|jsx|julia|latex|make|markdown|python|ruby|rust|scheme|toml|tsx|typescript|verilog|xml|yaml) %{
+  evaluate-commands %sh{ kak-tree-sitter -dks --session "$kak_session" }
+}
+
 ############### FORMAT/LINT ###############
 
 # LSP Magic
 cork kak-lsp https://github.com/kak-lsp/kak-lsp %{
-  define-command lsp-restart -docstring "restart lsp server" %{ lsp-stop; lsp-start }
   set global lsp_diagnostic_line_error_sign '║'
   set global lsp_diagnostic_line_warning_sign '┊'
   set global lsp_hover_max_lines 40
@@ -48,31 +51,31 @@ declare-user-mode dev
   map global dev s -docstring "set filetype" %{: set-filetype <ret>}
 
 cork indent https://github.com/kirusfg/indent.kak %{
-  set-indent global 2
+  set-indent global 2 false
   enable-detect-indent
 }
 
 # contextual scripts
-source "~/.config/kak/contexts/commit.kak"
-source "~/.config/kak/contexts/css.kak"
-source "~/.config/kak/contexts/diff.kak"
-source "~/.config/kak/contexts/fish.kak"
-source "~/.config/kak/contexts/go.kak"
-source "~/.config/kak/contexts/grep.kak"
-source "~/.config/kak/contexts/html.kak"
-source "~/.config/kak/contexts/javascript.kak"
-source "~/.config/kak/contexts/json.kak"
-source "~/.config/kak/contexts/markdown.kak"
-source "~/.config/kak/contexts/python.kak"
-source "~/.config/kak/contexts/rust.kak"
-source "~/.config/kak/contexts/sh.kak"
-source "~/.config/kak/contexts/typescript.kak"
-source "~/.config/kak/contexts/toml.kak"
-source "~/.config/kak/contexts/yaml.kak"
+hook global WinSetOption filetype=git-commit           %{ source "~/.config/kak/contexts/commit.kak" }
+hook global WinSetOption filetype=(css|scss)           %{ source "~/.config/kak/contexts/css.kak" }
+hook global WinSetOption filetype=diff                 %{ source "~/.config/kak/contexts/diff.kak" }
+hook global WinSetOption filetype=fish                 %{ source "~/.config/kak/contexts/fish.kak" }
+hook global WinSetOption filetype=go                   %{ source "~/.config/kak/contexts/go.kak" }
+hook global WinSetOption filetype=(grep|grep-buffer)   %{ source "~/.config/kak/contexts/grep.kak" }
+hook global WinSetOption filetype=html                 %{ source "~/.config/kak/contexts/html.kak" }
+hook global WinSetOption filetype=javascript           %{ source "~/.config/kak/contexts/javascript.kak" }
+hook global WinSetOption filetype=json                 %{ source "~/.config/kak/contexts/json.kak" }
+hook global WinSetOption filetype=markdown             %{ source "~/.config/kak/contexts/markdown.kak" }
+hook global WinSetOption filetype=python               %{ source "~/.config/kak/contexts/python.kak" }
+hook global WinSetOption filetype=rust                 %{ source "~/.config/kak/contexts/rust.kak" }
+hook global WinSetOption filetype=sh                   %{ source "~/.config/kak/contexts/sh.kak" }
+hook global WinSetOption filetype=typescript           %{ source "~/.config/kak/contexts/typescript.kak" }
+hook global WinSetOption filetype=toml                 %{ source "~/.config/kak/contexts/toml.kak" }
+hook global WinSetOption filetype=yaml                 %{ source "~/.config/kak/contexts/yaml.kak" }
 
 ###################### UTILITY ######################
 
-set global grepcmd 'rg --smart-case --vimgrep'
+set-option global grepcmd 'rg --smart-case --vimgrep'
 
 # empty scratch buffer(s)
 hook global BufCreate '\*scratch(-\d+)?\*' %{ execute-keys -draft '%<a-d>' }
@@ -115,6 +118,9 @@ cork sudo-write https://github.com/jtrv/sudo-write.kak %{
 
 # enable ansi-escapes
 cork kak-ansi https://github.com/eraserhd/kak-ansi
+
+# better object selection
+cork kakoune-text-objects https://github.com/Delapouite/kakoune-text-objects
 
 # display text with ansi color-codes inside a fifo
 cork kakpipe https://github.com/eburghar/kakpipe %{ require-module kakpipe }
@@ -318,22 +324,6 @@ define-command grep-buffers -docstring "
     else
       echo "grep %arg{@} %val{buflist}"
     fi
-  }
-}
-
-define-command grep-write -docstring "
-  grep-write: pipes the current grep-buffer to grug -w and prints the results
-" %{
-  declare-option -hidden str grug_buf
-  evaluate-commands -draft %{
-    evaluate-commands %sh{
-      echo "set-option buffer grug_buf '$(mktemp /tmp/grug_buf.XXX)'"
-    }
-    write -sync -force %opt{grug_buf}
-    evaluate-commands %sh{
-      cat "$kak_opt_grug_buf" | grug -w |
-        xargs -I{} echo "echo -markup {Information} '{}'; echo -debug '{}';"
-    }
   }
 }
 
@@ -574,8 +564,8 @@ map global insert <c-v> -docstring "insert mode paste"   %{<esc>Pi}
 map global prompt <c-n> <tab>   -docstring "next completion"
 map global prompt <c-p> <s-tab> -docstring "previous completion"
 
-map global prompt <a-.> -docstring "insert buffer directory"     '%sh{dirname "$kak_buffile"}<a-!>/'
-map global prompt <a-,> -docstring "insert git root directory"   '%sh{git rev-parse --show-toplevel}<a-!>/'
+map global prompt <a-.> -docstring "insert buffer directory"     '%sh{ dirname "$kak_buffile" }<a-!>/'
+map global prompt <a-,> -docstring "insert git root directory"   '%sh{ git rev-parse --show-toplevel }<a-!>/'
 
 ###################### NORMAL KEYS ######################
 
@@ -590,14 +580,19 @@ map global normal <a-w> <a-b> -docstring "select previous BIG-WORD"
 map global normal <a-W> <a-B> -docstring "extend previous BIG-WORD"
 
 # swap [] <a-[]>
-map global normal '<a-[>' '['     -docstring "select to previous object end"
 map global normal '[' '<a-[>'     -docstring "select upto previous object end"
+map global normal '<a-[>' '['     -docstring "select to previous object end"
+
 map global normal ']' '<a-]>'     -docstring "select upto next object end"
 map global normal '<a-]>' ']'     -docstring "select to next object end"
 
 # use <c-k>/<c-l> as more ergonomic undo/redo selction
 map global normal <c-k> <a-u> -docstring "undo selection change"
 map global normal <c-l> <a-U> -docstring "redo selection change"
+
+# use <a-u>/<a-U> to traverse change history
+map global normal <a-u> <c-k> -docstring "move backward in change history"
+map global normal <a-U> <c-j> -docstring "move forward in change history"
 
 # select whole lines
 map global normal J -docstring "select next line"       %{Jx}
@@ -616,7 +611,7 @@ map global normal <a-v> -docstring "deselect current sel"   %{*<a-n>}
 map global normal V     -docstring "add next match"         %{*N}
 map global normal <a-V> -docstring "add previous match"     %{*<a-N>}
 
-# case insensitive search
+# case insensitive search by default
 map global normal /     -docstring "search"                      %{/(?i)}
 map global normal <a-/> -docstring "search backwards"            %{<a-/>(?i)}
 map global normal ?     -docstring "(extend) search"             %{?(?i)}
@@ -627,12 +622,7 @@ map global normal <#> -docstring "comment"   %{: comment <ret>}
 
 # new windows
 map global normal <c-n> -docstring "new client"     %{: new <ret>}
-map global normal <c-t> -docstring "new terminal"   %{: connect terminal <ret>}
-map global normal +     -docstring "new popup"      %{: popup <ret>}
-
-# pickers
-map global normal B     -docstring "buffer picker"   %{: buffer-picker <ret>}
-map global normal <c-p> -docstring "file picker"     %{: file-picker <ret>}
+map global normal +     -docstring "new popup"      %{: popup fish <ret>}
 
 # external programs
 map global normal <c-h> -docstring "lf"        %{: popup lf <ret>}
@@ -715,7 +705,7 @@ cork kakoune-phantom-selection https://github.com/occivink/kakoune-phantom-selec
 }
 
 # select/edit surrounding chars and tags
-cork kakoune-surround https://github.com/h-youhei/kakoune-surround
+cork kakoune-surround https://github.com/h-youhei/kakoune-surround %{
   declare-user-mode surround
   map global normal <'> -docstring "surround" %{: enter-user-mode surround <ret>}
   map global surround d -docstring "delete"              %{: delete-surround <ret>}
@@ -726,6 +716,7 @@ cork kakoune-surround https://github.com/h-youhei/kakoune-surround
   map global surround I -docstring "surround with tag"   %{: surround-with-tag <ret>}
   map global surround R -docstring "replace tag"         %{: change-surrounding-tag <ret>}
   map global surround S -docstring "select tag"          %{: select-surrounding-tag <ret>}
+}
 
 # spelling and grammar checking
 declare-user-mode spell
