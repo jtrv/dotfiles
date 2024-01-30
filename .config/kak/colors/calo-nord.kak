@@ -9,6 +9,9 @@
 # To get around this I used xcolor to pipette the composite of these
 # translucent colors over the opaque background of normal kalolo.
 
+
+# Colors
+
 # Blues
 declare-option -hidden str kalolo_shiny_blue    rgba:b7dbffff
 declare-option -hidden str kalolo_light_blue    rgba:87bbffff
@@ -53,7 +56,9 @@ declare-option -hidden str kalolo_black         rgba:2b2b2b12
 declare-option -hidden str kalolo_dawn_black    rgba:232323ff
 declare-option -hidden str kalolo_dark_black    rgba:000000ff
 
+
 # Code
+
 # Comment are important information, they are the only thing in light green.
 set-face global comment            "%opt{kalolo_green},default"
 # Documentation is even more important, it's in bold.
@@ -92,6 +97,108 @@ set-face global keyword            "%opt{kalolo_red},default"
 # Additional keywords
 set-face global flow               "%opt{kalolo_red},default+b" # Keywords related to control flow (if,for,assert,etc.).
 set-face global state              "%opt{kalolo_red},default"   # Keywords reated to state (cast,new,sizeof,etc.).
+
+
+# tree-sitter faces
+
+set-face global ts_attribute                    "%opt{kalolo_light_blue}"
+set-face global ts_comment                      "%opt{kalolo_green}+i"
+set-face global ts_comment_block                "ts_comment"
+set-face global ts_comment_line                 "ts_comment"
+set-face global ts_conceal                      "%opt{kalolo_light_magenta}+i"
+set-face global ts_constant                     "%opt{kalolo_cream}"
+set-face global ts_constant_builtin_boolean     "%opt{kalolo_shiny_blue}"
+set-face global ts_constant_character           "%opt{kalolo_light_yellow}"
+set-face global ts_constant_character_escape    "ts_constant_character"
+set-face global ts_constant_macro               "%opt{kalolo_light_magenta}"
+set-face global ts_constant_numeric             "%opt{kalolo_cream}"
+set-face global ts_constant_numeric_float       "ts_constant_numeric"
+set-face global ts_constant_numeric_integer     "ts_constant_numeric"
+set-face global ts_constructor                  "%opt{kalolo_shiny_blue}"
+set-face global ts_diff_plus                    "%opt{kalolo_green}"
+set-face global ts_diff_minus                   "%opt{kalolo_red}"
+set-face global ts_diff_delta                   "%opt{kalolo_blue}"
+set-face global ts_diff_delta_moved             "%opt{kalolo_light_magenta}"
+set-face global ts_error                        "%opt{kalolo_red}+b"
+set-face global ts_function                     "%opt{kalolo_blue}"
+set-face global ts_function_builtin             "%opt{kalolo_blue}+i"
+set-face global ts_function_macro               "%opt{kalolo_light_magenta}"
+set-face global ts_function_method              "ts_function"
+set-face global ts_function_special             "ts_function"
+set-face global ts_hint                         "%opt{kalolo_light_blue}+b"
+set-face global ts_info                         "%opt{kalolo_light_green}+b"
+set-face global ts_keyword                      "%opt{kalolo_light_magenta}"
+set-face global ts_keyword_control              "ts_keyword"
+set-face global ts_keyword_conditional          "%opt{kalolo_light_magenta}+i"
+set-face global ts_keyword_control_conditional  "%opt{kalolo_light_magenta}+i"
+set-face global ts_keyword_control_directive    "%opt{kalolo_light_magenta}+i"
+set-face global ts_keyword_control_import       "%opt{kalolo_light_magenta}+i"
+set-face global ts_keyword_control_repeat       "ts_keyword"
+set-face global ts_keyword_control_return       "ts_keyword"
+set-face global ts_keyword_control_except       "ts_keyword"
+set-face global ts_keyword_control_exception    "ts_keyword"
+set-face global ts_keyword_directive            "%opt{kalolo_light_magenta}+i"
+set-face global ts_keyword_function             "ts_keyword"
+set-face global ts_keyword_operator             "ts_keyword"
+set-face global ts_keyword_special              "ts_keyword"
+set-face global ts_keyword_storage              "ts_keyword"
+set-face global ts_keyword_storage_modifier     "ts_keyword"
+set-face global ts_keyword_storage_modifier_mut "ts_keyword"
+set-face global ts_keyword_storage_modifier_ref "ts_keyword"
+set-face global ts_keyword_storage_type         "ts_keyword"
+set-face global ts_label                        "%opt{kalolo_shiny_blue}+i"
+set-face global ts_markup_bold                  "%opt{kalolo_cream}+b"
+set-face global ts_markup_heading               "%opt{kalolo_red}"
+set-face global ts_markup_heading_1             "%opt{kalolo_red}"
+set-face global ts_markup_heading_2             "%opt{kalolo_light_magenta}"
+set-face global ts_markup_heading_3             "%opt{kalolo_light_green}"
+set-face global ts_markup_heading_4             "%opt{kalolo_light_yellow}"
+set-face global ts_markup_heading_5             "%opt{kalolo_light_magenta}"
+set-face global ts_markup_heading_6             "%opt{kalolo_blue}"
+set-face global ts_markup_heading_marker        "%opt{kalolo_cream}+b"
+set-face global ts_markup_italic                "%opt{kalolo_light_magenta}+i"
+set-face global ts_markup_list_checked          "%opt{kalolo_green}"
+set-face global ts_markup_list_numbered         "%opt{kalolo_blue}+i"
+set-face global ts_markup_list_unchecked        "%opt{kalolo_blue}"
+set-face global ts_markup_list_unnumbered       "%opt{kalolo_light_magenta}"
+set-face global ts_markup_link_label            "%opt{kalolo_blue}"
+set-face global ts_markup_link_url              "%opt{kalolo_blue}+u"
+set-face global ts_markup_link_uri              "%opt{kalolo_blue}+u"
+set-face global ts_markup_link_text             "%opt{kalolo_blue}"
+set-face global ts_markup_quote                 "%opt{kalolo_mid_white}"
+set-face global ts_markup_raw                   "%opt{kalolo_light_green}"
+set-face global ts_markup_raw_block             "%opt{kalolo_light_green}"
+set-face global ts_markup_raw_inline            "%opt{kalolo_light_green}"
+set-face global ts_markup_strikethrough         "%opt{kalolo_mid_white}+s"
+set-face global ts_namespace                    "%opt{kalolo_blue}+i"
+set-face global ts_operator                     "%opt{kalolo_light_blue}"
+set-face global ts_property                     "%opt{kalolo_light_blue}"
+set-face global ts_punctuation                  "%opt{kalolo_light_yellow}"
+set-face global ts_punctuation_bracket          "ts_punctuation"
+set-face global ts_punctuation_delimiter        "ts_punctuation"
+set-face global ts_punctuation_special          "%opt{kalolo_light_blue}"
+set-face global ts_special                      "%opt{kalolo_blue}"
+set-face global ts_spell                        "%opt{kalolo_light_magenta}"
+set-face global ts_string                       "%opt{kalolo_shiny_green}"
+set-face global ts_string_regex                 "%opt{kalolo_cream}"
+set-face global ts_string_regexp                "%opt{kalolo_cream}"
+set-face global ts_string_escape                "%opt{kalolo_light_magenta}"
+set-face global ts_string_special               "%opt{kalolo_blue}"
+set-face global ts_string_special_path          "%opt{kalolo_light_green}"
+set-face global ts_string_special_symbol        "%opt{kalolo_light_magenta}"
+set-face global ts_string_symbol                "%opt{kalolo_red}"
+set-face global ts_tag                          "%opt{kalolo_light_magenta}"
+set-face global ts_tag_error                    "%opt{kalolo_red}"
+set-face global ts_text                         "%opt{kalolo_white}"
+set-face global ts_text_title                   "%opt{kalolo_light_magenta}"
+set-face global ts_type                         "%opt{kalolo_light_yellow}"
+set-face global ts_type_builtin                 "ts_type"
+set-face global ts_type_enum_variant            "%opt{kalolo_cream}"
+set-face global ts_variable                     "%opt{kalolo_white}"
+set-face global ts_variable_builtin             "%opt{kalolo_red}"
+set-face global ts_variable_other_member        "%opt{kalolo_blue}"
+set-face global ts_variable_parameter           "%opt{kalolo_red}+i"
+set-face global ts_warning                      "%opt{kalolo_light_yellow}+b"
 
 
 # LSP faces
