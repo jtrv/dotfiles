@@ -11,6 +11,9 @@ protocol = "sparse"
 [unstable]
 gc = true
 
+[profile.release]
+strip = true
+
 [profile.profiling]
 inherits = "release"
 debug = true
