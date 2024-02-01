@@ -208,9 +208,9 @@ define-command dic -docstring "
 " -params 0..2 %{
   evaluate-commands %sh{
     if [ $# -eq 0 ]; then
-      echo "kakpipe -- dic %val{selection} %val{window_width}"
+      echo "kakpipe -- dic %val{selection}"
     else
-      echo "kakpipe -- dic %arg{@} %val{window_width}"
+      echo "kakpipe -- dic %arg{@}"
     fi
   }
 }
@@ -311,10 +311,9 @@ define-command grep-write -docstring "
     write -sync -force %opt{grug_buf}
     evaluate-commands %sh{
       cat "$kak_opt_grug_buf" | grug -w |
-        xargs -I{} echo "echo -markup {Information} '{}'; echo -debug '{}';"
+        xargs -I{} echo "echo -markup {Information} 'grug: {}'; echo -debug 'grug: {}';"
     }
   }
-
 }
 
 define-command grep -override -docstring "
