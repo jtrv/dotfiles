@@ -292,6 +292,15 @@ settings_section = "_"
 # pylsp.configurationSources = ["flake8"]
 pylsp.plugins.jedi_completion.include_params = true
 
+[language_server.ruff]
+filetypes = ["python"]
+roots = ["requirements.txt", "setup.py", ".git", ".hg"]
+command = "ruff-lsp"
+settings_section = "_"
+[language_server.ruff.settings._.globalSettings]
+organizeImports = true
+fixAll = true
+
 [language_server.r-language-server]
 filetypes = ["r"]
 roots = ["DESCRIPTION", ".git", ".hg"]
