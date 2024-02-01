@@ -50,9 +50,9 @@ alias la      'fls -al --color=always' # all files and dirs
 alias lc      'lazygit --git-dir=$HOME/.cfg/ --work-tree=$HOME' # lazygit for config files
 alias lg      'lazygit'
 alias lh      'eza -la --color=always --ignore-glob="[a-z]*|[A-Z]*|[0-9]*"' # hidden only
-alias ll      'fls -l --color=always' # long format
+alias ll      'eza -l --color=always --git' # long format
 alias ls      'fls -l --color=always' # preferred listing
-alias lt      'erd --color=force -HIl' # tree listing
+alias lt      'erd -HIl --color=force' # tree listing
 alias loc     'plocate'
 alias lok     'xlock'
 alias m       'qalc'
