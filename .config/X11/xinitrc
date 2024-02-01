@@ -29,20 +29,17 @@ fi
 
 xrandr --output=virtual-1
 
-/usr/lib/kdeconnectd &                # kdeconnect daemon
-/usr/bin/pcmanfm --daemon-mode &      # file-manager daemon
-/usr/bin/picom &                      # window opacity / blur
-/usr/bin/redshift &                   # bluelight filter
-/usr/bin/udiskie -An --terminal=lf &  # notif for mountable drives
-/usr/bin/xbanish &                    # hide mouse when typing
-~/.local/bin/map-keys &               # map caps to ctrl/esc
-~/.local/bin/trackball-speed &        # set trackball speed
+/usr/lib/kdeconnectd &         # kdeconnect daemon
+pcmanfm --daemon-mode &        # file-manager daemon
+picom &                        # window opacity / blur
+redshift &                     # bluelight filter
+udiskie -An &                  # notify + mount usbs
+xbanish &                      # hide mouse when typing
+~/.local/bin/map-keys &        # map caps to ctrl/esc
+~/.local/bin/trackball-speed & # set trackball speed
 
-# randomized wallpapers
-/usr/bin/feh --randomize --bg-scale --no-fehbg ~/media/pictures/wallpapers/ &
-
-# startup sound
-/usr/bin/mpv --no-config --no-video ~/.config/sounds/ps2.flac &
+# random wallpaper
+feh --randomize --bg-scale --no-fehbg ~/media/pictures/nature/ &
 
 xhost +SI:localuser:$USER
 
