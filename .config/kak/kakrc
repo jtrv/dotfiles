@@ -208,9 +208,9 @@ define-command dic -docstring "
 " -params 0..2 %{
   evaluate-commands %sh{
     if [ $# -eq 0 ]; then
-      echo "kakpipe -- dic %val{selection} %val{window_width}"
+      echo "kakpipe -- dic %val{selection}"
     else
-      echo "kakpipe -- dic %arg{@} %val{window_width}"
+      echo "kakpipe -- dic %arg{@}"
     fi
   }
 }
