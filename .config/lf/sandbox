@@ -17,6 +17,5 @@ set -euo pipefail
      --ro-bind ~/.cache ~/.cache \
      --ro-bind "$PWD" "$PWD" \
      --unshare-all \
-     --new-session \
      sh ~/.config/lf/preview "$@"
 )
