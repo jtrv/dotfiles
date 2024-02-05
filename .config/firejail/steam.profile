@@ -1,0 +1,7 @@
+include /etc/firejail/steam.profile
+
+noblacklist ${HOME}/.local/bin/steam
+noblacklist ${HOME}/.local/share/Steam/garbage
+
+whitelist   ${HOME}/.local/bin/steam
+whitelist   ${HOME}/.local/share/Steam/garbage
