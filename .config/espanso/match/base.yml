@@ -31,7 +31,7 @@ matches:
 
 # HTML
 
-  - trigger: ",,hdo"
+  - trigger: ",,hdoc"
     replace: |
       <!DOCTYPE html>
 
@@ -217,50 +217,7 @@ matches:
     replace: |
       process.exit("$|$")
 
-  - trigger: ",,jpr"
-    replace: |
-      return new Promise((resolve, reject) => {$|$}
-
-  - trigger: ",,jpl"
-    replace: |
-      $|$.then(console.log).catch(console.error)
-
-# JS - REACT
-
-  - trigger: ",,rfc"
-    replace: |
-      import React from 'react';
-
-      const $|$ = () => {
-          return (
-              <div>
-              </div>
-          );
-      };
-
-  - trigger: ",,rus"
-    replace: |
-      const [, set] = useState();
-
-  - trigger: ",,rue"
-    replace: |
-      useEffect(() => {}, []);
-
-  - trigger: ",,rrr"
-    replace: |
-      render() { return($|$) }
-
-  - trigger: ",,rmap"
-    replace: |
-      {$|$.map((val, i) => (
-        <p key={i}>{val}</p>
-      ))}
-
-  - trigger: ",,rter"
-    replace: |
-      {$|$ ? <p></p> : <p></p>}
-
-# JS - ALGORITHMS
+  # JAVASCRIPT ALGO TEMPLATES
 
   - trigger: ",,jabs"
     replace: |
