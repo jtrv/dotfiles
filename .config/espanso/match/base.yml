@@ -1,5 +1,7 @@
 matches:
+
 # ENGLISH PROGRAMMING LANGUAGE
+
   - trigger: ",,idk"
     replace: "I don't know"
 
@@ -28,6 +30,7 @@ matches:
     replace: "This should be good to go now, moving this along."
 
 # HTML
+
   - trigger: ",,hdoc"
     replace: |
       <!DOCTYPE html>
@@ -129,6 +132,7 @@ matches:
       <input type="file" name="" id="">
 
 # JAVASCRIPT
+
   - trigger: ",,jfn"
     replace: |
       function $|$() { }
@@ -185,7 +189,7 @@ matches:
     replace: |
       process.exit("$|$")
 
-  # ALGO TEMPLATES
+  # JAVASCRIPT ALGO TEMPLATES
 
   - trigger: ",,jabs"
     replace: |
