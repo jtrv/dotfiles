@@ -1,0 +1,10 @@
+#!/bin/sh
+SOUNDCARD=$(pactl list short cards | cut -f 2 | rg -o '(usb-huinytech_Hidizs_XO_DAC_AMP_5000000001-01.*)' -r '$1')
+
+pactl set-card-profile "alsa_card.$SOUNDCARD" output:analog-stereo
+
+SINK=$(pactl list short sinks | cut -f 2 | rg -F "alsa_output.$SOUNDCARD.analog-stereo")
+
+pactl set-default-sink "$SINK"
+
+easyeffects -l out_direct
