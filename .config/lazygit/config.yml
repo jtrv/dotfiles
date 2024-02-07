@@ -14,26 +14,24 @@ gui:
   shortTimeFormat: '3:04PM'
   theme:
     activeBorderColor:
-      - green
+      - '#a6e3a1'
       - bold
     inactiveBorderColor:
-      - white
-    searchingActiveBorderColor:
-      - cyan
-      - bold
+      - '#a6adc8'
     optionsTextColor:
-      - blue
+      - '#89b4fa'
     selectedLineBgColor:
-      - default # set to `default` to have no background colour
-      - reverse
+      - '#313244'
     cherryPickedCommitBgColor:
-      - cyan
+      - '#45475a'
     cherryPickedCommitFgColor:
-      - blue
+      - '#a6e3a1'
     unstagedChangesColor:
-      - red
+      - '#f38ba8'
     defaultFgColor:
-      - default
+      - '#cdd6f4'
+    searchingActiveBorderColor:
+      - '#f9e2af'
   commitLength:
     show: true
   mouseEvents: true
@@ -221,8 +219,8 @@ keybinding:
     amendToCommit: 'A'
     pickCommit: 'p' # pick commit (when mid-rebase)
     revertCommit: 't'
-    cherryPickCopy: 'C'
-    pasteCommits: 'V'
+    cherryPickCopy: 'c'
+    pasteCommits: 'v'
     tagCommit: 'T'
     checkoutCommit: '<space>'
     resetCherryPick: '<c-R>'

@@ -9,7 +9,7 @@ evaluate-commands %sh{
 
 ################### DISPLAY ###################
 
-colorscheme calo-nord
+colorscheme catpuccin_mocha
 
 set-option global ui_options terminal_assistant=none
 set-option global scrolloff 1,3
