@@ -1,9 +1,9 @@
 [Unit]
 Description=Clipcat Daemon
-PartOf=graphical-session.target
+PartOf=default.target
 
 [Install]
-WantedBy=graphical-session.target
+WantedBy=default.target
 
 [Service]
 ExecStart=%h/.local/share/cargo/bin/clipcatd --no-daemon --replace
