@@ -31,5 +31,7 @@ fi
 xrandr --output "$MON" --brightness "$CurrBright" # Set new brightness
 
 # Display current brightness
-printf %s "Monitor $MON"
-xrandr --verbose --current | grep ^"$MON" -A5 | tail -n1
+title=$(printf %s "Monitor $MON")
+mesg=$(xrandr --verbose --current | grep ^"$MON" -A5 | tail -n1 | awk '{$1=$1};1')
+
+dunstify -h string:x-dunst-stack-tag:brightness -t 1000 "$title:" "$mesg"
