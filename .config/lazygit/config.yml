@@ -43,12 +43,11 @@ gui:
   showBranchCommitHash: false # show commit hashes alongside branch names
   showBottomLine: true # for hiding the bottom information line (unless it has important information to tell you)
   showPanelJumps: true # for showing the jump-to-panel keybindings as panel subtitles
-  showCommandLog: true
-  commandLogSize: 2
+  showCommandLog: false
+  commandLogSize: 8
   showIcons: false # deprecated: use nerdFontsVersion instead
   nerdFontsVersion: "3" # nerd fonts version to use ("2" or "3"); empty means don't show nerd font icons
   showFileIcons: true # for hiding file icons in the file views
-  commandLogSize: 8
   splitDiff: 'auto' # one of 'auto' | 'always'
   skipRewordInEditorWarning: false # for skipping the confirmation before launching the reword editor
   border: 'rounded' # one of 'single' | 'double' | 'rounded' | 'hidden'
