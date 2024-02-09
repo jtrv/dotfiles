@@ -418,6 +418,14 @@ define-command pcsv -docstring "
   }
 }
 
+define-command one-off -docstring "
+  one-off [<commands>]: one-off shell utility
+  execute one-off commands with the shell
+" -shell-completion -params .. %{
+  nop %sh{ $@ }
+}
+alias global sh one-off
+
 define-command ptsv -docstring "
   pcsv [<files>]: tsv viewing utility
   Print the files (or buffile) using bat and columns
