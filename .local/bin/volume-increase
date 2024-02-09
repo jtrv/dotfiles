@@ -10,4 +10,4 @@ fi
 
 DEFAULT_SINK=$(pactl get-default-sink)
 VOLUME_LEVEL=$(pactl get-sink-volume "$DEFAULT_SINK" | cut -d ' ' -f 6)
-notify-send -t 200 "Volume + $VOLUME_LEVEL"
+dunstify -h string:x-dunst-stack-tag:volume -t 1000 "Volume + $VOLUME_LEVEL"
