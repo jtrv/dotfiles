@@ -388,8 +388,8 @@ settings_section = "texlab"
 
 [language_server.texlab.settings.texlab]
 build.onSave = true
-build.executable = "pdflatex"
-build.args = ["%f"]
+build.executable = "latexmk"
+build.args = ["-pdf", "-interaction=nonstopmode", "-synctex=1", "%f"]
 # See https://github.com/latex-lsp/texlab/blob/master/docs/options.md
 #
 # Preview configuration for zathura with SyncTeX search.
@@ -412,6 +412,7 @@ forwardSearch.args = [
         '
     """,
 ]
+chktex.onOpenAndSave = true
 chktex.onEdit = true
 
 [language_server.typescript-language-server]
