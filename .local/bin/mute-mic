@@ -12,4 +12,4 @@ else
 	status="Live"
 fi
 
-notify-send -t 2000 "Microphone $status"
+dunstify -h string:x-dunst-stack-tag:mic-mute -t 2000 "Microphone $status"
