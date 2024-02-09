@@ -12,4 +12,4 @@ if [ "$MUTE_VALUE" = "yes" ]; then
 	MUTE_STATUS="Off"
 fi
 
-notify-send -t 2500 "Mute Toggled $MUTE_STATUS"
+dunstify -h string:x-dunst-stack-tag:volume -t 2500 "Mute Toggled $MUTE_STATUS"
