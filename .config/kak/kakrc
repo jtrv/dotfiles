@@ -124,7 +124,10 @@ cork kak-ansi https://github.com/eraserhd/kak-ansi
 cork kakoune-text-objects https://github.com/Delapouite/kakoune-text-objects
 
 # display text with ansi color-codes inside a fifo
-cork kakpipe https://github.com/eburghar/kakpipe %{ require-module kakpipe }
+cork kakpipe https://github.com/jtrv/kakpipe %{
+  require-module kakpipe 
+  complete-command kakpipe shell
+}
 
 # starship for kakoune modeline
 cork kakship https://github.com/eburghar/kakship %{ kakship-enable }
