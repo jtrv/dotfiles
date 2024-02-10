@@ -1,2 +1,5 @@
 #!/bin/sh
-doas systemctl kexec
+doas sh -c "
+  kexec -l /boot/vmlinuz-linux-zen --initrd=/boot/initramfs-linux-zen.img --reuse-cmdline
+  systemctl kexec
+"
