@@ -2,5 +2,5 @@
     "device": "alsa_input.usb-FIFINE_Microphones_FIFINE_K780A_Microphone_REV1.0-00.analog-stereo",
     "device-description": "FIFINE K780A Microphone Analog Stereo",
     "device-profile": "analog-input-mic",
-    "preset-name": "fifine_male_voice_noise_reduction"
+    "preset-name": "masc_voice_noise_reduction"
 }
