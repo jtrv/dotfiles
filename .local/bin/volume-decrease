@@ -9,4 +9,4 @@ if [ $# -eq 1 ]; then
 fi
 
 VOLUME_LEVEL=$(pactl get-sink-volume "@DEFAULT_SINK@" | sed -n 's/.* \([0-9]\+\)% .*/\1%/p')
-dunstify -h string:x-dunst-stack-tag:volume -t 1000 "Volume - $VOLUME_LEVEL"
+dunstify -h string:x-dunst-stack-tag:volume -t 1000 "Volume $VOLUME_LEVEL "
