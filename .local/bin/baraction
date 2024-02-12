@@ -50,12 +50,9 @@ mic() {
 #    NETWORK
 ##############################
 net() {
-  wire="$(mullvad status | rg Connected | wc -l)"
   wifi="$(ip a | grep 'enp6s0' | grep -c 'state UP')"
 
-  if [ "$wire" = 1 ]; then
-    echo ""
-  elif [ "$wifi" = 1 ]; then
+  if [ "$wifi" = 1 ]; then
     echo ""
   else
     echo "󰖪"
@@ -92,9 +89,9 @@ vol() {
 ##############################
 #    BAR RENDER
 ##############################
-SLEEP_SEC=1
+SLEEP_SEC=2
 #loops forever outputting a line every SLEEP_SEC secs
 while :; do
-  echo "$(cpu)  $(ram)  󰋊$(ssd)  | $(vol) | $(mic) $(net)  $(blu) |"
+  echo "$(cpu)  $(ram)  󰋊$(ssd)  | $(mic) $(net)  $(blu) |"
   sleep "$SLEEP_SEC"
 done
