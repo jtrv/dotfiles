@@ -123,7 +123,7 @@
 
     ### Text ###
 
-    font = Blex Mono Nerd Font 11
+    font = Blex Mono Nerd Font 10
 
     # The spacing between lines.  If the height is smaller than the
     # font height, it will get raised to the font height.
@@ -456,10 +456,6 @@
 #    appname = "some_volume_notifiers"
 #    set_stack_tag = "volume"
 # 
-
-[tidal-hifi]
-    summary = "tidal-hifi"
-    skip_display = yes
 
 [volume_changes]
     summary = "Volume *"
