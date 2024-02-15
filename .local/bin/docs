@@ -2,17 +2,23 @@
 #
 # doc <docset> <query> : utility for searching documentation
 #
-# req: dedoc, fzf, moar
+# req: dedoc, fzf, kak
 
 set -e
 
-doc_page=$(
+cols=$(tput cols)
+bufcols=$(echo "$cols - 7" | bc)
+
+doc=$(
 	dedoc ss -i "$1" "$2" |
-		awk 'NR > 2 {print $2}' |
-		fzf --preview "dedoc -c open -c '$COLUMNS' '$1' {}"
+		awk 'NR > 2' |
+		fzf --reverse --preview "\
+			echo {} |
+			awk '{print \$1}' |
+			xargs dedoc -c ss -i '$1' '$2' -o
+		"
 )
 
-PAGER_COLS=$(echo "$COLUMNS - 7" | bc)
+doc_num=$(echo "$doc" | awk '{print $1}')
 
-dedoc -c open -c "$PAGER_COLS" "$1" "$doc_page" |
-	$PAGER
+kak -e "kakpipe -- dedoc -c ss -c '$bufcols' -i '$1' '$2' -o '$doc_num' "
