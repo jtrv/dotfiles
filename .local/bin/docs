@@ -1,0 +1,16 @@
+#!/bin/sh
+#
+# doc <docset> <query> : utility for searching documentation
+#
+# req: dedoc, fzf, moar
+
+set -e
+
+doc_page=$(
+	dedoc ss -i "$1" "$2" |
+		awk 'NR > 2 {print $2}' |
+		fzf --preview "dedoc -c open -c '$COLUMNS' '$1' {}"
+)
+
+dedoc -c open -c "$COLUMNS" "$1" "$doc_page" |
+	moar
