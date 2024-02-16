@@ -44,6 +44,7 @@ declare-user-mode dev
   map global dev d -docstring "diagnostic"   %{: lsp-diagnostics <ret>}
   map global dev f -docstring "format"       %{: format <ret>}
   map global dev F -docstring "format sel"   %{: format-selections <ret>}
+  map global dev i -docstring "format sel"   %{: dedoc <ret>}
   map global dev n -docstring "next lint"    %{: lint-next-message <ret>}
   map global dev p -docstring "prev lint"    %{: lint-previous-message <ret>}
   map global dev l -docstring "lint"         %{: lint <ret>}
@@ -197,6 +198,35 @@ define-command comment -docstring "(Un)Comment lines" %{
     execute-keys _
     comment-block
   } catch comment-line
+}
+
+define-command dedoc -docstring "
+  dedoc <docset> <args> : search for an api within a dedoc docset
+  " -params 0.. %{
+  evaluate-commands %sh{
+    if [ $# -eq 0 ]; then
+      echo '
+        prompt -shell-script-candidates %{
+          rg -No "\p{L}+\w+" "$kak_buffile" \
+            | sort -u \
+            | sed "s/^/$kak_opt_filetype /"
+        } \
+        -init "%opt{filetype} " \
+        "dedoc: " %{
+          eval %sh{
+            echo $kak_text |
+              xargs echo "kakpipe -- dedoc -c ss -i -o 1 -c %val{window_width}"
+          }
+        }
+      '
+    else
+      echo "kakpipe -- dedoc -c ss -i -o 1 -c %val{window_width} $@"
+    fi
+  }
+} -shell-script-candidates %{
+  rg -No '\p{L}+\w+' "$kak_buffile" \
+    | sort -u \
+    | sed "s/^/$kak_opt_filetype /"
 }
 
 define-command delta -docstring "
@@ -788,15 +818,15 @@ cork ui https://github.com/kkga/ui.kak %{
   }
   map global ui k -docstring "toggle kak-lsp"   %{: ui-lsp-toggle <ret>}
 
-	declare-option -hidden bool colorcol_enabled false
+  declare-option -hidden bool colorcol_enabled false
   define-command ui-colorcol-enable %{
     evaluate-commands %sh{ $kak_opt_colorcol_enabled && echo "fail %{colorcol already enabled}" }
     colorcol-enable; colorcol-refresh-continuous;
-	  set-option buffer colorcol_enabled true
+    set-option buffer colorcol_enabled true
   }
   define-command ui-colorcol-disable %{
     colorcol-disable
-	  set-option buffer colorcol_enabled false
+    set-option buffer colorcol_enabled false
   }
   define-command ui-colorcol-toggle %{
     try ui-colorcol-enable catch ui-colorcol-disable
