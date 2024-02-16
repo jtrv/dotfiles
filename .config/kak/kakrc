@@ -44,6 +44,7 @@ declare-user-mode dev
   map global dev d -docstring "diagnostic"   %{: lsp-diagnostics <ret>}
   map global dev f -docstring "format"       %{: format <ret>}
   map global dev F -docstring "format sel"   %{: format-selections <ret>}
+  map global dev i -docstring "format sel"   %{: dedoc <ret>}
   map global dev n -docstring "next lint"    %{: lint-next-message <ret>}
   map global dev p -docstring "prev lint"    %{: lint-previous-message <ret>}
   map global dev l -docstring "lint"         %{: lint <ret>}
@@ -199,6 +200,35 @@ define-command comment -docstring "(Un)Comment lines" %{
   } catch comment-line
 }
 
+define-command dedoc -docstring "
+  dedoc <docset> <args> : search for an api within a dedoc docset
+  " -params 0.. %{
+  evaluate-commands %sh{
+    if [ $# -eq 0 ]; then
+      cat <<'EOF'
+        prompt -shell-script-candidates %{
+          rg -No "\p{L}+\w+" "$kak_buffile" \
+            | sort -u \
+            | sed "s/^/$kak_opt_filetype /"
+        } \
+        -init "%opt{filetype} " \
+        "dedoc: " %{
+          eval %sh{
+            echo $kak_text |
+              xargs echo "kakpipe -- dedoc -c ss -i -o 1 -c %val{window_width}"
+          }
+        }
+EOF
+    else
+      echo "kakpipe -- dedoc -c ss -i -o 1 -c %val{window_width} $@"
+    fi
+  }
+} -shell-script-candidates %{
+  rg -No '\p{L}+\w+' "$kak_buffile" \
+    | sort -u \
+    | sed "s/^/$kak_opt_filetype /"
+}
+
 define-command delta -docstring "
   delta [<arguments>]: delta utility wrapper
   Launch delta with the given arguments inside kakoune
@@ -240,7 +270,7 @@ define-command diff-buffers -docstring "
   evaluate-commands %sh{
     file1=$(mktemp)
     file2=$(mktemp)
-    echo "
+    cat <<'EOF'
       evaluate-commands -buffer '$1' write -force $file1
       evaluate-commands -buffer '$2' write -force $file2
       edit! -scratch *diff-buffers*
@@ -250,7 +280,7 @@ define-command diff-buffers -docstring "
         sd -n 1 -- ''\+{3} /tmp.*?$'' ''+++ $2'';
         rm $file1 $file2'
       execute-keys !<ret>gg
-    "
+EOF
   }
 }
 
@@ -548,7 +578,7 @@ define-command zeal -docstring "
 " -params 0.. %{
   evaluate-commands %sh{
     if [ $# -eq 0 ]; then
-      echo '
+      cat <<'EOF'
         prompt -shell-script-candidates %{
           rg -No "\p{L}+\w+" "$kak_buffile" \
             | huniq \
@@ -556,7 +586,7 @@ define-command zeal -docstring "
         } \
         -init "%opt{filetype}:" \
         zeal %{ terminal devour zeal %val{text} }
-      '
+EOF
     else
       echo "terminal devour zeal $*"
     fi
