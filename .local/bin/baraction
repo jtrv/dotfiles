@@ -82,12 +82,9 @@ mic() {
 }
 
 net() {
-	wire=$(mullvad status | grep -c 'Connected')
 	wifi=$(ip a | grep 'wlan0' | grep -c 'UP')
 
-	if [ "$wire" -gt 0 ]; then
-		printf ""
-	elif [ "$wifi" -gt 0 ]; then
+	if [ "$wifi" -gt 0 ]; then
 		printf ""
 	else
 		printf "󰖪"
@@ -107,6 +104,6 @@ blu() {
 
 SLEEP_SEC=2
 while :; do
-	echo "$(cpu) $(ram) $(ssd) $(bat) $(vol) $(mic) $(blu) $(net) "
+	echo "$(cpu) $(ram) $(ssd) $(bat) $(mic) $(blu) $(net) "
 	sleep $SLEEP_SEC
 done
