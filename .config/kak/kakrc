@@ -689,6 +689,8 @@ map global normal <#> -docstring "comment"   %{: comment <ret>}
 map global normal <c-n> -docstring "new client"     %{: new <ret>}
 map global normal +     -docstring "new popup"      %{: popup fish <ret>}
 
+map global normal <c-p> -docstring "file-picker"    %{: file-picker <ret>}
+
 # external programs
 map global normal <c-h> -docstring "lf"        %{: popup -- fish -c 'lf' <ret>}
 map global normal <c-v> -docstring "lazygit"   %{: popup -- fish -c 'lazygit' <ret>}
