@@ -1,4 +1,6 @@
-set-option window formatcmd "dprint fmt --stdin=format.tsx --config=$XDG_CONFIG_HOME/dprint/dprint.json"
+set-option window formatcmd "biome format --stdin-file-path=index.tsx"
+
+set-option window lintcmd "biome lint --log-kind=compact --stdin-file-path=index.tsx"
 
 define-command emmet -override %{ execute-keys  "giGl| emmet <ret>" }
 
