@@ -31,7 +31,7 @@ private-opt tidal-hifi
 
 ignore dbus-user none
 dbus-user filter
-dbus-user.own org.mpris.MediaPlayer2.tidal-hifi
+dbus-user.own org.mpris.MediaPlayer2.*
 dbus-user.talk org.freedesktop.Notifications
 
 join-or-start tidal-hifi
