@@ -62,7 +62,7 @@ set -gx MANPAGER                 "moar"
 set -gx MOZ_X11_EGL              1
 set -gx OPENAI_API_KEY           (secli get openai_api_key)
 set -gx OPENAI_API_BASE          "https://api.openai.com/v1"
-set -gx PAGER                    "moar"
+set -gx PAGER                    "kak -e 'ansi-enable'"
 set -gx PATH                     "$BUN_INSTALL/bin" $PATH
 set -gx SCCACHE_DIRECT           "true"
 set -gx QT_STYLE_OVERRIDE        "kvantum"
