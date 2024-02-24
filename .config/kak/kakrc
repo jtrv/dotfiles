@@ -2,10 +2,12 @@
 # Author: jtrv
 
 evaluate-commands %sh{
-  cork init
   skyspell-kak init
   colorcol
 }
+
+source "%val{config}/bundle/kak-bundle/rc/kak-bundle.kak"
+bundle-noload kak-bundle https://github.com/jdugan6240/kak-bundle
 
 ################### DISPLAY ###################
 
@@ -15,28 +17,39 @@ set-option global ui_options terminal_assistant=none
 set-option global scrolloff 1,3
 
 # toggle relative line numbers with insert mode
-cork number-toggle https://github.com/evanrelf/number-toggle.kak %{
+bundle number-toggle.kak https://github.com/jtrv/number-toggle.kak %{
   require-module "number-toggle"
   set-option global number_toggle_params -hlcursor -cursor-separator '┼'
 }
 
 # rainbow delimiters + current scope
-cork kak-rainbower https://github.com/jtrv/kak-rainbower %{
+bundle kak-rainbower https://github.com/jtrv/kak-rainbower %{
   hook global WinCreate .* %{ rainbow-enable-window }
 }
+bundle-install-hook kak-rainbower %{ g++ rc/rainbower.cpp -O2 -o rc/rainbower }
 
 hook -once global WinSetOption filetype=(awk|bash|bibtex|cmake|cpp|css|scss|diff|fish|git-commit|go|haskell|html|java|javascript|json|jsx|julia|latex|make|markdown|python|ruby|rust|scheme|toml|tsx|typescript|verilog|xml|yaml) %{
   evaluate-commands %sh{ kak-tree-sitter -dks --session "$kak_session" }
 }
 
+bundle popup.kak https://github.com/enricozb/popup.kak
+bundle-install-hook popup.kak %{
+  cargo install --path .
+  cargo clean
+}
+
 ############### FORMAT/LINT ###############
 
 # LSP Magic
-cork kak-lsp https://github.com/kak-lsp/kak-lsp %{
+bundle kak-lsp https://github.com/kak-lsp/kak-lsp %{
   set global lsp_diagnostic_line_error_sign '║'
   set global lsp_diagnostic_line_warning_sign '┊'
   set global lsp_hover_max_lines 40
   hook global KakEnd .* lsp-exit
+}
+bundle-install-hook kak-lsp %{
+  cargo install --path .
+  cargo clean
 }
 
 # lint/format etc mode
@@ -44,16 +57,14 @@ declare-user-mode dev
   map global dev d -docstring "diagnostic"   %{: lsp-diagnostics <ret>}
   map global dev f -docstring "format"       %{: format <ret>}
   map global dev F -docstring "format sel"   %{: format-selections <ret>}
-  map global dev i -docstring "doc search"   %{: docs <ret>}
   map global dev n -docstring "next lint"    %{: lint-next-message <ret>}
   map global dev p -docstring "prev lint"    %{: lint-previous-message <ret>}
   map global dev l -docstring "lint"         %{: lint <ret>}
   map global dev L -docstring "lint-buffer"  %{: buffer *lint-output* <ret>}
   map global dev s -docstring "set filetype" %{: set-filetype <ret>}
 
-cork indent https://github.com/kirusfg/indent.kak %{
+bundle indent.kak https://github.com/kirusfg/indent.kak %{
   set-indent global 2 false
-  enable-detect-indent
 }
 
 # contextual scripts
@@ -83,20 +94,28 @@ set-option global grepcmd 'rg --smart-case --vimgrep'
 hook global BufCreate '\*scratch(-\d+)?\*' %{ execute-keys -draft '%<a-d>' }
 
 # only color active window cursor
-cork active-window https://github.com/greenfork/active-window.kak %{
+bundle active-window.kak https://github.com/greenfork/active-window.kak %{
   set-face global InactiveCursor default,rgba:5d5d5dFF
 }
 
-cork auto-pairs https://github.com/alexherbo2/auto-pairs.kak %{ enable-auto-pairs }
+bundle auto-pairs.kak https://github.com/alexherbo2/auto-pairs.kak %{ enable-auto-pairs }
 
-cork grep-expand https://github.com/jtrv/grep-expand.kak
+bundle grep-expand.kak https://github.com/jtrv/grep-expand.kak
 
 # clipboard integration
-cork kakboard https://github.com/lePerdu/kakboard %{ hook global WinCreate .* %{ kakboard-enable } }
+# see https://discuss.kakoune.com/t/clipboard-integration-using-osc-52/1002/7
+hook global NormalKey y|d|c %{
+    nop %sh{
+        encoded=$(printf %s "$kak_main_reg_dquote" | base64 | tr -d '\n')
+        printf "\e]52;;%s\e\\" "$encoded" >"/proc/$kak_client_pid/fd/0"
+    }
+}
+hook global FocusIn .* %{ reg dquote %sh{ xclip -o clipboard } }
+hook global KakBegin .* %{ reg dquote %sh{ xclip -o clipboard } }
 
-cork kakoune-auto-percent https://github.com/delapouite/kakoune-auto-percent
+bundle kakoune-auto-percent https://github.com/delapouite/kakoune-auto-percent
 
-cork kakoune-state-save https://gitlab.com/Screwtapello/kakoune-state-save.git %{
+bundle kakoune-state-save https://gitlab.com/Screwtapello/kakoune-state-save.git %{
   hook global KakBegin .* %{
     state-save-reg-load colon
     state-save-reg-load pipe
@@ -109,32 +128,38 @@ cork kakoune-state-save https://gitlab.com/Screwtapello/kakoune-state-save.git %
   }
 }
 
-cork kak-live-grep https://git.sr.ht/~raiguard/kak-live-grep %{
+bundle kak-live-grep https://git.sr.ht/~raiguard/kak-live-grep %{
   set-face global LiveGrepMatch +u
 }
 
-cork sudo-write https://github.com/jtrv/sudo-write.kak %{
+bundle sudo-write.kak https://github.com/jtrv/sudo-write.kak %{
   alias global sw 'sudo-write'
   alias global swq 'sudo-write-quit'
 }
 
 # enable ansi-escapes
-cork kak-ansi https://github.com/eraserhd/kak-ansi
+bundle kak-ansi https://github.com/eraserhd/kak-ansi
+bundle-install-hook kak-ansi %{ make }
 
 # better object selection
-cork kakoune-text-objects https://github.com/Delapouite/kakoune-text-objects
+bundle kakoune-text-objects https://github.com/Delapouite/kakoune-text-objects
 
 # display text with ansi color-codes inside a fifo
-cork kakpipe https://github.com/jtrv/kakpipe %{
+bundle kakpipe https://github.com/jtrv/kakpipe %{
   require-module kakpipe 
   complete-command kakpipe shell
 }
+bundle-install-hook kakpipe %{
+  cargo install --path .
+  cargo clean
+}
 
 # starship for kakoune modeline
-cork kakship https://github.com/eburghar/kakship %{ kakship-enable }
-
-# popups with tmux
-cork popup https://github.com/enricozb/popup.kak
+bundle kakship https://github.com/eburghar/kakship %{ kakship-enable }
+bundle-install-hook kakship %{
+  cargo install --path .
+  cargo clean
+}
 
 ###################### COMMANDS ######################
 define-command buffer-picker -docstring "
@@ -700,7 +725,7 @@ map global normal <c-v> -docstring "lazygit"   %{: popup -- fish -c 'lazygit' <r
 map global user <space> : -docstring "prompt"
 
 # navigate buffers
-cork kakoune-buffers https://github.com/delapouite/kakoune-buffers %{
+bundle kakoune-buffers https://github.com/delapouite/kakoune-buffers %{
   hook global WinDisplay .* info-buffers
     map global normal b -docstring "buffers" %{: enter-buffers-mode <ret>}
     alias global bd  delete-buffer
@@ -711,12 +736,11 @@ cork kakoune-buffers https://github.com/delapouite/kakoune-buffers %{
     alias global bo! buffer-only-force
 }
 
-cork kakoune-buffer-manager https://github.com/theowenyoung/kakoune-buffer-manager %{
-  map global normal <a-B> -docstring "buffer editor"   %{: buffer-manager <ret>}
-  map global buffers e    -docstring "buffer editor"   %{: buffer-manager <ret>}
+bundle kakoune-buffer-manager https://github.com/theowenyoung/kakoune-buffer-manager %{
+  map global buffers e -docstring "buffer editor"   %{: buffer-manager <ret>}
 }
 
-cork kakoune-cd https://github.com/delapouite/kakoune-cd %{
+bundle kakoune-cd https://github.com/delapouite/kakoune-cd %{
   map global user c -docstring "cd" %{: enter-user-mode cd <ret>}
   alias global cdb change-directory-current-buffer
   alias global cdr change-directory-project-root
@@ -741,7 +765,7 @@ declare-user-mode case
 
 map global user d -docstring "dev" %{: enter-user-mode dev <ret>}
 
-cork kakoune-focus https://github.com/caksoylar/kakoune-focus %{
+bundle kakoune-focus https://github.com/caksoylar/kakoune-focus %{
   map global user f -docstring "focus" %{: focus-toggle <ret>}
 }
 
@@ -754,15 +778,14 @@ declare-user-mode grep
 
 map global user h -docstring "hey" %{: hey-buffer <ret>}
 
-map global user k -docstring "klip off" %{: kakboard-disable <ret>}
-map global user K -docstring "klip on" %{: kakboard-enable <ret>}
+map global user i -docstring "docs" %{: docs <ret>}
 
 map global user l -docstring "lsp" %{: enter-user-mode lsp <ret>}
   map global lsp <minus> -docstring "disable"   %{: lsp-disable-window <ret>}
   map global lsp <plus>  -docstring "enable"    %{: lsp-enable-window <ret>}
 
 # edit/extend/trim selections one by one
-cork kakoune-phantom-selection https://github.com/occivink/kakoune-phantom-selection %{
+bundle kakoune-phantom-selection https://github.com/occivink/kakoune-phantom-selection %{
   declare-user-mode phantom
   map global user p -docstring "phantom" %{: enter-user-mode phantom <ret>}
   map global phantom a -docstring "add"        %{: phantom-selection-add-selection <ret>}
@@ -772,7 +795,7 @@ cork kakoune-phantom-selection https://github.com/occivink/kakoune-phantom-selec
 }
 
 # select/edit surrounding chars and tags
-cork kakoune-surround https://github.com/h-youhei/kakoune-surround %{
+bundle kakoune-surround https://github.com/h-youhei/kakoune-surround %{
   declare-user-mode surround
   map global normal <'> -docstring "surround" %{: enter-user-mode surround <ret>}
   map global surround d -docstring "delete"              %{: delete-surround <ret>}
@@ -795,7 +818,7 @@ declare-user-mode spell
   map global spell p -docstring "previous"   %{: skyspell-previous <ret>}
   map global spell r -docstring "replace"    %{: skyspell-replace <ret>}
 
-cork ui https://github.com/kkga/ui.kak %{
+bundle ui.kak https://github.com/kkga/ui.kak %{
   map global user u -docstring "ui" %{: enter-user-mode ui <ret>}
   set-option global ui_wrap_flags -width 100 -word -indent -marker ~~
   hook global WinCreate .* %{
@@ -804,6 +827,11 @@ cork ui https://github.com/kkga/ui.kak %{
     ui-todos-enable
     ui-trailing-spaces-enable
   }
+
+  define-command -override ui-line-numbers-toggle -docstring 'toggle line numbers' %{
+	  toggle-number-toggle
+  }
+
   define-command ui-lsp-disable -override %{
     set-option window lsp_auto_highlight_references false
     set-option window lsp_hover_anchor false
