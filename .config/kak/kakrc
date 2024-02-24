@@ -38,9 +38,49 @@ bundle-install-hook popup.kak %{
   cargo clean
 }
 
-############### FORMAT/LINT ###############
+###################### UTILITY ######################
 
-# LSP Magic
+set-option global grepcmd 'rg --smart-case --vimgrep'
+
+# empty scratch buffer(s)
+hook global BufCreate '\*scratch(-\d+)?\*' %{ execute-keys -draft '%<a-d>' }
+
+# clipboard integration
+# see https://discuss.kakoune.com/t/clipboard-integration-using-osc-52/1002/7
+define-command push-clip -docstring "
+  push kakoune's "" register to external clipboard
+" %{ nop %sh{
+  encoded=$(printf %s "$kak_main_reg_dquote" | base64 | tr -d '\n')
+  printf "\e]52;;%s\e\\" "$encoded" >"/proc/$kak_client_pid/fd/0"
+}}
+
+define-command pull-clip -docstring "
+  pull external clipboard into kakoune's "" register
+" %{ reg dquote %sh{ xclip -o clipboard } }
+
+hook global NormalKey y|d|c %{ push-clip }
+hook global KakBegin .*     %{ pull-clip }
+hook global FocusIn .*      %{ pull-clip }
+
+bundle active-window.kak https://github.com/greenfork/active-window.kak %{
+  set-face global InactiveCursor default,rgba:5d5d5dFF
+}
+
+bundle auto-pairs.kak https://github.com/alexherbo2/auto-pairs.kak %{ enable-auto-pairs }
+
+bundle grep-expand.kak https://github.com/jtrv/grep-expand.kak
+
+bundle indent.kak https://github.com/kirusfg/indent.kak %{
+  set-indent global 2 false
+}
+
+bundle kak-ansi https://github.com/eraserhd/kak-ansi
+bundle-install-hook kak-ansi %{ make }
+
+bundle kak-live-grep https://git.sr.ht/~raiguard/kak-live-grep %{
+  set-face global LiveGrepMatch +u
+}
+
 bundle kak-lsp https://github.com/kak-lsp/kak-lsp %{
   set global lsp_diagnostic_line_error_sign '║'
   set global lsp_diagnostic_line_warning_sign '┊'
@@ -52,68 +92,9 @@ bundle-install-hook kak-lsp %{
   cargo clean
 }
 
-# lint/format etc mode
-declare-user-mode dev
-  map global dev d -docstring "diagnostic"   %{: lsp-diagnostics <ret>}
-  map global dev f -docstring "format"       %{: format <ret>}
-  map global dev F -docstring "format sel"   %{: format-selections <ret>}
-  map global dev n -docstring "next lint"    %{: lint-next-message <ret>}
-  map global dev p -docstring "prev lint"    %{: lint-previous-message <ret>}
-  map global dev l -docstring "lint"         %{: lint <ret>}
-  map global dev L -docstring "lint-buffer"  %{: buffer *lint-output* <ret>}
-  map global dev s -docstring "set filetype" %{: set-filetype <ret>}
-
-bundle indent.kak https://github.com/kirusfg/indent.kak %{
-  set-indent global 2 false
-}
-
-# contextual scripts
-hook global WinSetOption filetype=git-commit           %{ source "~/.config/kak/contexts/commit.kak" }
-hook global WinSetOption filetype=(css|scss)           %{ source "~/.config/kak/contexts/css.kak" }
-hook global WinSetOption filetype=diff                 %{ source "~/.config/kak/contexts/diff.kak" }
-hook global WinSetOption filetype=fish                 %{ source "~/.config/kak/contexts/fish.kak" }
-hook global WinSetOption filetype=go                   %{ source "~/.config/kak/contexts/go.kak" }
-hook global WinSetOption filetype=(grep|grep-buffer)   %{ source "~/.config/kak/contexts/grep.kak" }
-hook global WinSetOption filetype=html                 %{ source "~/.config/kak/contexts/html.kak" }
-hook global WinSetOption filetype=javascript           %{ source "~/.config/kak/contexts/javascript.kak" }
-hook global WinSetOption filetype=json                 %{ source "~/.config/kak/contexts/json.kak" }
-hook global WinSetOption filetype=latex                %{ source "~/.config/kak/contexts/latex.kak" }
-hook global WinSetOption filetype=markdown             %{ source "~/.config/kak/contexts/markdown.kak" }
-hook global WinSetOption filetype=python               %{ source "~/.config/kak/contexts/python.kak" }
-hook global WinSetOption filetype=rust                 %{ source "~/.config/kak/contexts/rust.kak" }
-hook global WinSetOption filetype=sh                   %{ source "~/.config/kak/contexts/sh.kak" }
-hook global WinSetOption filetype=typescript           %{ source "~/.config/kak/contexts/typescript.kak" }
-hook global WinSetOption filetype=toml                 %{ source "~/.config/kak/contexts/toml.kak" }
-hook global WinSetOption filetype=yaml                 %{ source "~/.config/kak/contexts/yaml.kak" }
-
-###################### UTILITY ######################
-
-set-option global grepcmd 'rg --smart-case --vimgrep'
-
-# empty scratch buffer(s)
-hook global BufCreate '\*scratch(-\d+)?\*' %{ execute-keys -draft '%<a-d>' }
-
-# only color active window cursor
-bundle active-window.kak https://github.com/greenfork/active-window.kak %{
-  set-face global InactiveCursor default,rgba:5d5d5dFF
-}
-
-bundle auto-pairs.kak https://github.com/alexherbo2/auto-pairs.kak %{ enable-auto-pairs }
-
-bundle grep-expand.kak https://github.com/jtrv/grep-expand.kak
-
-# clipboard integration
-# see https://discuss.kakoune.com/t/clipboard-integration-using-osc-52/1002/7
-hook global NormalKey y|d|c %{
-    nop %sh{
-        encoded=$(printf %s "$kak_main_reg_dquote" | base64 | tr -d '\n')
-        printf "\e]52;;%s\e\\" "$encoded" >"/proc/$kak_client_pid/fd/0"
-    }
-}
-hook global FocusIn .* %{ reg dquote %sh{ xclip -o clipboard } }
-hook global KakBegin .* %{ reg dquote %sh{ xclip -o clipboard } }
-
 bundle kakoune-auto-percent https://github.com/delapouite/kakoune-auto-percent
+
+bundle kakoune-boost https://github.com/jtrv/kakoune-boost
 
 bundle kakoune-state-save https://gitlab.com/Screwtapello/kakoune-state-save.git %{
   hook global KakBegin .* %{
@@ -128,23 +109,8 @@ bundle kakoune-state-save https://gitlab.com/Screwtapello/kakoune-state-save.git
   }
 }
 
-bundle kak-live-grep https://git.sr.ht/~raiguard/kak-live-grep %{
-  set-face global LiveGrepMatch +u
-}
-
-bundle sudo-write.kak https://github.com/jtrv/sudo-write.kak %{
-  alias global sw 'sudo-write'
-  alias global swq 'sudo-write-quit'
-}
-
-# enable ansi-escapes
-bundle kak-ansi https://github.com/eraserhd/kak-ansi
-bundle-install-hook kak-ansi %{ make }
-
-# better object selection
 bundle kakoune-text-objects https://github.com/Delapouite/kakoune-text-objects
 
-# display text with ansi color-codes inside a fifo
 bundle kakpipe https://github.com/jtrv/kakpipe %{
   require-module kakpipe 
   complete-command kakpipe shell
@@ -154,11 +120,15 @@ bundle-install-hook kakpipe %{
   cargo clean
 }
 
-# starship for kakoune modeline
 bundle kakship https://github.com/eburghar/kakship %{ kakship-enable }
 bundle-install-hook kakship %{
   cargo install --path .
   cargo clean
+}
+
+bundle sudo-write.kak https://github.com/jtrv/sudo-write.kak %{
+  alias global sw 'sudo-write'
+  alias global swq 'sudo-write-quit'
 }
 
 ###################### COMMANDS ######################
@@ -188,35 +158,28 @@ define-command cargo -docstring "
 define-command calc -docstring "
   calc [<arguments>]: calc utility wrapper
   Replace the selection with the result a given expression (X represents current selection)
-" -params 0.. %{
-  evaluate-commands %sh{
-    if [ $# -eq 0 ]; then
-      printf %s\\n
-    "
-        prompt 'expression:' -init 'X' %{
-          execute-keys \"| xargs -I X qalc -t '%val{text}' <ret>\"
-        }
-      "
-    else
-      printf %s\\n "
-        execute-keys \"| xargs -I X qalc -t '$*' <ret>\"
-      "
-    fi
-  }
-}
+" -params 0.. %{ evaluate-commands %sh{
+  if [ $# -eq 0 ]; then
+    printf %s\\n "
+    prompt 'expression:' -init 'X' %{
+      execute-keys \"| xargs -I X qalc -t '%val{text}' <ret>\"
+    }"
+  else
+    printf %s\\n "
+      execute-keys \"| xargs -I X qalc -t '$*' <ret>\""
+  fi
+}}
 
 define-command cat -docstring "
   bat [<files>]: bat utility wrapper
   Print the files (or buffile) using bat and kakpipe
-      " -params 1.. %{
-  evaluate-commands %sh{
-    if [ $# -eq 0 ]; then
-      echo "kakpipe -- bat --style=plain --color=always %val{buffile}"
-    else
-      echo "kakpipe -- bat --style=plain --color=always %arg{@}"
-    fi
-  }
-}
+" -params 1.. %{ evaluate-commands %sh{
+  if [ $# -eq 0 ]; then
+    echo "kakpipe -- bat --style=plain --color=always %val{buffile}"
+  else
+    echo "kakpipe -- bat --style=plain --color=always %arg{@}"
+  fi
+}}
 
 define-command comment -docstring "(Un)Comment lines" %{
   try %{
@@ -227,28 +190,26 @@ define-command comment -docstring "(Un)Comment lines" %{
 
 define-command docs -docstring "
   docs <docset> <args> : search for an api within a dedoc docset
-  " -params 0.. %{
-  evaluate-commands %sh{
-    if [ $# -eq 0 ]; then
-      echo '
-        prompt -shell-script-candidates %{
-          rg -No "\p{L}+\w+" "$kak_buffile" \
-            | sort -u \
-            | sed "s/^/$kak_opt_filetype /"
-        } \
-        -init "%opt{filetype} " \
-        "dedoc: " %{
-          eval %sh{
-            echo $kak_text |
-              xargs echo "kakpipe -- dedoc -c ss -i -o 1 -c %val{window_width}"
-          }
+" -params 0.. %{ evaluate-commands %sh{
+  if [ $# -eq 0 ]; then
+    echo '
+      prompt -shell-script-candidates %{
+        rg -No "\p{L}+\w+" "$kak_buffile" \
+          | sort -u \
+          | sed "s/^/$kak_opt_filetype /"
+      } \
+      -init "%opt{filetype} " \
+      "dedoc: " %{
+        evaluate-commands %sh{
+          echo $kak_text |
+            xargs echo "kakpipe -- dedoc -c ss -i -o 1 -c %val{window_width}"
         }
-      '
-    else
-      echo "kakpipe -- dedoc -c ss -i -o 1 -c %val{window_width} $@"
-    fi
-  }
-} -shell-script-candidates %{
+      }
+    '
+  else
+    echo "kakpipe -- dedoc -c ss -i -o 1 -c %val{window_width} $@"
+  fi
+}} -shell-script-candidates %{
   rg -No '\p{L}+\w+' "$kak_buffile" \
     | sort -u \
     | sed "s/^/$kak_opt_filetype /"
@@ -264,15 +225,13 @@ define-command delta -docstring "
 define-command dic -docstring "
   dic <query>: dic utility wrapper
   Generate dictionary results for the given query inside kakoune
-" -params 0..2 %{
-  evaluate-commands %sh{
-    if [ $# -eq 0 ]; then
-      echo "kakpipe -- dic %val{selection}"
-    else
-      echo "kakpipe -- dic %arg{@}"
-    fi
-  }
-}
+" -params 0..2 %{ evaluate-commands %sh{
+  if [ $# -eq 0 ]; then
+    echo "kakpipe -- dic %val{selection}"
+  else
+    echo "kakpipe -- dic %arg{@}"
+  fi
+}}
 
 define-command diff -docstring "
   diff [<arguments>]: diff utility wrapper
@@ -291,48 +250,43 @@ define-command difft -docstring "
 define-command diff-buffers -docstring "
   diff-buffers <buffer-a> <buffer-b>: diff utility
   Generate a diff buffer between <buffer-a> and <buffer-b>
-" -buffer-completion -override -params 2 %{
-  evaluate-commands %sh{
-    file1=$(mktemp)
-    file2=$(mktemp)
-    cat <<'EOF'
-      evaluate-commands -buffer '$1' write -force $file1
-      evaluate-commands -buffer '$2' write -force $file2
-      edit! -scratch *diff-buffers*
-      set buffer filetype diff
-      set-register | 'diff -u $file1 $file2 | \
-        sd -n 1 -- ''-{3} /tmp.*?$'' ''--- $1'' | \
-        sd -n 1 -- ''\+{3} /tmp.*?$'' ''+++ $2'';
-        rm $file1 $file2'
-      execute-keys !<ret>gg
-EOF
-  }
-}
+" -buffer-completion -override -params 2 %{ evaluate-commands %sh{
+  file1=$(mktemp)
+  file2=$(mktemp)
+  echo "
+    evaluate-commands -buffer '$1' write -force $file1
+    evaluate-commands -buffer '$2' write -force $file2
+    edit! -scratch *diff-buffers*
+    set buffer filetype diff
+    set-register | 'diff -u $file1 $file2 | \
+      sd -n 1 -- ''-{3} /tmp.*?$'' ''--- $1'' | \
+      sd -n 1 -- ''\+{3} /tmp.*?$'' ''+++ $2'';
+      rm $file1 $file2'
+    execute-keys !<ret>gk
+  "
+}}
 
 define-command doc-grep -docstring "
   doc-grep <query>: grep kakoune and plugin docs
-" -params .. %{
-  evaluate-commands %sh{
+" -params .. %{ evaluate-commands %sh{
+  if [ $# -eq 0 ]; then
+    grep_args="%val{selection}"
+  else
+    grep_args="%arg{@}"
+  fi
 
-    if [ $# -eq 0 ]; then
-      grep_args="%val{selection}"
-    else
-      grep_args="%arg{@}"
-    fi
-
-    fd \
-    --absolute-path \
-      --exclude '*changelog*' \
-      --search-path "$(dirname $(dirname $kak_runtime))" \
-      --search-path "$XDG_DATA_HOME/kak/" \
-      --extension=asciidoc |
-        xargs echo "grep $grep_args"
-  }
-}
+  fd \
+  --absolute-path \
+    --exclude '*changelog*' \
+    --search-path "$(dirname $(dirname $kak_runtime))" \
+    --search-path "$XDG_DATA_HOME/kak/" \
+    --extension=asciidoc |
+      xargs echo "grep $grep_args"
+}}
 
 define-command file-picker -docstring "
   file-picker: Opens file picker.
-      " %{
+" %{
   prompt file: -shell-script-candidates 'fd --type=file' %{
     edit %val{text}
   }
@@ -359,32 +313,44 @@ hook global WinDisplay '\*glow\*' %{
   ui-trailing-spaces-disable
 }
 
+define-command grep-write -docstring "
+  grep-write: pipes the current grep-buffer to grug -w and prints the results
+" %{
+  declare-option -hidden str grug_buf
+  evaluate-commands -draft %{
+    evaluate-commands %sh{
+      echo "set-option buffer grug_buf '$(mktemp /tmp/grug_buf.XXX)'"
+    }
+    write -sync -force %opt{grug_buf}
+    evaluate-commands %sh{
+      cat "$kak_opt_grug_buf" | grug -w |
+        xargs -I{} echo "echo -debug 'grug: {}'; echo -markup {Information} 'grug: {}';"
+    }
+  }
+}
+
 define-command grep -override -docstring "
   grep [<arguments>]: grep utility wrapper
   All optional arguments are forwarded to grep utility and kakpipe
   Passing no argument will perform a literal-string grep for the current selection
-" -params .. %{
-  evaluate-commands %sh{
-    if [ $# -eq 0 ]; then
-      echo "kakpipe -w -n grep -- $kak_opt_grepcmd --color=always -F %val{selection}; set-option buffer filetype grep"
-    else
-      echo "kakpipe -w -n grep -- $kak_opt_grepcmd --color=always %arg{@}; set-option buffer filetype grep"
-    fi
-  }
-}
+" -params .. %{ evaluate-commands %sh{
+  if [ $# -eq 0 ]; then
+    echo "kakpipe -w -n grep -- $kak_opt_grepcmd --color=always -F %val{selection}; set-option buffer filetype grep"
+  else
+    echo "kakpipe -w -n grep -- $kak_opt_grepcmd --color=always %arg{@}; set-option buffer filetype grep"
+  fi
+}}
 
 define-command grep-buffers -docstring "
   grep-buffers [<pattern>]: search for a pattern in all buffers
   If <pattern> is not specified, the content of the main selection is used
-" -params .. %{
-  evaluate-commands %sh{
-    if [ $# -eq 0 ]; then
-      echo "grep -F %val{selection} %val{buflist}"
-    else
-      echo "grep %arg{@} %val{buflist}"
-    fi
-  }
-}
+" -params .. %{ evaluate-commands %sh{
+  if [ $# -eq 0 ]; then
+    echo "grep -F %val{selection} %val{buflist}"
+  else
+    echo "grep %arg{@} %val{buflist}"
+  fi
+}}
 
 define-command hey -docstring "
   hey <query>: heygpt utility wrapper
@@ -403,10 +369,10 @@ define-command hey-buffer -docstring "
 }
 define-command hey-buffer-write -docstring "
   send the *hey-prompt* buffer to hey
-" -hidden %[
+" -hidden %{
   buffer *hey-prompt*
   execute-keys '%: hey %val{selection} <ret>'
-]
+}
 hook global BufSetOption filetype=hey-prompt %{
   alias buffer write hey-buffer-write
   alias buffer w hey-buffer-write
@@ -422,36 +388,32 @@ define-command how -docstring "
 define-command kan -docstring "
   kan <query>: man utility wrapper
   Either show a man-page or the --help text for the given query
-" -params 0.. %{
-  evaluate-commands %sh{
-    if [ $# -eq 0 ] && man -w "$kak_selection" > /dev/null; then
-      echo "man \"$kak_selection\""
-    elif [ $# -eq 0 ] && $("$kak_selection" --help > /dev/null || "$kak_selection" -h > /dev/null); then
-      echo "kelp \"$kak_selection\""
-    elif man -w "$*" > /dev/null; then
-      echo "man \"$*\""
-    elif "$*" --help > /dev/null || "$*" -h > /dev/null; then
-      echo "kelp \"$*\""
-    fi
-  }
-}
+" -params 0.. %{ evaluate-commands %sh{
+  if [ $# -eq 0 ] && man -w "$kak_selection" > /dev/null; then
+    echo "man \"$kak_selection\""
+  elif [ $# -eq 0 ] && $("$kak_selection" --help > /dev/null || "$kak_selection" -h > /dev/null); then
+    echo "kelp \"$kak_selection\""
+  elif man -w "$*" > /dev/null; then
+    echo "man \"$*\""
+  elif "$*" --help > /dev/null || "$*" -h > /dev/null; then
+    echo "kelp \"$*\""
+  fi
+}}
 
 define-command kelp -docstring "
   kelp <command>: --help output utility
   Show the --help output for the given command inside kakoune
-" -shell-completion -params 0.. %{
-  evaluate-commands %sh{
-    if [ $# -eq 0 ] && "$kak_selection" --help > /dev/null; then
-      echo "kakpipe -- \"$kak_selection\" --help"
-    elif [ $# -eq 0 ] && "$kak_selection" -h > /dev/null; then
-      echo "kakpipe -- \"$kak_selection\" -h"
-    elif "$*" --help > /dev/null; then
-      echo "kakpipe -- \"$*\" --help"
-    elif "$*" -h > /dev/null; then
-      echo "kakpipe -- \"$*\" -h"
-    fi
-  }
-}
+" -shell-completion -params 0.. %{ evaluate-commands %sh{
+  if [ $# -eq 0 ] && "$kak_selection" --help > /dev/null; then
+    echo "kakpipe -- \"$kak_selection\" --help"
+  elif [ $# -eq 0 ] && "$kak_selection" -h > /dev/null; then
+    echo "kakpipe -- \"$kak_selection\" -h"
+  elif "$*" --help > /dev/null; then
+    echo "kakpipe -- \"$*\" --help"
+  elif "$*" -h > /dev/null; then
+    echo "kakpipe -- \"$*\" -h"
+  fi
+}}
 
 define-command npm -docstring "
   npm [<arguments>]: npm utility wrapper
@@ -463,36 +425,30 @@ define-command npm -docstring "
 define-command pcsv -docstring "
   pcsv [<files>]: csv viewing utility
   Print the files (or buffile) using bat and columns
-" -file-completion -params .. %{
-  evaluate-commands %sh{
-    if [ $# -eq 0 ]; then
-      echo "kakpipe -- pcsv %val{buffile}"
-    else
-      echo "kakpipe -- pcsv %arg{@}"
-    fi
-  }
-}
+" -file-completion -params .. %{ evaluate-commands %sh{
+  if [ $# -eq 0 ]; then
+    echo "kakpipe -- pcsv %val{buffile}"
+  else
+    echo "kakpipe -- pcsv %arg{@}"
+  fi
+}}
 
 define-command one-off -docstring "
   one-off [<commands>]: one-off shell utility
   execute one-off commands with the shell
-" -shell-completion -params .. %{
-  nop %sh{ $@ }
-}
+" -shell-completion -params .. %{ nop %sh{ $@ } }
 alias global sh one-off
 
 define-command ptsv -docstring "
   pcsv [<files>]: tsv viewing utility
   Print the files (or buffile) using bat and columns
-" -file-completion -params .. %{
-  evaluate-commands %sh{
-    if [ $# -eq 0 ]; then
-      echo "kakpipe -- ptsv %val{buffile}"
-    else
-      echo "kakpipe -- ptsv %arg{@}"
-    fi
-  }
-}
+" -file-completion -params .. %{ evaluate-commands %sh{
+  if [ $# -eq 0 ]; then
+    echo "kakpipe -- ptsv %val{buffile}"
+  else
+    echo "kakpipe -- ptsv %arg{@}"
+  fi
+}}
 
 define-command reader-mode -docstring "Enables settings for better reading" %{
   remove-highlighter global/whitespace
@@ -510,15 +466,13 @@ hook global WinDisplay '\*(delta|diff|difft|greeting|help|man \w+|mdn|tldr)\*' %
 define-command rman -docstring "
   rman <query>: rusty-man utility wrapper
   show a rustdoc page for the given module
-" -params 1 %{
-  evaluate-commands %sh{
-    if [ $# -eq 0 ]; then
-      echo "kakpipe -n %val{selection} -- rusty-man --viewer=rich %val{selection}"
-    else
-      echo "kakpipe -n %arg{1} -- rusty-man --viewer=rich %arg{@}"
-    fi
-  }
-}
+" -params 1 %{ evaluate-commands %sh{
+  if [ $# -eq 0 ]; then
+    echo "kakpipe -n %val{selection} -- rusty-man --viewer=rich %val{selection}"
+  else
+    echo "kakpipe -n %arg{1} -- rusty-man --viewer=rich %arg{@}"
+  fi
+}}
 
 define-command save-macro-as -docstring "
   save-macro-as <command-name>: define-command with macro register
@@ -536,37 +490,31 @@ define-command set-filetype -docstring "prompt to set filetype" %{
 
 define-command rnd -docstring "
   rnd: go to a random line
-" %{
-  evaluate-commands %sh{
+" %{ evaluate-commands %sh{
     echo "execute-keys '$(shuf -i 1-$kak_buf_line_count)g'"
-  }
-}
+}}
 
 define-command thes -docstring "
   thes <query>: thesauromatic utility wrapper
   Generate thesaurus results for the given query
-" -params 0..2 %{
-  evaluate-commands %sh{
-    if [ $# -eq 0 ]; then
-      echo "kakpipe -- thesauromatic %val{selection} | col %val{window_width}"
-    else
-      echo "kakpipe -- thesauromatic %arg{@} | col %val{window_width}"
-    fi
-  }
-}
+" -params 0..2 %{ evaluate-commands %sh{
+  if [ $# -eq 0 ]; then
+    echo "kakpipe -- thesauromatic %val{selection} | col %val{window_width}"
+  else
+    echo "kakpipe -- thesauromatic %arg{@} | col %val{window_width}"
+  fi
+}}
 
 define-command tldr -docstring "
   tldr <command>: tldr utility wrapper
   Cheatsheet for the given command
-" -shell-completion -params 0.. %{
-  evaluate-commands %sh{
-    if [ $# -eq 0 ]; then
-      echo "kakpipe -- tldr --color=always %val{selection}"
-    else
-      echo "kakpipe -- tldr --color=always %arg{@}"
-    fi
-  }
-}
+" -shell-completion -params 0.. %{ evaluate-commands %sh{
+  if [ $# -eq 0 ]; then
+    echo "kakpipe -- tldr --color=always %val{selection}"
+  else
+    echo "kakpipe -- tldr --color=always %arg{@}"
+  fi
+}}
 
 define-command view-pdf -docstring "
   view-pdf [<pdf>]: View pdf with zathura.
@@ -600,23 +548,21 @@ define-command watchthis -docstring "
 
 define-command zeal -docstring "
   zeal <docset:api> : search for an api within a zeal docset
-" -params 0.. %{
-  evaluate-commands %sh{
-    if [ $# -eq 0 ]; then
-      cat <<'EOF'
-        prompt -shell-script-candidates %{
-          rg -No "\p{L}+\w+" "$kak_buffile" \
-            | huniq \
-            | sed "s/^/$kak_opt_filetype:/"
-        } \
-        -init "%opt{filetype}:" \
-        zeal %{ terminal devour zeal %val{text} }
-EOF
-    else
-      echo "terminal devour zeal $*"
-    fi
-  }
-} -shell-script-candidates %{
+" -params 0.. %{ evaluate-commands %sh{
+  if [ $# -eq 0 ]; then
+    echo '
+      prompt -shell-script-candidates %{
+        rg -No "\p{L}+\w+" "$kak_buffile" \
+          | sort -u \
+          | sed "s/^/$kak_opt_filetype:/"
+      } \
+      -init "%opt{filetype}:" \
+      zeal %{ terminal devour zeal %val{text} }
+    '
+  else
+    echo "terminal devour zeal $*"
+  fi
+}} -shell-script-candidates %{
   rg -No '\p{L}+\w+' "$kak_buffile" \
     | huniq \
     | sed "s/^/$kak_opt_filetype:/"
@@ -740,7 +686,16 @@ declare-user-mode case
   map global case t  -docstring 'Train-Case'      %{<esc>| caser train <ret>}
   map global case u  -docstring "UPPERCASE"       %{~}
 
-map global user d -docstring "dev" %{: enter-user-mode dev <ret>}
+declare-user-mode dev
+  map global user d -docstring "dev" %{: enter-user-mode dev <ret>}
+  map global dev f -docstring "format"       %{: format <ret>}
+  map global dev F -docstring "format sel"   %{: format-selections <ret>}
+  map global dev n -docstring "next lint"    %{: lint-next-message <ret>}
+  map global dev p -docstring "prev lint"    %{: lint-previous-message <ret>}
+  map global dev l -docstring "lint"         %{: lint <ret>}
+  map global dev L -docstring "lint-buffer"  %{: buffer *lint-output* <ret>}
+  map global dev s -docstring "set filetype" %{: set-filetype <ret>}
+
 
 bundle kakoune-focus https://github.com/caksoylar/kakoune-focus %{
   map global user f -docstring "focus" %{: focus-toggle <ret>}
@@ -806,7 +761,7 @@ bundle ui.kak https://github.com/kkga/ui.kak %{
   }
 
   define-command -override ui-line-numbers-toggle -docstring 'toggle line numbers' %{
-	  toggle-number-toggle
+    toggle-number-toggle
   }
 
   define-command ui-lsp-disable -override %{
@@ -850,3 +805,23 @@ map global user w -docstring "write" %{: write <ret>}
 map global user x -docstring "xargs" %{: xargs <ret>}
 
 map global user z -docstring "zeal" %{: zeal <ret>}
+
+# contextual scripts
+hook global BufSetOption filetype=git-commit           %{ source "~/.config/kak/contexts/commit.kak"      }
+hook global BufSetOption filetype=(css|scss)           %{ source "~/.config/kak/contexts/css.kak"         }
+hook global BufSetOption filetype=diff                 %{ source "~/.config/kak/contexts/diff.kak"        }
+hook global BufSetOption filetype=fish                 %{ source "~/.config/kak/contexts/fish.kak"        }
+hook global BufSetOption filetype=go                   %{ source "~/.config/kak/contexts/go.kak"          }
+hook global BufSetOption filetype=grep                 %{ source "~/.config/kak/contexts/grep.kak"        }
+hook global BufSetOption filetype=grep-expand          %{ source "~/.config/kak/contexts/grep-expand.kak" }
+hook global BufSetOption filetype=html                 %{ source "~/.config/kak/contexts/html.kak"        }
+hook global BufSetOption filetype=javascript           %{ source "~/.config/kak/contexts/javascript.kak"  }
+hook global BufSetOption filetype=json                 %{ source "~/.config/kak/contexts/json.kak"        }
+hook global BufSetOption filetype=latex                %{ source "~/.config/kak/contexts/latex.kak"       }
+hook global BufSetOption filetype=markdown             %{ source "~/.config/kak/contexts/markdown.kak"    }
+hook global BufSetOption filetype=python               %{ source "~/.config/kak/contexts/python.kak"      }
+hook global BufSetOption filetype=rust                 %{ source "~/.config/kak/contexts/rust.kak"        }
+hook global BufSetOption filetype=sh                   %{ source "~/.config/kak/contexts/sh.kak"          }
+hook global BufSetOption filetype=typescript           %{ source "~/.config/kak/contexts/typescript.kak"  }
+hook global BufSetOption filetype=toml                 %{ source "~/.config/kak/contexts/toml.kak"        }
+hook global BufSetOption filetype=yaml                 %{ source "~/.config/kak/contexts/yaml.kak"        }
