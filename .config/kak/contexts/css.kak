@@ -1,6 +1,6 @@
 set-option window formatcmd "prettierd format.scss"
 
-set-option window lintcmd "stylelint_d --config ~/.config/.stylelintrc --stdin --stdin-filename %val{buffile}"
+set-option window lintcmd "stylelint_d --config=~/.config/.stylelintrc --stdin --stdin-filename=format.scss"
 
 define-command emmet -override %{ execute-keys  "giGl| emmet <ret>" }
 
