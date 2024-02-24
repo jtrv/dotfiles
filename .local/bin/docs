@@ -12,5 +12,7 @@ doc_page=$(
 		fzf --preview "dedoc -c open -c '$COLUMNS' '$1' {}"
 )
 
-dedoc -c open -c "$COLUMNS" "$1" "$doc_page" |
-	moar
+PAGER_COLS=$(echo "$COLUMNS - 7" | bc)
+
+dedoc -c open -c "$PAGER_COLS" "$1" "$doc_page" |
+	$PAGER
