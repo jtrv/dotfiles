@@ -17,8 +17,7 @@ set-option global ui_options terminal_assistant=none
 set-option global scrolloff 1,3
 
 # toggle relative line numbers with insert mode
-bundle-customload number-toggle.kak https://github.com/jtrv/number-toggle.kak %{
-  source "%opt{bundle_path}/number-toggle.kak/rc/number-toggle.kak"
+bundle number-toggle.kak https://github.com/jtrv/number-toggle.kak %{
   require-module "number-toggle"
   set-option global number_toggle_params -hlcursor -cursor-separator '┼'
 }
@@ -27,7 +26,7 @@ bundle-customload number-toggle.kak https://github.com/jtrv/number-toggle.kak %{
 bundle kak-rainbower https://github.com/jtrv/kak-rainbower %{
   hook global WinCreate .* %{ rainbow-enable-window }
 }
-bundle-install-hook kak-rainbower %{ g++ rainbower.cpp -O2 -o rainbower }
+bundle-install-hook kak-rainbower %{ g++ rc/rainbower.cpp -O2 -o rc/rainbower }
 
 hook -once global WinSetOption filetype=(awk|bash|bibtex|cmake|cpp|css|scss|diff|fish|git-commit|go|haskell|html|java|javascript|json|jsx|julia|latex|make|markdown|python|ruby|rust|scheme|toml|tsx|typescript|verilog|xml|yaml) %{
   evaluate-commands %sh{ kak-tree-sitter -dks --session "$kak_session" }
