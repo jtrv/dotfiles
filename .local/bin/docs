@@ -21,4 +21,4 @@ doc=$(
 
 doc_num=$(echo "$doc" | awk '{print $1}')
 
-kak -e "kakpipe -- dedoc -c ss -c '$bufcols' -i '$1' '$2' -o '$doc_num' "
+dedoc -c ss -c "$bufcols" -i "$1" "$2" -o "$doc_num" | $PAGER
