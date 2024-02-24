@@ -21,7 +21,6 @@ kondo --completions=fish
 onefetch --generate=fish
 procs --gen-completion-out=fish
 rg --generate=complete-fish
-rye self completion -s=fish
 trip --generate=fish
 watchexec --completions=fish
 EOF
