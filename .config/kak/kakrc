@@ -44,7 +44,7 @@ declare-user-mode dev
   map global dev d -docstring "diagnostic"   %{: lsp-diagnostics <ret>}
   map global dev f -docstring "format"       %{: format <ret>}
   map global dev F -docstring "format sel"   %{: format-selections <ret>}
-  map global dev i -docstring "format sel"   %{: dedoc <ret>}
+  map global dev i -docstring "doc search"   %{: docs <ret>}
   map global dev n -docstring "next lint"    %{: lint-next-message <ret>}
   map global dev p -docstring "prev lint"    %{: lint-previous-message <ret>}
   map global dev l -docstring "lint"         %{: lint <ret>}
@@ -200,8 +200,8 @@ define-command comment -docstring "(Un)Comment lines" %{
   } catch comment-line
 }
 
-define-command dedoc -docstring "
-  dedoc <docset> <args> : search for an api within a dedoc docset
+define-command docs -docstring "
+  docs <docset> <args> : search for an api within a dedoc docset
   " -params 0.. %{
   evaluate-commands %sh{
     if [ $# -eq 0 ]; then
