@@ -10,6 +10,7 @@ cargo-bloat -> https://github.com/rust-lang/crates.io-index
 cargo-cache -> https://github.com/rust-lang/crates.io-index
 cargo-fix -> https://github.com/rust-lang/crates.io-index
 cargo-geiger -> https://github.com/rust-lang/crates.io-index
+cargo-msrv -> https://github.com/rust-lang/crates.io-index
 cargo-nextest -> https://github.com/rust-lang/crates.io-index
 cargo-spellcheck -> https://github.com/rust-lang/crates.io-index
 cargo-trend -> https://github.com/rust-lang/crates.io-index
@@ -20,9 +21,9 @@ choose -> https://github.com/rust-lang/crates.io-index
 clipcatctl -> https://github.com/xrelkd/clipcat
 clipcatd -> https://github.com/xrelkd/clipcat
 clipcat-menu -> https://github.com/xrelkd/clipcat
-complgen -> https://github.com/adaszko/complgen
 cpz -> https://github.com/rust-lang/crates.io-index
 crabz -> https://github.com/rust-lang/crates.io-index
+dedoc -> https://github.com/rust-lang/crates.io-index
 difftastic -> https://github.com/rust-lang/crates.io-index
 dog -> https://github.com/ogham/dog
 dprint -> https://github.com/rust-lang/crates.io-index
@@ -51,13 +52,15 @@ jaq -> https://github.com/rust-lang/crates.io-index
 jless -> https://github.com/rust-lang/crates.io-index
 jql -> https://github.com/rust-lang/crates.io-index
 just -> https://github.com/rust-lang/crates.io-index
-kak-lsp -> /home/sugimoto/.local/share/kak/cork/plugins/kak-lsp/repo
+kak-lsp -> /home/sugimoto/.config/kak/bundle/kak-lsp
 kakpipe -> /home/sugimoto/.local/share/kak/cork/plugins/kakpipe/repo
-kak-popup -> https://github.com/rust-lang/crates.io-index
+kak-popup -> /home/sugimoto/.config/kak/bundle/popup.kak
 kakship -> /home/sugimoto/.local/share/kak/cork/plugins/kakship/repo
+kak-tree-sitter -> https://github.com/rust-lang/crates.io-index
 kanata -> https://github.com/rust-lang/crates.io-index
 kmon -> https://github.com/rust-lang/crates.io-index
 kondo -> https://github.com/rust-lang/crates.io-index
+ktsctl -> https://github.com/rust-lang/crates.io-index
 license-generator -> https://github.com/rust-lang/crates.io-index
 lychee -> https://github.com/rust-lang/crates.io-index
 macchina -> https://github.com/rust-lang/crates.io-index
@@ -108,6 +111,6 @@ watchexec-cli -> https://github.com/rust-lang/crates.io-index
 wthrr -> https://github.com/rust-lang/crates.io-index
 xh -> https://github.com/rust-lang/crates.io-index
 xtask -> https://github.com/Anomalocaridid/handlr-regex
-yazi-fm -> https://github.com/sxyazi/yazi.git
+yazi-fm -> https://github.com/rust-lang/crates.io-index
 zet -> https://github.com/rust-lang/crates.io-index
 zoxide -> https://github.com/rust-lang/crates.io-index
