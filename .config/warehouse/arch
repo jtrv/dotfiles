@@ -1,7 +1,6 @@
 acpi
 acpi_call
 acpid
-adapta-gtk-theme
 alacritty-sixel-git
 alacritty-themes
 alsa-firmware
@@ -17,6 +16,7 @@ base
 base-devel
 batsignal
 bemoji
+betterdiscord-installer
 bindtointerface
 bluez-utils
 breeze-gtk
@@ -25,12 +25,16 @@ calibre
 calibre-plugin-dedrm
 calibre-plugin-goodreads
 catdoc
+catppuccin-cursors-mocha
+catppuccin-gtk-theme-mocha
+catppuccin-mocha-grub-theme-git
 ccache
 chaotic-keyring
 chaotic-mirrorlist
 checkbashisms
 circumflex-bin
 clojure-lsp-bin
+cmake
 cork.kak-git
 croc
 crystalline-bin
@@ -108,6 +112,7 @@ jpegoptim
 jre
 kdeconnect
 kexec-tools
+kvantum-theme-catppuccin-git
 kvantum-theme-materia
 kwakd
 lazygit
@@ -166,6 +171,7 @@ noto-fonts-extra
 npm
 ntfs-3g
 ntp
+nvtop
 odt2txt
 opendoas
 openssl-1.1
@@ -174,6 +180,7 @@ osv-scanner
 otf-font-awesome
 pacman-cleanup-hook
 pandoc-bin
+papirus-folders-catppuccin-git
 paru-git
 pass
 pay-respects-bin
@@ -259,6 +266,7 @@ ueberzugpp
 ufw
 upx
 usql
+uv
 vdpauinfo
 veracrypt
 vhs
@@ -266,6 +274,7 @@ video2x
 visidata
 volta-bin
 vulkan-intel
+webtorrent-mpv-hook
 wget2
 wikiman
 wine-mono
@@ -287,6 +296,7 @@ xorg-xev
 xorg-xinit
 xorg-xinput
 xournalpp
+xsel
 yamllint
 yin-yang
 yq
