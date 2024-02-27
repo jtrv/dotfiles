@@ -1,0 +1,42 @@
+(defcfg
+  process-unmapped-keys yes
+  danger-enable-cmd yes
+)
+
+(defsrc
+  esc  1    2    3    4    5    6    7    8    9    0    -    =    bspc home
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \    end
+  caps a    s    d    f    g    h    j    k    l    ;    '    ret       pgup
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft      up   pgdn
+  lctl lmet lalt                spc                 rctl  lft      down rght
+)
+
+(defalias
+
+;; home-row tap-holds
+;; idx   mid  ring  pink
+;; shft  ctl  alt   meta
+
+	;;             ttime  htime  tap  hold
+  a   (tap-hold  200    150    a    lmet)
+  s   (tap-hold  200    150    s    lalt)
+  d   (tap-hold  200    150    d    lctl)
+  f   (tap-hold  200    150    f    lsft)
+  j   (tap-hold  200    150    j    rsft)
+  k   (tap-hold  200    150    k    rctl)
+  l   (tap-hold  200    150    l    ralt)
+  ;   (tap-hold  200    150    ;    rmet)
+
+;; xcape
+  esc (tap-hold  200    150    esc  rctl) 
+)
+
+(deflayer base
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc home
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \    end
+  @esc @a   @s   @d   @f   g    h    @j   @k   @l   @;   '    ret       pgup
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft      up   pgdn
+  lctl lmet lalt                spc                 rctl  lft      down rght
+)
+
+
