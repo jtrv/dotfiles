@@ -39,7 +39,7 @@ xbanish &                      # hide mouse when typing
 ~/.local/bin/trackball-speed & # set trackball speed
 
 # random wallpaper
-feh --randomize --bg-scale --no-fehbg ~/media/pictures/nature/ &
+feh --randomize --bg-scale --no-fehbg ~/media/pictures/wallpapers/ &
 
 xhost +SI:localuser:$USER
 
