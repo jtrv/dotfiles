@@ -42,7 +42,6 @@ self_update = true
 # Custom commands
 [commands]
 "bun globals" = "bun update -g"
-"cork.kak" = "cork update"
 "proton" = "protonup-rs -q"
 
 [linux]
