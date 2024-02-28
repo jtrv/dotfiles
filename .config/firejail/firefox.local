@@ -1,4 +1,5 @@
 ignore noexec ${HOME}
+ignore whitelist ${RUNUSER}/*firefox*
 
 whitelist ${HOME}/.mozilla/native-messaging-hosts
 
