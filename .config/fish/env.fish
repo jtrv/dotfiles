@@ -55,7 +55,6 @@ set -gx BEMOJI_TYPE_CMD          "xdotool"
 set -gx DMENU_THEME              "-i -fn 'pixelsize=18:antialias=true' -nb black -nf white -sb black -sf red" # matched to spectrwm.conf
 set -gx EDITOR                   "kak"
 set -gx fish_greeting
-set -gx FZF_DEFAULT_OPTS         "--ansi --color=dark --multi --tabstop=2 --preview-window border-vertical --bind='alt-a:select-all,alt-d:deselect-all,ctrl-l:preview-down,ctrl-h:preview-up,alt-j:jump'"
 set -gx GITHUB_TOKEN             (secli get github_token)
 set -gx HORS_ENGINE              "google"
 set -gx MANPAGER                 "kak -e 'set buffer filetype man; ansi-enable'"
@@ -68,6 +67,21 @@ set -gx SCCACHE_DIRECT           "true"
 set -gx QT_STYLE_OVERRIDE        "kvantum"
 set -gx QT_QPA_PLATFORMTHEME     "qt6ct"
 set -gx VISUAL                   "kak"
+
+set -gx FZF_DEFAULT_OPTS "\
+--ansi \
+--color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+--color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+--color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
+--multi \
+--tabstop=2 \
+--preview-window border-vertical \
+--bind='alt-a:select-all,\
+alt-d:deselect-all,\
+ctrl-l:preview-down,\
+ctrl-h:preview-up,\
+alt-j:jump\
+'"
 
 set -gx LF_ICONS "\
 di=:\
