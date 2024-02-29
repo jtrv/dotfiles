@@ -54,10 +54,10 @@ jaq -> https://github.com/rust-lang/crates.io-index
 jless -> https://github.com/rust-lang/crates.io-index
 jql -> https://github.com/rust-lang/crates.io-index
 just -> https://github.com/rust-lang/crates.io-index
-kak-lsp -> /home/sugimoto/.local/share/cork/plugins/kak-lsp/repo
-kakpipe -> /home/sugimoto/.local/share/kak/cork/plugins/kakpipe/repo
-kak-popup -> https://github.com/rust-lang/crates.io-index
-kakship -> /home/sugimoto/.local/share/kak/cork/plugins/kakship/repo
+kak-lsp -> /home/sugimoto/.config/kak/bundle/kak-lsp
+kakpipe -> /home/sugimoto/.config/kak/bundle/kakpipe
+kak-popup -> /home/sugimoto/.config/kak/bundle/popup.kak
+kakship -> /home/sugimoto/.config/kak/bundle/kakship
 kak-tree-sitter -> https://github.com/rust-lang/crates.io-index
 kanata -> https://github.com/rust-lang/crates.io-index
 kmon -> https://github.com/rust-lang/crates.io-index

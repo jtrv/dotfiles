@@ -214,7 +214,6 @@ preload
 profanity
 progress
 pulsemixer
-python-easygui
 python-lsp-black
 python-lsp-ruff
 python-notify2
@@ -286,6 +285,7 @@ udiskie
 ueberzugpp
 ufw
 upx
+uv
 ventoy-bin
 veracrypt
 vhs

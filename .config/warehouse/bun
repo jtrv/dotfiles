@@ -1,13 +1,9 @@
 @biomejs/biome
 @fsouza/prettierd
-@typescript-eslint/eslint-plugin
-@typescript-eslint/parser
 bash-language-server
 bun
 commitlint
 depcheck
-eslint-plugin-autofix
-eslint-plugin-react-hooks
 gitignore
 prettier
 purgecss
