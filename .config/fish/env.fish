@@ -28,6 +28,7 @@ set -gx _JAVA_OPTIONS -Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
 set -gx ANDROID_HOME      "$XDG_DATA_HOME"/android
 set -gx BUN_INSTALL       "$XDG_DATA_HOME"/bun
 set -gx CARGO_HOME        "$XDG_DATA_HOME"/cargo
+set -gx FORTUNE_DIR       "$XDG_DATA_HOME"/fortunes
 set -gx GNUPGHOME         "$XDG_DATA_HOME"/gnupg
 set -gx GOPATH            "$XDG_DATA_HOME"/go
 set -gx GRADLE_USER_HOME  "$XDG_DATA_HOME"/gradle
