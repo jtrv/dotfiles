@@ -2,7 +2,7 @@
 #
 # doc <docset> <query> : utility for searching documentation
 #
-# req: dedoc, fzf, kak
+# req: dedoc, skim, kak
 
 set -e
 
@@ -12,7 +12,7 @@ bufcols=$(echo "$cols - 7" | bc)
 doc=$(
 	dedoc ss -i "$1" "$2" |
 		awk 'NR > 2' |
-		fzf --reverse --preview "\
+		sk --reverse --preview "\
 			echo {} |
 			awk '{print \$1}' |
 			xargs dedoc -c ss -i '$1' '$2' -o

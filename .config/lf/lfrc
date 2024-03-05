@@ -61,7 +61,7 @@ cmd zoxide %lf -remote "send $id cd '$(zoxide query $1)'"
 
 # jump to file from fzf
 cmd fuzzy_file ${{
-  res="$(fd . -H -d 4 | fzf | sed 's/\\/\\\\/g;s/"/\\"/g')"
+  res="$(fd . -H -d 4 | sk | sed 's/\\/\\\\/g;s/"/\\"/g')"
   if [ -d "$res" ]; then
     cmd="cd"
   else
@@ -75,7 +75,7 @@ cmd fuzzy_content ${{
     RG_PREFIX="rg --column --line-number --no-heading --color=always \
       --smart-case "
     FZF_DEFAULT_COMMAND="$RG_PREFIX ''" \
-      fzf --bind "change:reload:$RG_PREFIX {q} || true" \
+      sk --bind "change:reload:$RG_PREFIX {q} || true" \
       --ansi --layout=reverse --header 'Search in files' \
       | cut -d':' -f1
   )"
@@ -183,8 +183,8 @@ map o        push :open-with<space>
 
 map <a-d> delete                  # actually delete
 map D     rip                     # safer remove function (rip)
-map f     filter                  # jump to file with fzf choice
-map F     :fuzzy_file             # jump to file with fzf choice
+map f     filter                  # filter paths
+map F     :fuzzy_file             # jump to file with sk choice
 map G     :fuzzy_content          # search files by grepping contents
 map m     push :mkdir<space>      # create new dir
 map M     mkdirfromsels           # create new dir with selections
