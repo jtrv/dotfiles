@@ -1,7 +1,7 @@
 [init]
   defaultBranch = main
 [branch]
-  sort = -commiterdate
+  sort = -committerdate
 [commit]
   template = ~/.config/git/message
   verbose = true
