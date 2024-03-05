@@ -1,22 +1,22 @@
 #!/bin/sh
 #
 # requires:
-# fzf,
+# skim,
 # rg (ripgrep),
 # rip (rm-improved)
 
-FZF_DEFAULT_OPTS="--ansi --color=dark --multi --bind='alt-a:select-all'"
-FZF_PREVIEW="bat --color=always $XDG_DATA_HOME/graveyard{}"
+SKIM_DEFAULT_OPTIONS="--ansi --color=dark --multi --bind='alt-a:select-all'"
+SKIM_PREVIEW="bat --color=always $XDG_DATA_HOME/graveyard{}"
 
 if [ $# -eq 0 ]; then
 	rip -s |
 		sd "$XDG_DATA_HOME/graveyard" '' |
-		fzf --preview "$FZF_PREVIEW" |
+		sk --preview "$SKIM_PREVIEW" |
 		xargs -I {} rip -u "$XDG_DATA_HOME/graveyard{}"
 else
 	rip -s |
 		sd "$XDG_DATA_HOME/graveyard" '' |
 		rg "$@" |
-		fzf --preview "$FZF_PREVIEW" |
+		sk --preview "$SKIM_PREVIEW" |
 		xargs -I {} rip -u "$XDG_DATA_HOME/graveyard{}"
 fi

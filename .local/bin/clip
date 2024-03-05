@@ -1,0 +1,3 @@
+#!/bin/sh
+
+clipcat-menu --finder="skim"
