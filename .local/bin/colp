@@ -1,0 +1,5 @@
+#!/bin/sh
+notify-send "color picker enabled"
+COLOR=$(xcolor)
+notify-send "$COLOR"
+printf '%s' "$COLOR" | xclip -selection clipboard -i
