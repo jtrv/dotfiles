@@ -55,7 +55,7 @@ set -gx BEMOJI_TYPE_CMD          "xdotool"
 set -gx DMENU_THEME              "-i -fn 'pixelsize=18:antialias=true' -nb black -nf white -sb black -sf red" # matched to spectrwm.conf
 set -gx EDITOR                   "kak"
 set -gx fish_greeting
-set -gx GITHUB_TOKEN             (secli get github_token)
+set -gx GITHUB_TOKEN             (rg -No ':(\w*)@' -r '$1' "$XDG_CONFIG_HOME"/git/credentials)
 set -gx HORS_ENGINE              "google"
 set -gx MANPAGER                 "kak -e 'set buffer filetype man; ansi-enable'"
 set -gx MOZ_X11_EGL              1
