@@ -1,0 +1,12 @@
+[clipcatctl]
+toolchain = "stable"
+default_features = true
+features = []
+[clipcat-menu]
+toolchain = "stable"
+default_features = true
+features = []
+[clipcatd]
+toolchain = "stable"
+default_features = true
+features = []
