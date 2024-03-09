@@ -1,0 +1,14 @@
+[Unit]
+Description=Kanata keyboard remapper
+Documentation=https://github.com/jtroo/kanata
+
+[Service]
+Environment=PATH=%h/.local/share/cargo/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin
+Environment=DISPLAY=:0
+Environment=HOME=%h
+Type=simple
+ExecStart=%h/.local/share/cargo/bin/kanata --cfg %h/.config/kanata/kanata.kbd
+Restart=no
+
+[Install]
+WantedBy=default.target
