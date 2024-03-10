@@ -161,6 +161,10 @@ matches:
     replace: |
       console.log($|$)
 
+  - trigger: ",,jpl"
+    replace: |
+      .then(console.log).catch(console.error)
+
   - trigger: ",,jce"
     replace: |
       console.error($|$)
