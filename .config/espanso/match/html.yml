@@ -1,0 +1,97 @@
+matches:
+
+  - trigger: ",,hdoc"
+    replace: |
+      <!DOCTYPE html>
+
+  - trigger: ",,hmc"
+    replace: |
+      <meta charset="UTF-8">
+
+  - trigger: ",,hmv"
+    replace: |
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  - trigger: ",,hma"
+    replace: |
+      <meta name="author" content="$|$">
+
+  - trigger: ",,hmd"
+    replace: |
+      <meta name="description" content="$|$">
+
+  - trigger: ",,hmk"
+    replace: |
+      <meta name="keywords" content="$|$">
+
+  - trigger: ",,hmt"
+    replace: |
+      <title>$|$</title>
+
+  - trigger: ",,hd"
+    replace: |
+      <div>$|$</div>
+
+  - trigger: ",,hhe"
+    replace: |
+      <head>$|$</head>
+
+  - trigger: ",,hbo"
+    replace: |
+      <body>$|$</body>
+
+  - trigger: ",,hat"
+    replace: |
+      <a href="">$|$</a>
+
+  - trigger: ",,hbt"
+    replace: |
+      <button type="button">$|$</button>
+
+  - trigger: ",,hsti"
+    replace: |
+      <style>$|$</style>
+
+  - trigger: ",,hste"
+    replace: |
+      <link rel="stylesheet" type="text/css" href="$|$">
+
+  - trigger: ",,hsci"
+    replace: |
+      <script>$|$</script>
+
+  - trigger: ",,hsce"
+    replace: |
+      <script type="text/javascript" src="$|$"></script>
+
+  - trigger: ",,hfo"
+    replace: |
+      <form action="" method="">$|$</form>
+
+  - trigger: ",,hla"
+    replace: |
+      <label for="">$|$</label>
+
+  - trigger: ",,hsu"
+    replace: |
+      <input type="submit" value="$|$">
+
+  - trigger: ",,hint"
+    replace: |
+      <input type="text" name="" id="">
+
+  - trigger: ",,hinp"
+    replace: |
+      <input type="password" name="" id="">
+
+  - trigger: ",,hinr"
+    replace: |
+      <input type="radio" name="" id="" value="">
+
+  - trigger: ",,hinc"
+    replace: |
+      <input type="checkbox" name="" id="" value="">
+
+  - trigger: ",,hinf"
+    replace: |
+      <input type="file" name="" id="">
