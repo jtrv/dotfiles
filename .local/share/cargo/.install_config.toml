@@ -10,3 +10,7 @@ features = []
 toolchain = "stable"
 default_features = true
 features = []
+[kanata]
+toolchain = "nightly"
+default_features = true
+features = ['cmd']
