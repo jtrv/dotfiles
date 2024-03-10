@@ -663,16 +663,8 @@ bundle kakoune-buffer-manager https://github.com/theowenyoung/kakoune-buffer-man
   map global buffers e -docstring "buffer editor"   %{: buffer-manager <ret>}
 }
 
-bundle kakoune-cd https://github.com/delapouite/kakoune-cd %{
-  map global user c -docstring "cd" %{: enter-user-mode cd <ret>}
-  alias global cdb change-directory-current-buffer
-  alias global cdr change-directory-project-root
-  alias global ecd edit-current-buffer-directory
-  alias global pwd print-working-directory
-}
-
 declare-user-mode case
-  map global user C -docstring "case" %{: enter-user-mode case <ret>}
+  map global user c -docstring "case" %{: enter-user-mode case <ret>}
   map global case .  -docstring 'Sentence case'   %{<esc>| caser sentence <ret>}
   map global case a  -docstring 'Ada_Case'        %{<esc>| caser ada <ret>}
   map global case c  -docstring 'camelCase'       %{<esc>| caser camel <ret>}
@@ -685,6 +677,14 @@ declare-user-mode case
   map global case T  -docstring 'Title Case'      %{<esc>| caser title <ret>}
   map global case t  -docstring 'Train-Case'      %{<esc>| caser train <ret>}
   map global case u  -docstring "UPPERCASE"       %{~}
+
+bundle kakoune-cd https://github.com/delapouite/kakoune-cd %{
+  map global user C -docstring "cd" %{: enter-user-mode cd <ret>}
+  alias global cdb change-directory-current-buffer
+  alias global cdr change-directory-project-root
+  alias global ecd edit-current-buffer-directory
+  alias global pwd print-working-directory
+}
 
 declare-user-mode dev
   map global user d -docstring "dev" %{: enter-user-mode dev <ret>}
