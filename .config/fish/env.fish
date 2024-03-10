@@ -72,11 +72,18 @@ set -gx FZF_DEFAULT_OPTS "\
 --multi \
 --tabstop=2 \
 --preview-window border-vertical \
---bind='alt-a:select-all,\
+--bind='\
+alt-a:select-all,\
 alt-d:deselect-all,\
-ctrl-l:preview-down,\
-ctrl-h:preview-up,\
-alt-j:jump\
+alt-k:preview-up,\
+alt-j:preview-down,\
+alt-b:preview-page-up,\
+alt-f:preview-page-down,\
+ctrl-b:page-up,\
+ctrl-f:page-down,\
+ctrl-u:half-page-up,\
+ctrl-d:half-page-down,\
+ctrl-space:jump\
 '"
 
 # catppucin theme
@@ -91,11 +98,18 @@ set -gx SKIM_DEFAULT_OPTIONS "\
 --ansi \
 --multi \
 --tabstop=2 \
---bind='alt-a:select-all,\
+--bind='\
+alt-a:select-all,\
 alt-d:deselect-all,\
-ctrl-l:preview-down,\
-ctrl-h:preview-up,\
-alt-j:jump\
+alt-k:preview-up,\
+alt-j:preview-down,\
+alt-b:preview-page-up,\
+alt-f:preview-page-down,\
+ctrl-b:page-up,\
+ctrl-f:page-down,\
+ctrl-u:half-page-up,\
+ctrl-d:half-page-down,\
+ctrl-space:jump\
 '"
 
 # catppucin theme
