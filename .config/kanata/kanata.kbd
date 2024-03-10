@@ -1,5 +1,4 @@
 (defcfg
-  process-unmapped-keys yes
   danger-enable-cmd yes
 )
 
@@ -9,15 +8,17 @@
   caps a    s    d    f    g    h    j    k    l    ;    '    ret       pgup
   lsft z    x    c    v    b    n    m    ,    .    /    rsft      up   pgdn
   lctl lmet lalt                spc                 rctl  lft      down rght
+  ;; Mouse
+  mmid mbck mfwd mwu mwd 
 )
 
 (defalias
 
 ;; home-row tap-holds
-;; idx   mid  ring  pink
+;; indx  mid  ring  pink
 ;; shft  ctl  alt   meta
 
-	;;             ttime  htime  tap  hold
+  ;;             ttime  htime  tap  hold
   a   (tap-hold  200    150    a    lmet)
   s   (tap-hold  200    150    s    lalt)
   d   (tap-hold  200    150    d    lctl)
@@ -29,6 +30,13 @@
 
 ;; xcape
   esc (tap-hold  200    150    esc  rctl) 
+
+;; meta + mouse -> playerctl, vol
+  mmid (fork mmid                 (cmd playerctl play-pause) (lmet rmet))
+  mfwd (fork mfwd                 (cmd playerctl next)       (lmet rmet))
+  mbck (fork mbck                 (cmd playerctl previous)   (lmet rmet))
+  mwu  (fork (mwheel-up 50 120)   (cmd volume-increase 1)    (lmet rmet))
+  mwd  (fork (mwheel-down 50 120) (cmd volume-decrease 1)    (lmet rmet))
 )
 
 (deflayer base
@@ -37,6 +45,9 @@
   @esc @a   @s   @d   @f   g    h    @j   @k   @l   @;   '    ret       pgup
   lsft z    x    c    v    b    n    m    ,    .    /    rsft      up   pgdn
   lctl lmet lalt                spc                 rctl  lft      down rght
+
+  ;; Mouse
+  @mmid @mbck @mfwd @mwu @mwd
 )
 
 
