@@ -1,0 +1,29 @@
+matches:
+
+  - trigger: ",,rue"
+    replace: |
+      useEffect(($|$) => { },[])
+
+  - trigger: ",,rus"
+    replace: |
+      const [$|$, set] = useState();
+
+  - trigger: ",,ruc"
+    replace: |
+      const $|$ = useCallback(() => { }, []);
+
+  - trigger: ",,rum"
+    replace: |
+      const $|$ = useMemo(() => { }, []);
+
+  - trigger: ",,rfc"
+    replace: |
+      import React from 'react'
+
+      function $|$() { return ( <div> </div> ) }
+
+  - trigger: ",,rcc"
+    replace: |
+      import React, { Component } from 'react'
+
+      class ComponentName extends Component { render() { return ( <div> </div> ) } }

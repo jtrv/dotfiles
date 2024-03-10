@@ -1,0 +1,93 @@
+matches:
+
+  - trigger: ",,jfn"
+    replace: |
+      function $|$() { }
+
+  - trigger: ",,jaf"
+    replace: |
+      const $|$ = () =>
+
+  - trigger: ",,jwl"
+    replace: |
+      while ($|$){ }
+
+  - trigger: ",,jf+"
+    replace: |
+      for (let i = 0; i < $|$.length; i++){ }
+
+  - trigger: ",,jf-"
+    replace: |
+      for (let i = 0; i >= 0; i--){ }
+
+  - trigger: ",,jfi"
+    replace: |
+      for (let $|$ in ){ }
+
+  - trigger: ",,jfo"
+    replace: |
+      for (let $|$ of ){ }
+
+  - trigger: ",,jcl"
+    replace: |
+      console.log($|$)
+
+  - trigger: ",,jpl"
+    replace: |
+      .then(console.log).catch(console.error)
+
+  - trigger: ",,jce"
+    replace: |
+      console.error($|$)
+
+  - trigger: ",,jctm"
+    replace: |
+      console.time("$|$")
+
+  - trigger: ",,jcte"
+    replace: |
+      console.timeEnd("$|$")
+
+  - trigger: ",,jdo"
+    replace: |
+      const {$|$} = ;
+
+  - trigger: ",,jda"
+    replace: |
+      const [$|$] = ;
+
+  - trigger: ",,jgi"
+    replace: |
+      document.getElementById("$|$")
+
+  - trigger: ",,jgc"
+    replace: |
+      document.getElementByClassName("$|$")
+
+  - trigger: ",,jqs"
+    replace: |
+      document.querySelector("$|$")
+
+  - trigger: ",,jqa"
+    replace: |
+      document.querySelectorAll("$|$")
+
+  - trigger: ",,jcf"
+    replace: |
+      document.createDocumentFragment("$|$")
+
+  - trigger: ",,jsi"
+    replace: |
+      setInterval(() => {$|$}, interval)
+
+  - trigger: ",,jso"
+    replace: |
+      setTimeout(() => {$|$}, delay)
+
+  - trigger: ",,jst"
+    replace: |
+      JSON.stringify("$|$")
+
+  - trigger: ",,jpe"
+    replace: |
+      process.exit("$|$")
