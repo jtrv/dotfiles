@@ -1,0 +1,66 @@
+[date]
+number = { fg = "magenta" }
+separator = { faint = true }
+
+[date_word] # e.g. "Jan 01", "Mon Feb 28"
+day = { fg = "magenta" }
+month = { fg = "magenta" }
+number = { fg = "magenta" }
+
+[time]
+time = { fg = "blue" }
+zone = { fg = "red" }
+separator = { faint = true }
+
+[[keywords]]
+words = ['null', 'true', 'false']
+style = { fg = "red", italic = true }
+
+[[keywords]]
+words = ['GET']
+style = { fg = "black", bg = "green" }
+border = true
+
+[url]
+http = { fg = "red", faint = true }
+https = { fg = "green", faint = true }
+host = { fg = "blue", faint = true }
+path = { fg = "blue" }
+query_params_key = { fg = "magenta" }
+query_params_value = { fg = "cyan" }
+symbols = { fg = "red" }
+
+[number]
+style = { fg = "cyan" }
+
+[ip]
+number = { fg = "blue", italic = true }
+letter = { fg = "magenta", italic = true }
+separator = { fg = "red" }
+
+[quotes]
+style = { fg = "yellow" }
+token = '"'
+
+[path]
+segment = { fg = "green", italic = true }
+separator = { fg = "yellow" }
+
+[uuid]
+number = { fg = "blue", italic = true }
+letter = { fg = "magenta", italic = true }
+separator = { fg = "red" }
+
+[pointer]
+number = { fg = "blue", italic = true }
+letter = { fg = "magenta", italic = true }
+separator = { fg = "red" }
+
+[key_value]
+key = { faint = true }
+separator = { fg = "white" }
+
+[process]
+name = { fg = "green" }
+separator = { fg = "red" }
+id = { fg = "yellow" }
