@@ -24,7 +24,7 @@ bundle number-toggle.kak https://github.com/jtrv/number-toggle.kak %{
 
 # rainbow delimiters + current scope
 bundle kak-rainbower https://github.com/jtrv/kak-rainbower %{
-  hook global WinCreate .* %{ rainbow-enable-window }
+  hook global WinCreate (?!\*stdin\*).* %{ rainbow-enable-window }
 }
 bundle-install-hook kak-rainbower %{ g++ rc/rainbower.cpp -O2 -o rc/rainbower }
 
