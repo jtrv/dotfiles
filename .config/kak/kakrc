@@ -794,6 +794,20 @@ bundle ui.kak https://github.com/kkga/ui.kak %{
     try ui-colorcol-enable catch ui-colorcol-disable
   }
   map global ui r -docstring "toggle colorcol"   %{: ui-colorcol-toggle <ret>}
+
+  declare-option -hidden bool rainbow_enabled false
+  define-command ui-rainbow-enable %{
+    rainbow-enable-window;
+    set-option buffer rainbow_enabled true
+  }
+  define-command ui-rainbow-disable %{
+    rainbow-disable-window
+    set-option buffer rainbow_enabled false
+  }
+  define-command ui-rainbow-toggle %{
+    try ui-rainbow-enable catch ui-rainbow-disable
+  }
+  map global ui R -docstring "toggle rainbow"   %{: ui-rainbow-toggle <ret>}
 }
 
 map global user v -docstring "view" 'v'
