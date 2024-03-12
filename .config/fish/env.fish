@@ -49,7 +49,7 @@ set -gx HISTFILE "$XDG_STATE_HOME"/bash/history
 
 # Misc
 set -gx ATUIN_NOBIND             "true"
-set -gx BAT_PAGER                "moar -no-linenumbers"
+set -gx BAT_PAGER                "kak"
 set -gx BEMOJI_PICKER_CMD        "dmenu -i -fn 'pixelsize=18:antialias=true' -nb black -nf white -sb black -sf red"
 set -gx BEMOJI_CLIP_CMD          "xclip -sel clip"
 set -gx BEMOJI_TYPE_CMD          "xdotool"
@@ -62,7 +62,7 @@ set -gx MANPAGER                 "kak -e 'set buffer filetype man; ansi-enable'"
 set -gx MOZ_X11_EGL              1
 set -gx OPENAI_API_KEY           (secli get openai_api_key)
 set -gx OPENAI_API_BASE          "https://api.openai.com/v1"
-set -gx PAGER                    "kak -e 'ansi-enable'"
+set -gx PAGER                    "kak"
 set -gx SCCACHE_DIRECT           "true"
 set -gx QT_STYLE_OVERRIDE        "kvantum"
 set -gx QT_QPA_PLATFORMTHEME     "qt6ct"
