@@ -23,7 +23,7 @@ bind \cj edit_command_buffer
 if status --is-interactive
   abbr --add --global cp     'cp -i'
   abbr --add --global mv     'mv -i'
-  abbr --add --global rm     'rip'
+  abbr --add --global rm     'cnc'
   abbr --add --global gitbit 'git commit --amend --no-edit --date="Sat 01 Jan 2022 16:20:00 PST"'
 end
 
@@ -35,6 +35,8 @@ alias boi     'wikiman'
 alias cat     'bat'
 alias cbin    'yes | cargo binstall'
 alias cdr     'cd (git rev-parse --show-toplevel)'
+alias clip    'clipcat-menu --finder="fzf"'
+alias cncr    'cnc restore'
 alias cols    'column -c $COLUMNS'
 alias d       'doas --'
 alias doas    'doas --'

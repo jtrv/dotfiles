@@ -126,7 +126,7 @@ cmd touch-edit $IFS=" "; "$EDITOR" "$*"; lf -remote "send $id select \"$*\""
 cmd ripdrag $IFS="`printf '\n\t'`"; ripdrag $fx &
 cmd open-with %"$@" "$fx" &disown
 cmd renamer $IFS="`printf '\n\t'`"; renamer $fx
-cmd rip $IFS="`printf '\n\t'`"; rip $fx
+cmd cnc $IFS="`printf '\n\t'`"; cnc $fx
 cmd yank-basename $basename -a -- "$fx" | head -c-1 | xclip -selection clipboard
 cmd yank-dirname $dirname -- "$f" | head -c-1 | xclip -selection clipboard
 cmd yank-path $printf '%s' "$fx" | xclip -selection clipboard
@@ -182,7 +182,7 @@ map <enter>  open
 map o        push :open-with<space>
 
 map <a-d> delete                  # actually delete
-map D     rip                     # safer remove function (rip)
+map D     cnc                     # safer remove function (cnc)
 map f     filter                  # filter paths
 map F     :fuzzy_file             # jump to file with sk choice
 map G     :fuzzy_content          # search files by grepping contents
