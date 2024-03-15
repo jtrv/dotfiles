@@ -47,7 +47,7 @@ alias j       '~/.config/lf/wrapper'
 alias jd      'lfcd'
 alias jls     'jless -r'
 alias la      'fls -al --color=always' # all files and dirs
-alias lc      'lazygit --git-dir=$HOME/.cfg/ --work-tree=$HOME' # lazygit for config files
+alias lc      'lazygit --git-dir=$HOME/.config/dotfiles --work-tree=$HOME' # lazygit for config files
 alias lg      'lazygit'
 alias lh      'eza -la --color=always --ignore-glob="[a-z]*|[A-Z]*|[0-9]*"' # hidden only
 alias ll      'eza -l --color=always --git' # long format
