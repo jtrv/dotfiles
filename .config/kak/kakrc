@@ -753,12 +753,6 @@ declare-user-mode spell
 bundle ui.kak https://github.com/kkga/ui.kak %{
   map global user u -docstring "ui" %{: enter-user-mode ui <ret>}
   set-option global ui_wrap_flags -width 100 -word -indent -marker ~~
-  hook global WinCreate .* %{
-    ui-git-diff-enable
-    ui-lint-enable
-    ui-todos-enable
-    ui-trailing-spaces-enable
-  }
 
   define-command -override ui-line-numbers-toggle -docstring 'toggle line numbers' %{
     toggle-number-toggle
@@ -794,6 +788,29 @@ bundle ui.kak https://github.com/kkga/ui.kak %{
     try ui-colorcol-enable catch ui-colorcol-disable
   }
   map global ui r -docstring "toggle colorcol"   %{: ui-colorcol-toggle <ret>}
+
+  # zdiff3 highlighting
+  add-highlighter shared/zdiff3 group
+  add-highlighter shared/zdiff3/HEAD   regex ^<{7}\s.*?$  0:rgb:ff0000,rgb:000000
+  add-highlighter shared/zdiff3/PARENT regex ^\|{7}\s.*?$ 0:rgb:fff000,rgb:000000
+  add-highlighter shared/zdiff3/MERGED regex ^={7}$       0:rgb:fff000,rgb:000000
+  add-highlighter shared/zdiff3/CLOSE  regex ^>{7}\s.*?$  0:rgb:ff0000,rgb:000000
+  define-command ui-zdiff3-enable %{ add-highlighter window/zdiff3 ref zdiff3 }
+  define-command ui-zdiff3-disable %{ remove-highlighter window/zdiff3 }
+  define-command ui-zdiff3-toggle %{
+    try %{ ui-zdiff3-enable } catch %{ ui-zdiff3-disable }
+  }
+
+  map global ui z -docstring "toggle zdiff3"   %{: ui-zdiff3-toggle <ret>}
+
+  hook global WinCreate .* %{
+    ui-git-diff-enable
+    ui-lint-enable
+    ui-todos-enable
+    ui-trailing-spaces-enable
+    ui-zdiff3-enable
+  }
+
 }
 
 map global user v -docstring "view" 'v'
