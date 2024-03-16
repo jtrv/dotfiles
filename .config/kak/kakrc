@@ -753,12 +753,6 @@ declare-user-mode spell
 bundle ui.kak https://github.com/kkga/ui.kak %{
   map global user u -docstring "ui" %{: enter-user-mode ui <ret>}
   set-option global ui_wrap_flags -width 100 -word -indent -marker ~~
-  hook global WinCreate .* %{
-    ui-git-diff-enable
-    ui-lint-enable
-    ui-todos-enable
-    ui-trailing-spaces-enable
-  }
 
   define-command -override ui-line-numbers-toggle -docstring 'toggle line numbers' %{
     toggle-number-toggle
@@ -795,19 +789,27 @@ bundle ui.kak https://github.com/kkga/ui.kak %{
   }
   map global ui r -docstring "toggle colorcol"   %{: ui-colorcol-toggle <ret>}
 
-  declare-option -hidden bool rainbow_enabled false
-  define-command ui-rainbow-enable %{
-    rainbow-enable-window;
-    set-option buffer rainbow_enabled true
+  # zdiff3 highlighting
+  add-highlighter shared/zdiff3 group
+  add-highlighter shared/zdiff3/HEAD   regex ^<{7}\s.*?$  0:rgb:ff0000,rgb:000000
+  add-highlighter shared/zdiff3/PARENT regex ^\|{7}\s.*?$ 0:rgb:fff000,rgb:000000
+  add-highlighter shared/zdiff3/MERGED regex ^={7}$       0:rgb:fff000,rgb:000000
+  add-highlighter shared/zdiff3/CLOSE  regex ^>{7}\s.*?$  0:rgb:ff0000,rgb:000000
+  define-command ui-zdiff3-enable %{ add-highlighter window/zdiff3 ref zdiff3 }
+  define-command ui-zdiff3-disable %{ remove-highlighter window/zdiff3 }
+  define-command ui-zdiff3-toggle %{
+    try %{ ui-zdiff3-enable } catch %{ ui-zdiff3-disable }
   }
-  define-command ui-rainbow-disable %{
-    rainbow-disable-window
-    set-option buffer rainbow_enabled false
+
+  map global ui z -docstring "toggle zdiff3"   %{: ui-zdiff3-toggle <ret>}
+
+  hook global WinCreate .* %{
+    ui-git-diff-enable
+    ui-lint-enable
+    ui-todos-enable
+    ui-trailing-spaces-enable
+    ui-zdiff3-enable
   }
-  define-command ui-rainbow-toggle %{
-    try ui-rainbow-enable catch ui-rainbow-disable
-  }
-  map global ui R -docstring "toggle rainbow"   %{: ui-rainbow-toggle <ret>}
 }
 
 map global user v -docstring "view" 'v'
