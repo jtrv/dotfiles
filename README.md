@@ -4,20 +4,14 @@ I run [Arch Linux](https://wiki.archlinux.org/title/Arch_Linux) on the [Zen kern
 
 # Config
 
-All my configs managed with a [git --bare repo](https://www.atlassian.com/git/tutorials/dotfiles), usually in [lazygit](https://github.com/jesseduffield/lazygit) with the following alias in [`.config/fish/config.fish`](https://github.com/JacobTravers/.cfg/blob/main/.config/fish/config.fish):
+All my configs are managed in a [git --bare repo](https://www.atlassian.com/git/tutorials/dotfiles) named `dotfiles` stored in `~/.config/`. I usually use [lazygit](https://github.com/jesseduffield/lazygit) to make managing them easy with the following alias in [`.config/fish/config.fish`](https://github.com/jtrv/dotfiles/blob/main/.config/fish/config.fish):
 
 ```sh
-  alias lc 'lazygit --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+  alias lc 'lazygit --git-dir=$HOME/.config/dotfiles/ --work-tree=$HOME'
 ```
 
 I also have a few config related scripts that can be found in [`.local/bin/`](https://github.com/JacobTravers/.cfg/blob/main/.local/bin/) prepended with "config", as well as fish-completions in [.config/fish/completions/](https://github.com/JacobTravers/.cfg/blob/main/.config/fish/completions/).
 
 This branch runs on my thinkpad so I used the arch wiki for specific tweaks for my model as well as [auto-cpufreq](https://github.com/AdnanHodzic/auto-cpufreq), [thermald](https://wiki.debian.org/thermald), and [powertop](https://github.com/fenrus75/powertop) for optimal battery life and performance.
 
-# Kakrc
-
-My kakoune config is almost entirely in [kakrc](https://github.com/JacobTravers/.cfg/blob/main/.config/kak/kakrc), the only items outside of it are post-merge hooks for [kak-lsp](https://github.com/kak-lsp/kak-lsp), [kakpipe](https://github.com/eburghar/kakpipe), [kakship](https://github.com/eburghar/kakship), and [kampliment](https://github.com/vbauerster/kampliment).
-
-# Warehouse
-
-The [Warehouse](https://github.com/JacobTravers/.cfg/blob/morpheus/.config/warehouse) is where I log my installed packages, so I can diff them between devices ([config-diff](https://github.com/JacobTravers/.cfg/blob/morpheus/.local/bin/config-diff)) and easily reinstall them if needed with something like `paru -S (cat "/home/sugimoto/.config"/warehouse/arch)`. It's also a resource for curious config readers to see what packages I like to use.
+The [Warehouse](https://github.com/jtrv/dotfiles/blob/morpheus/.config/warehouse) is a manifest for my installed packages so I can diff between devices ([config-diff](https://github.com/jtrv/dotfiles/blob/morpheus/.local/bin/config-diff)) or do a new install easily e.g. `paru -S (cat "/home/$USER/.config"/warehouse/arch)`. It also makes for a good resource for curious config readers.
