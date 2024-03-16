@@ -15,7 +15,7 @@ set -gx TEXMFVAR     "$XDG_CACHE_HOME"/texlive/texmf-var
 # Config
 set -gx AWS_CONFIG_FILE             "$XDG_CONFIG_HOME"/aws/config
 set -gx AWS_SHARED_CREDENTIALS_FILE "$XDG_CONFIG_HOME"/aws/credentials
-set -gx BROWSER                     /usr/bin/firefox
+set -gx DOTFILES                    "$XDG_CONFIG_HOME"/dotfiles
 set -gx GTK2_RC_FILES               "$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
 set -gx NETRC                       "$XDG_CONFIG_HOME"/.netrc
 set -gx NPM_CONFIG_USERCONFIG       "$XDG_CONFIG_HOME"/npm/npmrc
