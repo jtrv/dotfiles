@@ -6,6 +6,7 @@ alacritty-themes
 alsa-firmware
 ananicy-cpp
 android-tools
+ani-cli
 arch-audit
 arch-wiki-docs
 archivemount
@@ -57,6 +58,7 @@ easyeffects
 efibootmgr
 epub-thumbnailer-git
 espanso-bin
+evtest
 exercism
 exfat-utils
 expac
@@ -206,8 +208,6 @@ progress
 pulsemixer
 python-lsp-black
 python-lsp-ruff
-python-pdm
-python-pip
 python-pyls-isort
 python-pylsp-mypy
 python-pylsp-rope
@@ -242,6 +242,7 @@ termv
 tesseract
 texlab
 texlive-bibtexextra
+texlive-binextra
 texlive-fonts-fontawesome
 texlive-formatsextra
 texlive-games
