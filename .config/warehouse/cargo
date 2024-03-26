@@ -36,6 +36,7 @@ eza -> https://github.com/rust-lang/crates.io-index
 fclones -> https://github.com/rust-lang/crates.io-index
 fd-find -> https://github.com/rust-lang/crates.io-index
 fls -> https://github.com/rust-lang/crates.io-index
+fortune-kind -> https://github.com/rust-lang/crates.io-index
 git-delta -> https://github.com/rust-lang/crates.io-index
 gobang -> https://github.com/TaKO8Ki/gobang
 gpg-tui -> https://github.com/rust-lang/crates.io-index
@@ -68,12 +69,12 @@ lychee -> https://github.com/rust-lang/crates.io-index
 macchina -> https://github.com/rust-lang/crates.io-index
 magnetfinder -> https://github.com/rust-lang/crates.io-index
 mdcat -> https://github.com/rust-lang/crates.io-index
+minhtml -> https://github.com/rust-lang/crates.io-index
 mullscan -> https://github.com/jtrv/mullscan
 noseyparker-cli -> https://github.com/praetorian-inc/noseyparker
 onefetch -> https://github.com/rust-lang/crates.io-index
 ouch -> https://github.com/rust-lang/crates.io-index
 oxipng -> https://github.com/rust-lang/crates.io-index
-paru -> https://github.com/rust-lang/crates.io-index
 pastel -> https://github.com/rust-lang/crates.io-index
 pipe-rename -> https://github.com/rust-lang/crates.io-index
 procs -> https://github.com/rust-lang/crates.io-index
@@ -95,6 +96,7 @@ sd -> https://github.com/rust-lang/crates.io-index
 secli -> https://github.com/rust-lang/crates.io-index
 shellclear -> https://github.com/rusty-ferris-club/shellclear
 skanuvaty -> https://github.com/Esc4iCEscEsc/skanuvaty
+skim -> https://github.com/kimono-koans/two_percent
 skyspell -> https://github.com/rust-lang/crates.io-index
 skyspell_kak -> https://github.com/rust-lang/crates.io-index
 sniffglue -> https://github.com/rust-lang/crates.io-index
