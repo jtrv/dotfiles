@@ -94,7 +94,7 @@ bundle-install-hook kak-lsp %{
 
 bundle kakoune-auto-percent https://github.com/delapouite/kakoune-auto-percent
 
-bundle kakoune-boost https://github.com/jtrv/kakoune-boost
+bundle kakoune-boost https://github.com/krobelus/kakoune-boost
 
 bundle kakoune-state-save https://gitlab.com/Screwtapello/kakoune-state-save.git %{
   hook global KakBegin .* %{
