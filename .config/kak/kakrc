@@ -1,5 +1,5 @@
 # Kakoune with Kakhis
-# Author: Jacob Travers
+# Author: jtrv
 
 evaluate-commands %sh{
   skyspell-kak init
@@ -94,7 +94,7 @@ bundle-install-hook kakoune-lsp %{
 
 bundle kakoune-auto-percent https://github.com/delapouite/kakoune-auto-percent
 
-bundle kakoune-boost https://github.com/jtrv/kakoune-boost
+bundle kakoune-boost https://github.com/krobelus/kakoune-boost
 
 bundle kakoune-state-save https://gitlab.com/Screwtapello/kakoune-state-save.git %{
   hook global KakBegin .* %{
@@ -552,7 +552,7 @@ define-command zeal -docstring "
   fi
 }} -shell-script-candidates %{
   rg -No '\p{L}+\w+' "$kak_buffile" \
-    | huniq \
+    | sort -u \
     | sed "s/^/$kak_opt_filetype:/"
 }
 
