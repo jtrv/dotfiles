@@ -45,4 +45,5 @@ self_update = true
 "proton" = "protonup-rs -q"
 
 [linux]
+arch_package_manager = "paru"
 enable_tlmgr = true
