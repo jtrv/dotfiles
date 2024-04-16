@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Kakoune
+Icon=Kakoune
+TryExec=kak
+Exec=kak
+Terminal=true
