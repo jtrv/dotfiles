@@ -1,13 +1,14 @@
 /* dark background in new tabs without a white flash (with tridactyl newtab) @see: https://github.com/tridactyl/tridactyl/issues/2510 */
 :root {
-  --tridactyl-bg: #1d1b19 !important;
-  --tridactyl-fg: white !important;
+  --tridactyl-bg: #1e1e2e !important;
+  --tridactyl-fg: #cdd6f4 !important;
+  --my-url-bar: 3rem;
 }
 
 /* set the background color of the new tab page (without tridactyl or with tridactyl without newtab) */
 @-moz-document url-prefix(about:home), url-prefix(about:newtab) {
   body {
-    background: #1d1b19;
+    background: #1e1e2e;
   }
 }
 
@@ -29,15 +30,15 @@
 }
 #navigator-toolbox:hover:not([inFullscreen]) :-moz-any(#nav-bar),
 #navigator-toolbox:focus-within :-moz-any(#nav-bar) {
-  min-height: 32px !important;
-  max-height: 32px !important;
+  min-height: var(--my-url-bar) !important;
+  max-height: var(--my-url-bar) !important;
   margin-top: 1px !important;
-  margin-bottom: -32px !important;
   transition: all 50ms linear 0s !important;
   z-index: 5 !important;
 }
 #urlbar {
-  --urlbar-toolbar-height: 32px !important;
+  --urlbar-toolbar-height: var(--my-url-bar) !important;
+  --urlbar-container-height: var(--my-url-bar) !important;
 }
 
 /* Hide sidebar on fullscreen */
@@ -45,26 +46,4 @@
 #main-window[inFullscreen] #sidebar-splitter {
   display: none !important;
   width: 0px !important;
-}
-
-/* Collapse sidebar + transition */
-/*#sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"] {
-  overflow: hidden;
-  min-width: 10px;
-  max-width: 10px;
-  border-right: 1px solid #0c0c0d;
-  z-index: 2;
-  opacity: 0;
-}
-#sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"]:hover,
-#sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"] #sidebar {
-  min-width: 280px !important;
-  max-width: 280px !important;
-  z-index: 1;
-  opacity: 1;
-}*/
-
-/*** Hide Tab Close buttons ***/
-.tabbrowser-tab .tab-close-button {
-  visibility: collapse !important;
 }
