@@ -79,13 +79,13 @@ bundle kak-live-grep https://git.sr.ht/~raiguard/kak-live-grep %{
   set-face global LiveGrepMatch +u
 }
 
-bundle kak-lsp https://github.com/kak-lsp/kak-lsp %{
+bundle kakoune-lsp https://github.com/kakoune-lsp/kakoune-lsp %{
   set global lsp_diagnostic_line_error_sign '║'
   set global lsp_diagnostic_line_warning_sign '┊'
   set global lsp_hover_max_lines 40
   hook global KakEnd .* lsp-exit
 }
-bundle-install-hook kak-lsp %{
+bundle-install-hook kakoune-lsp %{
   cargo install --path .
   cargo clean
 }
