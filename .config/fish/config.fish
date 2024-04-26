@@ -44,7 +44,7 @@ alias feh     'feh --scale-down --image-bg black'
 alias fp      'sk --preview="bat --color=always {}"'
 alias glow    'glow -p'
 alias hn      'clx -an --no-less-verify'
-alias j       '~/.config/lf/wrapper'
+alias j       'yazi'
 alias jd      'lfcd'
 alias jls     'jless -r'
 alias la      'fls -al --color=always' # all files and dirs
