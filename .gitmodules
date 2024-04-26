@@ -1,0 +1,18 @@
+[submodule "/home/sugimoto/.config/yazi/plugins/relative-motions.yazi"]
+	path = /home/sugimoto/.config/yazi/plugins/relative-motions.yazi
+	url = https://github.com/dedukun/relative-motions.yazi.git
+[submodule "/home/sugimoto/.config/yazi/plugins/starship.yazi"]
+	path = /home/sugimoto/.config/yazi/plugins/starship.yazi
+	url = https://github.com/Rolv-Apneseth/starship.yazi.git
+[submodule "/home/sugimoto/.config/yazi/plugins/ouch.yazi"]
+	path = /home/sugimoto/.config/yazi/plugins/ouch.yazi
+	url = https://github.com/ndtoan96/ouch.yazi.git
+[submodule "/home/sugimoto/.config/yazi/plugins/exifaudio.yazi"]
+	path = /home/sugimoto/.config/yazi/plugins/exifaudio.yazi
+	url = https://github.com/Sonico98/exifaudio.yazi.git
+[submodule "/home/sugimoto/.config/yazi/plugins/glow.yazi"]
+	path = /home/sugimoto/.config/yazi/plugins/glow.yazi
+	url = https://github.com/Reledia/glow.yazi.git
+[submodule "/home/sugimoto/.config/yazi/plugins/fg.yazi"]
+	path = /home/sugimoto/.config/yazi/plugins/fg.yazi
+	url = https://github.com/DreamMaoMao/fg.yazi.git
