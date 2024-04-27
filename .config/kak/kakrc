@@ -770,9 +770,7 @@ bundle ui.kak https://github.com/kkga/ui.kak %{
     colorcol-disable
     set-option buffer colorcol_enabled false
   }
-  define-command ui-colorcol-toggle %{
-    try ui-colorcol-enable catch ui-colorcol-disable
-  }
+  define-command ui-colorcol-toggle %{ try ui-colorcol-enable catch ui-colorcol-disable }
   map global ui r -docstring "toggle colorcol"   %{: ui-colorcol-toggle <ret>}
 
   # zdiff3 highlighting
@@ -783,10 +781,7 @@ bundle ui.kak https://github.com/kkga/ui.kak %{
   add-highlighter shared/zdiff3/CLOSE  regex ^>{7}\s.*?$  0:rgb:ff0000,rgb:000000
   define-command ui-zdiff3-enable %{ add-highlighter window/zdiff3 ref zdiff3 }
   define-command ui-zdiff3-disable %{ remove-highlighter window/zdiff3 }
-  define-command ui-zdiff3-toggle %{
-    try %{ ui-zdiff3-enable } catch %{ ui-zdiff3-disable }
-  }
-
+  define-command ui-zdiff3-toggle %{ try ui-zdiff3-enable catch ui-zdiff3-disable }
   map global ui z -docstring "toggle zdiff3"   %{: ui-zdiff3-toggle <ret>}
 
   hook global WinCreate .* %{
