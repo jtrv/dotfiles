@@ -1,5 +1,3 @@
-[init]
-  defaultBranch = main
 [branch]
   sort = -committerdate
 [commit]
@@ -15,6 +13,8 @@
   algorithm = histogram
   colorMoved = default
   submodule = log
+[init]
+  defaultBranch = main
 [interactive]
   diffFilter = delta --color-only
 [merge]
@@ -42,11 +42,11 @@
   hunk-header-file-style = "bold"
   hunk-header-line-number-style = "bold #a6adc8"
   hunk-header-style = "file line-number syntax"
-  line-numbers = true
   line-numbers-left-style = "#6c7086"
   line-numbers-minus-style = "bold #f38ba8"
   line-numbers-plus-style = "bold #a6e3a1"
   line-numbers-right-style = "#6c7086"
+  line-numbers = true
   line-numbers-zero-style = "#6c7086"
   # 25% red 75% base
   minus-emph-style = "bold syntax #53394c"
@@ -60,6 +60,6 @@
   syntax-theme = "Catppuccin-mocha"
 
 [delta]
-  true-color = always
-  map-styles = "bold purple => syntax #443c5b, bold cyan => syntax #374858"
   features = catppuccin-mocha zebra-dark
+  map-styles = "bold purple => syntax #443c5b, bold cyan => syntax #374858"
+  true-color = always
