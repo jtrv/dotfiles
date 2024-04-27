@@ -779,7 +779,10 @@ bundle ui.kak https://github.com/kkga/ui.kak %{
   add-highlighter shared/zdiff3/HEAD   regex ^<{7}\s.*?$  0:rgb:ff0000,rgb:000000
   add-highlighter shared/zdiff3/PARENT regex ^\|{7}\s.*?$ 0:rgb:fff000,rgb:000000
   add-highlighter shared/zdiff3/MERGED regex ^={7}$       0:rgb:fff000,rgb:000000
-  add-highlighter shared/zdiff3/CLOSE  regex ^>{7}\s.*?$  0:rgb:ff0000,rgb:000000
+  add-highlighter shared/zdiff3/CLOSE  regex ^>{7}\s.*?$  0:rgb:00ff00,rgb:000000
+  add-highlighter shared/zdiff3/diff regions
+  add-highlighter shared/zdiff3/diff/bg region ^<{7}\s ^>{7}\s fill default,rgb:000000
+
   define-command ui-zdiff3-enable %{ add-highlighter window/zdiff3 ref zdiff3 }
   define-command ui-zdiff3-disable %{ remove-highlighter window/zdiff3 }
   define-command ui-zdiff3-toggle %{ try ui-zdiff3-enable catch ui-zdiff3-disable }
