@@ -81,12 +81,12 @@ rename_origin = "hovered"
 rename_offset = [ 0, 1, 50, 3 ]
 
 # trash
-trash_title 	= "Move {n} selected file{s} to trash? (y/N)"
+trash_title 	= "Move {n} file{s} to trash? (y/N)"
 trash_origin	= "top-center"
 trash_offset	= [ 0, 2, 50, 3 ]
 
 # delete
-delete_title 	= "Delete {n} selected file{s} permanently? (y/N)"
+delete_title 	= "Delete {n} file{s} permanently? (y/N)"
 delete_origin	= "top-center"
 delete_offset	= [ 0, 2, 50, 3 ]
 
