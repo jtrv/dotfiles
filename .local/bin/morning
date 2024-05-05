@@ -1,4 +1,2 @@
 #!/bin/sh
-kak -e "kakpipe $HOME/.local/bin/greeting" &&
-		"$HOME"/.local/bin/news &&
-		rm -r ~/.pki ~/.w3m
+kak -e "kakpipe $HOME/.local/bin/greeting"
