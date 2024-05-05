@@ -2,8 +2,9 @@
 # Author: jtrv
 
 evaluate-commands %sh{
-  skyspell-kak init
   colorcol
+  hop-kak --init
+  skyspell-kak init
 }
 
 source "%val{config}/bundle/kak-bundle/rc/kak-bundle.kak"
@@ -130,6 +131,7 @@ bundle sudo-write.kak https://github.com/jtrv/sudo-write.kak %{
 }
 
 ###################### COMMANDS ######################
+
 define-command buffer-picker -docstring "
   buffer-picker: Opens buffer picker.
 " %{
@@ -363,6 +365,11 @@ hook global BufSetOption filetype=hey-prompt %{
   alias buffer write hey-buffer-write
   alias buffer w hey-buffer-write
 }
+
+declare-option str hop_kak_keyset "jklfdsahguioprewqmvczxnb"
+define-command hop-kak -docstring "
+  hint and hop to one of the current selections
+" %{ eval -no-hooks -- %sh{ hop-kak --keyset "$kak_opt_hop_kak_keyset" --sels "$kak_selections_desc" } }
 
 define-command how -docstring "
   how <query>: how utility wrapper
@@ -698,7 +705,9 @@ map global user h -docstring "hey" %{: hey-buffer <ret>}
 
 map global user i -docstring "docs" %{: docs <ret>}
 
-map global user l -docstring "lsp" %{:enter-user-mode lsp <ret>}
+map global user j -docstring "jump" %{: hop-kak <ret>}
+
+map global user l -docstring "lsp" %{: enter-user-mode lsp <ret>}
   map global lsp <minus> -docstring "disable"   %{: lsp-disable-window <ret>}
   map global lsp <plus>  -docstring "enable"    %{: lsp-enable-window <ret>}
 
