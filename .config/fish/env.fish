@@ -54,6 +54,7 @@ set -gx BEMOJI_PICKER_CMD           "dmenu -i -fn 'pixelsize=18:antialias=true' 
 set -gx BEMOJI_CLIP_CMD             "xclip -sel clip"
 set -gx BEMOJI_TYPE_CMD             "xdotool"
 set -gx BROWSER                     "firefox"
+set -gx CONCEAL_FINDER              "skim"
 set -gx DELTA_PAGER                 "kak"
 set -gx DMENU_THEME                 "-i -fn 'pixelsize=18:antialias=true' -nb black -nf white -sb black -sf red" # matched to spectrwm.conf
 set -gx EDITOR                      "kak"
