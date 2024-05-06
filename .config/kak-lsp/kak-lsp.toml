@@ -80,8 +80,18 @@ settings_section = "metals"
 [language_server.metals.settings.metals]
 icons = "unicode"
 isHttpEnabled = true
-statusBarProvider = "log-message"
+statusBarProvider = "show-message"
 compilerOptions = { overrideDefFormat = "unicode" }
+inlayHints.hintsInPatternMatch.enable = true
+inlayHints.implicitArguments.enable = true
+inlayHints.implicitConversions.enable = true
+inlayHints.inferredTypes.enable = true
+inlayHints.typeParameters.enable = true
+
+[language_server.nil]
+filetypes = ["nix"]
+command = "nil"
+roots = ["flake.nix", "shell.nix", ".git", ".hg"]
 
 [language_server.scss-language-server]
 filetypes = ["scss"]
@@ -101,35 +111,13 @@ roots = ["pubspec.yaml", ".git", ".hg"]
 command = "sh"
 args = ["-c", "dart $(dirname $(command -v dart))/snapshots/analysis_server.dart.snapshot --lsp"]
 
-# # Commented out by default because you still need to set the paths in the JDT
-# # Language Server arguments below before this can become a valid configuration.
-# [language_server.ejdtls]
-# filetypes = ["java"]
-# roots = [".git", "mvnw", "gradlew"]
-# command = "java"
-# args = [
-#     "-Declipse.application=org.eclipse.jdt.ls.core.id1",
-#     "-Dosgi.bundles.defaultStartLevel=4",
-#     "-Declipse.product=org.eclipse.jdt.ls.core.product",
-#     "-Dlog.level=ALL",
-#     "-Dfile.encoding=utf-8",
-#     "--add-modules=ALL-SYSTEM",
-#     "--add-opens",
-#     "java.base/java.util=ALL-UNNAMED",
-#     "--add-opens",
-#     "java.base/java.lang=ALL-UNNAMED",
-#     "-noverify",
-#     "-Xmx1G",
-#     "-jar",
-#     "/path/to/eclipse.jdt.ls/repository/plugins/org.eclipse.equinox.launcher_1.6.100.v20201223-0822.jar",
-#     "-configuration",
-#     "/path/to/eclipse.jdt.ls/repository/config_linux",
-#     "-data",
-#     "/path/to/eclipse-workspace",
-# ]
-# [language_server.ejdtls.settings]
-# # See https://github.dev/eclipse/eclipse.jdt.ls
-# # "java.format.insertSpaces" = true
+[language_server.jdtls]
+filetypes = ["java"]
+roots = ["mvnw", "gradlew", ".git", ".hg"]
+command = "jdtls"
+[language_server.jdtls.settings]
+# See https://github.dev/eclipse/eclipse.jdt.ls
+# "java.format.insertSpaces" = true
 
 [language_server.elixir-ls]
 filetypes = ["elixir"]
@@ -173,6 +161,15 @@ command = "gopls"
 [language_server.gopls.settings.gopls]
 # See https://github.com/golang/tools/blob/master/gopls/doc/settings.md
 # "build.buildFlags" = []
+hints.assignVariableTypes = true
+hints.compositeLiteralFields = true
+hints.compositeLiteralTypes = true
+hints.constantValues = true
+hints.functionTypeParameters = true
+hints.parameterNames = true
+hints.rangeVariableTypes = true
+"ui.completion.usePlaceholders" = true
+
 
 [language_server.haskell-language-server]
 filetypes = ["haskell"]
@@ -189,6 +186,11 @@ filetypes = ["html"]
 roots = ["package.json"]
 command = "html-languageserver"
 args = ["--stdio"]
+settings_section = "_"
+[language_server.html-language-server.settings._]
+quotePreference = "none"
+javascript.format.semicolons = "none"
+
 [language_server.intelephense]
 filetypes = ["php"]
 roots = [".htaccess", "composer.json"]
@@ -260,6 +262,12 @@ settings_section = "Lua"
 # See https://github.com/sumneko/vscode-lua/blob/master/setting/schema.json
 # diagnostics.enable = true
 
+[language_server.markdown]
+filetypes = ["markdown"]
+roots = [".marksman.toml"]
+command = "marksman"
+args = ["server"]
+
 [language_server.nimlsp]
 filetypes = ["nim"]
 roots = ["*.nimble", ".git", ".hg"]
@@ -291,6 +299,12 @@ settings_section = "_"
 # See https://github.com/python-lsp/python-lsp-server#configuration
 # pylsp.configurationSources = ["flake8"]
 pylsp.plugins.jedi_completion.include_params = true
+
+[language_server.pyright]
+filetypes = ["python"]
+roots = ["requirements.txt", "setup.py", "pyrightconfig.json", ".git", ".hg"]
+command = "pyright-langserver"
+args = ["--stdio"]
 
 [language_server.ruff]
 filetypes = ["python"]
@@ -326,9 +340,9 @@ command = "ocamllsp"
 #     "-c",
 #     """
 #         if path=$(rustup which rls 2>/dev/null); then
-#             "$path"
+#             exec "$path"
 #         else
-#             rls
+#             exec rls
 #         fi
 #     """,
 # ]
@@ -336,11 +350,6 @@ command = "ocamllsp"
 # [language_server.rls.settings.rust]
 # # See https://github.com/rust-lang/rls#configuration
 # # features = []
-
-[language_server.rnix-lsp]
-filetypes = ["nix"]
-roots = ["flake.nix", "shell.nix", ".git", ".hg"]
-command = "rnix-lsp"
 
 [language_server.rust-analyzer]
 filetypes = ["rust"]
@@ -350,9 +359,9 @@ args = [
     "-c",
     """
         if path=$(rustup which rust-analyzer 2>/dev/null); then
-            "$path"
+            exec "$path"
         else
-            rust-analyzer
+            exec rust-analyzer
         fi
     """,
 ]
@@ -370,6 +379,12 @@ settings_section = "_"
 [language_server.solargraph.settings._]
 # See https://github.com/castwide/solargraph/blob/master/lib/solargraph/language_server/host.rb
 # diagnostics = false
+
+[language_server.taplo]
+filetypes = ["toml"]
+roots = [".git", ".hg"]
+command = "taplo"
+args = ["lsp", "stdio"]
 
 [language_server.terraform-ls]
 filetypes = ["terraform"]
@@ -424,6 +439,24 @@ settings_section = "_"
 [language_server.typescript-language-server.settings._]
 quotePreference = "none"
 typescript.format.semicolons = "none"
+
+# [language_server.eslint]
+# filetypes = ["javascript", "typescript"]
+# roots = [".eslintrc", ".eslintrc.json"]
+# command = "eslint-language-server"
+# args = ["--stdio"]
+# workaround_eslint = true
+# [language_server.eslint.settings]
+# codeActionsOnSave = { mode = "all", "source.fixAll.eslint" = true }
+# format = { enable = true }
+# quiet = false
+# rulesCustomizations = []
+# run = "onType"
+# validate = "on"
+# experimental = {}
+# problems = { shortenToSingleLine = false }
+# codeAction.disableRuleComment = { enable = true, location = "separateLine" }
+# codeAction.showDocumentation = { enable = false }
 
 [language_server.yaml-language-server]
 filetypes = ["yaml"]
