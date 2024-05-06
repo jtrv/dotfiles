@@ -640,6 +640,8 @@ map global normal <c-v> -docstring "lazygit"   %{: popup -- fish -c 'lazygit' <r
 
 map global user <space> : -docstring "prompt"
 
+map global user a -docstring "ansi" %{: ansi-enable <ret>}
+
 # navigate buffers
 bundle kakoune-buffers https://github.com/delapouite/kakoune-buffers %{
   hook global WinDisplay .* info-buffers
