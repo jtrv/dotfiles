@@ -145,14 +145,14 @@ define-command bun -docstring "
   bun [<arguments>]: bun utility wrapper
   Launch bun with the given arguments inside kakoune
 " -params 1.. %{
-  kakpipe -S -V FORCE_COLOR=1 -- bun %arg{@}
+  kakpipe -n "bun %arg{@}" -S -V FORCE_COLOR=1 -- bun %arg{@}
 }
 
 define-command cargo -docstring "
   cargo [<arguments>]: cargo utility wrapper
   Launch cargo with the given arguments inside kakoune
 " -params 1.. %{
-  kakpipe -S -- cargo --color=always %arg{@}
+  kakpipe -n "cargo %arg{@}" -S -- cargo --color=always %arg{@}
 }
 
 define-command calc -docstring "
@@ -171,13 +171,13 @@ define-command calc -docstring "
 }}
 
 define-command cat -docstring "
-  bat [<files>]: bat utility wrapper
-  Print the files (or buffile) using bat and kakpipe
+  cat [<files>]: bat utility wrapper
+  Print the files (or buffile) using bat
 " -params 1.. %{ evaluate-commands %sh{
   if [ $# -eq 0 ]; then
-    echo "kakpipe -- bat --style=plain --color=always %val{buffile}"
+    echo "kakpipe -n \"bat %val{buffile}\" -- bat --style=plain --color=always %val{buffile}"
   else
-    echo "kakpipe -- bat --style=plain --color=always %arg{@}"
+    echo "kakpipe \"bat %arg{@}\" -- bat --style=plain --color=always %arg{@}"
   fi
 }}
 
@@ -202,12 +202,12 @@ define-command docs -docstring "
       "dedoc: " %{
         evaluate-commands %sh{
           echo $kak_text |
-            xargs echo "kakpipe -- dedoc -c ss -i -o 1 -c %val{window_width}"
+            xargs echo "kakpipe -n \"$kak_text\" -- dedoc  -c ss -i -o 1 -c %val{window_width}"
         }
       }
     '
   else
-    echo "kakpipe -- dedoc -c ss -i -o 1 -c %val{window_width} $@"
+    echo "kakpipe -n \"$@\" -- dedoc -c ss -i -o 1 -c %val{window_width} $@"
   fi
 }} -shell-script-candidates %{
   rg -No '\p{L}+\w+' "$kak_buffile" \
@@ -307,7 +307,7 @@ define-command glow -docstring "
   glow [<files>]: glow utility wrapper
   Open a glow formatted view of the provided files
 " -params 1.. %{
-  kakpipe -- glow -s dark %arg{@};
+  kakpipe -n "glow %arg{@}" -- glow -s dark %arg{@};
 } -menu -shell-script-candidates %{fd -e md}
 hook global WinDisplay '\*glow\*' %{
   ui-trailing-spaces-disable
@@ -344,7 +344,7 @@ define-command hey -docstring "
   hey <query>: heygpt utility wrapper
   Query ChatGPT and stream the response in a FIFO buffer
 " -params 1.. %{
-  kakpipe -w -n hey-response -- heygpt %arg{@};
+  kakpipe -w -n "hey %arg{@}" -- heygpt %arg{@};
 }
 hook global WinDisplay '\*hey\*' %{
   ui-wrap-enable
@@ -461,9 +461,9 @@ define-command rman -docstring "
   show a rustdoc page for the given module
 " -params 1 %{ evaluate-commands %sh{
   if [ $# -eq 0 ]; then
-    echo "kakpipe -n %val{selection} -- rusty-man --viewer=rich %val{selection}"
+    echo "kakpipe -n \"rman %val{selection}\" -- rusty-man --viewer=rich %val{selection}"
   else
-    echo "kakpipe -n %arg{1} -- rusty-man --viewer=rich %arg{@}"
+    echo "kakpipe -n \"rman %arg{1}\" -- rusty-man --viewer=rich %arg{@}"
   fi
 }}
 
