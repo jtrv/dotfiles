@@ -1,28 +1,32 @@
 [manager]
-
 # plugins
 prepend_keymap = [
+  # Drag and drop w/ ripdrag
   { on = [ "<C-k>" ], run = '''shell 'ripdrag -xa "$@" 2>/dev/null &' --confirm''' },
 
-  { on = [ "f","c" ], run  = "plugin fg",              desc = "Find file by content" }, 
-  { on = [ "f","n" ], run  = "plugin fg --args='fzf'", desc = "Find file by name" }, 
+  # Trash hovered file
+  { on = [ "t", "d" ], run = 'shell "conceal clean" --block --confirm',   desc = "destroy relative trash items" },
+  { on = [ "t", "r" ], run = 'shell "conceal restore" --block --confirm', desc = "restore relative trash items" },
 
-  { on = [ "1" ], run = "plugin relative-motions --args=1", desc = "Move in relative steps" }, 
-  { on = [ "2" ], run = "plugin relative-motions --args=2", desc = "Move in relative steps" }, 
-  { on = [ "3" ], run = "plugin relative-motions --args=3", desc = "Move in relative steps" }, 
-  { on = [ "4" ], run = "plugin relative-motions --args=4", desc = "Move in relative steps" }, 
-  { on = [ "5" ], run = "plugin relative-motions --args=5", desc = "Move in relative steps" }, 
-  { on = [ "6" ], run = "plugin relative-motions --args=6", desc = "Move in relative steps" }, 
-  { on = [ "7" ], run = "plugin relative-motions --args=7", desc = "Move in relative steps" }, 
-  { on = [ "8" ], run = "plugin relative-motions --args=8", desc = "Move in relative steps" }, 
+  { on = [ "f", "c" ], run = "plugin fg",              desc = "Find file by content" },
+  { on = [ "f", "n" ], run = "plugin fg --args='fzf'", desc = "Find file by name" },
+
+  { on = [ "1" ], run = "plugin relative-motions --args=1", desc = "Move in relative steps" },
+  { on = [ "2" ], run = "plugin relative-motions --args=2", desc = "Move in relative steps" },
+  { on = [ "3" ], run = "plugin relative-motions --args=3", desc = "Move in relative steps" },
+  { on = [ "4" ], run = "plugin relative-motions --args=4", desc = "Move in relative steps" },
+  { on = [ "5" ], run = "plugin relative-motions --args=5", desc = "Move in relative steps" },
+  { on = [ "6" ], run = "plugin relative-motions --args=6", desc = "Move in relative steps" },
+  { on = [ "7" ], run = "plugin relative-motions --args=7", desc = "Move in relative steps" },
+  { on = [ "8" ], run = "plugin relative-motions --args=8", desc = "Move in relative steps" },
   { on = [ "9" ], run = "plugin relative-motions --args=9", desc = "Move in relative steps" },
 ]
 
 keymap = [
   { on = [ "<Esc>" ], run = "escape",             desc = "Exit visual mode, clear selected, or cancel search" },
-  { on = [ "q" ],     run = "quit",               desc = "Exit the process" },
+  { on = [ "q" ],     run = "close",              desc = "Close the current tab, or quit if it is last tab" },
   { on = [ "Q" ],     run = "quit --no-cwd-file", desc = "Exit the process without writing cwd-file" },
-  { on = [ "<C-q>" ], run = "close",              desc = "Close the current tab, or quit if it is last tab" },
+  { on = [ "<A-q>" ], run = "quit",               desc = "Exit the process" },
   { on = [ "<C-z>" ], run = "suspend",            desc = "Suspend the process" },
 
   # Navigation
@@ -109,20 +113,20 @@ keymap = [
   { on = [ ",", "S" ], run = "sort size --reverse --dir_first",         desc = "Sort by size (reverse)" },
 
   # Tabs
-  { on = [ "t" ], run = "tab_create --current", desc = "Create a new tab using the current path" },
+  { on = [ "b", "b" ], run = "tab_create --current", desc = "Create a new tab using the current path" },
 
-  { on = [ "1" ], run = "tab_switch 0", desc = "Switch to the first tab" },
-  { on = [ "2" ], run = "tab_switch 1", desc = "Switch to the second tab" },
-  { on = [ "3" ], run = "tab_switch 2", desc = "Switch to the third tab" },
-  { on = [ "4" ], run = "tab_switch 3", desc = "Switch to the fourth tab" },
-  { on = [ "5" ], run = "tab_switch 4", desc = "Switch to the fifth tab" },
-  { on = [ "6" ], run = "tab_switch 5", desc = "Switch to the sixth tab" },
-  { on = [ "7" ], run = "tab_switch 6", desc = "Switch to the seventh tab" },
-  { on = [ "8" ], run = "tab_switch 7", desc = "Switch to the eighth tab" },
-  { on = [ "9" ], run = "tab_switch 8", desc = "Switch to the ninth tab" },
+  { on = [ "b", "1" ], run = "tab_switch 0", desc = "Switch to the first tab" },
+  { on = [ "b", "2" ], run = "tab_switch 1", desc = "Switch to the second tab" },
+  { on = [ "b", "3" ], run = "tab_switch 2", desc = "Switch to the third tab" },
+  { on = [ "b", "4" ], run = "tab_switch 3", desc = "Switch to the fourth tab" },
+  { on = [ "b", "5" ], run = "tab_switch 4", desc = "Switch to the fifth tab" },
+  { on = [ "b", "6" ], run = "tab_switch 5", desc = "Switch to the sixth tab" },
+  { on = [ "b", "7" ], run = "tab_switch 6", desc = "Switch to the seventh tab" },
+  { on = [ "b", "8" ], run = "tab_switch 7", desc = "Switch to the eighth tab" },
+  { on = [ "b", "9" ], run = "tab_switch 8", desc = "Switch to the ninth tab" },
 
-  { on = [ "[" ], run = "tab_switch -1 --relative", desc = "Switch to the previous tab" },
-  { on = [ "]" ], run = "tab_switch 1 --relative",  desc = "Switch to the next tab" },
+  { on = [ "b", "p" ], run = "tab_switch -1 --relative", desc = "Switch to the previous tab" },
+  { on = [ "b", "n" ], run = "tab_switch 1 --relative",  desc = "Switch to the next tab" },
 
   { on = [ "{" ], run = "tab_swap -1", desc = "Swap the current tab with the previous tab" },
   { on = [ "}" ], run = "tab_swap 1",  desc = "Swap the current tab with the next tab" },
@@ -135,25 +139,24 @@ keymap = [
   { on = [ "g", "k" ],       run = "arrow -99999999",                 desc = "Top" },
   { on = [ "g", "j" ],       run = "arrow 99999999",                  desc = "Bottom" },
   { on = [ "g", "h" ],       run = "cd ~",                            desc = "Go to ~" },
-  { on = [ "g", "c"],        run = "cd ~/.config",                    desc = "Go to ~/.config" },
-  { on = [ "g", "b"],        run = "cd ~/.local/bin",                 desc = "Go to ~/.local/bin" },
+  { on = [ "g", "c" ],       run = "cd ~/.config",                    desc = "Go to ~/.config" },
+  { on = [ "g", "b" ],       run = "cd ~/.local/bin",                 desc = "Go to ~/.local/bin" },
   { on = [ "g", "d" ],       run = "cd ~/downloads",                  desc = "Go to ~/downloads" },
-  { on = [ "g", "g"],        run = "cd ~/games",                      desc = "Go to ~/games" },
-  { on = [ "g", "p"],        run = "cd ~/media/pictures",             desc = "Go to ~/media/pictures" },
-  { on = [ "g", "m"],        run = "cd ~/media/pictures/memes",       desc = "Go to ~/media/pictures/memes" },
-  { on = [ "g", "s"],        run = "cd ~/media/pictures/screenshots", desc = "Go to ~/media/pictures/screenshots" },
-  { on = [ "g", "n"],        run = "cd ~/notes",                      desc = "Go to ~/notes" },
-  { on = [ "g", "r"],        run = "cd ~/repos",                      desc = "Go to ~/repos" },
-  { on = [ "g", "t"],        run = "cd ~/tmp",                        desc = "Go to ~/tmp" },
-  { on = [ "g", "M"],        run = "cd /run/media/$USER",             desc = "Go to /run/media/$USER" },
+  { on = [ "g", "g" ],       run = "cd ~/games",                      desc = "Go to ~/games" },
+  { on = [ "g", "p" ],       run = "cd ~/media/pictures",             desc = "Go to ~/media/pictures" },
+  { on = [ "g", "m" ],       run = "cd ~/media/pictures/memes",       desc = "Go to ~/media/pictures/memes" },
+  { on = [ "g", "s" ],       run = "cd ~/media/pictures/screenshots", desc = "Go to ~/media/pictures/screenshots" },
+  { on = [ "g", "n" ],       run = "cd ~/notes",                      desc = "Go to ~/notes" },
+  { on = [ "g", "r" ],       run = "cd ~/repos",                      desc = "Go to ~/repos" },
+  { on = [ "g", "t" ],       run = "cd ~/tmp",                        desc = "Go to ~/tmp" },
+  { on = [ "g", "M" ],       run = "cd /run/media/$USER",             desc = "Go to /run/media/$USER" },
   { on = [ "g", "T" ],       run = "cd /tmp",                         desc = "Go to /tmp" },
 
   # Help
-  { on = [ "?" ], run = ["help"], desc = "Open help" },
+  { on = [ "?" ], run = [ "help" ], desc = "Open help" },
 ]
 
 [tasks]
-
 keymap = [
   { on = [ "<Esc>" ], run = "close", desc = "Hide the task manager" },
   { on = [ "<C-q>" ], run = "close", desc = "Hide the task manager" },
@@ -168,11 +171,10 @@ keymap = [
   { on = [ "<Enter>" ], run = "inspect", desc = "Inspect the task" },
   { on = [ "x" ],       run = "cancel",  desc = "Cancel the task" },
 
-  { on = [ "?" ], run = "help", desc = "Open help" }
+  { on = [ "?" ], run = "help", desc = "Open help" },
 ]
 
 [select]
-
 keymap = [
   { on = [ "<C-q>" ],   run = "close",          desc = "Cancel selection" },
   { on = [ "<Esc>" ],   run = "close",          desc = "Cancel selection" },
@@ -184,11 +186,10 @@ keymap = [
   { on = [ "K" ], run = "arrow -5", desc = "Move cursor up 5 lines" },
   { on = [ "J" ], run = "arrow 5",  desc = "Move cursor down 5 lines" },
 
-  { on = [ "?" ], run = "help", desc = "Open help" }
+  { on = [ "?" ], run = "help", desc = "Open help" },
 ]
 
 [input]
-
 keymap = [
   { on = [ "<C-q>" ],   run = "close",          desc = "Cancel input" },
   { on = [ "<Enter>" ], run = "close --submit", desc = "Submit the input" },
@@ -211,11 +212,11 @@ keymap = [
   { on = [ "<C-f>" ],   run = "move 1",  desc = "Move forward a character" },
 
   # Word-wise movement
-  # { on = [ "b" ],     run = "backward",              desc = "Move back to the start of the current or previous word" },
-  { on = [ "w" ],     run = "backward",              desc = "Move back to the start of the current or previous word" },
-  { on = [ "e" ],     run = "forward --end-of-word", desc = "Move forward to the end of the current or next word" },
-  { on = [ "<A-b>" ], run = "backward",              desc = "Move back to the start of the current or previous word" },
-  { on = [ "<A-f>" ], run = "forward --end-of-word", desc = "Move forward to the end of the current or next word" },
+  # { on = [  "b"  ],     run = "backward",              desc = "Move back to the start of the current or previous word" },
+  { on = [ "w" ],         run = "backward",              desc = "Move back to the start of the current or previous word" },
+  { on = [ "e" ],         run = "forward --end-of-word", desc = "Move forward to the end of the current or next word" },
+  { on = [ "<A-b>" ],     run = "backward",              desc = "Move back to the start of the current or previous word" },
+  { on = [ "<A-f>" ],     run = "forward --end-of-word", desc = "Move forward to the end of the current or next word" },
 
   # Line-wise movement
   { on = [ "0" ],     run = "move -999", desc = "Move to the BOL" },
@@ -240,20 +241,19 @@ keymap = [
   { on = [ "c" ], run = "delete --cut --insert",                     desc = "Cut the selected characters, and enter insert mode" },
   { on = [ "C" ], run = [ "delete --cut --insert", "move 999" ],     desc = "Cut until the EOL, and enter insert mode" },
   { on = [ "x" ], run = [ "delete --cut", "move 1 --in-operating" ], desc = "Cut the current character" },
-  { on = [ "y" ], run = "yank",           desc = "Copy the selected characters" },
-  { on = [ "p" ], run = "paste",          desc = "Paste the copied characters after the cursor" },
-  { on = [ "P" ], run = "paste --before", desc = "Paste the copied characters before the cursor" },
+  { on = [ "y" ], run = "yank",                                      desc = "Copy the selected characters" },
+  { on = [ "p" ], run = "paste",                                     desc = "Paste the copied characters after the cursor" },
+  { on = [ "P" ], run = "paste --before",                            desc = "Paste the copied characters before the cursor" },
 
   # Undo/Redo
   { on = [ "u" ],     run = "undo", desc = "Undo the last operation" },
   { on = [ "<C-r>" ], run = "redo", desc = "Redo the last operation" },
 
   # Help
-  { on = [ "~" ], run = "help", desc = "Open help" }
+  { on = [ "~" ], run = "help", desc = "Open help" },
 ]
 
 [completion]
-
 keymap = [
   { on = [ "<C-q>" ], run = "close",          desc = "Cancel completion" },
   { on = [ "<Tab>" ], run = "close --submit", desc = "Submit the completion" },
@@ -261,11 +261,10 @@ keymap = [
   { on = [ "<C-p>" ], run = "arrow -1", desc = "Move cursor up" },
   { on = [ "<A-n>" ], run = "arrow 1",  desc = "Move cursor down" },
 
-  { on = [ "~" ], run = "help", desc = "Open help" }
+  { on = [ "~" ], run = "help", desc = "Open help" },
 ]
 
 [help]
-
 keymap = [
   { on = [ "<Esc>" ], run = "escape", desc = "Clear the filter, or hide the help" },
   { on = [ "q" ],     run = "close",  desc = "Exit the process" },
@@ -287,4 +286,3 @@ keymap = [
   # Filtering
   { on = [ "/" ], run = "filter", desc = "Apply a filter for the help items" },
 ]
-
