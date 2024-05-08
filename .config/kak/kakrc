@@ -191,7 +191,7 @@ define-command comment -docstring "(Un)Comment lines" %{
 define-command docs -docstring "
   docs <docset> <args> : search for an api within a dedoc docset
 " -params 2.. %{ evaluate-commands %sh{
-	cols=$(echo "$kak_window_width - 8" | bc -q)
+  cols=$(echo "$kak_window_width - 8" | bc -q)
   if [ $# -eq 3 ]; then
     echo "kakpipe -n \"docs $@\" -- dedoc -c ss -i -o $3 -c $cols $1 $2"
   else
