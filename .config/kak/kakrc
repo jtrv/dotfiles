@@ -299,7 +299,7 @@ define-command glow -docstring "
 " -params 1.. %{
   kakpipe -n "glow %arg{@}" -- glow -s dark %arg{@};
 } -menu -shell-script-candidates %{fd -e md}
-hook global WinDisplay '\*glow\*' %{
+hook global WinDisplay '\*glow.*\*' %{
   ui-trailing-spaces-disable
 }
 
@@ -336,7 +336,7 @@ define-command hey -docstring "
 " -params 1.. %{
   kakpipe -w -n "hey %arg{@}" -- heygpt %arg{@};
 }
-hook global WinDisplay '\*hey\*' %{
+hook global WinDisplay '\*hey.*\*' %{
   ui-wrap-enable
 }
 define-command hey-buffer -docstring "
@@ -442,7 +442,7 @@ define-command reader-mode -docstring "Enables settings for better reading" %{
   map buffer normal d <c-d>
   map buffer normal u <c-u>
 }
-hook global WinDisplay '\*(delta|diff|difft|greeting|help|man \w+|mdn|tldr)\*' %{
+hook global WinDisplay '\*(delta|diff|difft|greeting|help|man \w+|mdn|tldr).*\*' %{
   reader-mode
 }
 
