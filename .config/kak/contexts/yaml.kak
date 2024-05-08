@@ -1,3 +1,6 @@
+# indent.kak
+set-indent buffer 2 false 
+
 set-option window formatcmd "prettierd format.yml"
 
 set-option window lintcmd %{
