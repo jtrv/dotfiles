@@ -4,7 +4,7 @@ Documentation=man:batsignal(1)
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/batsignal -p -e -a Battery -f 97 -w 15 -c 7 -d 3 -D 'systemctl hibernate'
+ExecStart=/usr/bin/batsignal -p -e -a Battery -w 15 -c 7 -d 3 -D 'systemctl hibernate'
 Restart=on-failure
 RestartSec=1
 
