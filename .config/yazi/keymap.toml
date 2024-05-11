@@ -67,6 +67,7 @@ keymap = [
   { on = [ "<C-Enter>" ], run = "open --interactive",                                   desc = "Open the selected files interactively" },
   { on = [ "y" ],         run = [ "yank", "escape --visual --select" ],                 desc = "Copy the selected files" },
   { on = [ "x" ],         run = [ "yank --cut", "escape --visual --select" ],           desc = "Cut the selected files" },
+  { on = [ "U" ],         run = "unyank",                                               desc = "Unyank yanked files" },
   { on = [ "p" ],         run = "paste",                                                desc = "Paste the files" },
   { on = [ "P" ],         run = "paste --force",                                        desc = "Paste the files (overwrite if the destination exists)" },
   { on = [ "-" ],         run = "link",                                                 desc = "Symlink the absolute path of files" },
