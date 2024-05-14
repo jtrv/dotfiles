@@ -1,8 +1,12 @@
 [manager]
 # plugins
 prepend_keymap = [
+
+	# open in $EDITOR
+  { on = [ "e" ], run = 'shell "$EDITOR \"$@\" " --block --confirm', desc = "Open selected files in $EDITOR" },
+
   # Drag and drop w/ ripdrag
-  { on = [ "<C-k>" ], run = '''shell 'ripdrag -xa "$@" 2>/dev/null &' --confirm''', desc = "drag and drop selected items"},
+  { on = [ "<C-k>" ], run = 'shell "ripdrag -xa \"$@\" 2>/dev/null &" --confirm', desc = "drag and drop selected items"},
 
   # Trash hovered file
   { on = [ "t", "d" ], run = 'shell "conceal clean" --block --confirm',   desc = "destroy relative trash items" },
