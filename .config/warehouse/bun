@@ -1,11 +1,11 @@
 @biomejs/biome
 @fsouza/prettierd
+@prisma/language-server
 bash-language-server
 bun
 commitlint
 depcheck
 emmet-cli
-eslint-plugin-autofix
 gitignore
 live-server
 prettier
@@ -13,5 +13,8 @@ purgecss
 stylelint_d
 svelte-language-server
 typescript-language-server
+vscode-css-languageserver-bin
+vscode-html-languageserver-bin
+vscode-json-languageserver-bin
 webtorrent-mpv-hook
 yaml-language-server
