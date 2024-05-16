@@ -806,11 +806,6 @@ map global user x -docstring "xargs" %{: xargs <ret>}
 
 map global user z -docstring "zeal" %{: zeal <ret>}
 
-hook global WinDisplay '\.env$' %{
-  set buffer filetype sh;
-  lsp-inlay-diagnostics-disable window
-}
-
 # contextual scripts
 hook global WinSetOption filetype=git-commit           %{ source "~/.config/kak/contexts/commit.kak"      }
 hook global WinSetOption filetype=(css|scss)           %{ source "~/.config/kak/contexts/css.kak"         }
@@ -829,3 +824,5 @@ hook global WinSetOption filetype=sh                   %{ source "~/.config/kak/
 hook global WinSetOption filetype=typescript           %{ source "~/.config/kak/contexts/typescript.kak"  }
 hook global WinSetOption filetype=toml                 %{ source "~/.config/kak/contexts/toml.kak"        }
 hook global WinSetOption filetype=yaml                 %{ source "~/.config/kak/contexts/yaml.kak"        }
+
+hook global WinCreate '\.env$'       %{ source "~/.config/kak/contexts/env.kak"    }
