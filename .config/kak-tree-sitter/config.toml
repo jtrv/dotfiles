@@ -111,10 +111,10 @@ pin = "8eaa762d05cc67c0e2cc53a0a71750b3c16733c2"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "awk.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language.awk.queries.source.git]
 url = "https://github.com/helix-editor/helix"
@@ -132,8 +132,8 @@ pin = "275effdfc0edce774acf7d481f9ea195c6c403cd"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../scanner.cc", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "bash.so"]
 link_flags = ["-O3", "-lstdc++"]
 
@@ -159,10 +159,10 @@ pin = "ccfd77db0ed799b6c22c214fe9d2937f47bc8b34"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "parser.o", "-o", "bibtex.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language.bibtex.queries.source.git]
 url = "https://github.com/helix-editor/helix"
@@ -183,10 +183,10 @@ pin = "7175a6dd5fc1cee660dce6fe23f6043d75af424a"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "parser.o", "-o", "c.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language.c.queries.source.git]
 url = "https://github.com/helix-editor/helix"
@@ -216,8 +216,8 @@ pin = "6e51463ef3052dd3b328322c22172eda093727ad"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../parser.c", "../scanner.cc", "-I", ".."]
-compile_flags = ["-O3", "-flto=auto", "-march=native"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3", "-flto=auto", "-march=native"]
+link = "cc"
 link_args = ["-shared", "-fpic", "parser.o", "scanner.o", "-o", "cmake.so"]
 link_flags = ["-O3", "-lstdc++", "-flto=auto"]
 
@@ -237,10 +237,10 @@ pin = "94c99a66bb5051d8321b5900aee92b76450c50ce"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "comment.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language.comment.queries.source.git]
 url = "https://github.com/helix-editor/helix"
@@ -264,8 +264,8 @@ pin = "b0ecb0d376c94d2fa4814816b41986bf5d735384"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../scanner.cc", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "cpp.so"]
 link_flags = ["-O3", "-lstdc++"]
 
@@ -288,10 +288,10 @@ pin = "92c0a9431400cd8b6b6ee7503f81da3ae83fc830"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "csharp.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language.csharp.queries.source.git]
 url = "https://github.com/helix-editor/helix"
@@ -309,10 +309,10 @@ pin = "769203d0f9abe1a9a691ac2b9fe4bb4397a73c51"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "css.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language.css.queries.source.git]
 url = "https://github.com/helix-editor/helix"
@@ -345,10 +345,10 @@ pin = "fd74c78fa88a20085dbc7bbeaba066f4d1692b63"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "parser.o", "-o", "diff.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language.diff.queries.source.git]
 url = "https://github.com/helix-editor/helix"
@@ -387,10 +387,10 @@ pin = "511ea5e0088779e4bdd76e12963ab9a5fe99983a"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "elixir.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language.elixir.queries.source.git]
 url = "https://github.com/helix-editor/helix"
@@ -426,8 +426,8 @@ pin = "84436cf24c2b3176bfbb220922a0fdbd0141e406"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../parser.c", "../scanner.c", "-I", ".."]
-compile_flags = ["-O3", "-march=native", "-flto=auto"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3", "-march=native", "-flto=auto"]
+link = "cc"
 link_args = ["-shared", "-fpic", "parser.o", "scanner.o", "-o", "fish.so"]
 link_flags = ["-O3", "-flto=auto"]
 
@@ -456,10 +456,10 @@ pin = "db88cffa3952dd2328b741af5d0fc69bdb76704f"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "parser.o", "-o", "git-commit.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language.git-commit.queries.source.git]
 url = "https://github.com/helix-editor/helix"
@@ -492,10 +492,10 @@ pin = "64457ea6b73ef5422ed1687178d4545c3e91334a"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "parser.o", "-o", "go.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language.go.queries.source.git]
 url = "https://github.com/helix-editor/helix"
@@ -532,10 +532,10 @@ pin = "98fc7f59049aeb713ab9b72a8ff25dcaaef81087"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../parser.c", "../scanner.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "parser.o", "scanner.o", "-o", "haskell.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language.haskell.queries.source.git]
 url = "https://github.com/helix-editor/helix"
@@ -562,10 +562,10 @@ pin = "86c253e675e7fdd1c0482efe0706f24bafbc3a7d"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../parser.c", "../scanner.cc", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "html.so"]
-link_flags = ["-O3", "-lstdc++"]
+link_flags = ["-fuse-ld=mold", "-O3", "-lstdc++"]
 
 [language.html.queries.source.git]
 url = "https://github.com/helix-editor/helix"
@@ -592,10 +592,10 @@ pin = "09d650def6cdf7f479f4b78f595e9ef5b58ce31e"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "parser.o", "-o", "java.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language.java.queries.source.git]
 url = "https://github.com/helix-editor/helix"
@@ -613,10 +613,10 @@ pin = "f1e5a09b8d02f8209a68249c93f0ad647b228e6e"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "javascript.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language.javascript.queries.source.git]
 url = "https://git.sr.ht/~hadronized/kak-tree-sitter"
@@ -637,10 +637,10 @@ pin = "73076754005a460947cafe8e03a8cf5fa4fa2938"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "parser.o", "-o", "json.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language.json.queries.source.git]
 url = "https://github.com/helix-editor/helix"
@@ -661,10 +661,10 @@ pin = "f1e5a09b8d02f8209a68249c93f0ad647b228e6e"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "jsx.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language.jsx.queries.source.git]
 url = "https://git.sr.ht/~hadronized/kak-tree-sitter"
@@ -682,8 +682,8 @@ pin = "2f885efd38a6a6abfefc81d53ecdd99812dcde69"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "-flto=auto", "../parser.c", "../scanner.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "-flto=auto", "parser.o", "scanner.o", "-o", "julia.so"]
 link_flags = ["-O3"]
 
@@ -709,10 +709,10 @@ pin = "a4f71eb9b8c9b19ded3e0e9470be4b1b77c2b569"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "kotlin.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language.kotlin.queries.source.git]
 url = "https://github.com/helix-editor/helix"
@@ -730,10 +730,10 @@ pin = "dfe891922ccd2e7cef52eccb2775e1b576727165"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "latex.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language.latex.queries.source.git]
 url = "https://github.com/helix-editor/helix"
@@ -769,10 +769,10 @@ pin = "a4b9187417d6be349ee5fd4b6e77b4172c6827dd"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "parser.o", "-o", "make.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language.make.queries.source.git]
 url = "https://github.com/helix-editor/helix"
@@ -793,10 +793,10 @@ pin = "aaf76797aa8ecd9a5e78e0ec3681941de6c945ee"
 path = "tree-sitter-markdown/src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "markdown.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language.markdown.queries.source.git]
 url = "https://github.com/phaazon/kak-tree-sitter"
@@ -814,10 +814,10 @@ pin = "aaf76797aa8ecd9a5e78e0ec3681941de6c945ee"
 path = "tree-sitter-markdown-inline/src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "markdown.inline.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language."markdown.inline".queries.source.git]
 url = "https://github.com/helix-editor/helix"
@@ -848,11 +848,11 @@ path = "runtime/queries/markdown.inline"
 [language.nim.grammar]
 path = "src"
 compile = "sccache"
-compile_args = ["cc","-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_args = [ "cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "nim.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language.nim.grammar.source.git]
 url = "https://github.com/alaviss/tree-sitter-nim"
@@ -873,11 +873,11 @@ pin = "763168fa916a333a459434f1424b5d30645f015d"
 [language.nix.grammar]
 path = "src"
 compile = "sccache"
-compile_args = ["-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "nix.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language.nix.queries.source.git]
 url = "https://github.com/helix-editor/helix"
@@ -895,10 +895,10 @@ pin = "786689b0562b9799ce53e824cb45a1a2a04dc673"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "parser.o", "-o", "nu.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language.nu.queries.source.git]
 url = "https://github.com/helix-editor/helix"
@@ -957,7 +957,7 @@ compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
 compile_flags = ["-fuse-ld=mold", "-O3"]
 link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "scanner.o", "-o", "prisma.so"]
+link_args = ["-shared", "-fpic", "parser.o", "-o", "prisma.so"]
 link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language.prisma.queries.source.git]
@@ -982,10 +982,10 @@ pin = "1615ac3b9c3b572259bce7a30c14cb06d6c2f2ff"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../parser.c", "../scanner.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "parser.o", "scanner.o", "-o", "purescript.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language.purescript.queries.source.git]
 url = "https://github.com/postsolar/tree-sitter-purescript"
@@ -1003,10 +1003,10 @@ pin = "de221eccf9a221f5b85474a553474a69b4b5784d"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../scanner.cc", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "python.so"]
-link_flags = ["-O3", "-lstdc++"]
+link_flags = ["-fuse-ld=mold", "-O3", "-lstdc++"]
 
 [language.python.queries.source.git]
 url = "https://github.com/helix-editor/helix"
@@ -1054,10 +1054,10 @@ pin = "206c7077164372c596ffa8eaadb9435c28941364"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../scanner.cc", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "c++"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc++"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "ruby.so"]
-link_flags = ["-O3", "-lstdc++"]
+link_flags = ["-fuse-ld=mold", "-O3", "-lstdc++"]
 
 [language.ruby.queries.source.git]
 url = "https://github.com/helix-editor/helix"
@@ -1075,10 +1075,10 @@ pin = "0431a2c60828731f27491ee9fdefe25e250ce9c9"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "rust.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language.rust.queries.source.git]
 url = "https://github.com/helix-editor/helix"
@@ -1096,10 +1096,10 @@ pin = "c478c6868648eff49eb04a4df90d703dc45b312a"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "scss.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language.scss.queries.source.git]
 url = "https://github.com/helix-editor/helix"
@@ -1123,10 +1123,10 @@ pin = "c0741320bfca6b7b5b7a13b5171275951e96a842"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "parser.o", "-o", "scheme.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language.scheme.queries.source.git]
 url = "https://github.com/helix-editor/helix"
@@ -1186,10 +1186,10 @@ pin = "8bd2056818b21860e3d756b5a58c4f6e05fb744e"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "toml.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language.toml.queries.source.git]
 url = "https://github.com/helix-editor/helix"
@@ -1210,10 +1210,10 @@ pin = "b1bf4825d9eaa0f3bdeb1e52f099533328acfbdf"
 path = "tsx/src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "tsx.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language.tsx.queries.source.git]
 url = "https://git.sr.ht/~hadronized/kak-tree-sitter"
@@ -1234,10 +1234,10 @@ pin = "b1bf4825d9eaa0f3bdeb1e52f099533328acfbdf"
 path = "typescript/src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "typescript.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language.typescript.queries.source.git]
 url = "https://git.sr.ht/~hadronized/kak-tree-sitter"
@@ -1258,10 +1258,10 @@ pin = "1f505e2447fa876a87aee47ff3d70b9e141c744f"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "unison.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language.unison.queries.source.git]
 url = "https://github.com/helix-editor/helix"
@@ -1288,10 +1288,10 @@ pin = "902031343056bc0b11f3e47b33f036a9cf59f58d"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "parser.o", "-o", "verilog.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language.verilog.queries.source.git]
 url = "https://github.com/helix-editor/helix"
@@ -1315,8 +1315,8 @@ pin = "91fe2754796cd8fba5f229505a23fa08f3546c06"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../scanner.cc", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "vue.so"]
 link_flags = ["-O3", "-lstdc"]
 
@@ -1351,10 +1351,10 @@ pin = "48a7c2b6fb9d515577e115e6788937e837815651"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "parser.o", "-o", "xml.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 [language.xml.queries.source.git]
 url = "https://github.com/helix-editor/helix"
@@ -1372,8 +1372,8 @@ pin = "0e36bed171768908f331ff7dff9d956bae016efb"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../scanner.cc", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "mold"
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "yaml.so"]
 link_flags = ["-O3", "-lstdc++"]
 
@@ -1394,9 +1394,9 @@ pin = "0d08703e4c3f426ec61695d7617415fff97029bd"
 
 [language.zig.grammar]
 path = "src"
-compile = "cc"
-compile_args = ["-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
+compile = "sccache"
+compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
+compile_flags = ["-fuse-ld=mold", "-O3"]
 link = "cc"
 link_args = ["-shared", "-fpic", "parser.o", "-o", "zig.so"]
 link_flags = ["-O3"]
