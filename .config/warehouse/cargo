@@ -47,6 +47,7 @@ grug -> https://github.com/jtrv/grug
 handlr-regex -> https://github.com/rust-lang/crates.io-index
 hashgood -> https://github.com/thombles/hashgood
 heygpt -> https://github.com/rust-lang/crates.io-index
+hop-kak -> https://github.com/rust-lang/crates.io-index
 hors -> https://github.com/rust-lang/crates.io-index
 htmlq -> https://github.com/rust-lang/crates.io-index
 httm -> https://github.com/rust-lang/crates.io-index
@@ -77,7 +78,6 @@ noseyparker-cli -> https://github.com/praetorian-inc/noseyparker
 onefetch -> https://github.com/rust-lang/crates.io-index
 ouch -> https://github.com/rust-lang/crates.io-index
 oxipng -> https://github.com/rust-lang/crates.io-index
-paru -> https://github.com/rust-lang/crates.io-index
 pastel -> https://github.com/rust-lang/crates.io-index
 pipe-rename -> https://github.com/rust-lang/crates.io-index
 procs -> https://github.com/rust-lang/crates.io-index
