@@ -826,3 +826,4 @@ hook global WinSetOption filetype=toml                 %{ source "~/.config/kak/
 hook global WinSetOption filetype=yaml                 %{ source "~/.config/kak/contexts/yaml.kak"        }
 
 hook global WinCreate '\.env$'       %{ source "~/.config/kak/contexts/env.kak"    }
+hook global WinCreate '.*?\.prisma$' %{ source "~/.config/kak/contexts/prisma.kak" }
