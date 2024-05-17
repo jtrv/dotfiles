@@ -12,7 +12,7 @@ bundle-noload kak-bundle https://github.com/jdugan6240/kak-bundle
 
 ################### DISPLAY ###################
 
-evaluate-commands %sh{ kak-tree-sitter -vvvvv -dks --with-highlighting --with-text-objects --session "$kak_session" }
+evaluate-commands %sh{ kak-tree-sitter -vvv -dks --with-highlighting --with-text-objects --session "$kak_session" }
 
 colorscheme catpuccin_mocha
 
