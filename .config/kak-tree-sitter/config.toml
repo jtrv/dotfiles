@@ -257,24 +257,24 @@ path = "runtime/queries/comment"
 
 # cpp
 [language.cpp.grammar.source.git]
-url = "https://git.sr.ht/~hadronized/kak-tree-sitter"
-pin = "b0ecb0d376c94d2fa4814816b41986bf5d735384"
+url = "https://github.com/tree-sitter/tree-sitter-cpp"
+pin = "2369fa991eba294e9238e28280ffcd58132f94bc"
 
 [language.cpp.grammar]
 path = "src"
 compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.cc", "../parser.c", "-I", ".."]
+compile_args = ["cc","-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
 compile_flags = ["-fuse-ld=mold", "-O3"]
 link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "cpp.so"]
-link_flags = ["-O3", "-lstdc++"]
+link_flags = ["-fuse-ld=mold", "-O3", "-lstdc++"]
 
 [language.cpp.queries.source.git]
-url = "https://github.com/phaazon/kak-tree-sitter"
-pin = "bf5fbfcd2eee7f26d632607a2046f460aa392a8c"
+url = "https://github.com/tree-sitter/tree-sitter-cpp"
+pin = "2369fa991eba294e9238e28280ffcd58132f94bc"
 
 [language.cpp.queries]
-path = "runtime/queries/cpp"
+path = "queries"
 
 # crystal
 # TODO
@@ -1055,7 +1055,7 @@ path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../scanner.cc", "../parser.c", "-I", ".."]
 compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc++"
+link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "ruby.so"]
 link_flags = ["-fuse-ld=mold", "-O3", "-lstdc++"]
 
@@ -1318,7 +1318,7 @@ compile_args = ["cc", "-c", "-fpic", "../scanner.cc", "../parser.c", "-I", ".."]
 compile_flags = ["-fuse-ld=mold", "-O3"]
 link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "vue.so"]
-link_flags = ["-O3", "-lstdc"]
+link_flags = ["-fuse-ld=mold", "-O3", "-lstdc++"]
 
 [language.vue.queries.source.git]
 url = "https://github.com/helix-editor/helix"
