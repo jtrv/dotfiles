@@ -41,7 +41,6 @@ self_update = true
 
 # Custom commands
 [commands]
-"bun globals" = "bun update -g"
 "proton" = "protonup-rs -q"
 
 [linux]
