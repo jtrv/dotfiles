@@ -50,7 +50,7 @@ command = "crystalline"
 [language_server.css-language-server]
 filetypes = ["css"]
 roots = ["package.json", ".git", ".hg"]
-command = "css-languageserver"
+command = "vscode-css-language-server"
 args = ["--stdio"]
 
 # [language_server.deno-lsp]
@@ -66,7 +66,7 @@ args = ["--stdio"]
 [language_server.less-language-server]
 filetypes = ["less"]
 roots = ["package.json", ".git", ".hg"]
-command = "css-languageserver"
+command = "vscode-css-language-server"
 args = ["--stdio"]
 
 
@@ -184,7 +184,7 @@ settings_section = "_"
 [language_server.html-language-server]
 filetypes = ["html"]
 roots = ["package.json"]
-command = "html-languageserver"
+command = "vscode-html-language-server"
 args = ["--stdio"]
 settings_section = "_"
 [language_server.html-language-server.settings._]
@@ -203,7 +203,7 @@ storagePath = "/tmp/intelephense"
 [language_server.json-language-server]
 filetypes = ["json"]
 roots = ["package.json"]
-command = "json-languageserver"
+command = "vscode-json-language-server"
 args = ["--stdio"]
 
 # Requires Julia package "LanguageServer"
@@ -446,23 +446,24 @@ settings_section = "_"
 quotePreference = "none"
 typescript.format.semicolons = "none"
 
-# [language_server.eslint]
-# filetypes = ["javascript", "typescript"]
-# roots = [".eslintrc", ".eslintrc.json"]
-# command = "eslint-language-server"
-# args = ["--stdio"]
-# workaround_eslint = true
-# [language_server.eslint.settings]
-# codeActionsOnSave = { mode = "all", "source.fixAll.eslint" = true }
-# format = { enable = true }
-# quiet = false
-# rulesCustomizations = []
-# run = "onType"
-# validate = "on"
-# experimental = {}
-# problems = { shortenToSingleLine = false }
-# codeAction.disableRuleComment = { enable = true, location = "separateLine" }
-# codeAction.showDocumentation = { enable = false }
+[language_server.eslint]
+filetypes = ["javascript", "typescript"]
+roots = [".eslintrc", ".eslintrc.json"]
+command = "vscode-eslint-language-server"
+args = ["--stdio"]
+workaround_eslint = true
+[language_server.eslint.settings]
+codeActionsOnSave = { mode = "all", "source.fixAll.eslint" = true }
+workingDirectories = { "mode" = "location" }
+format = { enable = true }
+quiet = false
+rulesCustomizations = []
+run = "onType"
+validate = "on"
+experimental = {}
+problems = { shortenToSingleLine = false }
+codeAction.disableRuleComment = { enable = true, location = "separateLine" }
+codeAction.showDocumentation = { enable = true }
 
 [language_server.yaml-language-server]
 filetypes = ["yaml"]
