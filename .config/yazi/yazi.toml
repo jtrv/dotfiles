@@ -10,7 +10,7 @@ show_symlink   = true
 tab_size        = 2
 max_width       = 600
 max_height      = 900
-image_filter    = "lanczos3"
+image_filter    = "triangle"
 
 [opener]
 edit = [
