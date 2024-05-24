@@ -60,6 +60,7 @@ alias m       'qalc'
 alias mdc     'mdcat --columns=70'
 alias mkdir   'mkdir -p'
 alias nbg     'feh --randomize --bg-scale --no-fehbg ~/media/pictures/wallpapers/' # change bg
+alias o       'xdg-open'
 alias py      'python'
 alias q       'exit'
 alias thes    'thesauromatic'
