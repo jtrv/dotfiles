@@ -1,5 +1,7 @@
 @biomejs/biome
 @fsouza/prettierd
+@nestjs/cli
+@prisma/language-server
 bash-language-server
 bun
 commitlint
@@ -10,8 +12,6 @@ purgecss
 stylelint_d
 svelte-language-server
 typescript-language-server
-vscode-css-languageserver-bin
-vscode-html-languageserver-bin
-vscode-json-languageserver-bin
+vscode-langservers-extracted
 webtorrent-mpv-hook
 yaml-language-server

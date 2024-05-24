@@ -2,8 +2,10 @@ alacritty -> /home/sugimoto/repos/alacritty-sixel/alacritty
 attractorr -> https://github.com/rust-lang/crates.io-index
 atuin -> https://github.com/rust-lang/crates.io-index
 b3sum -> https://github.com/rust-lang/crates.io-index
+bacon -> https://github.com/rust-lang/crates.io-index
 bandwhich -> https://github.com/rust-lang/crates.io-index
 bat -> https://github.com/rust-lang/crates.io-index
+bogrep -> https://github.com/rust-lang/crates.io-index
 bottom -> https://github.com/rust-lang/crates.io-index
 cargo-audit -> https://github.com/rust-lang/crates.io-index
 cargo-binstall -> https://github.com/rust-lang/crates.io-index
@@ -22,7 +24,7 @@ choose -> https://github.com/rust-lang/crates.io-index
 clipcatctl -> https://github.com/xrelkd/clipcat
 clipcatd -> https://github.com/xrelkd/clipcat
 clipcat-menu -> https://github.com/xrelkd/clipcat
-complgen -> https://github.com/adaszko/complgen
+conceal -> https://github.com/rust-lang/crates.io-index
 cpz -> https://github.com/rust-lang/crates.io-index
 crabz -> https://github.com/rust-lang/crates.io-index
 dedoc -> /home/sugimoto/repos/dedoc
@@ -46,8 +48,10 @@ grug -> https://github.com/jtrv/grug
 handlr-regex -> https://github.com/rust-lang/crates.io-index
 hashgood -> https://github.com/thombles/hashgood
 heygpt -> https://github.com/rust-lang/crates.io-index
+hop-kak -> https://github.com/rust-lang/crates.io-index
 hors -> https://github.com/rust-lang/crates.io-index
 htmlq -> https://github.com/rust-lang/crates.io-index
+httm -> https://github.com/rust-lang/crates.io-index
 huniq -> https://github.com/rust-lang/crates.io-index
 hyperfine -> https://github.com/rust-lang/crates.io-index
 iching -> https://github.com/rust-lang/crates.io-index
@@ -55,7 +59,7 @@ jaq -> https://github.com/rust-lang/crates.io-index
 jless -> https://github.com/rust-lang/crates.io-index
 jql -> https://github.com/rust-lang/crates.io-index
 just -> https://github.com/rust-lang/crates.io-index
-kak-lsp -> /home/sugimoto/.config/kak/bundle/kak-lsp
+kak-lsp -> /home/sugimoto/.config/kak/bundle/kakoune-lsp
 kakpipe -> /home/sugimoto/.config/kak/bundle/kakpipe
 kak-popup -> /home/sugimoto/.config/kak/bundle/popup.kak
 kakship -> /home/sugimoto/.config/kak/bundle/kakship
@@ -71,7 +75,6 @@ magnetfinder -> https://github.com/rust-lang/crates.io-index
 mdcat -> https://github.com/rust-lang/crates.io-index
 minhtml -> https://github.com/rust-lang/crates.io-index
 mullscan -> https://github.com/jtrv/mullscan
-noseyparker-cli -> https://github.com/praetorian-inc/noseyparker
 onefetch -> https://github.com/rust-lang/crates.io-index
 ouch -> https://github.com/rust-lang/crates.io-index
 oxipng -> https://github.com/rust-lang/crates.io-index
@@ -84,7 +87,6 @@ rate_mirrors -> https://github.com/westandskif/rate-mirrors
 ripdrag -> https://github.com/rust-lang/crates.io-index
 ripgrep_all -> https://github.com/rust-lang/crates.io-index
 ripgrep -> https://github.com/rust-lang/crates.io-index
-rm-improved -> https://github.com/rust-lang/crates.io-index
 rmz -> https://github.com/rust-lang/crates.io-index
 rustscan -> https://github.com/rust-lang/crates.io-index
 rusty-man -> https://github.com/rust-lang/crates.io-index
@@ -106,15 +108,16 @@ tailspin -> https://github.com/rust-lang/crates.io-index
 tealdeer -> https://github.com/rust-lang/crates.io-index
 thesauromatic -> https://github.com/rust-lang/crates.io-index
 tokei -> https://github.com/rust-lang/crates.io-index
-topgrade -> https://github.com/rust-lang/crates.io-index
+topgrade -> https://github.com/topgrade-rs/topgrade
 t-rec -> https://github.com/rust-lang/crates.io-index
 trippy -> https://github.com/rust-lang/crates.io-index
 ttyper -> https://github.com/rust-lang/crates.io-index
 vopono -> https://github.com/rust-lang/crates.io-index
 watchexec-cli -> https://github.com/rust-lang/crates.io-index
 wthrr -> https://github.com/rust-lang/crates.io-index
+xcolor -> https://github.com/rust-lang/crates.io-index
 xh -> https://github.com/rust-lang/crates.io-index
 xtask -> https://github.com/Anomalocaridid/handlr-regex
-yazi-fm -> https://github.com/sxyazi/yazi.git
+yazi-fm -> https://github.com/rust-lang/crates.io-index
 zet -> https://github.com/rust-lang/crates.io-index
 zoxide -> https://github.com/rust-lang/crates.io-index
