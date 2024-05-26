@@ -613,7 +613,7 @@ map global normal +     -docstring "new popup"      %{: popup fish <ret>}
 map global normal <c-p> -docstring "file-picker"    %{: file-picker <ret>}
 
 # external programs
-map global normal <c-h> -docstring "lf"        %{: popup lf <ret>}
+map global normal <c-h> -docstring "yazi"      %{: popup yazi <ret>}
 map global normal <c-v> -docstring "lazygit"   %{: popup lazygit <ret>}
 
 ################# MODES ##################
