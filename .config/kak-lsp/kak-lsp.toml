@@ -405,16 +405,9 @@ args = ["serve"]
 filetypes = ["latex"]
 roots = [".git", ".hg"]
 command = "texlab"
-settings_section = "texlab"
 
 [language_server.texlab.settings.texlab]
 build.onSave = true
-build.executable = "latexmk"
-build.args = ["-pdf", "-interaction=nonstopmode", "-synctex=1", "%f"]
-# See https://github.com/latex-lsp/texlab/blob/master/docs/options.md
-#
-# Preview configuration for zathura with SyncTeX search.
-# For other PDF viewers see https://github.com/latex-lsp/texlab/blob/master/docs/previewing.md
 forwardSearch.executable = "zathura"
 forwardSearch.args = [
     "%p",
