@@ -808,6 +808,7 @@ hook global WinSetOption filetype=grep-expand          %{ source "~/.config/kak/
 hook global WinSetOption filetype=html                 %{ source "~/.config/kak/contexts/html.kak"        }
 hook global WinSetOption filetype=javascript           %{ source "~/.config/kak/contexts/javascript.kak"  }
 hook global WinSetOption filetype=json                 %{ source "~/.config/kak/contexts/json.kak"        }
+hook global WinSetOption filetype=latex                %{ source "~/.config/kak/contexts/latex.kak"       }
 hook global WinSetOption filetype=markdown             %{ source "~/.config/kak/contexts/markdown.kak"    }
 hook global WinSetOption filetype=python               %{ source "~/.config/kak/contexts/python.kak"      }
 hook global WinSetOption filetype=rust                 %{ source "~/.config/kak/contexts/rust.kak"        }
