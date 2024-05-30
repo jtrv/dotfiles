@@ -21,11 +21,9 @@ bat
 bemoji
 betterdiscord-installer-bin
 bindtointerface
-blueberry
 bluez
 bluez-utils
 boost
-bottles
 bottom
 breeze-icons
 btrfs-desktop-notification-git
@@ -44,15 +42,13 @@ cargo-update
 catppuccin-cursors-mocha
 catppuccin-gtk-theme-mocha
 catppuccin-mocha-grub-theme-git
-cava
 ccache
 chaotic-keyring
 chaotic-mirrorlist
 checkbashisms
 choose
+circumflex-bin
 clipcat
-cliphist
-clipmenu
 clojure-lsp-bin
 cmake
 croc
@@ -65,7 +61,6 @@ doasedit-alternative
 docker
 docker-compose
 docx2txt
-dog
 dosfstools
 downgrade
 dunst
@@ -80,6 +75,7 @@ exercism
 exfat-utils
 eza
 fail2ban
+fclones
 fd
 feh
 ff2mpv-rust
@@ -92,6 +88,7 @@ firefox-tridactyl
 firefox-tridactyl-native
 firefox-ublock-origin
 firejail-git
+firejail-pacman-hook
 fisher
 flameshot-git
 fstl
@@ -108,7 +105,6 @@ git
 git-delta
 github-cli
 glow
-gnome-tweaks
 gnuplot
 gomuks
 gopls
@@ -120,7 +116,6 @@ handlr-regex
 hostsblock
 htmlq
 hyperfine
-i2pd
 ibus
 imagemagick
 inotify-tools
@@ -128,9 +123,11 @@ intel-ucode
 irqbalance
 j4-dmenu-desktop
 jaq
+jless
 jp2a
 jpegoptim
 jre
+just
 kdeconnect
 kexec-tools
 kmon
@@ -163,7 +160,6 @@ logseq-desktop-bin
 lostfiles
 lua-language-server
 lutris
-lxappearance
 lychee
 marksman
 mcomix
@@ -193,6 +189,7 @@ ntfs-3g
 ntp
 nvtop
 odt2txt
+onefetch
 opencl-amd
 openmp
 osv-scanner
@@ -229,12 +226,16 @@ progress
 pueue
 pulsemixer
 pyright
+python-beaker
+python-dogpile.cache
 python-lsp-black
 python-lsp-ruff
 python-notify2
 python-pip
+python-pyls-isort
 python-pylsp-mypy
 python-pytest
+python-uv
 qbittorrent
 qpwgraph
 qrcp-git
@@ -251,6 +252,7 @@ rkhunter
 rsync
 ruff-lsp
 rust-analyzer
+rustscan
 rustup
 samply
 screenkey
@@ -260,6 +262,7 @@ shellcheck-bin
 shfmt
 signal-desktop
 sl
+sniffglue
 spectrwm
 speedtest++
 spirv-headers
@@ -289,7 +292,6 @@ tidy
 tig
 tmux
 tokei
-topgrade
 torbrowser-launcher
 trippy
 ttf-font-awesome
@@ -299,7 +301,9 @@ udict-bin
 udiskie
 ueberzugpp
 ufw
+unarchiver
 upx
+usql
 uv
 veracrypt
 vhs
@@ -335,7 +339,10 @@ xorg-xinit
 xorg-xinput
 xorg-xset
 xournalpp
+xsel
 yamllint
+yazi
+yin-yang-git
 yq
 yt-dlp
 zaread-git

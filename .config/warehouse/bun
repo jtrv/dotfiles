@@ -2,12 +2,17 @@
 @fsouza/prettierd
 @nestjs/cli
 @prisma/language-server
+@typescript-eslint/eslint-plugin
 bash-language-server
 bun
 commitlint
 depcheck
+emmet-cli
+eslint-plugin-prettier
 gitignore
+live-server
 prettier
+prisma
 purgecss
 stylelint_d
 svelte-language-server

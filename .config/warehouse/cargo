@@ -8,10 +8,10 @@ caser-cli -> https://github.com/jtrv/caser
 conceal -> https://github.com/rust-lang/crates.io-index
 cpz -> https://github.com/rust-lang/crates.io-index
 crabz -> https://github.com/rust-lang/crates.io-index
-dedoc -> /home/sugimoto/repos/dedoc
+dedoc -> https://github.com/rust-lang/crates.io-index
 dog -> https://github.com/ogham/dog
 dprint -> https://github.com/rust-lang/crates.io-index
-fclones -> https://github.com/rust-lang/crates.io-index
+fish-manpage-completions -> https://github.com/rust-dc/fish-manpage-completions
 fls -> https://github.com/rust-lang/crates.io-index
 fortune-kind -> https://github.com/rust-lang/crates.io-index
 gprepo -> /home/sugimoto/repos/gprepo
@@ -58,6 +58,7 @@ skyspell_kak -> https://github.com/rust-lang/crates.io-index
 sniffglue -> https://github.com/rust-lang/crates.io-index
 speedtest-rs -> https://github.com/rust-lang/crates.io-index
 thesauromatic -> https://github.com/rust-lang/crates.io-index
+topgrade -> /home/sugimoto/repos/topgrade
 t-rec -> https://github.com/rust-lang/crates.io-index
 vopono -> https://github.com/rust-lang/crates.io-index
 wthrr -> https://github.com/rust-lang/crates.io-index
