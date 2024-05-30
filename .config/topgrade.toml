@@ -5,7 +5,7 @@ assume_yes = true
 notify_each_step = true
 
 # Disable specific steps - same options as the command line flag
-disable = ["containers", "protonup"]
+disable = ["containers", "protonup", "kakoune"]
 
 # Ignore failures for these steps
 ignore_failures = ["git_repos"]
@@ -41,6 +41,7 @@ self_update = true
 
 # Custom commands
 [commands]
+"kakoune" = "pushd ~/repos/kakoune/; doas make install; popd; kak -e 'bundle-install'"
 "proton" = "protonup-rs -q"
 
 [linux]
