@@ -4,12 +4,12 @@
 colorscheme catpuccin_mocha
 
 evaluate-commands %sh{
-  kak-lsp --kakoune -s "$kak_session"
-  kak-tree-sitter -vvv -dks --with-highlighting --with-text-objects --session "$kak_session"
-  colorcol
-  kak-popup init
-  hop-kak --init
-  skyspell-kak init
+  kak-lsp --kakoune -s "$kak_session" # bundle https://github.com/kakoune-lsp/kakoune-lsp
+  kak-tree-sitter -vvv -dks --with-highlighting --with-text-objects --session "$kak_session" # bundle https://git.sr.ht/~hadronized/kak-tree-sitter 
+  colorcol # bundle https://github.com/SolitudeSF/colorcol
+  kak-popup init # bundle https://github.com/enricozb/popup.kak
+  hop-kak --init # bundle https://github.com/hadronized/hop.kak
+  skyspell-kak init # https://github.com/your-tools/skyspell
 }
 
 source "%val{config}/catpuccin_mocha_tree_sitter_faces.kak"
