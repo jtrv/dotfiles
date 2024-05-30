@@ -3,6 +3,9 @@
 prepend_keymap = [
 
 	# open in $EDITOR
+  { on = [ "B" ], run = 'shell "bak \"$@\" " --block --confirm', desc = "append '.bak' to filename" },
+
+	# open in $EDITOR
   { on = [ "e" ], run = 'shell "$EDITOR \"$@\" " --block --confirm', desc = "Open selected files in $EDITOR" },
 
   # Drag and drop w/ ripdrag
