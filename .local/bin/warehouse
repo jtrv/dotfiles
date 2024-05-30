@@ -11,7 +11,7 @@ sort <"$XDG_CONFIG_HOME"/fish/fish_plugins >"$WAREHOUSE"/fish
 
 ls -1 "$XDG_DATA_HOME"/go/bin >"$WAREHOUSE"/go
 
-rg -o '^bundle.*(https.*?)("|\s|$)' -r '$1' <"$XDG_CONFIG_HOME"/kak/kakrc | sort >"$WAREHOUSE"/kakoune
+rg -o 'bundle.*(https.*?)("|\s|$)' -r '$1' <"$XDG_CONFIG_HOME"/kak/kakrc | sort >"$WAREHOUSE"/kakoune
 
 nimble list -i --silent | cut -d ' ' -f 1 >"$WAREHOUSE"/nimble
 
