@@ -39,9 +39,6 @@ xbanish &                      # hide mouse when typing
 ~/.local/bin/map-keys &        # map caps to ctrl/esc
 ~/.local/bin/trackball-speed & # set trackball speed
 
-# random wallpaper
-feh --randomize --bg-scale --no-fehbg ~/media/pictures/wallpapers/ &
-
 xhost +SI:localuser:$USER
 
 exec spectrwm
