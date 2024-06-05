@@ -12,6 +12,7 @@ dedoc -> https://github.com/rust-lang/crates.io-index
 dog -> https://github.com/ogham/dog
 dprint -> https://github.com/rust-lang/crates.io-index
 fclones -> https://github.com/rust-lang/crates.io-index
+fish-manpage-completions -> https://github.com/rust-dc/fish-manpage-completions
 fls -> https://github.com/rust-lang/crates.io-index
 gprepo -> /home/sugimoto/repos/gprepo
 grug -> https://github.com/jtrv/grug
