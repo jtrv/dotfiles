@@ -5,7 +5,7 @@ colorscheme catpuccin_mocha
 
 evaluate-commands %sh{
   kak-lsp --kakoune -s "$kak_session" # bundle https://github.com/kakoune-lsp/kakoune-lsp
-  kak-tree-sitter -vvv -dks --with-highlighting --with-text-objects --session "$kak_session" # bundle https://git.sr.ht/~hadronized/kak-tree-sitter 
+  kak-tree-sitter -vvv -dks --session "$kak_session" # bundle https://git.sr.ht/~hadronized/kak-tree-sitter 
   colorcol # bundle https://github.com/SolitudeSF/colorcol
   kak-popup init # bundle https://github.com/enricozb/popup.kak
   hop-kak --init # bundle https://github.com/hadronized/hop.kak
