@@ -9,6 +9,8 @@ atuin init fish | source
 
 pay-respects fish --alias f | source
 
+starship init fish | source
+
 ######## KEY-BINDINGS ########
 
 bind ! __history_previous_command             # add '!!' functionality, req ./functions/__history_previous_command.fish
