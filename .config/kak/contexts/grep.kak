@@ -1,7 +1,6 @@
 ansi-enable
 
 alias window w grep-write
-alias window write grep-write
 
 map window normal <ret> ':grep-jump <ret>'
 
