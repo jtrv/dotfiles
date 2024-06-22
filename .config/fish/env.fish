@@ -51,13 +51,13 @@ set -gx HISTFILE "$XDG_STATE_HOME"/bash/history
 # Misc
 set -gx ATUIN_NOBIND                true
 set -gx BAT_PAGER                   "kak"
-set -gx BEMOJI_PICKER_CMD           "dmenu -i -fn 'pixelsize=18:antialias=true' -nb black -nf white -sb black -sf red"
+set -gx BEMOJI_PICKER_CMD           "dmenu -i -fn 'pixelsize=18:antialias=true' -nb rgb:11/11/1b -nf rgb:cd/d6/f4 -sb rgb:ca/a0/f6 -sf rgb:11/11/1b"
 set -gx BEMOJI_CLIP_CMD             "xclip -sel clip"
 set -gx BEMOJI_TYPE_CMD             "xdotool"
 set -gx BROWSER                     "firefox"
 set -gx CONCEAL_FINDER              "skim"
 set -gx DELTA_PAGER                 "kak"
-set -gx DMENU_THEME                 "-i -fn 'pixelsize=18:antialias=true' -nb black -nf white -sb black -sf red" # matched to spectrwm.conf
+set -gx DMENU_THEME                 "-i -fn 'pixelsize=18:antialias=true' -nb rgb:11/11/1b -nf rgb:cd/d6/f4 -sb rgb:ca/a0/f6 -sf rgb:11/11/1b" # matched to spectrwm.conf
 set -gx EDITOR                      "kak"
 set -gx fish_greeting
 set -gx GITHUB_TOKEN                (rg -No ':(\w*)@' -r '$1' "$XDG_CONFIG_HOME"/git/credentials)
