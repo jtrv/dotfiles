@@ -19,11 +19,11 @@ extra_arguments = [
   "-fn",
   "'pixelsize=18:antialias=true'",
   "-nb",
-  "rgb:18/18/25",
+  "rgb:1e/1e/2e",
   "-nf",
   "rgb:cd/d6/f4",
   "-sb",
-  "rgb:ca/a0/f6",
+  "rgb:89/dc/eb",
   "-sf",
-  "rgb:18/18/25"
+  "rgb:1e/1e/2e"
 ]
