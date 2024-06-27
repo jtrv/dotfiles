@@ -154,6 +154,12 @@ filetypes = ["erlang"]
 roots = ["rebar.config", "erlang.mk", ".git", ".hg"]
 command = "erlang_ls"
 
+[language_server.fish-lsp]
+filetypes = ["fish"]
+roots = ["*.fish", "config.fish", ".git", ".hg"]
+command = "fish-lsp"
+args = ["start"]
+
 [language_server.gopls]
 filetypes = ["go"]
 roots = ["Gopkg.toml", "go.mod", ".git", ".hg"]
