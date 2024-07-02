@@ -2,7 +2,7 @@
 # Any customization should be done in ~/.gtkrc-2.0.mine instead.
 
 include "/home/sugimoto/.gtkrc-2.0.mine"
-gtk-theme-name="Catppuccin-Mocha-Standard-Blue-Dark"
+gtk-theme-name="Colloid-Dark-Compact-Catppuccin"
 gtk-icon-theme-name="Papirus-Dark"
 gtk-font-name="BlexMono Nerd Font weight=450 11"
 gtk-cursor-theme-name="catppuccin-mocha-light-cursors"
