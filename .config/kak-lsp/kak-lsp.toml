@@ -274,6 +274,11 @@ roots = [".marksman.toml"]
 command = "marksman"
 args = ["server"]
 
+[language_server.markdown-oxide]
+filetypes = ["markdown"]
+roots = ["logseq"]
+command = "markdown-oxide"
+
 [language_server.nimlsp]
 filetypes = ["nim"]
 roots = ["*.nimble", ".git", ".hg"]
