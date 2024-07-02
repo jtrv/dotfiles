@@ -145,21 +145,6 @@ define-command cargo -docstring "
   kakpipe -n "cargo %arg{@}" -S -- cargo --color=always %arg{@}
 }
 
-define-command calc -docstring "
-  calc [<arguments>]: calc utility wrapper
-  Replace the selection with the result a given expression (X represents current selection)
-" -params 0.. %{ evaluate-commands %sh{
-  if [ $# -eq 0 ]; then
-    printf %s\\n "
-    prompt 'expression:' -init 'X' %{
-      execute-keys \"| xargs -I X qalc -t '%val{text}' <ret>\"
-    }"
-  else
-    printf %s\\n "
-      execute-keys \"| xargs -I X qalc -t '$*' <ret>\""
-  fi
-}}
-
 define-command cat -docstring "
   cat [<files>]: bat utility wrapper
   Print the files (or buffile) using bat
@@ -385,6 +370,21 @@ define-command kelp -docstring "
     echo "kakpipe -- \"$*\" --help"
   elif "$*" -h > /dev/null; then
     echo "kakpipe -- \"$*\" -h"
+  fi
+}}
+
+define-command math -docstring "
+  math <expression>: qalc utility wrapper
+  Replace the selection with the solution of the given expression where x=selection
+" -params 0.. %{ evaluate-commands %sh{
+  if [ $# -eq 0 ]; then
+    printf %s\\n "
+    prompt 'expression:' -init 'x' %{
+      execute-keys \"| xargs -I x qalc -t '%val{text}' <ret>\"
+    }"
+  else
+    printf %s\\n "
+      execute-keys \"| xargs -I x qalc -t '$*' <ret>\""
   fi
 }}
 
@@ -692,6 +692,8 @@ map global user j -docstring "jump" %{: hop-kak <ret>}
 map global user l -docstring "lsp" %{: enter-user-mode lsp <ret>}
   map global lsp <minus> -docstring "disable"   %{: lsp-disable-window <ret>}
   map global lsp <plus>  -docstring "enable"    %{: lsp-enable-window <ret>}
+
+map global user m -docstring "maths" %{: math <ret>}
 
 # edit/extend/trim selections one by one
 bundle kakoune-phantom-selection https://github.com/occivink/kakoune-phantom-selection %{
