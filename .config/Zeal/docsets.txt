@@ -1,3 +1,4 @@
+https://zealusercontributions.vercel.app/api/docsets/AWS_CLI.xml
 https://zealusercontributions.vercel.app/api/docsets/fish.xml
 https://zealusercontributions.vercel.app/api/docsets/Jest.xml
 https://zealusercontributions.vercel.app/api/docsets/JSDoc.xml
