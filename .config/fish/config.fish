@@ -2,14 +2,11 @@ fish_default_key_bindings
 
 ######## SOURCE ########
 
-set -gx XDG_CONFIG_HOME "$HOME"/.config
-source "$XDG_CONFIG_HOME"/fish/env.fish
+source ~/.config/fish/env.fish
 
-atuin init fish | source
-
+atuin init fish |             source
 pay-respects fish --alias f | source
-
-starship init fish | source
+starship init fish |          source
 
 ######## KEY-BINDINGS ########
 
