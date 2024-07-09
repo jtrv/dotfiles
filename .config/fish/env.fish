@@ -18,6 +18,7 @@ set -gx AWS_CONFIG_FILE             "$XDG_CONFIG_HOME"/aws/config
 set -gx AWS_SHARED_CREDENTIALS_FILE "$XDG_CONFIG_HOME"/aws/credentials
 set -gx DOTFILES                    "$XDG_CONFIG_HOME"/dotfiles
 set -gx GTK2_RC_FILES               "$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
+set -gx JUPYTER_CONFIG_DIR          "$XDG_CONFIG_HOME"/jupyter
 set -gx NETRC                       "$XDG_CONFIG_HOME"/.netrc
 set -gx NPM_CONFIG_USERCONFIG       "$XDG_CONFIG_HOME"/npm/npmrc
 set -gx PARALLEL_HOME               "$XDG_CONFIG_HOME"/parallel
