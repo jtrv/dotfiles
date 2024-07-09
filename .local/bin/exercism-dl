@@ -8,8 +8,9 @@
 set -e
 
 start_dir=$(pwd)
+exercism_dir="$HOME/study/exercism"
 
-cd "${HOME}/repos/exercism" || exit
+cd "$exercism_dir" || exit
 
 if [ $# -eq 0 ]; then
 	langs=$(ls)
@@ -20,16 +21,16 @@ fi
 token=$(secli get exercism_token)
 
 for lang in $langs; do
-	url="https://exercism.org/api/v2/tracks/${lang}/exercises"
+	url="https://exercism.org/api/v2/tracks/$lang/exercises"
 
 	exercises=$(
-		xh -bF "$url" -- "Authorization: Bearer ${token}" |
+		xh -bF "$url" -- "Authorization: Bearer $token" |
 			jaq -r '.[] | .[] | select(.is_unlocked == true) | select(.is_recommended == true) | .slug'
 	)
 
 	index=0
 
-	cd "${HOME}/repos/exercism/${lang}" || exit
+	cd "$exercism_dir/$lang" || exit
 
 	lang_text=$(printf '%-15s\n' "$lang")
 
@@ -37,15 +38,15 @@ for lang in $langs; do
 		while read -r exercise; do
 			index=$((index + 1))
 
-			if [ -d "${exercise}" ]; then
-				echo "${lang_text} has: ${index}. ${exercise}"
+			if [ -d "$exercise" ]; then
+				echo "$lang_text has: $index. $exercise"
 				continue
 			else
-				exercism download --exercise="${exercise}" --track="${lang}" >/dev/null 2>&1 &&
-					echo "${lang_text} got: ${index}. ${exercise}" || echo "${lang_text} err: ${index}. ${exercise}"
+				exercism download --exercise="$exercise" --track="$lang" >/dev/null 2>&1 &&
+					echo "$lang_text got: $index. $exercise" || echo "$lang_text err: $index. $exercise"
 			fi
 		done
-	cd "${HOME}/repos/exercism" || exit
+	cd "$exercism_dir" || exit
 done
 
 cd "$start_dir" || exit
