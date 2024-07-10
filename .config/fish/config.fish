@@ -108,6 +108,11 @@ alias kakrc   'k ~/.config/kak/kakrc'
 alias kenv    'k ~/.config/fish/env.fish'
 alias kish    'k ~/.config/fish/config.fish'
 
+# fix ssh agent
+if not set -q SSH_AUTH_SOCK
+    eval (ssh-agent -c) &> /dev/null
+end
+
 # Start X at login
 if status is-login
   if test -z "$DISPLAY" -a "$XDG_VTNR" = 1
