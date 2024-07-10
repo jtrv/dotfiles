@@ -1,5 +1,6 @@
 (defcfg
   danger-enable-cmd yes
+  concurrent-tap-hold yes
   linux-dev-names-exclude "Logitech MX Ergo" 
 )
 
@@ -32,6 +33,9 @@
 ;; xcape
   esc (tap-hold  200    150    esc  rctl) 
 
+;; tap-hold for "sd" esc -> nav layer
+  spc (tap-hold  200    150    spc  (layer-while-held nav))
+
 ;; meta + mouse -> playerctl, vol
   mmid (fork mmid                 (cmd playerctl play-pause) (lmet rmet))
   mfwd (fork mfwd                 (cmd playerctl next)       (lmet rmet))
@@ -45,10 +49,32 @@
   tab  q    w    e    r    t    y    u    i    o    p    [    ]    \    end
   @esc @a   @s   @d   @f   g    h    @j   @k   @l   @;   '    ret       pgup
   lsft z    x    c    v    b    n    m    ,    .    /    rsft      up   pgdn
-  lctl lmet lalt                spc                 rctl  lft      down rght
-
+  lctl lmet lalt                     @spc                rctl lft  down rght
   ;; Mouse
   @mmid @mbck @mfwd @mwu @mwd
 )
+
+(deflayer nav
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    home end  _    _    _    _    _
+  _    _    _    _    _    _    lft  down up   rght _    _    _         _
+  _    _    _    _    _    _    _    _    _    _    _    _         _    _
+  _    _    _                        _                   _    _    _    _
+  ;; Mouse
+  _     _     _     _     _
+)
+
+
+(defchordsv2-experimental
+  (s d)   (tap-hold 200 150 esc (multi lalt lctl))  50 first-release ()
+  (w e)   tab                                       50 first-release ()
+  (q w)   home                                      50 first-release ()
+
+  (k l)   (tap-hold 200 150 ret (multi rctl ralt))  50 first-release ()
+  (i o)   bspc                                      50 first-release ()
+  (l ;)   (tap-hold 200 150 del (multi ralt rmet))  50 first-release ()
+  (o p)   end                                       50 first-release ()
+)
+
 
 
