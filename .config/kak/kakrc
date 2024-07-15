@@ -109,6 +109,7 @@ bundle-install-hook kakpipe %{
   cargo install --path .
   cargo clean
 }
+alias global : kakpipe
 
 bundle kakship https://github.com/eburghar/kakship %{ kakship-enable }
 bundle-install-hook kakship %{
@@ -407,11 +408,11 @@ define-command pcsv -docstring "
   fi
 }}
 
-define-command one-off -docstring "
-  one-off [<commands>]: one-off shell utility
-  execute one-off commands with the shell
+define-command bgsh -docstring "
+  bgsh [<commands>]: background shell utility
+  execute one-off commands in the background
 " -shell-completion -params .. %{ nop %sh{ $@ } }
-alias global sh one-off
+alias global :: bgsh
 
 define-command ptsv -docstring "
   pcsv [<files>]: tsv viewing utility

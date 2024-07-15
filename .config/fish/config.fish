@@ -62,6 +62,7 @@ alias nbg     'feh --randomize --bg-scale --no-fehbg ~/media/pictures/wallpapers
 alias o       'xdg-open'
 alias py      'python'
 alias q       'exit'
+alias wh      'wormhole-rs'
 alias thes    'thesauromatic'
 alias tv      'lobster'
 alias wget    "wget2 --hsts-file=\"$XDG_DATA_HOME/wget-hsts\""
