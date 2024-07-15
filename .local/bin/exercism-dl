@@ -2,51 +2,41 @@
 # Download recommended exercises from an Exercism track
 
 # @license: MIT
-# @usage: exercism-dl <lang>
-# @deps: xh, jaq
+# @usage: exercism-dl [<lang>]
+# @deps: exercism, jaq, xh
 
 set -e
 
-start_dir=$(pwd)
+token=$(secli get exercism_token)
 exercism_dir="$HOME/study/exercism"
 
-cd "$exercism_dir" || exit
+cd "$exercism_dir"
 
 if [ $# -eq 0 ]; then
 	langs=$(ls)
 else
-	langs=$*
+	langs="$*"
 fi
-
-token=$(secli get exercism_token)
 
 for lang in $langs; do
 	url="https://exercism.org/api/v2/tracks/$lang/exercises"
+	exercises=$(xh -bF "$url" "Authorization: Bearer $token" |
+		jaq -r '.[] | .[] | select(.is_unlocked and .is_recommended) | .slug')
 
-	exercises=$(
-		xh -bF "$url" -- "Authorization: Bearer $token" |
-			jaq -r '.[] | .[] | select(.is_unlocked == true) | select(.is_recommended == true) | .slug'
-	)
+	cd "$lang" || continue
+	lang_text=$(printf '%-15s' "$lang")
 
-	index=0
-
-	cd "$exercism_dir/$lang" || exit
-
-	lang_text=$(printf '%-15s\n' "$lang")
-
-	echo "$exercises" |
-		while read -r exercise; do
-			index=$((index + 1))
-
-			if [ -d "$exercise" ]; then
-				echo "$lang_text has: $index. $exercise"
-				continue
+	echo "$exercises" | while read -r exercise; do
+		if [ -d "$exercise" ]; then
+			echo "$lang_text has: $exercise"
+		else
+			if exercism download --exercise="$exercise" --track="$lang" >/dev/null 2>&1; then
+				echo "$lang_text got: $exercise"
 			else
-				exercism download --exercise="$exercise" --track="$lang" >/dev/null 2>&1 &&
-					echo "$lang_text got: $index. $exercise" || echo "$lang_text err: $index. $exercise"
+				echo "$lang_text err: $exercise"
 			fi
-		done
-	cd "$exercism_dir" || exit
-done
+		fi
+	done
 
-cd "$start_dir" || exit
+	cd ..
+done
