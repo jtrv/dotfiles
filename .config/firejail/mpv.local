@@ -1,10 +1,12 @@
 whitelist ${HOME}/downloads
 whitelist ${HOME}/media
 whitelist ${HOME}/repos
+whitelist ${HOME}/study
 
 read-only ${HOME}/downloads
 read-only ${HOME}/media
 read-only ${HOME}/repos
+read-only ${HOME}/study
 
 ignore noexec /tmp
 ignore apparmor
