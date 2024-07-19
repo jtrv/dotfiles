@@ -1,3 +1,4 @@
+whitelist ${HOME}/.local/share/mpv
 whitelist ${HOME}/downloads
 whitelist ${HOME}/media
 whitelist ${HOME}/repos
