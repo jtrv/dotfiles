@@ -3,7 +3,7 @@
 	url = https://github.com/Sonico98/exifaudio.yazi.git
 [submodule "yazi/fg"]
 	path = .config/yazi/plugins/fg.yazi
-	url = https://github.com/DreamMaoMao/fg.yazi.git
+	url = https://github.com/lpnh/fg.yazi.git
 [submodule "yazi/glow"]
 	path = .config/yazi/plugins/glow.yazi
 	url = https://github.com/Reledia/glow.yazi.git
