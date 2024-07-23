@@ -26,7 +26,8 @@ cleanup = true
 max_concurrency = 10
 # Additional git repositories to pull
 repos = [
-    "~/repos/*"
+    "~/repos/*",
+    "~/study/*"
 ]
 
 # Arguments to pass Git when pulling Repositories
