@@ -266,7 +266,7 @@ command = "lua-language-server"
 settings_section = "Lua"
 [language_server.lua-language-server.settings.Lua]
 # See https://github.com/sumneko/vscode-lua/blob/master/setting/schema.json
-# diagnostics.enable = true
+diagnostics.enable = true
 
 [language_server.markdown]
 filetypes = ["markdown"]
