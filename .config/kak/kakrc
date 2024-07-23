@@ -275,6 +275,13 @@ define-command glow -docstring "
   kakpipe -n "glow %arg{@}" -- glow -s dark %arg{@};
 } -menu -shell-script-candidates %{fd -e md}
 
+define-command go -docstring "
+  go [<arguments>]: go utility wrapper
+  Launch go with the given arguments inside kakoune
+" -params 1.. %{
+  kakpipe -n "go %arg{@}" -S -- go %arg{@}
+}
+
 define-command grep-write -docstring "
   grep-write: pipes the current grep-buffer to grug -w and prints the results
 " %{
@@ -554,6 +561,7 @@ map global prompt <a-,> -docstring "insert git root directory"   '%sh{ git rev-p
 
 # clear selections
 map global normal <a-space> <a-,> -docstring "clear current (or nth) selection"
+map global normal <a-esc> <a-,>   -docstring "clear current (or nth) selection"
 map global normal <esc> ,         -docstring "clear multi-selection and keep (nth)"
 
 # use w as a more ergonomic 'previous word'
