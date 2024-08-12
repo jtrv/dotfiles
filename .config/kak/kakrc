@@ -818,6 +818,7 @@ hook global WinSetOption filetype=markdown             %{ source "~/.config/kak/
 hook global WinSetOption filetype=python               %{ source "~/.config/kak/contexts/python.kak"      }
 hook global WinSetOption filetype=rust                 %{ source "~/.config/kak/contexts/rust.kak"        }
 hook global WinSetOption filetype=sh                   %{ source "~/.config/kak/contexts/sh.kak"          }
+hook global WinSetOption filetype=terraform            %{ source "~/.config/kak/contexts/terraform.kak"   }
 hook global WinSetOption filetype=typescript           %{ source "~/.config/kak/contexts/typescript.kak"  }
 hook global WinSetOption filetype=toml                 %{ source "~/.config/kak/contexts/toml.kak"        }
 hook global WinSetOption filetype=yaml                 %{ source "~/.config/kak/contexts/yaml.kak"        }
