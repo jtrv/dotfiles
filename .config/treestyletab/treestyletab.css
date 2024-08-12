@@ -192,7 +192,20 @@ tab-twisty::before {
   content: "🕶";
 }
 
-/* hide close button */
-tab-item tab-closebox {
+/* Only show tab close button on hover */
+#tabbar tab-item tab-item-substance:not(:hover) tab-closebox {
   display: none;
+}
+
+tab-closebox::after {
+  content: "⨉";
+  color: var(--red);
+  background-color: rgba(0, 0, 0, 0);
+  background-image: unset;
+  line-height: 1;
+  text-align: center;
+  width: 1.25em;
+}
+tab-item.active tab-closebox {
+  background-image: unset;
 }
