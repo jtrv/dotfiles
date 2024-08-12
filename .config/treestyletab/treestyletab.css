@@ -1,6 +1,189 @@
+:root {
+  --rosewater: #f5e0dc;
+  --flamingo: #f2cdcd;
+  --pink: #f5c2e7;
+  --mauve: #cba6f7;
+  --red: #f38ba8;
+  --maroon: #eba0ac;
+  --peach: #fab387;
+  --yellow: #f9e2af;
+  --green: #a6e3a1;
+  --teal: #94e2d5;
+  --sky: #89dceb;
+  --sapphire: #74c7ec;
+  --blue: #89b4fa;
+  --lavender: #b4befe;
+  --text: #cdd6f4;
+  --subtext1: #bac2de;
+  --subtext0: #a6adc8;
+  --overlay2: #9399b2;
+  --overlay1: #7f849c;
+  --overlay0: #6c7086;
+  --surface2: #585b70;
+  --surface1: #45475a;
+  --surface0: #313244;
+  --base: #1e1e2e;
+  --mantle: #181825;
+  --crust: #11111b;
+
+  --tab-height: 32px;
+  --font-size: 14px;
+}
+
+/* the x on each tab */
+:root.simulate-svg-context-fill .closebox::after {
+  background: var(--text);
+}
+
+/* sound indicator */
+:root.simulate-svg-context-fill .sound-button::after {
+  background: var(--blue);
+}
+
+/* set x and sound indicator color when tab is active, highlighted, drag-select or hovered */
+:root.simulate-svg-context-fill .tab.highlighted .closebox::after,
+:root.simulate-svg-context-fill .tab.mth-ready-to-select .closebox::after,
+:root.simulate-svg-context-fill .tab.active .closebox::after,
+:root.simulate-svg-context-fill .tab:hover .closebox::after,
+:root.simulate-svg-context-fill .tab.highlighted .sound-button::after,
+:root.simulate-svg-context-fill .tab.mth-ready-to-select .sound-button::after,
+:root.simulate-svg-context-fill .tab.active .sound-button::after,
+:root.simulate-svg-context-fill .tab:hover .sound-button::after {
+  background: var(--crust);
+}
+
+/* indented area before tab */
+tab-item .extra-items-container.indent {
+  background-color: var(--base);
+}
+
+/* tab container, opened tabs */
+.tab {
+  background-color: var(--base);
+  height: var(--tab-height);
+}
+
+/* tab contents */
+.label {
+  margin-top: calc(-1 * var(--font-size) / 8);
+  margin-left: calc(var(--font-size) / 8);
+  font-size: var(--font-size);
+  color: var(--text);
+  line-height: var(--tab-height);
+}
+
+/* number of tab children */
+.tab .counter {
+  margin-top: calc(-3 * var(--font-size) / 16);
+  color: var(--green);
+}
+
+/* unloaded tab */
+.tab.discarded {
+  background-color: var(--base);
+}
+
+/* active tab(s) text + during drag selection (for Multiple Tab Handler extension) */
+.tab.active .label,
+.tab.highlighted .label,
+.tab.mth-ready-to-select .label {
+  color: var(--text);
+}
+
+/* active tab(s), whole area */
+.tab.active,
+.tab.highlighted {
+  background-color: var(--surface0);
+}
+
+/* tabs during drag selecting tabs (for Multiple Tab Handler extension) */
+.tab.mth-ready-to-select {
+  background-color: var(--surface2);
+}
+
+/* hovered tab, whole line */
+.tab:hover, .tab:not(.active):hover {
+  background-color: var(--surface1);
+}
+
+/* hide hidden tabs (it some times displays white area on larger tab sizes if this is not set) */
+tab-item.collapsed {
+  display: none;
+}
+
+/* drop tab location */
+tab-item[data-drop-position="self"] tab-item-substance {
+  outline-color: var(--overlay0) !important;
+  background-color: var(--overlay1);
+}
+
+/* drop tab location label */
+tab-item[data-drop-position="self"] tab-item-substance .label {
+  color: var(--mantle);
+}
+
+/* drop tab location line after/before tab */
+tab-item[data-drop-position]:not([data-drop-position="self"]) tab-item-substance::before {
+  background-color: white !important;
+}
+
+/* open/close tree chevron on tab move */
+tab-item:not(.collapsed):not(.subtree-collapsed) tab-twisty {
+  color: white !important;
+}
+
+/* open/close tree chevron on the left of the tab*/
+tab-twisty::before {
+  background-color: var(--text) !important;
+}
+
+/* active/hovered/drag-select tabs tree chevron */
+.tab:hover tab-twisty::before,
+.tab.active tab-twisty::before,
+.tab.highlighted tab-twisty::before,
+.tab.mth-ready-to-select tab-twisty::before {
+  background-color: var(--mantle) !important;
+}
+
+/* scrollbar */
+#tabbar {
+  scrollbar-color: var(--surface2) rgba(0,0,0,0.8);
+}
+
+/* new tab button */
+:root.simulate-svg-context-fill .newtab-button {
+  background-color: var(--surface0);
+  border-top: calc(var(--font-size) / 16) solid rgba(0,0,0,0.2);
+  line-height: calc(var(--tab-height) * 0.57);
+}
+
+/* new tab button hover */
+:root.simulate-svg-context-fill .newtab-button:hover {
+  background-color: var(--overlay1) !important;
+}
+
+/* new tab plus sign */
+:root.simulate-svg-context-fill .newtab-button::after {
+  background-color: var(--mantle);
+  vertical-align: middle;
+  margin-top: calc(-3 * var(--font-size) / 16);
+}
+
+/* new tab plus sign on hover */
+:root.simulate-svg-context-fill .newtab-button:hover.newtab-button::after {
+  background-color: var(--mantle);
+}
+
+/* background under new tab button */
+#background {
+  background: var(--crust);
+}
+
+/* CUSTOM STUFF */
+
 /* Show title of unread tabs with red and italic font */
 :root.sidebar tab-item.unread .label-content {
-  color: red !important;
+  color: var(--red) !important;
   font-style: italic !important;
 }
 
@@ -8,7 +191,21 @@
 :root.sidebar tab-item.private-browsing tab-label:before {
   content: "🕶";
 }
-/* Only show tab close button on hove */
-tab-item tab-closebox {
+
+/* Only show tab close button on hover */
+#tabbar tab-item tab-item-substance:not(:hover) tab-closebox {
   display: none;
+}
+
+tab-closebox::after {
+  content: "⨉";
+  color: var(--red);
+  background-color: rgba(0, 0, 0, 0);
+  background-image: unset;
+  line-height: 1;
+  text-align: center;
+  width: 1.25em;
+}
+tab-item.active tab-closebox {
+  background-image: unset;
 }
