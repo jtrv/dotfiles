@@ -36,8 +36,6 @@ set-option global lsp_hover_max_lines 40
 # rainbow delimiters + current scope
 bundle kak-rainbower https://github.com/jtrv/kak-rainbower
 bundle-install-hook kak-rainbower %{ g++ rc/rainbower.cpp -O2 -o rc/rainbower }
-hook global WinCreate .* rainbow-enable-window
-
 
 ###################### UTILITY ######################
 
@@ -276,9 +274,6 @@ define-command glow -docstring "
 " -params 1.. %{
   kakpipe -n "glow %arg{@}" -- glow -s dark %arg{@};
 } -menu -shell-script-candidates %{fd -e md}
-hook global WinDisplay '\*glow.*\*' %{
-  ui-trailing-spaces-disable
-}
 
 define-command grep-write -docstring "
   grep-write: pipes the current grep-buffer to grug -w and prints the results
@@ -768,6 +763,19 @@ bundle ui.kak https://github.com/kkga/ui.kak %{
   define-command ui-colorcol-toggle %{ try ui-colorcol-enable catch ui-colorcol-disable }
   map global ui r -docstring "toggle colorcol"   %{: ui-colorcol-toggle <ret>}
 
+  declare-option -hidden bool rainbow_enabled false
+  define-command ui-rainbow-enable %{
+    evaluate-commands %sh{ $kak_opt_rainbow_enabled && echo "fail %{rainbow already enabled}" }
+    rainbow-enable-window
+    set-option buffer rainbow_enabled true
+  }
+  define-command ui-rainbow-disable %{
+    rainbow-disable-window
+    set-option buffer rainbow_enabled false
+  }
+  define-command ui-rainbow-toggle %{ try ui-rainbow-enable catch ui-rainbow-disable }
+  map global ui R -docstring "toggle rainbow"   %{: ui-rainbow-toggle <ret>}
+
   # zdiff3 highlighting
   add-highlighter shared/zdiff3 group
   add-highlighter shared/zdiff3/HEAD   regex ^<{7}\s.*?$  0:rgb:ff0000,rgb:000000
@@ -785,6 +793,7 @@ bundle ui.kak https://github.com/kkga/ui.kak %{
   hook global WinCreate .* %{
     ui-git-diff-enable
     ui-lint-enable
+    ui-rainbow-enable
     ui-todos-enable
     ui-trailing-spaces-enable
     ui-zdiff3-enable
