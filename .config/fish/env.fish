@@ -65,7 +65,6 @@ set -gx fish_greeting
 set -gx GITHUB_TOKEN                (rg -No ':(\w*)@' -r '$1' "$XDG_CONFIG_HOME"/git/credentials)
 set -gx HORS_ENGINE                 "google"
 set -gx MANPAGER                    "kak -e 'set buffer filetype man'"
-set -gx MOZ_X11_EGL                 1
 set -gx OPENAI_API_KEY              (secli get openai_api_key)
 set -gx OPENAI_API_BASE             "https://api.openai.com/v1"
 set -gx PAGER                       "kak"
