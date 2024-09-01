@@ -6,8 +6,10 @@ unbind --mode=ex <C-c>
 " Space to enter cmd
 bind <space><space> fillcmdline_notrail
 "
-" ! to open a new tab with a duckduckgo !bang
+" ! to open a new tab with a !bang
 bind ! fillcmdline_notrail tabopen !
+" C to open a new tab with !chat bang
+bind C tabopen !chat
 "
 " JK for tree style tabs
 bind J tabnext
