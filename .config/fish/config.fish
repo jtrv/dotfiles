@@ -6,6 +6,7 @@ source ~/.config/fish/env.fish
 
 atuin init fish             | source
 pay-respects fish --alias f | source
+rbenv init -                | source
 starship init fish          | source
 
 ######## KEY-BINDINGS ########

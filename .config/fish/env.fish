@@ -17,6 +17,7 @@ set -gx TEXMFVAR     "$XDG_CACHE_HOME"/texlive/texmf-var
 set -gx AWS_CONFIG_FILE             "$XDG_CONFIG_HOME"/aws/config
 set -gx AWS_SHARED_CREDENTIALS_FILE "$XDG_CONFIG_HOME"/aws/credentials
 set -gx DOTFILES                    "$XDG_CONFIG_HOME"/dotfiles
+set -gx GEMRC                       "$XDG_CONFIG_HOME"/gem/gemrc
 set -gx GTK2_RC_FILES               "$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
 set -gx JUPYTER_CONFIG_DIR          "$XDG_CONFIG_HOME"/jupyter
 set -gx NETRC                       "$XDG_CONFIG_HOME"/.netrc
@@ -38,6 +39,7 @@ set -gx GRADLE_USER_HOME  "$XDG_DATA_HOME"/gradle
 set -gx NIMBLE_DIR        "$XDG_DATA_HOME"/nimble
 set -gx NODE_REPL_HISTORY "$XDG_DATA_HOME"/node_repl_history
 set -gx NVM_DIR           "$XDG_DATA_HOME"/nvm
+set -gx RBENV_ROOT        "$XDG_DATA_HOME"/rbenv
 set -gx RUSTUP_HOME       "$XDG_DATA_HOME"/rustup
 set -gx VOLTA_HOME        "$XDG_DATA_HOME"/volta
 set -gx WINEPREFIX        "$XDG_DATA_HOME"/wine
