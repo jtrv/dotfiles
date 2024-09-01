@@ -833,6 +833,7 @@ hook global WinSetOption filetype=json                 %{ source "~/.config/kak/
 hook global WinSetOption filetype=latex                %{ source "~/.config/kak/contexts/latex.kak"       }
 hook global WinSetOption filetype=markdown             %{ source "~/.config/kak/contexts/markdown.kak"    }
 hook global WinSetOption filetype=python               %{ source "~/.config/kak/contexts/python.kak"      }
+hook global WinSetOption filetype=ruby                 %{ source "~/.config/kak/contexts/ruby.kak"        }
 hook global WinSetOption filetype=rust                 %{ source "~/.config/kak/contexts/rust.kak"        }
 hook global WinSetOption filetype=sh                   %{ source "~/.config/kak/contexts/sh.kak"          }
 hook global WinSetOption filetype=terraform            %{ source "~/.config/kak/contexts/terraform.kak"   }
