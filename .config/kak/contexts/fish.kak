@@ -6,6 +6,8 @@ lint
 define-command -override ui-lsp-enable %{
   set-option window lsp_auto_highlight_references true
   set-option window lsp_hover_anchor true
+  set-option window lsp_hover_max_info_lines 10
+  set-option window lsp_hover_max_diagnostic_lines 10
   lsp-auto-hover-enable
   lsp-auto-hover-insert-mode-enable
   lsp-inlay-diagnostics-enable window
