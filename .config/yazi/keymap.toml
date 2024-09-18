@@ -122,6 +122,8 @@ keymap = [
 
   # Tabs
   { on = [ "b", "b" ], run = "tab_create --current", desc = "Create a new tab using the current path" },
+  { on = [ "b", "d" ], run = "close",                desc = "Close the current tab, or quit if it is last tab" },
+
 
   { on = [ "b", "1" ], run = "tab_switch 0", desc = "Switch to the first tab" },
   { on = [ "b", "2" ], run = "tab_switch 1", desc = "Switch to the second tab" },
