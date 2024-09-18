@@ -65,6 +65,7 @@ alias py      'python'
 alias q       'exit'
 alias wh      'wormhole-rs'
 alias thes    'thesauromatic'
+alias tf      'terraform'
 alias tv      'lobster'
 alias wget    "wget2 --hsts-file=\"$XDG_DATA_HOME/wget-hsts\""
 
