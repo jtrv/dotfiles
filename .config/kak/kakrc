@@ -3,14 +3,16 @@
 
 colorscheme catpuccin_mocha
 
+# "bundle" comments added to round out the list in ~/.config/warehouse/kakoune
 evaluate-commands %sh{
-  kak-lsp --kakoune -s "$kak_session" # bundle https://github.com/kakoune-lsp/kakoune-lsp
-  kak-tree-sitter -vvv -dks --session "$kak_session" # bundle https://git.sr.ht/~hadronized/kak-tree-sitter 
-  colorcol # bundle https://github.com/SolitudeSF/colorcol
-  kak-popup init # bundle https://github.com/enricozb/popup.kak
-  hop-kak --init # bundle https://github.com/hadronized/hop.kak
-  skyspell-kak init # https://github.com/your-tools/skyspell
+  kak-lsp --kakoune -s "$kak_session" # -vvv --log /tmp/kak-lsp.log   # bundle https://github.com/kakoune-lsp/kakoune-lsp
+  kak-tree-sitter -vvv -dks --init "$kak_session"                     # bundle https://git.sr.ht/~hadronized/kak-tree-sitter
+  colorcol                                                            # bundle https://github.com/SolitudeSF/colorcol
+  kak-popup init                                                      # bundle https://github.com/enricozb/popup.kak
+  hop-kak --init                                                      # bundle https://github.com/hadronized/hop.kak
+  skyspell-kak init                                                   # bundle https://github.com/your-tools/skyspell
 }
+
 
 source "%val{config}/catpuccin_mocha_tree_sitter_faces.kak"
 
@@ -742,6 +744,19 @@ bundle ui.kak https://github.com/kkga/ui.kak %{
     toggle-number-toggle
   }
 
+  declare-option -hidden bool colorcol_enabled false
+  define-command ui-colorcol-enable %{
+    evaluate-commands %sh{ $kak_opt_colorcol_enabled && echo "fail %{colorcol already enabled}" }
+    colorcol-enable; colorcol-refresh-continuous;
+    set-option buffer colorcol_enabled true
+  }
+  define-command ui-colorcol-disable %{
+    colorcol-disable
+    set-option buffer colorcol_enabled false
+  }
+  define-command ui-colorcol-toggle %{ try ui-colorcol-enable catch ui-colorcol-disable }
+  map global ui r -docstring "toggle colorcol"   %{: ui-colorcol-toggle <ret>}
+
   define-command ui-lsp-disable -override %{
     set-option window lsp_auto_highlight_references false
     set-option window lsp_hover_anchor false
@@ -757,19 +772,6 @@ bundle ui.kak https://github.com/kkga/ui.kak %{
     trigger-user-hook ui-hl-changed
   }
   map global ui k -docstring "toggle kak-lsp"   %{: ui-lsp-toggle <ret>}
-
-  declare-option -hidden bool colorcol_enabled false
-  define-command ui-colorcol-enable %{
-    evaluate-commands %sh{ $kak_opt_colorcol_enabled && echo "fail %{colorcol already enabled}" }
-    colorcol-enable; colorcol-refresh-continuous;
-    set-option buffer colorcol_enabled true
-  }
-  define-command ui-colorcol-disable %{
-    colorcol-disable
-    set-option buffer colorcol_enabled false
-  }
-  define-command ui-colorcol-toggle %{ try ui-colorcol-enable catch ui-colorcol-disable }
-  map global ui r -docstring "toggle colorcol"   %{: ui-colorcol-toggle <ret>}
 
   declare-option -hidden bool rainbow_enabled false
   define-command ui-rainbow-enable %{
@@ -833,7 +835,7 @@ hook global WinSetOption filetype=json                 %{ source "~/.config/kak/
 hook global WinSetOption filetype=latex                %{ source "~/.config/kak/contexts/latex.kak"       }
 hook global WinSetOption filetype=markdown             %{ source "~/.config/kak/contexts/markdown.kak"    }
 hook global WinSetOption filetype=python               %{ source "~/.config/kak/contexts/python.kak"      }
-hook global WinSetOption filetype=ruby                 %{ source "~/.config/kak/contexts/ruby.kak"        }
+hook global WinSetOption filetype=e?ruby               %{ source "~/.config/kak/contexts/ruby.kak"        }
 hook global WinSetOption filetype=rust                 %{ source "~/.config/kak/contexts/rust.kak"        }
 hook global WinSetOption filetype=sh                   %{ source "~/.config/kak/contexts/sh.kak"          }
 hook global WinSetOption filetype=terraform            %{ source "~/.config/kak/contexts/terraform.kak"   }
