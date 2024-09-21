@@ -25,7 +25,7 @@ ram() {
 
 ssd() {
 	icon=󰋊
-	SSD=$(df -h /home | awk '/\/dev/{print $5}')
+	SSD=$(df -h /home | awk '/\/dev/{print $5}' | tr -d '%')
 	printf "%s%3d%%" "$icon" "$SSD"
 }
 
