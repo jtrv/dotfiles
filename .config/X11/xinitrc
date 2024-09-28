@@ -37,6 +37,7 @@ picom &                        # window opacity / blur
 redshift &                     # bluelight filter
 udiskie -An &                  # notify + mount usbs
 xbanish &                      # hide mouse when typing
+xss-lock -- xlock &            # lock on sleep etc.
 ~/.local/bin/map-keys &        # map caps to ctrl/esc
 ~/.local/bin/trackball-speed & # set trackball speed
 
