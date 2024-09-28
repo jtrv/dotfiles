@@ -47,3 +47,7 @@
   display: none !important;
   width: 0px !important;
 }
+/* Smaller sidebar header/dropdown */
+#sidebar-header{
+	font-size: 1.1em
+}
