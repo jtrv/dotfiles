@@ -739,6 +739,7 @@ declare-user-mode spell
 bundle ui.kak https://github.com/kkga/ui.kak %{
   map global user u -docstring "ui" %{: enter-user-mode ui <ret>}
   set-option global ui_wrap_flags -width 100 -word -indent -marker ~~
+  set-face global TrailingSpace default,red
 
   define-command -override ui-line-numbers-toggle -docstring 'toggle line numbers' %{
     toggle-number-toggle
