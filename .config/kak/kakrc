@@ -102,7 +102,7 @@ bundle kakoune-state-save https://gitlab.com/Screwtapello/kakoune-state-save.git
 bundle kakoune-text-objects https://github.com/Delapouite/kakoune-text-objects
 
 bundle kakpipe https://github.com/jtrv/kakpipe %{
-  require-module kakpipe 
+  require-module kakpipe
   complete-command kakpipe shell
 }
 bundle-install-hook kakpipe %{
