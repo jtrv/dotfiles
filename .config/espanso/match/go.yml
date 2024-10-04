@@ -1,0 +1,141 @@
+matches:
+  # FUNCTION DEFINITIONS
+  - trigger: ",,gfn"
+    replace: |
+      func $|$() {
+      }
+
+  - trigger: ",,gin"
+    replace: |
+      func init() {
+          $|$
+      }
+
+  - trigger: ",,gmn"
+    replace: |
+      package main
+
+      import (
+      )
+
+      func main() {
+          $|$
+      }
+
+  # CONTROL STRUCTURES
+  - trigger: ",,gf+"
+    replace: |
+      for i := 0; i < $|$; i++ {
+      }
+
+  - trigger: ",,gf-"
+    replace: |
+      for i := 0; i > $|$; i-- {
+      }
+
+  - trigger: ",,gfr"
+    replace: |
+      for _, v := range $|$ {
+      }
+
+  - trigger: ",,gse"
+    replace: |
+      select {
+      case $|$:
+
+      default:
+
+      }
+
+  - trigger: ",,gsw"
+    replace: |
+      switch {
+      case $|$:
+
+      default:
+
+      }
+
+  # TYPE DEFINITIONS
+  - trigger: ",,gif"
+    replace: |
+      type $|$ interface {
+      }
+
+  - trigger: ",,gst"
+    replace: |
+      type $|$ struct {
+      }
+
+  # ERROR HANDLING AND DEFERRED EXECUTION
+  - trigger: ",,gde"
+    replace: |
+      defer $|$()
+
+  - trigger: ",,ger"
+    replace: |
+      if err != nil {
+          return $|$
+      }
+
+  # PRINTING AND FORMATTING
+  - trigger: ",,gpf"
+    replace: |
+      fmt.Printf("$|$\n")
+
+  - trigger: ",,gpl"
+    replace: |
+      fmt.Println($|$)
+
+  # DATA STRUCTURES
+  - trigger: ",,gap"
+    replace: |
+      $|$ = append($|$, )
+
+  - trigger: ",,gma"
+    replace: |
+      map[string]$|${}
+
+  - trigger: ",,gsl"
+    replace: |
+      []$|${}
+
+  # GOROUTINES AND CHANNELS
+  - trigger: ",,gch"
+    replace: |
+      ch := make(chan $|$)
+
+  - trigger: ",,ggo"
+    replace: |
+      go func() {
+          $|$
+      }()
+
+  # TESTING
+  - trigger: ",,gbe"
+    replace: |
+      func Benchmark$|$(b *testing.B) {
+          for i := 0; i < b.N; i++ {
+
+          }
+      }
+
+  - trigger: ",,gte"
+    replace: |
+      func Test$|$(t *testing.T) {
+      }
+
+  # JSON MARSHALING/UNMARSHALING
+  - trigger: ",,gjm"
+    replace: |
+      jsonData, err := json.Marshal($|$)
+      if err != nil {
+          log.Fatal(err)
+      }
+
+  - trigger: ",,gju"
+    replace: |
+      err := json.Unmarshal(data, &$|$)
+      if err != nil {
+          log.Fatal(err)
+      }
