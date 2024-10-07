@@ -311,30 +311,31 @@ define-command grep-buffers -docstring "
   fi
 }}
 
-define-command hey -docstring "
-  hey <query>: heygpt utility wrapper
-  Query ChatGPT and stream the response in a FIFO buffer
+define-command yo -docstring "
+  yo <query>: aichat utility wrapper
+  Query LLM and stream the response to a FIFO buffer
 " -params 1.. %{
-  kakpipe -w -n "hey %arg{@}" -- heygpt %arg{@};
+  kakpipe -w -- aichat %arg{@};
 }
-hook global WinDisplay '\*hey.*\*' %{
-  ui-wrap-enable
-}
-define-command hey-buffer -docstring "
-  opens a *hey-prompt* buffer for writing prompts to pass to hey
+define-command yo-buffer -docstring "
+  opens a *yo-prompt* buffer for writing prompts to pass to yo
 " %{
-  edit -scratch *hey-prompt*
-  set-option buffer filetype hey-prompt
+  edit -scratch *yo-prompt*
+  set-option buffer filetype yo-prompt
 }
-define-command hey-buffer-write -docstring "
-  send the *hey-prompt* buffer to hey
+define-command yo-buffer-write -docstring "
+  send the *yo-prompt* buffer to yo
 " -hidden %{
-  buffer *hey-prompt*
-  execute-keys '%: hey %val{selection} <ret>'
+  buffer *yo-prompt*
+  execute-keys '%: yo %val{selection} <ret>'
 }
-hook global BufSetOption filetype=hey-prompt %{
-  alias buffer write hey-buffer-write
-  alias buffer w hey-buffer-write
+hook global BufSetOption filetype=yo-prompt %{
+  alias buffer write yo-buffer-write
+  alias buffer w yo-buffer-write
+}
+hook global WinDisplay '\*aichat.*\*' %{
+  alias buffer write yo-buffer-write
+  alias buffer w yo-buffer-write
 }
 
 declare-option str hop_kak_keyset "jklfdsahguioprewqmvczxnb"
@@ -690,9 +691,7 @@ declare-user-mode grep
   map global grep p -docstring "prev match"   %{: grep-previous-match <ret>}
   map global grep l -docstring "live-grep"    %{: live-grep <ret>}
 
-map global user h -docstring "hey" %{: hey-buffer <ret>}
-
-map global user i -docstring "docs" %{: docs %opt{filetype}<a-!>}
+map global user i -docstring "dedoc" %{: docs %opt{filetype}<a-!>}
 
 map global user j -docstring "jump" %{: hop-kak <ret>}
 
@@ -820,6 +819,8 @@ map global user w -docstring "write" %{: write <ret>}
 
 # pipe selections as args with xargs
 map global user x -docstring "xargs" %{: xargs <ret>}
+
+map global user y -docstring "yo" %{: yo-buffer <ret>}
 
 map global user z -docstring "zeal" %{: zeal <ret>}
 
