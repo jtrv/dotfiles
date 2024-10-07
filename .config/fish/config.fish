@@ -4,6 +4,7 @@ fish_default_key_bindings
 
 source ~/.config/fish/env.fish
 
+argc --argc-completions fish $ARGC_SCRIPTS | source
 atuin init fish             | source
 pay-respects fish --alias f | source
 rbenv init -                | source

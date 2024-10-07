@@ -1,5 +1,3 @@
-set PATH /home/sugimoto/.local/bin /home/sugimoto/.local/share/bun/bin /home/sugimoto/.local/share/cargo/bin /home/sugimoto/.local/share/go/bin /home/sugimoto/.local/share/nimble/bin /home/sugimoto/.local/share/npm/bin /home/sugimoto/.local/share/rbenv/shims /home/sugimoto/repos/kakoune/src/../libexec/kak /usr/local/sbin /usr/local/bin /usr/bin /usr/bin/site_perl /usr/bin/vendor_perl /usr/bin/core_perl
-
 # XDG Base Directories
 set -gx XDG_CACHE_HOME    "$HOME"/.cache
 set -gx XDG_CONFIG_HOME   "$HOME"/.config
@@ -57,6 +55,9 @@ set -gx XAUTHORITY "$XDG_RUNTIME_DIR"/Xauthority
 set -gx HISTFILE "$XDG_STATE_HOME"/bash/history
 
 # Misc
+set -gx ARGC_COMPLETIONS_ROOT       "/home/sugimoto/repos/argc-completions"
+set -gx ARGC_COMPLETIONS_PATH       "$ARGC_COMPLETIONS_ROOT/completions/linux:$ARGC_COMPLETIONS_ROOT/completions"
+set -gx ARGC_SCRIPTS                (ls -p -1 "$ARGC_COMPLETIONS_ROOT/completions/linux" "$ARGC_COMPLETIONS_ROOT/completions" | sed -n 's/\.sh$//p')
 set -gx ATUIN_NOBIND                "true"
 set -gx BAT_PAGER                   "kak"
 set -gx BEMOJI_PICKER_CMD           "dmenu -i -fn 'pixelsize=18:antialias=true' -nb rgb:1e/1e/2e -nf rgb:cd/d6/f4 -sb rgb:89/dc/eb -sf rgb:1e/1e/2e"
@@ -289,3 +290,5 @@ ex=:\
 *.pdf=:\
 *.nix=:\
 "
+
+set PATH /home/sugimoto/.local/bin /home/sugimoto/.local/share/bun/bin /home/sugimoto/.local/share/cargo/bin /home/sugimoto/.local/share/go/bin /home/sugimoto/.local/share/nimble/bin /home/sugimoto/.local/share/npm/bin /home/sugimoto/.local/share/rbenv/shims /home/sugimoto/repos/kakoune/src/../libexec/kak /usr/local/sbin /usr/local/bin /usr/bin /usr/bin/site_perl /usr/bin/vendor_perl /usr/bin/core_perl $ARGC_COMPLETIONS_ROOT/bin
