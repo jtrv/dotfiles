@@ -806,10 +806,11 @@ bundle ui.kak https://github.com/kkga/ui.kak %{
     ui-lint-enable
     ui-rainbow-enable
     ui-todos-enable
-    ui-trailing-spaces-enable
     ui-zdiff3-enable
   }
-
+  hook global BufSetOption filetype=* %{
+    ui-trailing-spaces-enable
+  }
 }
 
 map global user v -docstring "view" 'v'
