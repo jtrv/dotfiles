@@ -1,6 +1,7 @@
 (defcfg
   concurrent-tap-hold yes
   danger-enable-cmd yes
+  linux-dev-names-exclude "Logitech MX Ergo"
 )
 
 (deflocalkeys-linux
