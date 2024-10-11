@@ -1,16 +1,126 @@
 matches:
 
-  - trigger: ",,jfn"
+  # ARRAY METHODS
+
+  - trigger: ",,jfi"
     replace: |
-      function $|$() { }
+      const filteredArray = $|$.filter(item => {
+        return condition;
+      });
+
+  - trigger: ",,jma"
+    replace: |
+      const newArray = $|$.map(item => {
+        return item;
+      });
+
+  - trigger: ",,jrd"
+    replace: |
+      const result = $|$.reduce((accumulator, currentValue) => {
+        return accumulator + currentValue;
+      }, initialValue);
+
+  # ASYNCHRONOUS OPERATIONS
+
+  - trigger: ",,jas"
+    replace: |
+      async function $|$() {
+        try {
+          const result = await someAsyncOperation();
+          console.log(result);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+  - trigger: ",,jfe"
+    replace: |
+      fetch('$|$')
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.error('Error:', error));
+
+  - trigger: ",,jpr"
+    replace: |
+      new Promise((resolve, reject) => {
+        $|$
+      });
+
+  # CLASSES
+
+  - trigger: ",,jcl"
+    replace: |
+      class $|$ {
+        constructor() {
+
+        }
+      }
+
+  # CONSOLE METHODS
+
+  - trigger: ",,jce"
+    replace: |
+      console.error($|$)
+
+  - trigger: ",,jcl"
+    replace: |
+      console.log($|$)
+
+  - trigger: ",,jctm"
+    replace: |
+      console.time("$|$")
+
+  - trigger: ",,jcte"
+    replace: |
+      console.timeEnd("$|$")
+
+  # DOM MANIPULATION
+
+  - trigger: ",,jae"
+    replace: |
+      window.addEventListener('$|$', eventHandler);
+
+  - trigger: ",,jcf"
+    replace: |
+      document.createDocumentFragment("$|$")
+
+  - trigger: ",,jev"
+    replace: |
+      const handler$|$ = e => {}
+      window.addEventListener('event', handler);
+      window.removeEventListener('event', handler);
+
+  - trigger: ",,jgc"
+    replace: |
+      document.getElementByClassName("$|$")
+
+  - trigger: ",,jgi"
+    replace: |
+      document.getElementById("$|$")
+
+  - trigger: ",,jqa"
+    replace: |
+      document.querySelectorAll("$|$")
+
+  - trigger: ",,jqs"
+    replace: |
+      document.querySelector("$|$")
+
+  - trigger: ",,jre"
+    replace: |
+      window.removeEventListener('$|$', eventHandler);
+
+  # FUNCTIONS AND ARROW FUNCTIONS
 
   - trigger: ",,jaf"
     replace: |
       const $|$ = () =>
 
-  - trigger: ",,jwl"
+  - trigger: ",,jfn"
     replace: |
-      while ($|$){ }
+      function $|$() { }
+
+  # LOOPS
 
   - trigger: ",,jf+"
     replace: |
@@ -28,66 +138,67 @@ matches:
     replace: |
       for (let $|$ of ){ }
 
-  - trigger: ",,jcl"
+  - trigger: ",,jwl"
     replace: |
-      console.log($|$)
+      while ($|$){ }
 
-  - trigger: ",,jpl"
-    replace: |
-      .then(console.log).catch(console.error)
-
-  - trigger: ",,jce"
-    replace: |
-      console.error($|$)
-
-  - trigger: ",,jctm"
-    replace: |
-      console.time("$|$")
-
-  - trigger: ",,jcte"
-    replace: |
-      console.timeEnd("$|$")
-
-  - trigger: ",,jdo"
-    replace: |
-      const {$|$} = ;
+  # MISCELLANEOUS
 
   - trigger: ",,jda"
     replace: |
       const [$|$] = ;
 
-  - trigger: ",,jgi"
+  - trigger: ",,jdb"
     replace: |
-      document.getElementById("$|$")
+      function debounce(func, delay) {
+        let timeoutId;
+        return function(...args) {
+          clearTimeout(timeoutId);
+          timeoutId = setTimeout(() => func.apply(this, args), delay);
+        };
+      }
 
-  - trigger: ",,jgc"
+  - trigger: ",,jco"
     replace: |
-      document.getElementByClassName("$|$")
+      const {$|$} = ;
 
-  - trigger: ",,jqs"
+  - trigger: ",,jlg"
     replace: |
-      document.querySelector("$|$")
+      const value = localStorage.getItem('$|$');
 
-  - trigger: ",,jqa"
+  - trigger: ",,jls"
     replace: |
-      document.querySelectorAll("$|$")
+      localStorage.setItem('$|$', value);
 
-  - trigger: ",,jcf"
+  - trigger: ",,jpe"
     replace: |
-      document.createDocumentFragment("$|$")
+      process.exit("$|$")
+
+  - trigger: ",,jpl"
+    replace: |
+      .then(console.log).catch(console.error)
 
   - trigger: ",,jsi"
     replace: |
       setInterval(() => {$|$}, interval)
 
-  - trigger: ",,jso"
-    replace: |
-      setTimeout(() => {$|$}, delay)
-
-  - trigger: ",,jst"
+  - trigger: ",,jss"
     replace: |
       JSON.stringify("$|$")
 
-  - trigger: ",,jpe"
+  - trigger: ",,jst"
     replace: |
-      process.exit("$|$")
+      setTimeout(() => {$|$}, delay)
+
+  - trigger: ",,jth"
+    replace: |
+      function throttle(func, limit) {
+        let inThrottle;
+        return function(...args) {
+          if (!inThrottle) {
+            func.apply(this, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+          }
+        };
+      }
