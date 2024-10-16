@@ -1,11 +1,11 @@
 #!/bin/sh
 {
-	iching --color=always divine &&
-		echo
-	if [ "$(date +%a)" = "Mon" ]; then
-		wthrr
-		nws-discussion
-	else
-		wthrr
-	fi
+  iching --color=always divine &&
+    echo
+  if [ "$(date +%a)" = "Mon" ]; then
+    unbuffer wthrr
+    nws-discussion
+  else
+    unbuffer wthrr
+  fi
 } | $PAGER
