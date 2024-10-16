@@ -3,16 +3,86 @@
 
 ipinfo_token=$(secli get ipinfo_token)
 
+# get lat/lon
 coordinates=$(xh -Fb "https://ipinfo.io/?token=$ipinfo_token" |
-	jql -r '"loc"')
+  jql -r '"loc"')
 
+# get corresponding weather office
 weather_office=$(xh -Fb "https://api.weather.gov/points/$coordinates" |
-	jql -r '"properties" "cwa"')
+  jql -r '"properties" "cwa"')
 
+# get discussion url
 area_forecast_discussion_url=$(xh -Fb "https://api.weather.gov/products/types/AFD/locations/$weather_office" |
-	jql -r '"@graph"[0] "@id"')
+  jql -r '"@graph"[0] "@id"')
 
-xh -Fb "$area_forecast_discussion_url" |
-	jql -r '"productText"' |
-	sd '(\n| \n)' '
+# get discussion raw text
+raw_text=$(xh -Fb "$area_forecast_discussion_url" |
+  jql -r '"productText"' |
+  sd '(\n| \n)' '
+')
+
+# Use tput for color codes
+BLUE=$(tput setaf 4)
+GREEN=$(tput setaf 2)
+YELLOW=$(tput setaf 3)
+RED=$(tput setaf 1)
+BOLD=$(tput bold)
+NC=$(tput sgr0)
+
+# Process raw_text with colors / formatting
+echo "$raw_text" | awk -v blue="$BLUE" -v green="$GREEN" -v yellow="$YELLOW" -v red="$RED" -v bold="$BOLD" -v nc="$NC" '
+BEGIN {
+  print blue "=======================================================================" nc
+  print yellow bold "                       NWS FORECAST DISCUSSION" nc
+  print blue "=======================================================================" nc
+  skip = 0
+  blank = 0
+}
+
+function print_section(text, color) {
+  if (!blank) print ""
+  print color bold text nc
+  blank = 0
+}
+
+/^\$\$/ { skip = 1; next }
+/^weather\.gov/ { skip = 0; next }
+skip { next }
+
+/^Area Forecast Discussion/ { print bold $0 nc; blank = 0; next }
+
+/^[.]SHORT TERM/ || /^[.]LONG TERM/ || /^[.][A-Z][A-Z0-9 ]+[.][.][.]/ {
+  print_section($0, green)
+  next
+}
+
+/^&&/ || /^[0-9]{3}$/ || /^FXUS/ { next }
+
+/^(KLAX|KBUR|CA|PZ)\.\.\./ {
+  if (!blank) print ""
+  match($0, /^[A-Z]+\.\.\./)
+  printf "%s%s%s %s\n", yellow, bold, substr($0, RSTART, RLENGTH), nc substr($0, RLENGTH + 1)
+  blank = 0
+  next
+}
+
+/^[[:space:]]*$/ {
+  if (!blank) {
+    print ""
+    blank = 1
+  }
+  next
+}
+
+/WATCHES\/WARNINGS\/ADVISORIES/ {
+  print_section($0, red)
+  next
+}
+
+{ print "  " $0; blank = 0 }
+
+END {
+  print ""
+  print blue "=======================================================================" nc
+}
 '
