@@ -1,0 +1,76 @@
+(defcfg
+  concurrent-tap-hold yes
+  danger-enable-cmd yes
+  linux-dev-names-include (
+    "Hoksi Technology DGK68C Consumer Control"
+    "Hoksi Technology DGK68C Keyboard"
+    "Hoksi Technology DGK68C"
+    "Hoksi Technology DGK68C System Control"
+  )
+)
+
+(defsrc
+  esc  1    2    3    4    5    6    7    8    9    0    -    =    bspc home
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \    end
+  caps a    s    d    f    g    h    j    k    l    ;    '    ret       pgup
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft      up   pgdn
+  lctl lmet lalt                spc                 rctl  lft      down rght
+  ;; Mouse
+  mmid mbck mfwd mwu mwd 
+)
+
+(defalias
+
+;; home-row tap-holds
+;; idx   mid  ring  pink
+;; shft  ctl  alt   meta
+
+;;               ttime  htime  tap  hold
+  a   (tap-hold  200    150    a    lmet)
+  s   (tap-hold  200    150    s    lalt)
+  d   (tap-hold  200    150    d    lctl)
+  f   (tap-hold  200    150    f    lsft)
+  j   (tap-hold  200    150    j    rsft)
+  k   (tap-hold  200    150    k    rctl)
+  l   (tap-hold  200    150    l    ralt)
+  ;   (tap-hold  200    150    ;    rmet)
+
+;; tap-hold for "sd" esc -> nav layer
+  spc (tap-hold  200    150    spc  (layer-while-held nav))
+
+;; xcape
+  esc (tap-hold  200    150    esc  rctl) 
+)
+
+(deflayer base
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc home
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \    end
+  @esc @a   @s   @d   @f   g    h    @j   @k   @l   @;   '    ret       pgup
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft      up   pgdn
+  lctl lmet lalt                     @spc                rctl lft  down rght
+  ;; Mouse
+  mmid mbck mfwd mwu  mwd
+)
+
+(deflayer nav
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    bspc home end  del  _    _    _    _
+  _    _    _    _    _    _    lft  down up   rght _    _    _         _
+  _    _    _    _    _    _    _    _    pgdn pgup _    _         _    _
+  _    _    _                        _                   _    _    _    _
+  ;; Mouse
+  _    _    _    _    _
+)
+
+(defchordsv2-experimental
+  (f j)   (caps-word 5000)                          50 first-release ()
+
+  (s d)   (tap-hold 200 150 esc (multi lalt lctl))  50 first-release ()
+  (w e)   tab                                       50 first-release ()
+  (q w)   home                                      50 first-release ()
+
+  (k l)   (tap-hold 200 150 ret (multi rctl ralt))  50 first-release ()
+  (i o)   bspc                                      50 first-release ()
+  (l ;)   (tap-hold 200 150 del (multi ralt rmet))  50 first-release ()
+  (o p)   end                                       50 first-release ()
+)

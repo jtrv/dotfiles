@@ -1,7 +1,10 @@
 (defcfg
   concurrent-tap-hold yes
   danger-enable-cmd yes
-  linux-dev-names-exclude "Logitech MX Ergo"
+  linux-dev-names-include (
+    "AT Translated Set 2 keyboard"
+    "Elan TrackPoint"
+  )
 )
 
 (deflocalkeys-linux
@@ -11,9 +14,9 @@
   blt  245
   wln  246
   mmut 248
-  btn2 258
-  btn4 260
-  btn5 261
+  mwck 258
+  mwup 260
+  mwdn 261
 )
 
 (defsrc
@@ -24,6 +27,8 @@
   lsft z    x    c    v    b    n    m    ,    .    /    rsft
   lctl lmet lalt           spc            ralt prnt rctl pgup up   pgdn
                                                          lft  down rght
+  ;; mouse
+  mwck mwup mwdn
 )
 
 (defalias
@@ -45,27 +50,31 @@
   spc (tap-hold  200    150    spc  (layer-while-held nav))
 
 ;; xcape
-  esc (tap-hold  200    150    esc  rctl) 
+  esc (tap-hold  200    150    esc  rctl)
 )
 
 (deflayer base
-  esc  mute vold volu mmut brdn brup dsp  wln  tls  blt  fav  home end  ins del
+  grv  mute vold volu mmut brdn brup dsp  wln  tls  blt  fav  home end  ins del
   grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
   tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
   @esc @a   @s   @d   @f   g    h    @j   @k   @l   @;   '    ret
   lsft z    x    c    v    b    n    m    ,    .    /    rsft
   lctl lmet lalt           @spc           ralt prnt rctl pgup up   pgdn
                                                          lft  down rght
+  ;; mouse
+  mwck mwup mwdn
 )
 
 (deflayer nav
   _    _    _    _    _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _    _    _    _    _    _    _    _    _    _    _    _
-  _    _    _    _    _    _    _    _    home end  _    _    _    _
+  _    _    _    _    _    _    _    bspc home end  del  _    _    _
   _    _    _    _    _    _    left down up   rght _    _    _
-  _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    pgdn pgup _    _
   _    _    _              _              _    _    _    _    _    _
                                                          _    _    _
+  ;; mouse
+  _    _    _
 )
 
 
