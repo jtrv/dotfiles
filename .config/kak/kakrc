@@ -585,14 +585,6 @@ map global normal '<a-[>' '['     -docstring "select to previous object end"
 map global normal ']' '<a-]>'     -docstring "select upto next object end"
 map global normal '<a-]>' ']'     -docstring "select to next object end"
 
-# use <c-k>/<c-l> as more ergonomic undo/redo selction
-map global normal <c-k> <a-u> -docstring "undo selection change"
-map global normal <c-l> <a-U> -docstring "redo selection change"
-
-# use <a-u>/<a-U> to traverse change history
-map global normal <a-u> <c-k> -docstring "move backward in change history"
-map global normal <a-U> <c-j> -docstring "move forward in change history"
-
 # select whole lines
 map global normal J -docstring "select next line"       %{Jx}
 map global normal K -docstring "select previous line"   %{Kx}
