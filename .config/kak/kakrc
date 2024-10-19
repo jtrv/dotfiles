@@ -25,9 +25,11 @@ set-option global ui_options terminal_assistant=none
 set-option global scrolloff 1,3
 
 # toggle relative line numbers with insert mode
-bundle number-toggle.kak https://github.com/jtrv/number-toggle.kak %{
-  require-module "number-toggle"
-  set-option global number_toggle_params -hlcursor -cursor-separator '┼'
+provide-module "number_toggle_kak" %{
+  bundle number-toggle.kak https://github.com/jtrv/number-toggle.kak %{
+    require-module "number-toggle"
+    set-option global number_toggle_params -hlcursor -cursor-separator '┼'
+  }
 }
 
 # kak-lsp settings
@@ -36,8 +38,10 @@ set-option global lsp_diagnostic_line_warning_sign '┊'
 set-option global lsp_hover_max_lines 40
 
 # rainbow delimiters + current scope
-bundle kak-rainbower https://github.com/jtrv/kak-rainbower
-bundle-install-hook kak-rainbower %{ g++ rc/rainbower.cpp -O2 -o rc/rainbower }
+provide-module "kak_rainbower" %{
+  bundle kak-rainbower https://github.com/jtrv/kak-rainbower
+  bundle-install-hook kak-rainbower %{ g++ rc/rainbower.cpp -O2 -o rc/rainbower }
+}
 
 ###################### UTILITY ######################
 
@@ -102,7 +106,7 @@ bundle kakoune-state-save https://gitlab.com/Screwtapello/kakoune-state-save.git
 bundle kakoune-text-objects https://github.com/Delapouite/kakoune-text-objects
 
 bundle kakpipe https://github.com/jtrv/kakpipe %{
-  require-module kakpipe
+  require-module "kakpipe"
   complete-command kakpipe shell
 }
 bundle-install-hook kakpipe %{
@@ -431,11 +435,12 @@ define-command ptsv -docstring "
 }}
 
 define-command reader-mode -docstring "Enables settings for better reading" %{
-  remove-highlighter global/whitespace
-  rainbow-disable-window
-  ui-trailing-spaces-disable
-  ui-whitespaces-disable
-  ui-wrap-disable
+  require-module "ui"
+  nop rainbow-disable-window
+  nop number-toggle-disable
+  nop ui-trailing-spaces-disable
+  nop ui-whitespaces-disable
+  nop ui-wrap-disable
   map buffer normal d <c-d>
   map buffer normal u <c-u>
 }
@@ -735,82 +740,87 @@ declare-user-mode spell
   map global spell p -docstring "previous"   %{: skyspell-previous <ret>}
   map global spell r -docstring "replace"    %{: skyspell-replace <ret>}
 
-bundle ui.kak https://github.com/kkga/ui.kak %{
-  map global user u -docstring "ui" %{: enter-user-mode ui <ret>}
-  set-option global ui_wrap_flags -width 100 -word -indent -marker ~~
-  set-face global TrailingSpace default,red
+provide-module "ui" %{
+  bundle ui.kak https://github.com/kkga/ui.kak %{
+    map global user u -docstring "ui" %{: enter-user-mode ui <ret>}
+    set-option global ui_wrap_flags -width 100 -word -indent -marker ~~
+    set-face global TrailingSpace default,red
 
-  define-command -override ui-line-numbers-toggle -docstring 'toggle line numbers' %{
-    toggle-number-toggle
-  }
+		require-module "number_toggle_kak"
+    define-command -override ui-line-numbers-toggle -docstring 'toggle line numbers' %{ number-toggle-toggle }
+    define-command -override ui-line-numbers-enable -docstring 'enable line numbers' %{ number-toggle-enable }
+    define-command -override ui-line-numbers-disable -docstring 'disable line numbers' %{ number-toggle-disable }
 
-  declare-option -hidden bool colorcol_enabled false
-  define-command ui-colorcol-enable %{
-    evaluate-commands %sh{ $kak_opt_colorcol_enabled && echo "fail %{colorcol already enabled}" }
-    colorcol-enable; colorcol-refresh-continuous;
-    set-option buffer colorcol_enabled true
-  }
-  define-command ui-colorcol-disable %{
-    colorcol-disable
-    set-option buffer colorcol_enabled false
-  }
-  define-command ui-colorcol-toggle %{ try ui-colorcol-enable catch ui-colorcol-disable }
-  map global ui r -docstring "toggle colorcol"   %{: ui-colorcol-toggle <ret>}
+    declare-option -hidden bool colorcol_enabled false
+    define-command ui-colorcol-enable %{
+      evaluate-commands %sh{ $kak_opt_colorcol_enabled && echo "fail %{colorcol already enabled}" }
+      colorcol-enable; colorcol-refresh-continuous;
+      set-option buffer colorcol_enabled true
+    }
+    define-command ui-colorcol-disable %{
+      colorcol-disable
+      set-option buffer colorcol_enabled false
+    }
+    define-command ui-colorcol-toggle %{ try ui-colorcol-enable catch ui-colorcol-disable }
+    map global ui r -docstring "toggle colorcol"   %{: ui-colorcol-toggle <ret>}
 
-  define-command ui-lsp-disable -override %{
-    set-option window lsp_auto_highlight_references false
-    set-option window lsp_hover_anchor false
-    lsp-auto-hover-disable
-    lsp-auto-hover-insert-mode-disable
-    lsp-inlay-diagnostics-disable window
-    lsp-inlay-hints-disable window
-    lsp-disable-window
-    echo -debug "Enabling LSP for filtetype %opt{filetype}"
-  }
-  define-command ui-lsp-toggle -override %{
-    try ui-lsp-enable catch ui-lsp-disable
-    trigger-user-hook ui-hl-changed
-  }
-  map global ui k -docstring "toggle kak-lsp"   %{: ui-lsp-toggle <ret>}
+    define-command ui-lsp-disable -override %{
+      set-option window lsp_auto_highlight_references false
+      set-option window lsp_hover_anchor false
+      lsp-auto-hover-disable
+      lsp-auto-hover-insert-mode-disable
+      lsp-inlay-diagnostics-disable window
+      lsp-inlay-hints-disable window
+      lsp-disable-window
+      echo -debug "Enabling LSP for filtetype %opt{filetype}"
+    }
+    define-command ui-lsp-toggle -override %{
+      try ui-lsp-enable catch ui-lsp-disable
+      trigger-user-hook ui-hl-changed
+    }
+    map global ui k -docstring "toggle kak-lsp"   %{: ui-lsp-toggle <ret>}
 
-  declare-option -hidden bool rainbow_enabled false
-  define-command ui-rainbow-enable %{
-    evaluate-commands %sh{ $kak_opt_rainbow_enabled && echo "fail %{rainbow already enabled}" }
-    rainbow-enable-window
-    set-option buffer rainbow_enabled true
-  }
-  define-command ui-rainbow-disable %{
-    rainbow-disable-window
-    set-option buffer rainbow_enabled false
-  }
-  define-command ui-rainbow-toggle %{ try ui-rainbow-enable catch ui-rainbow-disable }
-  map global ui R -docstring "toggle rainbow"   %{: ui-rainbow-toggle <ret>}
+		require-module "kak_rainbower"
+    declare-option -hidden bool rainbow_enabled false
+    define-command ui-rainbow-enable %{
+      evaluate-commands %sh{ $kak_opt_rainbow_enabled && echo "fail %{rainbow already enabled}" }
+      rainbow-enable-window
+      set-option buffer rainbow_enabled true
+    }
+    define-command ui-rainbow-disable %{
+      rainbow-disable-window
+      set-option buffer rainbow_enabled false
+    }
+    define-command ui-rainbow-toggle %{ try ui-rainbow-enable catch ui-rainbow-disable }
+    map global ui R -docstring "toggle rainbow"   %{: ui-rainbow-toggle <ret>}
 
-  # zdiff3 highlighting
-  add-highlighter shared/zdiff3 group
-  add-highlighter shared/zdiff3/HEAD   regex ^<{7}\s.*?$  0:rgb:ff0000,rgb:000000
-  add-highlighter shared/zdiff3/PARENT regex ^\|{7}\s.*?$ 0:rgb:fff000,rgb:000000
-  add-highlighter shared/zdiff3/MERGED regex ^={7}$       0:rgb:fff000,rgb:000000
-  add-highlighter shared/zdiff3/CLOSE  regex ^>{7}\s.*?$  0:rgb:00ff00,rgb:000000
-  add-highlighter shared/zdiff3/diff regions
-  add-highlighter shared/zdiff3/diff/bg region ^<{7}\s ^>{7}\s fill default,rgb:000000
+    # zdiff3 highlighting
+    add-highlighter shared/zdiff3 group
+    add-highlighter shared/zdiff3/HEAD   regex ^<{7}\s.*?$  0:rgb:ff0000,rgb:000000
+    add-highlighter shared/zdiff3/PARENT regex ^\|{7}\s.*?$ 0:rgb:fff000,rgb:000000
+    add-highlighter shared/zdiff3/MERGED regex ^={7}$       0:rgb:fff000,rgb:000000
+    add-highlighter shared/zdiff3/CLOSE  regex ^>{7}\s.*?$  0:rgb:00ff00,rgb:000000
+    add-highlighter shared/zdiff3/diff regions
+    add-highlighter shared/zdiff3/diff/bg region ^<{7}\s ^>{7}\s fill default,rgb:000000
 
-  define-command ui-zdiff3-enable %{ add-highlighter window/zdiff3 ref zdiff3 }
-  define-command ui-zdiff3-disable %{ remove-highlighter window/zdiff3 }
-  define-command ui-zdiff3-toggle %{ try ui-zdiff3-enable catch ui-zdiff3-disable }
-  map global ui z -docstring "toggle zdiff3"   %{: ui-zdiff3-toggle <ret>}
+    define-command ui-zdiff3-enable %{ add-highlighter window/zdiff3 ref zdiff3 }
+    define-command ui-zdiff3-disable %{ remove-highlighter window/zdiff3 }
+    define-command ui-zdiff3-toggle %{ try ui-zdiff3-enable catch ui-zdiff3-disable }
+    map global ui z -docstring "toggle zdiff3"   %{: ui-zdiff3-toggle <ret>}
 
-  hook global WinCreate .* %{
-    ui-git-diff-enable
-    ui-lint-enable
-    ui-rainbow-enable
-    ui-todos-enable
-    ui-zdiff3-enable
-  }
-  hook global BufSetOption filetype=* %{
-    ui-trailing-spaces-enable
+    hook global WinCreate .* %{
+      ui-git-diff-enable
+      ui-lint-enable
+      ui-rainbow-enable
+      ui-todos-enable
+      ui-zdiff3-enable
+    }
+    hook global BufSetOption filetype=* %{
+      ui-trailing-spaces-enable
+    }
   }
 }
+require-module "ui"
 
 map global user v -docstring "view" 'v'
 
