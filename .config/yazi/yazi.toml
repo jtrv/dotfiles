@@ -139,3 +139,7 @@ prepend_previewers = [
   { name = "*.md",                        run = "glow" },
 ]
 
+prepend_fetchers = [
+  { id  = "git", name = "*", run = "git" },
+  { id = "git", name = "*/", run = "git" }
+]

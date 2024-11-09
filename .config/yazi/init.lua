@@ -1,5 +1,8 @@
-require("starship"):setup()
+require("archivemount"):setup()
+require("git"):setup()
+require("relative-motions"):setup({ show_numbers="relative" })
 require("session"):setup({ sync_yanked = true })
+require("starship"):setup()
 
 -- show links in status bar
 function Status:name()
