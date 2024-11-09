@@ -8,7 +8,7 @@ matches:
   - trigger: ",,gin"
     replace: |
       func init() {
-          $|$
+        $|$
       }
 
   - trigger: ",,gmn"
@@ -19,7 +19,7 @@ matches:
       )
 
       func main() {
-          $|$
+        $|$
       }
 
   # CONTROL STRUCTURES
@@ -75,7 +75,7 @@ matches:
   - trigger: ",,ger"
     replace: |
       if err != nil {
-          return $|$
+        return $|$
       }
 
   # PRINTING AND FORMATTING
@@ -108,16 +108,16 @@ matches:
   - trigger: ",,ggo"
     replace: |
       go func() {
-          $|$
+        $|$
       }()
 
   # TESTING
   - trigger: ",,gbe"
     replace: |
       func Benchmark$|$(b *testing.B) {
-          for i := 0; i < b.N; i++ {
+        for i := 0; i < b.N; i++ {
 
-          }
+        }
       }
 
   - trigger: ",,gte"
@@ -130,12 +130,12 @@ matches:
     replace: |
       jsonData, err := json.Marshal($|$)
       if err != nil {
-          log.Fatal(err)
+        log.Fatal(err)
       }
 
   - trigger: ",,gju"
     replace: |
       err := json.Unmarshal(data, &$|$)
       if err != nil {
-          log.Fatal(err)
+        log.Fatal(err)
       }
