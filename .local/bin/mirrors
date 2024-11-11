@@ -35,7 +35,7 @@ Input password to continue."
 echo "$PROMPT_REMINDER"
 notify-send -t "$NOTIFY_TIME" "Update Mirrors" "$PROMPT_REMINDER"
 
-doas sh -c "
+sudo sh -c "
 	PATH='$PATH:$CARGO_HOME/bin/'
 	mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist-backup
 	cp '$RESULTS'/mirrorlist /etc/pacman.d/

@@ -42,7 +42,7 @@ self_update = true
 
 # Custom commands
 [commands]
-"kakoune" = "pushd ~/repos/kakoune/; doas make install; popd; kak -e 'bundle-install'"
+"kakoune" = "pushd ~/repos/kakoune/; sudo make install; popd; kak -e 'bundle-install'"
 "proton" = "protonup-rs -q"
 
 [linux]
