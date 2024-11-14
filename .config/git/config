@@ -1,3 +1,5 @@
+[advice]
+	detachedHead = false
 [branch]
   sort = -committerdate
 [commit]
