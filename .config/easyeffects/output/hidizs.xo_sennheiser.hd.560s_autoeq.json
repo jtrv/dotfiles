@@ -6,7 +6,7 @@
             "bypass": false,
             "input-gain": 0.0,
             "ir-width": 100,
-            "kernel-path": "/home/sugimoto/.config/easyeffects/irs/Sennheiser HD 560S Sample:192kHz Res:12Hz (Harman over-ear 2018).irs",
+            "kernel-name": "Sennheiser HD 560S Sample:192kHz Res:12Hz (Harman over-ear 2018)",
             "output-gain": 0.0
         },
         "plugins_order": [
