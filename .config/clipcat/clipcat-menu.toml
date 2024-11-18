@@ -16,6 +16,7 @@ menu_length = 30
 menu_prompt = ""
 # Extra arguments to pass to `dmenu`.
 extra_arguments = [
+  "-i",
   "-fn",
   "'pixelsize=18:antialias=true'",
   "-nb",
