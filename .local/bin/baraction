@@ -1,109 +1,86 @@
 #!/bin/sh
 
 cpu() {
-        icon=
-	read -r cpu a b c previdle rest </proc/stat
-	total=$((a + b + c + previdle))
-	prev_stat_file="/tmp/prev_cpu_stat"
-	if [ -f "$prev_stat_file" ]; then
-		read -r cpu_prev a_prev b_prev c_prev previdle_prev rest_prev <"$prev_stat_file"
-		cpu_usage=$((100 * ((total - (a_prev + b_prev + c_prev + previdle_prev)) - (previdle - previdle_prev)) / (total - (a_prev + b_prev + c_prev + previdle_prev))))
-		printf "%s%3d%%" "$icon" "$cpu_usage"
-	else
-		printf "N/A" # No data available for the first run
-	fi
-	echo "$cpu $a $b $c $previdle $rest" >"$prev_stat_file"
+  icon=
+  read -r cpu a b c previdle rest </proc/stat
+  total=$((a + b + c + previdle))
+  prev_stat_file="/tmp/prev_cpu_stat"
+  if [ -f "$prev_stat_file" ]; then
+    read -r _ a_prev b_prev c_prev previdle_prev _ <"$prev_stat_file"
+    cpu_usage=$((100 * ((total - (a_prev + b_prev + c_prev + previdle_prev)) - (previdle - previdle_prev)) / (total - (a_prev + b_prev + c_prev + previdle_prev))))
+    printf "%s%3d%%" "$icon" "$cpu_usage"
+  else
+    printf "N/A"
+  fi
+  echo "$cpu $a $b $c $previdle $rest" >"$prev_stat_file"
 }
 
 ram() {
-	icon=
-	used=$(free | grep Mem: | awk '{print $3}')
-	total=$(free | grep Mem: | awk '{print $2}')
-	percent=$((200 * used / total % 2 == 0 ? 100 * used / total : 101 * used / total))
-	printf "%s%3d%%" "$icon" "$percent"
+  icon=
+  free_output=$(free)
+  used=$(echo "$free_output" | awk '/Mem:/ {print $3}')
+  total=$(echo "$free_output" | awk '/Mem:/ {print $2}')
+  percent=$((200 * used / total % 2 == 0 ? 100 * used / total : 101 * used / total))
+  printf "%s%3d%%" "$icon" "$percent"
 }
 
 ssd() {
-	icon=󰋊
-	SSD=$(df -h /home | awk '/\/dev/{print $5}' | tr -d '%')
-	printf "%s%3d%%" "$icon" "$SSD"
+  icon=󰋊
+  SSD=$(df -P /home | awk 'NR==2 {print int($5)}')
+  printf "%s%3d%%" "$icon" "$SSD"
 }
 
 bat() {
-	charging=$(cat /sys/class/power_supply/AC/online)
-	percent=$(cat /sys/class/power_supply/BAT0/capacity)
+  read -r charging </sys/class/power_supply/AC/online
+  read -r percent </sys/class/power_supply/BAT0/capacity
 
-	case "$percent" in
-	[1-9])
-		icon=""
-		;;
-	[1-3][0-9])
-		icon=""
-		;;
-	[4-5][0-9])
-		icon=""
-		;;
-	[6-7][0-9])
-		icon=""
-		;;
-	*)
-		icon=""
-		;;
-	esac
+  icon=$(case "$percent" in
+    [1-9]) echo "" ;;
+    [1-3][0-9]) echo "" ;;
+    [4-5][0-9]) echo "" ;;
+    [6-7][0-9]) echo "" ;;
+    *) echo "" ;;
+    esac)
 
-	if [ "$charging" = "1" ]; then
-		icon="⚡"
-	fi
-
-	printf "%s%3d%%" "$icon" "$percent"
+  [ "$charging" = "1" ] && icon="⚡"
+  printf "%s%3d%%" "$icon" "$percent"
 }
 
 vol() {
-	volume=$(pamixer --get-volume)
-	mute=$(pamixer --get-mute)
+  volume=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -o '[0-9]*%' | head -1 | tr -d '%')
+  mute=$(pactl get-sink-mute @DEFAULT_SINK@ | grep -o 'yes')
 
-	if [ "$mute" = "true" ]; then
-		icon=""
-	else
-		icon=""
-	fi
+  if [ "$mute" = "yes" ]; then
+    icon=""
+  else
+    icon=""
+  fi
 
-	printf "%s%3d%%" "$icon" "$volume"
+  printf "%s%3d%%" "$icon" "$volume"
 }
 
 mic() {
-	state=$(amixer get Capture toggle | grep -oE '\[on\]|\[off\]')
-
-	if [ "$state" = "on" ]; then
-		printf ""
-	else
-		printf ""
-	fi
+  if find /proc/asound/card*/input*/status -type f -exec grep -q "RUNNING" {} + 2>/dev/null; then
+    printf ""
+  else
+    printf ""
+  fi
 }
 
 net() {
-	wifi=$(ip a | grep 'wlan0' | grep -c 'UP')
-
-	if [ "$wifi" -gt 0 ]; then
-		printf ""
-	else
-		printf "󰖪"
-	fi
+  if ip a | grep 'wlan0' | grep -c 'UP' >/dev/null; then
+    printf ""
+  else
+    printf "󰖪"
+  fi
 }
 
 blu() {
-	bluetoothStatus=$(bluetoothctl info | grep -c 'Connected: yes')
-
-	if [ "$bluetoothStatus" -gt 0 ]; then
-		printf "󰂱"
-	else
-		printf "󰂲"
-	fi
+  find /sys/class/bluetooth -name powered -quit 2>/dev/null && printf "󰂱" || printf "󰂲"
 }
-
 
 SLEEP_SEC=2
 while :; do
-	echo "$(cpu) $(ram) $(ssd) $(bat) $(mic) $(blu) $(net) "
-	sleep $SLEEP_SEC
+  echo "$(cpu) $(ram) $(ssd) $(bat) $(mic) $(blu) $(net) "
+  sleep $SLEEP_SEC
 done
