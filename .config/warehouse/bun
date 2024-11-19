@@ -2,6 +2,7 @@
 @fsouza/prettierd[0m[2m
 @nestjs/cli[0m[2m
 @prisma/language-server[0m[2m
+@tailwindcss/language-server[0m[2m
 @typescript-eslint/eslint-plugin[0m[2m
 bash-language-server[0m[2m
 bun[0m[2m
