@@ -1,6 +1,7 @@
 aichat -> https://github.com/rust-lang/crates.io-index
 archlinux-inputs-fsck -> https://github.com/kpcyrd/archlinux-inputs-fsck
 attractorr -> https://github.com/rust-lang/crates.io-index
+binsider -> https://github.com/rust-lang/crates.io-index
 bogrep -> https://github.com/rust-lang/crates.io-index
 cargo-cache -> https://github.com/rust-lang/crates.io-index
 cargo-fix -> https://github.com/rust-lang/crates.io-index
@@ -39,6 +40,7 @@ magic-wormhole-cli -> https://github.com/magic-wormhole/magic-wormhole.rs
 markdown-oxide -> https://github.com/feel-ix-343/markdown-oxide
 mullscan -> https://github.com/jtrv/mullscan
 onefetch -> https://github.com/rust-lang/crates.io-index
+presenterm -> https://github.com/rust-lang/crates.io-index
 protonup-rs -> https://github.com/rust-lang/crates.io-index
 rargs -> https://github.com/rust-lang/crates.io-index
 rate_mirrors -> https://github.com/westandskif/rate-mirrors
@@ -47,6 +49,7 @@ rmz -> https://github.com/rust-lang/crates.io-index
 rustscan -> https://github.com/rust-lang/crates.io-index
 rusty-man -> https://github.com/rust-lang/crates.io-index
 rusty-rain -> https://github.com/rust-lang/crates.io-index
+rustywind -> https://github.com/rust-lang/crates.io-index
 scaphandre -> https://github.com/rust-lang/crates.io-index
 sccache -> https://github.com/rust-lang/crates.io-index
 secli -> https://github.com/rust-lang/crates.io-index
