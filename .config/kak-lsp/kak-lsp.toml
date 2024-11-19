@@ -414,6 +414,14 @@ roots = [".git", ".hg"]
 command = "taplo"
 args = ["lsp", "stdio"]
 
+[language_server.tailwindcss-language-server]
+filetypes = ["javascript", "typescript"]
+roots = ["tailwind.config.ts"]
+command = "tailwindcss-language-server"
+args = ["--stdio"]
+[language_server.tailwindcss-language-server.settings.tailwindcss-language-server]
+emmetCompletions = true
+
 [language_server.terraform-ls]
 filetypes = ["terraform"]
 roots = ["*.tf"]
