@@ -16,8 +16,6 @@ bind ! __history_previous_command             # add '!!' functionality, req ./fu
 bind '$' __history_previous_command_arguments # add '!$' functionality, req ./functions/__history_previous_command_arguments.fish
 
 bind \cr _atuin_search
-bind \cj edit_command_buffer
-
 
 ######## ABBREVIATIONS ########
 
