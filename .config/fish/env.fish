@@ -55,7 +55,7 @@ set -gx XAUTHORITY "$XDG_RUNTIME_DIR"/Xauthority
 set -gx HISTFILE "$XDG_STATE_HOME"/bash/history
 
 # Misc
-set -gx ARGC_COMPLETIONS_ROOT       "/home/sugimoto/repos/argc-completions"
+set -gx ARGC_COMPLETIONS_ROOT       "$XDG_CONFIG_HOME/argc-completions"
 set -gx ARGC_COMPLETIONS_PATH       "$ARGC_COMPLETIONS_ROOT/completions/linux:$ARGC_COMPLETIONS_ROOT/completions"
 set -gx ARGC_SCRIPTS                (ls -p -1 "$ARGC_COMPLETIONS_ROOT/completions/linux" "$ARGC_COMPLETIONS_ROOT/completions" | sed -n 's/\.sh$//p')
 set -gx ATUIN_NOBIND                "true"
@@ -69,7 +69,6 @@ set -gx DELTA_PAGER                 "kak"
 set -gx DMENU_THEME                 "-i -fn 'pixelsize=18:antialias=true' -nb rgb:1e/1e/2e -nf rgb:cd/d6/f4 -sb rgb:89/dc/eb -sf rgb:1e/1e/2e" # matched to spectrwm.conf
 set -gx EDITOR                      "kak"
 set -gx fish_greeting
-set -gx GITHUB_TOKEN                (rg -No ':(\w*)@' -r '$1' "$XDG_CONFIG_HOME"/git/credentials)
 set -gx HORS_ENGINE                 "google"
 set -gx MANPAGER                    "kak -e 'set buffer filetype man'"
 set -gx OPENAI_API_KEY              (secli get openai_api_key)
