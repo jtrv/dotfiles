@@ -58,14 +58,13 @@ define-command push-clip -docstring "
   encoded=$(printf %s "$kak_main_reg_dquote" | base64 | tr -d '\n')
   printf "\e]52;;%s\e\\" "$encoded" >"/proc/$kak_client_pid/fd/0"
 }}
-
 define-command pull-clip -docstring "
   pull external clipboard into kakoune's "" register
-" %{ reg dquote %sh{ xclip -o clipboard } }
+" %{ set-register dquote %sh{ xclip -o clipboard } }
 
-hook global NormalKey y|d|c %{ push-clip }
-hook global KakBegin .*     %{ pull-clip }
-hook global FocusIn .*      %{ pull-clip }
+hook -group clip global NormalKey 'y|d|c' %{ push-clip }
+hook -group clip global KakBegin  '.*'    %{ pull-clip }
+hook -group clip global FocusIn   '.*'    %{ pull-clip }
 
 bundle active-window.kak https://github.com/greenfork/active-window.kak %{
   set-face global InactiveCursor default,rgba:5d5d5dFF
