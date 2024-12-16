@@ -45,7 +45,7 @@ provide-module "kak_rainbower" %{
 
 ###################### UTILITY ######################
 
-set-option global grepcmd 'rg --color=always --smart-case --vimgrep'
+set-option global grepcmd 'rg --color=always --smart-case --with-filename --line-number --column'
 
 # empty scratch buffer(s)
 hook global BufCreate '\*scratch(-\d+)?\*' %{ execute-keys -draft '%<a-d>' }
