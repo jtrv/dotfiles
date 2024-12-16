@@ -11,13 +11,11 @@ function gen_completions
   clipcatctl completions fish
   clipcatd completions fish
   clipcat-menu completions fish
-  dprint completions fish
   erd --completions=fish
   fd --gen-completions=fish
   glow completion fish
   just --completions=fish
   kondo --completions=fish
-  onefetch --generate=fish
   procs --gen-completion-out=fish
   rg --generate=complete-fish
   sniffglue --gen-completions=fish
