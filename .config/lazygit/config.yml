@@ -107,6 +107,7 @@ quitOnTopLevelReturn: true
 disableStartupPopups: true
 notARepository: 'prompt' # one of: 'prompt' | 'create' | 'skip' | 'quit'
 promptToReturnFromSubprocess: true # display confirmation when subprocess terminates
+
 keybinding:
     universal:
         quit: 'q'
@@ -238,7 +239,61 @@ keybinding:
         init: 'i'
         update: 'u'
         bulkMenu: 'b'
+
 customCommands:
+
+    - key: 'a'
+      description: 'Toggle file staged'
+      context: 'files'
+      command: "git {{if .SelectedFile.HasUnstagedChanges}} add {{else}} reset {{end}} {{.SelectedFile.Name | quote}}"
+
+    - key: '<c-f>'
+      description: 'fetch a remote branch as a new local branch'
+      command: "git fetch {{index .SelectedRemote.Name }} {{index .PromptResponses 0}}:{{index .PromptResponses 1}}"
+      context: 'remotes'
+      prompts:
+        - type: 'input'
+          title: 'Remote Branch Name'
+          initialValue: ''
+        - type: 'input'
+          title: 'New Local Branch Name'
+          initialValue: ''
+      loadingText: 'fetching branch'
+
+    - key: "G"
+      description: "Prune local branches no longer on its remote; (G)one."
+      command: |
+        git fetch -p && for branch in $(git for-each-ref --format '%(refname) %(upstream:track)' refs/heads | awk '$2 == "[gone]" {sub("refs/heads/", "", $1); print $1}'); do git branch -D $branch; done
+      context: "localBranches"
+      loadingText: "Pruning gone..."
+
+    - key: "v"
+      context: "localBranches"
+      loadingText: "Checking out GitHub Pull Request..."
+      command: "gh pr checkout {{.Form.PullRequestNumber}}"
+      prompts:
+        - type: "menuFromCommand"
+          title: "Which PR do you want to check out?"
+          key: "PullRequestNumber"
+          command: >-
+              gh pr list --json number,title,headRefName,updatedAt
+              --template '{{`{{range .}}{{printf "#%v: %s - %s (%s)" .number .title .headRefName (timeago .updatedAt)}}{{end}}`}}'
+          filter: '#(?P<number>[0-9]+): (?P<title>.+) - (?P<ref_name>[^ ]+).*'
+          valueFormat: '{{.number}}'
+          labelFormat: '{{"#" | black | bold}}{{.number | white | bold}} {{.title | yellow | bold}}{{" [" | black | bold}}{{.ref_name | green}}{{"]" | black | bold}}'
+
+    - key: "<c-p>"
+      description: "prune deleted remote branches"
+      command: "git remote prune {{.SelectedRemote.Name}}"
+      context: "remotes"
+      loadingText: "Pruning..."
+
+    - key: "b"
+      description: "prune local branches that have been merged to master"
+      command: "git branch --merged master | grep -v '^[ *]*master$' | xargs -r git branch -d"
+      context: "localBranches"
+      loadingText: "Pruning..."
+
     - key: '<c-c>'
       description: 'commit as non-default author'
       command: 'git commit -m "{{index .PromptResponses 0}}" --author="{{index .PromptResponses 1}} <{{index .PromptResponses 2}}>"'
@@ -254,43 +309,44 @@ customCommands:
           title: 'Email Address'
           initialValue: ''
       loadingText: 'commiting'
+
     - key: 'b'
+      description: 'blame file at tree'
       command: 'tig blame -- {{.SelectedFile.Name}}'
       context: 'files'
-      description: 'blame file at tree'
       subprocess: yes
     - key: 'b'
+      description: 'blame file at revision'
       command: 'tig blame {{.SelectedSubCommit.Sha}} -- {{.SelectedCommitFile.Name}}'
       context: 'commitFiles'
-      description: 'blame file at revision'
       subprocess: yes
     - key: 'B'
+      description: 'blame file at tree'
       command: 'tig blame -- {{.SelectedCommitFile.Name}}'
       context: 'commitFiles'
-      description: 'blame file at tree'
       subprocess: yes
     - key: 't'
+      description: 'tig commit (`t` again to browse files at revision)'
       command: 'tig show {{.SelectedSubCommit.Sha}}'
       context: 'subCommits'
-      description: 'tig commit (`t` again to browse files at revision)'
       subprocess: yes
     - key: 't'
+      description: 'tig branch (`t` again to browse files at revision)'
       command: 'tig show {{.SelectedLocalBranch.Name}}'
       context: 'localBranches'
-      description: 'tig branch (`t` again to browse files at revision)'
       subprocess: yes
     - key: 't'
+      description: 'tig branch (`t` again to browse files at revision)'
       command: 'tig show {{.SelectedRemoteBranch.RemoteName}}/{{.SelectedRemoteBranch.Name}}'
       context: 'remoteBranches'
-      description: 'tig branch (`t` again to browse files at revision)'
       subprocess: yes
     - key: 't'
+      description: 'tig file (history of commits affecting file)'
       command: 'tig {{.SelectedSubCommit.Sha}} -- {{.SelectedCommitFile.Name}}'
       context: 'commitFiles'
-      description: 'tig file (history of commits affecting file)'
       subprocess: yes
     - key: 't'
+      description: 'tig file (history of commits affecting file)'
       command: 'tig -- {{.SelectedFile.Name}}'
       context: 'files'
-      description: 'tig file (history of commits affecting file)'
       subprocess: yes
