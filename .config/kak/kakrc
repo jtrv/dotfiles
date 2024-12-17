@@ -466,7 +466,7 @@ define-command reader-mode -docstring "Enables settings for better reading" %{
   map buffer normal d <c-d>
   map buffer normal u <c-u>
 }
-hook global WinDisplay '\*(delta|diff|difft|greeting|help|man \w+|mdn|tldr).*\*' %{
+hook global WinDisplay '\*(delta|diff|difft|greeting|help|man|mdn|tldr).*\*' %{
   reader-mode
 }
 
