@@ -31,7 +31,7 @@
     origin = top-right
 
     # Offset from the origin
-    offset = 10x50
+    offset = (10, 50)
 
     # Scale factor. It is auto-detected if value is 0.
     scale = 0
@@ -199,9 +199,9 @@
     enable_recursive_icon_lookup = true
 
     # Set icon theme (only used for recursive icon lookup)
-    icon_theme = Papirus
+    # icon_theme = Adwaita
     # You can also set multiple icon themes, with the leftmost one being used first.
-    # icon_theme = "Adwaita, breeze"
+    icon_theme = "Adwaita, breeze"
 
     # Align icons left/right/top/off
     icon_position = left
