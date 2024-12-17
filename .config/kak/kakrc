@@ -616,13 +616,13 @@ map global normal x     -docstring "select inner"   %{<a-i>}
 map global normal X     -docstring "select outer"   %{<a-a>}
 
 # select all matches
-map global normal <a-x> -docstring "select all matches"   %{*%s<ret>)}
+map global normal <a-x> -docstring "select all matches"   %{<a-*>%s<ret>)}
 
 # select/add next match
-map global normal v     -docstring "select next match"      %{*n}
-map global normal <a-v> -docstring "deselect current sel"   %{*<a-n>}
-map global normal V     -docstring "add next match"         %{*N}
-map global normal <a-V> -docstring "add previous match"     %{*<a-N>}
+map global normal v     -docstring "select next match"      %{<a-*>n}
+map global normal <a-v> -docstring "deselect current sel"   %{<a-*><a-n>}
+map global normal V     -docstring "add next match"         %{<a-*>N}
+map global normal <a-V> -docstring "add previous match"     %{<a-*><a-N>}
 
 # case insensitive search by default
 map global normal /     -docstring "search"                      %{/(?i)}
