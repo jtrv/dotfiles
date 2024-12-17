@@ -1,0 +1,9 @@
+[submodule "argc-completions"]
+	path = repos/argc-completions
+	url = https://github.com/sigoden/argc-completions.git
+[submodule "kakoune"]
+	path = repos/kakoune
+	url = https://github.com/mawww/kakoune.git
+[submodule "kak-bundle"]
+	path = .config/kak/bundle/kak-bundle
+	url = https://github.com/jdugan6240/kak-bundle
