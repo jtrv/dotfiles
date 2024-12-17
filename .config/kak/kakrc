@@ -3,20 +3,15 @@
 
 colorscheme catpuccin_mocha
 
-# "bundle" comments added to round out the list in ~/.config/warehouse/kakoune
-evaluate-commands %sh{
-  kak-lsp --kakoune -s "$kak_session" # -vvv --log /tmp/kak-lsp.log   # bundle https://github.com/kakoune-lsp/kakoune-lsp
-  kak-tree-sitter -vvv -dks --init "$kak_session"                     # bundle https://git.sr.ht/~hadronized/kak-tree-sitter
-  colorcol                                                            # bundle https://github.com/SolitudeSF/colorcol
-  kak-popup init                                                      # bundle https://github.com/enricozb/popup.kak
-  skyspell-kak init                                                   # bundle https://github.com/your-tools/skyspell
-}
-
-
-source "%val{config}/catpuccin_mocha_tree_sitter_faces.kak"
-
 source "%val{config}/bundle/kak-bundle/rc/kak-bundle.kak"
 bundle-noload kak-bundle https://github.com/jdugan6240/kak-bundle
+
+evaluate-commands %sh{
+  kak-lsp --kakoune -s "$kak_session" # -vvv --log /tmp/kak-lsp.log
+  kak-tree-sitter -vvv -dks --init "$kak_session"
+}
+
+source "%val{config}/catpuccin_mocha_tree_sitter_faces.kak"
 
 ################### DISPLAY ###################
 
@@ -71,6 +66,9 @@ bundle active-window.kak https://github.com/greenfork/active-window.kak %{
 
 bundle auto-pairs.kak https://github.com/alexherbo2/auto-pairs.kak %{ enable-auto-pairs }
 
+bundle colorcol https://github.com/SolitudeSF/colorcol
+bundle-install-hook colorcol %{ nimble install colorcol }
+
 bundle grep-expand.kak https://github.com/jtrv/grep-expand.kak
 
 bundle indent.kak https://github.com/kirusfg/indent.kak %{
@@ -80,13 +78,27 @@ bundle indent.kak https://github.com/kirusfg/indent.kak %{
 bundle kak-ansi https://github.com/eraserhd/kak-ansi
 bundle-install-hook kak-ansi %{ make }
 
-bundle kak-live-grep https://git.sr.ht/~raiguard/kak-live-grep %{
-  set-face global LiveGrepMatch +u
+bundle popup.kak https://github.com/enricozb/popup.kak
+bundle-install-hook popup.kak %{
+  cargo binstall -y kak-popup --git https://github.com/enricozb/popup.kak
+  cargo clean
+}
+
+bundle-noload kak-tree-sitter https://git.sr.ht/~hadronized/kak-tree-sitter
+bundle-install-hook kak-tree-sitter %{
+  cargo binstall -y kak-tree-sitter ktsctl
+  cargo clean
 }
 
 bundle kakoune-auto-percent https://github.com/delapouite/kakoune-auto-percent
 
 bundle kakoune-boost https://github.com/krobelus/kakoune-boost
+
+bundle-noload kakoune-lsp https://github.com/kakoune-lsp/kakoune-lsp
+bundle-install-hook kakoune-lsp %{
+  cargo install --path .
+  cargo clean
+}
 
 bundle kakoune-state-save https://gitlab.com/Screwtapello/kakoune-state-save.git %{
   hook global KakBegin .* %{
@@ -108,14 +120,21 @@ bundle kakpipe https://github.com/jtrv/kakpipe %{
   complete-command kakpipe shell
 }
 bundle-install-hook kakpipe %{
+  cargo binstall -y kakpipe --git https://github.com/jtrv/kakpipe
+  cargo clean
+}
+
+bundle kakship https://github.com/eburghar/kakship %{
+  require-module kakship
+  kakship-enable
+}
+bundle-install-hook kakship %{
   cargo install --path .
   cargo clean
 }
-alias global : kakpipe
 
-bundle kakship https://github.com/eburghar/kakship %{ kakship-enable }
-bundle-install-hook kakship %{
-  cargo install --path .
+bundle-noload skyspell https://github.com/your-tools/skyspell %{
+  cargo binstall -y skyspell_kak --git https://github.com/your-tools/skyspell
   cargo clean
 }
 
