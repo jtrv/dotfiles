@@ -55,7 +55,7 @@ set -gx XAUTHORITY "$XDG_RUNTIME_DIR"/Xauthority
 set -gx HISTFILE "$XDG_STATE_HOME"/bash/history
 
 # Misc
-set -gx ARGC_COMPLETIONS_ROOT       "$XDG_CONFIG_HOME/argc-completions"
+set -gx ARGC_COMPLETIONS_ROOT       "$HOME/repos/argc-completions"
 set -gx ARGC_COMPLETIONS_PATH       "$ARGC_COMPLETIONS_ROOT/completions/linux:$ARGC_COMPLETIONS_ROOT/completions"
 set -gx ARGC_SCRIPTS                (ls -p -1 "$ARGC_COMPLETIONS_ROOT/completions/linux" "$ARGC_COMPLETIONS_ROOT/completions" | sed -n 's/\.sh$//p')
 set -gx ATUIN_NOBIND                "true"
