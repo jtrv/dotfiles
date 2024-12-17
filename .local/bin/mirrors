@@ -1,6 +1,8 @@
 #!/bin/sh
 # update mirrors and database
 
+set -e
+
 export RATE_MIRRORS_COMPLETION=0.98
 export RATE_MIRRORS_COUNTRY_NEIGHBORS_PER_COUNTRY=4
 export RATE_MIRRORS_COUNTRY_TEST_MIRRORS_PER_COUNTRY=3
@@ -15,17 +17,17 @@ LOGS="$XDG_DATA_HOME"/rate-mirrors/logs
 
 echo "Evaluating mirrors..."
 
-{ rate_mirrors \
+{ rate-mirrors \
 	--save "$RESULTS"/mirrorlist \
 	arch >"$LOGS"/arch.log; } 2>&1 &&
-	echo "Arch mirrors evaluated, view log in $LOGS/arch.log" &&
-	notify-send -t "$NOTIFY_TIME" "Update Mirrors" "Arch mirrors evaluated." &
+  	echo "Arch mirrors evaluated, view log in $LOGS/arch.log" &&
+  	notify-send -t "$NOTIFY_TIME" "Update Mirrors" "Arch mirrors evaluated." &
 
-{ rate_mirrors \
+{ rate-mirrors \
 	--save "$RESULTS"/chaotic-mirrorlist \
 	chaotic-aur >"$LOGS"/chaotic.log; } 2>&1 &&
-	echo "Chaotic mirrors evaluated, view log in $LOGS/chaotic.log" &&
-	notify-send -t "$NOTIFY_TIME" "Update Mirrors" "Chaotic mirrors evaluated." &
+  	echo "Chaotic mirrors evaluated, view log in $LOGS/chaotic.log" &&
+  	notify-send -t "$NOTIFY_TIME" "Update Mirrors" "Chaotic mirrors evaluated." &
 
 wait
 
