@@ -147,6 +147,14 @@ bundle sudo-write.kak https://github.com/jtrv/sudo-write.kak %{
 
 ###################### COMMANDS ######################
 
+define-command kakpipe-alias -docstring "
+ kakpipe-alias <command>: Forwards outputs of the command given as
+ parameter to a new fifo buffer and highlights text based on ansi color codes
+" -params 1.. %{
+  kakpipe --scroll --rw -- %arg{@}
+}
+alias global : kakpipe-alias
+
 define-command buffer-picker -docstring "
   buffer-picker: Opens buffer picker.
 " %{
