@@ -9,7 +9,6 @@ evaluate-commands %sh{
   kak-tree-sitter -vvv -dks --init "$kak_session"                     # bundle https://git.sr.ht/~hadronized/kak-tree-sitter
   colorcol                                                            # bundle https://github.com/SolitudeSF/colorcol
   kak-popup init                                                      # bundle https://github.com/enricozb/popup.kak
-  hop-kak --init                                                      # bundle https://github.com/hadronized/hop.kak
   skyspell-kak init                                                   # bundle https://github.com/your-tools/skyspell
 }
 
@@ -340,11 +339,6 @@ hook global WinDisplay '\*aichat.*\*' %{
   alias buffer write yo-buffer-write
   alias buffer w yo-buffer-write
 }
-
-declare-option str hop_kak_keyset "jklfdsahguioprewqmvczxnb"
-define-command hop-kak -docstring "
-  hint and hop to one of the current selections
-" %{ eval -no-hooks -- %sh{ hop-kak --keyset "$kak_opt_hop_kak_keyset" --sels "$kak_selections_desc" } }
 
 define-command how -docstring "
   how <query>: how utility wrapper
@@ -682,16 +676,7 @@ bundle kakoune-focus https://github.com/caksoylar/kakoune-focus %{
   map global user f -docstring "focus" %{: focus-toggle <ret>}
 }
 
-declare-user-mode grep
-  map global user g -docstring "grep" %{: enter-user-mode grep <ret>}
-  map global grep g -docstring "grep"         %{: grep <ret>}
-  map global grep n -docstring "next match"   %{: grep-next-match <ret>}
-  map global grep p -docstring "prev match"   %{: grep-previous-match <ret>}
-  map global grep l -docstring "live-grep"    %{: live-grep <ret>}
-
 map global user i -docstring "dedoc" %{: docs %opt{filetype}<a-!>}
-
-map global user j -docstring "jump" %{: hop-kak <ret>}
 
 map global user l -docstring "lsp" %{: enter-user-mode lsp <ret>}
   map global lsp <minus> -docstring "disable"   %{: lsp-disable-window <ret>}
