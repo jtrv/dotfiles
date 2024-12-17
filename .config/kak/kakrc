@@ -50,11 +50,11 @@ define-command push-clip -docstring "
   push kakoune's "" register to external clipboard
 " %{ nop %sh{
   encoded=$(printf %s "$kak_main_reg_dquote" | base64 | tr -d '\n')
-  printf "\e]52;;%s\e\\" "$encoded" >"/proc/$kak_client_pid/fd/0"
+  printf "\033]52;;%s\a" "$encoded" >"/proc/$kak_client_pid/fd/0"
 }}
-define-command pull-clip -docstring "
-  pull external clipboard into kakoune's "" register
-" %{ set-register dquote %sh{ xclip -o clipboard } }
+define-command pull-clip -docstring '
+  pull external clipboard into kakoune''s " register
+' %{ set-register dquote %sh{ xclip -o clipboard -selection clipboard } }
 
 hook -group clip global NormalKey 'y|d|c' %{ push-clip }
 hook -group clip global KakBegin  '.*'    %{ pull-clip }
