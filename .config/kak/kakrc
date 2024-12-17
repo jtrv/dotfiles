@@ -753,7 +753,7 @@ provide-module "ui" %{
     set-option global ui_wrap_flags -width 100 -word -indent -marker ~~
     set-face global TrailingSpace default,red
 
-		require-module "number_toggle_kak"
+    require-module "number_toggle_kak"
     define-command -override ui-line-numbers-toggle -docstring 'toggle line numbers' %{ number-toggle-toggle }
     define-command -override ui-line-numbers-enable -docstring 'enable line numbers' %{ number-toggle-enable }
     define-command -override ui-line-numbers-disable -docstring 'disable line numbers' %{ number-toggle-disable }
@@ -787,7 +787,7 @@ provide-module "ui" %{
     }
     map global ui k -docstring "toggle kak-lsp"   %{: ui-lsp-toggle <ret>}
 
-		require-module "kak_rainbower"
+    require-module "kak_rainbower"
     declare-option -hidden bool rainbow_enabled false
     define-command ui-rainbow-enable %{
       evaluate-commands %sh{ $kak_opt_rainbow_enabled && echo "fail %{rainbow already enabled}" }
