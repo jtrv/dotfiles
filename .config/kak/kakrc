@@ -40,6 +40,8 @@ provide-module "kak_rainbower" %{
 ###################### UTILITY ######################
 
 set-option global grepcmd 'rg --color=always --smart-case --with-filename --line-number --column'
+require-module grep
+alias global kg grep
 
 # empty scratch buffer(s)
 hook global BufCreate '\*scratch(-\d+)?\*' %{ execute-keys -draft '%<a-d>' }
