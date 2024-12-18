@@ -65,3 +65,11 @@
   features = catppuccin-mocha zebra-dark
   map-styles = "bold purple => syntax #443c5b, bold cyan => syntax #374858"
   true-color = always
+
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
