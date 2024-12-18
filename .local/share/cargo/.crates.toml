@@ -49,6 +49,7 @@
 "protonup-rs 0.8.5 (registry+https://github.com/rust-lang/crates.io-index)" = ["protonup-rs"]
 "rargs 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["rargs"]
 "ripdrag 0.4.10 (registry+https://github.com/rust-lang/crates.io-index)" = ["ripdrag"]
+"rkak_easymotion 0.1.0 (path+file:///home/sugimoto/.config/kak/bundle/reasymotion)" = ["rkak_easymotion"]
 "rmz 2.2.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["rmz"]
 "rustscan 2.3.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["rustscan"]
 "rusty-man 0.5.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["rusty-man"]
