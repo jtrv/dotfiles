@@ -94,10 +94,7 @@ bundle kakoune-auto-percent https://github.com/delapouite/kakoune-auto-percent
 bundle kakoune-boost https://github.com/krobelus/kakoune-boost
 
 bundle-noload kakoune-lsp https://github.com/kakoune-lsp/kakoune-lsp
-bundle-install-hook kakoune-lsp %{
-  cargo install --path .
-  cargo clean
-}
+bundle-install-hook kakoune-lsp %{ cargo install --path . ; cargo clean }
 
 bundle kakoune-state-save https://gitlab.com/Screwtapello/kakoune-state-save.git %{
   hook global KakBegin .* %{
@@ -127,10 +124,7 @@ bundle kakship https://github.com/eburghar/kakship %{
   require-module kakship
   kakship-enable
 }
-bundle-install-hook kakship %{
-  cargo install --path .
-  cargo clean
-}
+bundle-install-hook kakship %{ cargo install --path . ; cargo clean }
 
 bundle-noload skyspell https://github.com/your-tools/skyspell %{
   cargo binstall -y skyspell_kak --git https://github.com/your-tools/skyspell
@@ -707,6 +701,7 @@ bundle reasymotion https://github.com/astaugaard/reasymotion %{
   map global hop s -docstring "selections"       %{: reasymotion-selection <ret>}
   map global hop w -docstring "words"            %{: reasymotion-word <ret>}
 }
+bundle-install-hook reasymotion %{ cargo install --path . ; cargo clean }
 
 map global user i -docstring "dedoc" %{: docs %opt{filetype}<a-!>}
 
