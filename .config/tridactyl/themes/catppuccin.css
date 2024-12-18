@@ -1,0 +1,163 @@
+:root {
+    /* Catppuccin Mocha */
+    --rosewater: #f5e0dc;
+    --flamingo: #f2cdcd;
+    --pink: #f5c2e7;
+    --mauve: #cba6f7;
+    --red: #f38ba8;
+    --maroon: #eba0ac;
+    --peach: #fab387;
+    --yellow: #f9e2af;
+    --green: #a6e3a1;
+    --teal: #94e2d5;
+    --sky: #89dceb;
+    --sapphire: #74c7ec;
+    --blue: #89b4fa;
+    --lavender: #b4befe;
+    --text: #cdd6f4;
+    --subtext1: #bac2de;
+    --subtext0: #a6adc8;
+    --overlay2: #9399b2;
+    --overlay1: #7f849c;
+    --overlay0: #6c7086;
+    --surface2: #585b70;
+    --surface1: #45475a;
+    --surface0: #313244;
+    --base: #1e1e2e;
+    --mantle: #181825;
+    --crust: #11111b;
+
+    /* Font settings */
+    --font-sans: "IBM Plex Sans", system-ui, sans-serif;
+    --font-mono: "IBM Plex Mono", monospace;
+
+    /* Theme variables */
+    --tridactyl-font-family: var(--font-sans);
+    --tridactyl-bg: var(--base);
+    --tridactyl-fg: var(--text);
+
+    --tridactyl-status-font-size: 12px;
+    --tridactyl-status-font-family: var(--font-mono);
+    --tridactyl-status-font-bg: var(--surface0);
+    --tridactyl-status-border: 2px solid var(--surface1);
+    --tridactyl-status-border-radius: 4px;
+
+    --tridactyl-header-font-size: 16px;
+
+    --tridactyl-of-fg: var(--green);
+    --tridactyl-of-bg: var(--surface0);
+
+    --tridactyl-hintspan-fg: var(--base);
+    --tridactyl-hintspan-bg: var(--blue);
+
+    --tridactyl-hint-active-fg: var(--base);
+    --tridactyl-hint-active-bg: var(--green);
+    --tridactyl-hint-active-outline: 1px solid var(--surface0);
+
+    --tridactyl-hint-bg: rgba(30, 30, 46, 0.25);
+    --tridactyl-hint-outline: 1px solid var(--blue);
+
+    --tridactyl-cmdl-font-size: 1.5rem;
+    --tridactyl-cmplt-option-height: 1.9em;
+
+    --tridactyl-border-radius: 4px;
+}
+
+:root.TridactylOwnNamespace {
+    scrollbar-width: thin;
+}
+
+:root.TridactylOwnNamespace a {
+    color: var(--blue);
+}
+
+:root.TridactylOwnNamespace code {
+    background-color: var(--base);
+    padding: 3px 7px;
+}
+
+:root #command-line-holder {
+    order: 1;
+}
+
+:root #command-line-holder,
+:root #tridactyl-input {
+    border-radius: var(--tridactyl-border-radius) !important;
+}
+
+:root #tridactyl-colon::before {
+    content: "";
+}
+
+:root #tridactyl-input {
+    width: 96%;
+    padding: 1rem;
+}
+
+:root #completions table {
+    font-weight: 200;
+    font-size: 16px;
+    table-layout: fixed;
+    padding: 1rem;
+    padding-top: 0;
+}
+
+:root #completions > div {
+    max-height: calc(20 * var(--tridactyl-cmplt-option-height));
+    min-height: calc(10 * var(--tridactyl-cmplt-option-height));
+}
+
+:root #completions {
+    border: none !important;
+    font-family: var(--tridactyl-font-family);
+    order: 2;
+    margin-top: 10px;
+    border-radius: var(--tridactyl-border-radius);
+}
+
+:root #completions .HistoryCompletionSource table {
+    width: 100%;
+    border-spacing: 0;
+    table-layout: fixed;
+}
+
+:root #completions .BufferCompletionSource table {
+    width: unset;
+    font-size: unset;
+    border-spacing: unset;
+    table-layout: unset;
+}
+
+:root #completions table tr .title {
+    width: 50%;
+}
+
+:root #completions tr .documentation {
+    white-space: nowrap;
+    overflow: auto;
+    text-overflow: ellipsis;
+}
+
+:root #completions .sectionHeader {
+    background: transparent;
+    padding: 1rem 1rem 0.4rem !important;
+}
+
+:root #cmdline_iframe {
+    position: fixed !important;
+    bottom: unset;
+    top: 25% !important;
+    left: 10% !important;
+    z-index: 2147483647 !important;
+    width: 80% !important;
+    filter: drop-shadow(0px 0px 20px #000000) !important;
+    color-scheme: only light;
+}
+
+:root .TridactylStatusIndicator {
+    position: fixed !important;
+    bottom: 10px !important;
+    right: 10px !important;
+    font-weight: 200 !important;
+    padding: 5px !important;
+}
