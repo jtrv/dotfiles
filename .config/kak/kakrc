@@ -7,7 +7,10 @@ source "%val{config}/bundle/kak-bundle/rc/kak-bundle.kak"
 bundle-noload kak-bundle https://github.com/jdugan6240/kak-bundle
 
 evaluate-commands %sh{ kak-lsp }
-evaluate-commands %sh{ kak-tree-sitter -vvv -dks --init "$kak_session" }
+evaluate-commands %sh{
+  kak-tree-sitter -vvv -dks --init "$kak_session"
+  rkak_easymotion start 
+}
 
 source "%val{config}/lsp.kak"
 source "%val{config}/catpuccin_mocha_tree_sitter_faces.kak"
@@ -693,6 +696,16 @@ declare-user-mode dev
 
 bundle kakoune-focus https://github.com/caksoylar/kakoune-focus %{
   map global user f -docstring "focus" %{: focus-toggle <ret>}
+}
+
+bundle reasymotion https://github.com/astaugaard/reasymotion %{
+  declare-user-mode hop
+  map global user h -docstring "hop" %{: enter-user-mode hop <ret>}
+  map global hop f -docstring "filter first"     %{: reasymotion-select-screen }
+  map global hop l -docstring "letter to word"   %{: reasymotion-on-letter-to-word <ret>}
+  map global hop L -docstring "letter to letter" %{: reasymotion-on-letter-to-letter <ret>}
+  map global hop s -docstring "selections"       %{: reasymotion-selection <ret>}
+  map global hop w -docstring "words"            %{: reasymotion-word <ret>}
 }
 
 map global user i -docstring "dedoc" %{: docs %opt{filetype}<a-!>}

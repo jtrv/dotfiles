@@ -20,6 +20,7 @@
 #main-window:not([tabsintitlebar="true"]) #TabsToolbar {
     visibility: collapse !important;
 }
+
 #nav-bar:not([customizing="true"]):not([inFullscreen]) {
   min-height: 1px !important;
   max-height: 0px !important;
