@@ -6,11 +6,10 @@ colorscheme catpuccin_mocha
 source "%val{config}/bundle/kak-bundle/rc/kak-bundle.kak"
 bundle-noload kak-bundle https://github.com/jdugan6240/kak-bundle
 
-evaluate-commands %sh{
-  kak-lsp --kakoune -s "$kak_session" # -vvv --log /tmp/kak-lsp.log
-  kak-tree-sitter -vvv -dks --init "$kak_session"
-}
+evaluate-commands %sh{ kak-lsp }
+evaluate-commands %sh{ kak-tree-sitter -vvv -dks --init "$kak_session" }
 
+source "%val{config}/lsp.kak"
 source "%val{config}/catpuccin_mocha_tree_sitter_faces.kak"
 
 ################### DISPLAY ###################
@@ -25,11 +24,6 @@ provide-module "number_toggle_kak" %{
     set-option global number_toggle_params -hlcursor -cursor-separator '┼'
   }
 }
-
-# kak-lsp settings
-set-option global lsp_diagnostic_line_error_sign '║'
-set-option global lsp_diagnostic_line_warning_sign '┊'
-set-option global lsp_hover_max_lines 40
 
 # rainbow delimiters + current scope
 provide-module "kak_rainbower" %{
@@ -771,6 +765,16 @@ provide-module "ui" %{
     define-command ui-colorcol-toggle %{ try ui-colorcol-enable catch ui-colorcol-disable }
     map global ui r -docstring "toggle colorcol"   %{: ui-colorcol-toggle <ret>}
 
+    define-command -override ui-lsp-enable %{
+      set-option window lsp_auto_highlight_references true
+      set-option window lsp_hover_anchor true
+      lsp-auto-hover-enable
+      lsp-auto-hover-insert-mode-enable
+      lsp-inlay-diagnostics-enable window
+      lsp-inlay-hints-enable window
+      echo -debug "Enabling LSP for filtetype %opt{filetype}"
+      lsp-enable-window
+    }
     define-command ui-lsp-disable -override %{
       set-option window lsp_auto_highlight_references false
       set-option window lsp_hover_anchor false
