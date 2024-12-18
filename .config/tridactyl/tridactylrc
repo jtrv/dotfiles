@@ -54,7 +54,7 @@ set newtab about:blank
 set hintdelay 50
 "
 " Theme
-colors midnight
+colors catppuccin
 "
 "
 " URL SPECIFIC
