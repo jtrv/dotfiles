@@ -146,15 +146,6 @@ define-command kakpipe-alias -docstring "
 }
 alias global : kakpipe-alias
 
-define-command buffer-picker -docstring "
-  buffer-picker: Opens buffer picker.
-" %{
-  prompt buffer: -buffer-completion %{
-    buffer %val{text}
-  }
-}
-map global goto b -docstring "buffer"   %{<a-;>: buffer-picker <ret>}
-
 define-command bun -docstring "
   bun [<arguments>]: bun utility wrapper
   Launch bun with the given arguments inside kakoune
