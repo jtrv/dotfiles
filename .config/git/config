@@ -1,5 +1,5 @@
 [advice]
-	detachedHead = false
+  detachedHead = false
 [branch]
   sort = -committerdate
 [commit]
@@ -30,7 +30,7 @@
 [submodule]
   recurse = true
 [user]
-  email = jtrv@tutanota.com
+  email = 46337843+jtrv@users.noreply.github.com
   name = jtrv
   signingkey = A677F1929C2B08D2
 
@@ -67,9 +67,9 @@
   true-color = always
 
 [credential "https://github.com"]
-	helper = 
-	helper = !/usr/bin/gh auth git-credential
+  helper = 
+  helper = !/usr/bin/gh auth git-credential
 
 [credential "https://gist.github.com"]
-	helper = 
-	helper = !/usr/bin/gh auth git-credential
+  helper = 
+  helper = !/usr/bin/gh auth git-credential
