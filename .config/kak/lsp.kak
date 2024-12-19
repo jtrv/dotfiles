@@ -1,6 +1,14 @@
+map global object a      -docstring "LSP any symbol"  %{: lsp-object <ret>}
+map global object <a-a>  -docstring "LSP any symbol"  %{: lsp-object <ret>}
+map global object f      -docstring "LSP function or method"  %{: lsp-object Function Method <ret>}
+map global object t      -docstring "LSP class interface or struct"  %{: lsp-object Class Interface Struct <ret>}
+map global object d      -docstring "LSP errors and warnings"  %{: lsp-diagnostic-object --include-warnings <ret>}
+map global object D      -docstring "LSP errors"  %{: lsp-diagnostic-object <ret>}
+
 set-option global lsp_diagnostic_line_error_sign '║'
 set-option global lsp_diagnostic_line_warning_sign '┊'
-set-option global lsp_hover_max_lines 40
+set-option global lsp_hover_max_diagnostic_lines 40
+set-option global lsp_hover_max_info_lines 40
 
 declare-option -hidden str lsp_server_tailwind %{
     [tailwindcss-language-server]
