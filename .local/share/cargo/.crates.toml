@@ -70,3 +70,4 @@
 "vopono 0.10.10 (registry+https://github.com/rust-lang/crates.io-index)" = ["vopono"]
 "wthrr 1.2.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["wthrr"]
 "zet 2.0.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["zet"]
+"cargo-vcpkg 0.1.7 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-vcpkg"]
