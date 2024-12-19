@@ -210,5 +210,6 @@ hook -group lsp-filetype-latex global BufSetOption filetype=latex %{
         chktex.onOpenAndSave = true
         chktex.onEdit = true
         build.onSave = true
+        build.args = ["-pdf", "-interaction=nonstopmode", "-auxdir=.aux", "-synctex=1", "%f"]
     }
 }
