@@ -1,54 +1,35 @@
-/* dark background in new tabs without a white flash (with tridactyl newtab) @see: https://github.com/tridactyl/tridactyl/issues/2510 */
+/* dark newtab without blinding flash, https://github.com/tridactyl/tridactyl/issues/2510 */
 :root {
   --tridactyl-bg: #1e1e2e !important;
   --tridactyl-fg: #cdd6f4 !important;
-  --my-url-bar: 3rem;
 }
-
-/* set the background color of the new tab page (without tridactyl or with tridactyl without newtab) */
-@-moz-document url-prefix(about:home), url-prefix(about:newtab) {
+/* dark newtab without tridactyl, tridactyl-newtab */
+@-moz-document url-prefix("about:home"), url-prefix("about:newtab") {
   body {
     background: #1e1e2e;
   }
 }
 
-/* Hide the tab bar at the top */
-#main-window[tabsintitlebar="true"]:not([extradragspace="true"]) #TabsToolbar > .toolbar-items {
-  opacity: 0;
-  pointer-events: none;
-}
+/* hide the tab bar */
 #main-window:not([tabsintitlebar="true"]) #TabsToolbar {
-    visibility: collapse !important;
+  visibility: collapse !important;
 }
-
+/* hide urlbar, reveal on hover or focus */
 #nav-bar:not([customizing="true"]):not([inFullscreen]) {
-  min-height: 1px !important;
-  max-height: 0px !important;
-  margin-top: 1px !important;
-  margin-bottom: -1px !important;
-  transition: all 50ms linear 0s !important;
-  z-index: -5 !important;
+  margin-top: -5rem !important;
 }
 #navigator-toolbox:hover:not([inFullscreen]) :-moz-any(#nav-bar),
-#navigator-toolbox:focus-within :-moz-any(#nav-bar) {
-  min-height: var(--my-url-bar) !important;
-  max-height: var(--my-url-bar) !important;
+#navigator-toolbox:focus-within :-moz-any(#nav-bar)  {
   margin-top: 1px !important;
-  transition: all 50ms linear 0s !important;
-  z-index: 5 !important;
-}
-#urlbar {
-  --urlbar-toolbar-height: var(--my-url-bar) !important;
-  --urlbar-container-height: var(--my-url-bar) !important;
 }
 
-/* Hide sidebar on fullscreen */
+/* hide sidebar on fullscreen */
 #main-window[inFullscreen] #sidebar-box,
 #main-window[inFullscreen] #sidebar-splitter {
   display: none !important;
   width: 0px !important;
 }
-/* Smaller sidebar header/dropdown */
-#sidebar-header{
-	font-size: 1.1em
+/* smaller sidebar title */
+#sidebar-header {
+  font-size: 1.1em
 }
