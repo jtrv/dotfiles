@@ -46,9 +46,9 @@ hook global BufCreate '\*scratch(-\d+)?\*' %{ execute-keys -draft '%<a-d>' }
 
 # clipboard integration
 # see https://discuss.kakoune.com/t/clipboard-integration-using-osc-52/1002/7
-define-command push-clip -docstring "
-  push kakoune's "" register to external clipboard
-" %{ nop %sh{
+define-command push-clip -docstring '
+  push kakoune''s " register to external clipboard
+' %{ nop %sh{
   encoded=$(printf %s "$kak_main_reg_dquote" | base64 | tr -d '\n')
   printf "\033]52;;%s\a" "$encoded" >"/proc/$kak_client_pid/fd/0"
 }}
@@ -139,32 +139,32 @@ bundle sudo-write.kak https://github.com/jtrv/sudo-write.kak %{
 
 ###################### COMMANDS ######################
 
-define-command kakpipe-alias -docstring "
+define-command kakpipe-alias -docstring '
  kakpipe-alias <command>: Forwards outputs of the command given as
  parameter to a new fifo buffer and highlights text based on ansi color codes
-" -params 1.. %{
+' -params 1.. %{
   kakpipe --scroll --rw -- %arg{@}
 }
 alias global : kakpipe-alias
 
-define-command bun -docstring "
+define-command bun -docstring '
   bun [<arguments>]: bun utility wrapper
   Launch bun with the given arguments inside kakoune
-" -params 1.. %{
+' -params 1.. %{
   kakpipe -n "bun %arg{@}" -S -V FORCE_COLOR=1 -- bun %arg{@}
 }
 
-define-command cargo -docstring "
+define-command cargo -docstring '
   cargo [<arguments>]: cargo utility wrapper
   Launch cargo with the given arguments inside kakoune
-" -params 1.. %{
+' -params 1.. %{
   kakpipe -n "cargo %arg{@}" -S -- cargo --color=always %arg{@}
 }
 
-define-command cat -docstring "
+define-command cat -docstring '
   cat [<files>]: bat utility wrapper
   Print the files (or buffile) using bat
-" -params 1.. %{ evaluate-commands %sh{
+' -params 1.. %{ evaluate-commands %sh{
   if [ $# -eq 0 ]; then
     echo "kakpipe -n \"bat %val{buffile}\" -- bat --style=plain --color=always %val{buffile}"
   else
@@ -172,16 +172,16 @@ define-command cat -docstring "
   fi
 }}
 
-define-command comment -docstring "(Un)Comment lines" %{
+define-command comment -docstring '(Un)Comment lines' %{
   try %{
     execute-keys _
     comment-block
   } catch comment-line
 }
 
-define-command docs -docstring "
+define-command docs -docstring '
   docs <docset> <args> : search for an api within a dedoc docset
-" -params 2.. %{ evaluate-commands %sh{
+' -params 2.. %{ evaluate-commands %sh{
   cols=$(echo "$kak_window_width - 8" | bc -q)
   if [ $# -eq 3 ]; then
     echo "kakpipe -n \"docs $@\" -- dedoc -c ss -i -o $3 -c $cols $1 $2"
@@ -196,17 +196,17 @@ define-command docs -docstring "
   fi
 }
 
-define-command delta -docstring "
+define-command delta -docstring '
   delta [<arguments>]: delta utility wrapper
   Launch delta with the given arguments inside kakoune
-" -shell-completion -params 1.. %{
+' -shell-completion -params 1.. %{
   kakpipe -- delta %arg{@};
 }
 
-define-command dic -docstring "
+define-command dic -docstring '
   dic <query>: dic utility wrapper
   Generate dictionary results for the given query inside kakoune
-" -params 0..2 %{ evaluate-commands %sh{
+' -params 0..2 %{ evaluate-commands %sh{
   if [ $# -eq 0 ]; then
     echo "kakpipe -- dic %val{selection}"
   else
@@ -214,24 +214,24 @@ define-command dic -docstring "
   fi
 }}
 
-define-command diff -docstring "
+define-command diff -docstring '
   diff [<arguments>]: diff utility wrapper
   Generate a diff with the given arguments
-" -shell-completion -params 1.. %{
+' -shell-completion -params 1.. %{
   kakpipe -- diff -u %arg{@}; set buffer filetype diff;
 }
 
-define-command difft -docstring "
+define-command difft -docstring '
   difft [<arguments>]: difftastic utility wrapper
   Generate a diff with difftastic and the given arguments
-" -shell-completion -params 1.. %{
+' -shell-completion -params 1.. %{
   kakpipe -- difft --width=%val{window_width} --color=always %arg{@};
 }
 
-define-command diff-buffers -docstring "
+define-command diff-buffers -docstring '
   diff-buffers <buffer-a> <buffer-b>: diff utility
   Generate a diff buffer between <buffer-a> and <buffer-b>
-" -buffer-completion -override -params 2 %{ evaluate-commands %sh{
+' -buffer-completion -override -params 2 %{ evaluate-commands %sh{
   file1=$(mktemp)
   file2=$(mktemp)
   echo "
@@ -247,9 +247,9 @@ define-command diff-buffers -docstring "
   "
 }}
 
-define-command doc-grep -docstring "
+define-command doc-grep -docstring '
   doc-grep <query>: grep kakoune and plugin docs
-" -params .. %{ evaluate-commands %sh{
+' -params .. %{ evaluate-commands %sh{
   if [ $# -eq 0 ]; then
     grep_args="%val{selection}"
   else
@@ -265,9 +265,9 @@ define-command doc-grep -docstring "
       xargs echo "grep $grep_args"
 }}
 
-define-command file-picker -docstring "
+define-command file-picker -docstring '
   file-picker: Opens file picker.
-" %{
+' %{
   prompt file: -shell-script-candidates 'fd --type=file' %{
     edit %val{text}
   }
@@ -282,25 +282,25 @@ define-command global-picker -docstring 'global-picker: Opens global search pick
     grep %val{text}
   }
 }
-map global user / -docstring "search" %{<a-;>: global-picker <ret>}
+map global user / -docstring 'search' %{<a-;>: global-picker <ret>}
 
-define-command glow -docstring "
+define-command glow -docstring '
   glow [<files>]: glow utility wrapper
   Open a glow formatted view of the provided files
-" -params 1.. %{
+' -params 1.. %{
   kakpipe -n "glow %arg{@}" -- glow -s dark %arg{@};
 } -menu -shell-script-candidates %{fd -e md}
 
-define-command go -docstring "
+define-command go -docstring '
   go [<arguments>]: go utility wrapper
   Launch go with the given arguments inside kakoune
-" -params 1.. %{
+' -params 1.. %{
   kakpipe -n "go %arg{@}" -S -- go %arg{@}
 }
 
-define-command grep-write -docstring "
+define-command grep-write -docstring '
   grep-write: pipes the current grep-buffer to grug -w and prints the results
-" %{
+' %{
   declare-option -hidden str grug_buf
   evaluate-commands -draft %{
     evaluate-commands %sh{
@@ -314,10 +314,10 @@ define-command grep-write -docstring "
   }
 }
 
-define-command grep-buffers -docstring "
+define-command grep-buffers -docstring '
   grep-buffers [<pattern>]: search for a pattern in all buffers
   If <pattern> is not specified, the content of the main selection is used
-" -params .. %{ evaluate-commands %sh{
+' -params .. %{ evaluate-commands %sh{
   if [ $# -eq 0 ]; then
     echo "grep -F %val{selection} %val{buflist}"
   else
@@ -325,21 +325,21 @@ define-command grep-buffers -docstring "
   fi
 }}
 
-define-command yo -docstring "
+define-command yo -docstring '
   yo <query>: aichat utility wrapper
   Query LLM and stream the response to a FIFO buffer
-" -params 1.. %{
+' -params 1.. %{
   kakpipe -w -- aichat %arg{@};
 }
-define-command yo-buffer -docstring "
+define-command yo-buffer -docstring '
   opens a *yo-prompt* buffer for writing prompts to pass to yo
-" %{
+' %{
   edit -scratch *yo-prompt*
   set-option buffer filetype yo-prompt
 }
-define-command yo-buffer-write -docstring "
+define-command yo-buffer-write -docstring '
   send the *yo-prompt* buffer to yo
-" -hidden %{
+' -hidden %{
   buffer *yo-prompt*
   execute-keys '%: yo %val{selection} <ret>'
 }
@@ -352,17 +352,17 @@ hook global WinDisplay '\*aichat.*\*' %{
   alias buffer w yo-buffer-write
 }
 
-define-command how -docstring "
+define-command how -docstring '
   how <query>: how utility wrapper
   Get an answer from one of the popular Q&A platforms
-" -params 1.. %{
+' -params 1.. %{
   kakpipe -- hors -a -n 2 -p never %arg{@};
 }
 
-define-command kan -docstring "
+define-command kan -docstring '
   kan <query>: man utility wrapper
   Either show a man-page or the --help text for the given query
-" -params 0.. %{ evaluate-commands %sh{
+' -params 0.. %{ evaluate-commands %sh{
   if [ $# -eq 0 ] && man -w "$kak_selection" > /dev/null; then
     echo "man \"$kak_selection\""
   elif [ $# -eq 0 ] && $("$kak_selection" --help > /dev/null || "$kak_selection" -h > /dev/null); then
@@ -374,10 +374,10 @@ define-command kan -docstring "
   fi
 }}
 
-define-command kelp -docstring "
+define-command kelp -docstring '
   kelp <command>: --help output utility
   Show the --help output for the given command inside kakoune
-" -shell-completion -params 0.. %{ evaluate-commands %sh{
+' -shell-completion -params 0.. %{ evaluate-commands %sh{
   if [ $# -eq 0 ] && "$kak_selection" --help > /dev/null; then
     echo "kakpipe -- \"$kak_selection\" --help"
   elif [ $# -eq 0 ] && "$kak_selection" -h > /dev/null; then
@@ -389,10 +389,10 @@ define-command kelp -docstring "
   fi
 }}
 
-define-command math -docstring "
+define-command math -docstring '
   math <expression>: qalc utility wrapper
   Replace the selection with the solution of the given expression where x=selection
-" -params 0.. %{ evaluate-commands %sh{
+' -params 0.. %{ evaluate-commands %sh{
   if [ $# -eq 0 ]; then
     printf %s\\n "
     prompt 'expression:' -init 'x' %{
@@ -404,17 +404,17 @@ define-command math -docstring "
   fi
 }}
 
-define-command npm -docstring "
+define-command npm -docstring '
   npm [<arguments>]: npm utility wrapper
   Launch npm with the given parameters inside kakoune
-" -params 1.. %{
+' -params 1.. %{
   kakpipe -S -- npm %arg{@}
 }
 
-define-command pcsv -docstring "
+define-command pcsv -docstring '
   pcsv [<files>]: csv viewing utility
   Print the files (or buffile) using bat and columns
-" -file-completion -params .. %{ evaluate-commands %sh{
+' -file-completion -params .. %{ evaluate-commands %sh{
   if [ $# -eq 0 ]; then
     echo "kakpipe -- pcsv %val{buffile}"
   else
@@ -422,16 +422,16 @@ define-command pcsv -docstring "
   fi
 }}
 
-define-command bgsh -docstring "
+define-command bgsh -docstring '
   bgsh [<commands>]: background shell utility
   execute one-off commands in the background
-" -shell-completion -params .. %{ nop %sh{ $@ } }
+' -shell-completion -params .. %{ nop %sh{ $@ } }
 alias global :: bgsh
 
-define-command ptsv -docstring "
+define-command ptsv -docstring '
   pcsv [<files>]: tsv viewing utility
   Print the files (or buffile) using bat and columns
-" -file-completion -params .. %{ evaluate-commands %sh{
+' -file-completion -params .. %{ evaluate-commands %sh{
   if [ $# -eq 0 ]; then
     echo "kakpipe -- ptsv %val{buffile}"
   else
@@ -439,7 +439,7 @@ define-command ptsv -docstring "
   fi
 }}
 
-define-command reader-mode -docstring "Enables settings for better reading" %{
+define-command reader-mode -docstring 'Enables settings for better reading' %{
   require-module "ui"
   nop rainbow-disable-window
   nop number-toggle-disable
@@ -453,10 +453,10 @@ hook global WinDisplay '\*(delta|diff|difft|greeting|help|man|mdn|tldr).*\*' %{
   reader-mode
 }
 
-define-command rman -docstring "
+define-command rman -docstring '
   rman <query>: rusty-man utility wrapper
   show a rustdoc page for the given module
-" -params 1 %{ evaluate-commands %sh{
+' -params 1 %{ evaluate-commands %sh{
   if [ $# -eq 0 ]; then
     echo "kakpipe -n \"rman %val{selection}\" -- rusty-man --viewer=rich %val{selection}"
   else
@@ -464,13 +464,13 @@ define-command rman -docstring "
   fi
 }}
 
-define-command save-macro-as -docstring "
+define-command save-macro-as -docstring '
   save-macro-as <command-name>: define-command with macro register
-" -params 1 %{
+' -params 1 %{
   define-command %arg{1} -override %{ execute-keys "%reg{@}" }
 }
 
-define-command set-filetype -docstring "prompt to set filetype" %{
+define-command set-filetype -docstring 'prompt to set filetype' %{
   prompt filetype: -shell-script-candidates %{
       fd --base-directory "$kak_runtime/rc/filetype" -t f -x basename -s .kak {}
     } %{
@@ -478,16 +478,16 @@ define-command set-filetype -docstring "prompt to set filetype" %{
   }
 }
 
-define-command rnd -docstring "
+define-command rnd -docstring '
   rnd: go to a random line
-" %{ evaluate-commands %sh{
+' %{ evaluate-commands %sh{
     echo "execute-keys '$(shuf -i 1-$kak_buf_line_count)g'"
 }}
 
-define-command thes -docstring "
+define-command thes -docstring '
   thes <query>: thesauromatic utility wrapper
   Generate thesaurus results for the given query
-" -params 0..2 %{ evaluate-commands %sh{
+' -params 0..2 %{ evaluate-commands %sh{
   if [ $# -eq 0 ]; then
     echo "kakpipe -- thesauromatic %val{selection} | col %val{window_width}"
   else
@@ -495,10 +495,10 @@ define-command thes -docstring "
   fi
 }}
 
-define-command tldr -docstring "
+define-command tldr -docstring '
   tldr <command>: tldr utility wrapper
   Cheatsheet for the given command
-" -shell-completion -params 0.. %{ evaluate-commands %sh{
+' -shell-completion -params 0.. %{ evaluate-commands %sh{
   if [ $# -eq 0 ]; then
     echo "kakpipe -- tldr --color=always %val{selection}"
   else
@@ -506,39 +506,39 @@ define-command tldr -docstring "
   fi
 }}
 
-define-command view-pdf -docstring "
+define-command view-pdf -docstring '
   view-pdf [<pdf>]: View pdf with zathura.
-" -params .. %{
+' -params .. %{
   terminal devour zathura %arg{@}
-} -menu -shell-script-candidates %{fd -e pdf}
+} -menu -shell-script-candidates %{fd -I -e pdf}
 alias global pdf view-pdf
 
-define-command xargs -docstring "
+define-command xargs -docstring '
   xargs [<arguments>]: xargs utility wrapper
   execute a command with each selection, selections are represented with {} as a placeholder
-" %{
+' %{
   prompt 'command:' %{
     execute-keys "| xargs -I {} %val{text} <ret>"
   }
 }
 
-define-command watchexec -docstring "
+define-command watchexec -docstring '
   watchexec [<args>] <command>: watchexec utility wrapper
   execute the given command when the current directory changes 
-" -shell-completion -params 0.. %{
+' -shell-completion -params 0.. %{
   kakpipe -- watchexec %arg{@}
 }
 
-define-command watchthis -docstring "
+define-command watchthis -docstring '
   watchexec [<args>] <command>: watchexec utility wrapper
   execute the given command when the current file changes 
-" -shell-completion -params 0.. %{
+' -shell-completion -params 0.. %{
   kakpipe -- watchexec --watch %val{buffile} %arg{@}
 }
 
-define-command zeal -docstring "
+define-command zeal -docstring '
   zeal <docset:api> : search for an api within a zeal docset
-" -params 0.. %{ evaluate-commands %sh{
+' -params 0.. %{ evaluate-commands %sh{
   if [ $# -eq 0 ]; then
     echo '
       prompt -shell-script-candidates %{
@@ -560,78 +560,78 @@ define-command zeal -docstring "
 
 ###################### INSERT KEYS ######################
 
-map global insert <c-v> -docstring "insert mode paste"   %{<esc>Pi}
+map global insert <c-v> -docstring 'insert mode paste'   %{<esc>Pi}
 
 ###################### PROMPT KEYS ######################
 
-map global prompt <c-n> <tab>   -docstring "next completion"
-map global prompt <c-p> <s-tab> -docstring "previous completion"
+map global prompt <c-n> <tab>   -docstring 'next completion'
+map global prompt <c-p> <s-tab> -docstring 'previous completion'
 
-map global prompt <a-.> -docstring "insert buffer directory"     '%sh{ dirname "$kak_buffile" }<a-!>/'
-map global prompt <a-,> -docstring "insert git root directory"   '%sh{ git rev-parse --show-toplevel }<a-!>/'
+map global prompt <a-.> -docstring 'insert buffer directory'     '%sh{ dirname "$kak_buffile" }<a-!>/'
+map global prompt <a-,> -docstring 'insert git root directory'   '%sh{ git rev-parse --show-toplevel }<a-!>/'
 
 ###################### NORMAL KEYS ######################
 
 # clear selections
-map global normal <a-space> <a-,> -docstring "clear current (or nth) selection"
-map global normal <a-esc> <a-,>   -docstring "clear current (or nth) selection"
-map global normal <esc> ,         -docstring "clear multi-selection and keep (nth)"
+map global normal <a-space> <a-,> -docstring 'clear current (or nth) selection'
+map global normal <a-esc> <a-,>   -docstring 'clear current (or nth) selection'
+map global normal <esc> ,         -docstring 'clear multi-selection and keep (nth)'
 
 # use w as a more ergonomic 'previous word'
-map global normal w b         -docstring "select previous word"
-map global normal W B         -docstring "extend previous word"
-map global normal <a-w> <a-b> -docstring "select previous BIG-WORD"
-map global normal <a-W> <a-B> -docstring "extend previous BIG-WORD"
+map global normal w b         -docstring 'select previous word'
+map global normal W B         -docstring 'extend previous word'
+map global normal <a-w> <a-b> -docstring 'select previous BIG-WORD'
+map global normal <a-W> <a-B> -docstring 'extend previous BIG-WORD'
 
 # swap [] <a-[]>
-map global normal '[' '<a-[>'     -docstring "select upto previous object end"
-map global normal '<a-[>' '['     -docstring "select to previous object end"
+map global normal '[' '<a-[>'     -docstring 'select upto previous object end'
+map global normal '<a-[>' '['     -docstring 'select to previous object end'
 
-map global normal ']' '<a-]>'     -docstring "select upto next object end"
-map global normal '<a-]>' ']'     -docstring "select to next object end"
+map global normal ']' '<a-]>'     -docstring 'select upto next object end'
+map global normal '<a-]>' ']'     -docstring 'select to next object end'
 
 # select whole lines
-map global normal J -docstring "select next line"       %{Jx}
-map global normal K -docstring "select previous line"   %{Kx}
+map global normal J -docstring 'select next line'       %{Jx}
+map global normal K -docstring 'select previous line'   %{Kx}
 
 # make x/X inner and outer object selection
-map global normal x     -docstring "select inner"   %{<a-i>}
-map global normal X     -docstring "select outer"   %{<a-a>}
+map global normal x     -docstring 'select inner'   %{<a-i>}
+map global normal X     -docstring 'select outer'   %{<a-a>}
 
 # select all matches
-map global normal <a-x> -docstring "select all matches"   %{<a-*>%s<ret>)}
+map global normal <a-x> -docstring 'select all matches'   %{<a-*>%s<ret>)}
 
 # select/add next match
-map global normal v     -docstring "select next match"      %{<a-*>n}
-map global normal <a-v> -docstring "deselect current sel"   %{<a-*><a-n>}
-map global normal V     -docstring "add next match"         %{<a-*>N}
-map global normal <a-V> -docstring "add previous match"     %{<a-*><a-N>}
+map global normal v     -docstring 'select next match'      %{<a-*>n}
+map global normal <a-v> -docstring 'deselect current sel'   %{<a-*><a-n>}
+map global normal V     -docstring 'add next match'         %{<a-*>N}
+map global normal <a-V> -docstring 'add previous match'     %{<a-*><a-N>}
 
 # case insensitive search by default
-map global normal /     -docstring "search"                      %{/(?i)}
-map global normal <a-/> -docstring "search backwards"            %{<a-/>(?i)}
-map global normal ?     -docstring "(extend) search"             %{?(?i)}
-map global normal <a-?> -docstring "(extend) search backwards"   %{<a-?>(?i)}
+map global normal /     -docstring 'search'                      %{/(?i)}
+map global normal <a-/> -docstring 'search backwards'            %{<a-/>(?i)}
+map global normal ?     -docstring '(extend) search'             %{?(?i)}
+map global normal <a-?> -docstring '(extend) search backwards'   %{<a-?>(?i)}
 
 # (Un)Comment Lines
-map global normal <#> -docstring "comment"   %{: comment <ret>}
+map global normal <#> -docstring 'comment'   %{: comment <ret>}
 
 # new windows
-map global normal <c-n> -docstring "new client"     %{: new <ret>}
-map global normal +     -docstring "new popup"      %{: popup fish <ret>}
+map global normal <c-n> -docstring 'new client'     %{: new <ret>}
+map global normal +     -docstring 'new popup'      %{: popup fish <ret>}
 
-map global normal <c-p> -docstring "file-picker"    %{: file-picker <ret>}
+map global normal <c-p> -docstring 'file-picker'    %{: file-picker <ret>}
 
 ################# MODES ##################
 
-map global user <space> : -docstring "prompt"
+map global user <space> : -docstring 'prompt'
 
-map global user a -docstring "ansi" %{: ansi-enable <ret>}
+map global user a -docstring 'ansi' %{: ansi-enable <ret>}
 
 # navigate buffers
 bundle kakoune-buffers https://github.com/delapouite/kakoune-buffers %{
   hook global WinDisplay .* info-buffers
-    map global normal b -docstring "buffers" %{: enter-buffers-mode <ret>}
+    map global normal b -docstring 'buffers' %{: enter-buffers-mode <ret>}
     unmap global buffers o
     unmap global buffers D
     alias global bd  delete-buffer
@@ -643,11 +643,11 @@ bundle kakoune-buffers https://github.com/delapouite/kakoune-buffers %{
 }
 
 bundle kakoune-buffer-manager https://github.com/theowenyoung/kakoune-buffer-manager %{
-  map global buffers e -docstring "buffer editor"   %{: buffer-manager <ret>}
+  map global buffers e -docstring 'buffer editor'   %{: buffer-manager <ret>}
 }
 
 bundle kakoune-cd https://github.com/delapouite/kakoune-cd %{
-  map global user C -docstring "cd" %{: enter-user-mode cd <ret>}
+  map global user C -docstring 'cd' %{: enter-user-mode cd <ret>}
   alias global cdb change-directory-current-buffer
   alias global cdr change-directory-project-root
   alias global ecd edit-current-buffer-directory
@@ -655,91 +655,91 @@ bundle kakoune-cd https://github.com/delapouite/kakoune-cd %{
 }
 
 declare-user-mode case
-  map global user c -docstring "case" %{: enter-user-mode case <ret>}
+  map global user c -docstring 'case' %{: enter-user-mode case <ret>}
   map global case .  -docstring 'Sentence case'   %{<esc>| caser sentence <ret>}
   map global case a  -docstring 'Ada_Case'        %{<esc>| caser ada <ret>}
   map global case c  -docstring 'camelCase'       %{<esc>| caser camel <ret>}
-  map global case i  -docstring "invert CASE"     %{<a-`>}
+  map global case i  -docstring 'invert CASE'     %{<a-`>}
   map global case k  -docstring 'kebab-case'      %{<esc>| caser kebab <ret>}
-  map global case l  -docstring "lowercase"       %{`}
+  map global case l  -docstring 'lowercase'       %{`}
   map global case p  -docstring 'PascalCase'      %{<esc>| caser pascal <ret>}
   map global case S  -docstring 'SCREAMING_CASE'  %{<esc>| caser screaming <ret>}
   map global case s  -docstring 'snake_case'      %{<esc>| caser snake <ret>}
   map global case T  -docstring 'Title Case'      %{<esc>| caser title <ret>}
   map global case t  -docstring 'Train-Case'      %{<esc>| caser train <ret>}
-  map global case u  -docstring "UPPERCASE"       %{~}
+  map global case u  -docstring 'UPPERCASE'       %{~}
 
 declare-user-mode dev
-  map global user d -docstring "dev" %{: enter-user-mode dev <ret>}
-  map global dev f -docstring "format"       %{: format <ret>}
-  map global dev F -docstring "format sel"   %{: format-selections <ret>}
-  map global dev n -docstring "next lint"    %{: lint-next-message <ret>}
-  map global dev p -docstring "prev lint"    %{: lint-previous-message <ret>}
-  map global dev l -docstring "lint"         %{: lint <ret>}
-  map global dev L -docstring "lint-buffer"  %{: buffer *lint-output* <ret>}
-  map global dev s -docstring "set filetype" %{: set-filetype <ret>}
+  map global user d -docstring 'dev' %{: enter-user-mode dev <ret>}
+  map global dev f -docstring 'format'       %{: format <ret>}
+  map global dev F -docstring 'format sel'   %{: format-selections <ret>}
+  map global dev n -docstring 'next lint'    %{: lint-next-message <ret>}
+  map global dev p -docstring 'prev lint'    %{: lint-previous-message <ret>}
+  map global dev l -docstring 'lint'         %{: lint <ret>}
+  map global dev L -docstring 'lint-buffer'  %{: buffer *lint-output* <ret>}
+  map global dev s -docstring 'set filetype' %{: set-filetype <ret>}
 
 
 bundle kakoune-focus https://github.com/caksoylar/kakoune-focus %{
-  map global user f -docstring "focus" %{: focus-toggle <ret>}
+  map global user f -docstring 'focus' %{: focus-toggle <ret>}
 }
 
 bundle reasymotion https://github.com/astaugaard/reasymotion %{
   declare-user-mode hop
-  map global user h -docstring "hop" %{: enter-user-mode hop <ret>}
-  map global hop f -docstring "filter first"     %{: reasymotion-select-screen }
-  map global hop l -docstring "letter to word"   %{: reasymotion-on-letter-to-word <ret>}
-  map global hop L -docstring "letter to letter" %{: reasymotion-on-letter-to-letter <ret>}
-  map global hop s -docstring "selections"       %{: reasymotion-selection <ret>}
-  map global hop w -docstring "words"            %{: reasymotion-word <ret>}
+  map global user h -docstring 'hop' %{: enter-user-mode hop <ret>}
+  map global hop f -docstring 'filter first'     %{: reasymotion-select-screen }
+  map global hop l -docstring 'letter to word'   %{: reasymotion-on-letter-to-word <ret>}
+  map global hop L -docstring 'letter to letter' %{: reasymotion-on-letter-to-letter <ret>}
+  map global hop s -docstring 'selections'       %{: reasymotion-selection <ret>}
+  map global hop w -docstring 'words'            %{: reasymotion-word <ret>}
 }
 bundle-install-hook reasymotion %{ cargo install --path . ; cargo clean }
 
-map global user i -docstring "dedoc" %{: docs %opt{filetype}<a-!>}
+map global user i -docstring 'dedoc' %{: docs %opt{filetype}<a-!>}
 
-map global user l -docstring "lsp" %{: enter-user-mode lsp <ret>}
-  map global lsp <minus> -docstring "disable"   %{: lsp-disable-window <ret>}
-  map global lsp <plus>  -docstring "enable"    %{: lsp-enable-window <ret>}
+map global user l -docstring 'lsp' %{: enter-user-mode lsp <ret>}
+  map global lsp <minus> -docstring 'disable'   %{: lsp-disable-window <ret>}
+  map global lsp <plus>  -docstring 'enable'    %{: lsp-enable-window <ret>}
 
-map global user m -docstring "maths" %{: math <ret>}
+map global user m -docstring 'maths' %{: math <ret>}
 
 # edit/extend/trim selections one by one
 bundle kakoune-phantom-selection https://github.com/occivink/kakoune-phantom-selection %{
   declare-user-mode phantom
-  map global user p -docstring "phantom" %{: enter-user-mode phantom <ret>}
-  map global phantom a -docstring "add"        %{: phantom-selection-add-selection <ret>}
-  map global phantom c -docstring "clear"      %{: phantom-selection-select-all; phantom-selection-clear <ret>}
-  map global phantom n -docstring "next"       %{: phantom-selection-iterate-next <ret>}
-  map global phantom p -docstring "previous"   %{: phantom-selection-iterate-prev <ret>}
+  map global user p -docstring 'phantom' %{: enter-user-mode phantom <ret>}
+  map global phantom a -docstring 'add'        %{: phantom-selection-add-selection <ret>}
+  map global phantom c -docstring 'clear'      %{: phantom-selection-select-all; phantom-selection-clear <ret>}
+  map global phantom n -docstring 'next'       %{: phantom-selection-iterate-next <ret>}
+  map global phantom p -docstring 'previous'   %{: phantom-selection-iterate-prev <ret>}
 }
 
 # select/edit surrounding chars and tags
 bundle kakoune-surround https://github.com/h-youhei/kakoune-surround %{
   declare-user-mode surround
-  map global normal <'> -docstring "surround" %{: enter-user-mode surround <ret>}
-  map global surround d -docstring "delete"              %{: delete-surround <ret>}
-  map global surround i -docstring "insert"              %{: surround <ret>}
-  map global surround r -docstring "replace"             %{: change-surround <ret>}
-  map global surround s -docstring "select"              %{: select-surround <ret>}
-  map global surround D -docstring "delete tag"          %{: delete-surrounding-tag <ret>}
-  map global surround I -docstring "surround with tag"   %{: surround-with-tag <ret>}
-  map global surround R -docstring "replace tag"         %{: change-surrounding-tag <ret>}
-  map global surround S -docstring "select tag"          %{: select-surrounding-tag <ret>}
+  map global normal <'> -docstring 'surround' %{: enter-user-mode surround <ret>}
+  map global surround d -docstring 'delete'              %{: delete-surround <ret>}
+  map global surround i -docstring 'insert'              %{: surround <ret>}
+  map global surround r -docstring 'replace'             %{: change-surround <ret>}
+  map global surround s -docstring 'select'              %{: select-surround <ret>}
+  map global surround D -docstring 'delete tag'          %{: delete-surrounding-tag <ret>}
+  map global surround I -docstring 'surround with tag'   %{: surround-with-tag <ret>}
+  map global surround R -docstring 'replace tag'         %{: change-surrounding-tag <ret>}
+  map global surround S -docstring 'select tag'          %{: select-surrounding-tag <ret>}
 }
 
 # spelling and grammar checking
 declare-user-mode spell
-  map global user s -docstring "spell" %{: enter-user-mode spell <ret>}
-  map global spell e -docstring "enable"     %{: skyspell-enable en_US <ret>}
-  map global spell d -docstring "disable"    %{: skyspell-disable <ret>}
-  map global spell l -docstring "list"       %{: skyspell-list <ret>}
-  map global spell n -docstring "next"       %{: skyspell-next <ret>}
-  map global spell p -docstring "previous"   %{: skyspell-previous <ret>}
-  map global spell r -docstring "replace"    %{: skyspell-replace <ret>}
+  map global user s -docstring 'spell' %{: enter-user-mode spell <ret>}
+  map global spell e -docstring 'enable'     %{: skyspell-enable en_US <ret>}
+  map global spell d -docstring 'disable'    %{: skyspell-disable <ret>}
+  map global spell l -docstring 'list'       %{: skyspell-list <ret>}
+  map global spell n -docstring 'next'       %{: skyspell-next <ret>}
+  map global spell p -docstring 'previous'   %{: skyspell-previous <ret>}
+  map global spell r -docstring 'replace'    %{: skyspell-replace <ret>}
 
 provide-module "ui" %{
   bundle ui.kak https://github.com/kkga/ui.kak %{
-    map global user u -docstring "ui" %{: enter-user-mode ui <ret>}
+    map global user u -docstring 'ui' %{: enter-user-mode ui <ret>}
     set-option global ui_wrap_flags -width 100 -word -indent -marker ~~
     set-face global TrailingSpace default,red
 
@@ -759,33 +759,31 @@ provide-module "ui" %{
       set-option buffer colorcol_enabled false
     }
     define-command ui-colorcol-toggle %{ try ui-colorcol-enable catch ui-colorcol-disable }
-    map global ui r -docstring "toggle colorcol"   %{: ui-colorcol-toggle <ret>}
+    map global ui r -docstring 'toggle colorcol'   %{: ui-colorcol-toggle <ret>}
 
     define-command -override ui-lsp-enable %{
-      set-option window lsp_auto_highlight_references true
-      set-option window lsp_hover_anchor true
+      echo -debug "Enabling LSP for filtetype %opt{filetype}"
+      lsp-enable-window
       lsp-auto-hover-enable
       lsp-auto-hover-insert-mode-enable
       lsp-inlay-diagnostics-enable window
       lsp-inlay-hints-enable window
-      echo -debug "Enabling LSP for filtetype %opt{filetype}"
-      lsp-enable-window
+      set-option window lsp_auto_highlight_references true
     }
     define-command ui-lsp-disable -override %{
+      echo -debug "Enabling LSP for filtetype %opt{filetype}"
       set-option window lsp_auto_highlight_references false
-      set-option window lsp_hover_anchor false
       lsp-auto-hover-disable
       lsp-auto-hover-insert-mode-disable
       lsp-inlay-diagnostics-disable window
       lsp-inlay-hints-disable window
       lsp-disable-window
-      echo -debug "Enabling LSP for filtetype %opt{filetype}"
     }
     define-command ui-lsp-toggle -override %{
       try ui-lsp-enable catch ui-lsp-disable
       trigger-user-hook ui-hl-changed
     }
-    map global ui k -docstring "toggle kak-lsp"   %{: ui-lsp-toggle <ret>}
+    map global ui k -docstring 'toggle kak-lsp'   %{: ui-lsp-toggle <ret>}
 
     require-module "kak_rainbower"
     declare-option -hidden bool rainbow_enabled false
@@ -799,7 +797,7 @@ provide-module "ui" %{
       set-option buffer rainbow_enabled false
     }
     define-command ui-rainbow-toggle %{ try ui-rainbow-enable catch ui-rainbow-disable }
-    map global ui R -docstring "toggle rainbow"   %{: ui-rainbow-toggle <ret>}
+    map global ui R -docstring 'toggle rainbow'   %{: ui-rainbow-toggle <ret>}
 
     # zdiff3 highlighting
     add-highlighter shared/zdiff3 group
@@ -813,7 +811,7 @@ provide-module "ui" %{
     define-command ui-zdiff3-enable %{ add-highlighter window/zdiff3 ref zdiff3 }
     define-command ui-zdiff3-disable %{ remove-highlighter window/zdiff3 }
     define-command ui-zdiff3-toggle %{ try ui-zdiff3-enable catch ui-zdiff3-disable }
-    map global ui z -docstring "toggle zdiff3"   %{: ui-zdiff3-toggle <ret>}
+    map global ui z -docstring 'toggle zdiff3'   %{: ui-zdiff3-toggle <ret>}
 
     hook global WinCreate .* %{
       ui-git-diff-enable
@@ -829,17 +827,17 @@ provide-module "ui" %{
 }
 require-module "ui"
 
-map global user v -docstring "view" 'v'
+map global user v -docstring 'view' 'v'
 
 # write to file
-map global user w -docstring "write" %{: write <ret>}
+map global user w -docstring 'write' %{: write <ret>}
 
 # pipe selections as args with xargs
-map global user x -docstring "xargs" %{: xargs <ret>}
+map global user x -docstring 'xargs' %{: xargs <ret>}
 
-map global user y -docstring "yo" %{: yo-buffer <ret>}
+map global user y -docstring 'yo' %{: yo-buffer <ret>}
 
-map global user z -docstring "zeal" %{: zeal <ret>}
+map global user z -docstring 'zeal' %{: zeal <ret>}
 
 # contextual scripts
 hook global WinSetOption filetype=git-commit           %{ source "~/.config/kak/contexts/commit.kak"      }
