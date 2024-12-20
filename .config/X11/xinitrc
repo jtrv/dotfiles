@@ -29,6 +29,7 @@ fi
 
 xrandr --output=virtual-1
 
+caffeine &                     # inhibit sleep w/ media
 /usr/lib/kdeconnectd &         # kdeconnect daemon
 mons -a &                      # external display daemon
 pcmanfm --daemon-mode &        # file-manager daemon
