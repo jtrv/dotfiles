@@ -90,10 +90,13 @@ feh
 ff2mpv-rust
 ffmpegthumbnailer
 firefox-developer-edition
+firefox-developer-edition-firefox-symlink-latest
 firefox-tridactyl
 firefox-tridactyl-native-bin
+fish-lsp-git
 fisher
 flameshot-git
+flatpak
 fortune-mod
 fstl
 fuse-overlayfs
@@ -101,6 +104,7 @@ fwupd
 gamemode
 gamescope
 geticons-git
+gibo
 gifsicle
 gifski
 gimp
