@@ -840,29 +840,26 @@ map global user y -docstring 'yo' %{: yo-buffer <ret>}
 map global user z -docstring 'zeal' %{: zeal <ret>}
 
 # contextual scripts
-hook global WinSetOption filetype=git-commit           %{ source "~/.config/kak/contexts/commit.kak"      }
-hook global WinSetOption filetype=(css|scss)           %{ source "~/.config/kak/contexts/css.kak"         }
-hook global WinSetOption filetype=diff                 %{ source "~/.config/kak/contexts/diff.kak"        }
-hook global WinSetOption filetype=fish                 %{ source "~/.config/kak/contexts/fish.kak"        }
-hook global WinSetOption filetype=go                   %{ source "~/.config/kak/contexts/go.kak"          }
-hook global WinSetOption filetype=grep                 %{ source "~/.config/kak/contexts/grep.kak"        }
-hook global WinSetOption filetype=grep-expand          %{ source "~/.config/kak/contexts/grep-expand.kak" }
-hook global WinSetOption filetype=html                 %{ source "~/.config/kak/contexts/html.kak"        }
-hook global WinSetOption filetype=javascript           %{ source "~/.config/kak/contexts/javascript.kak"  }
-hook global WinSetOption filetype=json                 %{ source "~/.config/kak/contexts/json.kak"        }
-hook global WinSetOption filetype=latex                %{ source "~/.config/kak/contexts/latex.kak"       }
-hook global WinSetOption filetype=markdown             %{ source "~/.config/kak/contexts/markdown.kak"    }
-hook global WinSetOption filetype=python               %{ source "~/.config/kak/contexts/python.kak"      }
-hook global WinSetOption filetype=e?ruby               %{ source "~/.config/kak/contexts/ruby.kak"        }
-hook global WinSetOption filetype=rust                 %{ source "~/.config/kak/contexts/rust.kak"        }
-hook global WinSetOption filetype=sh                   %{ source "~/.config/kak/contexts/sh.kak"          }
-hook global WinSetOption filetype=terraform            %{ source "~/.config/kak/contexts/terraform.kak"   }
-hook global WinSetOption filetype=typescript           %{ source "~/.config/kak/contexts/typescript.kak"  }
-hook global WinSetOption filetype=toml                 %{ source "~/.config/kak/contexts/toml.kak"        }
-hook global WinSetOption filetype=yaml                 %{ source "~/.config/kak/contexts/yaml.kak"        }
+hook global WinSetOption filetype=git-commit    %{ source '~/.config/kak/contexts/commit.kak'      }
+hook global WinSetOption filetype=(css|scss)    %{ source '~/.config/kak/contexts/css.kak'         }
+hook global WinSetOption filetype=diff          %{ source '~/.config/kak/contexts/diff.kak'        }
+hook global WinSetOption filetype=fish          %{ source '~/.config/kak/contexts/fish.kak'        }
+hook global WinSetOption filetype=go            %{ source '~/.config/kak/contexts/go.kak'          }
+hook global WinSetOption filetype=grep          %{ source '~/.config/kak/contexts/grep.kak'        }
+hook global WinSetOption filetype=grep-expand   %{ source '~/.config/kak/contexts/grep-expand.kak' }
+hook global WinSetOption filetype=html          %{ source '~/.config/kak/contexts/html.kak'        }
+hook global WinSetOption filetype=javascript    %{ source '~/.config/kak/contexts/javascript.kak'  }
+hook global WinSetOption filetype=json          %{ source '~/.config/kak/contexts/json.kak'        }
+hook global WinSetOption filetype=latex         %{ source '~/.config/kak/contexts/latex.kak'       }
+hook global WinSetOption filetype=markdown      %{ source '~/.config/kak/contexts/markdown.kak'    }
+hook global WinSetOption filetype=python        %{ source '~/.config/kak/contexts/python.kak'      }
+hook global WinSetOption filetype=e?ruby        %{ source '~/.config/kak/contexts/ruby.kak'        }
+hook global WinSetOption filetype=rust          %{ source '~/.config/kak/contexts/rust.kak'        }
+hook global WinSetOption filetype=sh            %{ source '~/.config/kak/contexts/sh.kak'          }
+hook global WinSetOption filetype=terraform     %{ source '~/.config/kak/contexts/terraform.kak'   }
+hook global WinSetOption filetype=typescript    %{ source '~/.config/kak/contexts/typescript.kak'  }
+hook global WinSetOption filetype=toml          %{ source '~/.config/kak/contexts/toml.kak'        }
+hook global WinSetOption filetype=yaml          %{ source '~/.config/kak/contexts/yaml.kak'        }
 
-hook global WinCreate '\.env$'       %{ source "~/.config/kak/contexts/env.kak"    }
-hook global WinCreate '.*?\.prisma$' %{ source "~/.config/kak/contexts/prisma.kak" }
-
-hook global BufCreate '.*?\.jsx$' %{ set-option buffer kts_lang jsx }
-hook global BufCreate '.*?\.tsx$' %{ set-option buffer kts_lang tsx }
+hook global WinSetOption current_bufname=\.env$         %{ source '~/.config/kak/contexts/env.kak'    }
+hook global WinSetOption current_bufname=.*?\.prisma$   %{ source '~/.config/kak/contexts/prisma.kak' }
