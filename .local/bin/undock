@@ -1,0 +1,3 @@
+#!/bin/sh
+mons -o &
+sd '= 11' '= 7.5' .config/alacritty.toml

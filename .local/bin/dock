@@ -1,0 +1,4 @@
+#!/bin/sh
+mons -s &
+systemctl --user start kanata-morpheus.service &
+sd '= 7.5' '= 11' .config/alacritty.toml
