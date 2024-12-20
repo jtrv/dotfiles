@@ -1,14 +1,25 @@
+set-option global lsp_auto_highlight_references true
+set-option global lsp_auto_show_code_actions true
+set-option global lsp_diagnostic_line_error_sign '║'
+set-option global lsp_diagnostic_line_warning_sign '┊'
+set-option global lsp_hover_anchor true
+set-option global lsp_hover_max_diagnostic_lines 40
+set-option global lsp_hover_max_info_lines 40
+set-option global lsp_insert_spaces true
+set-option global lsp_snippet_support true
+
+hook global -group semantic-tokens BufReload .* lsp-semantic-tokens
+hook global -group semantic-tokens NormalIdle .* lsp-semantic-tokens
+hook global -group semantic-tokens InsertIdle .* lsp-semantic-tokens
+
+map global insert <tab> -docstring 'Select next snippet placeholder' %{<a-;>:try lsp-snippets-select-next-placeholders catch %{ execute-keys -with-hooks <lt>tab> }<ret>}
+
 map global object a      -docstring "LSP any symbol"  %{: lsp-object <ret>}
 map global object <a-a>  -docstring "LSP any symbol"  %{: lsp-object <ret>}
 map global object f      -docstring "LSP function or method"  %{: lsp-object Function Method <ret>}
 map global object t      -docstring "LSP class interface or struct"  %{: lsp-object Class Interface Struct <ret>}
 map global object d      -docstring "LSP errors and warnings"  %{: lsp-diagnostic-object --include-warnings <ret>}
 map global object D      -docstring "LSP errors"  %{: lsp-diagnostic-object <ret>}
-
-set-option global lsp_diagnostic_line_error_sign '║'
-set-option global lsp_diagnostic_line_warning_sign '┊'
-set-option global lsp_hover_max_diagnostic_lines 40
-set-option global lsp_hover_max_info_lines 40
 
 declare-option -hidden str lsp_server_tailwind %{
     [tailwindcss-language-server]
