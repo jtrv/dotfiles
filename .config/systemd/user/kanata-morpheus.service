@@ -3,7 +3,6 @@ Description=Kanata keyboard remapper
 Documentation=https://github.com/jtroo/kanata
 
 [Service]
-ExecStartPre=/usr/bin/modprobe uinput
 ExecStart=%h/.local/share/cargo/bin/kanata --cfg %h/.config/kanata/morpheus.kbd
 Restart=no
 
