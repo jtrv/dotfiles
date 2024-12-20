@@ -38,9 +38,6 @@ set-option global grepcmd 'rg --color=always --smart-case --with-filename --line
 require-module grep
 alias global kg grep
 
-# empty scratch buffer(s)
-hook global BufCreate '\*scratch(-\d+)?\*' %{ execute-keys -draft '%<a-d>' }
-
 # clipboard integration
 # see https://discuss.kakoune.com/t/clipboard-integration-using-osc-52/1002/7
 define-command push-clip -docstring '
