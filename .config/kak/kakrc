@@ -1,21 +1,22 @@
 # Kakoune with Kakhis
 # Author: jtrv
 
-colorscheme catpuccin_mocha
+################### INIT ###################
 
 source "%val{config}/bundle/kak-bundle/rc/kak-bundle.kak"
 bundle-noload kak-bundle https://github.com/jdugan6240/kak-bundle
 
 evaluate-commands %sh{ kak-lsp }
+source "%val{config}/lsp.kak"
+
 evaluate-commands %sh{
-  kak-tree-sitter -vvv -dks --init "$kak_session"
   rkak_easymotion start 
+  kak-tree-sitter -vvv -dks --init "$kak_session"
 }
 
-source "%val{config}/lsp.kak"
-source "%val{config}/catpuccin_mocha_tree_sitter_faces.kak"
-
 ################### DISPLAY ###################
+
+colorscheme catppuccin_mocha
 
 set-option global ui_options terminal_assistant=none
 set-option global scrolloff 1,3
@@ -864,3 +865,6 @@ hook global WinSetOption filetype=yaml                 %{ source "~/.config/kak/
 
 hook global WinCreate '\.env$'       %{ source "~/.config/kak/contexts/env.kak"    }
 hook global WinCreate '.*?\.prisma$' %{ source "~/.config/kak/contexts/prisma.kak" }
+
+hook global BufCreate '.*?\.jsx$' %{ set-option buffer kts_lang jsx }
+hook global BufCreate '.*?\.tsx$' %{ set-option buffer kts_lang tsx }
