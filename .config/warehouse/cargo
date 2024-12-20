@@ -9,6 +9,7 @@ cargo-nextest -> https://github.com/rust-lang/crates.io-index
 cargo-run-bin -> https://github.com/rust-lang/crates.io-index
 cargo-trend -> https://github.com/rust-lang/crates.io-index
 cargo-update -> https://github.com/rust-lang/crates.io-index
+cargo-vcpkg -> https://github.com/rust-lang/crates.io-index
 caser-cli -> https://github.com/jtrv/caser
 conceal -> https://github.com/rust-lang/crates.io-index
 cpz -> https://github.com/rust-lang/crates.io-index
