@@ -2,23 +2,43 @@
 #
 # doc <docset> <query> : utility for searching documentation
 #
-# req: dedoc, skim, kak
+# req: choose, dedoc, skim
 
 set -e
 
 cols=$(tput cols)
-bufcols=$(echo "$cols - 7" | bc)
+bufcols=$(echo "$cols - 8" | bc)
 
-doc=$(
-	dedoc ss -i "$1" "$2" |
-		awk 'NR > 2' |
-		sk --reverse --preview "\
-			echo {} |
-			awk '{print \$1}' |
-			xargs dedoc -c ss -i '$1' '$2' -o
-		"
-)
+if [ $# -eq 0 ]; then
+  docset=$( dedoc ls -ln | choose 0 | sk --reverse --select-1)
+  else
+  docset="$1"
+fi
 
-doc_num=$(echo "$doc" | awk '{print $1}')
+entries=$(dedoc ss -i "$docset" | awk 'NR > 2')
 
-dedoc -c ss -c "$bufcols" -i "$1" "$2" -o "$doc_num" | $PAGER
+if [ $# -eq 2 ]; then
+  entry=$(
+    echo "$entries" |
+    sk --reverse --select-1 --query="$2" --preview "\
+      echo {} |
+      choose 0 |
+      dedoc -c ss -i '$docset' -o"
+  )
+else
+  entry=$(
+    echo "$entries" |
+    sk --reverse --select-1 --preview "\
+      echo {} |
+      choose 0 |
+      xargs dedoc -c ss -i '$docset' -o"
+  )
+fi
+
+doc_num=$(echo "$entry" | choose 0)
+
+if [ -t 1 ]; then
+  dedoc -c ss -c "$bufcols" -i "$docset" -o "$doc_num" | "$PAGER"
+else
+  dedoc -c ss -c "$bufcols" -i "$docset" -o "$doc_num"
+fi
