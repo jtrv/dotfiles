@@ -29,43 +29,43 @@ end
 
 ######## ALIASES ########
 
-alias ani     'ani-cli -q best --skip' # weeb out in S-rank ultra-fidelity 8k lossless greenray
-alias boi     'wikiman'
-alias cat     'bat'
-alias cbin    'yes | cargo binstall'
-alias cdr     'cd (git rev-parse --show-toplevel)'
-alias clip    'clipcat-menu --finder="fzf"'
-alias cncr    'conceal restore'
-alias cols    'column -c $COLUMNS'
-alias d       'devour'
-alias feh     'feh --scale-down --image-bg black'
-alias fp      'sk --preview="bat --color=always {}"'
-alias glow    'glow -p'
-alias hn      'clx -an --no-less-verify'
-alias j       'yazi'
-alias jd      'lfcd'
-alias jls     'jless -r'
-alias la      'fls -al --color=always' # all files and dirs
-alias lc      'lazygit --git-dir="$DOTFILES" --work-tree="$HOME"' # lazygit for config files
-alias lg      'lazygit'
-alias lh      'eza -la --color=always --ignore-glob="[a-z]*|[A-Z]*|[0-9]*"' # hidden only
-alias ll      'eza -l --color=always --git' # long format
-alias ls      'fls -l --color=always' # preferred listing
-alias lt      'erd -HIl --color=force' # tree listing
-alias loc     'plocate'
-alias lok     'xlock'
-alias m       'qalc'
-alias mdc     'mdcat --columns=70'
-alias mkdir   'mkdir -p'
-alias nbg     'feh --randomize --bg-scale --no-fehbg ~/media/pictures/wallpapers/' # change bg
-alias o       'xdg-open'
-alias py      'python'
-alias q       'exit'
-alias wh      'wormhole-rs'
-alias thes    'thesauromatic'
-alias tf      'terraform'
-alias tv      'lobster'
-alias wget    "wget2 --hsts-file=\"$XDG_DATA_HOME/wget-hsts\""
+alias ani     "ani-cli -q best --skip" # weeb out in S-rank ultra-fidelity 8k lossless greenray
+alias boi     "wikiman"
+alias cat     "bat"
+alias cbin    "yes | cargo binstall"
+alias cdr     "cd (git rev-parse --show-toplevel)"
+alias clip    "clipcat-menu --finder='fzf'"
+alias cncr    "conceal restore"
+alias cols    "column -c '$COLUMNS'"
+alias d       "devour"
+alias feh     "feh --scale-down --image-bg black"
+alias fp      "sk --preview='bat --color=always {}'"
+alias glow    "glow -p"
+alias hn      "clx -an --no-less-verify"
+alias j       "yazi"
+alias jd      "lfcd"
+alias jls     "jless -r"
+alias la      "fls -al --color=always" # all files and dirs
+alias lc      "lazygit --git-dir='$DOTFILES' --work-tree='$HOME'" # lazygit for config files
+alias lg      "lazygit"
+alias lh      "eza -la --color=always --ignore-glob='[a-z]*|[A-Z]*|[0-9]*'" # hidden only
+alias ll      "eza -l --color=always --git" # long format
+alias ls      "fls -l --color=always" # preferred listing
+alias lt      "erd -HIl --color=force" # tree listing
+alias loc     "plocate"
+alias lok     "xlock"
+alias m       "qalc"
+alias mdc     "mdcat --columns=70"
+alias mkdir   "mkdir -p"
+alias nbg     "feh --randomize --bg-scale --no-fehbg ~/media/pictures/wallpapers/" # change bg
+alias o       "xdg-open"
+alias py      "python"
+alias q       "exit"
+alias wh      "wormhole-rs"
+alias thes    "thesauromatic"
+alias tf      "terraform"
+alias tv      "lobster"
+alias wget    "wget2 --hsts-file='$XDG_DATA_HOME/wget-hsts'"
 
 
 ######## KAKOUNE ########
@@ -80,11 +80,11 @@ function kda
 end
 
 function kg
-    set grepargs
-    for x in $argv
-        set -a grepargs (echo $x | sed -e "s/'/''/g" -e "s/^/'/" -e "s/\$/'/")
-    end
-    kak -e "grep $(string join -- " " $grepargs); buffer-only; echo; info-buffers"
+  set grepargs
+  for x in $argv
+    set -a grepargs (echo $x | sed -e "s/'/''/g" -e "s/^/'/" -e "s/\$/'/")
+  end
+  kak -e "grep $(string join -- " " $grepargs); buffer-only; echo; info-buffers"
 end
 complete -c kg -w rg
 
@@ -111,7 +111,7 @@ alias kish    'k ~/.config/fish/config.fish'
 
 # fix ssh agent
 if not set -q SSH_AUTH_SOCK
-    eval (ssh-agent -c) &> /dev/null
+  eval (ssh-agent -c) &> /dev/null
 end
 
 # Start X at login
