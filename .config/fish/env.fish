@@ -80,6 +80,8 @@ set -gx QT_QPA_PLATFORMTHEME        "qt6ct"
 set -gx VISUAL                      "kak"
 set -gx VIRTUAL_ENV_DISABLE_PROMPT  true
 
+set -gx fish_lsp_diagnostic_disable_error_codes 2002
+
 set -gx FZF_DEFAULT_OPTS "\
 --ansi \
 --multi \
