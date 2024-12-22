@@ -291,7 +291,8 @@ define-command glow -docstring '
   Open a glow formatted view of the provided files
 ' -params 1.. %{
   kakpipe -n "glow %arg{@}" -- glow -s dark %arg{@};
-} -menu -shell-script-candidates %{fd -e md}
+}
+complete-command -menu glow shell-script-candidates %{fd -e md}
 
 define-command go -docstring '
   go [<arguments>]: go utility wrapper
@@ -427,7 +428,7 @@ define-command pcsv -docstring '
 define-command bgsh -docstring '
   bgsh [<commands>]: background shell utility
   execute one-off commands in the background
-' -shell-completion -params .. %{ nop %sh{ $@ } }
+' -shell-completion -params .. %{ kakpipe-bg -- %arg{@} }
 alias global :: bgsh
 
 define-command ptsv -docstring '
@@ -512,7 +513,8 @@ define-command view-pdf -docstring '
   view-pdf [<pdf>]: View pdf with zathura.
 ' -params .. %{
   terminal devour zathura %arg{@}
-} -menu -shell-script-candidates %{fd -I -e pdf}
+}
+complete-command -menu view-pdf shell-script-candidates %{fd -I -e pdf}
 alias global pdf view-pdf
 
 define-command xargs -docstring '
@@ -554,10 +556,11 @@ define-command zeal -docstring '
   else
     echo "terminal devour zeal $*"
   fi
-}} -shell-script-candidates %{
-  rg -No '\p{L}+\w+' "$kak_buffile" \
-    | sort -u \
-    | sed "s/^/$kak_opt_filetype:/"
+}}
+complete-command zeal shell-script-candidates %{
+  rg -No '\p{L}+\w+' "$kak_buffile" |
+   sort -u |
+   sed "s/^/$kak_opt_filetype:/"
 }
 
 ###################### INSERT KEYS ######################
