@@ -9,7 +9,6 @@
     "bash-language-server": "^5.4.2",
     "bun": "^1.1.41",
     "caniuse-lite": "^1.0.30001690",
-    "commitlint": "^19.6.1",
     "depcheck": "^1.4.7",
     "emmet-cli": "^1.2.1",
     "eslint-plugin-prettier": "^5.2.1",
