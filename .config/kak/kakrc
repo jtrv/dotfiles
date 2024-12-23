@@ -850,7 +850,7 @@ provide-module "ui" %{
       ui-todos-enable
       ui-zdiff3-enable
     }
-    hook global BufSetOption filetype=* %{
+    hook global WinSetOption filetype=* %{
       ui-trailing-spaces-enable
     }
   }
