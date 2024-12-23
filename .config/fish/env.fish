@@ -85,6 +85,7 @@ set -gx fish_lsp_diagnostic_disable_error_codes 2002
 set -gx FZF_DEFAULT_OPTS "\
 --ansi \
 --multi \
+--reverse \
 --tabstop=2 \
 --preview-window border-vertical \
 --bind='\
@@ -112,6 +113,7 @@ $FZF_DEFAULT_OPTS \
 set -gx SKIM_DEFAULT_OPTIONS "\
 --ansi \
 --multi \
+--reverse \
 --tabstop=2 \
 --bind='\
 alt-a:select-all,\
