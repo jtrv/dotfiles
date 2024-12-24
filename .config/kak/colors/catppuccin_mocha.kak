@@ -85,14 +85,14 @@ set-face global SecondaryCursorEol "%opt{surface2}ff,%opt{maroon}ff"
 set-face global SecondaryCursor    "%opt{mantle}ff,%opt{teal}cc"
 set-face global SecondarySelection "default,%opt{lavender}1f"
 
-# Switching to normal = blue/lavender/green
+# Switching to normal = lavender/green
 hook global ModeChange ".*:normal" %{
   set-face global StatusLineInfo "%opt{background},%opt{green}ff"
   set-face global StatusLineMode "%opt{background},%opt{lavender}ff"
   set-face global StatusLine     "%opt{lavender}ff,%opt{mantle}ff"
 }
 
-# Switching to insert = red/peach/yellow
+# Switching to insert = peach/mauve
 hook global ModeChange ".*:insert" %{
   set-face global StatusLineInfo "%opt{background},%opt{mauve}ff"
   set-face global StatusLineMode "%opt{background},%opt{peach}ff"
@@ -100,19 +100,31 @@ hook global ModeChange ".*:insert" %{
 }
 
 # LSP
-set-face global DiagnosticError                "%opt{red}ff,%opt{background}"
-set-face global DiagnosticHint                 "%opt{lavender}ff,%opt{background}"
+
+# Faces used by inline diagnostics.
+set-face global DiagnosticError                "%opt{red}ff,%opt{background}+c"
+set-face global DiagnosticHint                 "%opt{lavender}ff,%opt{background}+u"
 set-face global DiagnosticInfo                 "%opt{sky}ff,%opt{background}"
-set-face global DiagnosticWarning              "%opt{peach}ff,%opt{background}"
-set-face global InlayHint                      "%opt{overlay0}ff,%opt{background}"
-set-face global LineFlagErrors                 "%opt{red}ff,%opt{background}"
-set-face global LSPDiagnosticsUnderlineError   "%opt{red}ff+u"
-set-face global LSPDiagnosticsUnderlineHint    "%opt{lavender}ff+u"
-set-face global LSPDiagnosticsUnderlineInfo    "%opt{sky}ff+u"
-set-face global LSPDiagnosticsUnderlineWarning "%opt{peach}ff+u"
+set-face global DiagnosticWarning              "%opt{peach}ff,%opt{background}+U"
+set-face global DiagnosticTagDeprecated        +s
+set-face global DiagnosticTagUnnecessary       +d
+# Faces used by inlay diagnostics.
+set-face global InlayDiagnosticError           DiagnosticError
+set-face global InlayDiagnosticHint            DiagnosticHint
+set-face global InlayDiagnosticInfo            DiagnosticInfo
+set-face global InlayDiagnosticWarning         DiagnosticWarning
+# Faces used by line flags
+set-face global LineFlagError                  "%opt{red}ff,%opt{background}"
+set-face global LineFlagHint                   default
+set-face global LineFlagInfo                   default
+set-face global LineFlagWarning                yellow
+# Face for highlighting references.
 set-face global ReferenceBind                  "default,%opt{surface0}ff+bu"
 set-face global Reference                      "default,%opt{surface0}ff"
-
+# Face for inlay hints.
+set-face global InlayHint                      "%opt{overlay0}ff,%opt{background}"
+set-face global InlayCodeLens                  cyan+d
+# Faces used for hover info
 set-face global InfoDefault                    "%opt{text}ff,%opt{surface1}ff+b"
 set-face global InfoBlock                      "%opt{sapphire}ff,%opt{surface1}ff+b"
 set-face global InfoBlockQuote                 "%opt{green}ff,%opt{surface1}ff+b"
