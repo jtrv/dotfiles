@@ -619,24 +619,24 @@ map global normal ?     -docstring '(extend) search'             %{?(?i)}
 map global normal <a-?> -docstring '(extend) search backwards'   %{<a-?>(?i)}
 
 # (Un)Comment Lines
-map global normal <#> -docstring 'comment'   %{: comment <ret>}
+map global normal <#> -docstring 'comment'   %{:comment <ret>}
 
 # new windows
-map global normal <c-n> -docstring 'new client'     %{: new <ret>}
-map global normal +     -docstring 'new popup'      %{: popup fish <ret>}
+map global normal <c-n> -docstring 'new client'     %{:new <ret>}
+map global normal +     -docstring 'new popup'      %{:popup fish <ret>}
 
-map global normal <c-p> -docstring 'file-picker'    %{: file-picker <ret>}
+map global normal <c-p> -docstring 'file-picker'    %{:file-picker <ret>}
 
 ################# MODES ##################
 
 map global user <space> : -docstring 'prompt'
 
-map global user a -docstring 'ansi' %{: ansi-enable <ret>}
+map global user a -docstring 'ansi' %{:ansi-enable <ret>}
 
 # navigate buffers
 bundle kakoune-buffers https://github.com/delapouite/kakoune-buffers %{
   hook global WinDisplay .* info-buffers
-    map global normal b -docstring 'buffers' %{: enter-buffers-mode <ret>}
+    map global normal b -docstring 'buffers' %{:enter-buffers-mode <ret>}
     unmap global buffers o
     unmap global buffers D
     alias global bd  delete-buffer
@@ -648,11 +648,11 @@ bundle kakoune-buffers https://github.com/delapouite/kakoune-buffers %{
 }
 
 bundle kakoune-buffer-manager https://github.com/theowenyoung/kakoune-buffer-manager %{
-  map global buffers e -docstring 'buffer editor'   %{: buffer-manager <ret>}
+  map global buffers e -docstring 'buffer editor'   %{:buffer-manager <ret>}
 }
 
 bundle kakoune-cd https://github.com/delapouite/kakoune-cd %{
-  map global user C -docstring 'cd' %{: enter-user-mode cd <ret>}
+  map global user C -docstring 'cd' %{:enter-user-mode cd <ret>}
   alias global cdb change-directory-current-buffer
   alias global cdr change-directory-project-root
   alias global ecd edit-current-buffer-directory
@@ -660,7 +660,7 @@ bundle kakoune-cd https://github.com/delapouite/kakoune-cd %{
 }
 
 declare-user-mode case
-  map global user c -docstring 'case' %{: enter-user-mode case <ret>}
+  map global user c -docstring 'case' %{:enter-user-mode case <ret>}
   map global case .  -docstring 'Sentence case'   %{<esc>| caser sentence <ret>}
   map global case a  -docstring 'Ada_Case'        %{<esc>| caser ada <ret>}
   map global case c  -docstring 'camelCase'       %{<esc>| caser camel <ret>}
@@ -675,101 +675,103 @@ declare-user-mode case
   map global case u  -docstring 'UPPERCASE'       %{~}
 
 declare-user-mode dev
-  map global user d -docstring 'dev' %{: enter-user-mode dev <ret>}
-  map global dev f -docstring 'format'       %{: format <ret>}
-  map global dev F -docstring 'format sel'   %{: format-selections <ret>}
-  map global dev n -docstring 'next lint'    %{: lint-next-message <ret>}
-  map global dev p -docstring 'prev lint'    %{: lint-previous-message <ret>}
-  map global dev l -docstring 'lint'         %{: lint <ret>}
-  map global dev L -docstring 'lint-buffer'  %{: buffer *lint-output* <ret>}
-  map global dev s -docstring 'set filetype' %{: set-filetype <ret>}
+  map global user d -docstring 'dev' %{:enter-user-mode dev <ret>}
+  map global dev f -docstring 'format'       %{:format <ret>}
+  map global dev F -docstring 'format sel'   %{:format-selections <ret>}
+  map global dev n -docstring 'next lint'    %{:lint-next-message <ret>}
+  map global dev p -docstring 'prev lint'    %{:lint-previous-message <ret>}
+  map global dev l -docstring 'lint'         %{:lint <ret>}
+  map global dev L -docstring 'lint-buffer'  %{:buffer *lint-output* <ret>}
+  map global dev s -docstring 'set filetype' %{:set-filetype <ret>}
 
 
 bundle kakoune-focus https://github.com/caksoylar/kakoune-focus %{
-  map global user f -docstring 'focus' %{: focus-toggle <ret>}
+  map global user f -docstring 'focus' %{:focus-toggle <ret>}
 }
+
+map global user g -docstring 'grep' %{:grep }
 
 bundle reasymotion https://github.com/astaugaard/reasymotion
 bundle-install-hook reasymotion %{ cargo install --path . ; cargo clean }
 declare-user-mode hop
-  map global user h -docstring 'hop' %{: enter-user-mode hop <ret>}
-  map global hop f -docstring 'filter first'     %{: reasymotion-select-screen }
-  map global hop l -docstring 'letter to word'   %{: reasymotion-on-letter-to-word <ret>}
-  map global hop L -docstring 'letter to letter' %{: reasymotion-on-letter-to-letter <ret>}
-  map global hop s -docstring 'selections'       %{: reasymotion-selection <ret>}
-  map global hop w -docstring 'words'            %{: reasymotion-word <ret>}
+  map global user h -docstring 'hop' %{:enter-user-mode hop <ret>}
+  map global hop f -docstring 'filter first'     %{:reasymotion-select-screen }
+  map global hop l -docstring 'letter to word'   %{:reasymotion-on-letter-to-word <ret>}
+  map global hop L -docstring 'letter to letter' %{:reasymotion-on-letter-to-letter <ret>}
+  map global hop s -docstring 'selections'       %{:reasymotion-selection <ret>}
+  map global hop w -docstring 'words'            %{:reasymotion-word <ret>}
 
 
 map global user i -docstring 'docs' %{:docs }
 
 declare-user-mode jump
-  map global user j -docstring 'jump' %{: enter-user-mode jump <ret>}
-  map global jump c     -docstring 'next spell'            %{: spell en_US ; spell-next <ret>}
-  map global jump <a-c> -docstring 'prev spell'            %{: spell en_US ; spell-prev <ret>}
-  map global jump d     -docstring 'next diagnostic'       %{: lsp-diagnostics ; jump-next '\*diagnostics\*' <ret>}
-  map global jump <a-d> -docstring 'prev diagnostic'       %{: lsp-diagnostics ; jump-previous '\*diagnostics\*' <ret>}
-  map global jump f     -docstring 'next function'         %{: lsp-next-function <ret>}
-  map global jump <a-f> -docstring 'prev function'         %{: lsp-previous-function <ret>}
-  map global jump F     -docstring 'next function hover'   %{: lsp-next-hover-function <ret>}
-  map global jump <a-F> -docstring 'prev function hover'   %{: lsp-previous-hover-function <ret>}
-  map global jump g     -docstring 'next grep'             %{: jump-next '\*grep\*' <ret>}
-  map global jump <a-g> -docstring 'prev grep'             %{: jump-previous '\*grep\*' <ret>}
-  map global jump l     -docstring 'next lint'             %{: lint ; lint-next-message <ret>}
-  map global jump <a-l> -docstring 'prev lint'             %{: lint ; lint-previous-message <ret>}
-  map global jump m     -docstring 'next man'              %{: man-link-next <ret>}
-  map global jump <a-m> -docstring 'prev man'              %{: man-link-prev <ret>}
-  map global jump p     -docstring 'next phantom'          %{: phantom-selection-iterate-next <ret>}
-  map global jump <a-p> -docstring 'prev phantom'          %{: phantom-selection-iterate-prev <ret>}
-  map global jump s     -docstring 'next symbol'           %{: lsp-next-symbol <ret>}
-  map global jump <a-s> -docstring 'prev symbol'           %{: lsp-previous-symbol <ret>}
-  map global jump S     -docstring 'next sym hover'        %{: lsp-next-hover-symbol <ret>}
-  map global jump <a-S> -docstring 'prev sym hover'        %{: lsp-previous-hover-symbol <ret>}
-  map global jump t     -docstring 'next goto'             %{: jump-next '\*goto\*' <ret>}
-  map global jump <a-t> -docstring 'prev goto'             %{: jump-previous '\*goto\*' <ret>}
+  map global user j -docstring 'jump' %{:enter-user-mode jump <ret>}
+  map global jump c     -docstring 'next spell'            %{:spell en_US ; spell-next <ret>}
+  map global jump <a-c> -docstring 'prev spell'            %{:spell en_US ; spell-prev <ret>}
+  map global jump d     -docstring 'next diagnostic'       %{:lsp-diagnostics ; jump-next '\*diagnostics\*' <ret>}
+  map global jump <a-d> -docstring 'prev diagnostic'       %{:lsp-diagnostics ; jump-previous '\*diagnostics\*' <ret>}
+  map global jump f     -docstring 'next function'         %{:lsp-next-function <ret>}
+  map global jump <a-f> -docstring 'prev function'         %{:lsp-previous-function <ret>}
+  map global jump F     -docstring 'next function hover'   %{:lsp-next-hover-function <ret>}
+  map global jump <a-F> -docstring 'prev function hover'   %{:lsp-previous-hover-function <ret>}
+  map global jump g     -docstring 'next grep'             %{:jump-next '\*grep\*' <ret>}
+  map global jump <a-g> -docstring 'prev grep'             %{:jump-previous '\*grep\*' <ret>}
+  map global jump l     -docstring 'next lint'             %{:lint ; lint-next-message <ret>}
+  map global jump <a-l> -docstring 'prev lint'             %{:lint ; lint-previous-message <ret>}
+  map global jump m     -docstring 'next man'              %{:man-link-next <ret>}
+  map global jump <a-m> -docstring 'prev man'              %{:man-link-prev <ret>}
+  map global jump p     -docstring 'next phantom'          %{:phantom-selection-iterate-next <ret>}
+  map global jump <a-p> -docstring 'prev phantom'          %{:phantom-selection-iterate-prev <ret>}
+  map global jump s     -docstring 'next symbol'           %{:lsp-next-symbol <ret>}
+  map global jump <a-s> -docstring 'prev symbol'           %{:lsp-previous-symbol <ret>}
+  map global jump S     -docstring 'next sym hover'        %{:lsp-next-hover-symbol <ret>}
+  map global jump <a-S> -docstring 'prev sym hover'        %{:lsp-previous-hover-symbol <ret>}
+  map global jump t     -docstring 'next goto'             %{:jump-next '\*goto\*' <ret>}
+  map global jump <a-t> -docstring 'prev goto'             %{:jump-previous '\*goto\*' <ret>}
 
-map global user l -docstring 'lsp' %{: enter-user-mode lsp <ret>}
-  map global lsp <minus> -docstring 'disable'   %{: lsp-disable-window <ret>}
-  map global lsp <plus>  -docstring 'enable'    %{: lsp-enable-window <ret>}
+map global user l -docstring 'lsp' %{:enter-user-mode lsp <ret>}
+  map global lsp <minus> -docstring 'disable'   %{:lsp-disable-window <ret>}
+  map global lsp <plus>  -docstring 'enable'    %{:lsp-enable-window <ret>}
 
-map global user m -docstring 'maths' %{: math <ret>}
+map global user m -docstring 'maths' %{:math <ret>}
 
 # edit/extend/trim selections one by one
 bundle kakoune-phantom-selection https://github.com/occivink/kakoune-phantom-selection %{
   declare-user-mode phantom
-  map global user p -docstring 'phantom' %{: enter-user-mode phantom <ret>}
-  map global phantom a -docstring 'add'        %{: phantom-selection-add-selection <ret>}
-  map global phantom c -docstring 'clear'      %{: phantom-selection-select-all; phantom-selection-clear <ret>}
-  map global phantom n -docstring 'next'       %{: phantom-selection-iterate-next <ret>}
-  map global phantom p -docstring 'previous'   %{: phantom-selection-iterate-prev <ret>}
+  map global user p -docstring 'phantom' %{:enter-user-mode phantom <ret>}
+  map global phantom a -docstring 'add'        %{:phantom-selection-add-selection <ret>}
+  map global phantom c -docstring 'clear'      %{:phantom-selection-select-all; phantom-selection-clear <ret>}
+  map global phantom n -docstring 'next'       %{:phantom-selection-iterate-next <ret>}
+  map global phantom p -docstring 'previous'   %{:phantom-selection-iterate-prev <ret>}
 }
 
 # select/edit surrounding chars and tags
 bundle kakoune-surround https://github.com/h-youhei/kakoune-surround %{
   declare-user-mode surround
-  map global normal <'> -docstring 'surround' %{: enter-user-mode surround <ret>}
-  map global surround d -docstring 'delete'              %{: delete-surround <ret>}
-  map global surround i -docstring 'insert'              %{: surround <ret>}
-  map global surround r -docstring 'replace'             %{: change-surround <ret>}
-  map global surround s -docstring 'select'              %{: select-surround <ret>}
-  map global surround D -docstring 'delete tag'          %{: delete-surrounding-tag <ret>}
-  map global surround I -docstring 'surround with tag'   %{: surround-with-tag <ret>}
-  map global surround R -docstring 'replace tag'         %{: change-surrounding-tag <ret>}
-  map global surround S -docstring 'select tag'          %{: select-surrounding-tag <ret>}
+  map global normal <'> -docstring 'surround' %{:enter-user-mode surround <ret>}
+  map global surround d -docstring 'delete'              %{:delete-surround <ret>}
+  map global surround i -docstring 'insert'              %{:surround <ret>}
+  map global surround r -docstring 'replace'             %{:change-surround <ret>}
+  map global surround s -docstring 'select'              %{:select-surround <ret>}
+  map global surround D -docstring 'delete tag'          %{:delete-surrounding-tag <ret>}
+  map global surround I -docstring 'surround with tag'   %{:surround-with-tag <ret>}
+  map global surround R -docstring 'replace tag'         %{:change-surrounding-tag <ret>}
+  map global surround S -docstring 'select tag'          %{:select-surrounding-tag <ret>}
 }
 
 # spelling and grammar checking
 declare-user-mode spell
-  map global user s -docstring 'spell' %{: enter-user-mode spell <ret>}
-  map global spell e -docstring 'enable'     %{: skyspell-enable en_US <ret>}
-  map global spell d -docstring 'disable'    %{: skyspell-disable <ret>}
-  map global spell l -docstring 'list'       %{: skyspell-list <ret>}
-  map global spell n -docstring 'next'       %{: skyspell-next <ret>}
-  map global spell p -docstring 'previous'   %{: skyspell-previous <ret>}
-  map global spell r -docstring 'replace'    %{: skyspell-replace <ret>}
+  map global user s -docstring 'spell' %{:enter-user-mode spell <ret>}
+  map global spell e -docstring 'enable'     %{:skyspell-enable en_US <ret>}
+  map global spell d -docstring 'disable'    %{:skyspell-disable <ret>}
+  map global spell l -docstring 'list'       %{:skyspell-list <ret>}
+  map global spell n -docstring 'next'       %{:skyspell-next <ret>}
+  map global spell p -docstring 'previous'   %{:skyspell-previous <ret>}
+  map global spell r -docstring 'replace'    %{:skyspell-replace <ret>}
 
 provide-module "ui" %{
   bundle ui.kak https://github.com/kkga/ui.kak %{
-    map global user u -docstring 'ui' %{: enter-user-mode ui <ret>}
+    map global user u -docstring 'ui' %{:enter-user-mode ui <ret>}
     set-option global ui_wrap_flags -width 100 -word -indent -marker ~~
     set-face global TrailingSpace default,red
 
@@ -789,7 +791,7 @@ provide-module "ui" %{
       set-option buffer colorcol_enabled false
     }
     define-command ui-colorcol-toggle %{ try ui-colorcol-enable catch ui-colorcol-disable }
-    map global ui r -docstring 'toggle colorcol'   %{: ui-colorcol-toggle <ret>}
+    map global ui r -docstring 'toggle colorcol'   %{:ui-colorcol-toggle <ret>}
 
     define-command -override ui-lsp-enable %{
       echo -debug "Enabling LSP for filtetype %opt{filetype}"
@@ -813,7 +815,7 @@ provide-module "ui" %{
       try ui-lsp-enable catch ui-lsp-disable
       trigger-user-hook ui-hl-changed
     }
-    map global ui k -docstring 'toggle kak-lsp'   %{: ui-lsp-toggle <ret>}
+    map global ui k -docstring 'toggle kak-lsp'   %{:ui-lsp-toggle <ret>}
 
     require-module "kak_rainbower"
     declare-option -hidden bool rainbow_enabled false
@@ -827,7 +829,7 @@ provide-module "ui" %{
       set-option buffer rainbow_enabled false
     }
     define-command ui-rainbow-toggle %{ try ui-rainbow-enable catch ui-rainbow-disable }
-    map global ui R -docstring 'toggle rainbow'   %{: ui-rainbow-toggle <ret>}
+    map global ui R -docstring 'toggle rainbow'   %{:ui-rainbow-toggle <ret>}
 
     # zdiff3 highlighting
     add-highlighter shared/zdiff3 group
@@ -841,7 +843,7 @@ provide-module "ui" %{
     define-command ui-zdiff3-enable %{ add-highlighter window/zdiff3 ref zdiff3 }
     define-command ui-zdiff3-disable %{ remove-highlighter window/zdiff3 }
     define-command ui-zdiff3-toggle %{ try ui-zdiff3-enable catch ui-zdiff3-disable }
-    map global ui z -docstring 'toggle zdiff3'   %{: ui-zdiff3-toggle <ret>}
+    map global ui z -docstring 'toggle zdiff3'   %{:ui-zdiff3-toggle <ret>}
 
     hook global WinCreate .* %{
       ui-git-diff-enable
@@ -860,14 +862,14 @@ require-module "ui"
 map global user v -docstring 'view' 'v'
 
 # write to file
-map global user w -docstring 'write' %{: write <ret>}
+map global user w -docstring 'write' %{:write <ret>}
 
 # pipe selections as args with xargs
-map global user x -docstring 'xargs' %{: xargs <ret>}
+map global user x -docstring 'xargs' %{:xargs <ret>}
 
-map global user y -docstring 'yo' %{: yo-buffer <ret>}
+map global user y -docstring 'yo' %{:yo-buffer <ret>}
 
-map global user z -docstring 'zeal' %{: zeal <ret>}
+map global user z -docstring 'zeal' %{:zeal <ret>}
 
 # contextual scripts
 hook global WinSetOption filetype=git-commit    %{ source '~/.config/kak/contexts/commit.kak'      }
