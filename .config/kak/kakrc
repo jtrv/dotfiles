@@ -233,7 +233,7 @@ define-command difft -docstring '
 define-command diff-buffers -docstring '
   diff-buffers <buffer-a> <buffer-b>: diff utility
   Generate a diff buffer between <buffer-a> and <buffer-b>
-' -buffer-completion -override -params 2 %{ evaluate-commands %sh{
+' -buffer-completion -params 2 %{ evaluate-commands %sh{
   file1=$(mktemp)
   file2=$(mktemp)
   echo "
@@ -350,10 +350,6 @@ hook global BufSetOption filetype=yo-prompt %{
   alias buffer write yo-buffer-write
   alias buffer w yo-buffer-write
 }
-hook global WinDisplay '\*aichat.*\*' %{
-  alias buffer write yo-buffer-write
-  alias buffer w yo-buffer-write
-}
 
 define-command how -docstring '
   how <query>: how utility wrapper
@@ -452,7 +448,7 @@ define-command reader-mode -docstring 'Enables settings for better reading' %{
   map buffer normal d <c-d>
   map buffer normal u <c-u>
 }
-hook global WinDisplay '\*(delta|diff|difft|greeting|help|man|mdn|tldr).*\*' %{
+hook global WinDisplay '\*(delta|diff|docs|greet|help|man|tldr).*\*' %{
   reader-mode
 }
 
