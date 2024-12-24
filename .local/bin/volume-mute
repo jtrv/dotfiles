@@ -4,7 +4,7 @@ DEFAULT_SINK=$(pactl get-default-sink)
 
 pactl set-sink-mute "$DEFAULT_SINK" toggle
 
-MUTE_VALUE=$(pactl get-sink-mute "$DEFAULT_SINK" | cut -d " " -f 2)
+MUTE_VALUE=$(pactl get-sink-mute "$DEFAULT_SINK" | awk '{print $2}')
 
 if [ "$MUTE_VALUE" = "yes" ]; then
 	MUTE_STATUS="On"
