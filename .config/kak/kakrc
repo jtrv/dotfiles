@@ -440,15 +440,12 @@ define-command ptsv -docstring '
 
 define-command reader-mode -docstring 'Enables settings for better reading' %{
   require-module "ui"
-  nop rainbow-disable-window
-  nop number-toggle-disable
-  nop ui-trailing-spaces-disable
-  nop ui-whitespaces-disable
-  nop ui-wrap-disable
-  map buffer normal d <c-d>
-  map buffer normal u <c-u>
+  try rainbow-disable-window
+  try number-toggle-disable
+  try ui-trailing-spaces-disable
+  try ui-whitespaces-disable
 }
-hook global WinDisplay '\*(delta|diff|docs|greet|help|man|tldr).*\*' %{
+hook global WinDisplay '\*(delta|diff|docs|greet|help|man|stdin|tldr).*\*' %{
   reader-mode
 }
 
