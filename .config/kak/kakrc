@@ -841,6 +841,7 @@ provide-module "ui" %{
     hook global WinCreate .* %{
       ui-git-diff-enable
       ui-lint-enable
+      ui-line-numbers-enable
       ui-rainbow-enable
       ui-todos-enable
       ui-trailing-spaces-enable
