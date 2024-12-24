@@ -1,2 +1,0 @@
-#!/bin/sh
-alacritty --class=popup -e pomshell "$@" &
