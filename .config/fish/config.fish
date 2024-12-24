@@ -70,6 +70,16 @@ alias wget    "wget2 --hsts-file='$XDG_DATA_HOME/wget-hsts'"
 
 ######## KAKOUNE ########
 
+function config-grep
+  set config_files (config ls-files | while read line; printf "\"%s\" " "$line"; end)
+  set grepargs
+  for x in $argv
+    set -a grepargs (echo $x | sed -e "s/'/''/g" -e "s/^/'/" -e "s/\$/'/")
+  end
+  kak -e "grep $(string join -- " " $grepargs) $config_files; buffer-only; echo; info-buffers"
+end
+complete -c config-grep -w rg
+
 function kd
   k (fd $argv)
 end
