@@ -1,9 +1,9 @@
 #!/bin/sh
-SOUNDCARD=$(pactl list short cards | cut -f 2 | rg -o '(usb-TT_AUDIO_TT_USB_AUDIO.*)' -r '$1')
+SOUNDCARD=$(pactl list short cards | awk '$2 ~ /usb-TT_AUDIO_TT_USB_AUDIO/ {print $2}')
 
 pactl set-card-profile "alsa_card.$SOUNDCARD" output:analog-stereo
 
-SINK=$(pactl list short sinks | cut -f 2 | rg -F "alsa_output.$SOUNDCARD.analog-stereo")
+SINK=$(pactl list short sinks | awk -v s="$SOUNDCARD" '$2 ~ "alsa_output." s ".analog-stereo" {print $2}')
 
 pactl set-default-sink "$SINK"
 

@@ -4,7 +4,7 @@ default_source=$(pactl get-default-source)
 
 pactl set-source-mute "$default_source" toggle
 
-state=$(pactl get-source-mute "$default_source" | cut -d " " -f 2)
+state=$(pactl get-source-mute "$default_source" | awk '{print $2}')
 
 if [ "$state" = "yes" ]; then
 	status="Muted"
