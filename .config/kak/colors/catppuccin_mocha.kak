@@ -1,32 +1,32 @@
 # Catppuccin theme for Kakoune
 
 # Color palette
-declare-option  -hidden str rosewater "rgba:f5e0dc"
-declare-option  -hidden str flamingo  "rgba:f2cdcd"
-declare-option  -hidden str pink      "rgba:f5c2e7"
-declare-option  -hidden str mauve     "rgba:cba6f7"
-declare-option  -hidden str red       "rgba:f38ba8"
-declare-option  -hidden str maroon    "rgba:eba0ac"
-declare-option  -hidden str peach     "rgba:fab387"
-declare-option  -hidden str yellow    "rgba:f9e2af"
-declare-option  -hidden str green     "rgba:a6e3a1"
-declare-option  -hidden str teal      "rgba:94e2d5"
-declare-option  -hidden str sky       "rgba:89dceb"
-declare-option  -hidden str sapphire  "rgba:74c7ec"
-declare-option  -hidden str blue      "rgba:89b4fa"
-declare-option  -hidden str lavender  "rgba:b4befe"
-declare-option  -hidden str text      "rgba:cdd6f4"
-declare-option  -hidden str subtext1  "rgba:bac2de"
-declare-option  -hidden str subtext0  "rgba:a6adc8"
-declare-option  -hidden str overlay2  "rgba:9399b2"
-declare-option  -hidden str overlay1  "rgba:7f849c"
-declare-option  -hidden str overlay0  "rgba:6c7086"
-declare-option  -hidden str surface2  "rgba:585b70"
-declare-option  -hidden str surface1  "rgba:45475a"
-declare-option  -hidden str surface0  "rgba:313244"
-declare-option  -hidden str base      "rgba:1e1e2e"
-declare-option  -hidden str mantle    "rgba:181825"
-declare-option  -hidden str crust     "rgba:11111b"
+declare-option  -hidden str rosewater "rgba:f5e0dc" # rgb:f5e0dc
+declare-option  -hidden str flamingo  "rgba:f2cdcd" # rgb:f2cdcd
+declare-option  -hidden str pink      "rgba:f5c2e7" # rgb:f5c2e7
+declare-option  -hidden str mauve     "rgba:cba6f7" # rgb:cba6f7
+declare-option  -hidden str red       "rgba:f38ba8" # rgb:f38ba8
+declare-option  -hidden str maroon    "rgba:eba0ac" # rgb:eba0ac
+declare-option  -hidden str peach     "rgba:fab387" # rgb:fab387
+declare-option  -hidden str yellow    "rgba:f9e2af" # rgb:f9e2af
+declare-option  -hidden str green     "rgba:a6e3a1" # rgb:a6e3a1
+declare-option  -hidden str teal      "rgba:94e2d5" # rgb:94e2d5
+declare-option  -hidden str sky       "rgba:89dceb" # rgb:89dceb
+declare-option  -hidden str sapphire  "rgba:74c7ec" # rgb:74c7ec
+declare-option  -hidden str blue      "rgba:89b4fa" # rgb:89b4fa
+declare-option  -hidden str lavender  "rgba:b4befe" # rgb:b4befe
+declare-option  -hidden str text      "rgba:cdd6f4" # rgb:cdd6f4
+declare-option  -hidden str subtext1  "rgba:bac2de" # rgb:bac2de
+declare-option  -hidden str subtext0  "rgba:a6adc8" # rgb:a6adc8
+declare-option  -hidden str overlay2  "rgba:9399b2" # rgb:9399b2
+declare-option  -hidden str overlay1  "rgba:7f849c" # rgb:7f849c
+declare-option  -hidden str overlay0  "rgba:6c7086" # rgb:6c7086
+declare-option  -hidden str surface2  "rgba:585b70" # rgb:585b70
+declare-option  -hidden str surface1  "rgba:45475a" # rgb:45475a
+declare-option  -hidden str surface0  "rgba:313244" # rgb:313244
+declare-option  -hidden str base      "rgba:1e1e2e" # rgb:1e1e2e
+declare-option  -hidden str mantle    "rgba:181825" # rgb:181825
+declare-option  -hidden str crust     "rgba:11111b" # rgb:11111b
 
 declare-option  -hidden str background "%opt{mantle}ff"
 declare-option  -hidden str foreground "%opt{text}ff"
@@ -101,37 +101,37 @@ hook global ModeChange ".*:insert" %{
 
 # LSP
 
-# Faces used by inline diagnostics.
-set-face global DiagnosticError                "%opt{red}ff,%opt{background}+c"
-set-face global DiagnosticHint                 "%opt{lavender}ff,%opt{background}+u"
-set-face global DiagnosticInfo                 "%opt{sky}ff,%opt{background}"
-set-face global DiagnosticWarning              "%opt{peach}ff,%opt{background}+U"
-set-face global DiagnosticTagDeprecated        +s
-set-face global DiagnosticTagUnnecessary       +d
 # Faces used by inlay diagnostics.
-set-face global InlayDiagnosticError           DiagnosticError
-set-face global InlayDiagnosticHint            DiagnosticHint
-set-face global InlayDiagnosticInfo            DiagnosticInfo
-set-face global InlayDiagnosticWarning         DiagnosticWarning
+set-face global InlayDiagnosticError           "%opt{red}ff,%opt{background}"
+set-face global InlayDiagnosticHint            "%opt{lavender}ff,%opt{background}"
+set-face global InlayDiagnosticInfo            "%opt{sky}ff,%opt{background}+d"
+set-face global InlayDiagnosticWarning         "%opt{peach}ff,%opt{background}"
+# Faces used by inline diagnostics.
+set-face global DiagnosticError                default,+c@InlayDiagnosticError
+set-face global DiagnosticHint                 +u@InlayDiagnosticHint
+set-face global DiagnosticInfo                 InlayDiagnosticInfo
+set-face global DiagnosticWarning              +U@InlayDiagnosticWarning
+set-face global DiagnosticTagDeprecated        +s
+set-face global DiagnosticTagUnnecessary       +cs
 # Faces used by line flags
 set-face global LineFlagError                  "%opt{red}ff,%opt{background}"
 set-face global LineFlagHint                   default
 set-face global LineFlagInfo                   default
-set-face global LineFlagWarning                yellow
+set-face global LineFlagWarning                "%opt{yellow}ff,%opt{background}"
 # Face for highlighting references.
 set-face global ReferenceBind                  "default,%opt{surface0}ff+bu"
 set-face global Reference                      "default,%opt{surface0}ff"
 # Face for inlay hints.
 set-face global InlayHint                      "%opt{overlay0}ff,%opt{background}"
-set-face global InlayCodeLens                  cyan+d
+set-face global InlayCodeLens                  "%opt{overlay0}ff,%opt{background}"
 # Faces used for hover info
 set-face global InfoDefault                    "%opt{text}ff,%opt{surface1}ff+b"
 set-face global InfoBlock                      "%opt{sapphire}ff,%opt{surface1}ff+b"
 set-face global InfoBlockQuote                 "%opt{green}ff,%opt{surface1}ff+b"
 set-face global InfoBullet                     "%opt{green}ff,%opt{surface1}ff+b"
-set-face global InfoHeader                     "%opt{red}ff,%opt{surface1}ff+b"
-set-face global InfoLink                       "%opt{green}ff,%opt{surface1}ff+b"
-set-face global InfoLinkMono                   "%opt{green}ff,%opt{surface1}ff+b"
+set-face global InfoHeader                     "%opt{red}ff,%opt{surface1}ff+bu"
+set-face global InfoLink                       "%opt{green}ff,%opt{surface1}ff+bi"
+set-face global InfoLinkMono                   "%opt{green}ff,%opt{surface1}ff+bi"
 set-face global InfoMono                       "%opt{green}ff,%opt{surface1}ff+b"
 set-face global InfoRule                       "%opt{text}ff,%opt{surface1}ff+b"
 set-face global InfoDiagnosticError            "%opt{red}ff,%opt{surface1}ff+b"
