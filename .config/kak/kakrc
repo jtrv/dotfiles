@@ -144,6 +144,12 @@ define-command kakpipe-alias -docstring '
 }
 alias global : kakpipe-alias
 
+define-command bgsh -docstring '
+  bgsh [<commands>]: background shell utility
+  execute one-off commands in the background
+' -shell-completion -params .. %{ kakpipe-bg -- %arg{@} }
+alias global :: bgsh
+
 define-command bun -docstring '
   bun [<arguments>]: bun utility wrapper
   Launch bun with the given arguments inside kakoune
@@ -424,12 +430,6 @@ define-command pcsv -docstring '
   fi
 }}
 
-define-command bgsh -docstring '
-  bgsh [<commands>]: background shell utility
-  execute one-off commands in the background
-' -shell-completion -params .. %{ kakpipe-bg -- %arg{@} }
-alias global :: bgsh
-
 define-command ptsv -docstring '
   pcsv [<files>]: tsv viewing utility
   Print the files (or buffile) using bat and columns
@@ -463,6 +463,12 @@ define-command rman -docstring '
   fi
 }}
 
+define-command rnd -docstring '
+  rnd: go to a random line
+' %{ evaluate-commands %sh{
+    echo "execute-keys '$(shuf -i 1-$kak_buf_line_count)g'"
+}}
+
 define-command save-macro-as -docstring '
   save-macro-as <command-name>: define-command with macro register
 ' -params 1 %{
@@ -476,12 +482,6 @@ define-command set-filetype -docstring 'prompt to set filetype' %{
       set buffer filetype %val{text}
   }
 }
-
-define-command rnd -docstring '
-  rnd: go to a random line
-' %{ evaluate-commands %sh{
-    echo "execute-keys '$(shuf -i 1-$kak_buf_line_count)g'"
-}}
 
 define-command thes -docstring '
   thes <query>: thesauromatic utility wrapper
@@ -524,14 +524,14 @@ define-command xargs -docstring '
 
 define-command watchexec -docstring '
   watchexec [<args>] <command>: watchexec utility wrapper
-  execute the given command when the current directory changes 
+  execute the given command when the current directory changes
 ' -shell-completion -params 0.. %{
   kakpipe -- watchexec %arg{@}
 }
 
 define-command watchthis -docstring '
   watchexec [<args>] <command>: watchexec utility wrapper
-  execute the given command when the current file changes 
+  execute the given command when the current file changes
 ' -shell-completion -params 0.. %{
   kakpipe -- watchexec --watch %val{buffile} %arg{@}
 }
