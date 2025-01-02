@@ -475,6 +475,17 @@ define-command save-macro-as -docstring '
   define-command %arg{1} -override %{ execute-keys "%reg{@}" }
 }
 
+define-command seq -docstring '
+seq: <start?> <inc?>
+insert numbered output to cursors
+' -params 0.. %{ evaluate-commands %sh{
+  start=1; increment=1;
+  if [ $# -eq 1 ]; then start=$1; fi
+  if [ $# -eq 2 ]; then increment=$2; fi
+  end=$(( $start + $kak_selection_count ))
+  echo "execute-keys ':e -scratch<ret>!seq $start $increment $end <ret><a-s>Hy:db<ret>P'"
+}}
+
 define-command set-filetype -docstring 'prompt to set filetype' %{
   prompt filetype: -shell-script-candidates %{
       fd --base-directory "$kak_runtime/rc/filetype" -t f -x basename -s .kak {}
@@ -764,6 +775,8 @@ declare-user-mode spell
   map global spell n -docstring 'next'       %{:skyspell-next <ret>}
   map global spell p -docstring 'previous'   %{:skyspell-previous <ret>}
   map global spell r -docstring 'replace'    %{:skyspell-replace <ret>}
+
+map global user S -docstring 'seq' %{:seq }
 
 provide-module "ui" %{
   bundle ui.kak https://github.com/kkga/ui.kak %{
