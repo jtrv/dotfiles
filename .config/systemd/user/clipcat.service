@@ -1,9 +1,9 @@
 [Unit]
 Description=Clipcat Daemon
-PartOf=multi-user.target
+PartOf=default.target
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
 
 [Service]
 ExecStartPre=/bin/rm -f %t/clipcat/grpc.sock
