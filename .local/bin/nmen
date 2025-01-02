@@ -1,2 +1,2 @@
 #!/bin/sh
-eval "networkmanager_dmenu $DMENU_THEME"
+networkmanager_dmenu

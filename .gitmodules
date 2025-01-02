@@ -7,3 +7,6 @@
 [submodule "kak-bundle"]
 	path = .config/kak/bundle/kak-bundle
 	url = https://github.com/jdugan6240/kak-bundle
+[submodule "dmenu"]
+	path = repos/dmenu
+	url = https://github.com/jtrv/dmenu

@@ -60,13 +60,12 @@ set -gx ARGC_COMPLETIONS_PATH       "$ARGC_COMPLETIONS_ROOT/completions/linux:$A
 set -gx ARGC_SCRIPTS                (ls -p -1 "$ARGC_COMPLETIONS_ROOT/completions/linux" "$ARGC_COMPLETIONS_ROOT/completions" | sed -n 's/\.sh$//p')
 set -gx ATUIN_NOBIND                "true"
 set -gx BAT_PAGER                   "kak"
-set -gx BEMOJI_PICKER_CMD           "dmenu -i -fn 'pixelsize=18:antialias=true' -nb rgb:1e/1e/2e -nf rgb:cd/d6/f4 -sb rgb:89/dc/eb -sf rgb:1e/1e/2e"
+set -gx BEMOJI_PICKER_CMD           "dmenu -i -l 5 -g 5"
 set -gx BEMOJI_CLIP_CMD             "xclip -sel clip"
 set -gx BEMOJI_TYPE_CMD             "xdotool"
 set -gx BROWSER                     "firefox"
 set -gx CONCEAL_FINDER              "skim"
 set -gx DELTA_PAGER                 "kak"
-set -gx DMENU_THEME                 "-i -fn 'pixelsize=18:antialias=true' -nb rgb:1e/1e/2e -nf rgb:cd/d6/f4 -sb rgb:89/dc/eb -sf rgb:1e/1e/2e" # matched to spectrwm.conf
 set -gx EDITOR                      "kak"
 set -gx fish_greeting
 set -gx HORS_ENGINE                 "google"

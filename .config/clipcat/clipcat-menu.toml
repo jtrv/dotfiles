@@ -17,14 +17,4 @@ menu_prompt = ""
 # Extra arguments to pass to `dmenu`.
 extra_arguments = [
   "-i",
-  "-fn",
-  "'pixelsize=18:antialias=true'",
-  "-nb",
-  "rgb:1e/1e/2e",
-  "-nf",
-  "rgb:cd/d6/f4",
-  "-sb",
-  "rgb:89/dc/eb",
-  "-sf",
-  "rgb:1e/1e/2e"
 ]
