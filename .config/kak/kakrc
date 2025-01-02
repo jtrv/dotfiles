@@ -67,6 +67,8 @@ bundle grep-expand.kak https://github.com/jtrv/grep-expand.kak
 
 bundle indent.kak https://github.com/kirusfg/indent.kak %{
   set-indent global 2 false
+  enable-detect-indent
+  enable-auto-indent
 }
 
 bundle kak-ansi https://github.com/eraserhd/kak-ansi
