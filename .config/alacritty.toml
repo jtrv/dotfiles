@@ -93,7 +93,7 @@ TERM = "alacritty"
 
 [font]
 builtin_box_drawing = true
-size = 7.5
+size = 11
 
 [font.bold]
 family = "BlexMono Nerd Font"
