@@ -1,9 +1,7 @@
-acpi
-acpi_call
-acpid
 aic94xx-firmware
 aichat
 alacritty-sixel-git
+amd-ucode
 ananicy-cpp
 android-tools
 ani-cli
@@ -23,7 +21,6 @@ bandwhich
 base
 base-devel
 bat
-batsignal
 bemoji
 betterdiscord-installer-bin
 bindtointerface
@@ -124,8 +121,6 @@ gst-plugin-pipewire
 heroku-cli-bin
 htmlq
 hyperfine
-intel-media-driver
-intel-ucode
 ipinfo-cli-bin
 irqbalance
 iw
@@ -147,9 +142,9 @@ kvantum-theme-catppuccin-git
 lazygit
 lbzip2
 leanify-git
+lib32-vulkan-radeon
 libpulse
 libqalculate
-libva-intel-driver
 linux
 linux-cachyos
 linux-cachyos-headers
@@ -176,7 +171,6 @@ memtest86+
 minify-html-bin
 minikube
 mold
-mons
 moreutils
 mpv-mpris
 mpv-sponsorblock
@@ -227,7 +221,6 @@ plymouth-theme-cubes-git
 plzip
 pngquant
 polly
-powertop
 preload
 presenterm
 procs
@@ -236,7 +229,6 @@ progress
 pueue
 pulsemixer
 pv
-python-validity
 qbittorrent
 qt5ct
 qt6ct
@@ -252,6 +244,7 @@ rsync
 ruby-build
 rust-analyzer
 rustscan
+rustup
 sad
 samply
 sassc
@@ -264,7 +257,6 @@ signal-desktop
 sl
 snap-pac
 snap-sync
-snapper
 sniffglue
 spectrwm
 speedtest++
@@ -290,7 +282,6 @@ texlive-formatsextra
 texlive-humanities
 texlive-latexextra
 texlive-mathscience
-thermald
 tidal-hifi-bin
 tidy
 tig
@@ -317,7 +308,7 @@ vhs
 video2x
 visidata
 vopono
-vulkan-intel
+vulkan-radeon
 watchexec
 wd719x-firmware
 webtorrent-mpv-hook
@@ -334,8 +325,8 @@ xcape
 xcolor
 xcwd-git
 xdg-ninja-git
-xdg-utils-handlr
-xf86-video-intel
+xf86-video-amdgpu
+xf86-video-ati
 xh
 xlockmore
 xorg-server
