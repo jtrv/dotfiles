@@ -1,19 +1,19 @@
 [plugin]
 deps = [
   { use = "dedukun/relative-motions", rev = "df97039" },
-  { use = "Ape/open-with-cmd", rev = "8d7abc8" },
+  { use = "Ape/open-with-cmd", rev = "a80d1cf" },
   { use = "Sonico98/exifaudio", rev = "d794614" },
   { use = "lpnh/fg", rev = "9bba743" },
-  { use = "Reledia/glow", rev = "c2ed51e" },
+  { use = "Reledia/glow", rev = "5ce76dc" },
   { use = "ndtoan96/ouch", rev = "b869886" },
-  { use = "Rolv-Apneseth/starship", rev = "247f49d" },
-  { use = "yazi-rs/plugins:diff", rev = "7afba3a" },
-  { use = "yazi-rs/plugins:git", rev = "7afba3a" },
+  { use = "Rolv-Apneseth/starship", rev = "9c37d37" },
+  { use = "yazi-rs/plugins:diff", rev = "600614a" },
+  { use = "yazi-rs/plugins:git", rev = "600614a" },
   { use = "Lil-Dank/lazygit", rev = "c82794f" },
   { use = "AnirudhG07/archivemount", rev = "d4f3e6a" }
 ]
 
 [flavor]
 deps = [
-  { use = "yazi-rs/flavors:catppuccin-mocha", rev = "8458d25" }
+  { use = "yazi-rs/flavors:catppuccin-mocha", rev = "fc8eeaa" }
 ]
