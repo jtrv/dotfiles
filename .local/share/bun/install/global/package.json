@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "@biomejs/biome": "^1.9.4",
-    "@fsouza/prettierd": "^0.25.4",
+    "@fsouza/prettierd": "^0.26.0",
     "@nestjs/cli": "^10.4.9",
     "@prisma/language-server": "^6.1.0",
     "@tailwindcss/language-server": "^0.0.27",
