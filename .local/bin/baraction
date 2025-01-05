@@ -27,7 +27,7 @@ ram() {
 ssd() {
   icon=󰋊
   SSD=$(df -P /home | awk 'NR==2 {print int($5)}')
-  printf "%s%3d%%" "$icon" "$SSD"
+  printf "%s%2d%%" "$icon" "$SSD"
 }
 
 bat() {
@@ -81,6 +81,6 @@ blu() {
 
 SLEEP_SEC=2
 while :; do
-  echo "$(cpu) $(ram) $(ssd) $(bat) $(mic) $(blu) $(net) "
+  echo "$(cpu)  $(ram)  $(ssd)  $(blu)  $(net)   $(mic)  "
   sleep $SLEEP_SEC
 done
