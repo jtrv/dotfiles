@@ -14,19 +14,20 @@ hook global -group semantic-tokens InsertIdle .* lsp-semantic-tokens
 
 map global insert <tab> -docstring 'Select next snippet placeholder' %{<a-;>:try lsp-snippets-select-next-placeholders catch %{ execute-keys -with-hooks <lt>tab> }<ret>}
 
-map global object a      -docstring "LSP any symbol"  %{: lsp-object <ret>}
-map global object <a-a>  -docstring "LSP any symbol"  %{: lsp-object <ret>}
-map global object f      -docstring "LSP function or method"  %{: lsp-object Function Method <ret>}
-map global object t      -docstring "LSP class interface or struct"  %{: lsp-object Class Interface Struct <ret>}
-map global object d      -docstring "LSP errors and warnings"  %{: lsp-diagnostic-object --include-warnings <ret>}
-map global object D      -docstring "LSP errors"  %{: lsp-diagnostic-object <ret>}
+map global object a      -docstring 'LSP any symbol'                 %{: lsp-object <ret>}
+map global object <a-a>  -docstring 'LSP any symbol'                 %{: lsp-object <ret>}
+map global object f      -docstring 'LSP function or method'         %{: lsp-object Function Method <ret>}
+map global object t      -docstring 'LSP class interface or struct'  %{: lsp-object Class Interface Struct <ret>}
+map global object d      -docstring 'LSP errors and warnings'        %{: lsp-diagnostic-object --include-warnings <ret>}
+map global object D      -docstring 'LSP errors'                     %{: lsp-diagnostic-object <ret>}
 
 declare-option -hidden str lsp_server_tailwind %{
     [tailwindcss-language-server]
-    root_globs = ["tailwind.*"]
-    args = ["--stdio"]
+    root_globs = [ "tailwind.*" ]
+    args = [ "--stdio" ]
     [tailwindcss-language-server.settings.tailwindCSS]
-    editor = {}
+    emmetCompletions = true
+    editor.quickSuggestions.strings = "on"
 }
 
 hook -group lsp-filetype-css global BufSetOption filetype=(?:css|less|scss) %{
@@ -34,16 +35,17 @@ hook -group lsp-filetype-css global BufSetOption filetype=(?:css|less|scss) %{
         # Documented options see
         # https://github.com/sublimelsp/LSP-css/blob/master/LSP-css.sublime-settings
         [vscode-css-language-server]
-        root_globs = ["package.json", ".git", ".hg"]
-        args = ["--stdio"]
+        root_globs = [ "package.json", ".git", ".hg" ]
+        args = [ "--stdio" ]
         settings_section = "_"
         [vscode-css-language-server.settings._]
         provideFormatter = true
-        handledSchemas = ["file"]
+        handledSchemas = [ "file" ]
         [vscode-css-language-server.settings]
         css.format.enable = true
         css.validProperties = []
         css.validate = true
+        css.lint.unknownAtRules = "ignore"
         scss.validProperties = []
         scss.format.enable = true
         scss.validate = true
@@ -59,8 +61,8 @@ hook -group lsp-filetype-css global BufSetOption filetype=(?:css|less|scss) %{
 hook -group lsp-filetype-fish global BufSetOption filetype=fish %{
     set-option buffer lsp_servers %{
         [fish-lsp]
-        root_globs = ["*.fish", "config.fish", ".git", ".hg"]
-        args = ["start"]
+        root_globs = [ "*.fish", "config.fish", ".git", ".hg" ]
+        args = [ "start" ]
     }
 }
 
@@ -69,8 +71,8 @@ hook -group lsp-filetype-html global BufSetOption filetype=html %{
         # Documented options see
         # https://github.com/sublimelsp/LSP-html/blob/master/LSP-html.sublime-settings
         [vscode-html-language-server]
-        root_globs = ["package.json", ".git", ".hg"]
-        args = ["--stdio"]
+        root_globs = [ "package.json", ".git", ".hg" ]
+        args = [ "--stdio" ]
         settings_section = "_"
         [vscode-html-language-server.settings._]
         provideFormatter = true
@@ -92,8 +94,8 @@ hook -group lsp-filetype-html global BufSetOption filetype=html %{
         # This is mainly a linter for HTML and to be used together with vscode-html-language-server
         # https://github.com/kristoff-it/superhtml
         [superhtml]
-        root_globs = ["package.json", ".git", ".hg"]
-        args = ["lsp"]
+        root_globs = [ "package.json", ".git", ".hg" ]
+        args = [ "lsp" ]
         %opt{lsp_server_biome}
         %opt{lsp_server_tailwind}
     }
@@ -102,17 +104,18 @@ hook -group lsp-filetype-html global BufSetOption filetype=html %{
 hook -group lsp-filetype-javascript global BufSetOption filetype=(?:javascript|typescript) %{
     set-option buffer lsp_servers %exp{
         [typescript-language-server]
-        root_globs = ["package.json", "tsconfig.json", "jsconfig.json", ".git", ".hg"]
-        args = ["--stdio"]
+        root_globs = [ "package.json", "tsconfig.json", "jsconfig.json", ".git", ".hg" ]
+        args = [ "--stdio" ]
         settings_section = "_"
         [typescript-language-server.settings._]
         quotePreference = "none"
         typescript.format.semicolons = "none"
         [vscode-eslint-language-server]
-        root_globs = [".eslintrc", ".eslintrc.json"]
-        args = ["--stdio"]
+        root_globs = [ ".eslintrc", ".eslintrc.json" ]
+        args = [ "--stdio" ]
         workaround_eslint = true
         [vscode-eslint-language-server.settings]
+        nodePath = ""
         codeActionsOnSave = { mode = "all", "source.fixAll.eslint" = true }
         format = { enable = true }
         quiet = false
@@ -131,44 +134,44 @@ hook -group lsp-filetype-javascript global BufSetOption filetype=(?:javascript|t
 hook -group lsp-filetype-markdown global BufSetOption filetype=markdown %{
     set-option buffer lsp_servers %{
         [marksman]
-        root_globs = [".marksman.toml"]
-        args = ["server"]
+        root_globs = [ ".marksman.toml" ]
+        args = [ "server" ]
     }
     # set-option buffer lsp_servers %{
     #     [zk]
-    #     root_globs = [".zk"]
-    #     args = ["lsp"]
+    #     root_globs = [ ".zk" ]
+    #     args = [ "lsp" ]
     # }
     # set-option buffer lsp_servers %{
     #     [markdown-oxide]
-    #     root_globs = ["logseq"]
+    #     root_globs = [ "logseq" ]
     # }
 }
 
 hook -group lsp-filetype-prisma global BufSetOption filetype=prisma %{
     set-option buffer lsp_servers %{
         [prisma-language-server]
-        root_globs = [".git", ".hg", "prisma"]
+        root_globs = [ ".git", ".hg", "prisma" ]
         command = "prisma-language-server"
-        args = ["--stdio"]
+        args = [ "--stdio" ]
     }
 }
 
 hook -group lsp-filetype-python global BufSetOption filetype=python %{
     set-option buffer lsp_servers %{
         [pylsp]
-        root_globs = ["requirements.txt", "setup.py", "pyproject.toml", ".git", ".hg"]
+        root_globs = [ "requirements.txt", "setup.py", "pyproject.toml", ".git", ".hg" ]
         settings_section = "_"
         [pylsp.settings._]
         # See https://github.com/python-lsp/python-lsp-server#configuration
-        # pylsp.configurationSources = ["flake8"]
+        # pylsp.configurationSources = [ "flake8" ]
         pylsp.plugins.jedi_completion.include_params = true
         [pyright-langserver]
-        root_globs = ["requirements.txt", "setup.py", "pyproject.toml", "pyrightconfig.json", ".git", ".hg"]
-        args = ["--stdio"]
+        root_globs = [ "requirements.txt", "setup.py", "pyproject.toml", "pyrightconfig.json", ".git", ".hg" ]
+        args = [ "--stdio" ]
         [ruff]
-        args = ["server", "--quiet"]
-        root_globs = ["requirements.txt", "setup.py", "pyproject.toml", ".git", ".hg"]
+        args = [ "server", "--quiet" ]
+        root_globs = [ "requirements.txt", "setup.py", "pyproject.toml", ".git", ".hg" ]
         settings_section = "_"
         [ruff.settings._.globalSettings]
         organizeImports = true
@@ -179,22 +182,22 @@ hook -group lsp-filetype-python global BufSetOption filetype=python %{
 hook -group lsp-filetype-ruby global BufSetOption filetype=ruby %{
     set-option buffer lsp_servers %{
         [solargraph]
-        root_globs = ["Gemfile"]
-        args = ["stdio"]
+        root_globs = [ "Gemfile" ]
+        args = [ "stdio" ]
         settings_section = "_"
         [solargraph.settings._]
         # See https://github.com/castwide/solargraph/blob/master/lib/solargraph/language_server/host.rb
         diagnostics = true
         [ruby-lsp]
-        root_globs = ["Gemfile"]
-        args = ["stdio"]
+        root_globs = [ "Gemfile" ]
+        args = [ "stdio" ]
     }
 }
 
 hook -group lsp-filetype-sql global BufSetOption filetype=sql %{
     set-option buffer lsp_servers %{
         [sqls]
-        roots = [".git", ".hg"]
+        roots = [ ".git", ".hg" ]
         command = "sqls"
     }
 }
@@ -202,7 +205,7 @@ hook -group lsp-filetype-sql global BufSetOption filetype=sql %{
 hook -group lsp-filetype-latex global BufSetOption filetype=latex %{
     set-option buffer lsp_servers %{
         [texlab]
-        root_globs = [".git", ".hg"]
+        root_globs = [ ".git", ".hg" ]
         [texlab.settings.texlab]
         # See https://github.com/latex-lsp/texlab/wiki/Configuration
         #
@@ -229,6 +232,6 @@ hook -group lsp-filetype-latex global BufSetOption filetype=latex %{
         chktex.onOpenAndSave = true
         chktex.onEdit = true
         build.onSave = true
-        build.args = ["-pdf", "-interaction=nonstopmode", "-auxdir=.aux", "-synctex=1", "%f"]
+        build.args = [ "-pdf", "-interaction=nonstopmode", "-auxdir=.aux", "-synctex=1", "%f" ]
     }
 }
