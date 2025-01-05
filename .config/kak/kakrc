@@ -715,14 +715,14 @@ declare-user-mode jump
   map global user j -docstring 'jump' %{:enter-user-mode jump <ret>}
   map global jump c     -docstring 'next spell'            %{:spell en_US ; spell-next <ret>}
   map global jump <a-c> -docstring 'prev spell'            %{:spell en_US ; spell-prev <ret>}
-  map global jump d     -docstring 'next diagnostic'       %{:lsp-diagnostics ; jump-next '\*diagnostics\*' <ret>}
-  map global jump <a-d> -docstring 'prev diagnostic'       %{:lsp-diagnostics ; jump-previous '\*diagnostics\*' <ret>}
+  map global jump d     -docstring 'next diagnostic'       %{:lsp-diagnostics ; jump-next *diagnostics* <ret>}
+  map global jump <a-d> -docstring 'prev diagnostic'       %{:lsp-diagnostics ; jump-previous *diagnostics* <ret>}
   map global jump f     -docstring 'next function'         %{:lsp-next-function <ret>}
   map global jump <a-f> -docstring 'prev function'         %{:lsp-previous-function <ret>}
   map global jump F     -docstring 'next function hover'   %{:lsp-next-hover-function <ret>}
   map global jump <a-F> -docstring 'prev function hover'   %{:lsp-previous-hover-function <ret>}
-  map global jump g     -docstring 'next grep'             %{:jump-next '\*grep\*' <ret>}
-  map global jump <a-g> -docstring 'prev grep'             %{:jump-previous '\*grep\*' <ret>}
+  map global jump g     -docstring 'next grep'             %{:jump-next *grep* <ret>}
+  map global jump <a-g> -docstring 'prev grep'             %{:jump-previous *grep* <ret>}
   map global jump l     -docstring 'next lint'             %{:lint ; lint-next-message <ret>}
   map global jump <a-l> -docstring 'prev lint'             %{:lint ; lint-previous-message <ret>}
   map global jump m     -docstring 'next man'              %{:man-link-next <ret>}
@@ -733,8 +733,8 @@ declare-user-mode jump
   map global jump <a-s> -docstring 'prev symbol'           %{:lsp-previous-symbol <ret>}
   map global jump S     -docstring 'next sym hover'        %{:lsp-next-hover-symbol <ret>}
   map global jump <a-S> -docstring 'prev sym hover'        %{:lsp-previous-hover-symbol <ret>}
-  map global jump t     -docstring 'next goto'             %{:jump-next '\*goto\*' <ret>}
-  map global jump <a-t> -docstring 'prev goto'             %{:jump-previous '\*goto\*' <ret>}
+  map global jump t     -docstring 'next goto'             %{:jump-next *goto* <ret>}
+  map global jump <a-t> -docstring 'prev goto'             %{:jump-previous *goto* <ret>}
 
 map global user l -docstring 'lsp' %{:enter-user-mode lsp <ret>}
   map global lsp <minus> -docstring 'disable'   %{:lsp-disable-window <ret>}
