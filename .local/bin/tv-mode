@@ -1,3 +1,0 @@
-#!/bin/sh
-mons -s &
-pactl set-card-profile 58 output:hdmi-stereo-extra1
