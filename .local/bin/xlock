@@ -1,11 +1,11 @@
 #!/bin/sh
+
 /usr/bin/xlock \
   -erasemode fizzle\
   -mode random\
   -modelist "\
     anemone,\
     ball,\
-    bevel,\
     blot,\
     bouboule,\
     bounce,\
