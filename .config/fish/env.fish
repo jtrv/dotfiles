@@ -42,6 +42,7 @@ set -gx GRADLE_USER_HOME   "$XDG_DATA_HOME"/gradle
 set -gx NIMBLE_DIR         "$XDG_DATA_HOME"/nimble
 set -gx NODE_REPL_HISTORY  "$XDG_DATA_HOME"/node_repl_history
 set -gx NVM_DIR            "$XDG_DATA_HOME"/nvm
+set -gx PASSWORD_STORE_DIR "$XDG_DATA_HOME"/pass
 set -gx RBENV_ROOT         "$XDG_DATA_HOME"/rbenv
 set -gx RUSTUP_HOME        "$XDG_DATA_HOME"/rustup
 set -gx VOLTA_HOME         "$XDG_DATA_HOME"/volta
