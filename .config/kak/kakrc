@@ -335,20 +335,38 @@ define-command grep-buffers -docstring '
 define-command yo -docstring '
   yo <query>: aichat utility wrapper
   Query LLM and stream the response to a FIFO buffer
+
+  Options:
+    -m, --model <MODEL>                  Select a LLM model
+    -r, --role <ROLE>                    Select a role
+    -s, --session [<SESSION>]            Start or join a session
+        --empty-session                  Ensure the session is empty
+        --save-session                   Ensure the new conversation is saved to the session
+    -a, --agent <AGENT>                  Start a agent
+        --agent-variable <NAME> <VALUE>  Set agent variables
+        --rag <RAG>                      Start a RAG
+    -e, --execute                        Execute commands in natural language
+    -c, --code                           Output code only
+    -f, --file <FILE>                    Include files with the message
+        --dry-run                        Display the message without sending it
+        --info                           Display information
+        --list-models                    List all available chat models
+        --list-roles                     List all roles
+        --list-sessions                  List all sessions
+        --list-agents                    List all agents
+        --list-rags                      List all RAGs
 ' -params 1.. %{
   kakpipe -w -- aichat %arg{@};
 }
 define-command yo-buffer -docstring '
   opens a *yo-prompt* buffer for writing prompts to pass to yo
-' %{
-  edit -scratch *yo-prompt*
-  set-option buffer filetype yo-prompt
-}
+' %{ edit -scratch *yo-prompt* ; set-option buffer filetype yo-prompt }
 define-command yo-buffer-write -docstring '
   send the *yo-prompt* buffer to yo
-' -hidden %{
+' -params 0.. %{
   buffer *yo-prompt*
-  execute-keys '%: yo %val{selection} <ret>'
+  execute-keys '%'
+  yo %arg{@} %val{selection}
 }
 hook global BufSetOption filetype=yo-prompt %{
   alias buffer write yo-buffer-write
