@@ -17,11 +17,12 @@ crabz -> https://github.com/rust-lang/crates.io-index
 dedoc -> https://github.com/rust-lang/crates.io-index
 fclones -> https://github.com/rust-lang/crates.io-index
 fish-manpage-completions -> https://github.com/rust-dc/fish-manpage-completions
-fls -> https://github.com/rust-lang/crates.io-index
+fls -> https://github.com/saethlin/fls
 gprepo -> https://github.com/jtrv/gprepo
 grug -> https://github.com/jtrv/grug
 handlr-regex -> https://github.com/rust-lang/crates.io-index
 hashgood -> https://github.com/thombles/hashgood
+hors -> https://github.com/rust-lang/crates.io-index
 httm -> https://github.com/rust-lang/crates.io-index
 huniq -> https://github.com/rust-lang/crates.io-index
 iching -> https://github.com/rust-lang/crates.io-index

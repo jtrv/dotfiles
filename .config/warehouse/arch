@@ -13,7 +13,6 @@ aria2
 aspell-en
 ast-firmware
 atuin
-auto-cpufreq
 aws-cli
 b3sum
 bacon
@@ -36,6 +35,7 @@ caffeine
 calibre
 calibre-plugin-dedrm
 calibre-plugin-goodreads
+capnet-assist
 cargo-audit
 cargo-binstall
 cargo-bloat
@@ -81,6 +81,7 @@ erdtree
 espanso-x11-bin
 exercism-bin
 exfat-utils
+expect
 eza
 fail2ban
 fclones
@@ -103,6 +104,7 @@ fuse-overlayfs
 fwupd
 gamemode
 gamescope
+geoclue
 geticons-git
 gibo
 gifsicle
@@ -121,6 +123,7 @@ gst-plugin-pipewire
 heroku-cli-bin
 htmlq
 hyperfine
+imagemagick
 ipinfo-cli-bin
 irqbalance
 iw
@@ -275,7 +278,6 @@ terraform
 terraform-ls
 tesseract
 texlab
-texlive-bibtexextra
 texlive-binextra
 texlive-fonts-fontawesome
 texlive-formatsextra
@@ -296,6 +298,7 @@ ttf-ibmplex-mono-nerd
 ttyper
 udict-bin
 udiskie
+ueberzugpp
 ufw
 umu-launcher
 ungoogled-chromium-xdg-bin
