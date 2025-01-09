@@ -84,6 +84,7 @@ erdtree
 espanso-x11-bin
 exercism-bin
 exfat-utils
+expect
 eza
 fail2ban
 fclones
@@ -208,6 +209,7 @@ pacman-cleanup-hook
 pandoc-bin
 papirus-folders-catppuccin-git
 paru
+pass
 pastel
 pay-respects-bin
 pbzip2

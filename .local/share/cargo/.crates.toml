@@ -24,7 +24,7 @@
 "dedoc 0.2.5 (registry+https://github.com/rust-lang/crates.io-index)" = ["dedoc"]
 "fclones 0.34.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["fclones"]
 "fish-manpage-completions 0.1.0 (git+https://github.com/rust-dc/fish-manpage-completions#d927605f1d2562e7f65c1d49d8b8ea5022733869)" = ["fish-manpage-completions"]
-"fls 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["fls"]
+"fls 0.1.0 (path+file:///home/sugimoto/repos/fls)" = ["fls"]
 "gprepo 0.1.0 (git+https://github.com/jtrv/gprepo#da6dba30256e17c97bc0e6f6530b727200809e0b)" = ["gprepo"]
 "grug 0.1.0 (git+https://github.com/jtrv/grug#bdc83b8316beb676cf5561c392e164a73cb11a74)" = ["grug"]
 "handlr-regex 0.12.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["handlr"]
