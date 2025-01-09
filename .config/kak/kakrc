@@ -167,7 +167,7 @@ define-command cat -docstring '
 
 define-command comment -docstring '(Un)Comment lines' %{
   try %{
-    execute-keys _
+    execute-keys '_'
     comment-block
   } catch comment-line
 }
@@ -244,7 +244,7 @@ define-command diff-buffers -docstring '
       sd -n 1 -- ''-{3} /tmp.*?$'' ''--- $1'' | \
       sd -n 1 -- ''\+{3} /tmp.*?$'' ''+++ $2'';
       rm $file1 $file2'
-    execute-keys !<ret>gk
+    execute-keys '!<ret>gk'
   "
 }}
 
