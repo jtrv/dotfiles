@@ -77,6 +77,8 @@ bundle-install-hook kak-ansi %{ make }
 bundle popup.kak https://github.com/enricozb/popup.kak
 bundle-install-hook popup.kak %{ cargo install --path . ; cargo clean }
 
+bundle kak-live-grep https://github.com/raiguard/kak-live-grep
+
 bundle-noload kak-tree-sitter https://git.sr.ht/~hadronized/kak-tree-sitter
 bundle-install-hook kak-tree-sitter %{ cargo binstall -y kak-tree-sitter ktsctl ; cargo clean }
 
