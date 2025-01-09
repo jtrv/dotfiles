@@ -79,16 +79,10 @@ bundle kak-ansi https://github.com/eraserhd/kak-ansi
 bundle-install-hook kak-ansi %{ make }
 
 bundle popup.kak https://github.com/enricozb/popup.kak
-bundle-install-hook popup.kak %{
-  cargo binstall -y kak-popup --git https://github.com/enricozb/popup.kak
-  cargo clean
-}
+bundle-install-hook popup.kak %{ cargo install --path . ; cargo clean }
 
 bundle-noload kak-tree-sitter https://git.sr.ht/~hadronized/kak-tree-sitter
-bundle-install-hook kak-tree-sitter %{
-  cargo binstall -y kak-tree-sitter ktsctl
-  cargo clean
-}
+bundle-install-hook kak-tree-sitter %{ cargo binstall -y kak-tree-sitter ktsctl ; cargo clean }
 
 bundle kakoune-auto-percent https://github.com/delapouite/kakoune-auto-percent
 
@@ -116,10 +110,7 @@ bundle kakpipe https://github.com/jtrv/kakpipe %{
   require-module "kakpipe"
   complete-command kakpipe shell
 }
-bundle-install-hook kakpipe %{
-  cargo binstall -y kakpipe --git https://github.com/jtrv/kakpipe
-  cargo clean
-}
+bundle-install-hook kakpipe %{ cargo install --path . ; cargo clean }
 
 bundle kakship https://github.com/eburghar/kakship %{
   require-module kakship
