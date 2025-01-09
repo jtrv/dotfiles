@@ -52,6 +52,7 @@ hook -group lsp-filetype-css global BufSetOption filetype=(?:css|less|scss) %{
         less.validProperties = []
         less.format.enable = true
         less.validate = true
+
         %opt{lsp_server_biome}
         %opt{lsp_server_tailwind}
     }
@@ -93,9 +94,11 @@ hook -group lsp-filetype-html global BufSetOption filetype=html %{
         javascript.validate.enable = true
         # This is mainly a linter for HTML and to be used together with vscode-html-language-server
         # https://github.com/kristoff-it/superhtml
+
         [superhtml]
         root_globs = [ "package.json", ".git", ".hg" ]
         args = [ "lsp" ]
+
         %opt{lsp_server_biome}
         %opt{lsp_server_tailwind}
     }
@@ -103,6 +106,7 @@ hook -group lsp-filetype-html global BufSetOption filetype=html %{
 
 hook -group lsp-filetype-javascript global BufSetOption filetype=(?:javascript|typescript) %{
     set-option buffer lsp_servers %exp{
+
         [typescript-language-server]
         root_globs = [ "package.json", "tsconfig.json", "jsconfig.json", ".git", ".hg" ]
         args = [ "--stdio" ]
@@ -114,6 +118,7 @@ hook -group lsp-filetype-javascript global BufSetOption filetype=(?:javascript|t
         root_globs = [ ".eslintrc", ".eslintrc.json" ]
         args = [ "--stdio" ]
         workaround_eslint = true
+
         [vscode-eslint-language-server.settings]
         nodePath = ""
         codeActionsOnSave = { mode = "all", "source.fixAll.eslint" = true }
@@ -126,6 +131,7 @@ hook -group lsp-filetype-javascript global BufSetOption filetype=(?:javascript|t
         problems = { shortenToSingleLine = false }
         codeAction.disableRuleComment = { enable = true, location = "separateLine" }
         codeAction.showDocumentation = { enable = true }
+
         %opt{lsp_server_biome}
         %opt{lsp_server_tailwind}
     }
@@ -137,11 +143,13 @@ hook -group lsp-filetype-markdown global BufSetOption filetype=markdown %{
         root_globs = [ ".marksman.toml" ]
         args = [ "server" ]
     }
+
     # set-option buffer lsp_servers %{
     #     [zk]
     #     root_globs = [ ".zk" ]
     #     args = [ "lsp" ]
     # }
+
     # set-option buffer lsp_servers %{
     #     [markdown-oxide]
     #     root_globs = [ "logseq" ]
@@ -166,9 +174,11 @@ hook -group lsp-filetype-python global BufSetOption filetype=python %{
         # See https://github.com/python-lsp/python-lsp-server#configuration
         # pylsp.configurationSources = [ "flake8" ]
         pylsp.plugins.jedi_completion.include_params = true
+
         [pyright-langserver]
         root_globs = [ "requirements.txt", "setup.py", "pyproject.toml", "pyrightconfig.json", ".git", ".hg" ]
         args = [ "--stdio" ]
+
         [ruff]
         args = [ "server", "--quiet" ]
         root_globs = [ "requirements.txt", "setup.py", "pyproject.toml", ".git", ".hg" ]
@@ -188,6 +198,7 @@ hook -group lsp-filetype-ruby global BufSetOption filetype=ruby %{
         [solargraph.settings._]
         # See https://github.com/castwide/solargraph/blob/master/lib/solargraph/language_server/host.rb
         diagnostics = true
+
         [ruby-lsp]
         root_globs = [ "Gemfile" ]
         args = [ "stdio" ]
