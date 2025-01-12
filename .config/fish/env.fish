@@ -1,59 +1,60 @@
 # XDG Base Directories
-set -gx XDG_CACHE_HOME    "$HOME"/.cache
-set -gx XDG_CONFIG_HOME   "$HOME"/.config
-set -gx XDG_DATA_HOME     "$HOME"/.local/share
-set -gx XDG_DESKTOP_DIR   "$HOME"/
-set -gx XDG_DOCUMENTS_DIR "$HOME"/documents
-set -gx XDG_DOWNLOAD_DIR  "$HOME"/downloads
-set -gx XDG_MUSIC_DIR     "$HOME"/media/music
-set -gx XDG_PICTURES_DIR  "$HOME"/media/pictures
-set -gx XDG_STATE_HOME    "$HOME"/.local/state
+set -gx XDG_CACHE_HOME    "$HOME/.cache"
+set -gx XDG_CONFIG_HOME   "$HOME/.config"
+set -gx XDG_DATA_HOME     "$HOME/.local/share"
+set -gx XDG_DESKTOP_DIR   "$HOME/"
+set -gx XDG_DOCUMENTS_DIR "$HOME/documents"
+set -gx XDG_DOWNLOAD_DIR  "$HOME/downloads"
+set -gx XDG_MUSIC_DIR     "$HOME/media/music"
+set -gx XDG_PICTURES_DIR  "$HOME/media/pictures"
+set -gx XDG_STATE_HOME    "$HOME/.local/state"
 
 # Cache
-set -gx BUNDLE_USER_CACHE "$XDG_CACHE_HOME"/bundle
-set -gx LESSHISTFILE      "$XDG_CACHE_HOME"/less/history
-set -gx TEXMFVAR          "$XDG_CACHE_HOME"/texlive/texmf-var
+set -gx BUNDLE_USER_CACHE "$XDG_CACHE_HOME/bundle"
+set -gx LESSHISTFILE      "$XDG_CACHE_HOME/less/history"
+set -gx TEXMFVAR          "$XDG_CACHE_HOME/texlive/texmf-var"
 
 # Config
-set -gx AWS_CONFIG_FILE             "$XDG_CONFIG_HOME"/aws/config
-set -gx AWS_SHARED_CREDENTIALS_FILE "$XDG_CONFIG_HOME"/aws/credentials
-set -gx BUNDLE_USER_CONFIG          "$XDG_CONFIG_HOME"/bundle
-set -gx DOTFILES                    "$XDG_CONFIG_HOME"/dotfiles
-set -gx GEMRC                       "$XDG_CONFIG_HOME"/gem/gemrc
-set -gx GTK2_RC_FILES               "$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
-set -gx JUPYTER_CONFIG_DIR          "$XDG_CONFIG_HOME"/jupyter
-set -gx NETRC                       "$XDG_CONFIG_HOME"/.netrc
-set -gx NPM_CONFIG_USERCONFIG       "$XDG_CONFIG_HOME"/npm/npmrc
-set -gx PARALLEL_HOME               "$XDG_CONFIG_HOME"/parallel
-set -gx PYTHONSTARTUP               "$XDG_CONFIG_HOME"/python/pythonrc
-set -gx XINITRC                     "$XDG_CONFIG_HOME"/X11/xinitrc
-set -gx _JAVA_OPTIONS -Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
+set -gx AWS_CONFIG_FILE             "$XDG_CONFIG_HOME/aws/config"
+set -gx AWS_SHARED_CREDENTIALS_FILE "$XDG_CONFIG_HOME/aws/credentials"
+set -gx BUNDLE_USER_CONFIG          "$XDG_CONFIG_HOME/bundle"
+set -gx DOTFILES                    "$XDG_CONFIG_HOME/dotfiles"
+set -gx GEMRC                       "$XDG_CONFIG_HOME/gem/gemrc"
+set -gx GTK2_RC_FILES               "$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
+set -gx JUPYTER_CONFIG_DIR          "$XDG_CONFIG_HOME/jupyter"
+set -gx NETRC                       "$XDG_CONFIG_HOME/.netrc"
+set -gx NPM_CONFIG_USERCONFIG       "$XDG_CONFIG_HOME/npm/npmrc"
+set -gx PARALLEL_HOME               "$XDG_CONFIG_HOME/parallel"
+set -gx PYTHONSTARTUP               "$XDG_CONFIG_HOME/python/pythonrc"
+set -gx XINITRC                     "$XDG_CONFIG_HOME/X11/xinitrc"
+set -gx _JAVA_OPTIONS -Djava.util.prefs.userRoot="$XDG_CONFIG_HOME/java"
 
 # Data
-set -gx ANDROID_HOME       "$XDG_DATA_HOME"/android
-set -gx BUNDLE_USER_PLUGIN "$XDG_DATA_HOME"/bundle
-set -gx BUN_INSTALL        "$XDG_DATA_HOME"/bun
-set -gx CARGO_HOME         "$XDG_DATA_HOME"/cargo
-set -gx DEDOC_HOME         "$XDG_DATA_HOME"/dedoc
-set -gx FORTUNE_DIR        "$XDG_DATA_HOME"/fortunes
-set -gx GNUPGHOME          "$XDG_DATA_HOME"/gnupg
-set -gx GOPATH             "$XDG_DATA_HOME"/go
-set -gx GRADLE_USER_HOME   "$XDG_DATA_HOME"/gradle
-set -gx NIMBLE_DIR         "$XDG_DATA_HOME"/nimble
-set -gx NODE_REPL_HISTORY  "$XDG_DATA_HOME"/node_repl_history
-set -gx NVM_DIR            "$XDG_DATA_HOME"/nvm
-set -gx PASSWORD_STORE_DIR "$XDG_DATA_HOME"/pass
-set -gx RBENV_ROOT         "$XDG_DATA_HOME"/rbenv
-set -gx RUSTUP_HOME        "$XDG_DATA_HOME"/rustup
-set -gx VOLTA_HOME         "$XDG_DATA_HOME"/volta
-set -gx WINEPREFIX         "$XDG_DATA_HOME"/wine
-set -gx W3M_DIR            "$XDG_DATA_HOME"/w3m
+set -gx ANDROID_HOME       "$XDG_DATA_HOME/android"
+set -gx BUNDLE_USER_PLUGIN "$XDG_DATA_HOME/bundle"
+set -gx BUN_INSTALL        "$XDG_DATA_HOME/bun"
+set -gx CARGO_HOME         "$XDG_DATA_HOME/cargo"
+set -gx DEDOC_HOME         "$XDG_DATA_HOME/dedoc"
+set -gx FORTUNE_DIR        "$XDG_DATA_HOME/fortunes"
+set -gx GEM_HOME           "$XDG_DATA_HOME/gem"
+set -gx GNUPGHOME          "$XDG_DATA_HOME/gnupg"
+set -gx GOPATH             "$XDG_DATA_HOME/go"
+set -gx GRADLE_USER_HOME   "$XDG_DATA_HOME/gradle"
+set -gx NIMBLE_DIR         "$XDG_DATA_HOME/nimble"
+set -gx NODE_REPL_HISTORY  "$XDG_DATA_HOME/node_repl_history"
+set -gx NVM_DIR            "$XDG_DATA_HOME/nvm"
+set -gx PASSWORD_STORE_DIR "$XDG_DATA_HOME/pass"
+set -gx RBENV_ROOT         "$XDG_DATA_HOME/rbenv"
+set -gx RUSTUP_HOME        "$XDG_DATA_HOME/rustup"
+set -gx VOLTA_HOME         "$XDG_DATA_HOME/volta"
+set -gx WINEPREFIX         "$XDG_DATA_HOME/wine"
+set -gx W3M_DIR            "$XDG_DATA_HOME/w3m"
 
 # Runtime
-set -gx XAUTHORITY "$XDG_RUNTIME_DIR"/Xauthority
+set -gx XAUTHORITY "$XDG_RUNTIME_DIR/Xauthority"
 
 # State
-set -gx HISTFILE "$XDG_STATE_HOME"/bash/history
+set -gx HISTFILE "$XDG_STATE_HOME/bash/history"
 
 # Misc
 set -gx ARGC_COMPLETIONS_ROOT       "$HOME/repos/argc-completions"
