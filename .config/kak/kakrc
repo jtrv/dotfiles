@@ -32,9 +32,9 @@ provide-module "kak_rainbower" %{
   bundle-install-hook kak-rainbower %{ g++ rc/rainbower.cpp -O2 -o rc/rainbower }
 }
 
-set-option global git_diff_add_char "█"
-set-option global git_diff_mod_char "█"
-set-option global git_diff_del_char "█"
+set-option global git_diff_add_char "▍"
+set-option global git_diff_mod_char "▍"
+set-option global git_diff_del_char "━"
 
 ###################### UTILITY ######################
 
