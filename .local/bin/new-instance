@@ -1,2 +1,2 @@
 #!/bin/sh
-alacritty --working-directory "$(xcwd)"
+alacritty msg create-window --working-directory "$(xcwd)"
