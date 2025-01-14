@@ -30,6 +30,7 @@ fi
 xrandr --output=virtual-1
 
 alacritty --daemon &           # alacritty daemon
+atuin daemon &                 # atuin daemon
 caffeine &                     # inhibit sleep w/ media
 /usr/lib/kdeconnectd &         # kdeconnect daemon
 pcmanfm --daemon-mode &        # file-manager daemon
