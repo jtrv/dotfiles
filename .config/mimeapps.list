@@ -4,6 +4,7 @@ audio/*=mpv.desktop;
 image/*=feh.desktop;
 inode/*=pcmanfm.desktop;
 model/stl=fstl.desktop;
+text/html=firefox.desktop;
 text/*=kakoune.desktop;
 video/*=mpv.desktop;
 x-scheme-handler/about=firefox.desktop;
