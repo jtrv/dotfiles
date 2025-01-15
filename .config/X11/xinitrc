@@ -29,6 +29,7 @@ fi
 
 xrandr --output=virtual-1
 
+alacritty --daemon &           # alacritty daemon
 caffeine &                     # inhibit sleep w/ media
 /usr/lib/kdeconnectd &         # kdeconnect daemon
 mons -a &                      # external display daemon
