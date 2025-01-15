@@ -57,6 +57,7 @@ set -gx XAUTHORITY "$XDG_RUNTIME_DIR/Xauthority"
 set -gx HISTFILE "$XDG_STATE_HOME/bash/history"
 
 # Misc
+set -gx ANTHROPIC_API_KEY           (secli get anthropic_api_key)
 set -gx ARGC_COMPLETIONS_ROOT       "$HOME/repos/argc-completions"
 set -gx ARGC_COMPLETIONS_PATH       "$ARGC_COMPLETIONS_ROOT/completions/linux:$ARGC_COMPLETIONS_ROOT/completions"
 set -gx ARGC_SCRIPTS                (ls -p -1 "$ARGC_COMPLETIONS_ROOT/completions/linux" "$ARGC_COMPLETIONS_ROOT/completions" | sed -n 's/\.sh$//p')
@@ -66,6 +67,7 @@ set -gx BEMOJI_PICKER_CMD           "dmenu -i -l 5 -g 5"
 set -gx BEMOJI_CLIP_CMD             "xclip -sel clip"
 set -gx BEMOJI_TYPE_CMD             "xdotool"
 set -gx BROWSER                     "firefox"
+set -gx CLAUDE_API_KEY              $ANTHROPIC_API_KEY # for aichat
 set -gx CONCEAL_FINDER              "skim"
 set -gx DELTA_PAGER                 "kak"
 set -gx EDITOR                      "kak"
