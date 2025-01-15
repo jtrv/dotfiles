@@ -1,4 +1,6 @@
 Xcursor.theme: catppuccin-mocha-light-cursors
+XLock.fontset:     -ibm-blexmono nerd font mono extralight-extralight-r-normal--17-120-100-100-m-0-iso8859-1
+XLock.planfontset: -ibm-blexmono nerd font mono extralight-extralight-r-normal--17-120-100-100-m-0-iso8859-1
 
 *background: #1E1E2E
 *foreground: #CDD6F4
