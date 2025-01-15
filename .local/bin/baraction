@@ -27,7 +27,7 @@ ram() {
 ssd() {
   icon=󰋊
   SSD=$(df -P /home | awk 'NR==2 {print int($5)}')
-  printf "%s%2d%%" "$icon" "$SSD"
+  printf "%s%3d%%" "$icon"  "$SSD"
 }
 
 bat() {
