@@ -1,0 +1,4 @@
+# https://mise.jdx.dev/registry.html
+[tools]
+cargo-binstall = "latest"
+usage = "latest"

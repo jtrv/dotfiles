@@ -6,8 +6,8 @@ source ~/.config/fish/env.fish
 
 argc --argc-completions fish $ARGC_SCRIPTS | source
 atuin init fish             | source
+mise activate fish          | source
 pay-respects fish --alias f | source
-rbenv init -                | source
 starship init fish          | source
 
 ######## KEY-BINDINGS ########
