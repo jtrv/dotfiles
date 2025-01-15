@@ -1,8 +1,13 @@
 #!/bin/sh
 
 /usr/bin/xlock \
-  -erasemode fizzle\
-  -mode random\
+  -erasemode fizzle \
+  -mode random \
+  -description \
+  -info " " \
+  -username " " \
+  -password " Enter Password" \
+  -validate "Validating..." \
   -modelist "\
     anemone,\
     ball,\
