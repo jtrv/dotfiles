@@ -4,7 +4,7 @@
 ################### INIT ###################
 
 source "%val{config}/bundle/kak-bundle/rc/kak-bundle.kak"
-bundle-noload kak-bundle https://github.com/jdugan6240/kak-bundle
+bundle-noload kak-bundle https://codeberg.org/jdugan6240/kak-bundle
 
 evaluate-commands %sh{ kak-lsp }
 source "%val{config}/lsp.kak"

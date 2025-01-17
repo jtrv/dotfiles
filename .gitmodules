@@ -9,4 +9,4 @@
 	url = https://github.com/mawww/kakoune
 [submodule "kak-bundle"]
 	path = .config/kak/bundle/kak-bundle
-	url = https://github.com/jdugan6240/kak-bundle
+	url = https://codeberg.org/jdugan6240/kak-bundle
