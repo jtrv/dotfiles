@@ -4,9 +4,9 @@ CONFIG_DIFF=$(mktemp).diff
 BRANCH=$(config status -bsu no | rg -o '(\w+)\.\.\.' -r '$1')
 
 if [ "$BRANCH" = "thiccpad" ]; then
-  config diff origin/morpheus > "$CONFIG_DIFF" "$@"
+  config diff origin/morpheus "$@" > "$CONFIG_DIFF"
 elif [ "$BRANCH" = "morpheus" ]; then
-  config diff origin/thiccpad > "$CONFIG_DIFF" "$@"
+  config diff origin/thiccpad "$@" > "$CONFIG_DIFF"
 fi
 
 "$EDITOR" "$CONFIG_DIFF"
