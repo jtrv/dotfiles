@@ -768,17 +768,8 @@ bundle kakoune-phantom-selection https://github.com/occivink/kakoune-phantom-sel
 map global user q -docstring 'qalc' %{:qalc <ret>}
 
 # select/edit surrounding chars and tags
-bundle kakoune-surround https://github.com/h-youhei/kakoune-surround %{
-  declare-user-mode surround
-  map global normal <'> -docstring 'surround' %{:enter-user-mode surround <ret>}
-  map global surround d -docstring 'delete'              %{:delete-surround <ret>}
-  map global surround i -docstring 'insert'              %{:surround <ret>}
-  map global surround r -docstring 'replace'             %{:change-surround <ret>}
-  map global surround s -docstring 'select'              %{:select-surround <ret>}
-  map global surround D -docstring 'delete tag'          %{:delete-surrounding-tag <ret>}
-  map global surround I -docstring 'surround with tag'   %{:surround-with-tag <ret>}
-  map global surround R -docstring 'replace tag'         %{:change-surrounding-tag <ret>}
-  map global surround S -docstring 'select tag'          %{:select-surrounding-tag <ret>}
+bundle Encapsul8 https://github.com/ElectricR/Encapsul8 %{
+  require-module encapsul8-load-defaults
 }
 
 # spelling and grammar checking
