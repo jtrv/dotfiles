@@ -46,6 +46,7 @@
 "macchina 6.4.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["macchina"]
 "magic-wormhole-cli 0.7.4 (registry+https://github.com/rust-lang/crates.io-index)" = ["wormhole-rs"]
 "markdown-oxide 0.24.0 (git+https://github.com/feel-ix-343/markdown-oxide#23f4d84fc64cc7626ecad44b7bf6fad2561cdcd3)" = ["markdown-oxide"]
+"mise 2025.1.7 (registry+https://github.com/rust-lang/crates.io-index)" = ["mise"]
 "pay-respects 0.6.8 (registry+https://github.com/rust-lang/crates.io-index)" = ["pay-respects"]
 "protonup-rs 0.8.5 (registry+https://github.com/rust-lang/crates.io-index)" = ["protonup-rs"]
 "rargs 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["rargs"]
