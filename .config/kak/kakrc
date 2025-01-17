@@ -126,6 +126,7 @@ bundle-noload skyspell https://github.com/your-tools/skyspell %{
 }
 
 bundle sudo-write.kak https://github.com/jtrv/sudo-write.kak %{
+  set-option global fprint_mode true
   alias global sw 'sudo-write'
   alias global swq 'sudo-write-quit'
 }
