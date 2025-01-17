@@ -314,4 +314,4 @@ ex=:\
 *.nix=:\
 "
 
-set PATH /home/sugimoto/.local/bin /home/sugimoto/.local/share/bun/bin /home/sugimoto/.local/share/cargo/bin /home/sugimoto/.local/share/go/bin /home/sugimoto/.local/share/nimble/bin /home/sugimoto/.local/share/npm/bin /home/sugimoto/.local/share/rbenv/shims /home/sugimoto/repos/kakoune/src/../libexec/kak /usr/local/sbin /usr/local/bin /usr/bin /usr/bin/site_perl /usr/bin/vendor_perl /usr/bin/core_perl $ARGC_COMPLETIONS_ROOT/bin
+set PATH /home/sugimoto/.local/bin /home/sugimoto/.local/share/bun/bin /home/sugimoto/.local/share/cargo/bin /home/sugimoto/.local/share/go/bin /home/sugimoto/.local/share/nimble/bin /home/sugimoto/.local/share/rbenv/shims /home/sugimoto/repos/kakoune/src/../libexec/kak /usr/local/sbin /usr/local/bin /usr/bin /usr/bin/site_perl /usr/bin/vendor_perl /usr/bin/core_perl $ARGC_COMPLETIONS_ROOT/bin
