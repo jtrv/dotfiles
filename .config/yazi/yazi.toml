@@ -134,8 +134,9 @@ prepend_previewers = [
   { mime = "application/x-tar",           run = "ouch" },
   { mime = "application/x-xz",            run = "ouch" },
   { mime = "application/*zip",            run = "ouch" },
-  { mime = "audio/*",                     run = "exifaudio" },
-  { mime = "text/csv",                    run = "miller" },
+  { mime = "application/subrip",          run = "mediainfo"},
+  { mime = "{image,audio,video}/*",       run = "mediainfo"},
+  { name = "*.ipynb",                     run = "nbpreview" },
   { name = "*.md",                        run = "glow" },
 ]
 

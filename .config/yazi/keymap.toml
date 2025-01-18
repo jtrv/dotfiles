@@ -3,6 +3,14 @@ prepend_keymap = [
   # bak
   { on = [ "B" ], run = 'shell "bak \"$@\" " --block --confirm', desc = "append '.bak' to filename" },
 
+  # chmod
+  { on = [ "c", "m" ], run = "plugin chmod", desc = "Chmod on selected files" },
+
+  # convert
+  { on  = [ "c", "j" ], run  = "plugin convert --args='--extension=jpg'", desc = "Convert image to JPG" },
+  { on  = [ "c", "p" ], run  = "plugin convert --args='--extension=png'", desc = "Convert image to PNG" },
+  { on  = [ "c", "w" ], run  = "plugin convert --args='--extension=webp'", desc = "Convert image to WEBP" },
+
   # diff
   { on = [ "<C-d>" ], run = "plugin diff", desc = "Diff the selected with the hovered file" },
 
@@ -39,6 +47,11 @@ prepend_keymap = [
 
   # ripdrag
   { on = [ "<C-k>" ], run = 'shell "ripdrag -xa \"$@\" 2>/dev/null &" --confirm', desc = "drag and drop selected items" },
+
+  # time-travel
+  { on = [ "z", "h" ], run = "plugin time-travel --args=prev", desc = "Go to previous snapshot" },
+  { on = [ "z", "l" ], run = "plugin time-travel --args=next", desc = "Go to next snapshot" },
+  { on = [ "z", "e" ], run = "plugin time-travel --args=exit", desc = "Exit browsing snapshots" },
 
   # trash
   { on = [ "t", "d" ], run = 'shell "conceal clean" --block --confirm', desc = "destroy relative trash items" },
