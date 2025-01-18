@@ -58,6 +58,36 @@ use = "ourongxing/fast-enter"
 rev = "1c4caeb"
 hash = "b209b5db91df69bdc6a4656cb8276cd9"
 
+[[plugin.deps]]
+use = "boydaihungst/mediainfo"
+rev = "ddfd5ec"
+hash = "30f1eb92543be9624503cb79d03dbd19"
+
+[[plugin.deps]]
+use = "kirasok/torrent-preview"
+rev = "c9e67df"
+hash = "f0d9a684da8e4ab9ccbcd255a97cf42b"
+
+[[plugin.deps]]
+use = "AnirudhG07/nbpreview"
+rev = "1d85745"
+hash = "d378328e5d0a1b9fb9f04ab3aade4575"
+
+[[plugin.deps]]
+use = "atareao/convert"
+rev = "ca88f17"
+hash = "cc6f6db11762ed3ee8c14c276e7cfb4b"
+
+[[plugin.deps]]
+use = "iynaix/time-travel"
+rev = "85baafd"
+hash = "653fca8253e8cc431e7b1ceacc53ccfc"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:chmod"
+rev = "e4aaf43"
+hash = "4c7e8fd0266eedee7b619d966bd2d025"
+
 [[flavor.deps]]
 use = "yazi-rs/flavors:catppuccin-mocha"
 rev = "78d1d19"
