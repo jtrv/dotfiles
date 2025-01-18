@@ -1,4 +1,3 @@
-require("archivemount"):setup()
 require("git"):setup()
 require("relative-motions"):setup({ show_numbers="relative" })
 require("session"):setup({ sync_yanked = true })
