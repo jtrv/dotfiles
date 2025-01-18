@@ -1,9 +1,5 @@
 [manager]
 prepend_keymap = [
-	# archivemount
-  { on   = [ "m", "a" ], run  = "plugin archivemount --args=mount", desc = "Mount selected archive" },
-  { on   = [ "m", "u" ], run  = "plugin archivemount --args=unmount", desc = "Unmount and save changes to original archive" },
-
   # bak
   { on = [ "B" ], run = 'shell "bak \"$@\" " --block --confirm', desc = "append '.bak' to filename" },
 
@@ -12,6 +8,9 @@ prepend_keymap = [
 
   # editor
   { on = [ "e" ], run = 'shell "$EDITOR \"$@\" " --block --confirm', desc = "Open selected files in $EDITOR" },
+
+  # fast-enter
+  { on = [ "l" ], run  = "plugin fast-enter", desc = "Enter the subfolder faster, or open the file directly" },
 
   # fg
   { on = [ "f", "c" ], run = "plugin fg", desc = "Find file by content" },
@@ -23,6 +22,9 @@ prepend_keymap = [
   # open with cmd
   { on = [ "o" ], run = "plugin open-with-cmd", desc = "Open with command" },
   { on = [ "O" ], run = "plugin open-with-cmd --args=block", desc = "Open with command in the terminal" },
+
+  # ouch compress
+  { on = ["C"], run = "plugin ouch --args=tgz", desc = "Compress with ouch" },
 
   # relative motions
   { on = [ "1" ], run = "plugin relative-motions --args=1", desc = "Move in relative steps" },

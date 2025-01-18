@@ -1,19 +1,64 @@
-[plugin]
-deps = [
-  { use = "dedukun/relative-motions", rev = "df97039" },
-  { use = "Ape/open-with-cmd", rev = "a80d1cf" },
-  { use = "Sonico98/exifaudio", rev = "d794614" },
-  { use = "lpnh/fg", rev = "9bba743" },
-  { use = "Reledia/glow", rev = "5ce76dc" },
-  { use = "ndtoan96/ouch", rev = "083d564" },
-  { use = "Rolv-Apneseth/starship", rev = "4053c8c" },
-  { use = "yazi-rs/plugins:diff", rev = "600614a" },
-  { use = "yazi-rs/plugins:git", rev = "600614a" },
-  { use = "Lil-Dank/lazygit", rev = "c82794f" },
-  { use = "AnirudhG07/archivemount", rev = "d4f3e6a" }
-]
+[[plugin.deps]]
+use = "dedukun/relative-motions"
+rev = "df97039"
+hash = "395940d2b22941e0acb1232579c9d4cf"
 
-[flavor]
-deps = [
-  { use = "yazi-rs/flavors:catppuccin-mocha", rev = "fc8eeaa" }
-]
+[[plugin.deps]]
+use = "Ape/open-with-cmd"
+rev = "a80d1cf"
+hash = "86e0312b01bc5762813c6c1d0517f073"
+
+[[plugin.deps]]
+use = "Sonico98/exifaudio"
+rev = "d794614"
+hash = "a8e15d3c21c02a5af41d46ed04778a02"
+
+[[plugin.deps]]
+use = "lpnh/fg"
+rev = "9bba743"
+hash = "5c395bf9b8ef3d4701ac9bdbc963c4c1"
+
+[[plugin.deps]]
+use = "Reledia/glow"
+rev = "5ce76dc"
+hash = "52e5f5c602962e7cbf874da28f52ba45"
+
+[[plugin.deps]]
+use = "ndtoan96/ouch"
+rev = "083d564"
+hash = "1e4c0ac1fca31a23412324710193358a"
+
+[[plugin.deps]]
+use = "Rolv-Apneseth/starship"
+rev = "4053c8c"
+hash = "3e56b7665569519e3fc54b02868627c4"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:diff"
+rev = "e4aaf43"
+hash = "284f6694e3b1a4afd686acf1052acd90"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:git"
+rev = "e4aaf43"
+hash = "e9cf1bfc03de7fee0f1d4260da0d1dfd"
+
+[[plugin.deps]]
+use = "Lil-Dank/lazygit"
+rev = "c82794f"
+hash = "2b0c33928986f126d5c5a4cac31a6b46"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:mount"
+rev = "e4aaf43"
+hash = "cf3f5c20e1b33048cb19bb1e0bba90ec"
+
+[[plugin.deps]]
+use = "ourongxing/fast-enter"
+rev = "1c4caeb"
+hash = "b209b5db91df69bdc6a4656cb8276cd9"
+
+[[flavor.deps]]
+use = "yazi-rs/flavors:catppuccin-mocha"
+rev = "78d1d19"
+hash = "407710c2af9621a8351453e637d6c870"
