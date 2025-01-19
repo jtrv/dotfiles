@@ -18,6 +18,7 @@ if status is-interactive
   bind '$' __history_previous_command_arguments # add '!$' functionality, req ./functions/__history_previous_command_arguments.fish
 
   bind \cr _atuin_search
+  bind \cs __ethp_commandline_toggle_sudo
 
 ######## ABBREVIATIONS ########
 
@@ -43,31 +44,29 @@ if status is-interactive
   alias fp      "sk --preview='bat --color=always {}'"
   alias glow    "glow -p"
   alias hn      "clx -an --no-less-verify"
-  alias j       "yazi"
-  alias jd      "lfcd"
   alias jls     "jless -r"
+  alias j       "yazi"
   alias la      "fls -al --color=always" # all files and dirs
   alias lc      "lazygit --git-dir='$DOTFILES' --work-tree='$HOME'" # lazygit for config files
   alias lg      "lazygit"
   alias lh      "eza -la --color=always --ignore-glob='[a-z]*|[A-Z]*|[0-9]*'" # hidden only
   alias ll      "eza -l --color=always --git" # long format
   alias lmk     "lemmeknow"
+  alias loc     "plocate"
   alias ls      "fls -l --color=always" # preferred listing
   alias lt      "erd -HIl --color=force" # tree listing
-  alias loc     "plocate"
-  alias lok     "xlock"
-  alias m       "qalc"
   alias mdc     "mdcat --columns=70"
-  alias mkdir   "mkdir -p"
+  alias mkd     "mkdir -p"
+  alias m       "qalc"
   alias nbg     "feh --randomize --bg-scale --no-fehbg ~/media/pictures/wallpapers/" # change bg
   alias o       "xdg-open"
   alias py      "python"
   alias q       "exit"
-  alias wh      "wormhole-rs"
-  alias thes    "thesauromatic"
   alias tf      "terraform"
+  alias thes    "thesauromatic"
   alias tv      "lobster"
   alias wget    "wget2 --hsts-file='$XDG_DATA_HOME/wget-hsts'"
+  alias wh      "wormhole-rs"
 
 end
 
