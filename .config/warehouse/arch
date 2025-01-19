@@ -29,6 +29,8 @@ betterdiscord-installer-bin
 bindtointerface
 binsider
 bitwarden
+blas-openblas
+blender
 bluez-utils
 bottom
 breeze-icons
@@ -64,6 +66,7 @@ colloid-catppuccin-theme-git
 colloid-cursors-git
 colloid-icon-theme-git
 cosign
+czkawka-cli
 dash
 devour
 discord
@@ -107,6 +110,7 @@ fuse-overlayfs
 fwupd
 gamemode
 gamescope
+gem
 geticons-git
 gibo
 gifsicle
@@ -117,6 +121,7 @@ git-delta
 github-cli
 glow
 gomuks
+google-chrome
 gopls
 gpg-tui
 gping
@@ -185,8 +190,6 @@ mpv-thumbfast-git
 mpv-uosc-git
 namcap
 needrestart
-networkmanager-dmenu-git
-networkmanager-iwd
 nfs-utils
 ngrep
 nim
@@ -257,6 +260,7 @@ rustscan
 sad
 samply
 sassc
+scheme-chez-symlink
 screenkey
 sd
 sdcv
@@ -343,8 +347,10 @@ xlockmore
 xorg-server
 xorg-xclipboard
 xorg-xev
+xorg-xfontsel
 xorg-xinit
 xorg-xinput
+xorg-xlsfonts
 xournalpp
 xsel
 xss-lock

@@ -2,13 +2,13 @@
 @fsouza/prettierd[0m[2m
 @nestjs/cli[0m[2m
 @prisma/language-server[0m[2m
-@sentry/cli[0m[2m
 @tailwindcss/language-server[0m[2m
 @typescript-eslint/eslint-plugin[0m[2m
 bash-language-server[0m[2m
 bun[0m[2m
 caniuse-lite[0m[2m
 depcheck[0m[2m
+dockerfile-language-server-nodejs[0m[2m
 emmet-cli[0m[2m
 eslint-plugin-prettier[0m[2m
 gitignore[0m[2m
@@ -22,6 +22,7 @@ purgecss[0m[2m
 stylelint_d[0m[2m
 svelte-language-server[0m[2m
 typescript-language-server[0m[2m
+vercel[0m[2m
 vscode-langservers-extracted[0m[2m
 webtorrent-mpv-hook[0m[2m
 yaml-language-server[0m[2m
