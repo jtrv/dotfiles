@@ -16,6 +16,7 @@ bind ! __history_previous_command             # add '!!' functionality, req ./fu
 bind '$' __history_previous_command_arguments # add '!$' functionality, req ./functions/__history_previous_command_arguments.fish
 
 bind \cr _atuin_search
+bind \cs __ethp_commandline_toggle_sudo
 
 ######## ABBREVIATIONS ########
 
@@ -62,10 +63,10 @@ alias nbg     "feh --randomize --bg-scale --no-fehbg ~/media/pictures/wallpapers
 alias o       "xdg-open"
 alias py      "python"
 alias q       "exit"
-alias wh      "wormhole-rs"
 alias thes    "thesauromatic"
 alias tf      "terraform"
 alias tv      "lobster"
+alias wh      "wormhole-rs"
 alias wget    "wget2 --hsts-file='$XDG_DATA_HOME/wget-hsts'"
 
 
