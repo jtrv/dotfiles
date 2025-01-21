@@ -18,7 +18,6 @@ cpz -> https://github.com/rust-lang/crates.io-index
 crabz -> https://github.com/rust-lang/crates.io-index
 dedoc -> https://github.com/rust-lang/crates.io-index
 dotenv-linter -> https://github.com/rust-lang/crates.io-index
-emplace -> https://github.com/rust-lang/crates.io-index
 fclones -> https://github.com/rust-lang/crates.io-index
 fish-manpage-completions -> https://github.com/rust-dc/fish-manpage-completions
 fls -> /home/sugimoto/repos/fls

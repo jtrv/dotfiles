@@ -25,7 +25,6 @@
 "crabz 0.10.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["crabz"]
 "dedoc 0.2.5 (registry+https://github.com/rust-lang/crates.io-index)" = ["dedoc"]
 "dotenv-linter 3.3.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["dotenv-linter"]
-"emplace 1.6.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["emplace"]
 "fclones 0.34.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["fclones"]
 "fish-manpage-completions 0.1.0 (git+https://github.com/rust-dc/fish-manpage-completions#d927605f1d2562e7f65c1d49d8b8ea5022733869)" = ["fish-manpage-completions"]
 "fls 0.1.0 (path+file:///home/sugimoto/repos/fls)" = ["fls"]

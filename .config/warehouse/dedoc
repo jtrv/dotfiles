@@ -1,6 +1,9 @@
+astro
 async
 axios
 bash
+browser_support_tables
+c
 cpp
 css
 d3~7
@@ -36,6 +39,8 @@ moment_timezone
 mongoose
 nextjs
 nginx
+nim
+nix
 node
 npm
 playwright
@@ -45,14 +50,17 @@ pug
 puppeteer
 python~3.13
 pytorch~1
+rails~8.0
 react
 react_bootstrap
 react_native
 react_router
+react~18
 redis
 redux
 requests
 requirejs
+ruby~3.3
 rust
 rxjs
 sass
@@ -66,4 +74,6 @@ underscore
 vite
 vitest
 web_extensions
+webpack~5
 yarn
+zig
