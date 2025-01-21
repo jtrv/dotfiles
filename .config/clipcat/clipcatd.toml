@@ -11,7 +11,7 @@ level = "INFO"
 # Enable watching X11/Wayland clipboard selection.
 enable_clipboard = true
 # Enable watching X11/Wayland primary selection.
-enable_primary = true
+enable_primary = false
 # Ignore clips which match with one of the X11 `TARGETS`.
 sensitive_x11_atoms = ["x-kde-passwordManagerHint"]
 # Ignore text clips which match with one of the regular expressions.
