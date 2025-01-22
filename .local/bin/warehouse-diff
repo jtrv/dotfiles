@@ -1,0 +1,6 @@
+#!/bin/sh
+WAREHOUSE="$XDG_CONFIG_HOME"/warehouse
+
+warehouse
+
+config diff "$WAREHOUSE"/*
