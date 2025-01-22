@@ -1,3 +1,5 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
 [aws]
 format = 'on [($profile )($region)$symbol]($style)'
 style = "bold yellow"
@@ -67,3 +69,10 @@ style = "dimmed green"
 disabled = false
 [kubernetes.context_aliases]
 "dev.local.cluster.k8s" = "dev"
+
+[custom.bartib]
+format = '[$output]($style) '
+style = "bold yellow"
+shell = [ "sh", "-s" ]
+command = "bartib current | awk 'NR==3 {gsub(/[[:space:]]+/, \" \"); print \"󰥔 \" $4 \" \" $5}'"
+when="bartib current | grep -q -v 'No Activity is currently running'"
