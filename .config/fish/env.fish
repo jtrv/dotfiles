@@ -31,6 +31,7 @@ set -gx _JAVA_OPTIONS -Djava.util.prefs.userRoot="$XDG_CONFIG_HOME/java"
 
 # Data
 set -gx ANDROID_HOME       "$XDG_DATA_HOME/android"
+set -gx BARTIB_FILE        "$XDG_DATA_HOME/bartib"
 set -gx BUNDLE_USER_PLUGIN "$XDG_DATA_HOME/bundle"
 set -gx BUN_INSTALL        "$XDG_DATA_HOME/bun"
 set -gx CARGO_HOME         "$XDG_DATA_HOME/cargo"
