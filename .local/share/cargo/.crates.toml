@@ -30,7 +30,6 @@
 "handlr-regex 0.12.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["handlr"]
 "hashgood 0.4.0 (git+https://github.com/thombles/hashgood#d1f32fc366d6f74183da55ea6e18624bf1b1e4b5)" = ["hashgood"]
 "hors 0.8.2 (registry+https://github.com/rust-lang/crates.io-index)" = ["hors"]
-"httm 0.44.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["httm"]
 "huniq 2.7.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["huniq"]
 "iching 0.5.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["iching"]
 "impala 0.2.4 (registry+https://github.com/rust-lang/crates.io-index)" = ["impala"]

@@ -21,10 +21,10 @@ base
 base-devel
 bat
 bemoji
-betterdiscord-installer-bin
 bindtointerface
 binsider
 bitwarden
+blender
 bluez-utils
 bottom
 breeze-icons
@@ -35,7 +35,6 @@ caffeine
 calibre
 calibre-plugin-dedrm
 calibre-plugin-goodreads
-capnet-assist
 cargo-audit
 cargo-binstall
 cargo-bloat
@@ -63,19 +62,21 @@ colloid-icon-theme-git
 cosign
 dash
 devour
-discord
+discord_arch_electron
 dmenu
 docker
 docker-compose
 docx2txt
 dosfstools
 downgrade
+droidcam
 dunst
 dust
 dwarfs
 dysk
 easyeffects
 efibootmgr
+electron
 epub-thumbnailer-git
 erdtree
 espanso-x11-bin
@@ -99,6 +100,7 @@ fisher
 flameshot-git
 flatpak
 fortune-mod
+fprintd
 fstl
 fuse-overlayfs
 fwupd
@@ -114,7 +116,9 @@ git
 git-delta
 github-cli
 glow
+gnome-keyring
 gomuks
+google-chrome
 gopls
 gpg-tui
 gping
@@ -181,8 +185,6 @@ mpv-thumbfast-git
 mpv-uosc-git
 namcap
 needrestart
-networkmanager-dmenu-git
-networkmanager-iwd
 nfs-utils
 ngrep
 nim
@@ -194,6 +196,7 @@ noto-fonts-extra
 npm
 ntfs-3g
 ntp
+nvtop
 odt2txt
 onefetch
 openssh
@@ -202,6 +205,7 @@ otf-font-awesome
 ouch
 oxipng
 pacman-cleanup-hook
+pam-fprint-grosshack
 pandoc-bin
 papirus-folders-catppuccin-git
 paru
@@ -244,7 +248,9 @@ revive
 ripgrep-all
 rkhunter
 rsync
+ruby
 ruby-build
+ruby-bundler
 rust-analyzer
 rustscan
 rustup
@@ -265,8 +271,10 @@ spectrwm
 speedtest++
 starship
 strace
+stremio
 superhtml
 syncthing
+systemd-resolvconf
 systeroid
 sysz
 tailspin
@@ -301,11 +309,11 @@ udiskie
 ueberzugpp
 ufw
 umu-launcher
-ungoogled-chromium-xdg-bin
 upd72020x-fw
 upx
 usql-bin
 uv
+vdpauinfo
 veracrypt
 vhs
 video2x
@@ -337,6 +345,7 @@ xorg-xclipboard
 xorg-xev
 xorg-xinit
 xorg-xinput
+xorg-xlsfonts
 xournalpp
 xsel
 xss-lock
