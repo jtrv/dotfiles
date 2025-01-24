@@ -23,7 +23,6 @@ bat
 bemoji
 bindtointerface
 binsider
-bitwarden
 blender
 bluez-utils
 bottom
@@ -60,6 +59,7 @@ colloid-catppuccin-theme-git
 colloid-cursors-git
 colloid-icon-theme-git
 cosign
+czkawka-cli
 dash
 devour
 discord_arch_electron
@@ -116,7 +116,6 @@ git
 git-delta
 github-cli
 glow
-gnome-keyring
 gomuks
 google-chrome
 gopls
