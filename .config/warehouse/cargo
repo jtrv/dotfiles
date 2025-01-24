@@ -1,6 +1,8 @@
 aichat -> https://github.com/rust-lang/crates.io-index
 archlinux-inputs-fsck -> https://github.com/rust-lang/crates.io-index
+atac -> https://github.com/rust-lang/crates.io-index
 attractorr -> https://github.com/rust-lang/crates.io-index
+bartib -> https://github.com/rust-lang/crates.io-index
 binsider -> https://github.com/rust-lang/crates.io-index
 cargo-binstall -> https://github.com/rust-lang/crates.io-index
 cargo-cache -> https://github.com/rust-lang/crates.io-index
@@ -15,6 +17,7 @@ conceal -> https://github.com/rust-lang/crates.io-index
 cpz -> https://github.com/rust-lang/crates.io-index
 crabz -> https://github.com/rust-lang/crates.io-index
 dedoc -> https://github.com/rust-lang/crates.io-index
+dotenv-linter -> https://github.com/rust-lang/crates.io-index
 fclones -> https://github.com/rust-lang/crates.io-index
 fish-manpage-completions -> https://github.com/rust-dc/fish-manpage-completions
 fls -> https://github.com/saethlin/fls
@@ -44,6 +47,7 @@ markdown-oxide -> https://github.com/feel-ix-343/markdown-oxide
 mise -> https://github.com/rust-lang/crates.io-index
 pay-respects -> https://github.com/rust-lang/crates.io-index
 protonup-rs -> https://github.com/rust-lang/crates.io-index
+qrtool -> https://github.com/rust-lang/crates.io-index
 rargs -> https://github.com/rust-lang/crates.io-index
 ripdrag -> https://github.com/rust-lang/crates.io-index
 rkak_easymotion -> /home/sugimoto/.config/kak/bundle/reasymotion
@@ -60,10 +64,12 @@ skyspell -> https://github.com/rust-lang/crates.io-index
 skyspell_kak -> https://github.com/rust-lang/crates.io-index
 sniffglue -> https://github.com/rust-lang/crates.io-index
 speedtest-rs -> https://github.com/rust-lang/crates.io-index
+suckit -> https://github.com/rust-lang/crates.io-index
 thesauromatic -> https://github.com/rust-lang/crates.io-index
 topgrade -> https://github.com/rust-lang/crates.io-index
 t-rec -> https://github.com/rust-lang/crates.io-index
 two_percent -> https://github.com/rust-lang/crates.io-index
 vopono -> https://github.com/rust-lang/crates.io-index
+work-break -> https://github.com/rust-lang/crates.io-index
 wthrr -> https://github.com/rust-lang/crates.io-index
 zet -> https://github.com/rust-lang/crates.io-index

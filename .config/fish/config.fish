@@ -51,6 +51,7 @@ if status is-interactive
   alias lg      "lazygit"
   alias lh      "eza -la --color=always --ignore-glob='[a-z]*|[A-Z]*|[0-9]*'" # hidden only
   alias ll      "eza -l --color=always --git" # long format
+  alias lmk     "lemmeknow"
   alias ls      "fls -l --color=always" # preferred listing
   alias lt      "erd -HIl --color=force" # tree listing
   alias loc     "plocate"
