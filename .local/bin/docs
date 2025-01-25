@@ -23,7 +23,7 @@ if [ $# -eq 2 ]; then
     sk --reverse --select-1 --query="$2" --preview "\
       echo {} |
       choose 0 |
-      dedoc -c ss -i '$docset' -o"
+      xargs dedoc -c ss -i '$docset' -o"
   )
 else
   entry=$(
