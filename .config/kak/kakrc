@@ -29,7 +29,7 @@ provide-module "number_toggle_kak" %{
 # rainbow delimiters + current scope
 provide-module "kak_rainbower" %{
   bundle kak-rainbower https://github.com/jtrv/kak-rainbower
-  bundle-install-hook kak-rainbower %{ g++ rc/rainbower.cpp -O2 -o rc/rainbower }
+  bundle-install-hook kak-rainbower %{ g++ ./rc/rainbower.cpp -O2 -o ./rc/rainbower }
 }
 
 set-option global git_diff_add_char "▍"
