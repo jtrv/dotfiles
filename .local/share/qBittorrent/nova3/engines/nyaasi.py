@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-# VERSION: 1.1
-# AUTHORS: Yun (chenzm39@gmail.com)
+#VERSION: 1.2
+#AUTHORS: Joost Bremmer (toost.b@gmail.com)
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -25,30 +25,42 @@ except ModuleNotFoundError:
 try:
     from novaprinter import prettyPrinter
     from helpers import retrieve_url
-    import requests
 except ModuleNotFoundError:
     pass
 
 
-class mikanani(object):
+class nyaasi(object):
     """Class used by qBittorrent to search for torrents."""
 
-    url = 'https://mikanani.me'
-    name = 'mikanani'
+    url = 'https://nyaa.si'
+    name = 'Nyaa.si'
 
+    # Whether to use magnet links or download torrent files ###################
+    #
+    # Set to 'True' to use magnet links, or 'False' to use torrent files
+    use_magent_links = True
+    #
     ###########################################################################
 
     # defines which search categories are supported by this search engine
     # and their corresponding id. Possible categories are:
     # 'all', 'movies', 'tv', 'music', 'games', 'anime', 'software', 'pictures',
     # 'books'
-    supported_categories = {'all': ''}
+    supported_categories = {
+            'all': '0_0',
+            'anime': '1_0',
+            'books': '3_0',
+            'music': '2_0',
+            'pictures': '5_0',
+            'software': '6_0',
+            'tv': '4_0',
+            'movies': '4_0'}
 
-    class mikananiParser(HTMLParser):
-        """Parses acg.rip browse page for search results and stores them."""
+    class NyaasiParser(HTMLParser):
+        """Parses Nyaa.si browse page for search results and stores them."""
 
-        def __init__(self, res, url):
-            """Construct a acgrip html parser.
+        def __init__(self, res, url, use_magnet=True):
+            """Construct a nyaasi html parser.
 
             Parameters:
             :param list res: a list to store the results in
@@ -63,10 +75,10 @@ class mikanani(object):
                 HTMLParser.__init__(self)
 
             self.engine_url = url
+            self.use_magnet_links = use_magnet
             self.results = res
             self.curr = None
             self.td_counter = -1
-            self.find_title = False
 
         def handle_starttag(self, tag, attr):
             """Tell the parser what to do with which tags."""
@@ -82,27 +94,31 @@ class mikanani(object):
             """Handle the opening of anchor tags."""
             params = dict(attr)
             # get torrent name
-            if 'class' in params and params['class'].startswith('magnet')\
-                    and 'target' in params:
-                self.find_title = True
-                hit = {'desc_link': self.engine_url + params['href']}
-                self.td_counter += 1
+            if 'title' in params and 'class' not in params \
+                    and params['href'].startswith('/view/'):
+                hit = {
+                        'name': params['title'],
+                        'desc_link': self.engine_url + params['href']}
                 if not self.curr:
                     hit['engine_url'] = self.engine_url
-                    hit['seeds'] = int(-1)
-                    hit['leech'] = int(-1)
                     self.curr = hit
             elif 'href' in params and self.curr:
                 # skip unrelated links
-                if not params['href'].endswith(".torrent"):
+                if not params['href'].startswith("magnet:?") and \
+                        not params['href'].endswith(".torrent"):
                     return
 
                 # check whether to use torrent files or magnet links,
                 # then search for a matching download link, and move on
-                if params['href'].endswith(".torrent"):
+                if not self.use_magnet_links and \
+                        params['href'].endswith(".torrent"):
                     self.curr['link'] = self.engine_url + params['href']
-            else:
-                pass
+                    self.td_counter += 1
+
+                elif params['href'].startswith("magnet:?") \
+                        and self.use_magnet_links:
+                    self.curr['link'] = params['href']
+                    self.td_counter += 1
 
         def start_td(self):
             """Handle the opening of a table cell tag."""
@@ -112,32 +128,36 @@ class mikanani(object):
 
             # Add the hit to the results,
             # then reset the counters for the next result
-            if self.td_counter >= 4:
+            if self.td_counter >= 5:
                 self.results.append(self.curr)
                 self.curr = None
                 self.td_counter = -1
-                self.find_title = False
-                self.span_counter = -1
 
         def handle_data(self, data):
             """Extract data about the torrent."""
             # These fields matter
-            if self.td_counter > -1\
-                    and self.td_counter <= 4:
-                # Catch the name
-                if self.find_title and self.td_counter == 0:
-                    self.curr['name'] = data.strip()
-                    self.find_title = False
+            if self.td_counter > 0 and self.td_counter <= 5:
                 # Catch the size
-                elif self.td_counter == 1:
+                if self.td_counter == 1:
                     self.curr['size'] = data.strip()
+                # Catch the seeds
+                elif self.td_counter == 3:
+                    try:
+                        self.curr['seeds'] = int(data.strip())
+                    except ValueError:
+                        self.curr['seeds'] = -1
+                # Catch the leechers
+                elif self.td_counter == 4:
+                    try:
+                        self.curr['leech'] = int(data.strip())
+                    except ValueError:
+                        self.curr['leech'] = -1
                 # The rest is not supported by prettyPrinter
                 else:
                     pass
 
     # DO NOT CHANGE the name and parameters of this function
     # This function will be the one called by nova2.py
-
     def search(self, what, cat='all'):
         """
         Retreive and parse engine search results by category and query.
@@ -147,39 +167,23 @@ class mikanani(object):
                      (e.g. "Ubuntu+Linux")
         :param cat:  the name of a search category, see supported_categories.
         """
-        url = self.url
+        url = str("{0}/?f=0&s=seeders&o=desc&c={1}&q={2}"
+                  .format(self.url,
+                          self.supported_categories.get(cat),
+                          what))
 
-        # print(url)
         hits = []
         page = 1
-        parser = self.mikananiParser(hits, self.url)
+        parser = self.NyaasiParser(hits, self.url, self.use_magent_links)
         while True:
-            requirement = f'{url}/Home/Search?page={page}&searchstr={what}&subgroupid={cat}'
-            # s = requests.Session()
-            # res = new_retrieve_url(requirement,s)
-            res = retrieve_url(requirement)
-            # print(res)
+            res = retrieve_url(url + "&p={}".format(page))
             parser.feed(res)
-            # print(hits)
             for each in hits:
                 prettyPrinter(each)
 
-            # if len(hits) < 30:
-            #     break
-            # del hits[:]
-            # page += 1
-            break
+            if len(hits) < 75:
+                break
+            del hits[:]
+            page += 1
 
         parser.close()
-
-
-def new_retrieve_url(url,s):
-    """ Return the content of the url page as a string """
-    user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
-    headers = {'User-Agent': user_agent}
-    s = requests.Session()
-    response = s.get(url, headers=headers)
-
-    dat = response.text
-    # return dat.encode('utf-8', 'replace')
-    return dat
