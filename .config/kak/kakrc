@@ -378,6 +378,17 @@ define-command npm -docstring '
   kakpipe -S -- npm %arg{@}
 }
 
+define-command pastel -docstring '
+  pastel [<arguments>]: pastel utility wrapper
+  Launch pastel with the given parameters inside kakoune
+' -params 0.. %{ evaluate-commands %sh{
+  if [ $# -eq 0 ]; then
+    echo "kakpipe -- unbuffer pastel color %val{selection}"
+  else
+    echo "kakpipe -- unbuffer pastel %arg{@}"
+  fi
+}}
+
 define-command pcsv -docstring '
   pcsv [<files>]: csv viewing utility
   Print the files (or buffile) using bat and columns
@@ -699,6 +710,7 @@ declare-user-mode case
 
 declare-user-mode dev
   map global user d -docstring 'dev' %{:enter-user-mode dev <ret>}
+  map global dev c -docstring 'color'        %{:pastel <ret>}
   map global dev f -docstring 'format'       %{:format <ret>}
   map global dev F -docstring 'format sel'   %{:format-selections <ret>}
   map global dev n -docstring 'next lint'    %{:lint-next-message <ret>}
