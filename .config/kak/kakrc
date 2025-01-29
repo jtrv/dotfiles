@@ -334,47 +334,6 @@ define-command grep-buffers -docstring '
   fi
 }}
 
-define-command yo -docstring '
-  yo <query>: aichat utility wrapper
-  Query LLM and stream the response to a FIFO buffer
-
-  Options:
-    -m, --model <MODEL>                  Select a LLM model
-    -r, --role <ROLE>                    Select a role
-    -s, --session [<SESSION>]            Start or join a session
-        --empty-session                  Ensure the session is empty
-        --save-session                   Ensure the new conversation is saved to the session
-    -a, --agent <AGENT>                  Start a agent
-        --agent-variable <NAME> <VALUE>  Set agent variables
-        --rag <RAG>                      Start a RAG
-    -e, --execute                        Execute commands in natural language
-    -c, --code                           Output code only
-    -f, --file <FILE>                    Include files with the message
-        --dry-run                        Display the message without sending it
-        --info                           Display information
-        --list-models                    List all available chat models
-        --list-roles                     List all roles
-        --list-sessions                  List all sessions
-        --list-agents                    List all agents
-        --list-rags                      List all RAGs
-' -params 1.. %{
-  kakpipe -w -- aichat %arg{@};
-}
-define-command yo-buffer -docstring '
-  opens a *yo-prompt* buffer for writing prompts to pass to yo
-' %{ edit -scratch *yo-prompt* ; set-option buffer filetype yo-prompt }
-define-command yo-buffer-write -docstring '
-  send the *yo-prompt* buffer to yo
-' -params 0.. %{
-  buffer *yo-prompt*
-  execute-keys '%'
-  yo %arg{@} %val{selection}
-}
-hook global BufSetOption filetype=yo-prompt %{
-  alias buffer write yo-buffer-write
-  alias buffer w yo-buffer-write
-}
-
 define-command hey -docstring '
   hey <query>: hors utility wrapper
   Get an answer from one of the popular Q&A platforms
@@ -412,21 +371,6 @@ define-command kelp -docstring '
   fi
 }}
 
-define-command qalc -docstring '
-  qalc <expression>: qalc utility wrapper
-  Replace the selection with the solution of the given expression where x=selection
-' -params 0.. %{ evaluate-commands %sh{
-  if [ $# -eq 0 ]; then
-    printf %s\\n "
-    prompt 'expression:' -init 'x' %{
-      execute-keys \"| xargs -I x qalc -t '%val{text}' <ret>\"
-    }"
-  else
-    printf %s\\n "
-      execute-keys \"| xargs -I x qalc -t '$*' <ret>\""
-  fi
-}}
-
 define-command npm -docstring '
   npm [<arguments>]: npm utility wrapper
   Launch npm with the given parameters inside kakoune
@@ -453,6 +397,21 @@ define-command ptsv -docstring '
     echo "kakpipe -- ptsv %val{buffile}"
   else
     echo "kakpipe -- ptsv %arg{@}"
+  fi
+}}
+
+define-command qalc -docstring '
+  qalc <expression>: qalc utility wrapper
+  Replace the selection with the solution of the given expression where x=selection
+' -params 0.. %{ evaluate-commands %sh{
+  if [ $# -eq 0 ]; then
+    printf %s\\n "
+    prompt 'expression:' -init 'x' %{
+      execute-keys \"| xargs -I x qalc -t '%val{text}' <ret>\"
+    }"
+  else
+    printf %s\\n "
+      execute-keys \"| xargs -I x qalc -t '$@' <ret>\""
   fi
 }}
 
@@ -539,15 +498,6 @@ define-command view-pdf -docstring '
 complete-command -menu view-pdf shell-script-candidates %{fd -I -e pdf}
 alias global pdf view-pdf
 
-define-command xargs -docstring '
-  xargs [<arguments>]: xargs utility wrapper
-  execute a command with each selection, selections are represented with {} as a placeholder
-' %{
-  prompt 'command:' %{
-    execute-keys "| xargs -I {} %val{text} <ret>"
-  }
-}
-
 define-command watchexec -docstring '
   watchexec [<args>] <command>: watchexec utility wrapper
   execute the given command when the current directory changes
@@ -561,6 +511,57 @@ define-command watchthis -docstring '
 ' -shell-completion -params 0.. %{
   kakpipe -- watchexec --watch %val{buffile} %arg{@}
 }
+
+define-command xargs -docstring '
+  xargs [<arguments>]: xargs utility wrapper
+  execute a command with each selection, selections are represented with {} as a placeholder
+' %{
+  prompt 'command:' %{
+    execute-keys "| xargs -I {} %val{text} <ret>"
+  }
+}
+
+define-command yo -docstring '
+  yo <query>: aichat utility wrapper
+  Query LLM and stream the response to a FIFO buffer
+
+  Options:
+    -m, --model <MODEL>                  Select a LLM model
+    -r, --role <ROLE>                    Select a role
+    -s, --session [<SESSION>]            Start or join a session
+        --empty-session                  Ensure the session is empty
+        --save-session                   Ensure the new conversation is saved to the session
+    -a, --agent <AGENT>                  Start a agent
+        --agent-variable <NAME> <VALUE>  Set agent variables
+        --rag <RAG>                      Start a RAG
+    -e, --execute                        Execute commands in natural language
+    -c, --code                           Output code only
+    -f, --file <FILE>                    Include files with the message
+        --dry-run                        Display the message without sending it
+        --info                           Display information
+        --list-models                    List all available chat models
+        --list-roles                     List all roles
+        --list-sessions                  List all sessions
+        --list-agents                    List all agents
+        --list-rags                      List all RAGs
+' -params 1.. %{
+  kakpipe -w -- aichat %arg{@};
+}
+define-command yo-buffer -docstring '
+  opens a *yo-prompt* buffer for writing prompts to pass to yo
+' %{ edit -scratch *yo-prompt* ; set-option buffer filetype yo-prompt }
+define-command yo-buffer-write -docstring '
+  send the *yo-prompt* buffer to yo
+' -params 0.. %{
+  buffer *yo-prompt*
+  execute-keys '%'
+  yo %arg{@} %val{selection}
+}
+hook global BufSetOption filetype=yo-prompt %{
+  alias buffer write yo-buffer-write
+  alias buffer w yo-buffer-write
+}
+
 
 define-command zeal -docstring '
   zeal <docset:api> : search for an api within a zeal docset
