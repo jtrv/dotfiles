@@ -8,5 +8,5 @@ WantedBy=default.target
 [Service]
 ExecStartPre=/bin/rm -f %t/clipcat/grpc.sock
 ExecStart=/usr/bin/clipcatd --no-daemon --replace
-Restart=on-failure
+Restart=always
 Type=simple
