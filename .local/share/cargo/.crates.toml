@@ -79,4 +79,5 @@
 "vopono 0.10.11 (registry+https://github.com/rust-lang/crates.io-index)" = ["vopono"]
 "work-break 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["work-break"]
 "wthrr 1.2.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["wthrr"]
+"xh 0.23.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["xh"]
 "zet 2.0.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["zet"]
