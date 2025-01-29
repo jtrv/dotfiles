@@ -74,5 +74,5 @@ disabled = false
 format = '[$output]($style) '
 style = "bold yellow"
 shell = [ "sh", "-s" ]
-command = "bartib current | awk 'NR==3 {gsub(/[[:space:]]+/, \" \"); print \"󰥔 \" $4 \" \" $5}'"
+command = "bartib current | awk 'NR==3 {$1=$2=\"\"; sub(/^[[:space:]]+/, \"\"); print \"󰥔 \" $0}'"
 when="bartib current | grep -q -v 'No Activity is currently running'"
