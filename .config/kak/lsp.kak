@@ -76,7 +76,7 @@ hook -group lsp-filetype-css global BufSetOption filetype=(?:css|less|scss) %{
         less.format.enable = true
         less.validate = true
 
-        %opt{lsp_server_biome}
+        #opt{lsp_server_biome}
         %opt{lsp_server_tailwind}
     }
 
@@ -122,7 +122,7 @@ hook -group lsp-filetype-html global BufSetOption filetype=html %{
         root_globs = [ "package.json", ".git", ".hg" ]
         args = [ "lsp" ]
 
-        %opt{lsp_server_biome}
+        #opt{lsp_server_biome}
         %opt{lsp_server_tailwind}
     }
 }
@@ -155,7 +155,7 @@ hook -group lsp-filetype-javascript global BufSetOption filetype=(?:javascript|t
         codeAction.disableRuleComment = { enable = true, location = "separateLine" }
         codeAction.showDocumentation = { enable = true }
 
-        %opt{lsp_server_biome}
+        #opt{lsp_server_biome}
         %opt{lsp_server_tailwind}
     }
 }
