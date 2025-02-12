@@ -1,0 +1,15 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentSize": 2,
+    "attributePosition": "multiline"
+  },
+  "linter": {
+    "enabled": true
+  },
+  "organizeImports": {
+    "enabled": true
+  }
+}
