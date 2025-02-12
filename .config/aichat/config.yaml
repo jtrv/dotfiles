@@ -190,10 +190,11 @@ clients:
     # api_key: xxx
 
   # See https://console.groq.com/docs/quickstart
-  # - type: openai-compatible
-    # name: groq
-    # api_base: https://api.groq.com/openai/v1
-    # api_key: xxx
+  - type: openai-compatible
+    name: groq
+    api_base: https://api.groq.com/openai/v1
+    models:
+      - name: deepseek-r1-distill-llama-70b
 
   # See https://github.com/jmorganca/ollama
   # - type: openai-compatible
@@ -268,10 +269,9 @@ clients:
     # api_key: xxx
 
   # See https://platform.deepseek.com/api-docs/
-  # - type: openai-compatible
-    # name: deepseek
-    # api_base: https://api.deepseek.com
-    # api_key: xxx
+  - type: openai-compatible
+    name: deepseek
+    api_base: https://api.deepseek.com/v1
 
   # See https://open.bigmodel.cn/dev/howuse/introduction
   # - type: openai-compatible
