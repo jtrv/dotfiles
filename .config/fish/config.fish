@@ -12,8 +12,10 @@ starship init fish          | source
 
 ######## KEY-BINDINGS ########
 
-bind ! __history_previous_command             # add '!!' functionality, req ./functions/__history_previous_command.fish
-bind '$' __history_previous_command_arguments # add '!$' functionality, req ./functions/__history_previous_command_arguments.fish
+  fzf_configure_bindings --variables=\e\cv
+
+  bind ! __history_previous_command             # add '!!' functionality, req ./functions/__history_previous_command.fish
+  bind '$' __history_previous_command_arguments # add '!$' functionality, req ./functions/__history_previous_command_arguments.fish
 
 bind \cr _atuin_search
 bind \cs __ethp_commandline_toggle_sudo
