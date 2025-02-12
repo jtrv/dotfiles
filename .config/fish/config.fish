@@ -14,6 +14,8 @@ if status is-interactive
 
 ######## KEY-BINDINGS ########
 
+  fzf_configure_bindings --variables=\e\cv
+
   bind ! __history_previous_command             # add '!!' functionality, req ./functions/__history_previous_command.fish
   bind '$' __history_previous_command_arguments # add '!$' functionality, req ./functions/__history_previous_command_arguments.fish
 
