@@ -70,8 +70,10 @@ set -gx BEMOJI_TYPE_CMD             "xdotool"
 set -gx BROWSER                     "firefox"
 set -gx CLAUDE_API_KEY              $ANTHROPIC_API_KEY # for aichat
 set -gx CONCEAL_FINDER              "skim"
+set -gx DEEPSEEK_API_KEY            (secli get deepseek_api_key)
 set -gx DELTA_PAGER                 "kak"
 set -gx EDITOR                      "kak"
+set -gx GROQ_API_KEY                (secli get groq_api_key)
 set -gx fish_greeting
 set -gx HORS_ENGINE                 "google"
 set -gx MANPAGER                    "kak -e 'set buffer filetype man'"
