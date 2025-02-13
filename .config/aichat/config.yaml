@@ -117,10 +117,8 @@ clients:
   #     connect_timeout: 10                           # Set timeout in seconds for connect to api
 
   # See https://platform.openai.com/docs/quickstart
-  # - type: openai
-    # api_base: https://api.openai.com/v1               # Optional
-    # api_key: xxx
-    # organization_id: org-xxx                          # Optional
+  - type: openai
+    api_base: https://api.openai.com/v1               # Optional
 
   # For any platform compatible with OpenAI's API
   # - type: openai-compatible
