@@ -27,7 +27,6 @@ max_concurrency = 10
 # Additional git repositories to pull
 repos = [
     "~/repos/*",
-    "~/study/*"
 ]
 
 # Arguments to pass Git when pulling Repositories
@@ -42,7 +41,7 @@ self_update = true
 
 # Custom commands
 [commands]
-"kakoune" = "pushd ~/repos/kakoune/; sudo make install; popd; kak -e 'bundle-install'"
+"kakoune" = "pushd ~/repos/kakoune/; sudo make install; popd; kak -e 'bundle-update'"
 "proton" = "protonup-rs -q"
 
 [linux]
