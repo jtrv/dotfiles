@@ -196,11 +196,11 @@ hook -group lsp-filetype-latex global BufSetOption filetype=latex %{
 
 
 hook -group lsp-filetype-markdown global BufSetOption filetype=markdown %{
-    set-option buffer lsp_servers %{
-        [marksman]
-        root_globs = [ ".marksman.toml" ]
-        args = [ "server" ]
-    }
+    # set-option buffer lsp_servers %{
+    #     [marksman]
+    #     root_globs = [ ".marksman.toml" ]
+    #     args = [ "server" ]
+    # }
 
     # set-option buffer lsp_servers %{
     #     [zk]
@@ -208,10 +208,10 @@ hook -group lsp-filetype-markdown global BufSetOption filetype=markdown %{
     #     args = [ "lsp" ]
     # }
 
-    # set-option buffer lsp_servers %{
-    #     [markdown-oxide]
-    #     root_globs = [ "logseq" ]
-    # }
+    set-option buffer lsp_servers %{
+        [markdown-oxide]
+        root_globs = [ "logseq" ]
+    }
 }
 
 hook -group lsp-filetype-prisma global BufSetOption filetype=prisma %{
