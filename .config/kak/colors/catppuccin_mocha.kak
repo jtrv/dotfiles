@@ -58,7 +58,7 @@ set-face global value         "%opt{peach}ff"
 set-face global variable      "%opt{text}ff"
 
 # Builtins
-set-face global BufferPadding      "%opt{background},%opt{background}"
+set-face global BufferPadding      "%opt{background},%opt{crust}ff"
 set-face global Default            "%opt{text}ff,%opt{background}"
 set-face global Error              "%opt{red}ff,%opt{base}ff"
 set-face global Information        "%opt{text}ff,%opt{surface1}ff+b"
