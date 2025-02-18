@@ -5,14 +5,17 @@ matches:
   - trigger: ",,idk"
     replace: "I don't know"
 
+  - trigger: ",,gtg"
+    replace: "This should be good to go, changing the status to"
+
   - trigger: ",,ins"
     replace: "I'm not sure, but I can find out"
 
   - trigger: ",,ijrn"
-    replace: "I'll join right now,"
+    replace: "I'll join right now"
 
   - trigger: ",,lmc"
-    replace: "Let me check..."
+    replace: "Let me check"
 
   - trigger: ",,np"
     replace: "No problem"
@@ -25,9 +28,6 @@ matches:
 
   - trigger: ",,yw"
     replace: "You're welcome"
-
-  - trigger: ",,mta"
-    replace: "This should be good to go now, moving this along."
 
 # DYNAMIC / SHELL
 
