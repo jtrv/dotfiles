@@ -20,17 +20,16 @@ bandwhich
 base
 base-devel
 bat
-bemoji
 bindtointerface
 binsider
 blender
+bluetui
 bluez-utils
 bottom
 breeze-icons
 btrfs-desktop-notification
 btrfs-progs
 cachyos-ananicy-rules-git
-caffeine
 calibre
 calibre-plugin-dedrm
 calibre-plugin-goodreads
@@ -116,6 +115,7 @@ git
 git-delta
 github-cli
 glow
+gnu-netcat
 gomuks
 google-chrome
 gopls
@@ -123,7 +123,11 @@ gpg-tui
 gping
 gron
 gst-plugin-pipewire
+gst-plugins-bad
+gst-plugins-good
+gst-plugins-ugly
 heroku-cli-bin
+hexedit
 htmlq
 hyperfine
 imagemagick
@@ -148,6 +152,11 @@ kvantum-theme-catppuccin-git
 lazygit
 lbzip2
 leanify-git
+lib32-gst-plugins-base
+lib32-gst-plugins-base-libs
+lib32-gst-plugins-good
+lib32-libpulse
+lib32-pipewire
 lib32-vulkan-radeon
 libpulse
 libqalculate
@@ -161,6 +170,7 @@ lobster-git
 logseq-desktop-bin
 lostfiles
 lrzip
+lsp-plugins
 lutris
 lxappearance
 lxqt-policykit
@@ -168,7 +178,6 @@ lychee
 lzop
 macchina
 man-db
-marksman
 mcomix
 mdcat
 mdp
@@ -184,6 +193,7 @@ mpv-thumbfast-git
 mpv-uosc-git
 namcap
 needrestart
+nerd-dictation-git
 nfs-utils
 ngrep
 nim
@@ -236,6 +246,7 @@ pueue
 pulsemixer
 pv
 qbittorrent
+qpdf
 qt5ct
 qt6ct
 rate-mirrors
@@ -246,6 +257,8 @@ rescrobbled-git
 revive
 ripgrep-all
 rkhunter
+rofi
+rofimoji
 rsync
 ruby
 ruby-build
@@ -292,7 +305,6 @@ texlive-humanities
 texlive-latexextra
 texlive-mathscience
 tidal-hifi-bin
-tidy
 tig
 timeshift
 tmux
@@ -317,6 +329,7 @@ veracrypt
 vhs
 video2x
 visidata
+vkd3d-proton-mingw-git
 vopono
 vulkan-radeon
 watchexec
@@ -325,6 +338,7 @@ webtorrent-mpv-hook
 wget2
 wikiman
 wine-mono
+wine-staging
 wireplumber
 wmctrl
 xarchiver
