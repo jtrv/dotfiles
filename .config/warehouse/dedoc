@@ -20,6 +20,7 @@ fastapi
 fish~3.7
 flask~3.0
 git
+gnu_make
 go
 html
 javascript
