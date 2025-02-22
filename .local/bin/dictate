@@ -1,0 +1,2 @@
+#!/bin/sh
+nerd-dictation begin --numbers-as-digits --numbers-use-separator --timeout 2
