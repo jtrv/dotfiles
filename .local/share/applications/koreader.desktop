@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=KOReader
+Comment=Ebook reader
+Exec=koreader %u
+Icon=koreader
+Terminal=false
+Type=Application
+Categories=Graphics;
+
+# Otherwise assumed incompatible with some mobile OSes
+# See <https://puri.sm/posts/specify-form-factors-in-your-librem-5-apps/>
+# and <https://github.com/koreader/koreader/issues/11118>
+X-Purism-FormFactor=Workstation;Mobile;
