@@ -1,0 +1,6 @@
+#!/bin/sh
+devour google-chrome-stable \
+    --incognito \
+    --auto-open-devtools-for-tabs \
+    --disable-extensions \
+    "$@"
