@@ -38,6 +38,7 @@ if status is-interactive
   alias cbin    "yes | cargo binstall"
   alias cdr     "cd (git rev-parse --show-toplevel)"
   alias cg      "config-grep"
+  alias claude  "SHELL=/bin/bash ~/.local/share/bun/bin/claude"
   alias clip    "clipcat-menu --finder='fzf'"
   alias cncr    "conceal restore"
   alias cols    "column -c '$COLUMNS'"
