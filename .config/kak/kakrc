@@ -6,7 +6,10 @@
 source "%val{config}/bundle/kak-bundle/rc/kak-bundle.kak"
 bundle-noload kak-bundle https://codeberg.org/jdugan6240/kak-bundle
 
-evaluate-commands %sh{ kak-lsp }
+evaluate-commands %sh{
+  kak-lsp
+  skyspell-kak init
+}
 source "%val{config}/lsp.kak"
 
 evaluate-commands %sh{ kak-tree-sitter -vvv -dks --init "$kak_session" }
