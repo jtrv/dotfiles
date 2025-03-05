@@ -656,7 +656,7 @@ map global normal ?     -docstring '(extend) search'             %{?(?i)}
 map global normal <a-?> -docstring '(extend) search backwards'   %{<a-?>(?i)}
 
 # (Un)Comment Lines
-map global normal <#> -docstring 'comment'   %{:comment <ret>}
+map global normal <#> -docstring 'comment'   %{:comment-line <ret>}
 
 # new windows
 map global normal <c-n> -docstring 'new client'     %{:new <ret>}
