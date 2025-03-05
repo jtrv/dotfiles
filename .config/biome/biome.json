@@ -1,7 +1,8 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "$schema": "../../.local/share/bun/install/global/node_modules/@biomejs/biome/configuration_schema.json",
   "formatter": {
     "enabled": true,
+    "formatWithErrors": true,
     "indentStyle": "space",
     "indentSize": 2,
     "attributePosition": "multiline"
