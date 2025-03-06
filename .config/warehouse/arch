@@ -36,6 +36,7 @@ bottom
 breeze-icons
 btrfs-desktop-notification
 btrfs-progs
+bun-bin
 cachyos-ananicy-rules-git
 caffeine
 calibre
@@ -69,7 +70,7 @@ cosign
 czkawka-cli
 dash
 devour
-discord
+discord_arch_electron
 dmenu
 docker
 docker-compose
@@ -82,6 +83,7 @@ dwarfs
 dysk
 easyeffects
 efibootmgr
+electron
 epub-thumbnailer-git
 erdtree
 espanso-x11-bin
@@ -173,7 +175,6 @@ lychee
 lzop
 macchina
 man-db
-marksman
 mcomix
 mdcat
 mdp
@@ -241,6 +242,7 @@ progress
 pueue
 pulsemixer
 pv
+python-capstone
 python-validity
 qbittorrent
 qt5ct
@@ -276,6 +278,7 @@ spectrwm
 speedtest++
 starship
 strace
+stremio
 superhtml
 syncthing
 systeroid
@@ -311,6 +314,7 @@ ttf-ibmplex-mono-nerd
 ttyper
 udict-bin
 udiskie
+ueberzugpp
 ufw
 umu-launcher
 ungoogled-chromium-xdg-bin
