@@ -73,6 +73,7 @@ set -gx CONCEAL_FINDER              "skim"
 set -gx DELTA_PAGER                 "kak"
 set -gx EDITOR                      "kak"
 set -gx fish_greeting
+set -gx GROQ_API_KEY                (secli get groq_api_key)
 set -gx HORS_ENGINE                 "google"
 set -gx MANPAGER                    "kak -e 'set buffer filetype man'"
 set -gx OPENAI_API_KEY              (secli get openai_api_key)
