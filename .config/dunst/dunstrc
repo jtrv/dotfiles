@@ -296,6 +296,8 @@
     mouse_middle_click = close_all
     mouse_right_click = close_current
 
+    script = ./sound.sh
+
 # Experimental features that may or may not work correctly. Do not expect them
 # to have a consistent behaviour across releases.
 [experimental]
