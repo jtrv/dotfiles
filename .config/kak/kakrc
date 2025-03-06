@@ -681,20 +681,8 @@ bundle kakoune-cd https://github.com/delapouite/kakoune-cd %{
   alias global pwd print-working-directory
 }
 
-declare-user-mode case
-  map global user c -docstring 'case' %{:enter-user-mode case <ret>}
-  map global case .  -docstring 'Sentence case'   %{<esc>| caser sentence <ret>}
-  map global case a  -docstring 'Ada_Case'        %{<esc>| caser ada <ret>}
-  map global case c  -docstring 'camelCase'       %{<esc>| caser camel <ret>}
-  map global case i  -docstring 'invert CASE'     %{<a-`>}
-  map global case k  -docstring 'kebab-case'      %{<esc>| caser kebab <ret>}
-  map global case l  -docstring 'lowercase'       %{`}
-  map global case p  -docstring 'PascalCase'      %{<esc>| caser pascal <ret>}
-  map global case S  -docstring 'SCREAMING_CASE'  %{<esc>| caser screaming <ret>}
-  map global case s  -docstring 'snake_case'      %{<esc>| caser snake <ret>}
-  map global case T  -docstring 'Title Case'      %{<esc>| caser title <ret>}
-  map global case t  -docstring 'Train-Case'      %{<esc>| caser train <ret>}
-  map global case u  -docstring 'UPPERCASE'       %{~}
+bundle caser https://github.com/jtrv/caser %{ require-module caser-recommended-bindings }
+bundle-install-hook caser %{ cargo install --path . ; cargo clean }
 
 declare-user-mode dev
   map global user d -docstring 'dev' %{:enter-user-mode dev <ret>}
