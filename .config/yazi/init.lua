@@ -1,5 +1,5 @@
 require("git"):setup()
-require("relative-motions"):setup({ show_numbers="relative" })
+require("relative-motions"):setup({ show_numbers="relative", show_motion = true })
 require("session"):setup({ sync_yanked = true })
 require("starship"):setup()
 
