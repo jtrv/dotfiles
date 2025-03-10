@@ -4,7 +4,7 @@
     "enabled": true,
     "formatWithErrors": true,
     "indentStyle": "space",
-    "indentSize": 2,
+    "indentWidth": 2,
     "attributePosition": "multiline"
   },
   "linter": {
