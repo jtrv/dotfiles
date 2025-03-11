@@ -12,6 +12,7 @@ archivemount
 aria2
 aspell-en
 ast-firmware
+atac
 atuin
 aws-cli
 b3sum
@@ -53,6 +54,7 @@ choose
 circumflex-bin
 clipcat
 cmake
+codename-goose-bin
 colloid-catppuccin-gtk-theme-git
 colloid-catppuccin-theme-git
 colloid-cursors-git
@@ -319,6 +321,7 @@ udict-bin
 udiskie
 ueberzugpp
 ufw
+ufw-docker-git
 umu-launcher
 upd72020x-fw
 upx
