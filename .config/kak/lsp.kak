@@ -27,16 +27,29 @@ declare-option -hidden str lsp_server_lsp_ai %{
   [lsp-ai.settings.memory]
   file_store = { }
 
-  [lsp-ai.settings.models.model1]
+  [lsp-ai.settings.models.r1]
+  type = "open_ai"
+  chat_endpoint = "https://api.deepseek.com/v1"
+  model = "deepseek-reasoner"
+  auth_token_env_var_name = "DEEPSEEK_API_KEY"
+  max_requests_per_second = 1
+
+  [[lsp-ai.settings.chat]]
+  trigger = "R1!"
+  action_display_name = "Chat"
+  model = "sonnet"
+
+  [lsp-ai.settings.models.sonnet]
   type = "anthropic"
   chat_endpoint = "https://api.anthropic.com/v1/messages"
   model = "claude-3-5-sonnet-20240620"
   auth_token_env_var_name = "ANTHROPIC_API_KEY"
+  max_requests_per_second = 1
 
   [[lsp-ai.settings.chat]]
-  trigger = "!C"
-  action_display_name = "Chat"
-  model = "model1"
+  trigger = "SO!"
+  action_display_name = "Sonnet"
+  model = "sonnet"
 
   [lsp-ai.settings.chat.parameters]
   max_context = 4096
@@ -53,6 +66,12 @@ declare-option -hidden str lsp_server_tailwind %{
   editor.quickSuggestions.strings = "on"
 }
 
+declare-option -hidden str lsp_server_unocss %{
+  [unocss-language-server]
+  root_globs = [ ".git", ".hg", "package.json" ]
+  args = [ "--stdio" ]
+}
+
 declare-option -hidden str lsp_server_emmet %{
   [emmet-language-server]
   root_globs = [ "package.json", ".git", ".hg" ]
@@ -62,7 +81,7 @@ declare-option -hidden str lsp_server_emmet %{
 set-option global lsp_server_biome %{
   [biome]
   root_globs = ["biome.json", "package.json", "tsconfig.json", "jsconfig.json", ".git", ".hg"]
-  args = ["lsp-proxy", "--config-path=~/.config/biome/biome.json"]
+  args = ["lsp-proxy"]
 }
 
 hook -group lsp-filetype-css global BufSetOption filetype=(?:css|less|scss) %{
@@ -91,9 +110,16 @@ hook -group lsp-filetype-css global BufSetOption filetype=(?:css|less|scss) %{
 
     %opt{lsp_server_biome}
     %opt{lsp_server_emmet}
-    %opt{lsp_server_tailwind}
+    %opt{lsp_server_unocss}
   }
 
+}
+
+hook -group lsp-filetype-dotenv global BufSetOption filetype=dotenv %{
+  set-option buffer lsp_servers %{
+    [dotenv-lsp]
+    root_globs = [ ".env", "*.env", ".git", ".hg" ]
+  }
 }
 
 hook -group lsp-filetype-fish global BufSetOption filetype=fish %{
@@ -119,19 +145,30 @@ hook -group lsp-filetype-html global BufSetOption filetype=html %{
     [vscode-html-language-server.settings]
     embeddedLanguages.css = true
     embeddedLanguages.javascript = true
+
     html.autoClosingTags = true
     html.format.enable = true
+    html.format.preserveNewLines = false
     html.mirrorCursorOnMatchingTag = true
     html.validate.scripts = true
     html.validate.styles = true
-    css.validate = true
+
     css.format.enable = true
+    css.format.preserveNewLines = false
+    css.format.spaceAroundSelectorSeparator = true
+    css.lint.boxModel = "ignore"
+    css.lint.compatibleVendorPrefixes = "ignore"
+    css.lint.duplicateProperties = "ignore"
+    css.lint.universalSelector = "ignore"
+    css.lint.zeroUnits = "ignore"
+    css.validate = true
     css.validProperties = []
+
     javascript.format.enable = true
     javascript.validate.enable = true
+
     # This is mainly a linter for HTML and to be used together with vscode-html-language-server
     # https://github.com/kristoff-it/superhtml
-
     [superhtml]
     root_globs = [ "package.json", ".git", ".hg" ]
     args = [ "lsp" ]
@@ -139,7 +176,7 @@ hook -group lsp-filetype-html global BufSetOption filetype=html %{
 
     %opt{lsp_server_biome}
     %opt{lsp_server_emmet}
-    %opt{lsp_server_tailwind}
+    %opt{lsp_server_unocss}
   }
 }
 
@@ -174,7 +211,7 @@ hook -group lsp-filetype-javascript global BufSetOption filetype=(?:javascript|t
 
     %opt{lsp_server_biome}
     %opt{lsp_server_emmet}
-    %opt{lsp_server_tailwind}
+    %opt{lsp_server_unocss}
   }
 }
 
