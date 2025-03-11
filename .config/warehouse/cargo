@@ -28,9 +28,9 @@ hashgood -> https://github.com/thombles/hashgood
 httm -> https://github.com/rust-lang/crates.io-index
 huniq -> https://github.com/rust-lang/crates.io-index
 iching -> https://github.com/rust-lang/crates.io-index
+impala -> https://github.com/rust-lang/crates.io-index
 jless -> https://github.com/rust-lang/crates.io-index
 jql -> https://github.com/rust-lang/crates.io-index
-just -> https://github.com/rust-lang/crates.io-index
 kak-lsp -> /home/sugimoto/.config/kak/bundle/kakoune-lsp
 kakpipe -> /home/sugimoto/.config/kak/bundle/kakpipe
 kak-popup -> https://github.com/rust-lang/crates.io-index
@@ -40,6 +40,7 @@ kanata -> https://github.com/rust-lang/crates.io-index
 ktsctl -> https://github.com/rust-lang/crates.io-index
 lemmeknow -> https://github.com/rust-lang/crates.io-index
 licensor -> https://github.com/rust-lang/crates.io-index
+lsp-ai -> https://github.com/rust-lang/crates.io-index
 macchina -> https://github.com/rust-lang/crates.io-index
 magic-wormhole-cli -> https://github.com/rust-lang/crates.io-index
 markdown-oxide -> https://github.com/feel-ix-343/markdown-oxide
@@ -47,7 +48,6 @@ mise -> https://github.com/rust-lang/crates.io-index
 pay-respects -> https://github.com/rust-lang/crates.io-index
 protonup-rs -> https://github.com/rust-lang/crates.io-index
 qrtool -> https://github.com/rust-lang/crates.io-index
-rargs -> https://github.com/rust-lang/crates.io-index
 ripdrag -> https://github.com/rust-lang/crates.io-index
 rkak_easymotion -> /home/sugimoto/.config/kak/bundle/reasymotion
 rmz -> https://github.com/rust-lang/crates.io-index
@@ -57,7 +57,6 @@ rustywind -> https://github.com/rust-lang/crates.io-index
 scaphandre -> https://github.com/rust-lang/crates.io-index
 sccache -> https://github.com/rust-lang/crates.io-index
 secli -> https://github.com/rust-lang/crates.io-index
-sendme -> https://github.com/rust-lang/crates.io-index
 skanuvaty -> https://github.com/Esc4iCEscEsc/skanuvaty
 skyspell -> https://github.com/rust-lang/crates.io-index
 skyspell_kak -> https://github.com/rust-lang/crates.io-index
