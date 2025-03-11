@@ -93,6 +93,13 @@ bundle kakoune-auto-percent https://github.com/delapouite/kakoune-auto-percent
 
 bundle kakoune-boost https://github.com/krobelus/kakoune-boost
 
+bundle kakoune-cd https://github.com/delapouite/kakoune-cd %{
+  alias global cdb change-directory-current-buffer
+  alias global cdr change-directory-project-root
+  alias global ecd edit-current-buffer-directory
+  alias global pwd print-working-directory
+}
+
 bundle-noload kakoune-lsp https://github.com/kakoune-lsp/kakoune-lsp
 bundle-install-hook kakoune-lsp %{ cargo install --path . ; cargo clean }
 
@@ -600,6 +607,11 @@ complete-command zeal shell-script-candidates %{
    sed "s/^/$kak_opt_filetype:/"
 }
 
+
+###################### KEYBINDINGS ######################
+
+map global user <space> : -docstring 'prompt'
+
 ###################### INSERT KEYS ######################
 
 map global insert <c-v> -docstring 'insert mode paste'   %{<esc>Pi}
@@ -666,8 +678,6 @@ map global normal <c-p> -docstring 'file-picker'    %{:file-picker <ret>}
 
 ################# MODES ##################
 
-map global user <space> : -docstring 'prompt'
-
 map global user a -docstring 'action' %{:lsp-code-actions <ret>}
 
 # navigate buffers
@@ -688,19 +698,11 @@ bundle kakoune-buffer-manager https://github.com/theowenyoung/kakoune-buffer-man
   map global buffers e -docstring 'buffer editor'   %{:buffer-manager <ret>}
 }
 
-bundle kakoune-cd https://github.com/delapouite/kakoune-cd %{
-  map global user C -docstring 'cd' %{:enter-user-mode cd <ret>}
-  alias global cdb change-directory-current-buffer
-  alias global cdr change-directory-project-root
-  alias global ecd edit-current-buffer-directory
-  alias global pwd print-working-directory
-}
-
 bundle caser https://github.com/jtrv/caser %{ require-module caser-recommended-bindings }
 bundle-install-hook caser %{ cargo install --path . ; cargo clean }
 
 declare-user-mode dev
-  map global user d -docstring 'dev' %{:enter-user-mode dev <ret>}
+  map global user d -docstring 'dev' %{: enter-user-mode dev <ret>}
   map global dev c -docstring 'color'        %{:pastel <ret>}
   map global dev f -docstring 'format'       %{:format <ret>}
   map global dev F -docstring 'format sel'   %{:format-selections <ret>}
@@ -720,7 +722,7 @@ map global user g -docstring 'grep' %{:grep }
 bundle reasymotion https://github.com/astaugaard/reasymotion
 bundle-install-hook reasymotion %{ cargo install --path . ; cargo clean }
 declare-user-mode hop
-  map global user h -docstring 'hop' %{:enter-user-mode hop <ret>}
+  map global user h -docstring 'hop' %{: enter-user-mode hop <ret>}
   map global hop f -docstring 'filter first'     %{:reasymotion-select-screen }
   map global hop l -docstring 'letter to word'   %{:reasymotion-on-letter-to-word <ret>}
   map global hop L -docstring 'letter to letter' %{:reasymotion-on-letter-to-letter <ret>}
@@ -731,7 +733,7 @@ declare-user-mode hop
 map global user i -docstring 'docs' %{:docs }
 
 declare-user-mode jump
-  map global user j -docstring 'jump' %{:enter-user-mode jump <ret>}
+  map global user j -docstring 'jump' %{: enter-user-mode jump <ret>}
   map global jump c     -docstring 'next spell'            %{:spell en_US ; spell-next <ret>}
   map global jump <a-c> -docstring 'prev spell'            %{:spell en_US ; spell-prev <ret>}
   map global jump d     -docstring 'next diagnostic'       %{:lsp-diagnostics ; jump-next *diagnostics* <ret>}
@@ -755,14 +757,14 @@ declare-user-mode jump
   map global jump t     -docstring 'next goto'             %{:jump-next *goto* <ret>}
   map global jump <a-t> -docstring 'prev goto'             %{:jump-previous *goto* <ret>}
 
-map global user l -docstring 'lsp' %{:enter-user-mode lsp <ret>}
+map global user l -docstring 'lsp' %{: enter-user-mode lsp <ret>}
   map global lsp <minus> -docstring 'disable'   %{:lsp-disable-window <ret>}
   map global lsp <plus>  -docstring 'enable'    %{:lsp-enable-window <ret>}
 
 # edit/extend/trim selections one by one
 bundle kakoune-phantom-selection https://github.com/occivink/kakoune-phantom-selection %{
   declare-user-mode phantom
-  map global user p -docstring 'phantom' %{:enter-user-mode phantom <ret>}
+  map global user p -docstring 'phantom' %{: enter-user-mode phantom <ret>}
   map global phantom a -docstring 'add'        %{:phantom-selection-add-selection <ret>}
   map global phantom c -docstring 'clear'      %{:phantom-selection-select-all; phantom-selection-clear <ret>}
   map global phantom n -docstring 'next'       %{:phantom-selection-iterate-next <ret>}
@@ -778,7 +780,7 @@ bundle Encapsul8 https://github.com/ElectricR/Encapsul8 %{
 
 # spelling and grammar checking
 declare-user-mode spell
-  map global user s -docstring 'spell' %{:enter-user-mode spell <ret>}
+  map global user s -docstring 'spell' %{: enter-user-mode spell <ret>}
   map global spell e -docstring 'enable'     %{:skyspell-enable en_US <ret>}
   map global spell d -docstring 'disable'    %{:skyspell-disable <ret>}
   map global spell l -docstring 'list'       %{:skyspell-list <ret>}
@@ -790,7 +792,7 @@ map global user S -docstring 'seq' %{:seq }
 
 provide-module "ui" %{
   bundle ui.kak https://github.com/kkga/ui.kak %{
-    map global user u -docstring 'ui' %{:enter-user-mode ui <ret>}
+    map global user u -docstring 'ui' %{: enter-user-mode ui <ret>}
     set-option global ui_wrap_flags -width 100 -word -indent -marker ~~
     set-face global TrailingSpace default,red
 
