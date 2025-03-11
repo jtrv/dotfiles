@@ -911,5 +911,7 @@ hook global WinSetOption filetype=typescript    %{ source '~/.config/kak/context
 hook global WinSetOption filetype=toml          %{ source '~/.config/kak/contexts/toml.kak'        }
 hook global WinSetOption filetype=yaml          %{ source '~/.config/kak/contexts/yaml.kak'        }
 
-hook global WinSetOption current_bufname=\.env$         %{ source '~/.config/kak/contexts/env.kak'    }
-hook global WinSetOption current_bufname=.*?\.prisma$   %{ source '~/.config/kak/contexts/prisma.kak' }
+hook global WinSetOption current_bufname=\.env$         %{ set-option buffer filetype env;    source '~/.config/kak/contexts/env.kak' }
+hook global WinSetOption current_bufname=.*\.grep$      %{ set-option buffer filetype grep;   source '~/.config/kak/contexts/grep.kak' }
+hook global WinSetOption current_bufname=.*?\.prisma$   %{ set-option buffer filetype prisma; source '~/.config/kak/contexts/prisma.kak' }
+
