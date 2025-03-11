@@ -41,6 +41,7 @@ self_update = true
 
 # Custom commands
 [commands]
+"config submodules" = "config submodule update"
 "kakoune" = "pushd ~/repos/kakoune/; sudo make install; popd; kak -e 'bundle-update'"
 "proton" = "protonup-rs -q"
 
