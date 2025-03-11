@@ -2,19 +2,31 @@
   detachedHead = false
 [branch]
   sort = -committerdate
+[column]
+  ui = auto
 [commit]
   template = ~/.config/git/message
   verbose = true
 [core]
   autocrlf = input
   editor = kak
+  fsmonitor = true
   pager = delta
-[credential]
-  helper = store
+  untrackedCache = true
 [diff]
   algorithm = histogram
   colorMoved = default
+  mnemonicPrefix = true
+  renames = true
   submodule = log
+[fetch]
+  all = true
+[help]
+  autocorrect = prompt
+[includeIf "gitdir:~/"]
+  path = ~/.config/git/personal
+[includeIf "gitdir:~/work/"]
+  path = ~/.config/git/work
 [init]
   defaultBranch = main
 [interactive]
@@ -23,16 +35,31 @@
   conflictstyle = zdiff3
 [push]
   autoSetupRemote = true
+  default = simple
+  followTags = true
+[rebase]
+  autoSquash = true
+  autoStash = true
+  updateRefs = true
 [rerere]
   enabled = true
+  autoupdate = true
 [status]
   submoduleSummary = true
 [submodule]
   recurse = true
-[user]
-  email = 46337843+jtrv@users.noreply.github.com
-  name = jtrv
-  signingkey = A677F1929C2B08D2
+[tag]
+  sort = version:refname
+
+[credential]
+  helper = store
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+
 
 [delta "catppuccin-mocha"]
   blame-palette = "#1e1e2e #181825 #11111b #313244 #45475a"
@@ -65,11 +92,3 @@
   features = catppuccin-mocha zebra-dark
   map-styles = "bold purple => syntax #443c5b, bold cyan => syntax #374858"
   true-color = always
-
-[credential "https://github.com"]
-  helper = 
-  helper = !/usr/bin/gh auth git-credential
-
-[credential "https://gist.github.com"]
-  helper = 
-  helper = !/usr/bin/gh auth git-credential
