@@ -1,6 +1,5 @@
 aichat -> https://github.com/rust-lang/crates.io-index
 archlinux-inputs-fsck -> https://github.com/rust-lang/crates.io-index
-attractorr -> https://github.com/rust-lang/crates.io-index
 bartib -> https://github.com/rust-lang/crates.io-index
 binsider -> https://github.com/rust-lang/crates.io-index
 cargo-binstall -> https://github.com/rust-lang/crates.io-index
@@ -27,10 +26,7 @@ hashgood -> https://github.com/thombles/hashgood
 hors -> https://github.com/rust-lang/crates.io-index
 huniq -> https://github.com/rust-lang/crates.io-index
 iching -> https://github.com/rust-lang/crates.io-index
-impala -> https://github.com/rust-lang/crates.io-index
 jless -> https://github.com/rust-lang/crates.io-index
-jql -> https://github.com/rust-lang/crates.io-index
-just -> https://github.com/rust-lang/crates.io-index
 kak-lsp -> /home/sugimoto/.config/kak/bundle/kakoune-lsp
 kakpipe -> /home/sugimoto/.config/kak/bundle/kakpipe
 kak-popup -> /home/sugimoto/.config/kak/bundle/popup.kak
@@ -47,7 +43,6 @@ mise -> https://github.com/rust-lang/crates.io-index
 pay-respects -> https://github.com/rust-lang/crates.io-index
 protonup-rs -> https://github.com/rust-lang/crates.io-index
 qrtool -> https://github.com/rust-lang/crates.io-index
-rargs -> https://github.com/rust-lang/crates.io-index
 ripdrag -> https://github.com/rust-lang/crates.io-index
 rkak_easymotion -> /home/sugimoto/.config/kak/bundle/reasymotion
 rmz -> https://github.com/rust-lang/crates.io-index
@@ -57,6 +52,7 @@ rustywind -> https://github.com/rust-lang/crates.io-index
 scaphandre -> https://github.com/rust-lang/crates.io-index
 sccache -> https://github.com/rust-lang/crates.io-index
 secli -> https://github.com/rust-lang/crates.io-index
+see-cat -> https://github.com/rust-lang/crates.io-index
 sendme -> https://github.com/rust-lang/crates.io-index
 skanuvaty -> https://github.com/Esc4iCEscEsc/skanuvaty
 skyspell -> https://github.com/rust-lang/crates.io-index

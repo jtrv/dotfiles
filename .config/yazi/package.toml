@@ -10,8 +10,8 @@ hash = "86e0312b01bc5762813c6c1d0517f073"
 
 [[plugin.deps]]
 use = "Sonico98/exifaudio"
-rev = "de526f3"
-hash = "c2a8633171355b6e482a96a739a446c1"
+rev = "7ff7141"
+hash = "666ccba55119fba4c25b8ad354b2855c"
 
 [[plugin.deps]]
 use = "lpnh/fg"
@@ -35,13 +35,13 @@ hash = "5614c46d5de76623c283d415bfac8025"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:diff"
-rev = "a1b678d"
+rev = "92f78dc"
 hash = "7a08e303167d5b655c06da6d570f0333"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:git"
-rev = "a1b678d"
-hash = "bcbf72738d4b7fb9a03cac84465b9ba4"
+rev = "92f78dc"
+hash = "806cb2842b64e976ba2c65a3e3724518"
 
 [[plugin.deps]]
 use = "Lil-Dank/lazygit"
@@ -50,18 +50,13 @@ hash = "2b0c33928986f126d5c5a4cac31a6b46"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:mount"
-rev = "a1b678d"
+rev = "92f78dc"
 hash = "dd97eede8e20e59cd2604e8006e470e2"
 
 [[plugin.deps]]
-use = "ourongxing/fast-enter"
-rev = "1c4caeb"
-hash = "b209b5db91df69bdc6a4656cb8276cd9"
-
-[[plugin.deps]]
 use = "boydaihungst/mediainfo"
-rev = "f565c5a"
-hash = "15d0dbb4e9ba84eb1f2dbb8e9e249bf6"
+rev = "447fe95"
+hash = "dcaebc8bc261206f6b59e2c67464af5"
 
 [[plugin.deps]]
 use = "kirasok/torrent-preview"
@@ -85,10 +80,15 @@ hash = "69967963fba96295a07b68354fc91ea9"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:chmod"
-rev = "a1b678d"
+rev = "92f78dc"
 hash = "2f1053f89d1a301a648ab181d0948e38"
+
+[[plugin.deps]]
+use = "dawsers/fuse-archive"
+rev = "a58327c"
+hash = "6a6d24880ce7666048fb81ad758c48d3"
 
 [[flavor.deps]]
 use = "yazi-rs/flavors:catppuccin-mocha"
-rev = "c023460"
+rev = "b929df6"
 hash = "2ac87e1b3a61f5887472899e86535d29"
