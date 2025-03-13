@@ -1,5 +1,5 @@
 [Unit]
-Description=Kanata keyboard remapper
+Description=Kanata for keychron k7
 Documentation=https://github.com/jtroo/kanata
 
 [Service]
