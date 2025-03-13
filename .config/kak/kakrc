@@ -790,6 +790,8 @@ declare-user-mode spell
 
 map global user S -docstring 'seq' %{:seq }
 
+map global user t -docstring 'tree' %{: enter-user-mode tree-sitter <ret>}
+
 provide-module "ui" %{
   bundle ui.kak https://github.com/kkga/ui.kak %{
     map global user u -docstring 'ui' %{: enter-user-mode ui <ret>}
