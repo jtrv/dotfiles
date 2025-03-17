@@ -9,9 +9,12 @@ cpp
 csharp
 css
 diff
+elixir
 fish
 git-commit
+glsl
 go
+haskell
 html
 hyprlang
 ini
@@ -19,8 +22,11 @@ java
 javascript
 json
 jsx
+julia
+koka
 kotlin
 latex
+llvm
 make
 markdown
 markdown.inline
@@ -28,6 +34,7 @@ nim
 nix
 nu
 prisma
+purescript
 python
 ruby
 rust

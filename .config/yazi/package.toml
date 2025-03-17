@@ -35,13 +35,13 @@ hash = "5614c46d5de76623c283d415bfac8025"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:diff"
-rev = "92f78dc"
+rev = "cb6165b"
 hash = "7a08e303167d5b655c06da6d570f0333"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:git"
-rev = "92f78dc"
-hash = "806cb2842b64e976ba2c65a3e3724518"
+rev = "cb6165b"
+hash = "ee5fa7e64db72d6b10c2315de97c9cc7"
 
 [[plugin.deps]]
 use = "Lil-Dank/lazygit"
@@ -50,7 +50,7 @@ hash = "2b0c33928986f126d5c5a4cac31a6b46"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:mount"
-rev = "92f78dc"
+rev = "cb6165b"
 hash = "dd97eede8e20e59cd2604e8006e470e2"
 
 [[plugin.deps]]
@@ -80,13 +80,13 @@ hash = "69967963fba96295a07b68354fc91ea9"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:chmod"
-rev = "92f78dc"
+rev = "cb6165b"
 hash = "2f1053f89d1a301a648ab181d0948e38"
 
 [[plugin.deps]]
-use = "dawsers/fuse-archive"
-rev = "a58327c"
-hash = "6a6d24880ce7666048fb81ad758c48d3"
+use = "boydaihungst/fuse-archive"
+rev = "01277db"
+hash = "b7f93f5f4865bbc09b6826ec6cfbc14c"
 
 [[flavor.deps]]
 use = "yazi-rs/flavors:catppuccin-mocha"
