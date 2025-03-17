@@ -1,7 +1,8 @@
--- require("git"):setup()
+require("fuse-archive"):setup({ smart_enter = false, mount_dir = "/tmp" })
+require("git"):setup()
 require("relative-motions"):setup({ show_numbers="relative", show_motions=true })
 require("session"):setup({ sync_yanked = true })
--- require("starship"):setup()
+require("starship"):setup()
 
 -- show links in status bar
 function Status:name()

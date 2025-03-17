@@ -17,41 +17,44 @@ prepend_keymap = [
   # editor
   { on = [ "e" ], run = 'shell "$EDITOR \"$@\" " --block --confirm', desc = "Open selected files in $EDITOR" },
 
-  # fast-enter
-  { on = [ "l" ], run  = "plugin fast-enter", desc = "Enter the subfolder faster, or open the file directly" },
+  # fuse-archive
+  { on   = [ "l" ], run = "plugin fuse-archive -- mount", desc = "Enter or Mount selected archive" },
+  { on   = [ "h" ], run = "plugin fuse-archive -- unmount", desc = "Leave or Unmount selected archive" },
 
   # fg
   { on = [ "f", "c" ], run = "plugin fg", desc = "Find file by content" },
-  { on = [ "f", "n" ], run = "plugin fg --args='fzf'", desc = "Find file by name" },
+  { on = [ "f", "n" ], run = "plugin fg fzf", desc = "Find file by name" },
+
+ { on = [ "F" ], run = "filter --smart", desc = "Filter files (for recursing use s for search)" },
 
   # lazygit
   { on = [ "<C-v>" ], run  = "plugin lazygit", desc = "run lazygit" },
 
   # open with cmd
   { on = [ "o" ], run = "plugin open-with-cmd", desc = "Open with command" },
-  { on = [ "O" ], run = "plugin open-with-cmd --args=block", desc = "Open with command in the terminal" },
+  { on = [ "O" ], run = "plugin open-with-cmd block", desc = "Open with command in the terminal" },
 
   # ouch compress
-  { on = ["C"], run = "plugin ouch --args=tgz", desc = "Compress with ouch" },
+  { on = ["C"], run = "plugin ouch tgz", desc = "Compress with ouch" },
 
   # relative motions
-  { on = [ "1" ], run = "plugin relative-motions --args=1", desc = "Move in relative steps" },
-  { on = [ "2" ], run = "plugin relative-motions --args=2", desc = "Move in relative steps" },
-  { on = [ "3" ], run = "plugin relative-motions --args=3", desc = "Move in relative steps" },
-  { on = [ "4" ], run = "plugin relative-motions --args=4", desc = "Move in relative steps" },
-  { on = [ "5" ], run = "plugin relative-motions --args=5", desc = "Move in relative steps" },
-  { on = [ "6" ], run = "plugin relative-motions --args=6", desc = "Move in relative steps" },
-  { on = [ "7" ], run = "plugin relative-motions --args=7", desc = "Move in relative steps" },
-  { on = [ "8" ], run = "plugin relative-motions --args=8", desc = "Move in relative steps" },
-  { on = [ "9" ], run = "plugin relative-motions --args=9", desc = "Move in relative steps" },
+  { on = [ "1" ], run = "plugin relative-motions 1", desc = "Move in relative steps" },
+  { on = [ "2" ], run = "plugin relative-motions 2", desc = "Move in relative steps" },
+  { on = [ "3" ], run = "plugin relative-motions 3", desc = "Move in relative steps" },
+  { on = [ "4" ], run = "plugin relative-motions 4", desc = "Move in relative steps" },
+  { on = [ "5" ], run = "plugin relative-motions 5", desc = "Move in relative steps" },
+  { on = [ "6" ], run = "plugin relative-motions 6", desc = "Move in relative steps" },
+  { on = [ "7" ], run = "plugin relative-motions 7", desc = "Move in relative steps" },
+  { on = [ "8" ], run = "plugin relative-motions 8", desc = "Move in relative steps" },
+  { on = [ "9" ], run = "plugin relative-motions 9", desc = "Move in relative steps" },
 
   # ripdrag
   { on = [ "<C-k>" ], run = 'shell "ripdrag -xa \"$@\" 2>/dev/null &" --confirm', desc = "drag and drop selected items" },
 
   # time-travel
-  { on = [ "z", "h" ], run = "plugin time-travel --args=prev", desc = "Go to previous snapshot" },
-  { on = [ "z", "l" ], run = "plugin time-travel --args=next", desc = "Go to next snapshot" },
-  { on = [ "z", "e" ], run = "plugin time-travel --args=exit", desc = "Exit browsing snapshots" },
+  { on = [ "z", "h" ], run = "plugin time-travel prev", desc = "Go to previous snapshot" },
+  { on = [ "z", "l" ], run = "plugin time-travel next", desc = "Go to next snapshot" },
+  { on = [ "z", "e" ], run = "plugin time-travel exit", desc = "Exit browsing snapshots" },
 
   # trash
   { on = [ "t", "d" ], run = 'shell "conceal clean" --block --confirm', desc = "destroy relative trash items" },
@@ -176,8 +179,8 @@ keymap = [
 
   # Goto
   { on = [ "g", "<Space>" ], run = "cd --interactive",                desc = "Interactive" },
-  { on = [ "g", "k" ],       run = "arrow -99999999",                 desc = "Top" },
-  { on = [ "g", "j" ],       run = "arrow 99999999",                  desc = "Bottom" },
+  { on = [ "g", "k" ],       run = "arrow top",                       desc = "Top" },
+  { on = [ "g", "j" ],       run = "arrow bot",                       desc = "Bottom" },
   { on = [ "g", "h" ],       run = "cd ~",                            desc = "Go to ~" },
   { on = [ "g", "c" ],       run = "cd ~/.config",                    desc = "Go to ~/.config" },
   { on = [ "g", "b" ],       run = "cd ~/.local/bin",                 desc = "Go to ~/.local/bin" },
