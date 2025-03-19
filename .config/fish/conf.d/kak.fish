@@ -1,10 +1,7 @@
 function config-grep -d "grep config files in kak"
   set config_files (config ls-files | while read line; printf "\"%s\" " "$line"; end)
-  set grepargs
-  for x in $argv
-    set -a grepargs (echo $x | sed -e "s/'/''/g" -e "s/^/'/" -e "s/\$/'/")
-  end
-  kak -e "grep $(string join -- " " $grepargs) $config_files; buffer-only; echo; info-buffers"
+  set -l escaped_args (string escape --style=script -- $argv)
+  kak -e "grep $escaped_args $config_files; buffer-only; echo; info-buffers"
 end
 complete -c config-grep -w rg
 
@@ -14,7 +11,8 @@ end
 complete -c kd -w fd
 
 function kda -d "open delta output in kak"
-  kak -e "delta $argv; buffer-only; echo; info-buffers"
+  set -l escaped_args (string escape --style=script -- $argv)
+  kak -e "delta $escaped_args; buffer-only; echo; info-buffers"
 end
 
 function kdr -d "make path and edit in kak"
@@ -25,11 +23,8 @@ function kdr -d "make path and edit in kak"
 end
 
 function kg -d "grep with kakoune"
-  set grepargs
-  for x in $argv
-    set -a grepargs (echo $x | sed -e "s/'/''/g" -e "s/^/'/" -e "s/\$/'/")
-  end
-  kak -e "grep $(string join -- " " $grepargs); buffer-only; echo; info-buffers"
+  set -l escaped_args (string escape --style=script -- $argv)
+  kak -e "grep $escaped_args; buffer-only; echo; info-buffers"
 end
 complete -c kg -w rg
 
@@ -38,5 +33,6 @@ function kgl -d "kakoune live grep"
 end
 
 function kp -d "kakpipe"
-  kak -e "kakpipe -- $argv"
+  set -l escaped_args (string escape --style=script -- $argv)
+  kak -e "kakpipe -- $escaped_args"
 end
