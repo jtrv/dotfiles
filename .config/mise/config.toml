@@ -1,4 +1,11 @@
 # https://mise.jdx.dev/registry.html
 [tools]
 cargo-binstall = "latest"
+node = "latest"
+python = "latest"
+ruby = "latest"
 usage = "latest"
+
+[settings]
+plugin_autoupdate_last_check_duration = '1 week'
+env_file = '.env'
