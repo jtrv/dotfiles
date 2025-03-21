@@ -31,6 +31,7 @@ kubectl
 kubernetes
 latex
 lodash~4
+man
 markdown
 minitest
 mocha
@@ -69,7 +70,9 @@ svelte
 svg
 tailwindcss
 terraform
+threejs
 typescript
+typescript~5.1
 underscore
 vite
 vitest
