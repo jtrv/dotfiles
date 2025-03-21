@@ -1,12 +1,10 @@
 #!/bin/sh
-# requires secli, xh, jql, rg, sd, ipinfo.io token
+# requires xh, jql, rg, sd, ipinfo.io token
 
 bold=$(tput bold)
 normal=$(tput sgr0)
 
-ipinfo_token=$(secli get ipinfo_token)
-
-coordinates=$(xh -Fb "https://ipinfo.io/?token=$ipinfo_token" | jql -r '"loc"')
+coordinates=$(xh -Fb "https://ipinfo.io/?token=$IPINFO_TOKEN" | jql -r '"loc"')
 
 forecast_url=$(xh -Fb "https://api.weather.gov/points/$coordinates" | jql -r '"properties" "forecast"')
 

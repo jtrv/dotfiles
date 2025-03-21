@@ -1,10 +1,8 @@
 #!/bin/sh
-# requires secli, xh, jql, sd, ipinfo.io token
-
-ipinfo_token=$(secli get ipinfo_token)
+# requires xh, jql, sd, ipinfo.io token
 
 # get lat/lon
-coordinates=$(xh -Fb "https://ipinfo.io/?token=$ipinfo_token" |
+coordinates=$(xh -Fb "https://ipinfo.io/?token=$IPINFO_TOKEN" |
   jql -r '"loc"')
 
 # get corresponding weather office
