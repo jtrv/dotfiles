@@ -1,7 +1,6 @@
 function config-grep -d "grep config files in kak"
   set config_files (config ls-files | while read line; printf "\"%s\" " "$line"; end)
-  set -l escaped_args (string escape --style=script -- $argv)
-  kak -e "grep $escaped_args $config_files; buffer-only; echo; info-buffers"
+  rg --color=always --smart-case --with-filename --line-number --column $argv $config_files | kak -e "set-option buffer filetype grep"
 end
 complete -c config-grep -w rg
 
@@ -23,8 +22,7 @@ function kdr -d "make path and edit in kak"
 end
 
 function kg -d "grep with kakoune"
-  set -l escaped_args (string escape --style=script -- $argv)
-  kak -e "grep $escaped_args; buffer-only; echo; info-buffers"
+  rg --color=always --smart-case --with-filename --line-number --column $argv | kak -e 'set-option buffer filetype grep'
 end
 complete -c kg -w rg
 
