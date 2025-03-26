@@ -6,3 +6,9 @@
 
 "volume-decrease 1"
     Mod4 + b:5
+
+"playerctl previous"
+    Mod4 + b:6
+
+"playerctl next"
+    Mod4 + b:7
