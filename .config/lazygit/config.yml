@@ -162,7 +162,7 @@ keybinding:
         filteringMenu: '<c-s>'
         diffingMenu: 'W'
         diffingMenu-alt: '<c-e>' # deprecated
-        copyToClipboard: '<c-o>'
+        copyToClipboard: 'y'
         submitEditorText: '<enter>'
         extrasMenu: '@'
         toggleWhitespaceInDiffView: '<c-w>'
