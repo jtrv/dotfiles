@@ -63,7 +63,7 @@ set -gx HISTFILE "$XDG_STATE_HOME/bash/history"
 # Misc
 set -gx ARGC_COMPLETIONS_ROOT       "$HOME/repos/argc-completions"
 set -gx ARGC_COMPLETIONS_PATH       "$ARGC_COMPLETIONS_ROOT/completions/linux:$ARGC_COMPLETIONS_ROOT/completions"
-set -gx ARGC_SCRIPTS                (ls -p -1 "$ARGC_COMPLETIONS_ROOT/completions/linux" "$ARGC_COMPLETIONS_ROOT/completions" | sed -n 's/\.sh$//p')
+set -gx ARGC_SCRIPTS                (/bin/ls -p -1 "$ARGC_COMPLETIONS_ROOT/completions/linux" "$ARGC_COMPLETIONS_ROOT/completions" | sed -n 's/\.sh$//p')
 set -gx ATUIN_NOBIND                "true"
 set -gx BAT_PAGER                   "kak"
 set -gx BEMOJI_PICKER_CMD           "dmenu -i -l 5 -g 5"
@@ -83,18 +83,6 @@ set -gx QT_STYLE_OVERRIDE           "kvantum"
 set -gx QT_QPA_PLATFORMTHEME        "qt6ct"
 set -gx VISUAL                      "kak"
 set -gx VIRTUAL_ENV_DISABLE_PROMPT  true
-
-# Secrets
-set -gx ANTHROPIC_API_KEY           (sec get anthropic_api_key)
-set -gx CLAUDE_API_KEY              $ANTHROPIC_API_KEY # for aichat
-set -gx DEEPSEEK_API_KEY            (sec get deepseek_api_key)
-set -gx EXERCISM_TOKEN              (sec get exercism_token)
-set -gx GROQ_API_KEY                (sec get groq_api_key)
-set -gx IPINFO_TOKEN                (sec get ipinfo_token)
-set -gx OPENAI_API_KEY              (sec get openai_api_key)
-set -gx SENTRY_AUTH_TOKEN           (sec get sentry_auth_token)
-
-set -gx fish_lsp_diagnostic_disable_error_codes 2002
 
 set -gx FZF_DEFAULT_OPTS "\
 --ansi \
