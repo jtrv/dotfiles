@@ -1,0 +1,4 @@
+[alias]
+  skip       = update-index --skip-worktree
+  unskip     = update-index --no-skip-worktree
+  unskip-all = !git update-index --no-skip-worktree $(git ls-files $(git rev-parse --show-toplevel))
