@@ -1,10 +1,17 @@
 # https://mise.jdx.dev/registry.html
 [tools]
+aichat = "latest"
+biome = "latest"
+bun = "latest"
 cargo-binstall = "latest"
+doggo = "latest"
+dotenv-linter = "latest"
 node = "latest"
 python = "latest"
+revive = "latest"
 ruby = "latest"
 usage = "latest"
+zig = "latest"
 
 [settings]
 plugin_autoupdate_last_check_duration = '1 week'

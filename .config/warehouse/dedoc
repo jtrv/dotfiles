@@ -33,6 +33,7 @@ kubectl
 kubernetes
 latex
 lodash~4
+man
 markdown
 minitest
 mocha
