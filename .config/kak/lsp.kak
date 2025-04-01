@@ -127,6 +127,9 @@ hook -group lsp-filetype-fish global BufSetOption filetype=fish %{
     [fish-lsp]
     root_globs = [ "*.fish", "config.fish", ".git", ".hg" ]
     args = [ "start" ]
+    [fish-lsp.envs]
+    fish_lsp_enabled_handlers = "popups formatting complete hover rename definition references diagnostics signatureHelp codeAction inlayHint highlight"
+    fish_lsp_diagnostic_disable_error_codes = "2002 2001"
   }
 }
 
