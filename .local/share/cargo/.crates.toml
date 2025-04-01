@@ -74,3 +74,8 @@
 "wthrr 1.2.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["wthrr"]
 "xh 0.24.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["xh"]
 "zet 2.0.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["zet"]
+"difftastic 0.63.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["difft"]
+"mergiraf 0.6.0 (registry+https://github.com/rust-lang/crates.io-index)" = [
+    "mergiraf",
+    "mgf_dev",
+]
