@@ -6,7 +6,7 @@ gui:
     scrollOffMargin: 2 # how many lines to keep before/after the cursor when it reaches the top/bottom of the view; see 'Scroll-off Margin' section below
     scrollOffBehavior: 'margin' # one of 'margin' | 'jump'; see 'Scroll-off Margin' section below
     sidePanelWidth: 0.3333 # number from 0 to 1
-    expandFocusedSidePanel: false
+    expandFocusedSidePanel: true
     mainPanelSplitMode: 'flexible' # one of 'horizontal' | 'flexible' | 'vertical'
     enlargedSideViewLocation: 'left' # one of 'left' | 'top'
     language: 'auto' # one of 'auto' | 'en' | 'zh-CN' | 'zh-TW' | 'pl' | 'nl' | 'ja' | 'ko' | 'ru'
@@ -53,6 +53,10 @@ gui:
     border: 'rounded' # one of 'single' | 'double' | 'rounded' | 'hidden'
     animateExplosion: true # shows an explosion animation when nuking the working tree
     portraitMode: 'auto' # one of 'auto' | 'never' | 'always'
+    filterMode: fuzzy
+    statusPanelView: allBranchesLog
+    switchToFilesAfterStashPop: true
+    switchToFilesAfterStashApply: true
 git:
     paging:
         colorArg: always
