@@ -478,7 +478,11 @@ insert numbered output to cursors
   if [ $# -eq 1 ]; then start=$1; fi
   if [ $# -eq 2 ]; then increment=$2; fi
   end=$(( $start + $kak_selection_count ))
-  echo "execute-keys ':e -scratch<ret>!seq $start $increment $end <ret><a-s>Hy:db<ret>P'"
+  echo "
+  edit -scratch
+  execute-keys '!seq $start $increment $end<ret><a-s>Hy'
+  delete-buffer
+  execute-keys 'P'"
 }}
 
 define-command set-filetype -docstring 'prompt to set filetype' %{
