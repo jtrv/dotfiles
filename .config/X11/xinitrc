@@ -29,7 +29,6 @@ fi
 
 xrandr --output=virtual-1
 
-atuin daemon &                 # atuin daemon
 caffeine &                     # inhibit sleep w/ media
 /usr/lib/kdeconnectd &         # kdeconnect daemon
 mons -a &                      # external display daemon
