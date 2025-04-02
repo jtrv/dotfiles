@@ -269,18 +269,18 @@ define-command doc-grep -docstring '
   doc-grep <query>: grep kakoune and plugin docs
 ' -params .. %{ evaluate-commands %sh{
   if [ $# -eq 0 ]; then
-    grep_args="%val{selection}"
+    grep_args=%val{selection}
   else
-    grep_args="%arg{@}"
+    grep_args=%arg{@}
   fi
 
   fd \
   --absolute-path \
     --exclude '*changelog*' \
-    --search-path "$(dirname $(dirname $kak_runtime))" \
-    --search-path "$XDG_DATA_HOME/kak/" \
+    --search-path "$(dirname $(dirname ${kak_runtime%/share/kak}))" \
+    --search-path "${kak_config}" \
     --extension=asciidoc |
-      xargs echo "grep $grep_args"
+      xargs echo "grep ${grep_args}"
 }}
 
 define-command file-picker -docstring '
