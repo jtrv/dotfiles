@@ -12,7 +12,7 @@ wrap_code: false                 # Enables or disables wrapping of code blocks
 
 # ---- function-calling ----
 # Visit https://github.com/sigoden/llm-functions for setup instructions
-function_calling: false           # Enables or disables function calling (Globally).
+function_calling: true           # Enables or disables function calling (Globally).
 # mapping_tools:                   # Alias for a tool or toolset
 #  fs: 'fs_cat,fs_ls,fs_mkdir,fs_rm,fs_write'
 use_tools: null                  # Which tools to use by default. (e.g. 'fs,web_search')
@@ -85,7 +85,7 @@ user_agent: null                            # Set User-Agent HTTP header, use `a
 save_shell_history: true                    # Whether to save shell execution command to the history file
 
 # ---- clients ----
-model: claude
+model: openrouter:google/gemini-2.5-pro-preview-03-25
 clients:
   # All clients have the following configuration:
   # - type: xxxx
@@ -302,10 +302,14 @@ clients:
     # api_key: xxx
 
   # See https://openrouter.ai/docs#quick-start
-  # - type: openai-compatible
-    # name: openrouter
-    # api_base: https://openrouter.ai/api/v1
-    # api_key: xxx
+  - type: openai-compatible
+    name: openrouter
+    api_base: https://openrouter.ai/api/v1
+    models:
+      - name: openrouter:deepseek/deepseek-r1
+      - name: openrouter:google/gemini-2.5-pro-preview-03-25
+      - name: openrouter:openai/o3-mini-high
+      - name: openrouter:openrouter/quasar-alpha
 
   # See https://docs.siliconflow.cn/docs/getting-started
   # - type: openai-compatible
