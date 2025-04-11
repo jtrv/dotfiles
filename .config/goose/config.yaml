@@ -1,0 +1,9 @@
+GOOSE_MODEL: google/gemini-2.5-pro-preview-03-25
+GOOSE_PROVIDER: openrouter
+extensions:
+  developer:
+    enabled: true
+    name: developer
+    type: builtin
+GOOSE_MODE: smart_approve
+GOOSE_CLI_MIN_PRIORITY: 0.2
