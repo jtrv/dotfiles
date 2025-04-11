@@ -27,34 +27,44 @@ declare-option -hidden str lsp_server_lsp_ai %{
   [lsp-ai.settings.memory]
   file_store = { }
 
+  [lsp-ai.settings.models.gemini]
+  type = "open_ai"
+  chat_endpoint = "https://openrouter.ai/api/v1"
+  model = "google/gemini-2.5-pro-preview-03-25"
+  auth_token_env_var_name = "OPENROUTER_API_KEY"
+  max_requests_per_second = 1
+
+  [[lsp-ai.settings.chat]]
+  trigger = ",.gg"
+  action_display_name = "gemini-2.5-pro"
+  model = "gemini"
+
   [lsp-ai.settings.models.r1]
   type = "open_ai"
-  chat_endpoint = "https://api.deepseek.com/v1"
-  model = "deepseek-reasoner"
-  auth_token_env_var_name = "DEEPSEEK_API_KEY"
+  chat_endpoint = "https://openrouter.ai/api/v1"
+  model = "deepseek/r1"
+  auth_token_env_var_name = "OPENROUTER_API_KEY"
   max_requests_per_second = 1
 
   [[lsp-ai.settings.chat]]
-  trigger = "R1!"
-  action_display_name = "Chat"
-  model = "sonnet"
+  trigger = ",.r1"
+  action_display_name = "deepseek-r1"
+  model = "r1"
 
   [lsp-ai.settings.models.sonnet]
-  type = "anthropic"
-  chat_endpoint = "https://api.anthropic.com/v1/messages"
-  model = "claude-3-5-sonnet-20240620"
-  auth_token_env_var_name = "ANTHROPIC_API_KEY"
+  type = "open_ai"
+  chat_endpoint = "https://openrouter.ai/api/v1"
+  model = "anthropic/claude-3.7-sonnet:thinking"
+  auth_token_env_var_name = "OPENROUTER_API_KEY"
   max_requests_per_second = 1
 
   [[lsp-ai.settings.chat]]
-  trigger = "SO!"
-  action_display_name = "Sonnet"
+  trigger = ",.so"
+  action_display_name = "sonnet-3.7"
   model = "sonnet"
 
   [lsp-ai.settings.chat.parameters]
-  max_context = 4096
-  max_tokens = 1024
-  system = "You are a code assistant chatbot. The user will ask you for assistance coding and you will do you best to answer succinctly and accurately"
+  system = "You are a code assistant chatbot. The user will ask you for assistance coding and you will do your best to answer succinctly and accurately"
 }
 
 declare-option -hidden str lsp_server_tailwind %{
@@ -110,7 +120,7 @@ hook -group lsp-filetype-css global BufSetOption filetype=(?:css|less|scss) %{
 
     %opt{lsp_server_biome}
     %opt{lsp_server_emmet}
-    %opt{lsp_server_unocss}
+    # % opt{lsp_server_unocss}
   }
 
 }
@@ -179,7 +189,7 @@ hook -group lsp-filetype-html global BufSetOption filetype=html %{
 
     %opt{lsp_server_biome}
     %opt{lsp_server_emmet}
-    %opt{lsp_server_unocss}
+    # % opt{lsp_server_unocss}
   }
 }
 
@@ -214,7 +224,7 @@ hook -group lsp-filetype-javascript global BufSetOption filetype=(?:javascript|t
 
     %opt{lsp_server_biome}
     %opt{lsp_server_emmet}
-    %opt{lsp_server_unocss}
+    # % opt{lsp_server_unocss}
   }
 }
 
