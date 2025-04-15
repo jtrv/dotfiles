@@ -2,6 +2,7 @@ if status is-interactive
 
 alias ani     "ani-cli -q best --skip" # weeb out in S-rank ultra-fidelity 8k lossless greenray
 alias boi     "wikiman"
+alias bls     "/bin/ls"
 alias cat     "bat"
 alias cbin    "yes | cargo binstall"
 alias cdr     "cd (git rev-parse --show-toplevel)"
@@ -12,6 +13,7 @@ alias cncr    "conceal restore"
 alias cols    "column -c '$COLUMNS'"
 alias cp      "cp -i"
 alias d       "devour"
+alias dg      "diff-grep"
 alias feh     "feh --scale-down --image-bg black"
 alias fp      "sk --preview='bat --color=always {}'"
 alias ghs     "gh auth switch"
@@ -24,14 +26,14 @@ alias kal     "k ~/.config/fish/conf.d/aliases.fish"
 alias kenv    "k ~/.config/fish/conf.d/env.fish"
 alias kish    "k ~/.config/fish/config.fish"
 alias k       "kak"
-alias la      "fls -al --color=always" # all files and dirs
+alias la      "fls -alh --color=always" # all files and dirs
 alias lc      "lazygit --git-dir='$DOTFILES' --work-tree='$HOME'" # lazygit for config files
 alias lg      "lazygit"
 alias lh      "eza -la --color=always --ignore-glob='[a-z]*|[A-Z]*|[0-9]*'" # hidden only
 alias ll      "eza -l --color=always --git" # long format
 alias lmk     "lemmeknow"
 alias loc     "plocate"
-alias ls      "fls -l --color=always" # preferred listing
+alias ls      "fls -lh --color=always" # preferred listing
 alias lt      "erd -HIl --color=force" # tree listing
 alias mdc     "mdcat --columns=70"
 alias mkd     "mkdir -p"
