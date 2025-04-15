@@ -673,6 +673,32 @@ map global normal <a-/> -docstring 'search backwards'            %{<a-/>(?i)}
 map global normal ?     -docstring '(extend) search'             %{?(?i)}
 map global normal <a-?> -docstring '(extend) search backwards'   %{<a-?>(?i)}
 
+define-command -hidden regex-assertions %{
+info -title 'assertions' '<c-i>:    ignore case  (?i)
+<a-n>:  . != newlines  (?S)
+<c-.>:  + look-ahead   (?=...)
+<c-,>:  + look-behind  (?!...)
+<a-.>:  - look-ahead   (?<=...)
+<a-,>:  - look-behind  (?<!...)
+'
+
+map global prompt <c-i> -docstring 'ignore case'   %{<c-a>(?i)<c-e>}
+map global prompt <a-n> -docstring '!= newlines'   %{<c-a>(?S)<c-e>}
+map global prompt <c-.> -docstring 'look-ahead'    %{<c-a>(?=)<c-b>}
+map global prompt <a-.> -docstring 'look-behind'   %{<c-a>(?!)<c-b>}
+map global prompt <c-,> -docstring 'look-ahead'    %{<c-a>(?<lt>=)<c-b>}
+map global prompt <a-,> -docstring 'look-behind'   %{<c-a>(?<lt>!)<c-b>}
+}
+
+hook global NormalKey 's'      regex-assertions
+hook global NormalKey 'S'      regex-assertions
+hook global NormalKey '<a-k>'  regex-assertions
+hook global NormalKey '<a-K>'  regex-assertions
+hook global NormalKey '/'      regex-assertions
+hook global NormalKey '<a-/>'  regex-assertions
+hook global NormalKey '\?'     regex-assertions
+hook global NormalKey '<a-\?>' regex-assertions
+
 # (Un)Comment Lines
 map global normal <#> -docstring 'comment'   %{:comment <ret>}
 
