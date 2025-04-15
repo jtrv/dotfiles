@@ -300,7 +300,6 @@ define-command global-picker -docstring 'global-picker: Opens global search pick
     grep %val{text}
   }
 }
-map global user / -docstring 'search' %{<a-;>: global-picker <ret>}
 
 define-command glow -docstring '
   glow [<files>]: glow utility wrapper
@@ -480,9 +479,11 @@ insert numbered output to cursors
   end=$(( $start + $kak_selection_count ))
   echo "
   edit -scratch
-  execute-keys '!seq $start $increment $end<ret><a-s>Hy'
+  execute-keys '!seq -w $start $increment $end <ret>'
+  execute-keys '<a-s>_y'
   delete-buffer
-  execute-keys 'P'"
+  execute-keys 'P'
+  "
 }}
 
 define-command set-filetype -docstring 'prompt to set filetype' %{
@@ -615,6 +616,9 @@ complete-command zeal shell-script-candidates %{
 ###################### KEYBINDINGS ######################
 
 map global user <space> : -docstring 'prompt'
+
+map global user / -docstring 'search' %{<a-;>: global-picker <ret>}
+
 
 ###################### INSERT KEYS ######################
 
