@@ -1,5 +1,8 @@
+.aider*
+*.env
 .env
 .env.*
-*.env
+.goosehints
+.mcp.json
 mise.local.toml
 skyspell-ignore.toml
