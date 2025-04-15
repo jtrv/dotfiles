@@ -5,7 +5,7 @@ assume_yes = true
 notify_each_step = true
 
 # Disable specific steps - same options as the command line flag
-disable = ["containers", "protonup", "kakoune"]
+disable = ["containers", "protonup", "kakoune", "uv"]
 
 # Ignore failures for these steps
 ignore_failures = ["git_repos"]
@@ -44,7 +44,8 @@ self_update = true
 "config submodules" = "config submodule update"
 "kakoune" = "pushd ~/repos/kakoune/; sudo make install; popd; kak -e 'bundle-update'"
 "proton" = "protonup-rs -q"
-"warehouse packages" = "warehouse"
+"uv tools" = "uv tool upgrade --all"
+"warehouse" = "warehouse"
 
 [linux]
 arch_package_manager = "paru"
