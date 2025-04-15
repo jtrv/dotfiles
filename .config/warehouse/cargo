@@ -15,10 +15,10 @@ conceal -> https://github.com/rust-lang/crates.io-index
 cpz -> https://github.com/rust-lang/crates.io-index
 crabz -> https://github.com/rust-lang/crates.io-index
 dedoc -> https://github.com/rust-lang/crates.io-index
+difftastic -> https://github.com/rust-lang/crates.io-index
 dotenv-linter -> https://github.com/rust-lang/crates.io-index
 fclones -> https://github.com/rust-lang/crates.io-index
-fish-manpage-completions -> https://github.com/rust-dc/fish-manpage-completions
-fls -> https://github.com/saethlin/fls
+fls -> /home/sugimoto/repos/fls
 gprepo -> /home/sugimoto/repos/gprepo
 grug -> https://github.com/jtrv/grug
 handlr-regex -> https://github.com/rust-lang/crates.io-index
@@ -39,6 +39,7 @@ lsp-ai -> https://github.com/rust-lang/crates.io-index
 macchina -> https://github.com/rust-lang/crates.io-index
 magic-wormhole-cli -> https://github.com/rust-lang/crates.io-index
 markdown-oxide -> https://github.com/feel-ix-343/markdown-oxide
+mergiraf -> https://github.com/rust-lang/crates.io-index
 mise -> https://github.com/rust-lang/crates.io-index
 pay-respects -> https://github.com/rust-lang/crates.io-index
 protonup-rs -> https://github.com/rust-lang/crates.io-index
