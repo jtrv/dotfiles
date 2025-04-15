@@ -7,9 +7,10 @@ prepend_keymap = [
   { on = [ "c", "m" ], run = "plugin chmod", desc = "Chmod on selected files" },
 
   # convert
-  { on  = [ "c", "j" ], run  = "plugin convert --args='--extension=jpg'", desc = "Convert image to JPG" },
-  { on  = [ "c", "p" ], run  = "plugin convert --args='--extension=png'", desc = "Convert image to PNG" },
-  { on  = [ "c", "w" ], run  = "plugin convert --args='--extension=webp'", desc = "Convert image to WEBP" },
+  { on = [ "c", "a" ], run  = "plugin convert -- --extension='avif'", desc = "Convert image to AVIF" },
+  { on = [ "c", "j" ], run  = "plugin convert -- --extension='jpg'",  desc = "Convert image to JPG"  },
+  { on = [ "c", "p" ], run  = "plugin convert -- --extension='png'",  desc = "Convert image to PNG"  },
+  { on = [ "c", "w" ], run  = "plugin convert -- --extension='webp'", desc = "Convert image to WEBP" },
 
   # diff
   { on = [ "<C-d>" ], run = "plugin diff", desc = "Diff the selected with the hovered file" },
@@ -18,14 +19,19 @@ prepend_keymap = [
   { on = [ "e" ], run = 'shell "$EDITOR \"$@\" " --block --confirm', desc = "Open selected files in $EDITOR" },
 
   # fuse-archive
-  { on   = [ "l" ], run = "plugin fuse-archive -- mount", desc = "Enter or Mount selected archive" },
-  { on   = [ "h" ], run = "plugin fuse-archive -- unmount", desc = "Leave or Unmount selected archive" },
+  { on = [ "h" ], run = "plugin fuse-archive -- unmount",     desc = "Leave / Unmount archive" },
+  { on = [ "l" ], run = "plugin fuse-archive -- mount",       desc = "Enter / Mount hovered archive"   },
+  { on = [ "<Enter>" ], run = "plugin fuse-archive -- mount", desc = "Enter / Mount hovered archive"   },
 
   # fg
-  { on = [ "f", "c" ], run = "plugin fg", desc = "Find file by content" },
-  { on = [ "f", "n" ], run = "plugin fg fzf", desc = "Find file by name" },
+  { on = [ "f", "f" ], run = "filter --smart", desc = "Filter by name (current)" },
+  { on = [ "f", "d" ], run = "search fd",      desc = "Filter by name (recurse)" },
+  { on = [ "f", "r" ], run = "search rg",      desc = "Filter by content" },
+  { on = [ "f", "z" ], run = "plugin fr rg",   desc = "Find rg query w/ fzf" },
+  { on = [ "f", "Z" ], run = "plugin fr rga",  desc = "Find rga query w/ fzf" },
 
- { on = [ "F" ], run = "filter --smart", desc = "Filter files (for recursing use s for search)" },
+  # vcs-files
+  { on = [ "g", "c" ], run  = "plugin vcs-files", desc = "Show Git file changes" },
 
   # lazygit
   { on = [ "<C-v>" ], run  = "plugin lazygit", desc = "run lazygit" },
@@ -49,15 +55,16 @@ prepend_keymap = [
   { on = [ "9" ], run = "plugin relative-motions 9", desc = "Move in relative steps" },
 
   # ripdrag
-  { on = [ "<C-k>" ], run = 'shell "ripdrag -xa \"$@\" 2>/dev/null &" --confirm', desc = "drag and drop selected items" },
+  { on = [ "<C-k>" ], run = 'shell "ripdrag -abx \"$@\" 2>/dev/null &" --confirm', desc = "drag and drop selected items" },
+  { on = [ "<A-k>" ], run = 'shell "ripdrag -ab  \"$@\" 2>/dev/null &" --confirm', desc = "drag and drop selected items" },
 
   # time-travel
-  { on = [ "z", "h" ], run = "plugin time-travel prev", desc = "Go to previous snapshot" },
-  { on = [ "z", "l" ], run = "plugin time-travel next", desc = "Go to next snapshot" },
-  { on = [ "z", "e" ], run = "plugin time-travel exit", desc = "Exit browsing snapshots" },
+  { on = [ "T", "h" ], run = "plugin time-travel prev", desc = "Go to previous snapshot" },
+  { on = [ "T", "l" ], run = "plugin time-travel next", desc = "Go to next snapshot" },
+  { on = [ "T", "e" ], run = "plugin time-travel exit", desc = "Exit browsing snapshots" },
 
   # trash
-  { on = [ "t", "d" ], run = 'shell "conceal clean" --block --confirm', desc = "destroy relative trash items" },
+  { on = [ "t", "d" ], run = 'shell "conceal clean" --block --confirm',   desc = "destroy relative trash items" },
   { on = [ "t", "r" ], run = 'shell "conceal restore" --block --confirm', desc = "restore relative trash items" },
 ]
 
@@ -97,7 +104,6 @@ keymap = [
   { on = [ "<C-r>" ],   run = "toggle_all --state=none",            desc = "Inverse selection of all files" },
 
   # Operation
-  { on = [ "o" ],         run = "open --interactive",          desc = "Open the selected files interactively" },
   { on = [ "<Enter>" ],   run = "open",                        desc = "Open the selected files" },
   { on = [ "<C-Enter>" ], run = "open --interactive",          desc = "Open the selected files interactively" },
   { on = [ "y" ],         run = "yank",                        desc = "Copy the selected files" },
@@ -297,7 +303,7 @@ keymap = [
   { on = [ "<C-r>" ], run = "redo", desc = "Redo the last operation" },
 
   # Help
-  { on = [ "~" ], run = "help", desc = "Open help" },
+  { on = [ "?" ], run = "help", desc = "Open help" },
 ]
 
 [completion]
@@ -308,7 +314,7 @@ keymap = [
   { on = [ "<C-p>" ], run = "arrow -1", desc = "Move cursor up" },
   { on = [ "<A-n>" ], run = "arrow 1",  desc = "Move cursor down" },
 
-  { on = [ "~" ], run = "help", desc = "Open help" },
+  { on = [ "?" ], run = "help", desc = "Open help" },
 ]
 
 [help]
