@@ -625,8 +625,8 @@ map global insert <c-v> -docstring 'insert mode paste'   %{<esc>Pi}
 map global prompt <c-n> <tab>   -docstring 'next completion'
 map global prompt <c-p> <s-tab> -docstring 'previous completion'
 
-map global prompt <a-.> -docstring 'insert buffer directory'     '%sh{ dirname "$kak_buffile" }<a-!>/'
-map global prompt <a-,> -docstring 'insert git root directory'   '%sh{ git rev-parse --show-toplevel }<a-!>/'
+map global prompt <a-/> -docstring 'insert buffer directory'     '%sh{ dirname "$kak_buffile" }<a-!>/'
+map global prompt <a-?> -docstring 'insert git root directory'   '%sh{ git rev-parse --show-toplevel }<a-!>/'
 
 ###################### NORMAL KEYS ######################
 
