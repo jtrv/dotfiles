@@ -248,6 +248,8 @@ progress
 pueue
 pulsemixer
 pv
+python-truststore
+python-uv
 qbittorrent
 qpdf
 qt5ct
