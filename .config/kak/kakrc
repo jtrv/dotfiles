@@ -939,6 +939,7 @@ map global user z -docstring 'zeal' %{:zeal <ret>}
 
 # contextual scripts
 hook global WinSetOption filetype=git-commit    %{ source '~/.config/kak/contexts/commit.kak'      }
+hook global WinSetOption filetype=cpp           %{ source '~/.config/kak/contexts/cpp.kak'         }
 hook global WinSetOption filetype=(css|scss)    %{ source '~/.config/kak/contexts/css.kak'         }
 hook global WinSetOption filetype=diff          %{ source '~/.config/kak/contexts/diff.kak'        }
 hook global WinSetOption filetype=fish          %{ source '~/.config/kak/contexts/fish.kak'        }
