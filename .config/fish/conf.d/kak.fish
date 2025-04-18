@@ -1,5 +1,5 @@
 function config-grep -d "grep config files in kak"
-  set config_files (config ls-files | while read line; printf "\"%s\" " "$line"; end)
+  set config_files (config ls-files | while read i; echo "$i"; end)
   rg --color=always --smart-case --with-filename --line-number --column $argv $config_files | kak -e "set-option buffer filetype grep"
 end
 complete -c config-grep -w rg
