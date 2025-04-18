@@ -18,7 +18,7 @@
     "cross-env": "^7.0.3",
     "depcheck": "^1.4.7",
     "eslint-plugin-prettier": "^5.2.6",
-    "gatsby": "^2.32.13",
+    "gatsby": "^5.14.3",
     "gitignore": "^0.7.0",
     "jest": "^29.7.0",
     "knip": "^5.50.4",
