@@ -71,7 +71,6 @@ docker-compose
 docx2txt
 dosfstools
 downgrade
-droidcam
 dunst
 dust
 dwarfs
@@ -196,7 +195,6 @@ mpv-thumbfast-git
 mpv-uosc-git
 namcap
 needrestart
-nerd-dictation-git
 nfs-utils
 ngrep
 nim
@@ -209,6 +207,7 @@ npm
 ntfs-3g
 ntp
 nvtop
+oculante
 odt2txt
 onefetch
 openssh
@@ -291,6 +290,7 @@ starship
 strace
 stremio
 superhtml
+sxiv
 syncthing
 systemd-resolvconf
 systeroid
@@ -331,6 +331,8 @@ upd72020x-fw
 upx
 usql-bin
 uv
+v4l2loopback-dkms
+vdhcoapp
 vdpauinfo
 veracrypt
 vhs
