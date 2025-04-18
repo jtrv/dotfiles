@@ -241,12 +241,14 @@ keybinding:
         update: 'u'
         bulkMenu: 'b'
 customCommands:
+
     # Remote-related actions
     - key: '-'
       description: "Switch GitHub User"
       command: "gh auth switch"
-      context: "files"
-      subprocess: true
+      context: "global"
+      loadingText: "Switching User"
+      subprocess: false
       showOutput: true
     - key: '<c-f>'
       description: "Fetch remote branch as new local branch"
@@ -287,10 +289,6 @@ customCommands:
       loadingText: "Checking out PR..."
 
     # File/commit actions
-    - key: 'a'
-      description: "Toggle file staged"
-      context: "files"
-      command: "git {{if .SelectedFile.HasUnstagedChanges}} add {{else}} reset {{end}} {{.SelectedFile.Name | quote}}"
     - key: '<c-c>'
       description: "Commit with non-default author"
       context: "files"
