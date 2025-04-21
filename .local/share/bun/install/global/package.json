@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@anthropic-ai/claude-code": "^0.2.59",
+    "@anthropic-ai/claude-code": "^0.2.74",
     "@fsouza/prettierd": "^0.26.1",
     "@getgrit/cli": "^0.1.0-alpha.1743007075",
     "@nestjs/cli": "^10.4.9",

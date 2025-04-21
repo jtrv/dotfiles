@@ -13,6 +13,7 @@ go = "latest"
 revive = "latest"
 usage = "latest"
 zig = "latest"
+yazi = "latest"
 
 [settings]
 plugin_autoupdate_last_check_duration = '1 day'
