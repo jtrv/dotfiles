@@ -24,8 +24,16 @@ map global object D      -docstring 'LSP errors'                     %{: lsp-dia
 declare-option -hidden str lsp_server_lsp_ai %{
   [lsp-ai]
   root_globs = [ ".git" ]
+
   [lsp-ai.settings.memory]
   file_store = { }
+
+  [lsp-ai.settings.completion]
+  model = "v3"
+  parameters = { }
+
+  [lsp-ai.settings.chat.parameters]
+  system = "You are a code assistant chatbot. The user will ask you for assistance coding and you will do your best to answer succinctly and accurately"
 
   [lsp-ai.settings.models.gemini]
   type = "open_ai"
@@ -33,11 +41,17 @@ declare-option -hidden str lsp_server_lsp_ai %{
   model = "google/gemini-2.5-pro-preview-03-25"
   auth_token_env_var_name = "OPENROUTER_API_KEY"
   max_requests_per_second = 1
-
   [[lsp-ai.settings.chat]]
   trigger = ",.gg"
   action_display_name = "gemini-2.5-pro"
   model = "gemini"
+
+  [lsp-ai.settings.models.v3]
+  type = "open_ai"
+  chat_endpoint = "https://openrouter.ai/api/v1"
+  model = "deepseek/deepseek-chat-v3-0324"
+  auth_token_env_var_name = "OPENROUTER_API_KEY"
+  max_requests_per_second = 1
 
   [lsp-ai.settings.models.r1]
   type = "open_ai"
@@ -45,7 +59,6 @@ declare-option -hidden str lsp_server_lsp_ai %{
   model = "deepseek/r1"
   auth_token_env_var_name = "OPENROUTER_API_KEY"
   max_requests_per_second = 1
-
   [[lsp-ai.settings.chat]]
   trigger = ",.r1"
   action_display_name = "deepseek-r1"
@@ -57,14 +70,11 @@ declare-option -hidden str lsp_server_lsp_ai %{
   model = "anthropic/claude-3.7-sonnet:thinking"
   auth_token_env_var_name = "OPENROUTER_API_KEY"
   max_requests_per_second = 1
-
   [[lsp-ai.settings.chat]]
   trigger = ",.so"
   action_display_name = "sonnet-3.7"
   model = "sonnet"
 
-  [lsp-ai.settings.chat.parameters]
-  system = "You are a code assistant chatbot. The user will ask you for assistance coding and you will do your best to answer succinctly and accurately"
 }
 
 declare-option -hidden str lsp_server_tailwind %{
