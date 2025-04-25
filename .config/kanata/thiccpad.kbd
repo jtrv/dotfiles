@@ -41,10 +41,15 @@
   s   (tap-hold  200    150    s    lalt)
   d   (tap-hold  200    150    d    lctl)
   f   (tap-hold  200    150    f    lsft)
+
   j   (tap-hold  200    150    j    rsft)
   k   (tap-hold  200    150    k    rctl)
   l   (tap-hold  200    150    l    ralt)
   ;   (tap-hold  200    150    ;    rmet)
+
+  e   (tap-hold  200    150    e    lmet)
+  i   (tap-hold  200    150    i    rmet)
+
 
 ;; tap-hold for "sd" esc -> nav layer
   spc (tap-hold  200    150    spc  (layer-while-held nav))
@@ -56,7 +61,7 @@
 (deflayer base
   esc  mute vold volu mmut brdn brup dsp  wln  tls  blt  fav  home end  ins del
   grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
-  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+  tab  q    w    @e   r    t    y    u    @i   o    p    [    ]    \
   @esc @a   @s   @d   @f   g    h    @j   @k   @l   @;   '    ret
   lsft z    x    c    v    b    n    m    ,    .    /    rsft
   lctl lmet lalt           @spc           ralt prnt rctl pgup up   pgdn
