@@ -20,7 +20,7 @@ entries=$(dedoc ss -i "$docset" | awk 'NR > 2')
 if [ $# -eq 2 ]; then
   entry=$(
     echo "$entries" |
-    sk --reverse --select-1 --query="$2" --preview "\
+    fzf --reverse --select-1 --query="$2" --preview "\
       echo {} |
       choose 0 |
       xargs dedoc -c ss -i '$docset' -o"
@@ -28,7 +28,7 @@ if [ $# -eq 2 ]; then
 else
   entry=$(
     echo "$entries" |
-    sk --reverse --select-1 --preview "\
+    fzf --reverse --select-1 --preview "\
       echo {} |
       choose 0 |
       xargs dedoc -c ss -i '$docset' -o"
