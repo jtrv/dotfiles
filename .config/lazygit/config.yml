@@ -10,8 +10,8 @@ gui:
     mainPanelSplitMode: 'flexible' # one of 'horizontal' | 'flexible' | 'vertical'
     enlargedSideViewLocation: 'left' # one of 'left' | 'top'
     language: 'auto' # one of 'auto' | 'en' | 'zh-CN' | 'zh-TW' | 'pl' | 'nl' | 'ja' | 'ko' | 'ru'
-    timeFormat: '02 Jan 06' # https://pkg.go.dev/time#Time.Format
-    shortTimeFormat: '3:04PM'
+    timeFormat: '06.01.02' # https://pkg.go.dev/time#Time.Format
+    shortTimeFormat: '15:04'
     theme:
         activeBorderColor:
             - '#a6e3a1'
@@ -43,8 +43,8 @@ gui:
     showBranchCommitHash: false # show commit hashes alongside branch names
     showBottomLine: true # for hiding the bottom information line (unless it has important information to tell you)
     showPanelJumps: true # for showing the jump-to-panel keybindings as panel subtitles
-    showCommandLog: false
-    commandLogSize: 8
+    showCommandLog: true
+    commandLogSize: 3
     showIcons: false # deprecated: use nerdFontsVersion instead
     nerdFontsVersion: "3" # nerd fonts version to use ("2" or "3"); empty means don't show nerd font icons
     showFileIcons: true # for hiding file icons in the file views
@@ -133,7 +133,7 @@ keybinding:
         jumpToBlock: ['1', '2', '3', '4', '5'] # goto the Nth block / panel
         nextMatch: 'n'
         prevMatch: 'N'
-        optionMenu: '' # show help menu
+        optionMenu: <disabled> # show help menu
         optionMenu-alt1: '?' # show help menu
         select: '<space>'
         goInto: '<enter>'
@@ -185,8 +185,8 @@ keybinding:
         confirmDiscard: 'x'
         ignoreFile: 'i'
         refreshFiles: 'r'
-        stashAllChanges: 's'
-        viewStashOptions: 'S'
+        stashAllChanges: 'S'
+        viewStashOptions: 's'
         toggleStagedAll: '<c-a>' # stage/unstage all
         viewResetOptions: 'D'
         fetch: 'f'
@@ -229,7 +229,7 @@ keybinding:
         openLogMenu: '<c-l>'
         viewBisectOptions: 'b'
     stash:
-        popStash: 'g'
+        popStash: ''
         renameStash: 'r'
     commitFiles:
         checkoutCommitFile: 'c'
@@ -243,12 +243,10 @@ keybinding:
 customCommands:
 
     # Remote-related actions
-    - key: '-'
-      description: "Switch GitHub User"
+    - key: 'z'
+      description: "Github auth switch"
       command: "gh auth switch"
       context: "global"
-      loadingText: "Switching User"
-      subprocess: false
       showOutput: true
     - key: '<c-f>'
       description: "Fetch remote branch as new local branch"
@@ -311,6 +309,16 @@ customCommands:
       context: "commitFiles"
       command: "tig blame {{.SelectedSubCommit.Sha}} -- {{.SelectedCommitFile.Name}}"
       subprocess: true
+
+    # Stash actions
+    - key: 'G'
+      description: "Use config"
+      context: "stash"
+      command: 'git restore --source {{ "stash@{" }}{{ .SelectedStashEntry.Index }}{{ "}" }} -- $LAZYGIT_0'
+    - key: 'G'
+      description: "Force write to index"
+      context: "commitFiles"
+      command: 'git restore --source {{ "stash@{" }}{{ .SelectedStashEntry.Index }}{{ "}" }} -- {{.SelectedCommitFile.Name}}'
 
     # Tig integrations
     - key: 't'
