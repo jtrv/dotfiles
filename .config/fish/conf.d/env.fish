@@ -107,7 +107,9 @@ ctrl-b:page-up,\
 ctrl-f:page-down,\
 ctrl-u:half-page-up,\
 ctrl-d:half-page-down,\
-ctrl-space:jump\
+ctrl-space:jump,\
+preview-scroll-up:preview-half-page-up,\
+preview-scroll-down:preview-half-page-down\
 '"
 
 # catppucin theme
@@ -135,7 +137,9 @@ ctrl-b:page-up,\
 ctrl-f:page-down,\
 ctrl-u:half-page-up,\
 ctrl-d:half-page-down,\
-ctrl-space:jump\
+ctrl-space:jump,\
+preview-scroll-up:preview-up,\
+preview-scroll-down:preview-down\
 '"
 
 # catppucin theme
