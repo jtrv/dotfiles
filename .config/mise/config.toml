@@ -11,8 +11,9 @@ python = "latest"
 revive = "latest"
 ruby = "latest"
 usage = "latest"
+yazi = "latest"
 zig = "latest"
 
 [settings]
-plugin_autoupdate_last_check_duration = '1 week'
+plugin_autoupdate_last_check_duration = '1 day'
 env_file = '.env'
