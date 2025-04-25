@@ -12,8 +12,8 @@ dotenv-linter = "latest"
 go = "latest"
 revive = "latest"
 usage = "latest"
-zig = "latest"
 yazi = "latest"
+zig = "latest"
 
 [settings]
 plugin_autoupdate_last_check_duration = '1 day'
