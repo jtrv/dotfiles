@@ -819,7 +819,25 @@ map global user q -docstring 'qalc' %{:qalc <ret>}
 
 # select/edit surrounding chars and tags
 bundle Encapsul8 https://github.com/ElectricR/Encapsul8 %{
-  require-module encapsul8-load-defaults
+  set-option global encapsul8_mapping_action_surround_around_shortcut 's'
+  set-option global encapsul8_mapping_action_surround_within_shortcut 'x'
+
+  set-option global encapsul8_mapping_action_delete         'D'
+  set-option global encapsul8_mapping_action_select_inner   'i'
+  set-option global encapsul8_mapping_action_select_outer   'a'
+  set-option global encapsul8_mapping_cancel                '<esc>'
+  set-option global encapsul8_mapping_surround_shortcut     's'
+
+  set-option global encapsul8_mapping_alias_angle_brackets  'n'
+  set-option global encapsul8_mapping_alias_braces          'c'
+  set-option global encapsul8_mapping_alias_double_quote    'd'
+  set-option global encapsul8_mapping_alias_grave           'g'
+  set-option global encapsul8_mapping_alias_parentheses     'p'
+  set-option global encapsul8_mapping_alias_single_quote    'q'
+  set-option global encapsul8_mapping_alias_square_brackets 'b'
+
+  set-option global encapsul8_show_key_tips true
+  require-module encapsul8-load-defaults-global
 }
 
 # spelling and grammar checking
