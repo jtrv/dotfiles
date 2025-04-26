@@ -128,6 +128,11 @@ mods = "Control|Shift"
 enabled = true
 mods = "None"
 
+[[keyboard.bindings]]
+key = "N"
+mods = "Super"
+command = { program = "sh", args = ["-f", "-c", "alacritty msg create-window --working-directory \"$PWD\""] }
+
 [window]
 opacity = 0.95
 
