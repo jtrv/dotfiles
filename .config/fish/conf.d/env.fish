@@ -76,8 +76,6 @@ set -gx EDITOR                      "kak"
 set -gx fish_greeting
 set -gx HORS_ENGINE                 "google"
 set -gx MANPAGER                    "kak -e 'set buffer filetype man'"
-set -gx OPENAI_API_BASE             "https://api.openai.com/v1"
-set -gx OPENROUTER_API_KEY          (secli get openrouter_api_key)
 set -gx PAGER                       "kak"
 set -gx SCCACHE_DIRECT              true
 set -gx QT_STYLE_OVERRIDE           "kvantum"
