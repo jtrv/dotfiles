@@ -61,7 +61,6 @@ set -gx XAUTHORITY "$XDG_RUNTIME_DIR/Xauthority"
 set -gx HISTFILE "$XDG_STATE_HOME/bash/history"
 
 # Misc
-set -gx ANTHROPIC_API_KEY           (secli get anthropic_api_key)
 set -gx ARGC_COMPLETIONS_ROOT       "$HOME/repos/argc-completions"
 set -gx ARGC_COMPLETIONS_PATH       "$ARGC_COMPLETIONS_ROOT/completions/linux:$ARGC_COMPLETIONS_ROOT/completions"
 set -gx ARGC_SCRIPTS                (/bin/ls -p -1 "$ARGC_COMPLETIONS_ROOT/completions/linux" "$ARGC_COMPLETIONS_ROOT/completions" | sed -n 's/\.sh$//p')
@@ -71,18 +70,12 @@ set -gx BEMOJI_PICKER_CMD           "dmenu -i -l 5 -g 5"
 set -gx BEMOJI_CLIP_CMD             "xclip -sel clip"
 set -gx BEMOJI_TYPE_CMD             "xdotool"
 set -gx BROWSER                     "firefox"
-set -gx CLAUDE_API_KEY              $ANTHROPIC_API_KEY # for aichat
 set -gx CONCEAL_FINDER              "skim"
-set -gx DEEPSEEK_API_KEY            (secli get deepseek_api_key)
 set -gx DELTA_PAGER                 "kak"
 set -gx EDITOR                      "kak"
-set -gx GROQ_API_KEY                (secli get groq_api_key)
 set -gx fish_greeting
 set -gx HORS_ENGINE                 "google"
 set -gx MANPAGER                    "kak -e 'set buffer filetype man'"
-set -gx OPENAI_API_KEY              (secli get openai_api_key)
-set -gx OPENAI_API_BASE             "https://api.openai.com/v1"
-set -gx OPENROUTER_API_KEY          (secli get openrouter_api_key)
 set -gx PAGER                       "kak"
 set -gx SCCACHE_DIRECT              true
 set -gx QT_STYLE_OVERRIDE           "kvantum"

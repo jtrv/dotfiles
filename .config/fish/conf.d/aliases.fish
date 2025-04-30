@@ -24,6 +24,7 @@ alias kab     "k ~/.config/fish/conf.d/abbreviations.fish"
 alias kakrc   "k ~/.config/kak/kakrc"
 alias kal     "k ~/.config/fish/conf.d/aliases.fish"
 alias kenv    "k ~/.config/fish/conf.d/env.fish"
+alias kenvs   "k ~/.config/fish/conf.d/envs.fish"
 alias kish    "k ~/.config/fish/config.fish"
 alias k       "kak"
 alias la      "fls -alh --color=always" # all files and dirs
