@@ -119,6 +119,7 @@ git-delta
 github-cli
 glow
 gnu-netcat
+go-yq
 gomuks
 google-chrome
 gopls
@@ -207,6 +208,7 @@ npm
 ntfs-3g
 ntp
 nvtop
+obs-studio
 oculante
 odt2txt
 onefetch
@@ -375,7 +377,6 @@ xss-lock
 yamllint
 yazi
 yin-yang-git
-yq
 yt-dlp
 zaread-git
 zathura

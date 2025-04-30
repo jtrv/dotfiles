@@ -10,10 +10,11 @@ cargo-run-bin -> https://github.com/rust-lang/crates.io-index
 cargo-trend -> https://github.com/rust-lang/crates.io-index
 cargo-update -> https://github.com/rust-lang/crates.io-index
 cargo-vcpkg -> https://github.com/rust-lang/crates.io-index
-caser-cli -> https://github.com/jtrv/caser
+caser-cli -> /home/sugimoto/.config/kak/bundle/caser
 conceal -> https://github.com/rust-lang/crates.io-index
 cpz -> https://github.com/rust-lang/crates.io-index
 crabz -> https://github.com/rust-lang/crates.io-index
+cymbal -> https://github.com/enricozb/cymbal
 dedoc -> https://github.com/rust-lang/crates.io-index
 difftastic -> https://github.com/rust-lang/crates.io-index
 dotenv-linter -> https://github.com/rust-lang/crates.io-index
