@@ -3,6 +3,12 @@
 
 ################### INIT ###################
 
+# noop evaluate-commands %sh{
+  # plugins="$kak_config/bundle"
+  # mkdir -p "$plugins"
+  # [ ! -e "$plugins/kak-bundle" ] && \
+  #   git clone -q https://codeberg.org/jdugan6240/kak-bundle "$plugins/kak-bundle"
+# }
 source "%val{config}/bundle/kak-bundle/rc/kak-bundle.kak"
 bundle-noload kak-bundle https://codeberg.org/jdugan6240/kak-bundle
 
