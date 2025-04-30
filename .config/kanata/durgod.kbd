@@ -36,8 +36,8 @@
   l   (tap-hold  200    150    l    ralt)
   ;   (tap-hold  200    150    ;    rmet)
 
-  e   (tap-hold  200    150    e    lmet)
-  i   (tap-hold  200    150    i    rmet)
+  e   (tap-hold  200    175    e    lmet)
+  i   (tap-hold  200    175    i    rmet)
 
 
 ;; hold spc for nav layer
