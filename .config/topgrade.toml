@@ -42,7 +42,7 @@ self_update = true
 # Custom commands
 [commands]
 "config submodules" = "config submodule update"
-"kakoune" = "pushd ~/repos/kakoune/; sudo make install; popd; kak -e 'bundle-update'"
+"kakoune" = "pushd ~/repos/kakoune/; sudo make install; popd; kak -ui dummy -e 'hook global User bundle-after-install %{ quit! }; bundle-update'"
 "proton" = "protonup-rs -q"
 "uv tools" = "uv tool upgrade --all"
 "warehouse" = "warehouse"
