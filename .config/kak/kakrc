@@ -674,10 +674,10 @@ map global normal V     -docstring 'add next match'         %{<a-*>N}
 map global normal <a-V> -docstring 'add previous match'     %{<a-*><a-N>}
 
 # case insensitive search by default
-map global normal /     -docstring 'search'                      %{/(?i)}
-map global normal <a-/> -docstring 'search backwards'            %{<a-/>(?i)}
-map global normal ?     -docstring '(extend) search'             %{?(?i)}
-map global normal <a-?> -docstring '(extend) search backwards'   %{<a-?>(?i)}
+map global normal /     -docstring 'search'                      %{/(?c)}
+map global normal <a-/> -docstring 'search backwards'            %{<a-/>(?c)}
+map global normal ?     -docstring '(extend) search'             %{?(?c)}
+map global normal <a-?> -docstring '(extend) search backwards'   %{<a-?>(?c)}
 
 define-command -hidden regex-assertions %{
 info -title 'assertions' '<c-i>:    ignore case  (?i)
