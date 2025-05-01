@@ -5,7 +5,6 @@ After=suspend.target sleep.target hybrid-sleep.target hibernate.target
 [Service]
 Type=oneshot
 ExecStart=/usr/bin/kdeconnect-cli --refresh
-RemainAfterExit=yes
 
 [Install]
 WantedBy=sleep.target default.target
