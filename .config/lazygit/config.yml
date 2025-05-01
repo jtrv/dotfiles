@@ -229,7 +229,7 @@ keybinding:
         openLogMenu: '<c-l>'
         viewBisectOptions: 'b'
     stash:
-        popStash: ''
+        popStash: '<disabled>'
         renameStash: 'r'
     commitFiles:
         checkoutCommitFile: 'c'
@@ -311,11 +311,11 @@ customCommands:
       subprocess: true
 
     # Stash actions
-    - key: 'G'
+    - key: 'g'
       description: "Use config"
       context: "stash"
       command: 'git restore --source {{ "stash@{" }}{{ .SelectedStashEntry.Index }}{{ "}" }} -- $LAZYGIT_0'
-    - key: 'G'
+    - key: 'g'
       description: "Force write to index"
       context: "commitFiles"
       command: 'git restore --source {{ "stash@{" }}{{ .SelectedStashEntry.Index }}{{ "}" }} -- {{.SelectedCommitFile.Name}}'
