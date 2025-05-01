@@ -1,0 +1,39 @@
+(defalias
+
+  ;;  home-row tap-holds
+  ;;  idx   mid  ring  pink
+  ;;  shft  ctl  alt   meta
+  ;;
+  ;;             ttime  htime  tap  hold
+  a   (tap-hold  200    150    a    lmet)
+  s   (tap-hold  200    150    s    lalt)
+  d   (tap-hold  200    150    d    lctl)
+  f   (tap-hold  200    150    f    lsft)
+  j   (tap-hold  200    150    j    rsft)
+  k   (tap-hold  200    150    k    rctl)
+  l   (tap-hold  200    150    l    ralt)
+  ;   (tap-hold  200    150    ;    rmet)
+
+  ;; pinky relief meta tap-holds
+  e   (tap-hold  200    175    e    lmet)
+  i   (tap-hold  200    175    i    rmet)
+
+  ;; hold spc for nav layer
+  spc (tap-hold  200    150    spc  (layer-while-held nav))
+
+  ;; xcape
+  esc (tap-hold  200    150    esc  rctl)
+)
+
+(defchordsv2-experimental
+  (f j)   (caps-word 5000)                          50 first-release ()
+
+  (s d)   (tap-hold 200 150 esc (multi lalt lctl))  50 first-release ()
+  (w e)   tab                                       50 first-release ()
+  (q w)   home                                      50 first-release ()
+
+  (k l)   (tap-hold 200 150 ret (multi rctl ralt))  50 first-release ()
+  (i o)   bspc                                      50 first-release ()
+  (l ;)   (tap-hold 200 150 del (multi ralt rmet))  50 first-release ()
+  (o p)   end                                       50 first-release ()
+)
