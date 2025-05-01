@@ -5,7 +5,7 @@ icon_name="audio-input-microphone"
 # Send a "running" notification and capture its ID ('-p' prints ID to stdout)
 notification_id=$(dunstify -p -t 0 -i "$icon_name" "Dictation Running" "Nerd Dictation is listening...")
 
-nerd-dictation begin --numbers-as-digits --numbers-use-separator --timeout 2
+nerd-dictation begin --simulate-input-tool XDOTOOL --numbers-as-digits --numbers-use-separator --timeout 3
 
 # Close the initial notification
 dunstify -C "$notification_id"
