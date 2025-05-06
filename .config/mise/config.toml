@@ -17,3 +17,4 @@ zig = "latest"
 [settings]
 plugin_autoupdate_last_check_duration = '1 day'
 env_file = '.env'
+idiomatic_version_file_enable_tools = [ 'crystal', 'elixir', 'go', 'java', 'node', 'python', 'ruby', 'terraform', 'yarn' ]
