@@ -1,5 +1,6 @@
 if status is-interactive
 
+alias aider   "aider --config ~/.config/aider/config.yaml"
 alias ani     "ani-cli -q best --skip" # weeb out in S-rank ultra-fidelity 8k lossless greenray
 alias boi     "wikiman"
 alias bls     "/bin/ls"
@@ -39,12 +40,13 @@ alias lt      "erd -HIl --color=force" # tree listing
 alias mdc     "mdcat --columns=70"
 alias mkd     "mkdir -p"
 alias m       "qalc"
+alias mr      "mise run"
 alias mrb     "mise run build"
 alias mrc     "mise run clean"
 alias mrd     "mise run develop"
 alias mrf     "mise run format"
 alias mrl     "mise run lint"
-alias mr      "mise run"
+alias mrp     "mise run deploy"
 alias mrs     "mise run serve"
 alias mv      "mv -i"
 alias nbg     "feh --randomize --bg-scale --no-fehbg ~/media/pictures/wallpapers/" # change bg
