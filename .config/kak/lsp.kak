@@ -345,6 +345,15 @@ hook -group lsp-filetype-sql global BufSetOption filetype=sql %{
   set-option buffer lsp_servers %{
     [sqls]
     roots = [ ".git", ".hg" ]
-    command = "sqls"
+  }
+}
+
+hook -group lsp-filetype-toml global BufSetOption filetype=toml %{
+  set-option buffer lsp_servers %exp{
+    #opt{lsp_server_lsp_ai}
+
+    [taplo]
+    root_globs = [ ".git", ".hg" ]
+    args = [ "lsp", "stdio" ]
   }
 }
