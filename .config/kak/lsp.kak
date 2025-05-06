@@ -23,58 +23,69 @@ map global object D      -docstring 'LSP errors'                     %{: lsp-dia
 
 declare-option -hidden str lsp_server_lsp_ai %{
   [lsp-ai]
-  root_globs = [ ".git" ]
-
+  root = "./"
   [lsp-ai.settings.memory]
   file_store = { }
 
   [lsp-ai.settings.completion]
-  model = "v3"
-  parameters = { }
+  model = "gemini_complete"
+  [lsp-ai.settings.completion.parameters]
+  max_context = 1024
+  max_tokens = 128
 
-  [lsp-ai.settings.chat.parameters]
-  system = "You are a code assistant chatbot. The user will ask you for assistance coding and you will do your best to answer succinctly and accurately"
+  [lsp-ai.settings.models.gemini_complete]
+  type = "open_ai"
+  completions_endpoint = "https://openrouter.ai/api/v1/completions"
+  model = "google/gemini-2.5-pro-preview-03-25"
+  auth_token_env_var_name = "OPENROUTER_API_KEY"
 
   [lsp-ai.settings.models.gemini]
   type = "open_ai"
-  chat_endpoint = "https://openrouter.ai/api/v1"
+  chat_endpoint = "https://openrouter.ai/api/v1/chat/completions"
   model = "google/gemini-2.5-pro-preview-03-25"
   auth_token_env_var_name = "OPENROUTER_API_KEY"
   max_requests_per_second = 1
   [[lsp-ai.settings.chat]]
   trigger = ",.gg"
-  action_display_name = "gemini-2.5-pro"
+  action_display_name = "google gemini"
   model = "gemini"
-
-  [lsp-ai.settings.models.v3]
-  type = "open_ai"
-  chat_endpoint = "https://openrouter.ai/api/v1"
-  model = "deepseek/deepseek-chat-v3-0324"
-  auth_token_env_var_name = "OPENROUTER_API_KEY"
-  max_requests_per_second = 1
+  parameters.max_context = 4096
+  parameters.max_tokens = 1024
+  paramaeters.messages = [
+    { role = "system", content = "You are a code assistant chatbot. The user will ask you for assistance coding and you will do you best to answer succinctly and accurately" }
+  ]
 
   [lsp-ai.settings.models.r1]
   type = "open_ai"
-  chat_endpoint = "https://openrouter.ai/api/v1"
+  chat_endpoint = "https://openrouter.ai/api/v1/chat/completions"
   model = "deepseek/r1"
   auth_token_env_var_name = "OPENROUTER_API_KEY"
   max_requests_per_second = 1
   [[lsp-ai.settings.chat]]
   trigger = ",.r1"
-  action_display_name = "deepseek-r1"
+  action_display_name = "deepseek r1"
   model = "r1"
+  parameters.max_context = 4096
+  parameters.max_tokens = 1024
+  paramaeters.messages = [
+    { role = "system", content = "You are a code assistant chatbot. The user will ask you for assistance coding and you will do you best to answer succinctly and accurately" }
+  ]
 
   [lsp-ai.settings.models.sonnet]
   type = "open_ai"
-  chat_endpoint = "https://openrouter.ai/api/v1"
+  chat_endpoint = "https://openrouter.ai/api/v1/chat/completions"
   model = "anthropic/claude-3.7-sonnet:thinking"
   auth_token_env_var_name = "OPENROUTER_API_KEY"
   max_requests_per_second = 1
   [[lsp-ai.settings.chat]]
   trigger = ",.so"
-  action_display_name = "sonnet-3.7"
+  action_display_name = "claude sonnet"
   model = "sonnet"
-
+  parameters.max_context = 4096
+  parameters.max_tokens = 1024
+  paramaeters.messages = [
+    { role = "system", content = "You are a code assistant chatbot. The user will ask you for assistance coding and you will do you best to answer succinctly and accurately" }
+  ]
 }
 
 declare-option -hidden str lsp_server_tailwind %{
@@ -98,14 +109,19 @@ declare-option -hidden str lsp_server_emmet %{
   args = [ "--stdio" ]
 }
 
-set-option global lsp_server_biome %{
+declare-option -hidden str lsp_server_biome %{
   [biome]
-  root_globs = ["biome.json", "package.json", "tsconfig.json", "jsconfig.json", ".git", ".hg"]
-  args = ["lsp-proxy"]
+  root_globs = ["biome.json", "package.json", "tsjson", "jsjson", ".git", ".hg"]
+  args = [ "lsp-proxy" ]
 }
 
 hook -group lsp-filetype-css global BufSetOption filetype=(?:css|less|scss) %{
   set-option buffer lsp_servers %exp{
+    #opt{lsp_server_lsp_ai}
+    %opt{lsp_server_biome}
+    %opt{lsp_server_emmet}
+    #opt{lsp_server_unocss}
+
     # Documented options see
     # https://github.com/sublimelsp/LSP-css/blob/master/LSP-css.sublime-settings
     [vscode-css-language-server]
@@ -126,11 +142,6 @@ hook -group lsp-filetype-css global BufSetOption filetype=(?:css|less|scss) %{
     less.validProperties = []
     less.format.enable = true
     less.validate = true
-
-
-    %opt{lsp_server_biome}
-    %opt{lsp_server_emmet}
-    # % opt{lsp_server_unocss}
   }
 
 }
@@ -143,9 +154,11 @@ hook -group lsp-filetype-dotenv global BufSetOption filetype=dotenv %{
 }
 
 hook -group lsp-filetype-fish global BufSetOption filetype=fish %{
-  set-option buffer lsp_servers %{
+  set-option buffer lsp_servers %exp{
+    #opt{lsp_server_lsp_ai}
+
     [fish-lsp]
-    root_globs = [ "*.fish", "config.fish", ".git", ".hg" ]
+    root_globs = [ "*.fish", "fish", ".git", ".hg" ]
     args = [ "start" ]
     [fish-lsp.envs]
     fish_lsp_enabled_handlers = "popups formatting complete hover rename definition references diagnostics signatureHelp codeAction inlayHint highlight"
@@ -155,6 +168,11 @@ hook -group lsp-filetype-fish global BufSetOption filetype=fish %{
 
 hook -group lsp-filetype-html global BufSetOption filetype=html %{
   set-option buffer lsp_servers %exp{
+    #opt{lsp_server_lsp_ai}
+    %opt{lsp_server_biome}
+    %opt{lsp_server_emmet}
+    #opt{lsp_server_unocss}
+
     # Documented options see
     # https://github.com/sublimelsp/LSP-html/blob/master/LSP-html.sublime-settings
     [vscode-html-language-server]
@@ -195,19 +213,18 @@ hook -group lsp-filetype-html global BufSetOption filetype=html %{
     [superhtml]
     root_globs = [ "package.json", ".git", ".hg" ]
     args = [ "lsp" ]
-
-
-    %opt{lsp_server_biome}
-    %opt{lsp_server_emmet}
-    # % opt{lsp_server_unocss}
   }
 }
 
 hook -group lsp-filetype-javascript global BufSetOption filetype=(?:javascript|typescript) %{
   set-option buffer lsp_servers %exp{
+    #opt{lsp_server_lsp_ai}
+    %opt{lsp_server_biome}
+    %opt{lsp_server_emmet}
+    #opt{lsp_server_unocss}
 
     [typescript-language-server]
-    root_globs = [ "package.json", "tsconfig.json", "jsconfig.json", ".git", ".hg" ]
+    root_globs = [ "package.json", "tsjson", "jsjson", ".git", ".hg" ]
     args = [ "--stdio" ]
     settings_section = "_"
     [typescript-language-server.settings._]
@@ -230,16 +247,13 @@ hook -group lsp-filetype-javascript global BufSetOption filetype=(?:javascript|t
     problems = { shortenToSingleLine = false }
     codeAction.disableRuleComment = { enable = true, location = "separateLine" }
     codeAction.showDocumentation = { enable = true }
-
-
-    %opt{lsp_server_biome}
-    %opt{lsp_server_emmet}
-    # % opt{lsp_server_unocss}
   }
 }
 
 hook -group lsp-filetype-latex global BufSetOption filetype=latex %{
-  set-option buffer lsp_servers %{
+  set-option buffer lsp_servers %exp{
+    #opt{lsp_server_lsp_ai}
+
     [texlab]
     root_globs = [ ".git", ".hg" ]
     [texlab.settings.texlab]
@@ -254,7 +268,7 @@ hook -group lsp-filetype-latex global BufSetOption filetype=latex %{
       "%l:1:%f",
       "--synctex-editor-command", # Inverse search: use Control+Left-Mouse-Button to jump to source.
       """
-        sh -c '
+        sh -fc '
           echo "
             evaluate-commands -client %%opt{texlab_client} %%{
               evaluate-commands -try-client %%opt{jumpclient} %%{
@@ -274,35 +288,35 @@ hook -group lsp-filetype-latex global BufSetOption filetype=latex %{
 
 
 hook -group lsp-filetype-markdown global BufSetOption filetype=markdown %{
-  # set-option buffer lsp_servers %{
-  #   [marksman]
-  #   root_globs = [ ".marksman.toml" ]
-  #   args = [ "server" ]
-  # }
+  set-option buffer lsp_servers %exp{
+    #opt{lsp_server_lsp_ai}
+    %opt{lsp_server_biome}
 
-  # set-option buffer lsp_servers %{
+    [markdown-oxide]
+    root_globs = [ "logseq" ]
   #   [zk]
   #   root_globs = [ ".zk" ]
   #   args = [ "lsp" ]
-  # }
-
-  set-option buffer lsp_servers %{
-    [markdown-oxide]
-    root_globs = [ "logseq" ]
+  #   [marksman]
+  #   root_globs = [ ".marksman.toml" ]
+  #   args = [ "server" ]
   }
 }
 
 hook -group lsp-filetype-prisma global BufSetOption filetype=prisma %{
-  set-option buffer lsp_servers %{
+  set-option buffer lsp_servers %exp{
+    #opt{lsp_server_lsp_ai}
+
     [prisma-language-server]
     root_globs = [ ".git", ".hg", "prisma" ]
-    command = "prisma-language-server"
     args = [ "--stdio" ]
   }
 }
 
 hook -group lsp-filetype-python global BufSetOption filetype=python %{
-  set-option buffer lsp_servers %{
+  set-option buffer lsp_servers %exp{
+    #opt{lsp_server_lsp_ai}
+
     [pylsp]
     root_globs = [ "requirements.txt", "setup.py", "pyproject.toml", ".git", ".hg" ]
     settings_section = "_"
@@ -326,7 +340,9 @@ hook -group lsp-filetype-python global BufSetOption filetype=python %{
 }
 
 hook -group lsp-filetype-ruby global BufSetOption filetype=ruby %{
-  set-option buffer lsp_servers %{
+  set-option buffer lsp_servers %exp{
+    #opt{lsp_server_lsp_ai}
+
     [solargraph]
     root_globs = [ "Gemfile" ]
     args = [ "stdio" ]
@@ -343,6 +359,8 @@ hook -group lsp-filetype-ruby global BufSetOption filetype=ruby %{
 
 hook -group lsp-filetype-sql global BufSetOption filetype=sql %{
   set-option buffer lsp_servers %{
+    #opt{lsp_server_lsp_ai}
+
     [sqls]
     roots = [ ".git", ".hg" ]
   }
