@@ -15,13 +15,13 @@
   visibility: collapse !important;
 }
 /* hide urlbar, reveal on hover or focus */
-#nav-bar:not([customizing="true"]):not([inFullscreen]) {
+/*#nav-bar:not([customizing="true"]):not([inFullscreen]) {
   margin-top: -5rem !important;
 }
 #navigator-toolbox:hover:not([inFullscreen]) :-moz-any(#nav-bar),
 #navigator-toolbox:focus-within :-moz-any(#nav-bar)  {
   margin-top: 1px !important;
-}
+}*/
 
 /* hide sidebar on fullscreen */
 #main-window[inFullscreen] #sidebar-box,
