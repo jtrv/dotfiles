@@ -1,1 +1,1 @@
-lsp-inlay-diagnostics-disable window
+# ui-lsp-enable
