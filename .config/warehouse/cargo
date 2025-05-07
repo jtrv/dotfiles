@@ -12,7 +12,7 @@ cargo-run-bin -> https://github.com/rust-lang/crates.io-index
 cargo-trend -> https://github.com/rust-lang/crates.io-index
 cargo-update -> https://github.com/rust-lang/crates.io-index
 cargo-vcpkg -> https://github.com/rust-lang/crates.io-index
-caser-cli -> https://github.com/jtrv/caser
+caser-cli -> /home/sugimoto/.config/kak/bundle/caser
 conceal -> https://github.com/rust-lang/crates.io-index
 cpz -> https://github.com/rust-lang/crates.io-index
 crabz -> https://github.com/rust-lang/crates.io-index
@@ -33,7 +33,7 @@ jless -> https://github.com/rust-lang/crates.io-index
 jql -> https://github.com/rust-lang/crates.io-index
 kak-lsp -> /home/sugimoto/.config/kak/bundle/kakoune-lsp
 kakpipe -> /home/sugimoto/.config/kak/bundle/kakpipe
-kak-popup -> https://github.com/rust-lang/crates.io-index
+kak-popup -> /home/sugimoto/.config/kak/bundle/popup.kak
 kakship -> /home/sugimoto/.config/kak/bundle/kakship
 kak-tree-sitter -> https://github.com/rust-lang/crates.io-index
 kanata -> https://github.com/rust-lang/crates.io-index
