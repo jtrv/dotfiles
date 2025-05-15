@@ -216,7 +216,7 @@ complete-command docs shell-script-candidates %{
           print b[i]
       }'
   elif [ $kak_token_to_complete = 1 ]; then
-    dedoc ss -i "$1" | awk 'NR > 2 {print $2}'
+    dedoc ss -i --porcelain "$1"
   fi
 }
 
