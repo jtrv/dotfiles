@@ -190,7 +190,7 @@ keybinding:
         toggleStagedAll: '<c-a>' # stage/unstage all
         viewResetOptions: 'D'
         fetch: 'f'
-        toggleTreeView: '`'
+        toggleTreeView: 't'
         openMergeTool: 'M'
         openStatusFilter: '<c-b>'
     branches:
