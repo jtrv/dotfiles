@@ -202,6 +202,9 @@ keymap = [
   { on = [ "g", "M" ],       run = "cd /run/media/$USER",             desc = "Go to /run/media/$USER" },
   { on = [ "g", "T" ],       run = "cd /tmp",                         desc = "Go to /tmp" },
 
+  { on = [ "g", "w" ],       run = "cd ~/work",                       desc = "Go to ~/work" },
+  { on = [ "g", "R" ],       run = "cd ~/work/repos",                 desc = "Go to ~/work/repos" },
+
   # Help
   { on = [ "?" ], run = [ "help" ], desc = "Open help" },
 ]
