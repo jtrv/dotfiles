@@ -737,7 +737,7 @@ bundle kakoune-buffer-manager https://github.com/theowenyoung/kakoune-buffer-man
   map global buffers e -docstring 'buffer editor'   %{:buffer-manager <ret>}
 }
 
-bundle caser https://github.com/jtrv/caser
+bundle caser https://github.com/jtrv/caser %{ require-module caser-recommended-bindings }
 bundle-install-hook caser %{ cargo install --path . ; cargo clean }
 
 declare-user-mode dev
