@@ -99,6 +99,8 @@ hook global ModeChange ".*:insert" %{
   set-face global StatusLine     "%opt{peach}ff,%opt{mantle}ff"
 }
 
+set-face global WhitespaceIndent "%opt{surface0}ff,default+f"
+
 # LSP
 
 # Faces used by inlay diagnostics.

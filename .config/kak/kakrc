@@ -873,6 +873,11 @@ provide-module "ui" %{
     define-command ui-colorcol-toggle %{ try ui-colorcol-enable catch ui-colorcol-disable }
     map global ui r -docstring 'toggle colorcol'   %{:ui-colorcol-toggle <ret>}
 
+    define-command ui-indent-enable %{ add-highlighter window/indent show-whitespaces -lf '' -tab '' -spc ' ' -indent '▏' }
+    define-command ui-indent-disable %{ remove-highlighter window/indent }
+    define-command ui-indent-toggle %{ try ui-indent-enable catch ui-indent-disable }
+    map global ui i -docstring 'toggle indent'   %{:ui-indent-toggle <ret>}
+
     define-command -override ui-lsp-enable %{
       echo -debug "Enabling LSP for filtetype %opt{filetype}"
       lsp-enable-window
@@ -929,6 +934,7 @@ provide-module "ui" %{
       ui-line-numbers-enable
       ui-lint-enable
       ui-git-diff-enable
+      ui-indent-enable
       ui-rainbow-enable
       ui-todos-enable
       ui-trailing-spaces-enable
