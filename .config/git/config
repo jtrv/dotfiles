@@ -45,12 +45,14 @@
 [tag]
   sort = version:refname
 
-[includeIf "gitdir:~/"]
-  path = ./personal
-[includeIf "gitdir:~/work/"]
-  path = ./work
 [include]
   path = ./aliases
   path = ./delta
   path = ./mergiraf
   path = ./secret
+
+[includeIf "gitdir:~/"]
+  path = ./personal
+
+[includeIf "gitdir:~/work/"]
+  path = ./work
