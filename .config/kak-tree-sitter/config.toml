@@ -102,11 +102,45 @@ highlight.groups = [
   "warning",
 ]
 
+# asciidoc
+[language.asciidoc.grammar]
+source.git.url = "https://github.com/cathaysia/tree-sitter-asciidoc"
+source.git.pin = "5b6ccea9953b939959f447f7bfea699ae6968a99"
+path = "tree-sitter-asciidoc/src"
+compile = "sccache"
+compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
+compile_flags = ["-O3"]
+link = "cc"
+link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "asciidoc.so"]
+link_flags = ["-O3"]
+
+[language.asciidoc.queries]
+source.git.url = "https://github.com/cathaysia/tree-sitter-asciidoc"
+source.git.pin = "5b6ccea9953b939959f447f7bfea699ae6968a99"
+path = "tree-sitter-asciidoc/queries"
+
+# asciidoc_inline
+[language.asciidoc_inline.grammar]
+source.git.url = "https://github.com/cathaysia/tree-sitter-asciidoc"
+source.git.pin = "5b6ccea9953b939959f447f7bfea699ae6968a99"
+path = "tree-sitter-asciidoc_inline/src"
+compile = "sccache"
+compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
+compile_flags = ["-O3"]
+link = "cc"
+link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "asciidoc_inline.so"]
+link_flags = ["-O3"]
+
+[language.asciidoc_inline.queries]
+source.git.url = "https://github.com/cathaysia/tree-sitter-asciidoc"
+source.git.pin = "5b6ccea9953b939959f447f7bfea699ae6968a99"
+path = "tree-sitter-asciidoc_inline/queries"
+
 # astro
 [language.astro.grammar]
 path = "src"
-compile = "cc"
-compile_args = ["-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
+compile = "sccache"
+compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
 compile_flags = ["-O3"]
 link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "astro.so"]
@@ -196,7 +230,21 @@ link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "comment.so"]
 link_flags = ["-fuse-ld=mold", "-O3"]
 
 # common-lisp
-# TODO
+[language.common-lisp.grammar]
+source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-commonlisp"
+source.git.pin = "32323509b3d9fe96607d151c2da2c9009eb13a2f"
+path = "src"
+compile = "sccache"
+compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
+link_args = ["-shared", "-fpic", "parser.o", "-o", "common-lisp.so"]
+link_flags = ["-fuse-ld=mold", "-O3"]
+
+[language.common-lisp.queries]
+source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-commonlisp"
+source.git.pin = "32323509b3d9fe96607d151c2da2c9009eb13a2f"
+path = "queries"
 
 # cpon
 # TODO
@@ -233,6 +281,23 @@ compile_flags = ["-fuse-ld=mold", "-O3"]
 link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "css.so"]
 link_flags = ["-fuse-ld=mold", "-O3"]
+
+# csv
+[language.csv.grammar]
+source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-csv"
+source.git.pin = "7eb7297823605392d2bbcc4c09b1cd18d6fa9529"
+path = "csv/src"
+compile = "sccache"
+compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
+compile_flags = ["-O3"]
+link = "cc"
+link_args = ["-shared", "-fpic", "parser.o", "-o", "csv.so"]
+link_flags = ["-O3"]
+
+[language.csv.queries]
+source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-csv"
+source.git.pin = "7eb7297823605392d2bbcc4c09b1cd18d6fa9529"
+path = "csv/queries"
 
 # cue
 # TODO
@@ -326,26 +391,75 @@ link_flags = ["-O3", "-flto=auto"]
 # TODO
 
 # git-attributes
-# TODO
+[language.git-attributes.grammar]
+source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-gitattributes"
+source.git.pin = "5425944fd61bf2b3bad2c17c2dc9f53172b0f01d"
+path = "src"
+compile = "sccache"
+compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
+compile_flags = ["-O3"]
+link = "cc"
+link_args = ["-shared", "-fpic", "parser.o", "-o", "git-attributes.so"]
+link_flags = ["-O3"]
+
+[language.git-attributes.queries]
+source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-gitattributes"
+source.git.pin = "5425944fd61bf2b3bad2c17c2dc9f53172b0f01d"
+path = "queries"
 
 # git-commit
 [language.git-commit.grammar]
+source.git.url = "https://github.com/gbprod/tree-sitter-gitcommit"
+source.git.pin = "a716678c0f00645fed1e6f1d0eb221481dbd6f6d"
+path = "src"
+compile = "sccache"
+compile_args = ["cc", "-c", "-fpic", "../parser.c", "../scanner.c", "-I", ".."]
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
+link_args = ["-shared", "-fpic", "parser.o", "scanner.o", "-o", "git-commit.so"]
+link_flags = ["-fuse-ld=mold", "-O3"]
+
+[language.git-commit.queries]
+source.git.url = "https://github.com/gbprod/tree-sitter-gitcommit"
+source.git.pin = "a716678c0f00645fed1e6f1d0eb221481dbd6f6d"
+path = "queries"
+
+# git-config
+[language.git-config.grammar]
+source.git.url = "https://github.com/the-mikedavis/tree-sitter-git-config"
+source.git.pin = "0fbc9f99d5a28865f9de8427fb0672d66f9d83a5"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
 compile_flags = ["-fuse-ld=mold", "-O3"]
 link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "git-commit.so"]
+link_args = ["-shared", "-fpic", "parser.o", "-o", "git-config.so"]
 link_flags = ["-fuse-ld=mold", "-O3"]
 
-# git-config
-# TODO
+[language.git-config.queries]
+source.git.url = "https://github.com/the-mikedavis/tree-sitter-git-config"
+source.git.pin = "0fbc9f99d5a28865f9de8427fb0672d66f9d83a5"
+path = "queries"
 
 # git-ignore
 # TODO
 
 # git-rebase
-# TODO
+[language.git-rebase.grammar]
+source.git.url = "https://github.com/the-mikedavis/tree-sitter-git-rebase"
+source.git.pin = "bff4b66b44b020d918d67e2828eada1974a966aa"
+path = "src"
+compile = "sccache"
+compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
+link_args = ["-shared", "-fpic", "parser.o", "-o", "git-rebase.so"]
+link_flags = ["-fuse-ld=mold", "-O3"]
+
+[language.git-rebase.queries]
+source.git.url = "https://github.com/the-mikedavis/tree-sitter-git-rebase"
+source.git.pin = "bff4b66b44b020d918d67e2828eada1974a966aa"
+path = "queries"
 
 # gleam
 # TODO
@@ -360,7 +474,6 @@ link = "cc"
 link_args = ["-shared", "-fpic", "parser.o", "-o", "glsl.so"]
 link_flags = ["-fuse-ld=mold", "-O3"]
 
-
 # go
 [language.go.grammar]
 path = "src"
@@ -371,12 +484,25 @@ link = "cc"
 link_args = ["-shared", "-fpic", "parser.o", "-o", "go.so"]
 link_flags = ["-fuse-ld=mold", "-O3"]
 
-
 # godot-resource
 # TODO
 
 # gomod
-# TODO
+[language.go-mod.grammar]
+source.git.url = "https://github.com/camdencheek/tree-sitter-go-mod"
+source.git.pin = "6efb59652d30e0e9cd5f3b3a669afd6f1a926d3c"
+path = "src"
+compile = "sccache"
+compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
+link_args = ["-shared", "-fpic", "parser.o", "-o", "go-mod.so"]
+link_flags = ["-fuse-ld=mold", "-O3"]
+
+[language.go-mod.queries]
+source.git.url = "https://github.com/camdencheek/tree-sitter-go-mod"
+source.git.pin = "6efb59652d30e0e9cd5f3b3a669afd6f1a926d3c"
+path = "queries"
 
 # gotmpl
 # TODO
@@ -385,10 +511,38 @@ link_flags = ["-fuse-ld=mold", "-O3"]
 # TODO
 
 # graphql
-# TODO
+[language.graphql.grammar]
+source.git.url = "https://github.com/bkegley/tree-sitter-graphql"
+source.git.pin = "5e66e961eee421786bdda8495ed1db045e06b5fe"
+path = "src"
+compile = "sccache"
+compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
+link_args = ["-shared", "-fpic", "parser.o", "-o", "graphql.so"]
+link_flags = ["-fuse-ld=mold", "-O3"]
+
+[language.graphql.queries]
+source.git.url = "https://github.com/bkegley/tree-sitter-graphql"
+source.git.pin = "5e66e961eee421786bdda8495ed1db045e06b5fe"
+path = "queries/graphql"
 
 # hare
-# TODO
+[language.hare.grammar]
+source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-hare"
+source.git.pin = "4af5d82cf9ec39f67cb1db5b7a9269d337406592"
+path = "src"
+compile = "sccache"
+compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
+link_args = ["-shared", "-fpic", "parser.o", "-o", "hare.so"]
+link_flags = ["-fuse-ld=mold", "-O3"]
+
+[language.hare.queries]
+source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-hare"
+source.git.pin = "4af5d82cf9ec39f67cb1db5b7a9269d337406592"
+path = "queries"
 
 # haskell
 [language.haskell.grammar]
@@ -467,7 +621,21 @@ link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "javascript.so"]
 link_flags = ["-fuse-ld=mold", "-O3"]
 
 # jsdoc
-# TODO
+[language.jsdoc.grammar]
+source.git.url = "https://github.com/tree-sitter/tree-sitter-jsdoc"
+source.git.pin = "a417db5dbdd869fccb6a8b75ec04459e1d4ccd2c"
+path = "src"
+compile = "sccache"
+compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
+link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "jsdoc.so"]
+link_flags = ["-fuse-ld=mold", "-O3"]
+
+[language.jsdoc.queries]
+source.git.url = "https://github.com/tree-sitter/tree-sitter-jsdoc"
+source.git.pin = "a417db5dbdd869fccb6a8b75ec04459e1d4ccd2c"
+path = "queries"
 
 # json
 [language.json.grammar]
@@ -562,10 +730,26 @@ link_flags = ["-fuse-ld=mold", "-O3"]
 # TODO
 
 # lua
-# TODO
+[language.lua.grammar]
+source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-lua"
+source.git.pin = "e5e406935ff3e36529545955e2972646ed97f9e2"
+path = "src"
+compile = "sccache"
+compile_args = ["cc", "-c", "-fpic", "../parser.c", "../scanner.c", "-I", ".."]
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
+link_args = ["-shared", "-fpic", "parser.o", "scanner.o", "-o", "lua.so"]
+link_flags = ["-fuse-ld=mold", "-O3"]
+
+[language.lua.queries]
+source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-lua"
+source.git.pin = "e5e406935ff3e36529545955e2972646ed97f9e2"
+path = "queries"
 
 # make
 [language.make.grammar]
+source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-make"
+source.git.pin = "5e9e8f8ff3387b0edcaa90f46ddf3629f4cfeb1d"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
@@ -573,6 +757,11 @@ compile_flags = ["-fuse-ld=mold", "-O3"]
 link = "cc"
 link_args = ["-shared", "-fpic", "parser.o", "-o", "make.so"]
 link_flags = ["-fuse-ld=mold", "-O3"]
+
+[language.make.queries]
+source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-make"
+source.git.pin = "5e9e8f8ff3387b0edcaa90f46ddf3629f4cfeb1d"
+path = "queries"
 
 # markdoc
 # TODO
@@ -685,11 +874,9 @@ link_flags = ["-fuse-ld=mold", "-O3"]
 # TODO
 
 # prisma
-[language.prisma.grammar.source.git]
-url = "https://github.com/victorhqc/tree-sitter-prisma"
-pin = "eca2596a355b1a9952b4f80f8f9caed300a272b5"
-
 [language.prisma.grammar]
+source.git.url = "https://github.com/victorhqc/tree-sitter-prisma"
+source.git.pin = "73f39a6d5401cfdcd143951e499336cf5ab2ffaa"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
@@ -698,11 +885,9 @@ link = "cc"
 link_args = ["-shared", "-fpic", "parser.o", "-o", "prisma.so"]
 link_flags = ["-fuse-ld=mold", "-O3"]
 
-[language.prisma.queries.source.git]
-url = "https://github.com/victorhqc/tree-sitter-prisma"
-pin = "eca2596a355b1a9952b4f80f8f9caed300a272b5"
-
 [language.prisma.queries]
+source.git.url = "https://github.com/victorhqc/tree-sitter-prisma"
+source.git.pin = "73f39a6d5401cfdcd143951e499336cf5ab2ffaa"
 path = "queries"
 
 # protobuf
@@ -710,6 +895,24 @@ path = "queries"
 
 # prql
 # TODO
+
+# psv
+[language.psv.grammar]
+source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-csv"
+source.git.pin = "7eb7297823605392d2bbcc4c09b1cd18d6fa9529"
+path = "psv/src"
+compile = "sccache"
+compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
+compile_flags = ["-O3"]
+link = "cc"
+link_args = ["-shared", "-fpic", "parser.o", "-o", "psv.so"]
+link_flags = ["-O3"]
+
+[language.psv.queries]
+source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-csv"
+source.git.pin = "7eb7297823605392d2bbcc4c09b1cd18d6fa9529"
+path = "psv/queries"
+
 
 # purescript
 [language.purescript.grammar]
@@ -725,7 +928,7 @@ link_flags = ["-fuse-ld=mold", "-O3"]
 [language.python.grammar]
 path = "src"
 compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.cc", "../parser.c", "-I", ".."]
+compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
 compile_flags = ["-fuse-ld=mold", "-O3"]
 link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "python.so"]
@@ -741,13 +944,44 @@ link_flags = ["-fuse-ld=mold", "-O3"]
 # TODO
 
 # regex
-# TODO
+[language.regex.grammar]
+source.git.url = "https://github.com/tree-sitter/tree-sitter-regex"
+source.git.pin = "b638d29335ef41215b86732dd51be34c701ef683"
+path = "src"
+compile = "sccache"
+compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
+link_args = ["-shared", "-fpic", "parser.o", "-o", "regex.so"]
+link_flags = ["-fuse-ld=mold", "-O3"]
+
+[language.regex.queries]
+source.git.url = "https://github.com/tree-sitter/tree-sitter-regex"
+source.git.pin = "b638d29335ef41215b86732dd51be34c701ef683"
+path = "queries"
 
 # rego
 # TODO
 
 # rescript
 # TODO
+
+# requirements
+[language.requirements.grammar]
+source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-requirements"
+source.git.pin = "728910099ddea7f1f94ea95a35a70d1ea76a1639"
+path = "src"
+compile = "sccache"
+compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
+link_args = ["-shared", "-fpic", "parser.o", "-o", "requirements.so"]
+link_flags = ["-fuse-ld=mold", "-O3"]
+
+[language.requirements.queries]
+source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-requirements"
+source.git.pin = "728910099ddea7f1f94ea95a35a70d1ea76a1639"
+path = "queries"
 
 # rmarkdown
 # TODO
@@ -756,24 +990,21 @@ link_flags = ["-fuse-ld=mold", "-O3"]
 # TODO
 
 # ron
-[language.ron.grammar.source.git]
-url = "https://github.com/tree-sitter-grammars/tree-sitter-ron"
-pin = "78938553b93075e638035f624973083451b29055"
 
 [language.ron.grammar]
+source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-ron"
+source.git.pin = "78938553b93075e638035f624973083451b29055"
 path = "src"
 compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
+compile_args = ["cc", "-c", "-fpic", "./scanner.c", "./parser.c", "-I", ".."]
 compile_flags = ["-fuse-ld=mold", "-O3"]
 link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "ron.so"]
 link_flags = ["-fuse-ld=mold", "-O3"]
 
-[language.ron.queries.source.git]
-url = "https://github.com/tree-sitter-grammars/tree-sitter-ron"
-pin = "78938553b93075e638035f624973083451b29055"
-
 [language.ron.queries]
+source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-ron"
+source.git.pin = "78938553b93075e638035f624973083451b29055"
 path = "queries"
 
 # rst
@@ -818,7 +1049,7 @@ link_flags = ["-fuse-ld=mold", "-O3"]
 # scss
 [language.scss.grammar]
 path = "src"
-compile = "sccche"
+compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
 compile_flags = ["-O3"]
 link = "cc"
@@ -841,13 +1072,41 @@ link_flags = ["-fuse-ld=mold", "-O3"]
 # TODO
 
 # sshclientconfig
-# TODO
+[language.sshclientconfig.grammar]
+source.git.url = "https://github.com/metio/tree-sitter-ssh-client-config"
+source.git.pin = "7aa1b42c44ec2970c6a4fb6cb59c7db3dd3f10c7"
+path = "src"
+compile = "sccache"
+compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
+link_args = ["-shared", "-fpic", "parser.o", "-o", "sshclientconfig.so"]
+link_flags = ["-fuse-ld=mold", "-O3"]
+
+[language.sshclientconfig.queries]
+source.git.url = "https://github.com/metio/tree-sitter-ssh-client-config"
+source.git.pin = "7aa1b42c44ec2970c6a4fb6cb59c7db3dd3f10c7"
+path = "queries"
 
 # starlark
 # TODO
 
 # svelte
-# TODO
+[language.svelte.grammar]
+source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-svelte"
+source.git.pin = "ae5199db47757f785e43a14b332118a5474de1a2"
+path = "src"
+compile = "sccache"
+compile_args = ["cc", "-c", "-fpic", "../parser.c", "../scanner.c", "-I", ".."]
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
+link_args = ["-shared", "-fpic", "parser.o", "scanner.o", "-o", "svelte.so"]
+link_flags = ["-fuse-ld=mold", "-O3"]
+
+[language.svelte.queries]
+source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-svelte"
+source.git.pin = "ae5199db47757f785e43a14b332118a5474de1a2"
+path = "queries"
 
 # sway
 # TODO
@@ -884,6 +1143,24 @@ link_flags = ["-fuse-ld=mold", "-O3"]
 # tsq
 # TODO
 
+# tsv
+[language.tsv.grammar]
+source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-csv"
+source.git.pin = "7eb7297823605392d2bbcc4c09b1cd18d6fa9529"
+path = "tsv/src"
+compile = "sccache"
+compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
+compile_flags = ["-O3"]
+link = "cc"
+link_args = ["-shared", "-fpic", "parser.o", "-o", "tsv.so"]
+link_flags = ["-O3"]
+
+[language.tsv.queries]
+source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-csv"
+source.git.pin = "7eb7297823605392d2bbcc4c09b1cd18d6fa9529"
+path = "tsv/queries"
+
+
 # tsx
 [language.tsx.grammar]
 path = "tsx/src"
@@ -906,6 +1183,23 @@ compile_flags = ["-fuse-ld=mold", "-O3"]
 link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "typescript.so"]
 link_flags = ["-fuse-ld=mold", "-O3"]
+
+# typst
+[language.typst.grammar]
+source.git.url = "https://github.com/uben0/tree-sitter-typst"
+source.git.pin = "46cf4ded12ee974a70bf8457263b67ad7ee0379d"
+path = "src"
+compile = "sccache"
+compile_args = ["cc", "-c", "-fpic", "../parser.c", "../scanner.c", "-I", ".."]
+compile_flags = ["-fuse-ld=mold", "-O3"]
+link = "cc"
+link_args = ["-shared", "-fpic", "parser.o", "scanner.o", "-o", "typst.so"]
+link_flags = ["-fuse-ld=mold", "-O3"]
+
+[language.typst.queries]
+source.git.url = "https://github.com/uben0/tree-sitter-typst"
+source.git.pin = "46cf4ded12ee974a70bf8457263b67ad7ee0379d"
+path = "queries/typst"
 
 # ungrammar
 # TODO
