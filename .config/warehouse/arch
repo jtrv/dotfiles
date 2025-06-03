@@ -135,6 +135,7 @@ hexedit
 htmlq
 hyperfine
 imagemagick
+inter-font
 ipinfo-cli-bin
 irqbalance
 iw
@@ -152,7 +153,10 @@ kondo
 koreader-bin
 kvantum-qt5
 kvantum-theme-catppuccin-git
+lazydocker
 lazygit
+lazyjournal
+lazysql
 lbzip2
 leanify-git
 lib32-gst-plugins-base
@@ -208,7 +212,6 @@ npm
 ntfs-3g
 ntp
 nvtop
-obs-studio
 oculante
 odt2txt
 onefetch
@@ -294,6 +297,7 @@ stremio
 superhtml
 sxiv
 syncthing
+systemctl-tui
 systemd-resolvconf
 systeroid
 sysz

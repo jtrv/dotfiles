@@ -15,11 +15,13 @@ conceal -> https://github.com/rust-lang/crates.io-index
 cpz -> https://github.com/rust-lang/crates.io-index
 crabz -> https://github.com/rust-lang/crates.io-index
 cymbal -> https://github.com/enricozb/cymbal
-dedoc -> https://github.com/rust-lang/crates.io-index
+dedoc -> https://github.com/toiletbril/dedoc
 difftastic -> https://github.com/rust-lang/crates.io-index
 dotenv-linter -> https://github.com/rust-lang/crates.io-index
 fclones -> https://github.com/rust-lang/crates.io-index
 fls -> /home/sugimoto/repos/fls
+gitnr -> https://github.com/rust-lang/crates.io-index
+gitui -> https://github.com/rust-lang/crates.io-index
 gprepo -> /home/sugimoto/repos/gprepo
 grug -> https://github.com/jtrv/grug
 handlr-regex -> https://github.com/rust-lang/crates.io-index
@@ -42,6 +44,7 @@ magic-wormhole-cli -> https://github.com/rust-lang/crates.io-index
 markdown-oxide -> https://github.com/feel-ix-343/markdown-oxide
 mergiraf -> https://github.com/rust-lang/crates.io-index
 mise -> https://github.com/rust-lang/crates.io-index
+openapi-tui -> https://github.com/rust-lang/crates.io-index
 pay-respects -> https://github.com/rust-lang/crates.io-index
 protonup-rs -> https://github.com/rust-lang/crates.io-index
 qrtool -> https://github.com/rust-lang/crates.io-index
@@ -62,6 +65,7 @@ skyspell_kak -> https://github.com/rust-lang/crates.io-index
 sniffglue -> https://github.com/rust-lang/crates.io-index
 speedtest-rs -> https://github.com/rust-lang/crates.io-index
 suckit -> https://github.com/rust-lang/crates.io-index
+taplo-cli -> https://github.com/rust-lang/crates.io-index
 thesauromatic -> https://github.com/rust-lang/crates.io-index
 topgrade -> https://github.com/rust-lang/crates.io-index
 t-rec -> https://github.com/rust-lang/crates.io-index
