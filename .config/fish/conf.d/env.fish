@@ -71,6 +71,7 @@ set -gx BEMOJI_CLIP_CMD             "xclip -sel clip"
 set -gx BEMOJI_TYPE_CMD             "xdotool"
 set -gx BROWSER                     "firefox"
 set -gx CONCEAL_FINDER              "skim"
+set -gx DO_NOT_TRACK                "true"
 set -gx DELTA_PAGER                 "kak"
 set -gx EDITOR                      "kak"
 set -gx fish_greeting
