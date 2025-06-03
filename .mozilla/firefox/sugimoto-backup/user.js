@@ -22,7 +22,7 @@ user_pref("browser.discovery.enabled", false);
 user_pref("browser.download.manager.addToRecentDocs", false);
 user_pref("browser.download.open_pdf_attachments_inline", true);
 
-user_pref("browser.engagement.downloads-button.has-used", true)
+user_pref("browser.engagement.downloads-button.has-used", true);
 user_pref("browser.engagement.fxa-toolbar-menu-button.has-used", true);
 user_pref("sidebar.old-sidebar.has-used", true);
 user_pref("browser.formfill.enable", false);
