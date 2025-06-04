@@ -2,7 +2,7 @@
 #
 # doc <docset> <query> : utility for searching documentation
 #
-# req: choose, dedoc, skim
+# req: dedoc, fzf
 
 set -e
 
@@ -10,7 +10,7 @@ cols=$(tput cols)
 bufcols=$(echo "$cols - 8" | bc)
 
 if [ $# -eq 0 ]; then
-	docset=$(dedoc ls -ln --porcelain | sk --reverse --select-1)
+	docset=$(dedoc ls -ln --porcelain | fzf --reverse --select-1 --no-multi)
 else
 	docset="$1"
 fi

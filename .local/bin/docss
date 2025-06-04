@@ -2,7 +2,7 @@
 #
 # doc <docset> <query> : utility for searching documentation
 #
-# req: dedoc, fzf
+# req: dedoc, sk
 
 set -e
 
@@ -10,20 +10,28 @@ cols=$(tput cols)
 bufcols=$(echo "$cols - 8" | bc)
 
 if [ $# -eq 0 ]; then
-	docset=$(dedoc ls -ln --porcelain | fzf --reverse --select-1)
+	docset=$(dedoc ls -ln --porcelain | sk --reverse --select-1 --no-multi)
 else
 	docset="$1"
 fi
 
-
 if [ $# -eq 2 ]; then
-	doc_entry=$(dedoc ss -ip --porcelain "$docset" "$2" |
-		fzf --reverse --select-1 --preview "dedoc -c open '$docset' --  {}")
+	query=$2
 else
-	doc_entry=$(read -rp "Query: " query;
-		dedoc ss -ip --porcelain "$docset" "$query" |
-		fzf --reverse --select-1 --preview "dedoc -c open '$docset' -- {} | rg --passthru '$query'")
+	query=''
 fi
+
+doc_entry=$(
+	sk \
+		--ansi \
+		--reverse \
+		--select-1 \
+		--interactive \
+		--cmd "dedoc -c ss -ip --porcelain '$docset' {}" \
+		--cmd-query="$query" \
+		--preview "dedoc -c open '$docset' -- {} |
+      rg --color=always -C 3 -i -F '{cq}'"
+)
 
 if [ -t 1 ]; then
 	dedoc -c open -c "$bufcols" "$docset" -- "$doc_entry" | "$PAGER"
