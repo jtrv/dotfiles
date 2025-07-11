@@ -1,3 +1,5 @@
+# @fish-lsp-disable 2002
+
 if status is-interactive
 
 alias aider   "aider --config ~/.config/aider/config.yaml"
