@@ -1,4 +1,4 @@
-[manager]
+[mgr]
 prepend_keymap = [
   # bak
   { on = [ "B" ], run = 'shell "bak \"$@\" " --block --confirm', desc = "append '.bak' to filename" },

@@ -1,7 +1,7 @@
 [[plugin.deps]]
 use = "dedukun/relative-motions"
-rev = "ce2e890"
-hash = "23915860e59348bf4166778bb0e606f7"
+rev = "a603d9e"
+hash = "e02a788e5b8ae0fb47fd0193dda589cc"
 
 [[plugin.deps]]
 use = "Ape/open-with-cmd"
@@ -10,38 +10,38 @@ hash = "86e0312b01bc5762813c6c1d0517f073"
 
 [[plugin.deps]]
 use = "Sonico98/exifaudio"
-rev = "7ff7141"
-hash = "666ccba55119fba4c25b8ad354b2855c"
+rev = "4506f9d"
+hash = "4761fffb60a12d37096c34a356380cdf"
 
 [[plugin.deps]]
 use = "lpnh/fg"
-rev = "92edf0b"
-hash = "b0edc5e9b7f44b2d3303e74f785d0bc9"
+rev = "6d5e469"
+hash = "d8455f929580ec602b4d0bbd8e96711"
 
 [[plugin.deps]]
 use = "Reledia/glow"
-rev = "2da96e3"
-hash = "f9ee1436e3b853508d87f7d49dce56e6"
+rev = "bd3eaa5"
+hash = "92b5c58159a51c567f82b618cee2b78"
 
 [[plugin.deps]]
 use = "ndtoan96/ouch"
-rev = "2496cd9"
-hash = "5b9dea47776a30946cfbf83232d18fb1"
+rev = "bb941c4"
+hash = "956b02fe8213e7b92e21a941b9abe764"
 
 [[plugin.deps]]
 use = "Rolv-Apneseth/starship"
-rev = "6fde3b2"
-hash = "7ddb7a790746fd91ecdd0350cc5a5d8c"
+rev = "a63550b"
+hash = "c2021386289a0cbb3e152a052f67c177"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:diff"
-rev = "864a021"
-hash = "7a08e303167d5b655c06da6d570f0333"
+rev = "b886025"
+hash = "47865a70cade14a0b9b6bc6a54f16bdb"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:git"
-rev = "864a021"
-hash = "e0ada736ea676c2bbb3ec705a49526ef"
+rev = "b886025"
+hash = "63b6c222bf2103b3023389dde5e2ecfe"
 
 [[plugin.deps]]
 use = "Lil-Dank/lazygit"
@@ -50,28 +50,28 @@ hash = "a1fa2b3e1826c3a34804ea8c548e9f80"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:mount"
-rev = "864a021"
-hash = "dd97eede8e20e59cd2604e8006e470e2"
+rev = "b886025"
+hash = "f10a14e823382d90fab5b3ee54cb38fe"
 
 [[plugin.deps]]
 use = "boydaihungst/mediainfo"
-rev = "9629b1e"
-hash = "5204b4e2bd238c40fa66cf0a0191f084"
+rev = "cc12f3f"
+hash = "b92e44ad5004f1b45e5c3d717a60ed24"
 
 [[plugin.deps]]
 use = "kirasok/torrent-preview"
-rev = "4ca5996"
-hash = "6af40ce6b2cd849b5fa32de04a598b06"
+rev = "f465282"
+hash = "b89b46a15035a51d010a254858ba9741"
 
 [[plugin.deps]]
 use = "AnirudhG07/nbpreview"
-rev = "bc573d5"
-hash = "ab61298c387a63e781a87129f533883b"
+rev = "7fb073f"
+hash = "a3e32d62ea3cc703e6bf677bdb18a544"
 
 [[plugin.deps]]
 use = "atareao/convert"
-rev = "7c18342"
-hash = "cc6f6db11762ed3ee8c14c276e7cfb4b"
+rev = "ce060d9"
+hash = "1c0465351f2a344e842f065ab316f265"
 
 [[plugin.deps]]
 use = "iynaix/time-travel"
@@ -80,25 +80,25 @@ hash = "69967963fba96295a07b68354fc91ea9"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:chmod"
-rev = "864a021"
-hash = "2f1053f89d1a301a648ab181d0948e38"
+rev = "b886025"
+hash = "1adc12c2b2b025411ab61eb8f0879574"
 
 [[plugin.deps]]
 use = "boydaihungst/fuse-archive"
-rev = "f0d28ff"
-hash = "36ed3bab12b96046b236a977c2aa020e"
+rev = "51c7c90"
+hash = "75e217039957b20eba6f3d1872941231"
 
 [[plugin.deps]]
 use = "lpnh/fr"
-rev = "92edf0b"
-hash = "b0edc5e9b7f44b2d3303e74f785d0bc9"
+rev = "6d5e469"
+hash = "d8455f929580ec602b4d0bbd8e96711"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:vcs-files"
-rev = "864a021"
-hash = "36405f8781fcaf33ceab24dffd5cea19"
+rev = "b886025"
+hash = "cc8da55f1deda45ee3787cc97b58ffc9"
 
 [[flavor.deps]]
 use = "yazi-rs/flavors:catppuccin-mocha"
-rev = "68326b4"
-hash = "2ac87e1b3a61f5887472899e86535d29"
+rev = "d3fd3a5"
+hash = "288a0dedd5d13b28605cf82c05326dcd"
