@@ -61,15 +61,13 @@ set -gx XAUTHORITY "$XDG_RUNTIME_DIR/Xauthority"
 set -gx HISTFILE "$XDG_STATE_HOME/bash/history"
 
 # Misc
-set -gx ARGC_COMPLETIONS_ROOT       "$HOME/repos/argc-completions"
-set -gx ARGC_COMPLETIONS_PATH       "$ARGC_COMPLETIONS_ROOT/completions/linux:$ARGC_COMPLETIONS_ROOT/completions"
-set -gx ARGC_SCRIPTS                (/bin/ls -p -1 "$ARGC_COMPLETIONS_ROOT/completions/linux" "$ARGC_COMPLETIONS_ROOT/completions" | sed -n 's/\.sh$//p')
 set -gx ATUIN_NOBIND                "true"
 set -gx BAT_PAGER                   "kak"
 set -gx BEMOJI_PICKER_CMD           "dmenu -i -l 5 -g 5"
 set -gx BEMOJI_CLIP_CMD             "xclip -sel clip"
 set -gx BEMOJI_TYPE_CMD             "xdotool"
 set -gx BROWSER                     "firefox"
+set -gx CARAPACE_BRIDGES            "zsh,fish,bash,inshellisense"
 set -gx CONCEAL_FINDER              "skim"
 set -gx DO_NOT_TRACK                "true"
 set -gx DELTA_PAGER                 "kak"
