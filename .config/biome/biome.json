@@ -1,5 +1,5 @@
 {
-  "$schema": "../../.local/share/bun/install/global/node_modules/@biomejs/biome/configuration_schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.0.6/schema.json",
   "formatter": {
     "enabled": true,
     "formatWithErrors": true,
@@ -8,9 +8,6 @@
     "attributePosition": "multiline"
   },
   "linter": {
-    "enabled": true
-  },
-  "organizeImports": {
     "enabled": true
   }
 }
