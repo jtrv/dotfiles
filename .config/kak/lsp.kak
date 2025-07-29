@@ -109,12 +109,6 @@ declare-option -hidden str lsp_server_emmet %{
   args = [ "--stdio" ]
 }
 
-declare-option -hidden str lsp_server_biome %{
-  [biome]
-  root_globs = ["biome.json", "package.json", "tsjson", "jsjson", ".git", ".hg"]
-  args = [ "lsp-proxy" ]
-}
-
 hook -group lsp-filetype-css global BufSetOption filetype=(?:css|less|scss) %{
   set-option buffer lsp_servers %exp{
     #opt{lsp_server_lsp_ai}
@@ -248,6 +242,48 @@ hook -group lsp-filetype-javascript global BufSetOption filetype=(?:javascript|t
     codeAction.disableRuleComment = { enable = true, location = "separateLine" }
     codeAction.showDocumentation = { enable = true }
   }
+
+  set-option -add buffer lsp_servers "
+    %opt{lsp_server_biome}
+    #opt{lsp_server_emmet}
+    #opt{lsp_server_lsp_ai}
+    #opt{lsp_server_unocss}
+  "
+}
+
+hook -group lsp-filetype-json global BufSetOption filetype=json %{
+  set-option buffer lsp_servers %{
+    [vscode-json-language-server]
+    root_globs = ["package.json", ".git", ".hg"]
+    args = ["--stdio"]
+    settings_section = "_"
+    [vscode-json-language-server.settings._]
+    provideFormatter = true
+    json.format.enable = true
+    json.validate.enable = true
+    # These are just some example JSON schemas, you need to add whatever JSON files you edit.
+    # The needed URLs you can find at https://www.schemastore.org/json/
+    # Configuration see
+    # https://github.com/microsoft/vscode/blob/main/extensions/json-language-features/server/README.md#configuration
+    [[vscode-json-language-server.settings._.json.schemas]]
+    fileMatch = ["/package.json"]
+    url = "https://json.schemastore.org/package.json"
+    [[vscode-json-language-server.settings._.json.schemas]]
+    fileMatch = ["/.markdownlintrc","/.markdownlint.json","/.markdownlint.jsonc"]
+    url = "https://raw.githubusercontent.com/DavidAnson/markdownlint/main/schema/markdownlint-config-schema.json"
+    [[vscode-json-language-server.settings._.json.schemas]]
+    fileMatch = ["/.prettierrc", "/.prettierrc.json"]
+    url = "https://json.schemastore.org/prettierrc.json"
+    [[vscode-json-language-server.settings._.json.schemas]]
+    fileMatch = ["/compile_commands.json"]
+    url = "https://json.schemastore.org/compile-commands.json"
+    [[vscode-json-language-server.settings._.json.schemas]]
+    fileMatch = ["/tsconfig*.json"]
+    url = "https://json.schemastore.org/tsconfig.json"
+  }
+  set-option -add buffer lsp_servers "
+    %opt{lsp_server_biome}
+  "
 }
 
 hook -group lsp-filetype-latex global BufSetOption filetype=latex %{
