@@ -16,6 +16,7 @@ at
 atac
 atuin
 aws-cli
+aws-sam-cli-bin
 b3sum
 bacon
 bandwhich
@@ -28,13 +29,17 @@ blender
 bluetui
 bluez-utils
 bottom
+bpf
+bpftune-git
 breeze-icons
 btrfs-desktop-notification
 btrfs-progs
 cachyos-ananicy-rules-git
+calf
 calibre
 calibre-plugin-dedrm
 calibre-plugin-goodreads
+carapace-bin
 cargo-audit
 cargo-binstall
 cargo-bloat
@@ -96,7 +101,7 @@ firefox-developer-edition-firefox-symlink-latest
 firefox-tridactyl
 firefox-tridactyl-native-bin
 firejail
-fish-lsp-git
+fish-lsp
 fisher
 flameshot-git
 flatpak
@@ -130,9 +135,13 @@ gst-plugin-pipewire
 gst-plugins-bad
 gst-plugins-good
 gst-plugins-ugly
+harper
+helvum
 heroku-cli-bin
 hexedit
 htmlq
+hunspell-en_us
+hunspell-es_any
 hyperfine
 imagemagick
 inter-font
@@ -153,6 +162,7 @@ kondo
 koreader-bin
 kvantum-qt5
 kvantum-theme-catppuccin-git
+languagetool
 lazydocker
 lazygit
 lazyjournal
@@ -165,6 +175,7 @@ lib32-gst-plugins-good
 lib32-libpulse
 lib32-pipewire
 lib32-vulkan-radeon
+libfprint-cs9711-git
 libpulse
 libqalculate
 linux
@@ -179,7 +190,6 @@ lostfiles
 lrzip
 lsp-plugins
 lutris
-lxappearance
 lxqt-policykit
 lychee
 lzop
@@ -202,7 +212,6 @@ namcap
 needrestart
 nfs-utils
 ngrep
-nim
 nmap
 noto-fonts
 noto-fonts-cjk
@@ -211,7 +220,9 @@ noto-fonts-extra
 npm
 ntfs-3g
 ntp
+nuspell
 nvtop
+nwg-look
 oculante
 odt2txt
 onefetch
@@ -261,6 +272,7 @@ qt6ct
 rate-mirrors
 rbenv
 rclone
+readest
 redshift
 rescrobbled-git
 responsively
@@ -285,6 +297,7 @@ sdcv
 shellcheck-bin
 shfmt
 signal-desktop
+sioyek-git
 sl
 snap-pac
 snap-sync
@@ -294,6 +307,7 @@ speedtest++
 starship
 strace
 stremio
+sunshine
 superhtml
 sxiv
 syncthing
@@ -324,7 +338,6 @@ tokei
 topgrade
 torbrowser-launcher
 trippy
-ttf-font-awesome
 ttf-ibmplex-mono-nerd
 ttyper
 udict-bin
@@ -357,6 +370,7 @@ wine-staging
 wired
 wireplumber
 wmctrl
+woff2-font-awesome
 xarchiver
 xautolock
 xbanish
