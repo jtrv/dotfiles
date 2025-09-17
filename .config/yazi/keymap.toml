@@ -19,7 +19,7 @@ prepend_keymap = [
   { on = [ "e" ], run = 'shell "$EDITOR \"$@\" " --block --confirm', desc = "Open selected files in $EDITOR" },
 
   # fuse-archive
-  { on = [ "h" ], run = "plugin fuse-archive -- unmount",     desc = "Leave / Unmount archive" },
+  { on = [ "h" ], run = "plugin fuse-archive -- leave",     desc = "Leave / Unmount archive" },
   { on = [ "l" ], run = "plugin fuse-archive -- mount",       desc = "Enter / Mount hovered archive"   },
   { on = [ "<Enter>" ], run = "plugin fuse-archive -- mount", desc = "Enter / Mount hovered archive"   },
 
