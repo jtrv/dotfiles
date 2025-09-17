@@ -1,4 +1,4 @@
-require("fuse-archive"):setup({ smart_enter = true, mount_dir = "/tmp" })
+require("fuse-archive"):setup({ smart_enter = true, mount_root_dir = "/tmp" })
 require("git"):setup()
 require("relative-motions"):setup({ show_numbers="relative_absolute", show_motion = true, enter_mode ="cache_or_first" })
 require("session"):setup({ sync_yanked = true })
