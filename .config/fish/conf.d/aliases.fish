@@ -30,14 +30,14 @@ alias kenv    "k ~/.config/fish/conf.d/env.fish"
 alias kenvs   "k ~/.config/fish/conf.d/envs.fish"
 alias kish    "k ~/.config/fish/config.fish"
 alias k       "kak"
-alias la      "eza -al --color=always" # all files and dirs
+alias la      "eza -alh --color=always" # all files and dirs
 alias lc      "lazygit --git-dir='$DOTFILES' --work-tree='$HOME'" # lazygit for config files
 alias lg      "lazygit"
 alias lh      "eza -la --color=always --ignore-glob='[a-z]*|[A-Z]*|[0-9]*'" # hidden only
 alias ll      "eza -l --color=always --git" # long format
 alias lmk     "lemmeknow"
 alias loc     "plocate"
-alias ls      "eza -l --color=always" # preferred listing
+alias ls      "eza -lh --color=always" # preferred listing
 alias lt      "erd -HIl --color=force" # tree listing
 alias mdc     "mdcat --columns=70"
 alias mkd     "mkdir -p"
@@ -47,6 +47,7 @@ alias mrb     "mise run build"
 alias mrc     "mise run clean"
 alias mrd     "mise run develop"
 alias mrf     "mise run format"
+alias mri     "mise run install"
 alias mrl     "mise run lint"
 alias mrp     "mise run deploy"
 alias mrs     "mise run serve"
