@@ -1,21 +1,23 @@
 #!/bin/sh
-# requires xh, jql, sd, ipinfo.io token
+# requires secli, xh, jaq, sd, ipinfo.io token
+
+ipinfo_token=$(secli get ipinfo_token)
 
 # get lat/lon
-coordinates=$(xh -Fb "https://ipinfo.io/?token=$IPINFO_TOKEN" |
-  jql -r '"loc"')
+coordinates=$(xh -Fb "https://ipinfo.io/?token=$ipinfo_token" |
+  jaq -r '.loc')
 
 # get corresponding weather office
 weather_office=$(xh -Fb "https://api.weather.gov/points/$coordinates" |
-  jql -r '"properties" "cwa"')
+  jaq -r '.properties.cwa')
 
 # get discussion url
 area_forecast_discussion_url=$(xh -Fb "https://api.weather.gov/products/types/AFD/locations/$weather_office" |
-  jql -r '"@graph"[0] "@id"')
+  jaq -r '.["@graph"][0]["@id"]')
 
 # get discussion raw text
 raw_text=$(xh -Fb "$area_forecast_discussion_url" |
-  jql -r '"productText"' |
+  jaq -r '.productText' |
   sd '(\n| \n)' '
 ')
 
