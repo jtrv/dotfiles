@@ -3,3 +3,12 @@ cache=${XDG_CACHE_HOME}/npm
 tmp=${XDG_RUNTIME_DIR}/npm
 init-module=${XDG_CONFIG_HOME}/npm/config/npm-init.js
 store-dir=${XDG_DATA_HOME}/pnpm-store
+
+audit=false
+fetch-retries=3
+fund=false
+loglevel=warn
+prefer-offline=true
+save-exact=true
+strict-ssl=true
+update-notifier=false
