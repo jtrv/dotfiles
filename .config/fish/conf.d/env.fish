@@ -53,6 +53,7 @@ set -gx RUSTUP_HOME        "$XDG_DATA_HOME/rustup"
 set -gx VOLTA_HOME         "$XDG_DATA_HOME/volta"
 set -gx WINEPREFIX         "$XDG_DATA_HOME/wine"
 set -gx W3M_DIR            "$XDG_DATA_HOME/w3m"
+set -gx XCURSOR_PATH       "/usr/share/icons:$XDG_DATA_HOME/icons"
 
 # Runtime
 set -gx XAUTHORITY "$XDG_RUNTIME_DIR/Xauthority"
