@@ -86,6 +86,19 @@ declare-option -hidden str lsp_server_lsp_ai %{
   ]
 }
 
+declare-option -hidden str lsp_server_harper %{
+  [harper-ls]
+  args = [ "--stdio" ]
+  [harper-ls.settings]
+  dialect = "American"
+  maxFileLength = 120000
+  [[linters]]
+  AnA = true
+  RepeatedWords = true
+  SentenceCapitalization = false
+  SpellCheck = false
+}
+
 declare-option -hidden str lsp_server_tailwind %{
   [tailwindcss-language-server]
   root_globs = [ "tailwind.*" ]
@@ -291,7 +304,7 @@ hook -group lsp-filetype-javascript global BufSetOption filetype=(?:javascript|t
   "
 }
 
-hook -group lsp-filetype-json global BufSetOption filetype=json %{
+hook -group lsp-filetype-json global BufSetOption filetype=(?:json|jsonc) %{
   set-option buffer lsp_servers %{
     [vscode-json-language-server]
     root_globs = ["package.json", ".git", ".hg"]
@@ -391,6 +404,12 @@ hook -group lsp-filetype-prisma global BufSetOption filetype=prisma %{
   "
 }
 
+declare-option -hidden str lsp_server_basedpyright %{
+  [basedpyright-langserver]
+  root_globs = [ "requirements.txt", "setup.py", "pyproject.toml", "pyrightconfig.json", ".git", ".hg" ]
+  args = [ "--stdio" ]
+}
+
 hook -group lsp-filetype-python global BufSetOption filetype=python %{
   set-option buffer lsp_servers %{
     [pylsp]
@@ -400,10 +419,6 @@ hook -group lsp-filetype-python global BufSetOption filetype=python %{
     # See https://github.com/python-lsp/python-lsp-server#configuration
     # pylsp.configurationSources = [ "flake8" ]
     pylsp.plugins.jedi_completion.include_params = true
-
-    [basedpyright-langserver]
-    root_globs = [ "requirements.txt", "setup.py", "pyproject.toml", "pyrightconfig.json", ".git", ".hg" ]
-    args = [ "--stdio" ]
 
     [ruff]
     args = [ "server", "--quiet" ]
@@ -415,6 +430,7 @@ hook -group lsp-filetype-python global BufSetOption filetype=python %{
   }
 
   set-option -add buffer lsp_servers "
+    #opt{lsp_server_basedpyright}
     #opt{lsp_server_lsp_ai}
   "
 }
