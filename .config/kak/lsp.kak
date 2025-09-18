@@ -263,9 +263,9 @@ hook -group lsp-filetype-latex global BufSetOption filetype=latex %{
     # For other PDF viewers see https://github.com/latex-lsp/texlab/wiki/Previewing
     forwardSearch.executable = "zathura"
     forwardSearch.args = [
-      "%p",
+      "%%p",
       "--synctex-forward", # Support texlab-forward-search
-      "%l:1:%f",
+      "%%l:1:%%f",
       "--synctex-editor-command", # Inverse search: use Control+Left-Mouse-Button to jump to source.
       """
         sh -fc '
@@ -282,7 +282,7 @@ hook -group lsp-filetype-latex global BufSetOption filetype=latex %{
     chktex.onOpenAndSave = true
     chktex.onEdit = true
     build.onSave = true
-    build.args = [ "-pdf", "-interaction=nonstopmode", "-auxdir=.aux", "-synctex=1", "%f" ]
+    build.args = [ "-pdf", "-interaction=nonstopmode", "-auxdir=.aux", "-synctex=1", "%%f" ]
   }
 }
 
