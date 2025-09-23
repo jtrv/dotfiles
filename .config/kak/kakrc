@@ -861,18 +861,8 @@ provide-module "ui" %{
     define-command -override ui-line-numbers-enable -docstring 'enable line numbers' %{ number-toggle-enable }
     define-command -override ui-line-numbers-disable -docstring 'disable line numbers' %{ number-toggle-disable }
 
-    declare-option -hidden bool colorcol_enabled false
-    define-command ui-colorcol-enable %{
-      evaluate-commands %sh{ $kak_opt_colorcol_enabled && echo "fail %{colorcol already enabled}" }
-      colorcol-enable; colorcol-refresh-continuous;
-      set-option buffer colorcol_enabled true
-    }
-    define-command ui-colorcol-disable %{
-      colorcol-disable
-      set-option buffer colorcol_enabled false
-    }
-    define-command ui-colorcol-toggle %{ try ui-colorcol-enable catch ui-colorcol-disable }
-    map global ui r -docstring 'toggle colorcol'   %{:ui-colorcol-toggle <ret>}
+    define-command ui-blame-toggle %{ git blame }
+    map global ui b -docstring 'toggle blame'   %{: ui-blame-toggle <ret>}
 
     define-command ui-indent-enable %{ add-highlighter window/indent show-whitespaces -lf '' -tab '' -spc ' ' -indent '▏' }
     define-command ui-indent-disable %{ remove-highlighter window/indent }
@@ -916,6 +906,19 @@ provide-module "ui" %{
     }
     define-command ui-rainbow-toggle %{ try ui-rainbow-enable catch ui-rainbow-disable }
     map global ui R -docstring 'toggle rainbow'   %{:ui-rainbow-toggle <ret>}
+
+    declare-option -hidden bool colorcol_enabled false
+    define-command ui-colorcol-enable %{
+      evaluate-commands %sh{ $kak_opt_colorcol_enabled && echo "fail %{colorcol already enabled}" }
+      colorcol-enable; colorcol-refresh-continuous;
+      set-option buffer colorcol_enabled true
+    }
+    define-command ui-colorcol-disable %{
+      colorcol-disable
+      set-option buffer colorcol_enabled false
+    }
+    define-command ui-colorcol-toggle %{ try ui-colorcol-enable catch ui-colorcol-disable }
+    map global ui r -docstring 'toggle colorcol'   %{:ui-colorcol-toggle <ret>}
 
     # zdiff3 highlighting
     add-highlighter shared/zdiff3 group
