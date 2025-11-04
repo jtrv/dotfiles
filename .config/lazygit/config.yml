@@ -318,26 +318,26 @@ customCommands:
     context: "commitFiles"
     command: 'git restore --source {{ "stash@{" }}{{ .SelectedStashEntry.Index }}{{ "}" }} -- {{.SelectedCommitFile.Name}}'
   # Tig integrations
-  - key: 't'
+  - key: '<c-t>'
     description: "View commit/file history (tig)"
     context: "subCommits"
     output: terminal
-  - key: 't'
+  - key: '<c-t>'
     description: "View commit/file history (tig)"
     command: "tig show {{.SelectedSubCommit.Sha}}"
     context: "commitFiles"
     output: terminal
-  - key: 't'
+  - key: '<c-t>'
     description: "View commit/file history (tig)"
     command: "tig {{.SelectedSubCommit.Sha}} -- {{.SelectedCommitFile.Name}}"
     context: "localBranches"
     output: terminal
-  - key: 't'
+  - key: '<c-t>'
     description: "View commit/file history (tig)"
     command: "tig show {{.SelectedLocalBranch.Name}}"
     context: "remoteBranches"
     output: terminal
-  - key: 't'
+  - key: '<c-t>'
     description: "View commit/file history (tig)"
     command: "tig show {{.SelectedRemoteBranch.RemoteName}}/{{.SelectedRemoteBranch.Name}}"
     context: "global"
