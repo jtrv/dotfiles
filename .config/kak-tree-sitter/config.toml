@@ -141,10 +141,10 @@ path = "tree-sitter-asciidoc_inline/queries"
 path = "src"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
+compile_flags = ["-fuse-ld=mold", "-O3"]
 link = "cc"
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "astro.so"]
-link_flags = ["-O3"]
+link_flags = ["-fuse-ld=mold", "-O3"]
 
 # awk
 [grammar.awk]
