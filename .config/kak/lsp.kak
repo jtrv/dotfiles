@@ -98,7 +98,15 @@ declare-option -hidden str lsp_server_harper %{
   AnA = true
   RepeatedWords = true
   SentenceCapitalization = false
-  SpellCheck = false
+  SpellCheck = true
+}
+
+# This is mainly a linter for HTML and to be used together with vscode-html-language-server
+# https://github.com/kristoff-it/superhtml
+declare-option -hidden str lsp_server_superhtml %{
+  [superhtml]
+  root_globs = [ "package.json", ".git", ".hg" ]
+  args = [ "lsp" ]
 }
 
 declare-option -hidden str lsp_server_tailwind %{
@@ -220,7 +228,29 @@ hook -group lsp-filetype-html global BufSetOption filetype=html %{
     [superhtml]
     root_globs = [ "package.json", ".git", ".hg" ]
     args = [ "lsp" ]
+    [vscode-html-language-server.settings.javascript]
+    format.enable = true
+    format.semicolons = "none"
+    validate.enable = true
+
+    # This is mainly a linter for HTML and to be used together with vscode-html-language-server
+    # https://github.com/kristoff-it/superhtml
+    [superhtml]
+    root_globs = [ "package.json", ".git", ".hg" ]
+    args = [ "lsp" ]
+    [vscode-html-language-server.settings.javascript]
+    format.enable = true
+    format.semicolons = "none"
+    validate.enable = true
   }
+
+  set-option -add buffer lsp_servers "
+    %opt{lsp_server_biome}
+    #opt{lsp_server_emmet}
+    #opt{lsp_server_lsp_ai}
+    #opt{lsp_server_superhtml}
+    #opt{lsp_server_unocss}
+  "
 }
 
 hook -group lsp-filetype-javascript global BufSetOption filetype=(?:javascript|typescript) %{
