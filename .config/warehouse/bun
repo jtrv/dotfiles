@@ -1,4 +1,3 @@
-@anthropic-ai/claude-code[0m[2m
 @fsouza/prettierd[0m[2m
 @getgrit/cli[0m[2m
 @google/gemini-cli[0m[2m
@@ -12,12 +11,12 @@
 @tailwindcss/language-server[0m[2m
 @typescript-eslint/eslint-plugin[0m[2m
 @unocss/cli[0m[2m
+babel-cli[0m[2m
 bash-language-server[0m[2m
 caniuse-lite[0m[2m
 cross-env[0m[2m
 depcheck[0m[2m
 eslint-plugin-prettier[0m[2m
-gatsby[0m[2m
 jest[0m[2m
 knip[0m[2m
 live-server[0m[2m

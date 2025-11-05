@@ -37,11 +37,13 @@ julia
 koka
 kotlin
 latex
+lean
 llvm
 lua
 make
 markdown
 markdown.inline
+mermaid
 nim
 nix
 nu
@@ -54,6 +56,7 @@ requirements
 ron
 ruby
 rust
+rust-format-args
 scheme
 scss
 sshclientconfig

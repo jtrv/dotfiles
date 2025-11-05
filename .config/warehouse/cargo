@@ -32,7 +32,7 @@ kak-lsp -> https://github.com/rust-lang/crates.io-index
 kakpipe -> /home/sugimoto/.config/kak/bundle/kakpipe
 kak-popup -> /home/sugimoto/.config/kak/bundle/popup.kak
 kakship -> /home/sugimoto/.config/kak/bundle/kakship
-kak-tree-sitter -> /home/sugimoto/.config/kak/bundle/kak-tree-sitter/kak-tree-sitter
+kak-tree-sitter -> https://github.com/rust-lang/crates.io-index
 kanata -> https://github.com/rust-lang/crates.io-index
 ktsctl -> https://github.com/rust-lang/crates.io-index
 lemmeknow -> https://github.com/rust-lang/crates.io-index
@@ -66,6 +66,7 @@ sniffglue -> https://github.com/rust-lang/crates.io-index
 speedtest-rs -> https://github.com/rust-lang/crates.io-index
 suckit -> https://github.com/rust-lang/crates.io-index
 taplo-cli -> https://github.com/rust-lang/crates.io-index
+tectonic -> https://github.com/tectonic-typesetting/tectonic.git
 thesauromatic -> https://github.com/rust-lang/crates.io-index
 topgrade -> https://github.com/rust-lang/crates.io-index
 t-rec -> https://github.com/rust-lang/crates.io-index

@@ -144,6 +144,7 @@ hunspell-en_us
 hunspell-es_any
 hyperfine
 imagemagick
+inkscape
 inter-font
 ipinfo-cli-bin
 irqbalance
@@ -184,6 +185,7 @@ linux-cachyos-headers
 linux-firmware
 linux-firmware-qlogic
 linux-headers
+lkrg-dkms-git
 lobster-git
 logseq-desktop-bin
 lostfiles
@@ -271,6 +273,7 @@ qpdf
 qt5ct
 qt6ct
 rate-mirrors
+rawtherapee
 rbenv
 rclone
 readest
@@ -308,6 +311,7 @@ speedtest++
 starship
 strace
 stremio
+sudo-rs
 sunshine
 superhtml
 sxiv
@@ -340,6 +344,7 @@ topgrade
 torbrowser-launcher
 trippy
 ttf-ibmplex-mono-nerd
+ttf-roboto
 ttyper
 udict-bin
 udiskie
@@ -350,6 +355,7 @@ umu-launcher
 upd72020x-fw
 upx
 usql-bin
+uutils-coreutils
 uv
 v4l2loopback-dkms
 vdhcoapp
