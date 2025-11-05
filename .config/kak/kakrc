@@ -93,7 +93,7 @@ bundle-install-hook popup.kak %{ cargo install --path . ; cargo clean }
 bundle kak-live-grep https://github.com/raiguard/kak-live-grep
 
 bundle-noload kak-tree-sitter https://git.sr.ht/~hadronized/kak-tree-sitter
-bundle-install-hook kak-tree-sitter %{ cargo binstall -y kak-tree-sitter ktsctl ; cargo clean }
+bundle-install-hook kak-tree-sitter %{ cargo install kak-tree-sitter ktsctl ; cargo clean }
 
 bundle kakoune-auto-percent https://github.com/delapouite/kakoune-auto-percent
 
