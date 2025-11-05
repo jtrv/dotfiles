@@ -1,5 +1,0 @@
-#!/bin/sh
-sudo sh -c "
-  kexec -l /boot/vmlinuz-linux-cachyos --initrd=/boot/initramfs-linux-cachyos.img --reuse-cmdline
-  systemctl kexec
-"
