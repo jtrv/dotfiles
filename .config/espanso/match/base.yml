@@ -6,7 +6,7 @@ matches:
     replace: "I don't know"
 
   - trigger: ",,gtg"
-    replace: "This should be good to go, changing the status to"
+    replace: "This should be good to go, moving status to "
 
   - trigger: ",,ins"
     replace: "I'm not sure, but I can find out"
@@ -16,6 +16,9 @@ matches:
 
   - trigger: ",,lmc"
     replace: "Let me check"
+
+  - trigger: ",,mtc"
+    replace: "Made the change, moving to QA and passing to "
 
   - trigger: ",,np"
     replace: "No problem"
