@@ -59,10 +59,10 @@ gui:
   switchToFilesAfterStashPop: true
   switchToFilesAfterStashApply: true
 git:
-  paging:
-    colorArg: always
-    pager: delta --paging=never
-    useConfig: false
+  pagers:
+    - colorArg: always
+      pager: delta --paging=never
+      useConfig: false
   merging:
     # only applicable to unix users
     manualCommit: false
@@ -193,7 +193,7 @@ keybinding:
     viewResetOptions: 'D'
     fetch: 'f'
     toggleTreeView: 't'
-    openMergeTool: 'M'
+    openMergeOptions: 'M'
     openStatusFilter: '<c-b>'
   branches:
     createPullRequest: 'o'
