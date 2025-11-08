@@ -522,14 +522,6 @@ define-command tldr -docstring '
   fi
 }}
 
-define-command view-pdf -docstring '
-  view-pdf [<pdf>]: View pdf with zathura.
-' -params .. %{
-  terminal devour zathura %arg{@}
-}
-complete-command -menu view-pdf shell-script-candidates %{fd -I -e pdf}
-alias global pdf view-pdf
-
 define-command watchexec -docstring '
   watchexec [<args>] <command>: watchexec utility wrapper
   execute the given command when the current directory changes

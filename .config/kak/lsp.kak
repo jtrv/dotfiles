@@ -340,28 +340,21 @@ hook -group lsp-filetype-latex global BufSetOption filetype=latex %{
     #
     # Preview configuration for zathura with SyncTeX search.
     # For other PDF viewers see https://github.com/latex-lsp/texlab/wiki/Previewing
-    forwardSearch.executable = "zathura"
+    forwardSearch.executable = "sioyek"
     forwardSearch.args = [
-      "%%p",
-      "--synctex-forward", # Support texlab-forward-search
-      "%%l:1:%%f",
-      "--synctex-editor-command", # Inverse search: use Control+Left-Mouse-Button to jump to source.
-      """
-        sh -fc '
-          echo "
-            evaluate-commands -client %%opt{texlab_client} %%{
-              evaluate-commands -try-client %%opt{jumpclient} %%{
-                edit -- %%{input} %%{line}
-              }
-            }
-          " | kak -p $kak_session
-        '
-      """,
+      "--reuse-window",
+      "--execute-command", "toggle_synctex",
+      "--inverse-search",
+      "texlab inverse-search -i '%%1' -l '%%2'",
+      "--forward-search-file", "%f",
+      "--forward-search-line", "%l",
+      "%p",
     ]
     chktex.onOpenAndSave = true
     chktex.onEdit = true
     build.onSave = true
-    build.args = [ "-pdf", "-interaction=nonstopmode", "-auxdir=.aux", "-synctex=1", "%%f" ]
+    build.forwardSearchAfter = true
+    build.args = [ "-pdf", "-interaction=nonstopmode", "-auxdir=.aux", "-synctex=1", "%f" ]
   }
 }
 
