@@ -67,6 +67,7 @@ colloid-cursors-git
 colloid-icon-theme-git
 cosign
 czkawka-cli
+dangerzone-bin
 dash
 devour
 discord_arch_electron
@@ -157,7 +158,6 @@ jp2a
 jpegoptim
 kakoune
 kdeconnect
-kexec-tools
 kmon
 kondo
 koreader-bin
@@ -301,7 +301,7 @@ sdcv
 shellcheck-bin
 shfmt
 signal-desktop
-sioyek-git
+sioyek
 sl
 snap-pac
 snap-sync
@@ -403,10 +403,6 @@ yamllint
 yazi
 yin-yang-git
 yt-dlp
-zaread-git
-zathura
-zathura-cb
-zathura-pdf-mupdf
 zeal
 zls
 zoom
