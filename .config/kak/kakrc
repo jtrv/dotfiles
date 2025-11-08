@@ -751,15 +751,14 @@ bundle kakoune-focus https://github.com/caksoylar/kakoune-focus %{
 map global user g -docstring 'grep' %{:grep }
 
 bundle reasymotion https://github.com/astaugaard/reasymotion
+set-face global REasymotionForeground "%opt{crust}ff,%opt{peach}ff+F"
 bundle-install-hook reasymotion %{ cargo install --path . ; cargo clean }
 declare-user-mode hop
   map global user h -docstring 'hop' %{: enter-user-mode hop <ret>}
-  map global hop f -docstring 'filter first'     %{:reasymotion-select-screen }
-  map global hop l -docstring 'letter to word'   %{:reasymotion-on-letter-to-word <ret>}
-  map global hop L -docstring 'letter to letter' %{:reasymotion-on-letter-to-letter <ret>}
-  map global hop s -docstring 'selections'       %{:reasymotion-selection <ret>}
-  map global hop w -docstring 'words'            %{:reasymotion-word <ret>}
-
+  map global hop i -docstring 'word initial'  %{:reasymotion-on-letter-to-word <ret>}
+  map global hop w -docstring 'word'          %{:reasymotion-word <ret>}
+  map global hop l -docstring 'letter'        %{:reasymotion-on-letter-to-letter <ret>}
+  map global hop s -docstring 'selection'     %{:reasymotion-selection <ret>}
 
 map global user i -docstring 'docs' %{:docs }
 
