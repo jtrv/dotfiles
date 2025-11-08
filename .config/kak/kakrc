@@ -709,6 +709,9 @@ map global normal <c-p> -docstring 'file-picker'    %{:file-picker <ret>}
 
 ################# MODES ##################
 
+# free keys:
+# b e k m n o r , . '
+
 map global user a -docstring 'action' %{:lsp-code-actions <ret>}
 
 # navigate buffers
