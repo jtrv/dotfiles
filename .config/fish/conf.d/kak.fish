@@ -11,21 +11,16 @@ function config-grep -d "grep config files in kak"
 end
 complete -c config-grep -w rg
 
-function kd -d "edit all fd results in kak"
-  k (fd $argv)
-end
-complete -c kd -w fd
-
-function kda -d "open delta output in kak"
-  set -l escaped_args (string escape --style=script -- $argv)
-  kak -e "delta $escaped_args; buffer-only; echo; info-buffers"
-end
-
-function kdr -d "make path and edit in kak"
+function kk -d "make path and edit in kak"
   for i in $argv
     mkdir -p (dirname $i)
     k $i
   end
+end
+complete -c kk -F
+
+function kd -d "edit all fd results in kak"
+  k (rg -lI . | lscolors | sk --color=always --preview="_fzf_preview_file {}")
 end
 
 function kg -d "grep with kakoune"
@@ -40,11 +35,11 @@ function kg -d "grep with kakoune"
 end
 complete -c kg -w rg
 
-function kgl -d "kakoune live grep"
-  kak -e 'live-grep; buffer-only;echo "live-grep"; info-buffers'
+function kif -d "open delta output in kak"
+  diff -u $argv | kak -e 'set-option buffer filetype diff'
 end
+complete -c kdf -w diff
 
-function kp -d kakpipe
-  set -l escaped_args (string escape --style=script -- $argv)
-  kak -e "kakpipe -- $escaped_args"
+function klg -d "kakoune live grep"
+  kak -e 'live-grep; buffer-only;echo "live-grep"; info-buffers'
 end
