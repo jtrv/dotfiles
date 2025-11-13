@@ -20,6 +20,11 @@
   mnemonicPrefix = true
   renames = true
   submodule = log
+  tool = diffsitter
+[difftool]
+  prompt = false
+[difftool "diffsitter"]
+  cmd = diffsitter "$LOCAL" "$REMOTE"
 [fetch]
   all = true
 [help]
