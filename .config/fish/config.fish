@@ -14,7 +14,7 @@ end
 # Start X at login
 if status is-login
   if test -z "$DISPLAY" -a "$XDG_VTNR" = 1
-    echo "Starting X11. (<C-c> to cancel)"
+    echo "Starting X11. Press <C-c> to cancel"
     sleep 2
     exec startx -- -keeptty &>/dev/null
   end
