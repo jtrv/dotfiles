@@ -131,12 +131,7 @@ declare-option -hidden str lsp_server_emmet %{
 }
 
 hook -group lsp-filetype-css global BufSetOption filetype=(?:css|less|scss) %{
-  set-option buffer lsp_servers %exp{
-    #opt{lsp_server_lsp_ai}
-    %opt{lsp_server_biome}
-    %opt{lsp_server_emmet}
-    #opt{lsp_server_unocss}
-
+  set-option buffer lsp_servers %{
     # Documented options see
     # https://github.com/sublimelsp/LSP-css/blob/master/LSP-css.sublime-settings
     [vscode-css-language-server]
@@ -159,6 +154,13 @@ hook -group lsp-filetype-css global BufSetOption filetype=(?:css|less|scss) %{
     less.validate = true
   }
 
+  set-option -add buffer lsp_servers "
+    %opt{lsp_server_biome}
+    #opt{lsp_server_emmet}
+    #opt{lsp_server_lsp_ai}
+    #opt{lsp_server_superhtml}
+    #opt{lsp_server_unocss}
+  "
 }
 
 hook -group lsp-filetype-dotenv global BufSetOption filetype=dotenv %{
@@ -169,9 +171,7 @@ hook -group lsp-filetype-dotenv global BufSetOption filetype=dotenv %{
 }
 
 hook -group lsp-filetype-fish global BufSetOption filetype=fish %{
-  set-option buffer lsp_servers %exp{
-    #opt{lsp_server_lsp_ai}
-
+  set-option buffer lsp_servers %{
     [fish-lsp]
     root_globs = [ "*.fish", "fish", ".git", ".hg" ]
     args = [ "start" ]
@@ -182,12 +182,7 @@ hook -group lsp-filetype-fish global BufSetOption filetype=fish %{
 }
 
 hook -group lsp-filetype-html global BufSetOption filetype=html %{
-  set-option buffer lsp_servers %exp{
-    #opt{lsp_server_lsp_ai}
-    %opt{lsp_server_biome}
-    %opt{lsp_server_emmet}
-    #opt{lsp_server_unocss}
-
+  set-option buffer lsp_servers %{
     # Documented options see
     # https://github.com/sublimelsp/LSP-html/blob/master/LSP-html.sublime-settings
     [vscode-html-language-server]
@@ -254,12 +249,7 @@ hook -group lsp-filetype-html global BufSetOption filetype=html %{
 }
 
 hook -group lsp-filetype-javascript global BufSetOption filetype=(?:javascript|typescript) %{
-  set-option buffer lsp_servers %exp{
-    #opt{lsp_server_lsp_ai}
-    %opt{lsp_server_biome}
-    %opt{lsp_server_emmet}
-    #opt{lsp_server_unocss}
-
+  set-option buffer lsp_servers %{
     [typescript-language-server]
     root_globs = [ "package.json", "tsjson", "jsjson", ".git", ".hg" ]
     args = [ "--stdio" ]
@@ -330,9 +320,7 @@ hook -group lsp-filetype-json global BufSetOption filetype=(?:json|jsonc) %{
 }
 
 hook -group lsp-filetype-latex global BufSetOption filetype=latex %{
-  set-option buffer lsp_servers %exp{
-    #opt{lsp_server_lsp_ai}
-
+  set-option buffer lsp_servers %{
     [texlab]
     root_globs = [ ".git", ".hg" ]
     [texlab.settings.texlab]
@@ -360,10 +348,7 @@ hook -group lsp-filetype-latex global BufSetOption filetype=latex %{
 
 
 hook -group lsp-filetype-markdown global BufSetOption filetype=markdown %{
-  set-option buffer lsp_servers %exp{
-    #opt{lsp_server_lsp_ai}
-    %opt{lsp_server_biome}
-
+  set-option buffer lsp_servers %{
     [markdown-oxide]
     root_globs = [ "logseq" ]
   #   [zk]
@@ -373,12 +358,14 @@ hook -group lsp-filetype-markdown global BufSetOption filetype=markdown %{
   #   root_globs = [ ".marksman.toml" ]
   #   args = [ "server" ]
   }
+  set-option -add buffer lsp_servers "
+    #opt{lsp_server_lsp_ai}
+    %opt{lsp_server_biome}
+  "
 }
 
 hook -group lsp-filetype-prisma global BufSetOption filetype=prisma %{
-  set-option buffer lsp_servers %exp{
-    #opt{lsp_server_lsp_ai}
-
+  set-option buffer lsp_servers %{
     [prisma-language-server]
     root_globs = [ ".git", ".hg", "prisma" ]
     args = [ "--stdio" ]
@@ -392,9 +379,7 @@ declare-option -hidden str lsp_server_basedpyright %{
 }
 
 hook -group lsp-filetype-python global BufSetOption filetype=python %{
-  set-option buffer lsp_servers %exp{
-    #opt{lsp_server_lsp_ai}
-
+  set-option buffer lsp_servers %{
     [pylsp]
     root_globs = [ "requirements.txt", "setup.py", "pyproject.toml", ".git", ".hg" ]
     settings_section = "_"
@@ -419,9 +404,7 @@ hook -group lsp-filetype-python global BufSetOption filetype=python %{
 }
 
 hook -group lsp-filetype-ruby global BufSetOption filetype=ruby %{
-  set-option buffer lsp_servers %exp{
-    #opt{lsp_server_lsp_ai}
-
+  set-option buffer lsp_servers %{
     [solargraph]
     root_globs = [ "Gemfile" ]
     args = [ "stdio" ]
@@ -438,17 +421,13 @@ hook -group lsp-filetype-ruby global BufSetOption filetype=ruby %{
 
 hook -group lsp-filetype-sql global BufSetOption filetype=sql %{
   set-option buffer lsp_servers %{
-    #opt{lsp_server_lsp_ai}
-
     [sqls]
     roots = [ ".git", ".hg" ]
   }
 }
 
 hook -group lsp-filetype-toml global BufSetOption filetype=toml %{
-  set-option buffer lsp_servers %exp{
-    #opt{lsp_server_lsp_ai}
-
+  set-option buffer lsp_servers %{
     [taplo]
     root_globs = [ ".git", ".hg" ]
     args = [ "lsp", "stdio" ]
