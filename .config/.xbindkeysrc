@@ -8,7 +8,7 @@
     Mod4 + b:5
 
 "playerctl previous"
-    Mod4 + b:6
+    Mod4 + c:110
 
 "playerctl next"
-    Mod4 + b:7
+    Mod4 + c:115
