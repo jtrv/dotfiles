@@ -5,35 +5,42 @@
   ;;  shft  ctl  alt   meta
   ;;
   ;;             ttime  htime  tap  hold
-  a   (tap-hold  200    150    a    lmet)
-  s   (tap-hold  200    150    s    lalt)
-  d   (tap-hold  200    150    d    lctl)
-  f   (tap-hold  200    150    f    lsft)
-  j   (tap-hold  200    150    j    rsft)
-  k   (tap-hold  200    150    k    rctl)
-  l   (tap-hold  200    150    l    ralt)
-  ;   (tap-hold  200    150    ;    rmet)
+  a   (tap-hold  200    150    a    met)
+  s   (tap-hold  200    150    s    alt)
+  d   (tap-hold  200    150    d    ctl)
+  f   (tap-hold  200    150    f    sft)
+  j   (tap-hold  200    150    j    sft)
+  k   (tap-hold  200    150    k    ctl)
+  l   (tap-hold  200    150    l    alt)
+  ;   (tap-hold  200    150    ;    met)
 
   ;; pinky relief meta tap-holds
-  e   (tap-hold  200    175    e    lmet)
-  i   (tap-hold  200    175    i    rmet)
+  e   (tap-hold  200    175    e    met)
+  i   (tap-hold  200    175    i    met)
 
-  ;; hold spc for nav layer
-  spc (tap-hold  200    150    spc  (layer-while-held nav))
+  ;; hold spc for space layer
+  spc (tap-hold  200    150    spc  (layer-while-held space))
 
   ;; xcape
-  esc (tap-hold  200    150    esc  rctl)
+  esc (tap-hold  200    150    esc  ctl)
 )
 
-(defchordsv2-experimental
-  (f j)   (caps-word 5000)                          50 first-release ()
+(defchordsv2
+  (f j)   (caps-word 5000)                        50 first-release ()
 
-  (s d)   (tap-hold 200 150 esc (multi lalt lctl))  50 first-release ()
-  (w e)   tab                                       50 first-release ()
-  (q w)   home                                      50 first-release ()
+  (s d)   (tap-hold 200 150 esc (multi alt ctl))  50 first-release ()
+  (w e)   tab                                     50 first-release ()
+  (q w)   home                                    50 first-release ()
 
-  (k l)   (tap-hold 200 150 ret (multi rctl ralt))  50 first-release ()
-  (i o)   bspc                                      50 first-release ()
-  (l ;)   (tap-hold 200 150 del (multi ralt rmet))  50 first-release ()
-  (o p)   end                                       50 first-release ()
+  (k l)   (tap-hold 200 150 ret (multi ctl alt))  50 first-release ()
+  (i o)   bspc                                    50 first-release ()
+  (l ;)   (tap-hold 200 150 del (multi alt met))  50 first-release ()
+  (o p)   end                                     50 first-release ()
+
+  (met home) prev 50 first-release ()
+  (met end)  next 50 first-release ()
+
+  (met mmid) pp                       50 first-release ()
+  (met mwu)  (cmd volume-increase 1)  50 first-release ()
+  (met mwd)  (cmd volume-decrease 1)  50 first-release ()
 )
