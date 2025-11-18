@@ -1,3 +1,0 @@
-#!/bin/sh
-{ killall xbindkeys >/dev/null; } 2>&1
-xbindkeys -f ~/.config/.xbindkeysrc
