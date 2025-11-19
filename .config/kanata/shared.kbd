@@ -23,6 +23,19 @@
 
   ;; xcape
   esc (tap-hold  200    150    esc  ctl)
+
+  ;; playerctl controls
+  mpp (cmd playerctl play-pause)
+  mpr (cmd playerctl previous)
+  mnx (cmd playerctl next)
+
+  ;; key volume
+  kvlu (cmd volume-increase 5)
+  kvld (cmd volume-decrease 5)
+
+  ;; scroll volume
+  svlu (cmd volume-increase 1)
+  svld (cmd volume-decrease 1)
 )
 
 (defchordsv2
@@ -36,11 +49,4 @@
   (i o)   bspc                                    50 first-release ()
   (l ;)   (tap-hold 200 150 del (multi alt met))  50 first-release ()
   (o p)   end                                     50 first-release ()
-
-  (met home) prev 50 first-release ()
-  (met end)  next 50 first-release ()
-
-  (met mmid) pp                       50 first-release ()
-  (met mwu)  (cmd volume-increase 1)  50 first-release ()
-  (met mwd)  (cmd volume-decrease 1)  50 first-release ()
 )
