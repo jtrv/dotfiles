@@ -1,5 +1,5 @@
 if status is-interactive
-  carapace _carapace fish     | source
+  carapace _carapace          | source
   atuin init fish             | source
   mise activate fish          | source
   pay-respects fish --alias f | source
