@@ -15,6 +15,7 @@ cpz -> https://github.com/rust-lang/crates.io-index
 crabz -> https://github.com/rust-lang/crates.io-index
 cymbal -> https://github.com/enricozb/cymbal
 dedoc -> https://github.com/toiletbril/dedoc
+diffsitter -> https://github.com/rust-lang/crates.io-index
 difftastic -> https://github.com/rust-lang/crates.io-index
 dotenv-linter -> https://github.com/rust-lang/crates.io-index
 fclones -> https://github.com/rust-lang/crates.io-index
@@ -36,6 +37,7 @@ kak-tree-sitter -> https://github.com/rust-lang/crates.io-index
 kanata -> https://github.com/rust-lang/crates.io-index
 ktsctl -> https://github.com/rust-lang/crates.io-index
 lemmeknow -> https://github.com/rust-lang/crates.io-index
+lscolors -> https://github.com/rust-lang/crates.io-index
 lsp-ai -> https://github.com/rust-lang/crates.io-index
 lychee -> http://github.com/gwennlbh/lychee?branch=recursion
 macchina -> https://github.com/rust-lang/crates.io-index

@@ -15,8 +15,8 @@ hash = "4761fffb60a12d37096c34a356380cdf"
 
 [[plugin.deps]]
 use = "lpnh/fg"
-rev = "3d32e55"
-hash = "f7ab219b58675582ef855a9414dbc659"
+rev = "a60466e"
+hash = "ae6f2fb9ea03527e3a367a9faf2690ac"
 
 [[plugin.deps]]
 use = "Reledia/glow"
@@ -35,12 +35,12 @@ hash = "c2021386289a0cbb3e152a052f67c177"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:diff"
-rev = "9a52857"
+rev = "8f1d971"
 hash = "82376c3381ae915fd799d40f4dd4c6cd"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:git"
-rev = "9a52857"
+rev = "8f1d971"
 hash = "63b6c222bf2103b3023389dde5e2ecfe"
 
 [[plugin.deps]]
@@ -50,13 +50,13 @@ hash = "ee71543790f0ce3951161045a3787abd"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:mount"
-rev = "9a52857"
+rev = "8f1d971"
 hash = "4fccaaf10c36dc2466e2438a386ff017"
 
 [[plugin.deps]]
 use = "boydaihungst/mediainfo"
-rev = "2093ab7"
-hash = "16a10359fc2a3cd8cc8bcfbe00f744d3"
+rev = "7543154"
+hash = "212fe977a845f44da073a397e0170e60"
 
 [[plugin.deps]]
 use = "kirasok/torrent-preview"
@@ -65,8 +65,8 @@ hash = "b89b46a15035a51d010a254858ba9741"
 
 [[plugin.deps]]
 use = "AnirudhG07/nbpreview"
-rev = "7fb073f"
-hash = "a3e32d62ea3cc703e6bf677bdb18a544"
+rev = "b504594"
+hash = "b83919985400521dee78e1c352b5d9db"
 
 [[plugin.deps]]
 use = "atareao/convert"
@@ -80,7 +80,7 @@ hash = "69967963fba96295a07b68354fc91ea9"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:chmod"
-rev = "9a52857"
+rev = "8f1d971"
 hash = "8ad3e90b079190b4905f24a44f4ca06b"
 
 [[plugin.deps]]
@@ -90,15 +90,15 @@ hash = "2b496dd4dcba137e2423783c3c31a823"
 
 [[plugin.deps]]
 use = "lpnh/fr"
-rev = "3d32e55"
-hash = "f7ab219b58675582ef855a9414dbc659"
+rev = "a60466e"
+hash = "ae6f2fb9ea03527e3a367a9faf2690ac"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:vcs-files"
-rev = "9a52857"
+rev = "8f1d971"
 hash = "4ee57085277d616acfa0ef1fef37dc00"
 
 [[flavor.deps]]
 use = "yazi-rs/flavors:catppuccin-mocha"
-rev = "2d73b79"
-hash = "d4c41d713b325710a9dd5ae86c3f8a5f"
+rev = "f6b425a"
+hash = "14b111562c00eb1917fe3ca3ae9bb771"
