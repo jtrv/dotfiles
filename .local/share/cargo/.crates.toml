@@ -24,6 +24,11 @@
 "cpz 3.0.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["cpz"]
 "crabz 0.10.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["crabz"]
 "dedoc 0.2.7 (git+https://github.com/toiletbril/dedoc#97fe4d6198333a7e1ae754c8e81963fc938d90ed)" = ["dedoc"]
+"diffsitter 0.9.0 (registry+https://github.com/rust-lang/crates.io-index)" = [
+    "diffsitter",
+    "diffsitter-utils",
+    "diffsitter_completions",
+]
 "dotenv-linter 3.3.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["dotenv-linter"]
 "fclones 0.35.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["fclones"]
 "fish-manpage-completions 0.1.0 (git+https://github.com/rust-dc/fish-manpage-completions#d927605f1d2562e7f65c1d49d8b8ea5022733869)" = ["fish-manpage-completions"]

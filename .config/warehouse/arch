@@ -15,7 +15,6 @@ aria2
 aspell-en
 ast-firmware
 atuin
-auto-cpufreq
 aws-cli
 b3sum
 bacon
@@ -43,6 +42,7 @@ caffeine
 calibre
 calibre-plugin-dedrm
 calibre-plugin-goodreads
+carapace
 cargo-audit
 cargo-binstall
 cargo-bloat
@@ -56,6 +56,7 @@ cargo-update
 catdoc
 catppuccin-cursors-mocha
 ccache
+chainner-bin
 chaotic-keyring
 chaotic-mirrorlist
 checkbashisms
@@ -71,6 +72,7 @@ cosign
 czkawka-cli
 dash
 devour
+difftastic
 discord_arch_electron
 dmenu
 docker
@@ -109,6 +111,7 @@ flameshot-git
 flatpak
 fortune-mod
 fstl
+fuse-archive
 fuse-overlayfs
 fwupd
 gamemode
@@ -133,6 +136,7 @@ gst-plugin-pipewire
 heroku-cli-bin
 htmlq
 hyperfine
+inkscape
 intel-media-driver
 intel-ucode
 ipinfo-cli-bin
@@ -147,7 +151,6 @@ jpegoptim
 just
 kakoune
 kdeconnect
-kexec-tools
 kmon
 kondo
 koreader-bin
@@ -165,6 +168,7 @@ linux-cachyos-headers
 linux-firmware
 linux-firmware-qlogic
 linux-headers
+lla-bin
 lobster-git
 logseq-desktop-bin
 lostfiles
@@ -196,6 +200,7 @@ nfs-utils
 ngrep
 nim
 nmap
+nodejs
 noto-fonts
 noto-fonts-cjk
 noto-fonts-emoji
@@ -251,11 +256,13 @@ qt6ct
 rate-mirrors
 rbenv
 rclone
+realesrgan-ncnn-vulkan-bin
 redshift
 rescrobbled-git
 revive
 ripgrep-all
 rkhunter
+rofimoji
 rsync
 ruby-build
 rust-analyzer
@@ -270,6 +277,7 @@ sdcv
 shellcheck-bin
 shfmt
 signal-desktop
+sioyek
 sl
 snap-pac
 snap-sync
@@ -280,8 +288,10 @@ speedtest++
 starship
 strace
 stremio
+sudo-rs
 superhtml
 syncthing
+systemctl-tui
 systeroid
 sysz
 tailspin
@@ -301,7 +311,7 @@ texlive-humanities
 texlive-latexextra
 texlive-mathscience
 thermald
-tidal-hifi-git
+tidal-hifi
 tidy
 tig
 timeshift
@@ -322,6 +332,7 @@ ungoogled-chromium-xdg-bin
 upd72020x-fw
 upx
 usql-bin
+uutils-coreutils
 uv
 veracrypt
 vhs
@@ -360,14 +371,9 @@ xournalpp
 xsel
 xss-lock
 yamllint
-yazi-nightly-bin
 yin-yang-git
 yq
 yt-dlp
-zaread-git
-zathura
-zathura-cb
-zathura-pdf-mupdf
 zeal
 zls
 zoom
