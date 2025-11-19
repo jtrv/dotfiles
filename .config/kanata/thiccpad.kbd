@@ -14,45 +14,42 @@
   blt  245
   wln  246
   mmut 248
-  mwck 258
-  mwup 260
-  mwdn 261
 )
 
 (defsrc
-  esc  mute vold volu mmut brdn brup dsp  wln  tls  blt  fav  home end ins del
-  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
-  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
-  caps a    s    d    f    g    h    j    k    l    ;    '    ret
-  lsft z    x    c    v    b    n    m    ,    .    /    rsft
-  lctl lmet lalt           spc            ralt prnt rctl pgup up   pgdn
-                                                         lft  down rght
-  ;; mouse
-  mwck mwup mwdn
+   esc   mute  vold  volu  mmut  brdn  brup  dsp   wln   tls   blt   fav   home  end  ins  del
+   grv   1     2     3     4     5     6     7     8     9     0     -     =     bspc
+   tab   q     w     e     r     t     y     u     i     o     p     [     ]     \
+   caps  a     s     d     f     g     h     j     k     l     ;     '     ret
+   lsft  z     x     c     v     b     n     m     ,     .     /     rsft
+   lctl  lmet  lalt             spc                ralt  prnt  rctl  pgup  up    pgdn
+                                                                     lft   down  rght
+   ;; mouse
+   mlft  mmid  mrgt  mwu   mwd   mwl   mwr   mbck  mfwd
 )
 
 (include shared.kbd)
 
 (deflayer base
-  esc  mute vold volu mmut brdn brup dsp  wln  tls  blt  fav  home end  ins del
-  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
-  tab  q    w    @e   r    t    y    u    @i   o    p    [    ]    \
-  @esc @a   @s   @d   @f   g    h    @j   @k   @l   @;   '    ret
-  sft  z    x    c    v    b    n    m    ,    .    /    sft
-  ctl  met  alt            @spc           alt  prnt ctl  pgup up   pgdn
-                                                         lft  down rght
-  ;; mouse
-  mwck mwup mwdn
+   esc   mute  vold  volu  mmut  brdn  brup  dsp   wln   tls   blt   fav   home  end   ins  del
+   grv   1     2     3     4     5     6     7     8     9     0     -     =     bspc
+   tab   q     w     @e    r     t     y     u     @i    o     p     [     ]     \
+   @esc  @a    @s    @d    @f    g     h     @j    @k    @l    @;    '     ret
+   sft   z     x     c     v     b     n     m     ,     .     /     sft
+   ctl   met   alt              @spc               alt   prnt  ctl   pgup  up    pgdn
+                                                                     lft   down  rght
+   ;; mouse
+   mlft  mmid  mrgt  mwu   mwd   mwl   mwr   mbck  mfwd
 )
 
 (deflayer space
-  _    _    _    _    _    _    _    _    _    _    _    _    _    _    _    _
-  _    _    _    _    _    _    _    _    _    _    _    _    _    _
-  _    _    _    _    _    _    _    bspc home end  del  _    _    _
-  _    prev _    pp   next _    left down up   rght _    _    _
-  _    _    _    _    _    _    _    _    pgdn pgup _    _
-  _    _    _              _              _    _    _    _    _    _
-                                                         _    _    _
-  ;; mouse
-  _    _    _
+   _     _     _     _     _     _     _     _     _     _     _     _     _     _     _     _
+   _     _     _     _     _     _     _     _     _     _     _     _     _     _
+   _     _     @kvld @kvlu _     _     _     bspc  home  end   del   _     _     _
+   _     @mpr  _     @mpp  @mnx  _     left  down  up    rght  _     _     _
+   _     _     _     _     _     _     _     _     pgdn  pgup  _     _
+   _     _     _                 _                 _     _     _     _     _     _
+                                                                     _     _     _
+   ;;  mouse
+   _     @mpp  _     @svlu  @svld  _     _     _     _
 )
