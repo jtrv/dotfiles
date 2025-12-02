@@ -1,10 +1,11 @@
 (defcfg
-  concurrent-tap-hold yes
-  danger-enable-cmd yes
   linux-dev-names-include (
     "AT Translated Set 2 keyboard"
     "Elan TrackPoint"
   )
+  concurrent-tap-hold yes
+  danger-enable-cmd yes
+  process-unmapped-keys no
 )
 
 (deflocalkeys-linux
