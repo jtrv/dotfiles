@@ -972,6 +972,7 @@ hook global WinSetOption filetype=python        %{ source '~/.config/kak/context
 hook global WinSetOption filetype=e?ruby        %{ source '~/.config/kak/contexts/ruby.kak'        }
 hook global WinSetOption filetype=rust          %{ source '~/.config/kak/contexts/rust.kak'        }
 hook global WinSetOption filetype=sh            %{ source '~/.config/kak/contexts/sh.kak'          }
+hook global WinSetOption filetype=systemd       %{ source '~/.config/kak/contexts/systemd.kak'   }
 hook global WinSetOption filetype=terraform     %{ source '~/.config/kak/contexts/terraform.kak'   }
 hook global WinSetOption filetype=typescript    %{ source '~/.config/kak/contexts/typescript.kak'  }
 hook global WinSetOption filetype=toml          %{ source '~/.config/kak/contexts/toml.kak'        }
