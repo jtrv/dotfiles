@@ -83,3 +83,4 @@
 "work-break 0.6.2 (registry+https://github.com/rust-lang/crates.io-index)" = ["work-break"]
 "wthrr 1.2.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["wthrr"]
 "zet 2.0.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["zet"]
+"systemd-lsp 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = ["systemd-lsp"]

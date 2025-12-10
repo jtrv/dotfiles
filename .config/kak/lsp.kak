@@ -36,51 +36,19 @@ declare-option -hidden str lsp_server_lsp_ai %{
   [lsp-ai.settings.models.gemini_complete]
   type = "open_ai"
   completions_endpoint = "https://openrouter.ai/api/v1/completions"
-  model = "google/gemini-2.5-pro-preview-03-25"
+  model = "x-ai/grok-4-fast"
   auth_token_env_var_name = "OPENROUTER_API_KEY"
 
   [lsp-ai.settings.models.gemini]
   type = "open_ai"
   chat_endpoint = "https://openrouter.ai/api/v1/chat/completions"
-  model = "google/gemini-2.5-pro-preview-03-25"
+  model = "google/gemini-3-pro-preview"
   auth_token_env_var_name = "OPENROUTER_API_KEY"
   max_requests_per_second = 1
   [[lsp-ai.settings.chat]]
   trigger = ",.gg"
   action_display_name = "google gemini"
   model = "gemini"
-  parameters.max_context = 4096
-  parameters.max_tokens = 1024
-  paramaeters.messages = [
-    { role = "system", content = "You are a code assistant chatbot. The user will ask you for assistance coding and you will do you best to answer succinctly and accurately" }
-  ]
-
-  [lsp-ai.settings.models.r1]
-  type = "open_ai"
-  chat_endpoint = "https://openrouter.ai/api/v1/chat/completions"
-  model = "deepseek/r1"
-  auth_token_env_var_name = "OPENROUTER_API_KEY"
-  max_requests_per_second = 1
-  [[lsp-ai.settings.chat]]
-  trigger = ",.r1"
-  action_display_name = "deepseek r1"
-  model = "r1"
-  parameters.max_context = 4096
-  parameters.max_tokens = 1024
-  paramaeters.messages = [
-    { role = "system", content = "You are a code assistant chatbot. The user will ask you for assistance coding and you will do you best to answer succinctly and accurately" }
-  ]
-
-  [lsp-ai.settings.models.sonnet]
-  type = "open_ai"
-  chat_endpoint = "https://openrouter.ai/api/v1/chat/completions"
-  model = "anthropic/claude-3.7-sonnet:thinking"
-  auth_token_env_var_name = "OPENROUTER_API_KEY"
-  max_requests_per_second = 1
-  [[lsp-ai.settings.chat]]
-  trigger = ",.so"
-  action_display_name = "claude sonnet"
-  model = "sonnet"
   parameters.max_context = 4096
   parameters.max_tokens = 1024
   paramaeters.messages = [
@@ -425,6 +393,18 @@ hook -group lsp-filetype-sql global BufSetOption filetype=sql %{
     roots = [ ".git", ".hg" ]
   }
 }
+
+hook -group lsp-filetype-systemd global BufSetOption filetype=systemd %{
+  set-option buffer lsp_servers %{
+    [systemd-lsp]
+    root_globs = [ "*.service", "*.mount", "*.device", "*.nspawn", "*.target", "*.timer" ]
+  }
+
+  set-option -add buffer lsp_servers "
+    #opt{lsp_server_lsp_ai}
+  "
+}
+
 
 hook -group lsp-filetype-toml global BufSetOption filetype=toml %{
   set-option buffer lsp_servers %{
