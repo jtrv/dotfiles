@@ -3,7 +3,6 @@ aichat
 alacritty-sixel-git
 amd-ucode
 ananicy-cpp
-android-tools
 ani-cli
 anki
 apparmor
@@ -35,6 +34,11 @@ breeze-icons
 btrfs-desktop-notification
 btrfs-progs
 cachyos-ananicy-rules-git
+cachyos-keyring
+cachyos-mirrorlist
+cachyos-settings
+cachyos-v3-mirrorlist
+cachyos-v4-mirrorlist
 calf
 calibre
 calibre-plugin-dedrm
@@ -92,7 +96,6 @@ exfat-utils
 expect
 eza
 fail2ban
-fclones
 fd
 feh
 ff2mpv-rust
@@ -127,7 +130,6 @@ glow
 gnu-netcat
 go-yq
 gomuks
-google-chrome
 gopls
 gpg-tui
 gping
@@ -148,7 +150,6 @@ imagemagick
 inkscape
 inter-font
 ipinfo-cli-bin
-irqbalance
 iw
 iwd
 j4-dmenu-desktop
@@ -201,7 +202,6 @@ mcomix
 mdcat
 mdp
 mediainfo
-memtest86+
 meson
 minify-html-bin
 minikube
@@ -215,6 +215,7 @@ namcap
 needrestart
 nfs-utils
 ngrep
+nix
 nmap
 noto-fonts
 noto-fonts-cjk
@@ -316,7 +317,6 @@ sunshine
 superhtml
 sxiv
 syncthing
-systemctl-tui
 systemd-resolvconf
 systeroid
 sysz
@@ -354,6 +354,7 @@ ufw-docker-git
 umu-launcher
 upd72020x-fw
 upx
+usbguard
 usql-bin
 uutils-coreutils
 uv
@@ -362,7 +363,6 @@ vdhcoapp
 vdpauinfo
 veracrypt
 vhs
-video2x
 visidata
 vkd3d-proton-mingw-git
 vopono
