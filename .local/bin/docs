@@ -10,23 +10,23 @@ cols=$(tput cols)
 bufcols=$(echo "$cols - 8" | bc)
 
 if [ $# -eq 0 ]; then
-	docset=$(dedoc ls -ln --porcelain | fzf --reverse --select-1 --no-multi)
+  docset=$(dedoc ls -ln --porcelain | fzf --reverse --select-1 --no-multi)
 else
-	docset="$1"
+  docset="$1"
 fi
 
 doc_entries=$(dedoc ss -i --porcelain "$docset")
 
 if [ $# -eq 2 ]; then
-	doc_entry=$(echo "$doc_entries" |
-		fzf --reverse --select-1 --query="$2" --preview "dedoc -c open '$docset' --  {}")
+  doc_entry=$(echo "$doc_entries" |
+    fzf --reverse --select-1 --query="$2" --preview "dedoc -c open '$docset' --  {}")
 else
-	doc_entry=$(echo "$doc_entries" |
-		fzf --reverse --select-1 --preview "dedoc -c open '$docset' -- {}")
+  doc_entry=$(echo "$doc_entries" |
+    fzf --reverse --select-1 --preview "dedoc -c open '$docset' -- {}")
 fi
 
 if [ -t 1 ]; then
-	dedoc -c open -c "$bufcols" "$docset" -- "$doc_entry" | "$PAGER"
+  dedoc -c open -c "$bufcols" "$docset" -- "$doc_entry" | "$PAGER"
 else
-	dedoc -c open -c "$bufcols" "$docset" -- "$doc_entry"
+  dedoc -c open -c "$bufcols" "$docset" -- "$doc_entry"
 fi

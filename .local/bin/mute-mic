@@ -7,9 +7,9 @@ pactl set-source-mute "$default_source" toggle
 state=$(pactl get-source-mute "$default_source" | awk '{print $2}')
 
 if [ "$state" = "yes" ]; then
-	status="Muted"
+  status="Muted"
 else
-	status="Live"
+  status="Live"
 fi
 
 dunstify -h string:x-dunst-stack-tag:mic-mute -t 2000 "Microphone $status"

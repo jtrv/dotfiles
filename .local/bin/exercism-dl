@@ -13,30 +13,30 @@ exercism_dir="$HOME/study/exercism"
 cd "$exercism_dir"
 
 if [ $# -eq 0 ]; then
-	langs=$(ls)
+  langs=$(ls)
 else
-	langs="$*"
+  langs="$*"
 fi
 
 for lang in $langs; do
-	url="https://exercism.org/api/v2/tracks/$lang/exercises"
-	exercises=$(xh -bF "$url" "Authorization: Bearer $token" |
-		jaq -r '.[] | .[] | select(.is_unlocked and .is_recommended) | .slug')
+  url="https://exercism.org/api/v2/tracks/$lang/exercises"
+  exercises=$(xh -bF "$url" "Authorization: Bearer $token" |
+    jaq -r '.[] | .[] | select(.is_unlocked and .is_recommended) | .slug')
 
-	cd "$lang" || continue
-	lang_text=$(printf '%-15s' "$lang")
+  cd "$lang" || continue
+  lang_text=$(printf '%-15s' "$lang")
 
-	echo "$exercises" | while read -r exercise; do
-		if [ -d "$exercise" ]; then
-			echo "$lang_text has: $exercise"
-		else
-			if exercism download --exercise="$exercise" --track="$lang" >/dev/null 2>&1; then
-				echo "$lang_text got: $exercise"
-			else
-				echo "$lang_text err: $exercise"
-			fi
-		fi
-	done
+  echo "$exercises" | while read -r exercise; do
+    if [ -d "$exercise" ]; then
+      echo "$lang_text has: $exercise"
+    else
+      if exercism download --exercise="$exercise" --track="$lang" >/dev/null 2>&1; then
+        echo "$lang_text got: $exercise"
+      else
+        echo "$lang_text err: $exercise"
+      fi
+    fi
+  done
 
-	cd ..
+  cd ..
 done

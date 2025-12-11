@@ -2,4 +2,3 @@
 for file in "$@"; do
   cp -r "$file" "$file.bak"
 done
-

@@ -21,11 +21,11 @@ MathBright=$((MathBright + Right))
 [ "$MathBright" -gt 999 ] && MathBright=999   # Can't go over 9.99
 
 if [ "${#MathBright}" -eq 3 ]; then
-	MathBright="$MathBright"000 # Pad with lots of zeros
-	CurrBright="${MathBright:0:1}.${MathBright:1:2}"
+  MathBright="$MathBright"000 # Pad with lots of zeros
+  CurrBright="${MathBright:0:1}.${MathBright:1:2}"
 else
-	MathBright="$MathBright"000 # Pad with lots of zeros
-	CurrBright=".${MathBright:0:2}"
+  MathBright="$MathBright"000 # Pad with lots of zeros
+  CurrBright=".${MathBright:0:2}"
 fi
 
 xrandr --output "$MON" --brightness "$CurrBright" # Set new brightness

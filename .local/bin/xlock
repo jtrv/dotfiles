@@ -53,7 +53,7 @@ dunstctl set-paused true
     starfish,\
     vines,\
     worm\
-  "\
+  " \
   "$@"
 
 dunstctl set-paused false

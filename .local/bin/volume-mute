@@ -7,9 +7,9 @@ pactl set-sink-mute "$DEFAULT_SINK" toggle
 MUTE_VALUE=$(pactl get-sink-mute "$DEFAULT_SINK" | awk '{print $2}')
 
 if [ "$MUTE_VALUE" = "yes" ]; then
-	MUTE_STATUS="On"
-	else
-	MUTE_STATUS="Off"
+  MUTE_STATUS="On"
+else
+  MUTE_STATUS="Off"
 fi
 
 dunstify -h string:x-dunst-stack-tag:volume -t 2500 "Mute Toggled $MUTE_STATUS"
