@@ -25,33 +25,41 @@ declare-option -hidden str lsp_server_lsp_ai %{
   [lsp-ai]
   root_globs = [ ".git", ".hg", ".*"]
 
-  [lsp-ai.settings.completion]
-  model = "completions"
-  [lsp-ai.settings.completion.parameters]
-  max_context = 1024
-  max_tokens = 128
+  [lsp-ai.settings.memory]
+  file_store = {}
 
-  [lsp-ai.settings.models.completions]
+  [lsp-ai.settings.models.completion]
   type = "open_ai"
   completions_endpoint = "https://openrouter.ai/api/v1/completions"
-  model = "x-ai/grok-4-fast"
+  model = "google/gemini-3-pro-preview"
   auth_token_env_var_name = "OPENROUTER_API_KEY"
 
-  [lsp-ai.settings.models.gemini]
+  [lsp-ai.settings.models.chat]
   type = "open_ai"
   chat_endpoint = "https://openrouter.ai/api/v1/chat/completions"
   model = "google/gemini-3-pro-preview"
   auth_token_env_var_name = "OPENROUTER_API_KEY"
   max_requests_per_second = 1
+
+  [lsp-ai.settings.completion]
+  model = "completion"
+  [lsp-ai.settings.completion.parameters]
+  max_context = 1024
+  max_tokens = 128
+
   [[lsp-ai.settings.chat]]
   trigger = ",.gg"
-  action_display_name = "google gemini"
-  model = "gemini"
+  action_display_name = "chat"
+  model = "chat"
   parameters.max_context = 4096
   parameters.max_tokens = 1024
-  paramaeters.messages = [
-    { role = "system", content = "You are a code assistant chatbot. The user will ask you for assistance coding and you will do you best to answer succinctly and accurately" }
-  ]
+  parameters.system = "You are a code assistant chatbot. The user will ask you for assistance coding and you will do you best to answer succinctly and accurately"
+}
+
+declare-option -hidden str lsp_server_basedpyright %{
+  [basedpyright-langserver]
+  root_globs = [ "requirements.txt", "setup.py", "pyproject.toml", "pyrightconfig.json", ".git", ".hg" ]
+  args = [ "--stdio" ]
 }
 
 declare-option -hidden str lsp_server_harper %{
@@ -97,7 +105,7 @@ declare-option -hidden str lsp_server_emmet %{
 }
 
 hook -group lsp-filetype-css global BufSetOption filetype=(?:css|less|scss) %{
-  set-option buffer lsp_servers %{
+  set-option -add buffer lsp_servers %{
     # Documented options see
     # https://github.com/sublimelsp/LSP-css/blob/master/LSP-css.sublime-settings
     [vscode-css-language-server]
@@ -152,13 +160,12 @@ hook -group lsp-filetype-css global BufSetOption filetype=(?:css|less|scss) %{
   set-option -add buffer lsp_servers "
     %opt{lsp_server_biome}
     #opt{lsp_server_emmet}
-    #opt{lsp_server_lsp_ai}
     #opt{lsp_server_unocss}
   "
 }
 
 hook -group lsp-filetype-dotenv global BufSetOption filetype=dotenv %{
-  set-option buffer lsp_servers %{
+  set-option -add buffer lsp_servers %{
     [dotenv-lsp]
     root_globs = [ ".env", "*.env", ".git", ".hg" ]
   }
@@ -166,21 +173,17 @@ hook -group lsp-filetype-dotenv global BufSetOption filetype=dotenv %{
 }
 
 hook -group lsp-filetype-fish global BufSetOption filetype=fish %{
-  set-option buffer lsp_servers %{
+  set-option -add buffer lsp_servers %{
     [fish-lsp]
     root_globs = [ "*.fish", "config.fish", "fish", ".git", ".hg" ]
     args = [ "start" ]
     [fish-lsp.envs]
     fish_lsp_diagnostic_disable_error_codes = "2002 2001"
   }
-
-  set-option -add buffer "
-    #opt{lsp_server_lsp_ai}
-  "
 }
 
 hook -group lsp-filetype-html global BufSetOption filetype=html %{
-  set-option buffer lsp_servers %{
+  set-option -add buffer lsp_servers %{
     # Documented options see
     # https://github.com/sublimelsp/LSP-html/blob/master/LSP-html.sublime-settings
     [vscode-html-language-server]
@@ -233,14 +236,13 @@ hook -group lsp-filetype-html global BufSetOption filetype=html %{
   set-option -add buffer lsp_servers "
     %opt{lsp_server_biome}
     #opt{lsp_server_emmet}
-    #opt{lsp_server_lsp_ai}
     #opt{lsp_server_superhtml}
     #opt{lsp_server_unocss}
   "
 }
 
 hook -group lsp-filetype-javascript global BufSetOption filetype=(?:javascript|typescript) %{
-  set-option buffer lsp_servers %{
+  set-option -add buffer lsp_servers %{
     [typescript-language-server]
     root_globs = [ "package.json", "tsjson", "jsjson", ".git", ".hg" ]
     args = [ "--stdio" ]
@@ -270,13 +272,12 @@ hook -group lsp-filetype-javascript global BufSetOption filetype=(?:javascript|t
   set-option -add buffer lsp_servers "
     %opt{lsp_server_biome}
     #opt{lsp_server_emmet}
-    #opt{lsp_server_lsp_ai}
     #opt{lsp_server_unocss}
   "
 }
 
 hook -group lsp-filetype-json global BufSetOption filetype=(?:json|jsonc) %{
-  set-option buffer lsp_servers %{
+  set-option -add buffer lsp_servers %{
     [vscode-json-language-server]
     root_globs = ["package.json", ".git", ".hg"]
     args = ["--stdio"]
@@ -311,7 +312,7 @@ hook -group lsp-filetype-json global BufSetOption filetype=(?:json|jsonc) %{
 }
 
 hook -group lsp-filetype-latex global BufSetOption filetype=latex %{
-  set-option buffer lsp_servers %{
+  set-option -add buffer lsp_servers %{
     [texlab]
     root_globs = [ ".git", ".hg" ]
     [texlab.settings.texlab]
@@ -339,7 +340,7 @@ hook -group lsp-filetype-latex global BufSetOption filetype=latex %{
 
 
 hook -group lsp-filetype-markdown global BufSetOption filetype=markdown %{
-  set-option buffer lsp_servers %{
+  set-option -add buffer lsp_servers %{
     [markdown-oxide]
     root_globs = [ "logseq" ]
   #   [zk]
@@ -352,30 +353,29 @@ hook -group lsp-filetype-markdown global BufSetOption filetype=markdown %{
 
   set-option -add buffer lsp_servers "
     %opt{lsp_server_biome}
-    #opt{lsp_server_lsp_ai}
   "
 }
 
+hook -group lsp-filetype-nix global BufSetOption filetype=nix %{
+  set-option -add buffer lsp_servers %{
+    [nil]
+    root_globs = [ "*.nix" ]
+    [nil.settings.nil]
+    formatting.command = "nixfmt"
+  }
+}
+
+
 hook -group lsp-filetype-prisma global BufSetOption filetype=prisma %{
-  set-option buffer lsp_servers %{
+  set-option -add buffer lsp_servers %{
     [prisma-language-server]
     root_globs = [ ".git", ".hg", "prisma" ]
     args = [ "--stdio" ]
   }
-
-  set-option -add buffer lsp_servers "
-    #opt{lsp_server_lsp_ai}
-  "
-}
-
-declare-option -hidden str lsp_server_basedpyright %{
-  [basedpyright-langserver]
-  root_globs = [ "requirements.txt", "setup.py", "pyproject.toml", "pyrightconfig.json", ".git", ".hg" ]
-  args = [ "--stdio" ]
 }
 
 hook -group lsp-filetype-python global BufSetOption filetype=python %{
-  set-option buffer lsp_servers %{
+  set-option -add buffer lsp_servers %{
     [pylsp]
     root_globs = [ "requirements.txt", "setup.py", "pyproject.toml", ".git", ".hg" ]
     settings_section = "_"
@@ -395,12 +395,11 @@ hook -group lsp-filetype-python global BufSetOption filetype=python %{
 
   set-option -add buffer lsp_servers "
     #opt{lsp_server_basedpyright}
-    #opt{lsp_server_lsp_ai}
   "
 }
 
 hook -group lsp-filetype-ruby global BufSetOption filetype=ruby %{
-  set-option buffer lsp_servers %{
+  set-option -add buffer lsp_servers %{
     [solargraph]
     root_globs = [ "Gemfile" ]
     args = [ "stdio" ]
@@ -413,37 +412,25 @@ hook -group lsp-filetype-ruby global BufSetOption filetype=ruby %{
     root_globs = [ "Gemfile" ]
     args = [ "stdio" ]
   }
-
-  set-option -add buffer lsp_servers "
-    #opt{lsp_server_lsp_ai}
-  "
 }
 
 hook -group lsp-filetype-sql global BufSetOption filetype=sql %{
-  set-option buffer lsp_servers %{
+  set-option -add buffer lsp_servers %{
     [sqls]
     roots = [ ".git", ".hg" ]
   }
-
-  set-option -add buffer lsp_servers "
-    #opt{lsp_server_lsp_ai}
-  "
 }
 
 hook -group lsp-filetype-systemd global BufSetOption filetype=systemd %{
-  set-option buffer lsp_servers %{
+  set-option -add buffer lsp_servers %{
     [systemd-lsp]
     root_globs = [ "*.service", "*.mount", "*.device", "*.nspawn", "*.target", "*.timer" ]
   }
-
-  set-option -add buffer lsp_servers "
-    #opt{lsp_server_lsp_ai}
-  "
 }
 
 
 hook -group lsp-filetype-toml global BufSetOption filetype=toml %{
-  set-option buffer lsp_servers %{
+  set-option -add buffer lsp_servers %{
     [taplo]
     root_globs = [ ".git", ".hg" ]
     args = [ "lsp", "stdio" ]
