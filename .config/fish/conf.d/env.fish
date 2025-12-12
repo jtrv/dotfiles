@@ -69,7 +69,9 @@ set -gx BEMOJI_PICKER_CMD           "dmenu -i -l 5 -g 5"
 set -gx BEMOJI_CLIP_CMD             "xclip -sel clip"
 set -gx BEMOJI_TYPE_CMD             "xdotool"
 set -gx BROWSER                     "firefox"
-set -gx CARAPACE_BRIDGES            "zsh,fish,bash,inshellisense"
+set -gx CARAPACE_BRIDGES            "fish,bash,inshellisense,carapace,argcomplete,clap,click,cobra,complete,kingpin,urfavecli,yargs"
+set -gx CARAPACE_LENIENT            1
+set -gx CARAPACE_MATCH              1
 set -gx CONCEAL_FINDER              "skim"
 set -gx DO_NOT_TRACK                "true"
 set -gx DELTA_PAGER                 "kak"
