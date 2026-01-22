@@ -1,4 +1,99 @@
 "$schema" = 'https://starship.rs/config-schema.json'
+format = """
+$username\
+$hostname\
+$localip\
+$shlvl\
+$singularity\
+$kubernetes\
+$directory\
+$vcsh\
+$fossil_branch\
+$fossil_metrics\
+$git_branch\
+$git_commit\
+$git_state\
+$git_metrics\
+$git_status\
+$hg_branch\
+$hg_state\
+$pijul_channel\
+$docker_context\
+$package\
+$c\
+$cmake\
+$cobol\
+$daml\
+$dart\
+$deno\
+$dotnet\
+$elixir\
+$elm\
+$erlang\
+$fennel\
+$fortran\
+$gleam\
+$golang\
+$guix_shell\
+$haskell\
+$haxe\
+$helm\
+$java\
+$julia\
+$kotlin\
+$gradle\
+$lua\
+$nim\
+$nodejs\
+$ocaml\
+$opa\
+$perl\
+$php\
+$pulumi\
+$purescript\
+$python\
+$quarto\
+$raku\
+$rlang\
+$red\
+$ruby\
+$rust\
+$scala\
+$solidity\
+$swift\
+$terraform\
+$typst\
+$vlang\
+$vagrant\
+$zig\
+$buf\
+$nix_shell\
+$conda\
+$meson\
+$spack\
+$memory_usage\
+$aws\
+$gcloud\
+$openstack\
+$azure\
+$nats\
+$direnv\
+$env_var\
+$mise\
+$crystal\
+$custom\
+$sudo\
+$cmd_duration\
+$time\
+$line_break\
+$jobs\
+$battery\
+$status\
+$os\
+$container\
+$netns\
+$shell\
+$character"""
 
 [aws]
 format = 'on [($profile )($region)$symbol]($style)'
@@ -22,7 +117,7 @@ style = "bold yellow"
 [character]
 success_symbol = "[❯](bold green)"
 error_symbol = "[](bold red)"
-vicmd_symbol = "[](bold green)"
+vimcmd_symbol = "[](bold green)"
 
 [directory]
 fish_style_pwd_dir_length = 1
@@ -33,14 +128,20 @@ symbol = "🐋 "
 disabled = false
 
 [gcloud]
-format = 'on [$symbol$account(@$domain)(\($project\))]($style) '
+format = '[$symbol$account(@$domain)(\($project\))]($style) '
 style = "bold yellow"
 symbol = "☁️  "
 disabled = true
 
 # git
+[git_branch]
+format = "[$symbol$branch(:$remote_branch)]($style) "
+
 [git_commit]
 commit_hash_length = 4
+
+[git_metrics]
+disabled = false
 
 [git_status]
 conflicted = "🏳 "
@@ -56,10 +157,6 @@ deleted = "🗑 "
 
 # hostname
 [hostname]
-ssh_only = false
-prefix = "⟪"
-suffix = "⟫"
-trim_at = ".companyname.com"
 disabled = true
 
 # kubernetes
@@ -69,3 +166,13 @@ style = "dimmed green"
 disabled = false
 [kubernetes.context_aliases]
 "dev.local.cluster.k8s" = "dev"
+
+[sudo]
+disabled = false
+
+[terraform]
+disabled = false
+
+[time]
+disabled = false
+
