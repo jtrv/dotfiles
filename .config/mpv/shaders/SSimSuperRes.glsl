@@ -1,3 +1,6 @@
+// Revised 12/08/23
+// https://gist.github.com/igv/2364ffa6e81540f29cb7ab4c9bc05b6b
+//
 // SSimSuperRes by Shiandow
 //
 // This library is free software; you can redistribute it and/or
@@ -148,7 +151,7 @@ vec4 hook() {
 //!WHEN NATIVE_CROPPED.h OUTPUT.h <
 //!DESC SSSR final pass
 
-#define oversharp   0.4
+#define oversharp   0.5
 
 // -- Window Size --
 #define taps        3.0
