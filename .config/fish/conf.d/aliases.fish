@@ -6,6 +6,7 @@ alias aider   "aider --config ~/.config/aider/config.yaml"
 alias ani     "ani-cli -q best --skip" # weeb out in S-rank ultra-fidelity 8k lossless greenray
 alias boi     "wikiman"
 alias bls     "/bin/ls"
+alias bup     "bun update -g --latest"
 alias cat     "bat"
 alias cbin    "yes | cargo binstall"
 alias cdr     "cd (git rev-parse --show-toplevel)"
