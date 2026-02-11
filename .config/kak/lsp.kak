@@ -62,6 +62,12 @@ declare-option -hidden str lsp_server_basedpyright %{
   args = [ "--stdio" ]
 }
 
+declare-option -hidden str lsp_server_biome %{
+  [biome]
+  root_globs = ["biome.json", "package.json", "tsconfig.json", "jsconfig.json", ".git", ".hg"]
+  args = ["lsp-proxy"]
+}
+
 declare-option -hidden str lsp_server_harper %{
   [harper-ls]
   args = [ "--stdio" ]
