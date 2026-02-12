@@ -1,4 +1,6 @@
+bugstalker -> https://github.com/rust-lang/crates.io-index
 cargo-fix -> https://github.com/rust-lang/crates.io-index
+cargo-geiger -> https://github.com/rust-lang/crates.io-index
 cargo-run-bin -> https://github.com/rust-lang/crates.io-index
 cargo-trend -> https://github.com/rust-lang/crates.io-index
 cargo-vcpkg -> https://github.com/rust-lang/crates.io-index
@@ -52,4 +54,5 @@ skyspell_kak -> https://github.com/rust-lang/crates.io-index
 systemd-lsp -> https://github.com/rust-lang/crates.io-index
 thesauromatic -> https://github.com/rust-lang/crates.io-index
 t-rec -> https://github.com/rust-lang/crates.io-index
+wthrr -> https://github.com/rust-lang/crates.io-index
 zet -> https://github.com/rust-lang/crates.io-index
