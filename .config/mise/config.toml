@@ -11,6 +11,7 @@ dotenv-linter = "latest"
 go = "latest"
 revive = "latest"
 usage = "latest"
+uv = "latest"
 yazi = "latest"
 zig = "latest"
 
