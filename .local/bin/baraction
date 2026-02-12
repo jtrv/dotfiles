@@ -68,7 +68,7 @@ mic() {
 }
 
 net() {
-  if ip a | grep 'wlan0' | grep -c 'UP' >/dev/null; then
+  if ip a | grep 'enp6s0' | grep -c 'UP' >/dev/null; then
     printf ""
   else
     printf "󰖪"
