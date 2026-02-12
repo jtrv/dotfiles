@@ -60,7 +60,7 @@ vol() {
 }
 
 mic() {
-  if find /proc/asound/card*/input*/status -type f -exec grep -q "RUNNING" {} + 2>/dev/null; then
+  if wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | grep -q "\[MUTED\]" 2>/dev/null; then
     printf ""
   else
     printf ""
