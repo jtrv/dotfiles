@@ -10,6 +10,7 @@ node = "latest"
 revive = "latest"
 ruby = "latest"
 usage = "latest"
+uv = "latest"
 yazi = "latest"
 zig = "latest"
 
