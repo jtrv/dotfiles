@@ -1,0 +1,38 @@
+# Enable mouse support
+mouse = true
+
+# Peak meter mode
+peaks = "auto"
+
+# Initial tab
+tab = "playback"
+
+# Maximum percentage for volume sliders
+max_volume_percent = 100.0
+
+# Whether to prevent increasing volume past max_volume
+enforce_max_volume = true
+
+# If true, only monitor peak levels of visible nodes
+lazy_capture = false
+
+# This override makes it show as "spotify" instead of "spotify: Spotify".
+[[names.overrides]]
+types = [ "stream" ]
+property = "node:node.name"
+value = "spotify"
+templates = [ "{node:node.name}" ]
+
+# This override makes it show as "foo - mpv" instead of "mpv: foo - mpv".
+[[names.overrides]]
+types = [ "stream" ]
+property = "node:node.name"
+value = "mpv"
+templates = [ "{node:media.name}" ]
+
+# This override truncates "Firefox Developer Edition" to "Firefox"
+[[names.overrides]]
+types = [ "stream" ]
+property = "node:node.name"
+value = "Firefox Developer Edition"
+templates = [ "Firefox: {node:media.name}" ]
