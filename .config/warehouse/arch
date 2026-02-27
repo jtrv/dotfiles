@@ -27,21 +27,19 @@ bemoji
 betterdiscord-installer-bin
 bindtointerface
 binsider
-bitwarden
 blas-openblas
 blender
+bluetui
 bluez-utils
 bottles
 bottom
+bpftune-git
 breeze-icons
 btrfs-desktop-notification
 btrfs-progs
 bun-bin
 cachyos-ananicy-rules-git
 caffeine
-calibre
-calibre-plugin-dedrm
-calibre-plugin-goodreads
 carapace
 cargo-audit
 cargo-binstall
@@ -127,7 +125,6 @@ git-delta
 github-cli
 glow
 gomuks
-google-chrome
 gopls
 gpg-tui
 gping
@@ -159,6 +156,7 @@ kvantum-theme-catppuccin-git
 lazygit
 lbzip2
 leanify-git
+lemurs
 libpulse
 libqalculate
 libva-intel-driver
@@ -168,7 +166,6 @@ linux-cachyos-headers
 linux-firmware
 linux-firmware-qlogic
 linux-headers
-lla-bin
 lobster-git
 logseq-desktop-bin
 lostfiles
@@ -179,6 +176,7 @@ lxqt-policykit
 lychee
 lzop
 macchina
+mako
 man-db
 mcomix
 mdcat
@@ -198,7 +196,8 @@ namcap
 needrestart
 nfs-utils
 ngrep
-nim
+niri
+nix
 nmap
 nodejs
 noto-fonts
@@ -219,7 +218,6 @@ pacman-cleanup-hook
 pandoc-bin
 papirus-folders-catppuccin-git
 paru
-pass
 pastel
 pay-respects-bin
 pbzip2
@@ -246,7 +244,6 @@ procs
 profile-sync-daemon
 progress
 pueue
-pulsemixer
 pv
 python-capstone
 python-validity
@@ -285,11 +282,13 @@ snapper
 sniffglue
 spectrwm
 speedtest++
+spotify
 starship
 strace
-stremio
 sudo-rs
 superhtml
+swayidle
+swaylock
 syncthing
 systemctl-tui
 systeroid
@@ -320,7 +319,6 @@ tokei
 topgrade
 torbrowser-launcher
 trippy
-ttf-font-awesome
 ttf-ibmplex-mono-nerd
 ttyper
 udict-bin
@@ -328,9 +326,8 @@ udiskie
 ueberzugpp
 ufw
 umu-launcher
-ungoogled-chromium-xdg-bin
+ungoogled-chromium-bin
 upd72020x-fw
-upx
 usql-bin
 uutils-coreutils
 uv
@@ -344,10 +341,13 @@ watchexec
 wd719x-firmware
 webtorrent-mpv-hook
 wget2
+whosthere-bin
 wikiman
 wine-mono
+wiremix
 wireplumber
 wmctrl
+woff2-font-awesome
 xarchiver
 xautolock
 xbanish
@@ -357,7 +357,6 @@ xcolor
 xcwd-git
 xdg-ninja-git
 xdg-utils-handlr
-xf86-video-intel
 xh
 xlockmore
 xorg-server
@@ -370,6 +369,7 @@ xorg-xlsfonts
 xournalpp
 xsel
 xss-lock
+xwayland-satellite
 yamllint
 yin-yang-git
 yq
