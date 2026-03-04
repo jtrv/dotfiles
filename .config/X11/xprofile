@@ -1,16 +1,17 @@
 #!/bin/sh
 
-userresources=$HOME/.config/X11/Xresources
-usermodmap=$HOME/.config/.Xmodmap
+CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}"
+userresources="$CONFIG_DIR/X11/Xresources"
+usermodmap="$CONFIG_DIR/.Xmodmap"
 sysresources=/etc/X11/xinit/.Xresources
 sysmodmap=/etc/X11/xinit/.Xmodmap
 
 # merge in defaults and keymaps
-if [ -f $sysresources ]; then
-	xrdb -merge $sysresources
+if [ -f "$sysresources" ]; then
+	xrdb -merge "$sysresources"
 fi
-if [ -f $sysmodmap ]; then
-	xmodmap $sysmodmap
+if [ -f "$sysmodmap" ]; then
+	xmodmap "$sysmodmap"
 fi
 if [ -f "$userresources" ]; then
 	xrdb -merge "$userresources"
@@ -39,5 +40,3 @@ xss-lock -- xlock &            # lock on sleep etc.
 ~/.local/bin/trackball-speed & # set trackball speed
 
 xhost +SI:localuser:$USER
-
-exec spectrwm
