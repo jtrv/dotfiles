@@ -35,6 +35,7 @@ bottles
 bottom
 bpftune-git
 breeze-icons
+brightnessctl
 btrfs-desktop-notification
 btrfs-progs
 bun-bin
@@ -371,6 +372,7 @@ xsel
 xss-lock
 xwayland-satellite
 yamllint
+ydotool
 yin-yang-git
 yq
 yt-dlp
