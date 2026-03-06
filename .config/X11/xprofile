@@ -32,6 +32,7 @@ xrandr --output eDP-1
 
 alacritty --daemon &           # alacritty daemon
 caffeine &                     # inhibit sleep w/ media
+dunst &                        # notification daemon
 /usr/lib/kdeconnectd &         # kdeconnect daemon
 picom &                        # window opacity / blur
 redshift &                     # bluelight filter
