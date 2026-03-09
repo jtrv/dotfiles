@@ -1,10 +1,11 @@
 [Unit]
 Description=kdeconnect
-After=suspend.target sleep.target hybrid-sleep.target hibernate.target
+After=default.target graphical-session.target suspend.target sleep.target hybrid-sleep.target hibernate.target
 
 [Service]
 Type=oneshot
+ExecStartPre=/usr/bin/sleep 5
 ExecStart=/usr/bin/kdeconnect-cli --refresh
 
 [Install]
-WantedBy=sleep.target default.target
+WantedBy=sleep.target default.target graphical-session.target
