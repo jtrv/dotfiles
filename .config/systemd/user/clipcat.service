@@ -1,11 +1,12 @@
 [Unit]
 Description=Clipcat Daemon
 PartOf=default.target
-
-[Install]
-WantedBy=default.target
+After=graphical-session.target
 
 [Service]
 ExecStart=/usr/bin/clipcatd --no-daemon --replace
 Restart=on-failure
 Type=simple
+
+[Install]
+WantedBy=default.target

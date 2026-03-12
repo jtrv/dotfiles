@@ -1,5 +1,7 @@
 #!/bin/sh
 
+export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
+
 CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}"
 userresources="$CONFIG_DIR/X11/Xresources"
 usermodmap="$CONFIG_DIR/.Xmodmap"

@@ -1,6 +1,7 @@
 [Unit]
 Description=Battery monitor daemon
 Documentation=man:batsignal(1)
+After=graphical-session.target
 
 [Service]
 Type=simple

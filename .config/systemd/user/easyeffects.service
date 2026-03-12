@@ -1,5 +1,6 @@
 [Unit]
 Description=easyeffects autostart config
+After=graphical-session.target
 
 [Service]
 Restart=always

@@ -1,5 +1,6 @@
 [Unit]
 Description=Pueue Daemon - CLI process scheduler and manager
+After=graphical-session.target
 
 [Service]
 Restart=no
