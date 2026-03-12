@@ -108,13 +108,15 @@ while :; do
     # --- 4. SSD (Interval Limited) ---
     # Only run this heavy check every N loops
     if [ "$tick_disk" -ge "$DISK_UPDATE_INTERVAL" ]; then
-        # Pure sh parsing of df (avoids 'tail')
         # We assume df -P output format: Filesystem Blocks Used Available Capacity Mounted
-        df -P /home | {
-            read _ # Skip header
-            read _ _ _ _cap _
-            echo "${_cap%\%}"
-        } | read -r ssd_percent
+        ssd_percent=$(
+            df -P /home | {
+                read -r _ # Skip header
+                # Use 4 underscores to skip fs, blocks, used, avail. 5th is cap.
+                read -r _ _ _ _ cap _
+                echo "${cap%\%}"
+            }
+        )
         tick_disk=0
     else
         tick_disk=$((tick_disk + 1))
