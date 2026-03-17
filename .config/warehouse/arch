@@ -3,7 +3,6 @@ aichat
 alacritty-sixel-git
 amd-ucode
 ananicy-cpp
-ani-cli
 anki
 apparmor
 arch-audit
@@ -23,7 +22,6 @@ base
 base-devel
 bat
 bindtointerface
-binsider
 blender
 bluetui
 bluez-utils
@@ -40,9 +38,6 @@ cachyos-settings
 cachyos-v3-mirrorlist
 cachyos-v4-mirrorlist
 calf
-calibre
-calibre-plugin-dedrm
-calibre-plugin-goodreads
 carapace-bin
 cargo-audit
 cargo-binstall
@@ -61,7 +56,6 @@ chaotic-keyring
 chaotic-mirrorlist
 checkbashisms
 choose
-circumflex-bin
 clipcat
 cmake
 colloid-catppuccin-gtk-theme-git
@@ -175,6 +169,7 @@ lazyjournal
 lazysql
 lbzip2
 leanify-git
+lemurs
 lib32-gst-plugins-base
 lib32-gst-plugins-base-libs
 lib32-gst-plugins-good
@@ -268,10 +263,8 @@ polly
 preload
 presenterm
 procs
-profile-sync-daemon
 progress
 pueue
-pulsemixer
 pv
 python-mako
 python-setproctitle
@@ -389,6 +382,7 @@ wikiman
 wine-mono
 wine-staging
 wired
+wiremix
 wireplumber
 wmctrl
 woff2-font-awesome
