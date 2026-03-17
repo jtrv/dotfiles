@@ -1,86 +1,130 @@
 #!/bin/sh
 
-cpu() {
-  icon=
-  read -r cpu a b c previdle rest </proc/stat
-  total=$((a + b + c + previdle))
-  prev_stat_file="/tmp/prev_cpu_stat"
-  if [ -f "$prev_stat_file" ]; then
-    read -r _ a_prev b_prev c_prev previdle_prev _ <"$prev_stat_file"
-    cpu_usage=$((100 * ((total - (a_prev + b_prev + c_prev + previdle_prev)) - (previdle - previdle_prev)) / (total - (a_prev + b_prev + c_prev + previdle_prev))))
-    printf "%s%3d%%" "$icon" "$cpu_usage"
+# Global state
+prev_total=0
+prev_idle=0
+ssd_str=""
+tick=0
+
+update_cpu() {
+  read -r _ user nice system idle iowait irq softirq steal _ < /proc/stat
+
+  idle=${idle:-0}; iowait=${iowait:-0}; user=${user:-0}
+  nice=${nice:-0}; system=${system:-0}; irq=${irq:-0}
+  softirq=${softirq:-0}; steal=${steal:-0}
+
+  total=$((user + nice + system + idle + iowait + irq + softirq + steal))
+  current_idle=$((idle + iowait))
+
+  diff_idle=$((current_idle - prev_idle))
+  diff_total=$((total - prev_total))
+  [ "$diff_total" -eq 0 ] && diff_total=1
+
+  usage=$(( (100 * (diff_total - diff_idle) + (diff_total / 2)) / diff_total ))
+
+  prev_total=$total
+  prev_idle=$current_idle
+
+  cpu_str=" $(printf '%3d%%' "$usage")"
+}
+
+update_ram() {
+  while read -r name value _; do
+    case "$name" in
+      MemTotal:) mem_total=$value ;;
+      MemAvailable:)
+        mem_avail=$value
+        break # Exit loop immediately to save CPU cycles
+        ;;
+    esac
+  done < /proc/meminfo
+
+  [ -z "$mem_avail" ] && mem_avail=$mem_total
+
+  used=$((mem_total - mem_avail))
+  percent=$(( (100 * used + (mem_total / 2)) / mem_total ))
+  ram_str=" $(printf '%3d%%' "$percent")"
+}
+
+update_ssd() {
+  # df -P header has 7 words, data has 6. The 12th word is the % capacity.
+  set -- $(df -P /home)
+  percent=${12%\%} # Extracts the 12th param and strips the '%' character
+  ssd_str="󰋊 $(printf '%3d%%' "$percent")"
+}
+
+update_vol() {
+  raw_vol=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ 2>/dev/null)
+
+  case "$raw_vol" in
+    *"[MUTED]"*) icon="" ;;
+    *) icon="" ;;
+  esac
+
+  # Pure shell string manipulation to convert "Volume: 0.45" to integer "45"
+  vol_str=${raw_vol#Volume: }        # Strip prefix
+  vol_str=${vol_str%% *}             # Strip [MUTED] if present
+  vol_str=${vol_str%.*}${vol_str#*.} # Remove decimal point (0.45 -> 045)
+
+  # Safely strip leading zeros to prevent octal math errors
+  while [ "${vol_str#0}" != "$vol_str" ]; do
+    vol_str=${vol_str#0}
+  done
+
+  vol=${vol_str:-0} # Default to 0 if string is empty
+  vol_str="$icon $(printf '%3d%%' "$vol")"
+}
+
+update_mic() {
+  raw_mic=$(wpctl get-volume @DEFAULT_AUDIO_SOURCE@ 2>/dev/null)
+  case "$raw_mic" in
+    *"[MUTED]"*) mic_str="" ;;
+    *) mic_str="" ;;
+  esac
+}
+
+update_net() {
+  read -r state < /sys/class/net/enp6s0/operstate 2>/dev/null || state="down"
+  if [ "$state" = "up" ]; then
+    net_str=""
   else
-    printf "N/A"
-  fi
-  echo "$cpu $a $b $c $previdle $rest" >"$prev_stat_file"
-}
-
-ram() {
-  icon=
-  free_output=$(free)
-  used=$(echo "$free_output" | awk '/Mem:/ {print $3}')
-  total=$(echo "$free_output" | awk '/Mem:/ {print $2}')
-  percent=$((200 * used / total % 2 == 0 ? 100 * used / total : 101 * used / total))
-  printf "%s%3d%%" "$icon" "$percent"
-}
-
-ssd() {
-  icon=󰋊
-  SSD=$(df -P /home | awk 'NR==2 {print int($5)}')
-  printf "%s%3d%%" "$icon" "$SSD"
-}
-
-bat() {
-  read -r charging </sys/class/power_supply/AC/online
-  read -r percent </sys/class/power_supply/BAT0/capacity
-
-  icon=$(case "$percent" in
-    [1-9]) echo "" ;;
-    [1-3][0-9]) echo "" ;;
-    [4-5][0-9]) echo "" ;;
-    [6-7][0-9]) echo "" ;;
-    *) echo "" ;;
-    esac)
-
-  [ "$charging" = "1" ] && icon="⚡"
-  printf "%s%3d%%" "$icon" "$percent"
-}
-
-vol() {
-  volume=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -o '[0-9]*%' | head -1 | tr -d '%')
-  mute=$(pactl get-sink-mute @DEFAULT_SINK@ | grep -o 'yes')
-
-  if [ "$mute" = "yes" ]; then
-    icon=""
-  else
-    icon=""
-  fi
-
-  printf "%s%3d%%" "$icon" "$volume"
-}
-
-mic() {
-  if wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | grep -q "\[MUTED\]" 2>/dev/null; then
-    printf ""
-  else
-    printf ""
+    net_str="󰖪"
   fi
 }
 
-net() {
-  if ip a | grep 'enp6s0' | grep -c 'UP' >/dev/null; then
-    printf ""
-  else
-    printf "󰖪"
-  fi
-}
-
-blu() {
-  find /sys/class/bluetooth -name powered -quit 2>/dev/null && printf "󰂱" || printf "󰂲"
+update_blu() {
+  blu_str="󰂲"
+  for f in /sys/class/bluetooth/hci*/powered; do
+    if [ -f "$f" ]; then
+      read -r p < "$f" 2>/dev/null
+      if [ "$p" = "1" ]; then
+        blu_str="󰂱"
+        break # Exit immediately on first active device
+      fi
+    fi
+  done
 }
 
 SLEEP_SEC=2
+
+# Initialize SSD on first run
+update_ssd
+
 while :; do
-  echo "$(cpu)  $(ram)  $(ssd)  $(blu)  $(net)   $(mic)  "
-  sleep $SLEEP_SEC
+  update_cpu
+  update_ram
+  update_net
+  update_blu
+  update_mic
+
+  # Tick-based execution: Only check SSD every 60 seconds (30 ticks)
+  # This drastically cuts down on unnecessary disk queries.
+  if [ $((tick % 30)) -eq 0 ]; then
+    update_ssd
+  fi
+
+  printf "%s  %s  %s  %s  %s   %s  \n" "$cpu_str" "$ram_str" "$ssd_str" "$blu_str" "$net_str" "$mic_str"
+
+  tick=$(( (tick + 1) % 30 ))
+  sleep "$SLEEP_SEC"
 done
