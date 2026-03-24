@@ -59,7 +59,7 @@
 "skim 3.7.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["sk"]
 "skyspell 5.0.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["skyspell"]
 "skyspell_kak 3.0.2 (registry+https://github.com/rust-lang/crates.io-index)" = ["skyspell-kak"]
-"superseedr 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)" = ["superseedr"]
+"superseedr 1.0.3 (registry+https://github.com/rust-lang/crates.io-index)" = ["superseedr"]
 "systemd-lsp 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["systemd-lsp"]
 "t-rec 0.8.2 (registry+https://github.com/rust-lang/crates.io-index)" = ["t-rec"]
 "thesauromatic 0.0.11 (registry+https://github.com/rust-lang/crates.io-index)" = ["thesauromatic"]
