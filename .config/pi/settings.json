@@ -1,0 +1,21 @@
+{
+  "lastChangelogVersion": "0.62.0",
+  "images": {
+    "blockImages": true
+  },
+  "defaultProvider": "openrouter",
+  "defaultModel": "z-ai/glm-5",
+  "collapseChangelog": true,
+  "hideThinkingBlock": true,
+  "quietStartup": true,
+  "treeFilterMode": "all",
+  "theme": "dark",
+  "defaultThinkingLevel": "high",
+  "enabledModels": [
+    "openrouter/z-ai/glm-5",
+    "openrouter/minimax/minimax-m2.7",
+    "openrouter/moonshotai/kimi-k2.5",
+    "openrouter/google/gemini-3.1-pro-preview-customtools"
+  ],
+  "doubleEscapeAction": "tree"
+}
