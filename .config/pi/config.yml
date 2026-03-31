@@ -1,0 +1,39 @@
+lastChangelogVersion: 13.17.0
+images: 
+  blockImages: true
+defaultProvider: openrouter
+defaultModel: minimax/minimax-m2.7
+collapseChangelog: true
+hideThinkingBlock: true
+quietStartup: true
+treeFilterMode: all
+defaultThinkingLevel: high
+enabledModels: 
+  - openrouter/z-ai/glm-5
+  - openrouter/minimax/minimax-m2.7
+  - openrouter/moonshotai/kimi-k2.5
+  - openrouter/xiaomi/mimo-v2-pro
+  - openrouter/google/gemini-3.1-pro-preview-customtools
+  - openrouter/google/gemini-3.1-flash-lite-preview
+doubleEscapeAction: tree
+packages: 
+  - source: npm:checkpoint-pi
+    extensions: 
+      - +checkpoint.ts
+modelRoles: 
+  default: openrouter/minimax/minimax-m2.7:high
+  plan: openrouter/z-ai/glm-5:high
+  vision: openrouter/google/gemini-3.1-pro-preview-customtools:high
+  slow: openrouter/xiaomi/mimo-v2-pro:high
+  smol: openrouter/google/gemini-3.1-flash-lite-preview
+theme: 
+  dark: dark-catppuccin
+  light: light-catppuccin
+symbolPreset: nerd
+statusLine: 
+  preset: nerd
+  separator: powerline-thin
+  showHookStatus: true
+display: 
+  showTokenUsage: true
+clearOnShrink: true
