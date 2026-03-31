@@ -33,11 +33,9 @@ xrandr --output=HDMI-A-0 --off
 xrandr --output=DisplayPort-0 --auto --primary
 
 alacritty --daemon &           # alacritty daemon
-caffeine &                     # inhibit sleep w/ media
-pcmanfm --daemon-mode &        # file-manager daemon
+dunst &                        # dunst notifications
 picom &                        # window opacity / blur
 redshift &                     # bluelight filter
-udiskie -An &                  # notify + mount usbs
 xbanish &                      # hide mouse when typing
 xss-lock -- xlock &            # lock on sleep etc.
 ~/.local/bin/trackball-speed & # set trackball speed
