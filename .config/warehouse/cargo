@@ -1,8 +1,6 @@
-aichat -> https://github.com/rust-lang/crates.io-index
 archlinux-inputs-fsck -> https://github.com/rust-lang/crates.io-index
 atac -> https://github.com/rust-lang/crates.io-index
 attractorr -> https://github.com/rust-lang/crates.io-index
-bartib -> https://github.com/rust-lang/crates.io-index
 binsider -> https://github.com/rust-lang/crates.io-index
 cargo-binstall -> https://github.com/rust-lang/crates.io-index
 cargo-cache -> https://github.com/rust-lang/crates.io-index
@@ -32,7 +30,7 @@ iching -> https://github.com/rust-lang/crates.io-index
 impala -> https://github.com/rust-lang/crates.io-index
 jless -> https://github.com/rust-lang/crates.io-index
 jql -> https://github.com/rust-lang/crates.io-index
-kak-lsp -> /home/sugimoto/.config/kak/bundle/kakoune-lsp
+kak-lsp -> https://github.com/rust-lang/crates.io-index
 kakpipe -> /home/sugimoto/.config/kak/bundle/kakpipe
 kak-popup -> /home/sugimoto/.config/kak/bundle/popup.kak
 kakship -> /home/sugimoto/.config/kak/bundle/kakship
@@ -46,6 +44,7 @@ lsp-ai -> https://github.com/rust-lang/crates.io-index
 macchina -> https://github.com/rust-lang/crates.io-index
 magic-wormhole-cli -> https://github.com/rust-lang/crates.io-index
 markdown-oxide -> https://github.com/feel-ix-343/markdown-oxide
+mcdu -> https://github.com/rust-lang/crates.io-index
 mise -> https://github.com/rust-lang/crates.io-index
 pay-respects -> https://github.com/rust-lang/crates.io-index
 protonup-rs -> https://github.com/rust-lang/crates.io-index
@@ -75,3 +74,4 @@ vopono -> https://github.com/rust-lang/crates.io-index
 work-break -> https://github.com/rust-lang/crates.io-index
 wthrr -> https://github.com/rust-lang/crates.io-index
 zet -> https://github.com/rust-lang/crates.io-index
+zomerth -> /home/sugimoto/repos/zomerth-rs

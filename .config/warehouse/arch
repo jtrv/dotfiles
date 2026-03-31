@@ -28,7 +28,6 @@ betterdiscord-installer-bin
 bindtointerface
 binsider
 blas-openblas
-blender
 bluetui
 bluez-utils
 bottles
@@ -106,7 +105,7 @@ firefox-tridactyl-native-bin
 firejail
 fish-lsp-git
 fisher
-flameshot-git
+flameshot
 flatpak
 fortune-mod
 fstl
@@ -115,7 +114,6 @@ fuse-overlayfs
 fwupd
 gamemode
 gamescope
-gem
 geticons-git
 gibo
 gifsicle
@@ -144,6 +142,7 @@ iwd
 j4-dmenu-desktop
 jaq
 jless
+jolt
 jp2a
 jpegoptim
 just
@@ -337,6 +336,7 @@ vhs
 video2x
 visidata
 vopono
+vortix
 vulkan-intel
 watchexec
 wd719x-firmware
@@ -350,7 +350,6 @@ wireplumber
 wmctrl
 woff2-font-awesome
 xarchiver
-xautolock
 xbanish
 xbindkeys
 xcape
