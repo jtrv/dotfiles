@@ -31,7 +31,7 @@ bpftune-git
 breeze-icons
 btrfs-desktop-notification
 btrfs-progs
-cachyos-ananicy-rules-git
+cachyos-ananicy-rules
 cachyos-keyring
 cachyos-mirrorlist
 cachyos-settings
@@ -264,6 +264,8 @@ preload
 presenterm
 procs
 progress
+proton-cachyos
+proton-cachyos-slr
 pueue
 pv
 python-mako
@@ -381,7 +383,6 @@ wget2
 wikiman
 wine-mono
 wine-staging
-wired
 wiremix
 wireplumber
 wmctrl
