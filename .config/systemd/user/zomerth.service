@@ -1,0 +1,14 @@
+[Unit]
+Description=Update Earth wallpaper from Zoom.Earth satellite imagery
+After=network-online.target graphical-session.target
+
+[Service]
+Type=simple
+Environment="DISPLAY=:1"
+Environment="XAUTHORITY=/run/user/%U/Xauthority"
+ExecStart=%h/.local/share/cargo/bin/zomerth --daemon --set-wallpaper --output %h/.local/share/wallpaper/earth.png -z 4 -w 3440 -h 1440
+Restart=on-failure
+Nice=19
+
+[Install]
+WantedBy=default.target
