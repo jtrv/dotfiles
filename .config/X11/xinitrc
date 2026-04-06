@@ -42,3 +42,5 @@ xss-lock -- xlock &            # lock on sleep etc.
 ~/.local/bin/trackball-speed & # set trackball speed
 
 xhost +SI:localuser:$USER
+
+exec spectrwm
