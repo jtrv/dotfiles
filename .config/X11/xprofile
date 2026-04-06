@@ -37,7 +37,6 @@ caffeine &                     # inhibit sleep w/ media
 dunst &                        # notification daemon
 /usr/lib/kdeconnectd &         # kdeconnect daemon
 picom &                        # window opacity / blur
-redshift &                     # bluelight filter
 xbanish &                      # hide mouse when typing
 xss-lock -- xlock &            # lock on sleep etc.
 ~/.local/bin/trackball-speed & # set trackball speed
