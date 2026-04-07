@@ -1,0 +1,6 @@
+action = type
+selector = dmenu
+files = [emojis, kaomoji, fontawesome6, math, arrows, box_drawing]
+hidden-descriptions = False
+use-icons = False
+skin-tone = neutral
