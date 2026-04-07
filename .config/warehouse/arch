@@ -10,6 +10,7 @@ archivemount
 aria2
 aspell-en
 ast-firmware
+ast-grep
 at
 atac
 atuin
@@ -313,6 +314,7 @@ sl
 snap-pac
 snap-sync
 sniffglue
+socat
 spectrwm
 speedtest++
 spotify
@@ -353,6 +355,7 @@ trippy
 ttf-ibmplex-mono-nerd
 ttf-roboto
 ttyper
+typescript
 udict-bin
 udiskie
 ueberzugpp
