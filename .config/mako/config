@@ -5,11 +5,11 @@ background-color=#1E1E2E
 text-color=#CDD6F4
 width=300
 height=110
-margin=50,10
+margin=10,10
 padding=8
-border-size=3
+border-size=1
 border-color=#89B4FA
-border-radius=5
+border-radius=6
 icons=1
 max-icon-size=32
 icon-location=left
@@ -18,7 +18,7 @@ actions=1
 history=1
 text-alignment=center
 default-timeout=7000
-font=Blex Mono Nerd Font 10
+font=Blex Mono Nerd Font 8
 format=<b>%s</b>\n%b
 
 # Interactions
@@ -40,6 +40,7 @@ default-timeout=7000
 background-color=#1E1E2E
 text-color=#CDD6F4
 border-color=#FAB387
+border-size=2
 default-timeout=0
 
 # Specific Rules

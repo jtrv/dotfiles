@@ -13,7 +13,7 @@ enable_clipboard = true
 # Enable watching X11/Wayland primary selection.
 enable_primary = false
 # Ignore clips which match with one of the X11 `TARGETS`.
-sensitive_x11_atoms = ["x-kde-passwordManagerHint"]
+sensitive_mime_types = ["x-kde-passwordManagerHint"]
 # Ignore text clips which match with one of the regular expressions.
 denied_text_regex_patterns = []
 # Ignore text clips with a length <= `filter_text_min_length`, in characters (Unicode scalar value), not in byte.

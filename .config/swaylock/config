@@ -1,0 +1,54 @@
+ignore-empty-password
+show-failed-attempts
+daemonize
+
+# Catppuccin Mocha theme
+
+# Background
+color=11111b
+
+# Font
+font="Blex Mono Nerd Font"
+font-size=33
+
+# Indicator
+indicator-idle-visible
+indicator-radius=99
+indicator-thickness=15
+
+# Ring (outer circle)
+ring-color=1e1e2e
+ring-ver-color=a6e3a1
+ring-wrong-color=f38ba8
+ring-clear-color=89dceb
+ring-caps-lock-color=fab387
+
+# Inside (inner circle)
+inside-color=1e1e2e
+inside-ver-color=313244
+inside-wrong-color=313244
+inside-clear-color=313244
+inside-caps-lock-color=313244
+
+# Line (between inside and ring)
+line-color=45475a
+line-ver-color=45475a
+line-wrong-color=45475a
+line-clear-color=45475a
+line-caps-lock-color=45475a
+
+# Text
+text-color=cdd6f4
+text-ver-color=cdd6f4
+text-wrong-color=f38ba8
+text-clear-color=a6e3a1
+text-caps-lock-color=cdd6f4
+
+# Key highlight (ring segments on key press)
+key-hl-color=a6e3a1
+bs-hl-color=f38ba8
+caps-lock-key-hl-color=fab387
+caps-lock-bs-hl-color=f38ba8
+
+# Separator (between highlight segments)
+separator-color=11111b
