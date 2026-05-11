@@ -1,20 +1,11 @@
-finder = "dmenu"
+finder = "custom"
+
+[custom_finder]
+program = "tofi"
+args = ["-c", "/home/sugimoto/.config/clipcat/tofi"]
 
 [log]
 # Emit log message to systemd-journald.
 emit_journald = true
 # Log level.
 level = "INFO"
-
-# Options for "dmenu".
-[dmenu]
-# Length of line.
-line_length = 100
-# Length of menu.
-menu_length = 30
-# Prompt of menu.
-menu_prompt = ""
-# Extra arguments to pass to `dmenu`.
-extra_arguments = [
-  "-i",
-]

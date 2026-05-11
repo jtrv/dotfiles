@@ -1,0 +1,290 @@
+#waybar * {
+  border: none;
+  border-radius: 0px;
+  min-height: 0px;
+  margin: 0px;
+  padding: 0px;
+  box-shadow: none;
+  text-shadow: none;
+  font-family: "Blex Mono Nerd Font";
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* Catppuccin Mocha palette */
+@define-color rosewater #f5e0dc;
+@define-color flamingo  #f2cdcd;
+@define-color pink      #f5c2e7;
+@define-color mauve     #cba6f7;
+@define-color red       #f38ba8;
+@define-color maroon    #eba0ac;
+@define-color peach     #fab387;
+@define-color yellow    #f9e2af;
+@define-color green     #a6e3a1;
+@define-color teal      #94e2d5;
+@define-color sky       #89b4fa;
+@define-color sapphire  #74c7ec;
+@define-color blue      #89b4fa;
+@define-color lavender  #b4befe;
+@define-color text      #cdd6f4;
+@define-color subtext1  #bac2de;
+@define-color subtext0  #a6adc8;
+@define-color overlay2  #9399b2;
+@define-color overlay1  #7f849c;
+@define-color overlay0  #6c7086;
+@define-color surface2  #585b70;
+@define-color surface1  #45475a;
+@define-color surface0  #313244;
+@define-color base      #1e1e2e;
+@define-color mantle    #181825;
+@define-color crust     #11111b;
+
+#waybar {
+  background: @crust;
+}
+
+#backlight,
+#battery,
+#bluetooth,
+#clock,
+#cpu,
+#custom-pomodoro,
+#disk,
+#idle_inhibitor,
+#idle_inhibitor.activated,
+#idle_inhibitor.deactivated,
+#memory,
+#mpris,
+#network,
+#privacy,
+#privacy,
+#systemd-failed-units,
+#temperature,
+#tray,
+#wireplumber,
+#wireplumber.muted,
+#workspaces,
+#window {
+  padding: 0px 6px;
+  margin: 2px 2px 4px;
+  background: @base;
+  border-radius: 6px;
+}
+
+#backlight:hover,
+#battery:hover,
+#bluetooth:hover,
+#clock:hover,
+#cpu:hover,
+#custom-pomodoro:hover,
+#disk:hover,
+#idle_inhibitor:hover,
+#memory:hover,
+#network:hover,
+#network.connected:hover,
+#network.disconnected:hover,
+#privacy:hover,
+#systemd-failed-units:hover,
+#temperature:hover,
+#tray:hover,
+#wireplumber:hover,
+#wireplumber.muted:hover,
+#window:hover {
+  background: @surface1;
+}
+
+#backlight {
+  color: @flamingo;
+}
+
+#battery {
+  color: @green;
+}
+
+#battery.warning {
+  color: @peach;
+}
+
+#battery.critical {
+  color: @red;
+}
+
+#battery.charging {
+  color: @green;
+}
+
+#bluetooth {
+  color: @sky;
+}
+
+#bluetooth.disabled {
+  color: @peach;
+}
+
+#bluetooth.off {
+  color: @overlay0;
+}
+
+#clock {
+  color: @yellow;
+}
+
+#cpu {
+  color: @pink;
+}
+
+#custom-pomodoro {
+  color: @green;
+}
+
+#custom-pomodoro.work {
+  color: @red;
+}
+
+#custom-pomodoro.break {
+  color: @peach;
+}
+
+#custom-pomodoro.pause {
+  color: @overlay0;
+}
+
+#disk {
+  color: @mauve;
+}
+
+#idle_inhibitor {
+}
+
+#idle_inhibitor.activated {
+  color: @pink;
+}
+
+#idle_inhibitor.deactivated {
+  color: @overlay0;
+}
+
+#memory {
+  color: @teal;
+}
+
+#mpris.playing {
+  color: @sky;
+}
+
+#mpris.paused {
+  color: @overlay0;
+}
+
+#network {
+  color: @overlay0;
+}
+
+#network.connected {
+  color: @sky;
+}
+
+#network.disconnected {
+  color: @red;
+}
+
+#privacy-item.screenshare{
+  color: @red;
+  animation: blink-critical 1s steps(15) infinite;
+}
+
+#privacy-item.audio-in{
+  color: @red;
+  animation: blink-critical 1s steps(15) infinite;
+}
+
+#privacy-item.audio-out{
+  color: @red;
+  animation: blink-critical 1s steps(15) infinite;
+}
+
+#systemd-failed-units.ok {
+  color: @green;
+}
+
+#systemd-failed-units.degraded {
+  color: @red;
+}
+
+#wireplumber,
+#wireplumber.source {
+  color: @sapphire;
+}
+
+#wireplumber.muted {
+  color: @red;
+}
+
+#temperature {
+  color: @lavender;
+}
+
+#workspaces {
+  padding-left: 0px;
+  padding-right: 0px;
+  border-radius: 6px;
+}
+
+#workspaces button {
+  color: @mauve;
+  margin-left: 0px;
+  margin-right: 0px;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+}
+
+#workspaces button.active {
+  background: @surface0;
+  color: @peach;
+}
+
+#workspaces button.urgent {
+  background: @base;
+  color: @red;
+  animation: blink-critical 0.5s steps(10) 3;
+}
+
+#workspaces button:hover {
+  background: @surface1;
+  color: @sapphire;
+}
+
+#window {
+  color: @lavender;
+}
+
+
+
+#cpu.critical,
+#memory.critical,
+#temperature.critical {
+  color: @red;
+  animation: blink-critical 1s steps(15) infinite;
+}
+
+#cpu.warning,
+#memory.warning {
+  color: @peach;
+}
+
+
+tooltip {
+  color: @base;
+  padding: 0px;
+}
+
+tooltip > label {
+  color: @text;
+}
+
+@keyframes blink-critical {
+  to {
+    color: @base;
+  }
+}
+

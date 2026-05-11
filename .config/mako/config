@@ -1,0 +1,57 @@
+sort=-time
+layer=overlay
+anchor=top-right
+background-color=#1E1E2E
+text-color=#CDD6F4
+width=300
+height=110
+margin=10,10
+padding=8
+border-size=1
+border-color=#89B4FA
+border-radius=6
+icons=1
+max-icon-size=32
+icon-location=left
+markup=1
+actions=1
+history=1
+text-alignment=center
+default-timeout=7000
+font=Blex Mono Nerd Font 8
+format=<b>%s</b>\n%b
+
+# Interactions
+on-button-left=invoke-default-action
+on-button-middle=dismiss-all
+on-button-right=dismiss
+
+[urgency=low]
+background-color=#1E1E2E
+text-color=#CDD6F4
+default-timeout=7000
+
+[urgency=normal]
+background-color=#1E1E2E
+text-color=#CDD6F4
+default-timeout=7000
+
+[urgency=critical]
+background-color=#1E1E2E
+text-color=#CDD6F4
+border-color=#FAB387
+border-size=2
+default-timeout=0
+
+# Specific Rules
+
+# "skip_display = yes" equivalent
+[summary="tidal-hifi"]
+invisible=1
+
+# "history_ignore = yes" equivalent
+[summary="Volume *"]
+history=0
+
+[mode=dnd]
+invisible=1

@@ -1,0 +1,244 @@
+{
+    // Main bar
+    "layer": "top",
+    "position": "top",
+    "height": 23,
+    "name": "main",
+    "reload_style_on_change": true,
+
+    // Modules
+    "modules-left": [
+        "clock",
+        "niri/workspaces",
+        "niri/window",
+    ],
+
+    "modules-center": [
+        "mpris",
+        "custom/pomodoro",
+    ],
+
+    "modules-right": [
+        "privacy",
+        "systemd-failed-units",
+        "cpu",
+        "memory",
+        "disk",
+        "network",
+        "backlight",
+        "wireplumber",
+        "bluetooth",
+        "idle_inhibitor",
+        "gamemode",
+        "battery",
+    ],
+
+    "backlight": {
+        "device": "intel_backlight",
+        "format": "{icon} {percent}%",
+        "format-icons": ["󱩎", "󱩑", "󱩓", "󱩕", "󰛨"],
+        "on-scroll-up": "brightnessctl set 1%+",
+        "on-scroll-down": "brightnessctl set 1%-",
+        "scroll-step": 5,
+        "on-click-right": "brightnessctl set 100%",
+        "on-click-middle": "brightnessctl set 30%",
+    },
+
+    "battery": {
+        "interval": 30,
+        "format": "{icon} {capacity}%",
+        "format-charging": "{icon} {capacity}%",
+        "format-plugged": "{icon} {capacity}%",
+        "format-alt": "{icon} {time}",
+        "format-icons": {
+            "default": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+            "charging": ["󰢟", "󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
+        },
+        "states": {
+            "warning": 30,
+            "critical": 15,
+        },
+        "tooltip-format": "{timeTo}, {capacity}%",
+        "on-click-right": "alacritty msg create-window --class=popup -e jolt &",
+    },
+
+    "bluetooth": {
+        "format": " {status}",
+        "format-off": "󰂲",
+        "format-disabled": "󰂲",
+        "format-connected": "",
+        "format-connected-battery": " {device_battery_percentage}%",
+        "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+        "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
+        "on-click": "alacritty msg create-window --class=popup -e bluetui &",
+        "on-click-middle": "bluetoothctl power off",
+    },
+
+    "clock": {
+        "interval": 1,
+        "format": "{:%I:%M}",
+        "format-alt": "{:%m.%d %a | %I:%M %p %Z}",
+        "tooltip": true,
+        "tooltip-format": "{tz_list}",
+        "timezone-tooltip-format": "{:%m.%d %a | %H:%M %Z}",
+        "timezones": [
+            "",
+            "America/Los_Angeles",
+            "America/Chicago",
+            "America/New_York",
+            "Iran",
+            "PRC",
+            "Japan",
+            "UTC",
+        ],
+        "actions": {
+            "on-click-middle": "tz_up",
+        },
+    },
+
+    "cpu": {
+        "interval": 4,
+        "format": " {usage}%",
+        "states": {
+            "warning": 80,
+            "critical": 95,
+        },
+        "on-click": "alacritty msg create-window --class=popup -e btm &",
+    },
+
+    "disk": {
+        "interval": 30,
+        "format": "󰋊 {percentage_used}%",
+        "tooltip-format": "Free {free}",
+        "states": {
+            "warning": 85,
+            "critical": 95,
+        },
+        "on-click": "alacritty msg create-window --class=popup -e mcdu /home &",
+    },
+
+    "gamemode": {
+        "format": "{glyph}",
+        "format-alt": "{glyph} {count}",
+        "glyph": "",
+        "hide-not-running": true,
+        "use-icon": true,
+        "icon-name": "input-gaming-symbolic",
+        "icon-spacing": 4,
+        "icon-size": 20,
+        "tooltip": true,
+        "tooltip-format": "Games running: {count}",
+    },
+
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": " ",
+            "deactivated": " "
+        }
+    },
+
+    "memory": {
+        "interval": 4,
+        "format": " {percentage}%",
+        "tooltip-format": "{used:0.1f}G / {total:0.1f}G",
+        "states": {
+            "warning": 80,
+            "critical": 95,
+        },
+        "on-click": "alacritty msg create-window --class=popup -e btm &",
+    },
+
+    "mpris": {
+    	"format": "󰝚 {dynamic}",
+        "dynamic-order": ["title", "artist", "album" ],
+    	"ignored-players": ["firefox"]
+    },
+
+    "network": {
+        "interval": 2,
+        "format-wifi": "󰖩 {signalStrength}%",
+        "format-ethernet": "󰈀",
+        "format-disconnected": "󰖪",
+        "tooltip-format": "Freq: {frequency}, Signal:{signaldBm}\nIP: {ipaddr}\n{essid}\nTX: {bandwidthUpBits}\nRX: {bandwidthDownBits}",
+        "tooltip-format-ethernet": "IP: {ipaddr}\nTX: {bandwidthUpBits}\nRX: {bandwidthDownBits}",
+        "tooltip-format-disconnected": "disconnected",
+        "states": {
+            "connected": 0
+        },
+        "on-click": "alacritty msg create-window --class=popup -e impala &",
+        "on-click-right": "iwctl station wlan0 disconnect",
+    },
+
+    // From: https://github.com/Andeskjerf/waybar-module-pomodoro
+    "custom/pomodoro": {
+        "format": "{}",
+        "return-type": "json",
+        "exec": "~/.local/bin/waybar-module-pomodoro --no-icons --no-work-icons",
+        "on-click": "~/.local/bin/waybar-module-pomodoro toggle",
+        "on-click-right": "~/.local/bin/waybar-module-pomodoro reset",
+    },
+
+    "privacy": {
+    	"icon-size": 16,
+    	"modules": [
+    		{
+    			"type": "screenshare",
+    			"tooltip": true,
+    			"tooltip-icon-size": 24,
+    		},
+    		{
+    			"type": "audio-in",
+    			"tooltip": true,
+    			"tooltip-icon-size": 24,
+    		}
+    	],
+    	"ignore-monitor": true,
+    },
+
+    "systemd-failed-units": {
+    	"format": "✗ {nr_failed}",
+    	"system": true, // Monitor failed systemwide units.
+    	"user": false, // Ignore failed user units.
+    	"on-click": "alacritty msg create-window --class=popup -e 'waybar-systemd-failed-units' &",
+    },
+
+    "wireplumber": {
+        "format": "󰕾 {volume}%",
+        "format-muted": "󰝟",
+        "on-click": "alacritty msg create-window --class=popup -e wiremix &",
+        "on-click-right": "wpctl set-mute @DEFAULT_SINK@ toggle",
+        "on-scroll-up": "wpctl set-volume @DEFAULT_SINK@ 1%+",
+        "on-scroll-down": "wpctl set-volume @DEFAULT_SINK@ 1%-",
+        "scroll-step": 5,
+    },
+
+    "wireplumber#source": {
+        "node-type": "Audio/Source",
+        "format": " {volume}%",
+        "format-muted": "",
+        "on-click": "alacritty msg create-window --class=popup -e wiremix &",
+        "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
+        "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 1%+",
+        "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 1%-",
+        "scroll-step": 5,
+    },
+
+    "tray": {
+        "icon-size": 18,
+        "spacing": 10,
+    },
+
+    "niri/window": {
+        "format": "{}",
+        "max-length": 48,
+        "separate-outputs": true,
+    },
+
+    "niri/workspaces": {
+        "show-scrollable": true,
+        "on-click": "niri msg workspace {value}",
+    }
+}

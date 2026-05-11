@@ -64,9 +64,9 @@ set -gx HISTFILE "$XDG_STATE_HOME/bash/history"
 # Misc
 set -gx ATUIN_NOBIND                "true"
 set -gx BAT_PAGER                   "kak"
-set -gx BEMOJI_PICKER_CMD           "dmenu -i -l 5 -g 5"
-set -gx BEMOJI_CLIP_CMD             "xclip -sel clip"
-set -gx BEMOJI_TYPE_CMD             "xdotool"
+set -gx BEMOJI_PICKER_CMD           'tofi --font="/usr/share/fonts/TTF/BlexMonoNerdFont-Bold.ttf,/usr/share/fonts/noto/NotoColorEmoji.ttf" --horizontal=true'
+set -gx BEMOJI_CLIP_CMD             "wl-copy"
+set -gx BEMOJI_TYPE_CMD             "ydotool"
 set -gx BROWSER                     "firefox"
 set -gx CARAPACE_BRIDGES            "fish,bash,inshellisense,carapace,argcomplete,clap,click,cobra,complete,kingpin,urfavecli,yargs"
 set -gx CARAPACE_LENIENT            1
@@ -78,8 +78,10 @@ set -gx EDITOR                      "kak"
 set -gx fish_greeting
 set -gx HORS_ENGINE                 "google"
 set -gx MANPAGER                    "kak -e 'set buffer filetype man'"
+set -gx MOZ_ENABLE_WAYLAND          1
 set -gx PAGER                       "kak"
 set -gx SCCACHE_DIRECT              true
+set -gx TERMINAL                    "alacritty"
 set -gx QT_STYLE_OVERRIDE           "kvantum"
 set -gx QT_QPA_PLATFORMTHEME        "qt6ct"
 set -gx VISUAL                      "kak"
