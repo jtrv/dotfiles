@@ -1,0 +1,30 @@
+{
+  "lastChangelogVersion": "0.74.0",
+  "defaultProvider": "openrouter",
+  "defaultModel": "minimax/minimax-m2.7",
+  "defaultThinkingLevel": "medium",
+  "enabledModels": [
+    "openrouter/minimax/minimax-m2.7",
+    "openrouter/xiaomi/mimo-v2.5-pro",
+    "openrouter/moonshotai/kimi-k2.6",
+    "openrouter/deepseek/deepseek-v4-pro",
+    "openrouter/google/gemini-3.1-pro-preview-customtools"
+  ],
+  "hideThinkingBlock": true,
+  "collapseChangelog": true,
+  "quietStartup": true,
+  "treeFilterMode": "all",
+  "theme": "dark",
+  "doubleEscapeAction": "tree",
+  "packages": [
+    {
+      "source": "npm:pi-lens",
+      "extensions": [
+        "-index.ts"
+      ]
+    },
+    "npm:pi-librarian",
+    "npm:pi-read-many",
+    "npm:pi-web-providers"
+  ]
+}
