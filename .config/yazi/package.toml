@@ -30,13 +30,13 @@ hash = "635b0feb9215772d22020eb0abf0bb34"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:diff"
-rev = "1962818"
+rev = "442d908"
 hash = "8b1af6b5a69797ee951f2a80ce570818"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:git"
-rev = "1962818"
-hash = "26db011a778f261d730d4f5f8bf24b3f"
+rev = "442d908"
+hash = "6849444b7c2df08eace83f3f86fb55a3"
 
 [[plugin.deps]]
 use = "Lil-Dank/lazygit"
@@ -45,13 +45,13 @@ hash = "85316b5e9abeae2531d3e5d02a094381"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:mount"
-rev = "1962818"
-hash = "91937a4a9b779eabc6983e258befdfe9"
+rev = "442d908"
+hash = "77e20b071404f97c09d3f9afdb9482e0"
 
 [[plugin.deps]]
 use = "boydaihungst/mediainfo"
-rev = "a7febc0"
-hash = "5093ac06d5a80b5fe4f1d5f6db86fd30"
+rev = "49f5ab7"
+hash = "e9a32b121fac586ee0b5f62e18b89c79"
 
 [[plugin.deps]]
 use = "kirasok/torrent-preview"
@@ -75,7 +75,7 @@ hash = "3d52b2b88c91a4ece2f7ed68ff39bb7b"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:chmod"
-rev = "1962818"
+rev = "442d908"
 hash = "f0c8c378184d5f8abd1b095a443d336d"
 
 [[plugin.deps]]
@@ -95,8 +95,8 @@ hash = "8b0e87c3176e0d44f79a8656f79f0fa"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:vcs-files"
-rev = "1962818"
-hash = "f6e6a829c6dc6c900a75bebe422a5c33"
+rev = "442d908"
+hash = "6b141fbed3c74b45558fbc7088c805ee"
 
 [[plugin.deps]]
 use = "dedukun/relative-motions"

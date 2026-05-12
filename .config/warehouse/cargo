@@ -24,6 +24,7 @@ gprepo -> https://github.com/jtrv/gprepo
 grug -> https://github.com/jtrv/grug
 handlr-regex -> https://github.com/rust-lang/crates.io-index
 hashgood -> https://github.com/thombles/hashgood
+hexhog -> https://github.com/rust-lang/crates.io-index
 httm -> https://github.com/rust-lang/crates.io-index
 huniq -> https://github.com/rust-lang/crates.io-index
 iching -> https://github.com/rust-lang/crates.io-index
@@ -71,6 +72,7 @@ topgrade -> https://github.com/rust-lang/crates.io-index
 t-rec -> https://github.com/rust-lang/crates.io-index
 two_percent -> https://github.com/rust-lang/crates.io-index
 vopono -> https://github.com/rust-lang/crates.io-index
+waybar-module-pomodoro -> https://github.com/Andeskjerf/waybar-module-pomodoro
 work-break -> https://github.com/rust-lang/crates.io-index
 wthrr -> https://github.com/rust-lang/crates.io-index
 zet -> https://github.com/rust-lang/crates.io-index

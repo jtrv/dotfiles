@@ -12,6 +12,7 @@ apparmor
 arch-audit
 archivemount
 aria2
+ashell
 aspell-en
 ast-firmware
 atuin
@@ -40,6 +41,7 @@ btrfs-progs
 bun-bin
 cachyos-ananicy-rules-git
 caffeine
+calcurse
 carapace
 cargo-audit
 cargo-binstall
@@ -127,11 +129,15 @@ gomuks
 gopls
 gpg-tui
 gping
+gradle
+grim
 gron
 gst-plugin-pipewire
 heroku-cli-bin
 htmlq
 hyperfine
+impala
+imv
 inkscape
 intel-media-driver
 intel-ucode
@@ -173,6 +179,7 @@ lrzip
 lutris
 lxappearance
 lxqt-policykit
+ly
 lychee
 lzop
 macchina
@@ -207,6 +214,7 @@ noto-fonts-extra
 npm
 ntfs-3g
 ntp
+nwg-look
 odt2txt
 onefetch
 openssh
@@ -241,9 +249,7 @@ powertop
 preload
 presenterm
 procs
-profile-sync-daemon
 progress
-pueue
 pv
 python-capstone
 python-validity
@@ -275,6 +281,7 @@ shellcheck-bin
 shfmt
 signal-desktop
 sioyek
+skim
 sl
 snap-pac
 snap-sync
@@ -287,6 +294,7 @@ starship
 strace
 sudo-rs
 superhtml
+swaybg
 swayidle
 swaylock
 syncthing
@@ -315,6 +323,7 @@ tidy
 tig
 timeshift
 tmux
+tofi-git
 tokei
 topgrade
 torbrowser-launcher
@@ -339,6 +348,7 @@ vopono
 vortix
 vulkan-intel
 watchexec
+waybar
 wd719x-firmware
 webtorrent-mpv-hook
 wget2
@@ -347,6 +357,8 @@ wikiman
 wine-mono
 wiremix
 wireplumber
+wl-clipboard
+wl-screenrec
 wmctrl
 woff2-font-awesome
 xarchiver
@@ -371,6 +383,7 @@ xsel
 xss-lock
 xwayland-satellite
 yamllint
+yazi
 ydotool
 yin-yang-git
 yq
