@@ -2,4 +2,4 @@
 [Icon Theme]
 Name=Default
 Comment=Default Cursor Theme
-Inherits=catppuccin-mocha-light-cursors
+Inherits=catppuccin-mocha-dark-cursors
