@@ -12,7 +12,7 @@ alias cbin    "yes | cargo binstall"
 alias cdr     "cd (git rev-parse --show-toplevel)"
 alias cg      "config-grep"
 alias claude  "SHELL=/bin/bash ~/.local/share/bun/bin/claude"
-alias clip    "clipcat-menu --finder='fzf'"
+alias clip    "clipcat-menu --finder='skim'"
 alias cncr    "conceal restore"
 alias cols    "column -c '$COLUMNS'"
 alias cp      "cp -i"
@@ -33,7 +33,7 @@ alias kenvs   "k ~/.config/fish/conf.d/envs.fish"
 alias kish    "k ~/.config/fish/config.fish"
 alias k       "kak"
 alias la      "eza -al --color=always" # all files and dirs
-alias lc      "lazygit --git-dir='$DOTFILES' --work-tree='$HOME'" # lazygit for config files
+alias lc      'lazygit --git-dir=$DOTFILES --work-tree=$HOME' # lazygit for config files
 alias lg      "lazygit"
 alias lh      "eza -la --color=always --ignore-glob='[a-z]*|[A-Z]*|[0-9]*'" # hidden only
 alias ll      "eza -l --color=always --git" # long format
