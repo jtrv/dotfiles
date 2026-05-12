@@ -5,7 +5,7 @@ mouse = true
 peaks = "auto"
 
 # Initial tab
-tab = "playback"
+tab = "output"
 
 # Maximum percentage for volume sliders
 max_volume_percent = 100.0
