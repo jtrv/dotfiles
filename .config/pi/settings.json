@@ -25,6 +25,6 @@
     },
     "npm:pi-librarian",
     "npm:pi-read-many",
-    "npm:pi-web-providers"
+    "npm:pi-web-access"
   ]
 }
