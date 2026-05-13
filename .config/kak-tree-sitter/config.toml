@@ -700,20 +700,21 @@ link_flags = ["-O3"]
 # TODO
 
 # kak
-[language.kak]
-grammar = "kak"
-queries.path = "queries"
-
-[grammar.kak.source]
+[grammar.kak]
 source.git.url = "https://github.com/saifulapm/tree-sitter-kak"
 source.git.pin = "5969f641d0526c6d67ebecbd2ab2d1ee88363ab7"
 compile = "sccache"
 compile_args = ["cc", "-c", "-fpic", "../parser.c", "../scanner.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
+compile_flags = ["-fuse-ld=mold"]
 link = "cc"
 link_args = ["-shared", "-fpic", "parser.o", "scanner.o", "-o", "kak.so"]
 link_flags = ["-fuse-ld=mold"]
 
+[language.kak]
+queries.source.git.url = "https://github.com/saifulapm/tree-sitter-kak"
+queries.source.git.pin = "5969f641d0526c6d67ebecbd2ab2d1ee88363ab7"
+grammar = "kak"
+queries.path = "queries"
 
 # kdl
 # TODO
