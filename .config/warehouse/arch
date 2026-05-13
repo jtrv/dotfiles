@@ -38,10 +38,9 @@ breeze-icons
 brightnessctl
 btrfs-desktop-notification
 btrfs-progs
-bun-bin
+bun
 cachyos-ananicy-rules-git
 caffeine
-calcurse
 carapace
 cargo-audit
 cargo-binstall
@@ -61,7 +60,7 @@ chaotic-keyring
 chaotic-mirrorlist
 checkbashisms
 choose
-circumflex-bin
+circumflex
 clipcat
 cmake
 colloid-catppuccin-gtk-theme-git
@@ -273,14 +272,13 @@ rustscan
 sad
 samply
 sassc
-scheme-chez-symlink
 screenkey
 sd
 sdcv
 shellcheck-bin
 shfmt
 signal-desktop
-sioyek
+sioyek-git
 skim
 sl
 snap-pac
@@ -368,7 +366,7 @@ xcape
 xcolor
 xcwd-git
 xdg-ninja-git
-xdg-utils-handlr
+xdg-utils
 xh
 xlockmore
 xorg-server
