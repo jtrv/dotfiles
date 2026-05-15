@@ -17,11 +17,14 @@ devicetree
 diff
 elixir
 fish
+git-attributes
 git-commit
 git-config
 git-rebase
 glsl
 go
+go-mod
+graphql
 hare
 haskell
 html
@@ -29,10 +32,12 @@ hyprlang
 ini
 java
 javascript
+jsdoc
 json
 jsx
 julia
 just
+kak
 kdl
 koka
 kotlin
@@ -55,6 +60,7 @@ psv
 purescript
 python
 qmljs
+regex
 requirements
 ron
 ruby
