@@ -25,7 +25,6 @@ cursor {
 }
 
 layout {
-    empty-workspace-above-first
     always-center-single-column
     background-color "#1e1e2e"
     gaps 0
