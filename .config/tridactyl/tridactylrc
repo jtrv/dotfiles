@@ -32,7 +32,7 @@ bind <A-n> findnext -1
 bind <A-e> editor
 "
 " Open right click menu on links
-bind ;c composite hint; !s xdotool key Menu
+bind ;c composite hint; !s ydotool key Menu
 "
 "
 " COMMANDS
