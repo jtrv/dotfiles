@@ -21,6 +21,10 @@ map global object t      -docstring 'LSP class interface or struct'  %{: lsp-obj
 map global object d      -docstring 'LSP errors and warnings'        %{: lsp-diagnostic-object --include-warnings <ret>}
 map global object D      -docstring 'LSP errors'                     %{: lsp-diagnostic-object <ret>}
 
+declare-option -hidden str lsp_server_emmet %{
+  [emmet-language-server]
+  root_globs = [ "package.json", ".git", ".hg" ]
+  args = [ "--stdio" ]
 }
 
 declare-option -hidden str lsp_server_harper %{
@@ -59,12 +63,6 @@ declare-option -hidden str lsp_server_unocss %{
   args = [ "--stdio" ]
 }
 
-declare-option -hidden str lsp_server_emmet %{
-  [emmet-language-server]
-  root_globs = [ "package.json", ".git", ".hg" ]
-  args = [ "--stdio" ]
-}
-
 hook -group lsp-filetype-css global BufSetOption filetype=(?:css|less|scss) %{
   set-option buffer lsp_servers %{
     # Documented options see
@@ -79,7 +77,7 @@ hook -group lsp-filetype-css global BufSetOption filetype=(?:css|less|scss) %{
     [vscode-css-language-server.settings]
     css.format.enable = true
     css.validProperties = []
-    css.validate = true
+    css.validate = false
     css.lint.unknownAtRules = "ignore"
     scss.validProperties = []
     scss.format.enable = true
@@ -247,7 +245,7 @@ hook -group lsp-filetype-json global BufSetOption filetype=(?:json|jsonc) %{
     url = "https://json.schemastore.org/tsconfig.json"
   }
   set-option -add buffer lsp_servers "
-    %opt{lsp_server_biome}
+    #opt{lsp_server_biome}
   "
 }
 
