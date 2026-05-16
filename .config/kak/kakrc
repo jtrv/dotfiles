@@ -799,12 +799,43 @@ map global user l -docstring 'lsp' %{: enter-user-mode lsp <ret>}
   map global lsp <minus> -docstring 'disable'   %{:lsp-disable-window <ret>}
   map global lsp <plus>  -docstring 'enable'    %{:lsp-enable-window <ret>}
 
-map global user m -docstring 'math' %{:qalc <ret>}
+bundle kak-pi https://github.com/saifulapm/pi.kak
+bundle-install-hook kak-pi %{ make install }
+map global user p -docstring 'pi'                  %{: enter-user-mode pi <ret>}
+  map global pi a -docstring 'ask'                 %{:pi-ask <ret>}
+  map global pi b -docstring 'bash command'        %{:pi-bash <ret>}
+  map global pi c -docstring 'compose'             %{:pi-compose <ret>}
+  map global pi d -docstring 'doc'                 %{:pi-doc <ret>}
+  map global pi e -docstring 'explain'             %{:pi-explain <ret>}
+  map global pi E -docstring 'export HTML'         %{:pi-export <ret>}
+  map global pi f -docstring 'fix'                 %{:pi-fix <ret>}
+  map global pi F -docstring 'follow-up'           %{:pi-follow-up <ret>}
+  map global pi i -docstring 'session info'        %{:pi-session <ret>}
+  map global pi k -docstring 'compact'             %{:pi-compact <ret>}
+  map global pi m -docstring 'pick model'          %{:pi-models <ret>}
+  map global pi M -docstring 'cycle model'         %{:pi-cycle-model <ret>}
+  map global pi n -docstring 'new session'         %{:pi-new-session <ret>}
+  map global pi N -docstring 'name session'        %{:pi-name <ret>}
+  map global pi o -docstring 'open buffer'         %{:pi-open <ret>}
+  map global pi q -docstring 'abort'               %{:pi-abort <ret>}
+  map global pi r -docstring 'refactor'            %{:pi-refactor <ret>}
+  map global pi R -docstring 'resume session'      %{:pi-resume <ret>}
+  map global pi s -docstring 'steer'               %{:pi-steer <ret>}
+  map global pi S -docstring 'refresh stats'       %{:pi-stats <ret>}
+  map global pi t -docstring 'test'                %{:pi-test <ret>}
+  map global pi T -docstring 'thinking level'      %{:pi-thinking <ret>}
+  map global pi w -docstring 'widgets'             %{:pi-widgets <ret>}
+  map global pi x -docstring 'stop'                %{:pi-stop <ret>}
+  map global pi y -docstring 'copy last response'  %{:pi-copy <ret>}
+  map global pi Y -docstring 'fork'                %{:pi-fork <ret>}
+  map global pi ? -docstring 'show hotkeys'        %{:pi-hotkeys <ret>}
+  map global pi / -docstring 'slash commands'      %{:pi-commands <ret>}
+
 
 # edit/extend/trim selections one by one
 bundle kakoune-phantom-selection https://github.com/occivink/kakoune-phantom-selection %{
   declare-user-mode phantom
-  map global user p -docstring 'phantom' %{: enter-user-mode phantom <ret>}
+  map global user P -docstring 'phantom' %{: enter-user-mode phantom <ret>}
   map global phantom a -docstring 'add'        %{:phantom-selection-add-selection <ret>}
   map global phantom c -docstring 'clear'      %{:phantom-selection-select-all; phantom-selection-clear <ret>}
   map global phantom n -docstring 'next'       %{:phantom-selection-iterate-next <ret>}
