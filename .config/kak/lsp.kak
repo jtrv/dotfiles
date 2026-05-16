@@ -21,39 +21,6 @@ map global object t      -docstring 'LSP class interface or struct'  %{: lsp-obj
 map global object d      -docstring 'LSP errors and warnings'        %{: lsp-diagnostic-object --include-warnings <ret>}
 map global object D      -docstring 'LSP errors'                     %{: lsp-diagnostic-object <ret>}
 
-declare-option -hidden str lsp_server_lsp_ai %{
-  [lsp-ai]
-  root = "./"
-  [lsp-ai.settings.memory]
-  file_store = { }
-
-  [lsp-ai.settings.completion]
-  model = "gemini_complete"
-  [lsp-ai.settings.completion.parameters]
-  max_context = 1024
-  max_tokens = 128
-
-  [lsp-ai.settings.models.gemini_complete]
-  type = "open_ai"
-  completions_endpoint = "https://openrouter.ai/api/v1/completions"
-  model = "x-ai/grok-4-fast"
-  auth_token_env_var_name = "OPENROUTER_API_KEY"
-
-  [lsp-ai.settings.models.gemini]
-  type = "open_ai"
-  chat_endpoint = "https://openrouter.ai/api/v1/chat/completions"
-  model = "google/gemini-3-pro-preview"
-  auth_token_env_var_name = "OPENROUTER_API_KEY"
-  max_requests_per_second = 1
-  [[lsp-ai.settings.chat]]
-  trigger = ",.gg"
-  action_display_name = "google gemini"
-  model = "gemini"
-  parameters.max_context = 4096
-  parameters.max_tokens = 1024
-  paramaeters.messages = [
-    { role = "system", content = "You are a code assistant chatbot. The user will ask you for assistance coding and you will do you best to answer succinctly and accurately" }
-  ]
 }
 
 declare-option -hidden str lsp_server_harper %{
@@ -125,7 +92,6 @@ hook -group lsp-filetype-css global BufSetOption filetype=(?:css|less|scss) %{
   set-option -add buffer lsp_servers "
     %opt{lsp_server_biome}
     #opt{lsp_server_emmet}
-    #opt{lsp_server_lsp_ai}
     #opt{lsp_server_superhtml}
     #opt{lsp_server_unocss}
   "
@@ -210,7 +176,6 @@ hook -group lsp-filetype-html global BufSetOption filetype=html %{
   set-option -add buffer lsp_servers "
     %opt{lsp_server_biome}
     #opt{lsp_server_emmet}
-    #opt{lsp_server_lsp_ai}
     #opt{lsp_server_superhtml}
     #opt{lsp_server_unocss}
   "
@@ -247,7 +212,6 @@ hook -group lsp-filetype-javascript global BufSetOption filetype=(?:javascript|t
   set-option -add buffer lsp_servers "
     %opt{lsp_server_biome}
     #opt{lsp_server_emmet}
-    #opt{lsp_server_lsp_ai}
     #opt{lsp_server_unocss}
   "
 }
@@ -327,7 +291,6 @@ hook -group lsp-filetype-markdown global BufSetOption filetype=markdown %{
   #   args = [ "server" ]
   }
   set-option -add buffer lsp_servers "
-    #opt{lsp_server_lsp_ai}
     %opt{lsp_server_biome}
   "
 }
@@ -367,7 +330,6 @@ hook -group lsp-filetype-python global BufSetOption filetype=python %{
 
   set-option -add buffer lsp_servers "
     #opt{lsp_server_basedpyright}
-    #opt{lsp_server_lsp_ai}
   "
 }
 
@@ -399,10 +361,6 @@ hook -group lsp-filetype-systemd global BufSetOption filetype=systemd %{
     [systemd-lsp]
     root_globs = [ "*.service", "*.mount", "*.device", "*.nspawn", "*.target", "*.timer" ]
   }
-
-  set-option -add buffer lsp_servers "
-    #opt{lsp_server_lsp_ai}
-  "
 }
 
 
