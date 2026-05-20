@@ -10,7 +10,7 @@
   box-shadow: none;
   text-shadow: none;
   font-family: "Blex Mono Nerd Font", sans-serif;
-  font-size: 11px;
+  font-size: 16px;
   font-weight: 600;
 }
 
@@ -69,7 +69,7 @@
 #workspaces,
 #window {
   padding: 0px 6px;
-  margin: 2px 2px 4px;
+  margin: 3px 3px 5px;
   background: @base;
   border-radius: 6px;
 }

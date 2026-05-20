@@ -2,7 +2,7 @@
     // Main bar
     "layer": "top",
     "position": "top",
-    "height": 23,
+    "height": 30,
     "name": "main",
     "reload_style_on_change": true,
 
@@ -105,7 +105,7 @@
             "warning": 80,
             "critical": 95,
         },
-        "on-click": "alacritty msg create-window --class=popup -e btm &",
+        "on-click": "alacritty msg create-window --class=popup -e btm --basic &",
     },
 
     "disk": {
@@ -148,7 +148,7 @@
             "warning": 80,
             "critical": 95,
         },
-        "on-click": "alacritty msg create-window --class=popup -e btm &",
+        "on-click": "alacritty msg create-window --class=popup -e btm --basic --process_default_sort mem &",
     },
 
     "mpris": {
@@ -169,7 +169,7 @@
             "connected": 0
         },
         "on-click": "alacritty msg create-window --class=popup -e impala &",
-        "on-click-right": "iwctl station wlan0 disconnect",
+        "on-click-right": "alacritty msg create-window --class=popup -e sudo bandwhich &",
     },
 
     // From: https://github.com/Andeskjerf/waybar-module-pomodoro

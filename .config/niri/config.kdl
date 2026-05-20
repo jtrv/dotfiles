@@ -7,7 +7,10 @@ hotkey-overlay {
     hide-not-bound
 }
 
-output "eDP-1" { mode "1920x1080@60.05"; }
+output "eDP-1" {
+    mode "1920x1080@60.05"
+    scale 1
+}
 
 input {
     touchpad {
@@ -70,7 +73,7 @@ overview {
 spawn-at-startup "alacritty" "--daemon"
 spawn-at-startup "mako"
 spawn-at-startup "waybar"
-spawn-at-startup "swayidle -w"
+spawn-at-startup "swayidle" "-w"
 
 screenshot-path "~/pictures/screenshots/%Y-%m-%d_%H-%M-%S.png"
 
