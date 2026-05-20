@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@earendil-works/pi-coding-agent": "^0.74.0",
+    "@earendil-works/pi-coding-agent": "^0.75.3",
     "@fsouza/prettierd": "^0.27.0",
     "@nestjs/cli": "^11.0.21",
     "@prisma/language-server": "^31.10.0",
