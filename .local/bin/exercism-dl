@@ -8,7 +8,7 @@
 set -e
 
 token=$(secli get exercism_token)
-exercism_dir="$HOME/study/exercism"
+exercism_dir="$HOME/repos/exercism"
 
 cd "$exercism_dir"
 
