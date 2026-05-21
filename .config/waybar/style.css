@@ -7,7 +7,7 @@
   box-shadow: none;
   text-shadow: none;
   font-family: "Blex Mono Nerd Font", sans-serif;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
 }
 
@@ -66,7 +66,7 @@
 #workspaces,
 #window {
   padding: 0px 6px;
-  margin: 3px 3px 5px;
+  margin: 2px 3px 5px;
   background: @base;
   border-radius: 6px;
 }
@@ -274,8 +274,9 @@
 
 
 tooltip {
-  color: @base;
-  padding: 0px;
+  color: @text;
+  background: @surface0;
+  border: 1px solid @text;
 }
 
 tooltip > label {
