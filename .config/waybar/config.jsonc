@@ -2,13 +2,12 @@
     // Main bar
     "layer": "top",
     "position": "top",
-    "height": 30,
+    "height": 28,
     "name": "main",
     "reload_style_on_change": true,
 
     // Modules
     "modules-left": [
-        "clock",
         "niri/workspaces",
         "niri/window",
     ],
@@ -31,11 +30,12 @@
         "idle_inhibitor",
         "gamemode",
         "battery",
+        "clock",
     ],
 
     "backlight": {
         "device": "intel_backlight",
-        "format": "{icon} {percent}%",
+        "format": "{icon} {percent}",
         "format-icons": ["󱩎", "󱩑", "󱩓", "󱩕", "󰛨"],
         "on-scroll-up": "brightnessctl set 1%+",
         "on-scroll-down": "brightnessctl set 1%-",
@@ -46,9 +46,9 @@
 
     "battery": {
         "interval": 30,
-        "format": "{icon} {capacity}%",
-        "format-charging": "{icon} {capacity}%",
-        "format-plugged": "{icon} {capacity}%",
+        "format": "{icon} {capacity}",
+        "format-charging": "{icon} {capacity}",
+        "format-plugged": "{icon} {capacity}",
         "format-alt": "{icon} {time}",
         "format-icons": {
             "default": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
@@ -58,7 +58,7 @@
             "warning": 30,
             "critical": 15,
         },
-        "tooltip-format": "{timeTo}, {capacity}%",
+        "tooltip-format": "{timeTo}",
         "on-click-right": "alacritty msg create-window --class=popup -e jolt &",
     },
 
@@ -67,11 +67,11 @@
         "format-off": "󰂲",
         "format-disabled": "󰂲",
         "format-connected": "",
-        "format-connected-battery": " {device_battery_percentage}%",
+        "format-connected-battery": " {device_battery_percentage}",
         "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
         "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
-        "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
+        "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}",
         "on-click": "alacritty msg create-window --class=popup -e bluetui &",
         "on-click-middle": "bluetoothctl power off",
     },
@@ -100,7 +100,7 @@
 
     "cpu": {
         "interval": 4,
-        "format": " {usage}%",
+        "format": " {usage}",
         "states": {
             "warning": 80,
             "critical": 95,
@@ -110,7 +110,7 @@
 
     "disk": {
         "interval": 30,
-        "format": "󰋊 {percentage_used}%",
+        "format": "󰋊 {percentage_used}",
         "tooltip-format": "Free {free}",
         "states": {
             "warning": 85,
@@ -142,7 +142,7 @@
 
     "memory": {
         "interval": 4,
-        "format": " {percentage}%",
+        "format": " {percentage}",
         "tooltip-format": "{used:0.1f}G / {total:0.1f}G",
         "states": {
             "warning": 80,
@@ -159,7 +159,7 @@
 
     "network": {
         "interval": 2,
-        "format-wifi": "󰖩 {signalStrength}%",
+        "format-wifi": "󰖩 {signalStrength}",
         "format-ethernet": "󰈀",
         "format-disconnected": "󰖪",
         "tooltip-format": "Freq: {frequency}, Signal:{signaldBm}\nIP: {ipaddr}\n{essid}\nTX: {bandwidthUpBits}\nRX: {bandwidthDownBits}",
@@ -199,7 +199,7 @@
     },
 
     "systemd-failed-units": {
-    	"format": "✗ {nr_failed}",
+    	"format": " {nr_failed}",
         "hide-on-ok": true,
     	"system": true, // Monitor failed systemwide units.
     	"user": false, // Ignore failed user units.
@@ -207,7 +207,7 @@
     },
 
     "wireplumber": {
-        "format": "󰕾 {volume}%",
+        "format": "󰕾 {volume}",
         "format-muted": "󰝟",
         "on-click": "alacritty msg create-window --class=popup -e wiremix &",
         "on-click-right": "wpctl set-mute @DEFAULT_SINK@ toggle",
@@ -218,18 +218,13 @@
 
     "wireplumber#source": {
         "node-type": "Audio/Source",
-        "format": " {volume}%",
+        "format": " {volume}",
         "format-muted": "",
         "on-click": "alacritty msg create-window --class=popup -e wiremix &",
         "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
         "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 1%+",
         "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 1%-",
         "scroll-step": 5,
-    },
-
-    "tray": {
-        "icon-size": 18,
-        "spacing": 10,
     },
 
     "niri/window": {
