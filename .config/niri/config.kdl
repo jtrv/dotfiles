@@ -7,8 +7,8 @@ hotkey-overlay {
     hide-not-bound
 }
 
-output "eDP-1" {
-    mode "1920x1080@60.05"
+output "DisplayPort-0" {
+    mode "3440x1440@120.00"
     scale 1
 }
 
