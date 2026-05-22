@@ -2,6 +2,7 @@
 "archlinux-inputs-fsck 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["archlinux-inputs-fsck"]
 "atac 0.23.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["atac"]
 "attractorr 0.7.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["attractorr"]
+"baijia-suo 0.1.0 (path+file:///home/sugimoto/repos/baijia-suo)" = ["baijia-suo"]
 "binsider 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)" = ["binsider"]
 "bottom 0.12.3 (git+https://github.com/ClementTsang/bottom#6daf7ebd3f88170e553a3220383f50af91b9885d)" = ["btm"]
 "cargo-binstall 1.19.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["cargo-binstall"]

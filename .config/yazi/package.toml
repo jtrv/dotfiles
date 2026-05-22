@@ -45,8 +45,8 @@ hash = "e3260d0b1feded8c8e3ae3afa1169e30"
 
 [[plugin.deps]]
 use = "boydaihungst/mediainfo"
-rev = "49f5ab7"
-hash = "e9a32b121fac586ee0b5f62e18b89c79"
+rev = "4f80288"
+hash = "7eeae1e194ccb6bd8d8e75b7f10d8cbd"
 
 [[plugin.deps]]
 use = "kirasok/torrent-preview"
@@ -75,8 +75,8 @@ hash = "f0c8c378184d5f8abd1b095a443d336d"
 
 [[plugin.deps]]
 use = "boydaihungst/fuse-archive"
-rev = "ba96b2a"
-hash = "50deb02b3b00422b13005d2459d05d82"
+rev = "512a950"
+hash = "9641b444668a1220d4cf5e9cc0b2100f"
 
 [[plugin.deps]]
 use = "dedukun/relative-motions"
@@ -100,5 +100,5 @@ hash = "e02a788e5b8ae0fb47fd0193dda589cc"
 
 [[flavor.deps]]
 use = "yazi-rs/flavors:catppuccin-mocha"
-rev = "3e6da98"
-hash = "deff42490f77b222e9d3a84dc16a76c5"
+rev = "54ab389"
+hash = "7dfe41c9c3d9be76da8a844263d0bbed"
