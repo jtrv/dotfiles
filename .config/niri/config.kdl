@@ -76,10 +76,10 @@ overview {
     backdrop-color "#11111b"
 }
 
-spawn-at-startup "alacritty" "--daemon"
-spawn-at-startup "mako"
-spawn-at-startup "waybar"
-spawn-at-startup "swayidle" "-w"
+spawn-at-startup "waybar"        // status bar
+spawn-at-startup "mako"          // notifications
+spawn-at-startup "swayidle" "-w" // idle screen locker
+spawn-at-startup "alacritty" "--daemon" // terminal daemon
 
 screenshot-path "~/pictures/screenshots/%Y-%m-%d_%H-%M-%S.png"
 
