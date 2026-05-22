@@ -7,3 +7,5 @@ AGENTS.md
 .mcp.json
 mise.local.toml
 skyspell-ignore.toml
+
+**/.claude/settings.local.json
