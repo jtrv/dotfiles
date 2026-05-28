@@ -136,12 +136,12 @@ binds {
     // shows a list of important hotkeys.
     Mod+Shift+Slash { show-hotkey-overlay; }
 
-    // --- Application Launches ---
-    Mod+Return hotkey-overlay-title="terminal: alacritty" { spawn "alacritty" "msg" "create-window"; }
-    Mod+P      hotkey-overlay-title="launch program"      { spawn "sh" "-c" "exec $(tofi-run)"; }
-    Mod+A      hotkey-overlay-title="launch desktop app"  { spawn "tofi-drun"; }
+    // --- Application Launchers ---
+    Mod+P hotkey-overlay-title="launch program"      { spawn "tofi-run"; }
+    Mod+A hotkey-overlay-title="launch desktop app"  { spawn "tofi-drun"; }
 
     // --- Custom Tools ---
+    Mod+Return hotkey-overlay-title="terminal: alacritty"           { spawn "alacritty" "msg" "create-window"; }
     Mod+Shift+E hotkey-overlay-title="emoji picker: bemoji"         { spawn "bemoji"; }
     Mod+Shift+P hotkey-overlay-title="clipboard menu: clipcat-menu" { spawn "clipcat-menu"; }
     Mod+Shift+D hotkey-overlay-title="speech to text: dictate"      { spawn "~/.local/bin/dictate"; }
