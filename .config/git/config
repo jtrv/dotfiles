@@ -50,6 +50,7 @@
   recurse = true
 [tag]
   sort = version:refname
+  gpgsign = true
 
 [include]
   path = ./aliases
