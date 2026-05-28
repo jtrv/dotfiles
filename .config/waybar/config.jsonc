@@ -2,7 +2,7 @@
     // Main bar
     "layer": "top",
     "position": "top",
-    "height": 28,
+    "height": 31,
     "name": "main",
     "reload_style_on_change": true,
 
@@ -152,9 +152,9 @@
     },
 
     "mpris": {
-    	"format": "󰝚 {dynamic}",
+        "format": "󰝚 {dynamic}",
         "dynamic-order": ["title", "artist", "album" ],
-    	"ignored-players": ["firefox"]
+        "ignored-players": ["firefox"]
     },
 
     "network": {
@@ -172,38 +172,35 @@
         "on-click-right": "alacritty msg create-window --class=popup -e sudo bandwhich &",
     },
 
-    // From: https://github.com/Andeskjerf/waybar-module-pomodoro
+    // From: https://github.com/jtrv/waybar-module-pomodoro
     "custom/pomodoro": {
         "format": "{}",
         "return-type": "json",
-        "exec": "~/.local/bin/waybar-module-pomodoro --no-icons --no-work-icons",
-        "on-click": "~/.local/bin/waybar-module-pomodoro toggle",
-        "on-click-right": "~/.local/bin/waybar-module-pomodoro reset",
+        "exec": "waybar-module-pomodoro --no-icons --no-work-icons",
+        "on-click": "waybar-module-pomodoro toggle",
+        "on-click-right": "waybar-module-pomodoro reset",
     },
 
     "privacy": {
-    	"icon-size": 16,
-    	"modules": [
-    		{
-    			"type": "screenshare",
-    			"tooltip": true,
-    			"tooltip-icon-size": 24,
-    		},
-    		{
-    			"type": "audio-in",
-    			"tooltip": true,
-    			"tooltip-icon-size": 24,
-    		}
-    	],
-    	"ignore-monitor": true,
+        "icon-size": 16,
+        "modules": [
+            {
+                "type": "screenshare",
+                "tooltip": true,
+                "tooltip-icon-size": 24,
+            },
+            {
+                "type": "audio-in",
+                "tooltip": true,
+                "tooltip-icon-size": 24,
+            }
+        ],
+        "ignore-monitor": true,
     },
 
     "systemd-failed-units": {
-    	"format": " {nr_failed}",
-        "hide-on-ok": true,
-    	"system": true, // Monitor failed systemwide units.
-    	"user": false, // Ignore failed user units.
-    	"on-click": "alacritty msg create-window --class=popup -e 'waybar-systemd-failed-units' &",
+        "format": " {nr_failed}",
+        "on-click": "alacritty msg create-window --class=popup -e 'waybar-systemd-failed-units' &",
     },
 
     "wireplumber": {
