@@ -22,6 +22,15 @@ input {
     focus-follows-mouse
 }
 
+gestures {
+    hot-corners {
+        top-left
+        top-right
+        bottom-left
+        bottom-right
+    }
+}
+
 cursor {
     hide-when-typing
     hide-after-inactive-ms 1000
@@ -29,7 +38,7 @@ cursor {
 
 layout {
     always-center-single-column
-    background-color "#1e1e2e"
+    background-color "#1e1e2ecc"
     gaps 0
     center-focused-column "never"
     preset-column-widths {
@@ -48,7 +57,7 @@ layout {
     focus-ring {
         width 1
         active-color "#cdd6f4"
-        inactive-color "#11111b"
+        inactive-color "#00000000"
         urgent-color "#f38ba8"
     }
     struts{
@@ -68,12 +77,12 @@ layout {
         position "top"
         place-within-column
     }
-    insert-hint { color "#f9e2af"; }
+    insert-hint { color "#f9e2afb3"; }
 }
 
 overview {
     zoom 0.5
-    backdrop-color "#11111b"
+    backdrop-color "#00000000"
 }
 
 spawn-at-startup "waybar"        // status bar
@@ -130,53 +139,53 @@ binds {
     // shows a list of important hotkeys.
     Mod+Shift+Slash { show-hotkey-overlay; }
 
-    // --- Application Launches ---
-    Mod+Return hotkey-overlay-title="terminal: alacritty" { spawn "alacritty" "msg" "create-window"; }
-    Mod+P      hotkey-overlay-title="launch program"      { spawn "sh" "-c" "exec $(tofi-run)"; }
+    // --- Launchers ---
+    Mod+P      hotkey-overlay-title="launch program"      { spawn-sh "exec $(tofi-run)"; }
     Mod+A      hotkey-overlay-title="launch desktop app"  { spawn "tofi-drun"; }
 
     // --- Custom Tools ---
+    Mod+Return  hotkey-overlay-title="terminal: alacritty"          { spawn "alacritty" "msg" "create-window"; }
+    Mod+Shift+D hotkey-overlay-title="speech to text: dictate"      { spawn "~/.local/bin/dictate"; }
     Mod+Shift+E hotkey-overlay-title="emoji picker: bemoji"         { spawn "bemoji"; }
     Mod+Shift+P hotkey-overlay-title="clipboard menu: clipcat-menu" { spawn "clipcat-menu"; }
-    Mod+Shift+D hotkey-overlay-title="speech to text: dictate"      { spawn "~/.local/bin/dictate"; }
+    Mod+Shift+T hotkey-overlay-title="pomodoro toggle"              { spawn "waybar-module-pomodoro" "toggle"; }
     Mod+V       hotkey-overlay-title="volume mixer: wiremix"        { spawn "alacritty" "msg" "create-window" "--class=popup" "--command=wiremix"; }
-
-    // --- Pomodoro Timer ---
-    // Binary: waybar-module-pomodoro
-    Mod+Shift+B hotkey-overlay-title="pomodoro toggle" { spawn "waybar-module-pomodoro" "toggle"; }
 
     // --- Screenshot ---
     Mod+S       hotkey-overlay-title="screenshot: gui"  { spawn "flameshot" "gui"; }
     Mod+Shift+S hotkey-overlay-title="screenshot: full" { spawn "flameshot" "full"; }
 
+    // --- Media Keys ---
+    XF86AudioPlay  allow-when-locked=true { spawn "playerctl" "play-pause"; }
+    XF86AudioStop  allow-when-locked=true { spawn "playerctl" "stop"; }
+    XF86AudioPrev  allow-when-locked=true { spawn "playerctl" "previous"; }
+    XF86AudioNext  allow-when-locked=true { spawn "playerctl" "next"; }
+
+    Mod+WheelScrollRight allow-when-locked=true { spawn "playerctl" "next"; }
+    Mod+WheelScrollLeft  allow-when-locked=true { spawn "playerctl" "previous"; }
+
     // --- Audio & Hardware ---
     Mod+Shift+TouchpadScrollDown { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "1%-"; }
     Mod+Shift+TouchpadScrollUp   { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "1%+"; }
-    Mod+Shift+WheelScrollDown    { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "1%-"; }
-    Mod+Shift+WheelScrollUp      { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "1%+"; }
 
-    XF86AudioRaiseVolume allow-when-locked=true { spawn "~/.local/bin/volume-increase"; }
-    XF86AudioLowerVolume allow-when-locked=true { spawn "~/.local/bin/volume-decrease"; }
-    XF86AudioMute        allow-when-locked=true { spawn "~/.local/bin/volume-mute"; }
-    Mod+Ctrl+M           allow-when-locked=true { spawn "~/.local/bin/volume-mute"; }
-    Mod+Shift+M          allow-when-locked=true { spawn "~/.local/bin/mute-mic"; }
-    XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "1%+"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "1%-"; }
+    XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+    XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+    Mod+Shift+M          allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+    Mod+Ctrl+M           allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
 
-    XF86MonBrightnessUp   { spawn "~/.local/bin/bright" "+"; }
-    XF86MonBrightnessDown { spawn "~/.local/bin/bright" "-"; }
+    XF86MonBrightnessUp   { spawn "brightnessctl" "+1%"; }
+    XF86MonBrightnessDown { spawn "brightnessctl" "-1%"; }
 
     // --- Notifications (Mako) ---
-    Mod+Ctrl+Period       { spawn "makoctl" "dismiss"; }
-    Mod+Ctrl+Shift+Period { spawn "makoctl" "dismiss" "-a"; }
+    Mod+Ctrl+Period       { spawn "makoctl" "dismiss" "-a"; }
     Mod+Ctrl+Comma        { spawn "makoctl" "restore"; }
 
-    // --- Media Keys (from spectrwm) ---
-    XF86AudioPlay  allow-when-locked=true { spawn-sh "playerctl play-pause"; }
-    XF86AudioStop  allow-when-locked=true { spawn-sh "playerctl stop"; }
-    XF86AudioPrev  allow-when-locked=true { spawn-sh "playerctl previous"; }
-    XF86AudioNext  allow-when-locked=true { spawn-sh "playerctl next"; }
-
     // --- Navigation (niri defaults) ---
+    Mod+Shift+WheelScrollUp   cooldown-ms=150 { focus-column-left; }
+    Mod+Shift+WheelScrollDown cooldown-ms=150 { focus-column-right; }
+
     Mod+Left  { focus-column-left; }
     Mod+Down  { focus-window-down; }
     Mod+Up    { focus-window-up; }
@@ -185,6 +194,7 @@ binds {
     Mod+J     { focus-window-down; }
     Mod+K     { focus-window-up; }
     Mod+L     { focus-column-right; }
+
 
     // --- Move Windows (niri defaults) ---
     Mod+Shift+Left  { move-column-left; }
@@ -197,6 +207,11 @@ binds {
     Mod+Shift+L     { move-column-right; }
 
     // --- Workspace (niri defaults) ---
+    Mod+i { focus-workspace-up; }
+    Mod+o { focus-workspace-down; }
+    Mod+WheelScrollUp   cooldown-ms=150 { focus-workspace-up; }
+    Mod+WheelScrollDown cooldown-ms=150 { focus-workspace-down; }
+
     Mod+1 { focus-workspace 1; }
     Mod+2 { focus-workspace 2; }
     Mod+3 { focus-workspace 3; }
@@ -217,11 +232,6 @@ binds {
     Mod+Shift+8 { move-column-to-workspace 8; }
     Mod+Shift+9 { move-column-to-workspace 9; }
 
-    Mod+WheelScrollDown     cooldown-ms=150 { focus-workspace-down; }
-    Mod+WheelScrollUp       cooldown-ms=150 { focus-workspace-up; }
-    Mod+WheelScrollRight    cooldown-ms=150 { focus-column-right; }
-    Mod+WheelScrollLeft     cooldown-ms=150 { focus-column-left; }
-
     Mod+TouchpadScrollDown  cooldown-ms=150 { focus-workspace-down; }
     Mod+TouchpadScrollUp    cooldown-ms=150 { focus-workspace-up; }
     Mod+TouchpadScrollRight cooldown-ms=150 { focus-column-right; }
@@ -236,10 +246,10 @@ binds {
     Mod+Space       { toggle-overview; }
 
     // --- Layout (niri defaults) ---
-    Mod+R { switch-preset-column-width; }
-    Mod+Alt+R { switch-preset-column-width-back; }
+    Mod+R       { switch-preset-column-width; }
+    Mod+Alt+R   { switch-preset-column-width-back; }
     Mod+Shift+R { switch-preset-window-height; }
-    Mod+M { maximize-window-to-edges; }
+    Mod+M       { maximize-window-to-edges; }
 
     // --- Column Management (niri defaults) ---
     Mod+Comma  { consume-window-into-column; }
@@ -261,15 +271,6 @@ binds {
     Mod+Ctrl+Shift+Alt+L hotkey-overlay-title="lock screen" { spawn "swaylock" "-c" "000000"; }
     Mod+Ctrl+Shift+Alt+O hotkey-overlay-title="shutdown"    { spawn "loginctl" "poweroff"; }
     Mod+Ctrl+Shift+Alt+S hotkey-overlay-title="suspend"     { spawn "loginctl" "suspend"; }
-
-    // --- Workspaces (niri defaults) ---
-    Mod+Shift+0 { move-column-to-workspace 0; }
-
-    // --- Monitor Focus ---
-    Mod+W            { focus-monitor-up; }
-    Mod+Shift+W      { move-column-to-monitor-up; }
-    Mod+E            { focus-monitor-down; }
-    Mod+Ctrl+Shift+E { move-column-to-monitor-down; }
 
     // --- Layout/Resize ---
     Mod+Y       { expand-column-to-available-width; }
