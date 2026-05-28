@@ -29,7 +29,7 @@ cursor {
 
 layout {
     always-center-single-column
-    background-color "#1e1e2e"
+    background-color "#1e1e2ec6"
     gaps 0
     center-focused-column "never"
     preset-column-widths {
@@ -68,7 +68,7 @@ layout {
         position "top"
         place-within-column
     }
-    insert-hint { color "#f9e2af"; }
+    insert-hint { color "#f9e2afc6"; }
 }
 
 overview {
@@ -122,6 +122,12 @@ window-rule {
 window-rule {
     match app-id="firefox"
     clip-to-geometry true
+}
+
+window-rule {
+    match is-active=false
+
+    opacity 0.80
 }
 
 // Key bindings - niri defaults with spectrwm customizations
