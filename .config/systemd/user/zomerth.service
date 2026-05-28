@@ -4,9 +4,7 @@ After=network-online.target graphical-session.target
 
 [Service]
 Type=simple
-Environment="DISPLAY=:1"
-Environment="XAUTHORITY=/run/user/%U/Xauthority"
-ExecStart=%h/.local/share/cargo/bin/zomerth --daemon --set-wallpaper --output %h/.local/share/wallpaper/earth.png -z 4 -w 3440 -h 1440
+ExecStart=%h/.local/share/cargo/bin/zomerth --daemon -z 4 -w 3440 -h 1440 --set-wallpaper --output %h/.local/share/wallpaper/earth.png
 Restart=on-failure
 Nice=19
 
