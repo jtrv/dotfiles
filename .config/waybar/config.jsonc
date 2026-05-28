@@ -200,9 +200,6 @@
 
     "systemd-failed-units": {
     	"format": " {nr_failed}",
-        "hide-on-ok": true,
-    	"system": true, // Monitor failed systemwide units.
-    	"user": false, // Ignore failed user units.
     	"on-click": "alacritty msg create-window --class=popup -e 'waybar-systemd-failed-units' &",
     },
 
