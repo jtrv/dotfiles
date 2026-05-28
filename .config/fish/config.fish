@@ -4,6 +4,7 @@ if status is-interactive
   mise activate fish          | source
   pay-respects fish --alias f | source
   starship init fish          | source
+  fish_config theme choose catppuccin-mocha
 end
 
 # fix ssh agent
