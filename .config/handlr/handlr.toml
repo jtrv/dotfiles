@@ -1,4 +1,3 @@
 enable_selector = true
-selector = "dmenu -i -p 'Open With: '"
-term_exec_args = '-e'
+selector = "tofi --prompt-text='Open With: '"
 expand_wildcards = false

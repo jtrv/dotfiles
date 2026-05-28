@@ -146,7 +146,7 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     // --- Launchers ---
-    Mod+P      hotkey-overlay-title="launch program"      { spawn-sh "exec $(tofi-run)"; }
+    Mod+P      hotkey-overlay-title="launch program"      { spawn "tofi-run"; }
     Mod+A      hotkey-overlay-title="launch desktop app"  { spawn "tofi-drun"; }
 
     // --- Custom Tools ---
