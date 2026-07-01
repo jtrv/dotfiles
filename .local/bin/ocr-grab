@@ -1,4 +1,7 @@
 #!/bin/sh
+
+set -e
+
 flameshot gui --raw | tesseract stdin stdout >/tmp/ocr-grab.txt
 
 if [ "$(wc -l </tmp/ocr-grab.txt)" -eq 0 ]; then
@@ -6,5 +9,5 @@ if [ "$(wc -l </tmp/ocr-grab.txt)" -eq 0 ]; then
   exit 1
 fi
 
-xclip -selection clipboard /tmp/ocr-grab.txt
+cat /tmp/ocr-grab.txt | wl-copy
 notify-send "ocr-grab" "$(cat /tmp/ocr-grab.txt)"
