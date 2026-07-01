@@ -14,6 +14,22 @@ hook global -group semantic-tokens InsertIdle .* lsp-semantic-tokens
 
 map global insert <tab> -docstring 'Select next snippet placeholder' %{<a-;>:try lsp-snippets-select-next-placeholders catch %{ execute-keys -with-hooks <lt>tab> }<ret>}
 
+# LSP goto/jump targets. Keys avoid built-in goto bindings (g k j e t b c v h l i a f . n p).
+map global goto d '<esc>: lsp-definition<ret>'           -docstring 'LSP definition'
+map global goto y '<esc>: lsp-type-definition<ret>'      -docstring 'LSP type definition'
+map global goto r '<esc>: lsp-references<ret>'           -docstring 'LSP references'
+map global goto I '<esc>: lsp-implementation<ret>'       -docstring 'LSP implementation'
+map global goto s '<esc>: lsp-goto-document-symbol<ret>' -docstring 'LSP document symbol'
+map global goto o '<esc>: lsp-workspace-symbol-incr<ret>' -docstring 'LSP search workspace symbols'
+
+# LSP next/previous navigation (brackets/parens are free in goto mode).
+map global goto ] '<esc>: lsp-find-error<ret>'            -docstring 'LSP next error'
+map global goto [ '<esc>: lsp-find-error --previous<ret>' -docstring 'LSP previous error'
+map global goto } '<esc>: lsp-next-symbol<ret>'           -docstring 'LSP next symbol'
+map global goto { '<esc>: lsp-previous-symbol<ret>'       -docstring 'LSP previous symbol'
+map global goto ) '<esc>: lsp-next-function<ret>'         -docstring 'LSP next function'
+map global goto ( '<esc>: lsp-previous-function<ret>'     -docstring 'LSP previous function'
+
 map global object a      -docstring 'LSP any symbol'                 %{: lsp-object <ret>}
 map global object <a-a>  -docstring 'LSP any symbol'                 %{: lsp-object <ret>}
 map global object f      -docstring 'LSP function or method'         %{: lsp-object Function Method <ret>}
