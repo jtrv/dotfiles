@@ -9,5 +9,5 @@ if [ "$(wc -l </tmp/ocr-grab.txt)" -eq 0 ]; then
   exit 1
 fi
 
-cat /tmp/ocr-grab.txt | wl-copy
+wl-copy </tmp/ocr-grab.txt
 notify-send "ocr-grab" "$(cat /tmp/ocr-grab.txt)"
