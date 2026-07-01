@@ -108,7 +108,7 @@ window-rule {
     open-floating true
 
     match app-id="easyeffects"
-    match app-id="feh"
+    match app-id="imv"
     match app-id="firefox" title="Pushbullet"
     match app-id="gimp"
     match app-id="popup"
@@ -129,14 +129,25 @@ window-rule {
 }
 
 window-rule {
-    match app-id="firefox"
     clip-to-geometry true
+
+    match app-id="firefox"
 }
 
 window-rule {
+    opacity 0.80
     match is-active=false
 
-    opacity 0.80
+    exclude app-id="gimp"
+    exclude app-id="zoom"
+    exclude app-id="signal"
+    exclude title="^Picture-in-Picture$"
+}
+window-rule {
+    open-fullscreen true
+    open-floating true
+
+    match app-id="flameshot"
 }
 
 // Key bindings - niri defaults with spectrwm customizations
@@ -189,8 +200,10 @@ binds {
     Mod+Ctrl+Comma        { spawn "makoctl" "restore"; }
 
     // --- Navigation (niri defaults) ---
-    Mod+Shift+WheelScrollUp   cooldown-ms=150 { focus-column-left; }
-    Mod+Shift+WheelScrollDown cooldown-ms=150 { focus-column-right; }
+    Mod+WheelScrollUp   cooldown-ms=150 { focus-column-left; }
+    Mod+WheelScrollDown cooldown-ms=150 { focus-column-right; }
+    Mod+TouchpadScrollRight cooldown-ms=150 { focus-column-right; }
+    Mod+TouchpadScrollLeft  cooldown-ms=150 { focus-column-left; }
 
     Mod+Left  { focus-column-left; }
     Mod+Down  { focus-window-down; }
@@ -215,8 +228,6 @@ binds {
     // --- Workspace (niri defaults) ---
     Mod+i { focus-workspace-up; }
     Mod+o { focus-workspace-down; }
-    Mod+WheelScrollUp   cooldown-ms=150 { focus-workspace-up; }
-    Mod+WheelScrollDown cooldown-ms=150 { focus-workspace-down; }
 
     Mod+1 { focus-workspace 1; }
     Mod+2 { focus-workspace 2; }
@@ -240,8 +251,6 @@ binds {
 
     Mod+TouchpadScrollDown  cooldown-ms=150 { focus-workspace-down; }
     Mod+TouchpadScrollUp    cooldown-ms=150 { focus-workspace-up; }
-    Mod+TouchpadScrollRight cooldown-ms=150 { focus-column-right; }
-    Mod+TouchpadScrollLeft  cooldown-ms=150 { focus-column-left; }
 
     // --- Window Management (niri defaults) ---
     Mod+F                { maximize-column; }
