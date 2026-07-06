@@ -1,20 +1,44 @@
 #!/bin/sh
-WAREHOUSE="$XDG_CONFIG_HOME"/warehouse
+# dump installed-package lists for setup/bootstrap scripts to replay.
+# each list is only replaced when its tool exists and produced output, so a
+# host missing some tool (or nixos, missing paru) never truncates a good list.
+set -u
 
-paru -Qqe >"$WAREHOUSE"/arch
+CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"
+DATA="${XDG_DATA_HOME:-$HOME/.local/share}"
+WAREHOUSE="$CONFIG/warehouse"
+mkdir -p "$WAREHOUSE"
 
-bun pm ls -g | tail +2 | rg --color=never -o ' (.*?)@\d' -r '$1' >"$WAREHOUSE"/bun
+have() { command -v "$1" >/dev/null 2>&1; }
+keep() { # stdin -> list, only if non-empty
+	t="$WAREHOUSE/$1.tmp"
+	cat >"$t"
+	if [ -s "$t" ]; then mv "$t" "$WAREHOUSE/$1"; else rm -f "$t"; fi
+}
 
-rg --color=never -o '^"(\S+).*?\(\w+\+(file://)?(.*?)(#.*?)?\)' -r '$1 -> $3' ~/.local/share/cargo/.crates.toml | sort -u >"$WAREHOUSE"/cargo
+have paru && paru -Qqe | keep arch
 
-dedoc ls -ln | awk '{print $1}' >"$WAREHOUSE"/dedoc
+# NO_COLOR is not always honored by bun; strip escapes as well
+have bun && NO_COLOR=1 bun pm ls -g | tail +2 |
+	sed 's/\x1b\[[0-9;]*m//g' |
+	rg --color=never -o ' (.*?)@\d' -r '$1' | keep bun
 
-sort <"$XDG_CONFIG_HOME"/fish/fish_plugins >"$WAREHOUSE"/fish
+rg --color=never -o '^"(\S+).*?\(\w+\+(file://)?(.*?)(#.*?)?\)' -r '$1 -> $3' \
+	"$DATA"/cargo/.crates.toml 2>/dev/null | sort -u | keep cargo
 
-ls -1 "$XDG_DATA_HOME"/go/bin >"$WAREHOUSE"/go
+have dedoc && dedoc ls -ln | awk '{print $1}' | keep dedoc
 
-rg -o 'bundle.*(https.*?)("|\s|$)' -r '$1' <"$XDG_CONFIG_HOME"/kak/kakrc | sort >"$WAREHOUSE"/kakoune
+[ -f "$CONFIG"/fish/fish_plugins ] && sort <"$CONFIG"/fish/fish_plugins | keep fish
 
-ls -1 "$XDG_DATA_HOME"/kak-tree-sitter/grammars >"$WAREHOUSE"/ktsctl
+# module paths, not binary names - replayable with `go install <path>@latest`
+have go && [ -d "$DATA"/go/bin ] &&
+	go version -m "$DATA"/go/bin/* 2>/dev/null |
+	awk '$1 == "path" {print $2}' | sort -u | keep go
 
-uv tool list --show-version-specifiers | rg '^\w' >"$WAREHOUSE"/uv
+rg --color=never -o 'bundle.*(https.*?)("|\s|$)' -r '$1' \
+	"$CONFIG"/kak/kakrc 2>/dev/null | sort | keep kakoune
+
+[ -d "$DATA"/kak-tree-sitter/grammars ] &&
+	ls -1 "$DATA"/kak-tree-sitter/grammars | keep ktsctl
+
+have uv && uv tool list --show-version-specifiers | rg --color=never '^\w' | keep uv
