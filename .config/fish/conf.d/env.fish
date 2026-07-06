@@ -19,7 +19,6 @@ set -gx TEXMFVAR          "$XDG_CACHE_HOME/texlive/texmf-var"
 # Config
 set -gx AWS_CONFIG_FILE             "$XDG_CONFIG_HOME/aws/config"
 set -gx AWS_SHARED_CREDENTIALS_FILE "$XDG_CONFIG_HOME/aws/credentials"
-set -gx BIOME_CONFIG_PATH           "$XDG_CONFIG_HOME/biome/biome.json"
 set -gx BUNDLE_USER_CONFIG          "$XDG_CONFIG_HOME/bundle"
 set -gx CLAUDE_CONFIG_DIR           "$XDG_CONFIG_HOME/claude"
 set -gx DOTFILES                    "$XDG_CONFIG_HOME/dotfiles"
