@@ -1,0 +1,6 @@
+[Unit]
+Description=dump installed package lists to warehouse
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/warehouse
