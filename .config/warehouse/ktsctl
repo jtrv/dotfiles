@@ -9,9 +9,11 @@ cmake
 comment
 common-lisp
 cpp
+crystal
 csharp
 css
 csv
+devicetree
 diff
 elixir
 fish
@@ -34,6 +36,8 @@ jsdoc
 json
 jsx
 julia
+just
+kak
 koka
 kotlin
 latex
@@ -47,6 +51,9 @@ mermaid
 nim
 nix
 nu
+ocaml
+ocaml-interface
+pest
 prisma
 psv
 purescript

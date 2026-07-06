@@ -22,6 +22,7 @@ bandwhich
 base
 base-devel
 bat
+bemoji
 bindtointerface
 binsider
 blender
@@ -51,6 +52,7 @@ cargo-geiger
 cargo-msrv
 cargo-nextest
 cargo-spellcheck
+cargo-tarpaulin
 cargo-udeps
 cargo-update
 catdoc
@@ -69,6 +71,7 @@ colloid-icon-theme-git
 cosign
 czkawka-cli
 dash
+ddcci-driver-linux-dkms
 devour
 difftastic
 discord_arch_electron
@@ -91,6 +94,7 @@ electron
 epub-thumbnailer-git
 erdtree
 espanso-wayland-git
+evsieve
 exercism-bin
 exfat-utils
 expect
@@ -117,6 +121,7 @@ fuse-overlayfs
 fwupd
 gamemode
 gamescope
+gammastep
 geoclue
 geticons-git
 gibo
@@ -164,6 +169,7 @@ jaq
 jless
 jp2a
 jpegoptim
+just
 kakoune
 kdeconnect
 kmon
@@ -280,6 +286,7 @@ proton-cachyos
 proton-cachyos-slr
 pueue
 pv
+python-html2text
 python-mako
 python-setproctitle
 python-truststore
@@ -302,8 +309,8 @@ revive
 ripgrep-all
 rkhunter
 rofi
-rofimoji
 rsync
+rtk
 ruby
 ruby-build
 ruby-bundler
@@ -389,6 +396,7 @@ uutils-coreutils
 uv
 v4l2loopback-dkms
 vdpauinfo
+ventoy-bin
 veracrypt
 vhs
 visidata
@@ -418,6 +426,7 @@ xbindkeys
 xcape
 xcolor
 xcwd-git
+xdg-desktop-portal-termfilechooser-hunkyburrito-git
 xdg-ninja-git
 xdg-utils
 xf86-video-amdgpu

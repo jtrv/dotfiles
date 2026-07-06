@@ -1,3 +1,4 @@
+baijia-suo -> /home/sugimoto/repos/baijia-suo
 bugstalker -> https://github.com/rust-lang/crates.io-index
 cargo-fix -> https://github.com/rust-lang/crates.io-index
 cargo-geiger -> https://github.com/rust-lang/crates.io-index
@@ -35,7 +36,6 @@ magic-wormhole-cli -> https://github.com/rust-lang/crates.io-index
 markdown-oxide -> https://github.com/feel-ix-343/markdown-oxide
 mergiraf -> https://github.com/rust-lang/crates.io-index
 mise -> https://github.com/rust-lang/crates.io-index
-openapi-tui -> https://github.com/rust-lang/crates.io-index
 protonup-rs -> https://github.com/rust-lang/crates.io-index
 qrtool -> https://github.com/rust-lang/crates.io-index
 ripdrag -> https://github.com/rust-lang/crates.io-index
@@ -56,6 +56,7 @@ systemd-lsp -> https://github.com/rust-lang/crates.io-index
 thesauromatic -> https://github.com/rust-lang/crates.io-index
 t-rec -> https://github.com/rust-lang/crates.io-index
 typos-cli -> https://github.com/rust-lang/crates.io-index
+waybar-module-pomodoro -> /home/sugimoto/repos/waybar-module-pomodoro
 wthrr -> https://github.com/rust-lang/crates.io-index
 zet -> https://github.com/rust-lang/crates.io-index
 zomerth -> /home/sugimoto/repos/zomerth-rs
