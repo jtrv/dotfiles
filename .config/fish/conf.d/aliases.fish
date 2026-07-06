@@ -51,6 +51,7 @@ alias mri     "mise run install"
 alias mrl     "mise run lint"
 alias mrp     "mise run deploy"
 alias mrs     "mise run serve"
+alias mrt     "mise run test"
 alias mv      "mv -i"
 alias nbg     "feh --randomize --bg-scale --no-fehbg ~/media/pictures/wallpapers/" # change bg
 alias o       "xdg-open"
