@@ -1,2 +1,2 @@
-timeout 180  'playerctl pause; niri msg action power-off-monitors; systemctl suspend;' resume 'niri msg action power-on-monitors'
+timeout 300  'playerctl pause; niri msg action power-off-monitors; systemctl suspend;' resume 'niri msg action power-on-monitors'
 before-sleep 'playerctl pause; swaylock -f'
