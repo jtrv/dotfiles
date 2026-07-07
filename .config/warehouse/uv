@@ -1,2 +1,1 @@
-auto-cpufreq v3.0.0+c1ba0fe [required:  git+https://github.com/AdnanHodzic/auto-cpufreq.git]
 trafilatura v2.0.0
