@@ -1,18 +1,11 @@
 # https://mise.jdx.dev/registry.html
+# global tools now come from nix (systemPackages) - keeping them here too means
+# mise shims shadow the nix copies. only tools nix doesn't provide stay global;
+# per-project versions still work via .mise.toml.
 [tools]
-aichat = "latest"
-biome = "latest"
-bun = "latest"
-cargo-binstall = "latest"
-node = "latest"
-ruby = "latest"
-doggo = "latest"
-dotenv-linter = "latest"
-go = "latest"
-revive = "latest"
-usage = "latest"
-uv = "latest"
-zig = "latest"
+biome = "latest"  # not in nixpkgs
+ruby = "latest"   # nix provides ruby on morpheus only
+usage = "latest"  # mise completion dependency
 
 [settings]
 plugin_autoupdate_last_check_duration = '1 day'

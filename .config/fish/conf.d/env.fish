@@ -55,7 +55,7 @@ set -gx RBENV_ROOT         "$XDG_DATA_HOME/rbenv"
 set -gx RUSTUP_HOME        "$XDG_DATA_HOME/rustup"
 set -gx WINEPREFIX         "$XDG_DATA_HOME/wine"
 set -gx W3M_DIR            "$XDG_DATA_HOME/w3m"
-set -gx XCURSOR_PATH       "/usr/share/icons:$XDG_DATA_HOME/icons"
+set -gx XCURSOR_PATH       "/run/current-system/sw/share/icons:$XDG_DATA_HOME/icons"
 
 # Runtime
 set -gx XAUTHORITY "$XDG_RUNTIME_DIR/Xauthority"
@@ -66,7 +66,7 @@ set -gx HISTFILE "$XDG_STATE_HOME/bash/history"
 # Misc
 set -gx ATUIN_NOBIND                "true"
 set -gx BAT_PAGER                   "kak"
-set -gx BEMOJI_PICKER_CMD           'tofi --font="/usr/share/fonts/TTF/BlexMonoNerdFont-Bold.ttf,/usr/share/fonts/noto/NotoColorEmoji.ttf" --horizontal=true'
+set -gx BEMOJI_PICKER_CMD           'tofi --font="BlexMono Nerd Font, Noto Color Emoji" --horizontal=true'
 set -gx BEMOJI_CLIP_CMD             "wl-copy"
 set -gx BEMOJI_TYPE_CMD             "ydotool"
 set -gx BROWSER                     "firefox"

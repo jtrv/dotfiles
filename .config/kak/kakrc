@@ -771,8 +771,8 @@ map global user i -docstring 'docs' %{:docs }
 
 declare-user-mode jump
   map global user j -docstring 'jump' %{: enter-user-mode jump <ret>}
-  map global jump c     -docstring 'next spell'            %{:spell en_US ; spell-next <ret>}
-  map global jump <a-c> -docstring 'prev spell'            %{:spell en_US ; spell-prev <ret>}
+  map global jump c     -docstring 'next spell'            %{:skyspell-enable en_US-large ; skyspell-next <ret>}
+  map global jump <a-c> -docstring 'prev spell'            %{:skyspell-enable en_US-large ; skyspell-previous <ret>}
   map global jump d     -docstring 'next diagnostic'       %{:lsp-diagnostics ; jump-next *diagnostics* <ret>}
   map global jump <a-d> -docstring 'prev diagnostic'       %{:lsp-diagnostics ; jump-previous *diagnostics* <ret>}
   map global jump f     -docstring 'next function'         %{:lsp-next-function <ret>}
