@@ -21,6 +21,9 @@
   ;; hold spc for space layer
   spc (tap-hold  200    150    spc  (layer-while-held space))
 
+  ;; tap 4, hold 4 = voxtype push-to-talk (emits f13 while held)
+  4   (tap-hold  200    150    4    f13)
+
   ;; xcape
   esc (tap-hold  200    150    esc  ctl)
 
@@ -37,6 +40,7 @@
   kvlu (tap-hold 200    200    @svlu  (macro-repeat @svlu 50))
   kvld (tap-hold 200    200    @svld  (macro-repeat @svld 50))
 
+  ;; niri workspace scrolling
   nwsu (cmd niri msg action focus-workspace-up)
   nwsd (cmd niri msg action focus-workspace-down)
 )

@@ -31,7 +31,7 @@ enabled = true
 # Key to hold for push-to-talk (when enabled = true)
 # Common choices: SCROLLLOCK, PAUSE, RIGHTALT, F13-F24
 # Use `evtest` to find key names for your keyboard
-key = "HOME"
+key = "F13"
 
 # Optional modifier keys that must also be held
 # Example: modifiers = ["LEFTCTRL", "LEFTALT"]
