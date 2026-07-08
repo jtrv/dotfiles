@@ -19,7 +19,7 @@
   i   (tap-hold  200    175    i    met)
 
   ;; hold spc for space layer
-  spc (tap-hold  200    150    spc  (layer-while-held space))
+  spc (tap-hold  200    210    spc  (layer-while-held space))
 
   ;; xcape
   esc (tap-hold  200    150    esc  ctl)
