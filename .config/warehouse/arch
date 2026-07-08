@@ -152,7 +152,6 @@ hyperfine
 imagemagick
 imv
 inkscape
-inter-font
 ipinfo-cli-bin
 irqbalance
 iw
@@ -366,7 +365,6 @@ topgrade
 torbrowser-launcher
 trippy
 ttf-ibmplex-mono-nerd
-ttf-roboto
 ttyper
 typescript
 udict-bin
