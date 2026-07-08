@@ -24,6 +24,9 @@
   ;; xcape
   esc (tap-hold  200    150    esc  ctl)
 
+  ;; tap 4, hold 4 = voxtype push-to-talk (emits f13 while held)
+  4   (tap-hold  200    150    4    f13)
+
   ;; playerctl controls
   mpp (cmd playerctl play-pause)
   mpr (cmd playerctl previous)
