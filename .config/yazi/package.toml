@@ -4,6 +4,11 @@ rev = "eba191d"
 hash = "722a60eca1b338c9c24bb508d2d48578"
 
 [[plugin.deps]]
+use = "Sonico98/exifaudio"
+rev = "4506f9d"
+hash = "4761fffb60a12d37096c34a356380cdf"
+
+[[plugin.deps]]
 use = "lpnh/fg"
 rev = "aa88cd4"
 hash = "8b0e87c3176e0d44f79a8656f79f0fa"
@@ -92,11 +97,6 @@ hash = "8b0e87c3176e0d44f79a8656f79f0fa"
 use = "yazi-rs/plugins:vcs-files"
 rev = "5d5c480"
 hash = "6b141fbed3c74b45558fbc7088c805ee"
-
-[[plugin.deps]]
-use = "dedukun/relative-motions"
-rev = "a603d9e"
-hash = "e02a788e5b8ae0fb47fd0193dda589cc"
 
 [[flavor.deps]]
 use = "yazi-rs/flavors:catppuccin-mocha"
