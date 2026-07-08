@@ -70,7 +70,7 @@ set -gx BEMOJI_PICKER_CMD           'tofi --font="BlexMono Nerd Font, Noto Color
 set -gx BEMOJI_CLIP_CMD             "wl-copy"
 set -gx BEMOJI_TYPE_CMD             "ydotool"
 set -gx BROWSER                     "firefox"
-set -gx CARAPACE_BRIDGES            "zsh,fish,bash,inshellisense"
+set -gx CARAPACE_BRIDGES            "fish,bash,inshellisense"
 set -gx CONCEAL_FINDER              "skim"
 set -gx DO_NOT_TRACK                "true"
 set -gx DELTA_PAGER                 "kak"
