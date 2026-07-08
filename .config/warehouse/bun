@@ -1,6 +1,5 @@
 @ast-grep/cli
 @ast-grep/napi
-@earendil-works/pi-coding-agent
 @fsouza/prettierd
 @olrtg/emmet-language-server
 @openai/codex

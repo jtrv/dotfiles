@@ -3,13 +3,12 @@
 
 ################### INIT ###################
 
-# evaluate-commands %sh{
-#   plugins="$kak_config/bundle"
-#   mkdir -p "$plugins"
-#   [ ! -e "$plugins/kak-bundle" ] && \
-#     git clone -q https://codeberg.org/jdugan6240/kak-bundle "$plugins/kak-bundle"
-# }
-
+evaluate-commands %sh{
+  plugins="$kak_config/bundle"
+  mkdir -p "$plugins"
+  [ ! -e "$plugins/kak-bundle" ] && \
+    git clone -q https://codeberg.org/jdugan6240/kak-bundle "$plugins/kak-bundle"
+}
 source "%val{config}/bundle/kak-bundle/rc/kak-bundle.kak"
 bundle-noload kak-bundle https://codeberg.org/jdugan6240/kak-bundle
 
@@ -284,10 +283,10 @@ define-command doc-grep -docstring '
   fd \
   --absolute-path \
     --exclude '*changelog*' \
-    --search-path "$(dirname $(dirname $kak_runtime))" \
-    --search-path "$XDG_DATA_HOME/kak/" \
+    --search-path "$(dirname $(dirname ${kak_runtime%/share/kak}))" \
+    --search-path "${kak_config}" \
     --extension=asciidoc |
-      xargs echo "grep $grep_args"
+      xargs echo "grep ${grep_args}"
 }}
 
 define-command file-picker -docstring '
@@ -485,9 +484,11 @@ insert numbered output to cursors
   if [ $# -eq 2 ]; then increment=$2; fi
   end=$(( $start + $kak_selection_count ))
   echo "
-    edit -scratch
-    execute-keys '!seq -w $start $increment $end <ret>'
-    execute-keys '<a-s>_y:db<ret>P'
+  edit -scratch
+  execute-keys '!seq -w $start $increment $end <ret>'
+  execute-keys '<a-s>_y'
+  delete-buffer
+  execute-keys 'P'
   "
 }}
 
@@ -768,8 +769,8 @@ map global user i -docstring 'docs' %{:docs }
 
 declare-user-mode jump
   map global user j -docstring 'jump' %{: enter-user-mode jump <ret>}
-  map global jump c     -docstring 'next spell'            %{:spell en_US ; spell-next <ret>}
-  map global jump <a-c> -docstring 'prev spell'            %{:spell en_US ; spell-prev <ret>}
+  map global jump c     -docstring 'next spell'            %{:skyspell-enable en_US-large ; skyspell-next <ret>}
+  map global jump <a-c> -docstring 'prev spell'            %{:skyspell-enable en_US-large ; skyspell-previous <ret>}
   map global jump d     -docstring 'next diagnostic'       %{:lsp-diagnostics ; jump-next *diagnostics* <ret>}
   map global jump <a-d> -docstring 'prev diagnostic'       %{:lsp-diagnostics ; jump-previous *diagnostics* <ret>}
   map global jump f     -docstring 'next function'         %{:lsp-next-function <ret>}
@@ -837,6 +838,8 @@ bundle kakoune-phantom-selection https://github.com/occivink/kakoune-phantom-sel
   map global phantom n -docstring 'next'       %{:phantom-selection-iterate-next <ret>}
   map global phantom p -docstring 'previous'   %{:phantom-selection-iterate-prev <ret>}
 }
+
+map global user q -docstring 'qalc' %{:qalc <ret>}
 
 # select/edit surrounding chars and tags
 bundle Encapsul8 https://github.com/ElectricR/Encapsul8 %{
@@ -962,9 +965,9 @@ provide-module "ui" %{
 
     hook global WinCreate .* %{
       ui-line-numbers-enable
+      ui-indent-enable
       ui-lint-enable
       ui-git-diff-enable
-      ui-indent-enable
       ui-rainbow-enable
       ui-todos-enable
       ui-trailing-spaces-enable

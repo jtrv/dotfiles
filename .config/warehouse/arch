@@ -8,7 +8,6 @@ apparmor
 arch-audit
 archivemount
 aria2
-aspell-en
 ast-firmware
 ast-grep
 at
@@ -75,7 +74,6 @@ ddcci-driver-linux-dkms
 devour
 difftastic
 discord_arch_electron
-dmenu
 docbook-xml
 docbook-xsl
 docker
@@ -137,7 +135,6 @@ glow
 gnu-netcat
 go-yq
 gobject-introspection
-gomuks
 gopls
 gpg-tui
 gping
@@ -159,7 +156,6 @@ hyperfine
 imagemagick
 imv
 inkscape
-inter-font
 ipinfo-cli-bin
 irqbalance
 iw
@@ -203,7 +199,6 @@ linux-firmware
 linux-firmware-qlogic
 linux-headers
 lobster-git
-logseq-desktop-bin
 lostfiles
 lrzip
 lsp-plugins
@@ -265,7 +260,6 @@ pbzip2
 pcmanfm
 peek
 perf
-picom
 pipe-rename
 pipewire
 pipewire-alsa
@@ -278,7 +272,6 @@ plymouth-theme-cubes-git
 plzip
 pngquant
 polly
-preload
 presenterm
 procs
 progress
@@ -334,7 +327,6 @@ snap-pac
 snap-sync
 sniffglue
 socat
-spectrwm
 speedtest++
 spotify
 starship
@@ -377,7 +369,6 @@ topgrade
 torbrowser-launcher
 trippy
 ttf-ibmplex-mono-nerd
-ttf-roboto
 ttyper
 typescript
 udict-bin
@@ -424,7 +415,6 @@ xapp-symbolic-icons
 xarchiver
 xautolock
 xbanish
-xbindkeys
 xcape
 xcolor
 xcwd-git
@@ -448,10 +438,8 @@ xss-lock
 xwayland-satellite
 yamllint
 yazi
-ydotool
 yin-yang-git
 yt-dlp
-zeal
 zls
 zoom
 zoxide

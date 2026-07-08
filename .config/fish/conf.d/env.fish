@@ -23,12 +23,10 @@ set -gx BUNDLE_USER_CONFIG          "$XDG_CONFIG_HOME/bundle"
 set -gx CLAUDE_CONFIG_DIR           "$XDG_CONFIG_HOME/claude"
 set -gx DOTFILES                    "$XDG_CONFIG_HOME/dotfiles"
 set -gx GEMRC                       "$XDG_CONFIG_HOME/gem/gemrc"
-set -gx GTK2_RC_FILES               "$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
 set -gx JUPYTER_CONFIG_DIR          "$XDG_CONFIG_HOME/jupyter"
 set -gx NETRC                       "$XDG_CONFIG_HOME/.netrc"
 set -gx NPM_CONFIG_USERCONFIG       "$XDG_CONFIG_HOME/npm/npmrc"
 set -gx PARALLEL_HOME               "$XDG_CONFIG_HOME/parallel"
-set -gx PI_CODING_AGENT_DIR         "$XDG_CONFIG_HOME/pi"
 set -gx PRETTIERD_DEFAULT_CONFIG    "$XDG_CONFIG_HOME/prettier/prettier.config.js"
 set -gx PYTHONSTARTUP               "$XDG_CONFIG_HOME/python/pythonrc"
 set -gx XINITRC                     "$XDG_CONFIG_HOME/X11/xinitrc"
@@ -54,7 +52,6 @@ set -gx RBENV_ROOT         "$XDG_DATA_HOME/rbenv"
 set -gx RUSTUP_HOME        "$XDG_DATA_HOME/rustup"
 set -gx WINEPREFIX         "$XDG_DATA_HOME/wine"
 set -gx W3M_DIR            "$XDG_DATA_HOME/w3m"
-set -gx XCURSOR_PATH       "/usr/share/icons:$XDG_DATA_HOME/icons"
 
 # Runtime
 set -gx XAUTHORITY "$XDG_RUNTIME_DIR/Xauthority"
@@ -65,13 +62,8 @@ set -gx HISTFILE "$XDG_STATE_HOME/bash/history"
 # Misc
 set -gx ATUIN_NOBIND                "true"
 set -gx BAT_PAGER                   "kak"
-set -gx BEMOJI_PICKER_CMD           'tofi --font="/usr/share/fonts/TTF/BlexMonoNerdFont-Bold.ttf,/usr/share/fonts/noto/NotoColorEmoji.ttf" --horizontal=true'
-set -gx BEMOJI_CLIP_CMD             "wl-copy"
-set -gx BEMOJI_TYPE_CMD             "ydotool"
 set -gx BROWSER                     "firefox"
-set -gx CARAPACE_BRIDGES            "fish,bash,inshellisense,carapace,argcomplete,clap,click,cobra,complete,kingpin,urfavecli,yargs"
-set -gx CARAPACE_LENIENT            1
-set -gx CARAPACE_MATCH              1
+set -gx CARAPACE_BRIDGES            "fish,bash,inshellisense"
 set -gx CONCEAL_FINDER              "skim"
 set -gx DO_NOT_TRACK                "true"
 set -gx DELTA_PAGER                 "kak"
@@ -80,12 +72,9 @@ set -gx fish_greeting
 set -gx HORS_ENGINE                 "google"
 set -gx LAST30DAYS_MEMORY_DIR       "$XDG_DOCUMENTS_DIR/Last30Days"
 set -gx MANPAGER                    "kak -e 'set buffer filetype man'"
-set -gx MOZ_ENABLE_WAYLAND          1
 set -gx PAGER                       "kak"
 set -gx SCCACHE_DIRECT              true
 set -gx TERMINAL                    "alacritty"
-set -gx QT_STYLE_OVERRIDE           "kvantum"
-set -gx QT_QPA_PLATFORMTHEME        "qt6ct"
 set -gx VISUAL                      "kak"
 set -gx VIRTUAL_ENV_DISABLE_PROMPT  true
 
@@ -160,4 +149,4 @@ selected:#eba0ac,\
 header:#94e2d5,\
 border:#6c7086"
 
-set PATH /home/sugimoto/.local/bin /home/sugimoto/.local/share/bun/bin /home/sugimoto/.local/share/cargo/bin /home/sugimoto/.local/share/go/bin /home/sugimoto/.local/share/nimble/bin /home/sugimoto/.local/share/rbenv/shims /home/sugimoto/repos/kakoune/src/../libexec/kak /usr/local/sbin /usr/local/bin /usr/bin /usr/bin/site_perl /usr/bin/vendor_perl /usr/bin/core_perl
+set PATH /home/sugimoto/.local/bin /home/sugimoto/.local/share/bun/bin /home/sugimoto/.local/share/cargo/bin /home/sugimoto/.local/share/go/bin /home/sugimoto/.local/share/nimble/bin /home/sugimoto/.local/share/rbenv/shims /usr/local/sbin /usr/local/bin /usr/bin /usr/bin/site_perl /usr/bin/vendor_perl /usr/bin/core_perl

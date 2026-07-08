@@ -80,7 +80,7 @@ declare-option -hidden str lsp_server_unocss %{
 }
 
 hook -group lsp-filetype-css global BufSetOption filetype=(?:css|less|scss) %{
-  set-option -add buffer lsp_servers %{
+  set-option buffer lsp_servers %{
     # Documented options see
     # https://github.com/sublimelsp/LSP-css/blob/master/LSP-css.sublime-settings
     [vscode-css-language-server]
@@ -112,25 +112,25 @@ hook -group lsp-filetype-css global BufSetOption filetype=(?:css|less|scss) %{
 }
 
 hook -group lsp-filetype-dotenv global BufSetOption filetype=dotenv %{
-  set-option -add buffer lsp_servers %{
+  set-option buffer lsp_servers %{
     [dotenv-lsp]
     root_globs = [ ".env", "*.env", ".git", ".hg" ]
   }
-
 }
 
 hook -group lsp-filetype-fish global BufSetOption filetype=fish %{
-  set-option -add buffer lsp_servers %{
+  set-option buffer lsp_servers %{
     [fish-lsp]
-    root_globs = [ "*.fish", "config.fish", "fish", ".git", ".hg" ]
+    root_globs = [ "*.fish", "fish", ".git", ".hg" ]
     args = [ "start" ]
     [fish-lsp.envs]
+    fish_lsp_enabled_handlers = "popups formatting complete hover rename definition references diagnostics signatureHelp codeAction inlayHint highlight"
     fish_lsp_diagnostic_disable_error_codes = "2002 2001"
   }
 }
 
 hook -group lsp-filetype-html global BufSetOption filetype=html %{
-  set-option -add buffer lsp_servers %{
+  set-option buffer lsp_servers %{
     # Documented options see
     # https://github.com/sublimelsp/LSP-html/blob/master/LSP-html.sublime-settings
     [vscode-html-language-server]
@@ -140,40 +140,47 @@ hook -group lsp-filetype-html global BufSetOption filetype=html %{
     [vscode-html-language-server.settings._]
     provideFormatter = true
     quotePreference = "none"
-    [vscode-html-language-server.settings.embeddedLanguages]
-    css = true
-    javascript = true
+    javascript.format.semicolons = "none"
+    [vscode-html-language-server.settings]
+    embeddedLanguages.css = true
+    embeddedLanguages.javascript = true
 
-    [vscode-html-language-server.settings.html]
-    autoClosingTags = true
-    mirrorCursorOnMatchingTag = true
-    suggest.html5 = true
-    validate.scripts = true
-    validate.styles = true
-    [vscode-html-language-server.settings.html.format]
-    contentUnformatted = "head, meta"
-    enable = true
-    extraLiners = "head, body, /html"
-    indentInnerHtml = false
-    preserveNewLines = false
-    templating = true
-    unformatted = "head, meta"
+    html.autoClosingTags = true
+    html.format.enable = true
+    html.format.preserveNewLines = false
+    html.mirrorCursorOnMatchingTag = true
+    html.validate.scripts = true
+    html.validate.styles = true
 
-    [vscode-html-language-server.settings.css]
-    validate = true
-    validProperties = []
-    [vscode-html-language-server.settings.css.format]
-    enable = true
-    preserveNewLines = false
-    spaceAroundSelectorSeparator = true
-    [vscode-html-language-server.settings.css.lint]
-    boxModel = "ignore"
-    compatibleVendorPrefixes = "ignore"
-    duplicateProperties = "ignore"
-    universalSelector = "ignore"
-    unknownAtRules = "ignore"
-    zeroUnits = "ignore"
+    css.format.enable = true
+    css.format.preserveNewLines = false
+    css.format.spaceAroundSelectorSeparator = true
+    css.lint.boxModel = "ignore"
+    css.lint.compatibleVendorPrefixes = "ignore"
+    css.lint.duplicateProperties = "ignore"
+    css.lint.universalSelector = "ignore"
+    css.lint.zeroUnits = "ignore"
+    css.validate = true
+    css.validProperties = []
 
+    javascript.format.enable = true
+    javascript.validate.enable = true
+
+    # This is mainly a linter for HTML and to be used together with vscode-html-language-server
+    # https://github.com/kristoff-it/superhtml
+    [superhtml]
+    root_globs = [ "package.json", ".git", ".hg" ]
+    args = [ "lsp" ]
+    [vscode-html-language-server.settings.javascript]
+    format.enable = true
+    format.semicolons = "none"
+    validate.enable = true
+
+    # This is mainly a linter for HTML and to be used together with vscode-html-language-server
+    # https://github.com/kristoff-it/superhtml
+    [superhtml]
+    root_globs = [ "package.json", ".git", ".hg" ]
+    args = [ "lsp" ]
     [vscode-html-language-server.settings.javascript]
     format.enable = true
     format.semicolons = "none"
@@ -189,7 +196,7 @@ hook -group lsp-filetype-html global BufSetOption filetype=html %{
 }
 
 hook -group lsp-filetype-javascript global BufSetOption filetype=(?:javascript|typescript) %{
-  set-option -add buffer lsp_servers %{
+  set-option buffer lsp_servers %{
     [typescript-language-server]
     root_globs = [ "package.json", "tsjson", "jsjson", ".git", ".hg" ]
     args = [ "--stdio" ]
@@ -224,7 +231,7 @@ hook -group lsp-filetype-javascript global BufSetOption filetype=(?:javascript|t
 }
 
 hook -group lsp-filetype-json global BufSetOption filetype=(?:json|jsonc) %{
-  set-option -add buffer lsp_servers %{
+  set-option buffer lsp_servers %{
     [vscode-json-language-server]
     root_globs = ["package.json", ".git", ".hg"]
     args = ["--stdio"]
@@ -259,7 +266,7 @@ hook -group lsp-filetype-json global BufSetOption filetype=(?:json|jsonc) %{
 }
 
 hook -group lsp-filetype-latex global BufSetOption filetype=latex %{
-  set-option -add buffer lsp_servers %{
+  set-option buffer lsp_servers %{
     [texlab]
     root_globs = [ ".git", ".hg" ]
     [texlab.settings.texlab]
@@ -287,7 +294,7 @@ hook -group lsp-filetype-latex global BufSetOption filetype=latex %{
 
 
 hook -group lsp-filetype-markdown global BufSetOption filetype=markdown %{
-  set-option -add buffer lsp_servers %{
+  set-option buffer lsp_servers %{
     [markdown-oxide]
     root_globs = [ "logseq" ]
   #   [zk]
@@ -297,14 +304,13 @@ hook -group lsp-filetype-markdown global BufSetOption filetype=markdown %{
   #   root_globs = [ ".marksman.toml" ]
   #   args = [ "server" ]
   }
-
   set-option -add buffer lsp_servers "
     %opt{lsp_server_biome}
   "
 }
 
 hook -group lsp-filetype-nix global BufSetOption filetype=nix %{
-  set-option -add buffer lsp_servers %{
+  set-option buffer lsp_servers %{
     [nil]
     root_globs = [ "*.nix" ]
     [nil.settings.nil]
@@ -312,17 +318,22 @@ hook -group lsp-filetype-nix global BufSetOption filetype=nix %{
   }
 }
 
-
 hook -group lsp-filetype-prisma global BufSetOption filetype=prisma %{
-  set-option -add buffer lsp_servers %{
+  set-option buffer lsp_servers %{
     [prisma-language-server]
     root_globs = [ ".git", ".hg", "prisma" ]
     args = [ "--stdio" ]
   }
 }
 
+declare-option -hidden str lsp_server_basedpyright %{
+  [basedpyright-langserver]
+  root_globs = [ "requirements.txt", "setup.py", "pyproject.toml", "pyrightconfig.json", ".git", ".hg" ]
+  args = [ "--stdio" ]
+}
+
 hook -group lsp-filetype-python global BufSetOption filetype=python %{
-  set-option -add buffer lsp_servers %{
+  set-option buffer lsp_servers %{
     [pylsp]
     root_globs = [ "requirements.txt", "setup.py", "pyproject.toml", ".git", ".hg" ]
     settings_section = "_"
@@ -346,7 +357,7 @@ hook -group lsp-filetype-python global BufSetOption filetype=python %{
 }
 
 hook -group lsp-filetype-ruby global BufSetOption filetype=ruby %{
-  set-option -add buffer lsp_servers %{
+  set-option buffer lsp_servers %{
     [solargraph]
     root_globs = [ "Gemfile" ]
     args = [ "stdio" ]
@@ -362,14 +373,14 @@ hook -group lsp-filetype-ruby global BufSetOption filetype=ruby %{
 }
 
 hook -group lsp-filetype-sql global BufSetOption filetype=sql %{
-  set-option -add buffer lsp_servers %{
+  set-option buffer lsp_servers %{
     [sqls]
     roots = [ ".git", ".hg" ]
   }
 }
 
 hook -group lsp-filetype-systemd global BufSetOption filetype=systemd %{
-  set-option -add buffer lsp_servers %{
+  set-option buffer lsp_servers %{
     [systemd-lsp]
     root_globs = [ "*.service", "*.mount", "*.device", "*.nspawn", "*.target", "*.timer" ]
   }
@@ -377,7 +388,7 @@ hook -group lsp-filetype-systemd global BufSetOption filetype=systemd %{
 
 
 hook -group lsp-filetype-toml global BufSetOption filetype=toml %{
-  set-option -add buffer lsp_servers %{
+  set-option buffer lsp_servers %{
     [taplo]
     root_globs = [ ".git", ".hg" ]
     args = [ "lsp", "stdio" ]
