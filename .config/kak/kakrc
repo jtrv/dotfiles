@@ -3,12 +3,12 @@
 
 ################### INIT ###################
 
-# noop evaluate-commands %sh{
-  # plugins="$kak_config/bundle"
-  # mkdir -p "$plugins"
-  # [ ! -e "$plugins/kak-bundle" ] && \
-  #   git clone -q https://codeberg.org/jdugan6240/kak-bundle "$plugins/kak-bundle"
-# }
+evaluate-commands %sh{
+  plugins="$kak_config/bundle"
+  mkdir -p "$plugins"
+  [ ! -e "$plugins/kak-bundle" ] && \
+    git clone -q https://codeberg.org/jdugan6240/kak-bundle "$plugins/kak-bundle"
+}
 source "%val{config}/bundle/kak-bundle/rc/kak-bundle.kak"
 bundle-noload kak-bundle https://codeberg.org/jdugan6240/kak-bundle
 
@@ -895,6 +895,11 @@ provide-module "ui" %{
     define-command ui-blame-toggle %{ git blame }
     map global ui b -docstring 'toggle blame'   %{: ui-blame-toggle <ret>}
 
+    define-command ui-indent-enable %{ add-highlighter window/indent show-whitespaces -lf '' -tab '' -spc ' ' -indent '▏' }
+    define-command ui-indent-disable %{ remove-highlighter window/indent }
+    define-command ui-indent-toggle %{ try ui-indent-enable catch ui-indent-disable }
+    map global ui i -docstring 'toggle indent'   %{:ui-indent-toggle <ret>}
+
     define-command -override ui-lsp-enable %{
       echo -debug "Enabling LSP for filtetype %opt{filetype}"
       lsp-enable-window
@@ -962,6 +967,7 @@ provide-module "ui" %{
 
     hook global WinCreate .* %{
       ui-line-numbers-enable
+      ui-indent-enable
       ui-lint-enable
       ui-git-diff-enable
       ui-rainbow-enable

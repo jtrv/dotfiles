@@ -293,6 +293,15 @@ hook -group lsp-filetype-markdown global BufSetOption filetype=markdown %{
   "
 }
 
+hook -group lsp-filetype-nix global BufSetOption filetype=nix %{
+  set-option buffer lsp_servers %{
+    [nil]
+    root_globs = [ "*.nix" ]
+    [nil.settings.nil]
+    formatting.command = "nixfmt"
+  }
+}
+
 hook -group lsp-filetype-prisma global BufSetOption filetype=prisma %{
   set-option buffer lsp_servers %{
     [prisma-language-server]

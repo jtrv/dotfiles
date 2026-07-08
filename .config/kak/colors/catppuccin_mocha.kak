@@ -76,6 +76,7 @@ set-face global StatusLineMode     "%opt{base}ff,%opt{yellow}ff"
 set-face global StatusLine         "%opt{lavender}ff,%opt{mantle}ff"
 set-face global Whitespace         "%opt{overlay0}ff,%opt{background}+f"
 set-face global WrapMarker         Whitespace
+set-face global WhitespaceIndent   "%opt{surface0}ff,default+f"
 
 set-face global PrimaryCursorEol   "%opt{surface2}ff,%opt{mauve}ff"
 set-face global PrimaryCursor      "%opt{background},%opt{rosewater}ff"
