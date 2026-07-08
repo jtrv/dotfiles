@@ -153,9 +153,6 @@
   color: @mauve;
 }
 
-#idle_inhibitor {
-}
-
 #idle_inhibitor.activated {
   color: @pink;
 }
