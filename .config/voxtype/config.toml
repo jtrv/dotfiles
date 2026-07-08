@@ -84,7 +84,7 @@ volume = 0.7
 # Options: tiny, tiny.en, base, base.en, small, small.en, medium, medium.en, large-v3, large-v3-turbo
 # .en models are English-only but faster and more accurate for English
 # Or provide absolute path to a custom .bin model file
-model = "large-v3-turbo"
+model = "small.en"  # T480s CPU: small.en is the accuracy/latency sweet spot (large-v3-turbo lags without a GPU)
 
 # Language for transcription
 # Use "en" for English, "auto" for auto-detection
