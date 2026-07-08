@@ -24,7 +24,6 @@ set -gx BUNDLE_USER_CONFIG          "$XDG_CONFIG_HOME/bundle"
 set -gx CLAUDE_CONFIG_DIR           "$XDG_CONFIG_HOME/claude"
 set -gx DOTFILES                    "$XDG_CONFIG_HOME/dotfiles"
 set -gx GEMRC                       "$XDG_CONFIG_HOME/gem/gemrc"
-set -gx GTK2_RC_FILES               "$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
 set -gx JUPYTER_CONFIG_DIR          "$XDG_CONFIG_HOME/jupyter"
 set -gx NETRC                       "$XDG_CONFIG_HOME/.netrc"
 set -gx NPM_CONFIG_USERCONFIG       "$XDG_CONFIG_HOME/npm/npmrc"
@@ -55,7 +54,6 @@ set -gx RBENV_ROOT         "$XDG_DATA_HOME/rbenv"
 set -gx RUSTUP_HOME        "$XDG_DATA_HOME/rustup"
 set -gx WINEPREFIX         "$XDG_DATA_HOME/wine"
 set -gx W3M_DIR            "$XDG_DATA_HOME/w3m"
-set -gx XCURSOR_PATH       "/usr/share/icons:$XDG_DATA_HOME/icons"
 
 # Runtime
 set -gx XAUTHORITY "$XDG_RUNTIME_DIR/Xauthority"
@@ -66,9 +64,6 @@ set -gx HISTFILE "$XDG_STATE_HOME/bash/history"
 # Misc
 set -gx ATUIN_NOBIND                "true"
 set -gx BAT_PAGER                   "kak"
-set -gx BEMOJI_PICKER_CMD           'tofi --font="BlexMono Nerd Font, Noto Color Emoji" --horizontal=true'
-set -gx BEMOJI_CLIP_CMD             "wl-copy"
-set -gx BEMOJI_TYPE_CMD             "ydotool"
 set -gx BROWSER                     "firefox"
 set -gx CARAPACE_BRIDGES            "fish,bash,inshellisense"
 set -gx CONCEAL_FINDER              "skim"
@@ -78,12 +73,9 @@ set -gx EDITOR                      "kak"
 set -gx fish_greeting
 set -gx HORS_ENGINE                 "google"
 set -gx MANPAGER                    "kak -e 'set buffer filetype man'"
-set -gx MOZ_ENABLE_WAYLAND          1
 set -gx PAGER                       "kak"
 set -gx SCCACHE_DIRECT              true
 set -gx TERMINAL                    "alacritty"
-set -gx QT_STYLE_OVERRIDE           "kvantum"
-set -gx QT_QPA_PLATFORMTHEME        "qt6ct"
 set -gx VISUAL                      "kak"
 set -gx VIRTUAL_ENV_DISABLE_PROMPT  true
 
