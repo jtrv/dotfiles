@@ -172,7 +172,7 @@
         "on-click-right": "alacritty msg create-window --class=popup -e sudo bandwhich &",
     },
 
-    // From: https://github.com/jtrv/waybar-module-pomodoro
+    // From: https://github.com/Andeskjerf/waybar-module-pomodoro
     "custom/pomodoro": {
         "format": "{}",
         "return-type": "json",
