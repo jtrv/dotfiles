@@ -57,7 +57,7 @@ layout {
     focus-ring {
         width 1
         active-color "#cdd6f4"
-        inactive-color "#11111b"
+        inactive-color "#00000000"
         urgent-color "#f38ba8"
     }
     struts{
@@ -82,7 +82,7 @@ layout {
 
 overview {
     zoom 0.5
-    backdrop-color "#11111b"
+    backdrop-color "#00000000"
 }
 
 spawn-at-startup "waybar"        // status bar
@@ -195,8 +195,7 @@ binds {
     XF86MonBrightnessDown { spawn "brightnessctl" "-1%"; }
 
     // --- Notifications (Mako) ---
-    Mod+Ctrl+Period       { spawn "makoctl" "dismiss"; }
-    Mod+Ctrl+Shift+Period { spawn "makoctl" "dismiss" "-a"; }
+    Mod+Ctrl+Period       { spawn "makoctl" "dismiss" "-a"; }
     Mod+Ctrl+Comma        { spawn "makoctl" "restore"; }
 
     // --- Navigation (niri defaults) ---
@@ -301,10 +300,6 @@ binds {
     Mod+Ctrl+Shift+Alt+Left  { move-column-to-monitor-left; }
     Mod+Ctrl+Alt+Right       { focus-monitor-right; }
     Mod+Ctrl+Alt+Left        { focus-monitor-left; }
-    Mod+W            { focus-monitor-up; }
-    Mod+Shift+W      { move-column-to-monitor-up; }
-    Mod+E            { focus-monitor-down; }
-    Mod+Ctrl+Shift+E { move-column-to-monitor-down; }
 
     // --- Column/Window Focus ---
     Mod+Home       { focus-column-first; }
