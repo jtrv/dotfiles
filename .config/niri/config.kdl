@@ -158,8 +158,6 @@ binds {
     // --- Audio & Hardware ---
     Mod+Shift+TouchpadScrollDown { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "1%-"; }
     Mod+Shift+TouchpadScrollUp   { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "1%+"; }
-    Mod+Shift+WheelScrollDown    { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "1%-"; }
-    Mod+Shift+WheelScrollUp      { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "1%+"; }
 
     XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "1%+"; }
     XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "1%-"; }
@@ -223,10 +221,14 @@ binds {
     Mod+Shift+8 { move-column-to-workspace 8; }
     Mod+Shift+9 { move-column-to-workspace 9; }
 
-    Mod+WheelScrollDown     cooldown-ms=150 { focus-workspace-down; }
-    Mod+WheelScrollUp       cooldown-ms=150 { focus-workspace-up; }
-    Mod+WheelScrollRight    cooldown-ms=150 { focus-column-right; }
-    Mod+WheelScrollLeft     cooldown-ms=150 { focus-column-left; }
+    Mod+i { focus-workspace-up; }
+    Mod+o { focus-workspace-down; }
+    Mod+WheelScrollUp   cooldown-ms=150 { focus-workspace-up; }
+    Mod+WheelScrollDown cooldown-ms=150 { focus-workspace-down; }
+    Mod+WheelScrollRight allow-when-locked=true { spawn "playerctl" "next"; }
+    Mod+WheelScrollLeft  allow-when-locked=true { spawn "playerctl" "previous"; }
+    Mod+Shift+WheelScrollUp   cooldown-ms=150 { focus-column-left; }
+    Mod+Shift+WheelScrollDown cooldown-ms=150 { focus-column-right; }
 
     Mod+TouchpadScrollDown  cooldown-ms=150 { focus-workspace-down; }
     Mod+TouchpadScrollUp    cooldown-ms=150 { focus-workspace-up; }
