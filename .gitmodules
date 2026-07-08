@@ -1,3 +1,0 @@
-[submodule "kakoune"]
-	path = repos/kakoune
-	url = https://github.com/jtrv/kakoune
