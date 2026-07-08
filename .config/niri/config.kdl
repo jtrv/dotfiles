@@ -139,7 +139,7 @@ window-rule {
     opacity 0.80
 }
 
-// Key bindings - niri defaults with spectrwm customizations
+// Key bindings
 binds {
     // Mod-Shift-/, which is usually the same as Mod-?,
     // shows a list of important hotkeys.
@@ -151,7 +151,6 @@ binds {
 
     // --- Custom Tools ---
     Mod+Return  hotkey-overlay-title="terminal: alacritty"          { spawn "alacritty" "msg" "create-window"; }
-    Mod+Shift+D hotkey-overlay-title="speech to text: dictate"      { spawn "~/.local/bin/dictate"; }
     Mod+Shift+E hotkey-overlay-title="emoji picker: bemoji"         { spawn "bemoji"; }
     Mod+Shift+P hotkey-overlay-title="clipboard menu: clipcat-menu" { spawn "clipcat-menu"; }
     Mod+Shift+B hotkey-overlay-title="pomodoro toggle"              { spawn "waybar-module-pomodoro" "toggle"; }
