@@ -57,7 +57,7 @@ layout {
     focus-ring {
         width 1
         active-color "#cdd6f4"
-        inactive-color "#00000000"
+        inactive-color "#11111b"
         urgent-color "#f38ba8"
     }
     struts{
@@ -82,7 +82,7 @@ layout {
 
 overview {
     zoom 0.5
-    backdrop-color "#00000000"
+    backdrop-color "#11111b"
 }
 
 spawn-at-startup "waybar"        // status bar
@@ -154,7 +154,7 @@ binds {
     Mod+Shift+D hotkey-overlay-title="speech to text: dictate"      { spawn "~/.local/bin/dictate"; }
     Mod+Shift+E hotkey-overlay-title="emoji picker: bemoji"         { spawn "bemoji"; }
     Mod+Shift+P hotkey-overlay-title="clipboard menu: clipcat-menu" { spawn "clipcat-menu"; }
-    Mod+Shift+T hotkey-overlay-title="pomodoro toggle"              { spawn "waybar-module-pomodoro" "toggle"; }
+    Mod+Shift+B hotkey-overlay-title="pomodoro toggle"              { spawn "waybar-module-pomodoro" "toggle"; }
     Mod+V       hotkey-overlay-title="volume mixer: wiremix"        { spawn "alacritty" "msg" "create-window" "--class=popup" "--command=wiremix"; }
 
     // --- Screenshot ---
@@ -185,7 +185,8 @@ binds {
     XF86MonBrightnessDown { spawn "brightnessctl" "-1%"; }
 
     // --- Notifications (Mako) ---
-    Mod+Ctrl+Period       { spawn "makoctl" "dismiss" "-a"; }
+    Mod+Ctrl+Period       { spawn "makoctl" "dismiss"; }
+    Mod+Ctrl+Shift+Period { spawn "makoctl" "dismiss" "-a"; }
     Mod+Ctrl+Comma        { spawn "makoctl" "restore"; }
 
     // --- Navigation (niri defaults) ---
@@ -237,6 +238,7 @@ binds {
     Mod+Shift+7 { move-column-to-workspace 7; }
     Mod+Shift+8 { move-column-to-workspace 8; }
     Mod+Shift+9 { move-column-to-workspace 9; }
+    Mod+Shift+0 { move-column-to-workspace 0; }
 
     Mod+TouchpadScrollDown  cooldown-ms=150 { focus-workspace-down; }
     Mod+TouchpadScrollUp    cooldown-ms=150 { focus-workspace-up; }
@@ -291,6 +293,10 @@ binds {
     Mod+Ctrl+Shift+Alt+Left  { move-column-to-monitor-left; }
     Mod+Ctrl+Alt+Right       { focus-monitor-right; }
     Mod+Ctrl+Alt+Left        { focus-monitor-left; }
+    Mod+W            { focus-monitor-up; }
+    Mod+Shift+W      { move-column-to-monitor-up; }
+    Mod+E            { focus-monitor-down; }
+    Mod+Ctrl+Shift+E { move-column-to-monitor-down; }
 
     // --- Column/Window Focus ---
     Mod+Home       { focus-column-first; }
