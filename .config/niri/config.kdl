@@ -48,7 +48,7 @@ layout {
     focus-ring {
         width 1
         active-color "#cdd6f4"
-        inactive-color "#11111b"
+        inactive-color "#00000000"
         urgent-color "#f38ba8"
     }
     struts{
@@ -73,7 +73,7 @@ layout {
 
 overview {
     zoom 0.5
-    backdrop-color "#11111b"
+    backdrop-color "#00000000"
 }
 
 spawn-at-startup "waybar"        // status bar
@@ -169,8 +169,7 @@ binds {
     XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "-n" "s" "10%-"; }
 
     // --- Notifications (Mako) ---
-    Mod+Ctrl+Period       { spawn "makoctl" "dismiss"; }
-    Mod+Ctrl+Shift+Period { spawn "makoctl" "dismiss" "-a"; }
+    Mod+Ctrl+Period       { spawn "makoctl" "dismiss" "-a"; }
     Mod+Ctrl+Comma        { spawn "makoctl" "restore"; }
 
     // --- Media Keys ---
@@ -271,12 +270,6 @@ binds {
 
     // --- Workspaces (niri defaults) ---
     Mod+Shift+0 { move-column-to-workspace 0; }
-
-    // --- Monitor Focus ---
-    Mod+W            { focus-monitor-up; }
-    Mod+Shift+W      { move-column-to-monitor-up; }
-    Mod+E            { focus-monitor-down; }
-    Mod+Ctrl+Shift+E { move-column-to-monitor-down; }
 
     // --- Layout/Resize ---
     Mod+Y       { expand-column-to-available-width; }
