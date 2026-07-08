@@ -1,4 +1,4 @@
-alias buffer w grep-expand-write
+alias buffer w grep-write
 
-map buffer user r -docstring "review changes"   ': grep-expand-review <ret>'
-map buffer user w -docstring "write changes"    ': grep-expand-write <ret>'
+map buffer user r -docstring "review changes"   ': grep-preview <ret>'
+map buffer user w -docstring "write changes"    ': grep-write <ret>'
