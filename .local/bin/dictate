@@ -1,9 +1,0 @@
-#!/bin/sh
-
-icon_name="audio-input-microphone"
-
-notify-send -h string:x-canonical-private-synchronous:dictate -t 0 -i "$icon_name" "Dictation Running" "Nerd Dictation is listening..."
-
-nerd-dictation begin --simulate-input-tool YDOTOOL --numbers-as-digits --numbers-use-separator --timeout 3
-
-notify-send -h string:x-canonical-private-synchronous:dictate -t 3000 "Dictation Finished" "Nerd Dictation has stopped listening."
