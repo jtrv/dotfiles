@@ -76,7 +76,8 @@ bundle auto-pairs.kak https://github.com/alexherbo2/auto-pairs.kak %{ enable-aut
 bundle colorcol https://github.com/SolitudeSF/colorcol
 bundle-install-hook colorcol %{ nimble install colorcol }
 
-bundle grep-expand.kak https://github.com/jtrv/grep-expand.kak
+bundle grug https://github.com/jtrv/grug
+bundle-install-hook grug %{ cargo install --locked --force --path . ; cargo clean }
 
 bundle indent.kak https://github.com/kirusfg/indent.kak %{
   set-indent global 2 false
@@ -322,22 +323,6 @@ define-command go -docstring '
   kakpipe -n "go %arg{@}" -S -- go %arg{@}
 }
 
-define-command grep-write -docstring '
-  grep-write: pipes the current grep-buffer to grug -w and prints the results
-' %{
-  declare-option -hidden str grug_buf
-  evaluate-commands -draft %{
-    evaluate-commands %sh{
-      echo "set-option buffer grug_buf '$(mktemp /tmp/grug_buf.XXX)'"
-    }
-    write -sync -force %opt{grug_buf}
-    evaluate-commands %sh{
-      cat "$kak_opt_grug_buf" | grug -w |
-        xargs -I{} echo "echo -debug 'grug: {}'; echo -markup {Information} 'grug: {}';"
-    }
-  }
-}
-
 define-command grep-buffers -docstring '
   grep-buffers [<pattern>]: search for a pattern in all buffers
   If <pattern> is not specified, the content of the main selection is used
@@ -484,11 +469,9 @@ insert numbered output to cursors
   if [ $# -eq 2 ]; then increment=$2; fi
   end=$(( $start + $kak_selection_count ))
   echo "
-  edit -scratch
-  execute-keys '!seq -w $start $increment $end <ret>'
-  execute-keys '<a-s>_y'
-  delete-buffer
-  execute-keys 'P'
+    edit -scratch
+    execute-keys '!seq -w $start $increment $end <ret>'
+    execute-keys '<a-s>_y:db<ret>P'
   "
 }}
 
