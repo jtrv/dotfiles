@@ -30,8 +30,8 @@
   mnx (cmd playerctl next)
 
   ;; scroll volume
-  svlu (cmd volume-increase 1)
-  svld (cmd volume-decrease 1)
+  svlu (cmd wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+)
+  svld (cmd wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-)
 
   ;; key volume
   kvlu (tap-hold 200    200    @svlu  (macro-repeat @svlu 50))
