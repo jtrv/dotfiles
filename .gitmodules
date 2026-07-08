@@ -1,9 +1,3 @@
-[submodule "dmenu"]
-	path = repos/dmenu
-	url = https://github.com/jtrv/dmenu
-[submodule "kakoune"]
-	path = repos/kakoune
-	url = https://github.com/jtrv/kakoune
 [submodule "kak-bundle"]
 	path = .config/kak/bundle/kak-bundle
 	url = https://codeberg.org/jdugan6240/kak-bundle
