@@ -9,8 +9,7 @@
 # Whether to hide the average cpu entry.
 #hide_avg_cpu = false
 
-# Whether to use a dedicated row for the average cpu entry
-#average_cpu_row = false
+
 
 # Whether to use dot markers rather than braille.
 #dot_marker = false
@@ -18,8 +17,7 @@
 # The update rate of the application.
 #rate = "1s"
 
-# Whether to put the CPU legend to the left.
-#cpu_left_legend = false
+
 
 # Whether to set CPU% on a process to be based on the total CPU or just current usage.
 #current_usage = false
@@ -29,7 +27,8 @@
 
 # Whether to group processes with the same name together by default. Doesn't do anything
 # if tree is set to true or --tree is set.
-group_processes = true
+[processes]
+default_grouped = true
 
 # Whether to make process searching case sensitive by default.
 #case_sensitive = false
@@ -83,7 +82,7 @@ battery = true
 #disable_keys = false
 
 # Show memory values in the processes widget as values by default
-#process_memory_as_value = false
+#default_memory_value = false
 
 # Show tree mode by default in the processes widget.
 #tree = false
@@ -91,11 +90,9 @@ battery = true
 # Shows an indicator in table widgets tracking where in the list you are.
 show_table_scroll_position = true
 
-# Show processes as their commands by default in the process widget.
-#process_command = false
 
-# Displays the network widget with binary prefixes.
-#network_use_binary_prefix = false
+
+
 
 # Displays the network widget using bytes.
 #network_use_bytes = false
@@ -112,14 +109,18 @@ show_table_scroll_position = true
 # Hides the kernel threads
 hide_k_threads = true
 
+# Show processes as their commands by default in the process widget.
+#process_command = false
+
 # Hide GPU(s) information
 #disable_gpu = false
 
 # Shows cache and buffer memory
-enable_cache_memory = true
+[memory_graph]
+cache_memory = true
 
 # Subtract freeable ARC from memory usage
-#free_arc = false
+#arc = false
 
 # How much data is stored at once in terms of time.
 #retention = "10m"
@@ -142,9 +143,15 @@ get_threads = true
 
 
 # CPU widget configuration
-#[cpu]
+[cpu]
 # One of "all" (default), "average"/"avg"
 #default = "average"
+
+# Whether to put the CPU legend to the left.
+#left_legend = false
+
+# Whether to use a dedicated row for the average cpu entry
+#basic_average_cpu_row = false
 
 
 # Disk widget configuration
@@ -227,6 +234,10 @@ get_threads = true
 
 # Whether to be require matching the whole word. Defaults to false.
 #whole_word = false
+
+# Displays the network widget with binary prefixes.
+[network_graph]
+#use_binary_prefix = false
 
 
 # These are all the components that support custom theming.  Note that colour support
