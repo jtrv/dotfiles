@@ -2,6 +2,7 @@
 
 if status is-interactive
 
+alias aider   "aider --config ~/.config/aider/config.yaml"
 alias ani     "ani-cli -q best --skip" # weeb out in S-rank ultra-fidelity 8k lossless greenray
 alias boi     "wikiman"
 alias bls     "/bin/ls"
@@ -51,7 +52,6 @@ alias mri     "mise run install"
 alias mrl     "mise run lint"
 alias mrp     "mise run deploy"
 alias mrs     "mise run serve"
-alias mrt     "mise run test"
 alias mv      "mv -i"
 alias nbg     "feh --randomize --bg-scale --no-fehbg ~/media/pictures/wallpapers/" # change bg
 alias o       "xdg-open"
