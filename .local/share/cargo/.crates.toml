@@ -55,7 +55,6 @@
 "scaphandre 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["scaphandre"]
 "sccache 0.16.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["sccache"]
 "secli 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["secli"]
-"see-cat 0.9.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["see"]
 "skanuvaty 0.2.1 (git+https://github.com/Esc4iCEscEsc/skanuvaty#33a007edf5502bff6dd0583f8cf6f366d9ead11a)" = ["skanuvaty"]
 "skim 4.4.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["sk"]
 "skyspell 5.0.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["skyspell"]
@@ -70,3 +69,4 @@
 "wthrr 1.2.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["wthrr"]
 "zet 2.0.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["zet"]
 "zomerth 0.1.0 (path+file:///home/sugimoto/repos/zomerth-rs)" = ["zomerth"]
+"suckit 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["suckit"]
