@@ -87,7 +87,6 @@ overview {
 
 spawn-at-startup "waybar"        // status bar
 spawn-at-startup "mako"          // notifications
-spawn-at-startup "swayidle" "-w" // idle screen locker
 spawn-at-startup "alacritty" "--daemon" // terminal daemon
 
 screenshot-path "~/pictures/screenshots/%Y-%m-%d_%H-%M-%S.png"
@@ -283,7 +282,7 @@ binds {
     Mod+Ctrl+Shift+Alt+Q { quit; }
     Mod+Ctrl+Shift+Alt+M { power-off-monitors; }
     Mod+Ctrl+Shift+Alt+H hotkey-overlay-title="hibernate"   { spawn "loginctl" "hibernate"; }
-    Mod+Ctrl+Shift+Alt+L hotkey-overlay-title="lock screen" { spawn "swaylock" "-c" "000000"; }
+    Mod+Ctrl+Shift+Alt+L hotkey-overlay-title="lock screen" { spawn "baijia-suo"; }
     Mod+Ctrl+Shift+Alt+O hotkey-overlay-title="shutdown"    { spawn "loginctl" "poweroff"; }
     Mod+Ctrl+Shift+Alt+S hotkey-overlay-title="suspend"     { spawn "loginctl" "suspend"; }
 
