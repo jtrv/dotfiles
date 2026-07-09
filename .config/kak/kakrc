@@ -655,6 +655,8 @@ map global normal /     -docstring 'search'                      %{/(?i)}
 map global normal <a-/> -docstring 'search backwards'            %{<a-/>(?i)}
 map global normal ?     -docstring '(extend) search'             %{?(?i)}
 map global normal <a-?> -docstring '(extend) search backwards'   %{<a-?>(?i)}
+map global normal s     -docstring 'select'                      %{s(?i)}
+map global normal S     -docstring 'select with splits'          %{S(?i)}
 
 define-command -hidden regex-assertions %{
 info -title 'assertions' '<c-i>:    ignore case  (?i)
