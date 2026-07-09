@@ -1,0 +1,40 @@
+#!/bin/sh
+#
+# doc <docset> <query> : utility for searching documentation
+#
+# req: dedoc, sk
+
+set -e
+
+cols=$(tput cols)
+bufcols=$(echo "$cols - 8" | bc)
+
+if [ $# -eq 0 ]; then
+  docset=$(dedoc ls -ln --porcelain | sk --reverse --select-1 --no-multi)
+else
+  docset="$1"
+fi
+
+if [ $# -eq 2 ]; then
+  query=$2
+else
+  query=''
+fi
+
+doc_entry=$(
+  sk \
+    --ansi \
+    --reverse \
+    --select-1 \
+    --interactive \
+    --cmd "dedoc -c ss -ip --porcelain '$docset' {}" \
+    --cmd-query="$query" \
+    --preview "dedoc -c open '$docset' -- {} |
+      rg --color=always -C 3 -i -F '{cq}'"
+)
+
+if [ -t 1 ]; then
+  dedoc -c open -c "$bufcols" "$docset" -- "$doc_entry" | "$PAGER"
+else
+  dedoc -c open -c "$bufcols" "$docset" -- "$doc_entry"
+fi
