@@ -2,7 +2,6 @@
   "dependencies": {
     "@ast-grep/cli": "^0.44.0",
     "@ast-grep/napi": "^0.44.0",
-    "@earendil-works/pi-coding-agent": "^0.80.2",
     "@fsouza/prettierd": "^0.28.0",
     "@olrtg/emmet-language-server": "^2.8.0",
     "@openai/codex": "^0.142.0",
@@ -23,8 +22,7 @@
     "unocss-language-server": "^0.1.9",
     "vercel": "^54.16.0",
     "vscode-langservers-extracted": "^4.10.0",
-    "yaml-language-server": "^1.23.0",
-    "yarn": "^1.22.22"
+    "yaml-language-server": "^1.23.0"
   },
   "trustedDependencies": [
     "@anthropic-ai/claude-code",

@@ -15,7 +15,7 @@ diffsitter -> https://github.com/rust-lang/crates.io-index
 difftastic -> https://github.com/rust-lang/crates.io-index
 dotenv-linter -> https://github.com/rust-lang/crates.io-index
 gprepo -> /home/sugimoto/repos/gprepo
-grug -> https://github.com/jtrv/grug
+grug -> /home/sugimoto/.config/kak/bundle/grug
 handlr-regex -> https://github.com/rust-lang/crates.io-index
 harper-ls -> https://github.com/rust-lang/crates.io-index
 hashgood -> https://github.com/thombles/hashgood

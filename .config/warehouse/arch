@@ -17,6 +17,7 @@ aws-cli
 aws-sam-cli-bin
 b3sum
 bacon
+baijia-suo
 bandwhich
 base
 base-devel
@@ -228,6 +229,7 @@ namcap
 needrestart
 nfs-utils
 ngrep
+nim
 niri
 nix
 nmap
@@ -303,7 +305,6 @@ ripgrep-all
 rkhunter
 rofi
 rsync
-rtk
 ruby
 ruby-build
 ruby-bundler

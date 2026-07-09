@@ -5,6 +5,7 @@ awk
 bash
 bibtex
 c
+clojure
 cmake
 comment
 common-lisp
@@ -15,6 +16,7 @@ css
 csv
 devicetree
 diff
+dockerfile
 elixir
 fish
 git-attributes
@@ -27,6 +29,7 @@ go-mod
 graphql
 hare
 haskell
+hcl
 html
 hyprlang
 ini
@@ -56,6 +59,7 @@ ocaml
 ocaml-interface
 pest
 prisma
+protobuf
 psv
 purescript
 python
@@ -66,10 +70,13 @@ ron
 ruby
 rust
 rust-format-args
+scala
 scheme
 scss
+sql
 sshclientconfig
 svelte
+swift
 task
 toml
 tsv

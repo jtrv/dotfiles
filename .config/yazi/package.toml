@@ -25,17 +25,17 @@ hash = "f5afc904d5106ee368c8aa2ded43bd74"
 
 [[plugin.deps]]
 use = "Rolv-Apneseth/starship"
-rev = "a837101"
-hash = "635b0feb9215772d22020eb0abf0bb34"
+rev = "159eaba"
+hash = "7de446280b1ba8c49ffd86dbc24bbbe6"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:diff"
-rev = "5d5c480"
-hash = "8b1af6b5a69797ee951f2a80ce570818"
+rev = "8cd50c6"
+hash = "39ce0924dfe3989dc89d7caa1473c77c"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:git"
-rev = "5d5c480"
+rev = "8cd50c6"
 hash = "88e56a64b7ce7c4314427452343fef17"
 
 [[plugin.deps]]
@@ -45,13 +45,13 @@ hash = "6ea5f37c7f219671ec504cb8311f889d"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:mount"
-rev = "5d5c480"
+rev = "8cd50c6"
 hash = "e3260d0b1feded8c8e3ae3afa1169e30"
 
 [[plugin.deps]]
 use = "boydaihungst/mediainfo"
-rev = "4f80288"
-hash = "7eeae1e194ccb6bd8d8e75b7f10d8cbd"
+rev = "a6d30a1"
+hash = "f3970de915c038d09fecf8d93d156fba"
 
 [[plugin.deps]]
 use = "kirasok/torrent-preview"
@@ -75,13 +75,13 @@ hash = "3d52b2b88c91a4ece2f7ed68ff39bb7b"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:chmod"
-rev = "5d5c480"
-hash = "f0c8c378184d5f8abd1b095a443d336d"
+rev = "8cd50c6"
+hash = "5b1c276b75cae91cbbdbe7863f39a540"
 
 [[plugin.deps]]
 use = "boydaihungst/fuse-archive"
-rev = "512a950"
-hash = "9641b444668a1220d4cf5e9cc0b2100f"
+rev = "f618260"
+hash = "55cacc8fbf5d925bdc70e04426383360"
 
 [[plugin.deps]]
 use = "dedukun/relative-motions"
@@ -95,10 +95,10 @@ hash = "8b0e87c3176e0d44f79a8656f79f0fa"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:vcs-files"
-rev = "5d5c480"
-hash = "6b141fbed3c74b45558fbc7088c805ee"
+rev = "8cd50c6"
+hash = "bc5da419b4337d0122ac531e705fa7b6"
 
 [[flavor.deps]]
 use = "yazi-rs/flavors:catppuccin-mocha"
-rev = "54ab389"
+rev = "4770a34"
 hash = "7dfe41c9c3d9be76da8a844263d0bbed"
