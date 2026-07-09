@@ -2,7 +2,6 @@
 
 if status is-interactive
 
-alias aider   "aider --config ~/.config/aider/config.yaml"
 alias ani     "ani-cli -q best --skip" # weeb out in S-rank ultra-fidelity 8k lossless greenray
 alias boi     "wikiman"
 alias bls     "/bin/ls"
