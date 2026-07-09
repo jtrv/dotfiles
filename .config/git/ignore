@@ -5,6 +5,7 @@ AGENTS.md
 .env.*
 .goosehints
 .mcp.json
+.my-notes*
 mise.local.toml
 skyspell-ignore.toml
 
