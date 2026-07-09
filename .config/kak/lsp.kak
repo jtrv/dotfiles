@@ -1,3 +1,28 @@
+# Bound lsp-exit's shutdown wait. Upstream lsp-exit (rc/lsp.kak) loops FOREVER
+# waiting for kak-lsp to delete its session dir. But kak's exit and kak-lsp's
+# shutdown can deadlock in a circular wait (kak stops servicing the server while
+# waiting; the server can't finish flushing to kak, so it never removes the dir),
+# leaving kak un-quittable and blocking whatever launched it. Cap the wait at ~3s
+# so exit always proceeds; a still-wedged server is reaped when kak's client dies.
+# Applied on KakBegin, which fires after all startup config (incl. the plugin,
+# which defines lsp-exit at source time) — so this -override always wins, and it
+# survives plugin updates.
+hook -group lsp-exit-timeout global KakBegin .* %{
+    define-command -override -hidden lsp-exit -params 0..1 -docstring %{
+        lsp-exit: shutdown language servers associated with current editor session
+    } %{
+        lsp-send kakoune/exit
+        evaluate-commands %sh{
+            existing_session_dir=${kak_opt_lsp_pid_file%.ref/*}
+            i=0
+            while [ -e "${existing_session_dir}" ] && [ "$i" -lt 100 ]; do
+                sleep .030
+                i=$((i + 1))
+            done
+        }
+    }
+}
+
 set-option global lsp_auto_highlight_references true
 set-option global lsp_auto_show_code_actions true
 set-option global lsp_diagnostic_line_error_sign '║'
@@ -120,6 +145,15 @@ declare-option -hidden str lsp_server_sqruff %{
   [sqruff]
   root_globs = [ ".sqruff", ".git", ".hg" ]
   args = [ "lsp" ]
+}
+
+# lightweight zero-config nix LSP; nixd is now primary (flake-driven option/pkg
+# completion), nil kept as an #opt fallback
+declare-option -hidden str lsp_server_nil %{
+  [nil]
+  root_globs = [ "*.nix" ]
+  [nil.settings.nil]
+  formatting.command = "nixfmt"
 }
 
 hook -group lsp-filetype-css global BufSetOption filetype=(?:css|less|scss) %{
@@ -348,11 +382,21 @@ hook -group lsp-filetype-prose global BufSetOption filetype=(?:gitcommit|text) %
 
 hook -group lsp-filetype-nix global BufSetOption filetype=nix %{
   set-option buffer lsp_servers %{
-    [nil]
-    root_globs = [ "*.nix" ]
-    [nil.settings.nil]
-    formatting.command = "nixfmt"
+    [nixd]
+    root_globs = [ "flake.nix", "*.nix", ".git", ".hg" ]
+    [nixd.settings.nixd.nixpkgs]
+    # flake-pinned nixpkgs (no channel dependency) for package/lib completion
+    expr = "(builtins.getFlake \"/home/sugimoto/repos/nixos-config\").inputs.nixpkgs.legacyPackages.${builtins.currentSystem}"
+    [nixd.settings.nixd.formatting]
+    command = [ "nixfmt" ]
+    [nixd.settings.nixd.options.nixos]
+    # options for the current host (HOSTNAME) -> completion for services.*, etc.
+    expr = "(builtins.getFlake \"/home/sugimoto/repos/nixos-config\").nixosConfigurations.${builtins.getEnv \"HOSTNAME\"}.options"
   }
+
+  set-option -add buffer lsp_servers "
+    #opt{lsp_server_nil}
+  "
 }
 
 
