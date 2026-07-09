@@ -1,0 +1,98 @@
+# baijia-suo example configuration (TOML)
+#
+# Place at ~/.config/baijia-suo/config.toml or /etc/baijia-suo/config.toml
+# (or pass an explicit path with -C). Command-line flags override values
+# set here. All keys are optional; uncomment to use.
+
+# Background color, RRGGBB or RRGGBBAA
+# color = "a3a3a3ff"
+
+# Background animation. Uncomment modes below to enable them; leave all
+# commented (an empty list) for a solid background. More than one enabled
+# mode is cycled through, shuffled, with `cycle` seconds of airtime each.
+# Shortcut: replace the whole list with animation = "random" for every mode.
+animation = [
+  "abstractile",
+  "anemone",
+  "apollonian",
+  "attraction",
+  "ball",
+  "binaryhorizon",
+  "binaryring",
+  "blaster",
+  "blot",
+  "bouboule",
+  "bounce",
+  "boxfit",
+  "braid",
+  "bubble",
+  "ccurve",
+  "coral",
+  "crystal",
+  "cynosure",
+  "discrete",
+  "drift",
+  "euler2d",
+  "fiberlamp",
+  "flame",
+  "flow",
+  "fluidballs",
+  "forest",
+  "galaxy",
+  "goop",
+  "grav",
+  "helix",
+  "hop",
+  "ico",
+  "ifs",
+  "intermomentary",
+  "julia",
+  "life3d",
+  "lightning",
+  "lisa",
+  "lissie",
+  "mandelbrot",
+  "matrix",
+  "maze",
+  "moire",
+  "molecule",
+  "mountain",
+  "noof",
+  "petri",
+  "piecewise",
+  "polyominoes",
+  "popsquares",
+  "pyro",
+  "pyro2",
+  "qix",
+  "rain",
+  "scooter",
+  "space",
+  "spiral",
+  "squiral",
+  "starfish",
+  "vermiculate",
+  "vines",
+  "whirlwindwarp",
+  "worm",
+  "wormhole",
+  "xrayswarm",
+]
+
+# Seconds each mode plays before cycling to the next (only matters with
+# more than one mode enabled above). Default 60.
+cycle = 20
+
+# Detach from the terminal after locking
+# daemonize = false
+
+[indicator]
+# Typing indicator style: fade (default), pin-tumbler, comet, breath,
+# dots, scope, or ripple
+mode = "fade"
+
+# Indicator opacity, 0.0-1.0 (default 1.0 = fully opaque)
+# opacity = 1.0
+
+# Indicator disk color for idle/typing states, RRGGBB
+# color = "3c3c3c"
