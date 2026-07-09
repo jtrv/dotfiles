@@ -46,10 +46,11 @@ declare-option -hidden str lsp_server_emmet %{
 declare-option -hidden str lsp_server_harper %{
   [harper-ls]
   args = [ "--stdio" ]
-  [harper-ls.settings]
+  [harper-ls.settings.harper-ls]
   dialect = "American"
   maxFileLength = 120000
-  [[linters]]
+  diagnosticSeverity = "information"   # default "hint" barely shows in kak
+  [harper-ls.settings.harper-ls.linters]
   AnA = true
   RepeatedWords = true
   SentenceCapitalization = false
@@ -77,6 +78,48 @@ declare-option -hidden str lsp_server_unocss %{
   [unocss-language-server]
   root_globs = [ ".git", ".hg", "package.json" ]
   args = [ "--stdio" ]
+}
+
+# type-checker alternative to pylsp+jedi; toggle on with %opt in the python hook
+declare-option -hidden str lsp_server_basedpyright %{
+  [basedpyright-langserver]
+  root_globs = [ "requirements.txt", "setup.py", "pyproject.toml", "pyrightconfig.json", ".git", ".hg" ]
+  args = [ "--stdio" ]
+  settings_section = "_"
+  [basedpyright-langserver.settings._.basedpyright.analysis]
+  typeCheckingMode = "standard"
+}
+
+# same tsserver engine as typescript-language-server, just a faster/maintained wrapper;
+# toggle this ON and the plain typescript-language-server block OFF (never both - two tsservers)
+declare-option -hidden str lsp_server_vtsls %{
+  [vtsls]
+  root_globs = [ "package.json", "tsconfig.json", "jsconfig.json", ".git", ".hg" ]
+  args = [ "--stdio" ]
+}
+
+# scss/sass superset of vscode-css (Sass modules, @use/@forward, SassDoc); toggle on for scss
+declare-option -hidden str lsp_server_some_sass %{
+  [some-sass-language-server]
+  root_globs = [ ".git", ".hg", "package.json" ]
+  args = [ "--stdio" ]
+}
+
+# older ruby LSP; ruby-lsp supersedes it - keep as a fallback toggle (YARD-doc hover)
+declare-option -hidden str lsp_server_solargraph %{
+  [solargraph]
+  root_globs = [ "Gemfile" ]
+  args = [ "stdio" ]
+  settings_section = "_"
+  [solargraph.settings._]
+  diagnostics = true
+}
+
+# SQL linter/formatter (complements sqls, which does completion only); needs a .sqruff file
+declare-option -hidden str lsp_server_sqruff %{
+  [sqruff]
+  root_globs = [ ".sqruff", ".git", ".hg" ]
+  args = [ "lsp" ]
 }
 
 hook -group lsp-filetype-css global BufSetOption filetype=(?:css|less|scss) %{
@@ -108,23 +151,16 @@ hook -group lsp-filetype-css global BufSetOption filetype=(?:css|less|scss) %{
     #opt{lsp_server_emmet}
     #opt{lsp_server_superhtml}
     #opt{lsp_server_unocss}
+    #opt{lsp_server_some_sass}
   "
-}
-
-hook -group lsp-filetype-dotenv global BufSetOption filetype=dotenv %{
-  set-option buffer lsp_servers %{
-    [dotenv-lsp]
-    root_globs = [ ".env", "*.env", ".git", ".hg" ]
-  }
 }
 
 hook -group lsp-filetype-fish global BufSetOption filetype=fish %{
   set-option buffer lsp_servers %{
     [fish-lsp]
-    root_globs = [ "*.fish", "fish", ".git", ".hg" ]
+    root_globs = [ "*.fish", "config.fish", "fish", ".git", ".hg" ]
     args = [ "start" ]
     [fish-lsp.envs]
-    fish_lsp_enabled_handlers = "popups formatting complete hover rename definition references diagnostics signatureHelp codeAction inlayHint highlight"
     fish_lsp_diagnostic_disable_error_codes = "2002 2001"
   }
 }
@@ -140,50 +176,42 @@ hook -group lsp-filetype-html global BufSetOption filetype=html %{
     [vscode-html-language-server.settings._]
     provideFormatter = true
     quotePreference = "none"
-    javascript.format.semicolons = "none"
-    [vscode-html-language-server.settings]
-    embeddedLanguages.css = true
-    embeddedLanguages.javascript = true
+    [vscode-html-language-server.settings.embeddedLanguages]
+    css = true
+    javascript = true
 
-    html.autoClosingTags = true
-    html.format.enable = true
-    html.format.preserveNewLines = false
-    html.mirrorCursorOnMatchingTag = true
-    html.validate.scripts = true
-    html.validate.styles = true
+    [vscode-html-language-server.settings.html]
+    autoClosingTags = true
+    suggest.html5 = true
+    validate.scripts = true
+    validate.styles = true
+    [vscode-html-language-server.settings.html.format]
+    contentUnformatted = "head, meta"
+    enable = true
+    extraLiners = "head, body, /html"
+    indentInnerHtml = false
+    preserveNewLines = false
+    templating = true
+    unformatted = "head, meta"
 
-    css.format.enable = true
-    css.format.preserveNewLines = false
-    css.format.spaceAroundSelectorSeparator = true
-    css.lint.boxModel = "ignore"
-    css.lint.compatibleVendorPrefixes = "ignore"
-    css.lint.duplicateProperties = "ignore"
-    css.lint.universalSelector = "ignore"
-    css.lint.zeroUnits = "ignore"
-    css.validate = true
-    css.validProperties = []
+    [vscode-html-language-server.settings.css]
+    validate = true
+    validProperties = []
+    [vscode-html-language-server.settings.css.format]
+    enable = true
+    preserveNewLines = false
+    spaceAroundSelectorSeparator = true
+    [vscode-html-language-server.settings.css.lint]
+    boxModel = "ignore"
+    compatibleVendorPrefixes = "ignore"
+    duplicateProperties = "ignore"
+    universalSelector = "ignore"
+    unknownAtRules = "ignore"
+    zeroUnits = "ignore"
 
-    javascript.format.enable = true
-    javascript.validate.enable = true
-
-    # This is mainly a linter for HTML and to be used together with vscode-html-language-server
-    # https://github.com/kristoff-it/superhtml
-    [superhtml]
-    root_globs = [ "package.json", ".git", ".hg" ]
-    args = [ "lsp" ]
     [vscode-html-language-server.settings.javascript]
     format.enable = true
-    format.semicolons = "none"
-    validate.enable = true
-
-    # This is mainly a linter for HTML and to be used together with vscode-html-language-server
-    # https://github.com/kristoff-it/superhtml
-    [superhtml]
-    root_globs = [ "package.json", ".git", ".hg" ]
-    args = [ "lsp" ]
-    [vscode-html-language-server.settings.javascript]
-    format.enable = true
-    format.semicolons = "none"
+    format.semicolons = "remove"
     validate.enable = true
   }
 
@@ -202,8 +230,8 @@ hook -group lsp-filetype-javascript global BufSetOption filetype=(?:javascript|t
     args = [ "--stdio" ]
     settings_section = "_"
     [typescript-language-server.settings._]
-    quotePreference = "none"
-    typescript.format.semicolons = "none"
+    quotePreference = "auto"
+    typescript.format.semicolons = "remove"
 
     [vscode-eslint-language-server]
     root_globs = [ ".eslintrc", ".eslintrc.json" ]
@@ -227,6 +255,7 @@ hook -group lsp-filetype-javascript global BufSetOption filetype=(?:javascript|t
     %opt{lsp_server_biome}
     #opt{lsp_server_emmet}
     #opt{lsp_server_unocss}
+    #opt{lsp_server_vtsls}
   "
 }
 
@@ -304,8 +333,16 @@ hook -group lsp-filetype-markdown global BufSetOption filetype=markdown %{
   #   root_globs = [ ".marksman.toml" ]
   #   args = [ "server" ]
   }
+
   set-option -add buffer lsp_servers "
-    %opt{lsp_server_biome}
+    %opt{lsp_server_harper}
+  "
+}
+
+# prose grammar/spell (harper-ls) for commit messages and plain text
+hook -group lsp-filetype-prose global BufSetOption filetype=(?:gitcommit|text) %{
+  set-option buffer lsp_servers "
+    %opt{lsp_server_harper}
   "
 }
 
@@ -318,18 +355,13 @@ hook -group lsp-filetype-nix global BufSetOption filetype=nix %{
   }
 }
 
+
 hook -group lsp-filetype-prisma global BufSetOption filetype=prisma %{
   set-option buffer lsp_servers %{
     [prisma-language-server]
     root_globs = [ ".git", ".hg", "prisma" ]
     args = [ "--stdio" ]
   }
-}
-
-declare-option -hidden str lsp_server_basedpyright %{
-  [basedpyright-langserver]
-  root_globs = [ "requirements.txt", "setup.py", "pyproject.toml", "pyrightconfig.json", ".git", ".hg" ]
-  args = [ "--stdio" ]
 }
 
 hook -group lsp-filetype-python global BufSetOption filetype=python %{
@@ -358,25 +390,25 @@ hook -group lsp-filetype-python global BufSetOption filetype=python %{
 
 hook -group lsp-filetype-ruby global BufSetOption filetype=ruby %{
   set-option buffer lsp_servers %{
-    [solargraph]
-    root_globs = [ "Gemfile" ]
-    args = [ "stdio" ]
-    settings_section = "_"
-    [solargraph.settings._]
-    # See https://github.com/castwide/solargraph/blob/master/lib/solargraph/language_server/host.rb
-    diagnostics = true
-
     [ruby-lsp]
-    root_globs = [ "Gemfile" ]
+    root_globs = [ "Gemfile", ".git", ".hg" ]
     args = [ "stdio" ]
   }
+
+  set-option -add buffer lsp_servers "
+    #opt{lsp_server_solargraph}
+  "
 }
 
 hook -group lsp-filetype-sql global BufSetOption filetype=sql %{
   set-option buffer lsp_servers %{
     [sqls]
-    roots = [ ".git", ".hg" ]
+    root_globs = [ ".git", ".hg" ]
   }
+
+  set-option -add buffer lsp_servers "
+    #opt{lsp_server_sqruff}
+  "
 }
 
 hook -group lsp-filetype-systemd global BufSetOption filetype=systemd %{
