@@ -1,3 +1,28 @@
+# Bound lsp-exit's shutdown wait. Upstream lsp-exit (rc/lsp.kak) loops FOREVER
+# waiting for kak-lsp to delete its session dir. But kak's exit and kak-lsp's
+# shutdown can deadlock in a circular wait (kak stops servicing the server while
+# waiting; the server can't finish flushing to kak, so it never removes the dir),
+# leaving kak un-quittable and blocking whatever launched it. Cap the wait at ~3s
+# so exit always proceeds; a still-wedged server is reaped when kak's client dies.
+# Applied on KakBegin, which fires after all startup config (incl. the plugin,
+# which defines lsp-exit at source time) — so this -override always wins, and it
+# survives plugin updates.
+hook -group lsp-exit-timeout global KakBegin .* %{
+    define-command -override -hidden lsp-exit -params 0..1 -docstring %{
+        lsp-exit: shutdown language servers associated with current editor session
+    } %{
+        lsp-send kakoune/exit
+        evaluate-commands %sh{
+            existing_session_dir=${kak_opt_lsp_pid_file%.ref/*}
+            i=0
+            while [ -e "${existing_session_dir}" ] && [ "$i" -lt 100 ]; do
+                sleep .030
+                i=$((i + 1))
+            done
+        }
+    }
+}
+
 set-option global lsp_auto_highlight_references true
 set-option global lsp_auto_show_code_actions true
 set-option global lsp_diagnostic_line_error_sign '║'
@@ -13,6 +38,22 @@ hook global -group semantic-tokens NormalIdle .* lsp-semantic-tokens
 hook global -group semantic-tokens InsertIdle .* lsp-semantic-tokens
 
 map global insert <tab> -docstring 'Select next snippet placeholder' %{<a-;>:try lsp-snippets-select-next-placeholders catch %{ execute-keys -with-hooks <lt>tab> }<ret>}
+
+# LSP goto/jump targets. Keys avoid built-in goto bindings (g k j e t b c v h l i a f . n p).
+map global goto d '<esc>: lsp-definition<ret>'           -docstring 'LSP definition'
+map global goto y '<esc>: lsp-type-definition<ret>'      -docstring 'LSP type definition'
+map global goto r '<esc>: lsp-references<ret>'           -docstring 'LSP references'
+map global goto I '<esc>: lsp-implementation<ret>'       -docstring 'LSP implementation'
+map global goto s '<esc>: lsp-goto-document-symbol<ret>' -docstring 'LSP document symbol'
+map global goto o '<esc>: lsp-workspace-symbol-incr<ret>' -docstring 'LSP search workspace symbols'
+
+# LSP next/previous navigation (brackets/parens are free in goto mode).
+map global goto ] '<esc>: lsp-find-error<ret>'            -docstring 'LSP next error'
+map global goto [ '<esc>: lsp-find-error --previous<ret>' -docstring 'LSP previous error'
+map global goto } '<esc>: lsp-next-symbol<ret>'           -docstring 'LSP next symbol'
+map global goto { '<esc>: lsp-previous-symbol<ret>'       -docstring 'LSP previous symbol'
+map global goto ) '<esc>: lsp-next-function<ret>'         -docstring 'LSP next function'
+map global goto ( '<esc>: lsp-previous-function<ret>'     -docstring 'LSP previous function'
 
 map global object a      -docstring 'LSP any symbol'                 %{: lsp-object <ret>}
 map global object <a-a>  -docstring 'LSP any symbol'                 %{: lsp-object <ret>}
@@ -30,10 +71,11 @@ declare-option -hidden str lsp_server_emmet %{
 declare-option -hidden str lsp_server_harper %{
   [harper-ls]
   args = [ "--stdio" ]
-  [harper-ls.settings]
+  [harper-ls.settings.harper-ls]
   dialect = "American"
   maxFileLength = 120000
-  [[linters]]
+  diagnosticSeverity = "information"   # default "hint" barely shows in kak
+  [harper-ls.settings.harper-ls.linters]
   AnA = true
   RepeatedWords = true
   SentenceCapitalization = false
@@ -61,6 +103,48 @@ declare-option -hidden str lsp_server_unocss %{
   [unocss-language-server]
   root_globs = [ ".git", ".hg", "package.json" ]
   args = [ "--stdio" ]
+}
+
+# type-checker alternative to pylsp+jedi; toggle on with %opt in the python hook
+declare-option -hidden str lsp_server_basedpyright %{
+  [basedpyright-langserver]
+  root_globs = [ "requirements.txt", "setup.py", "pyproject.toml", "pyrightconfig.json", ".git", ".hg" ]
+  args = [ "--stdio" ]
+  settings_section = "_"
+  [basedpyright-langserver.settings._.basedpyright.analysis]
+  typeCheckingMode = "standard"
+}
+
+# same tsserver engine as typescript-language-server, just a faster/maintained wrapper;
+# toggle this ON and the plain typescript-language-server block OFF (never both - two tsservers)
+declare-option -hidden str lsp_server_vtsls %{
+  [vtsls]
+  root_globs = [ "package.json", "tsconfig.json", "jsconfig.json", ".git", ".hg" ]
+  args = [ "--stdio" ]
+}
+
+# scss/sass superset of vscode-css (Sass modules, @use/@forward, SassDoc); toggle on for scss
+declare-option -hidden str lsp_server_some_sass %{
+  [some-sass-language-server]
+  root_globs = [ ".git", ".hg", "package.json" ]
+  args = [ "--stdio" ]
+}
+
+# older ruby LSP; ruby-lsp supersedes it - keep as a fallback toggle (YARD-doc hover)
+declare-option -hidden str lsp_server_solargraph %{
+  [solargraph]
+  root_globs = [ "Gemfile" ]
+  args = [ "stdio" ]
+  settings_section = "_"
+  [solargraph.settings._]
+  diagnostics = true
+}
+
+# SQL linter/formatter (complements sqls, which does completion only); needs a .sqruff file
+declare-option -hidden str lsp_server_sqruff %{
+  [sqruff]
+  root_globs = [ ".sqruff", ".git", ".hg" ]
+  args = [ "lsp" ]
 }
 
 hook -group lsp-filetype-css global BufSetOption filetype=(?:css|less|scss) %{
@@ -92,23 +176,16 @@ hook -group lsp-filetype-css global BufSetOption filetype=(?:css|less|scss) %{
     #opt{lsp_server_emmet}
     #opt{lsp_server_superhtml}
     #opt{lsp_server_unocss}
+    #opt{lsp_server_some_sass}
   "
-}
-
-hook -group lsp-filetype-dotenv global BufSetOption filetype=dotenv %{
-  set-option buffer lsp_servers %{
-    [dotenv-lsp]
-    root_globs = [ ".env", "*.env", ".git", ".hg" ]
-  }
 }
 
 hook -group lsp-filetype-fish global BufSetOption filetype=fish %{
   set-option buffer lsp_servers %{
     [fish-lsp]
-    root_globs = [ "*.fish", "fish", ".git", ".hg" ]
+    root_globs = [ "*.fish", "config.fish", "fish", ".git", ".hg" ]
     args = [ "start" ]
     [fish-lsp.envs]
-    fish_lsp_enabled_handlers = "popups formatting complete hover rename definition references diagnostics signatureHelp codeAction inlayHint highlight"
     fish_lsp_diagnostic_disable_error_codes = "2002 2001"
   }
 }
@@ -124,50 +201,42 @@ hook -group lsp-filetype-html global BufSetOption filetype=html %{
     [vscode-html-language-server.settings._]
     provideFormatter = true
     quotePreference = "none"
-    javascript.format.semicolons = "none"
-    [vscode-html-language-server.settings]
-    embeddedLanguages.css = true
-    embeddedLanguages.javascript = true
+    [vscode-html-language-server.settings.embeddedLanguages]
+    css = true
+    javascript = true
 
-    html.autoClosingTags = true
-    html.format.enable = true
-    html.format.preserveNewLines = false
-    html.mirrorCursorOnMatchingTag = true
-    html.validate.scripts = true
-    html.validate.styles = true
+    [vscode-html-language-server.settings.html]
+    autoClosingTags = true
+    suggest.html5 = true
+    validate.scripts = true
+    validate.styles = true
+    [vscode-html-language-server.settings.html.format]
+    contentUnformatted = "head, meta"
+    enable = true
+    extraLiners = "head, body, /html"
+    indentInnerHtml = false
+    preserveNewLines = false
+    templating = true
+    unformatted = "head, meta"
 
-    css.format.enable = true
-    css.format.preserveNewLines = false
-    css.format.spaceAroundSelectorSeparator = true
-    css.lint.boxModel = "ignore"
-    css.lint.compatibleVendorPrefixes = "ignore"
-    css.lint.duplicateProperties = "ignore"
-    css.lint.universalSelector = "ignore"
-    css.lint.zeroUnits = "ignore"
-    css.validate = true
-    css.validProperties = []
+    [vscode-html-language-server.settings.css]
+    validate = true
+    validProperties = []
+    [vscode-html-language-server.settings.css.format]
+    enable = true
+    preserveNewLines = false
+    spaceAroundSelectorSeparator = true
+    [vscode-html-language-server.settings.css.lint]
+    boxModel = "ignore"
+    compatibleVendorPrefixes = "ignore"
+    duplicateProperties = "ignore"
+    universalSelector = "ignore"
+    unknownAtRules = "ignore"
+    zeroUnits = "ignore"
 
-    javascript.format.enable = true
-    javascript.validate.enable = true
-
-    # This is mainly a linter for HTML and to be used together with vscode-html-language-server
-    # https://github.com/kristoff-it/superhtml
-    [superhtml]
-    root_globs = [ "package.json", ".git", ".hg" ]
-    args = [ "lsp" ]
     [vscode-html-language-server.settings.javascript]
     format.enable = true
-    format.semicolons = "none"
-    validate.enable = true
-
-    # This is mainly a linter for HTML and to be used together with vscode-html-language-server
-    # https://github.com/kristoff-it/superhtml
-    [superhtml]
-    root_globs = [ "package.json", ".git", ".hg" ]
-    args = [ "lsp" ]
-    [vscode-html-language-server.settings.javascript]
-    format.enable = true
-    format.semicolons = "none"
+    format.semicolons = "remove"
     validate.enable = true
   }
 
@@ -186,8 +255,8 @@ hook -group lsp-filetype-javascript global BufSetOption filetype=(?:javascript|t
     args = [ "--stdio" ]
     settings_section = "_"
     [typescript-language-server.settings._]
-    quotePreference = "none"
-    typescript.format.semicolons = "none"
+    quotePreference = "auto"
+    typescript.format.semicolons = "remove"
 
     [vscode-eslint-language-server]
     root_globs = [ ".eslintrc", ".eslintrc.json" ]
@@ -211,6 +280,7 @@ hook -group lsp-filetype-javascript global BufSetOption filetype=(?:javascript|t
     %opt{lsp_server_biome}
     #opt{lsp_server_emmet}
     #opt{lsp_server_unocss}
+    #opt{lsp_server_vtsls}
   "
 }
 
@@ -288,8 +358,16 @@ hook -group lsp-filetype-markdown global BufSetOption filetype=markdown %{
   #   root_globs = [ ".marksman.toml" ]
   #   args = [ "server" ]
   }
+
   set-option -add buffer lsp_servers "
-    %opt{lsp_server_biome}
+    %opt{lsp_server_harper}
+  "
+}
+
+# prose grammar/spell (harper-ls) for commit messages and plain text
+hook -group lsp-filetype-prose global BufSetOption filetype=(?:gitcommit|text) %{
+  set-option buffer lsp_servers "
+    %opt{lsp_server_harper}
   "
 }
 
@@ -302,18 +380,13 @@ hook -group lsp-filetype-nix global BufSetOption filetype=nix %{
   }
 }
 
+
 hook -group lsp-filetype-prisma global BufSetOption filetype=prisma %{
   set-option buffer lsp_servers %{
     [prisma-language-server]
     root_globs = [ ".git", ".hg", "prisma" ]
     args = [ "--stdio" ]
   }
-}
-
-declare-option -hidden str lsp_server_basedpyright %{
-  [basedpyright-langserver]
-  root_globs = [ "requirements.txt", "setup.py", "pyproject.toml", "pyrightconfig.json", ".git", ".hg" ]
-  args = [ "--stdio" ]
 }
 
 hook -group lsp-filetype-python global BufSetOption filetype=python %{
@@ -342,25 +415,25 @@ hook -group lsp-filetype-python global BufSetOption filetype=python %{
 
 hook -group lsp-filetype-ruby global BufSetOption filetype=ruby %{
   set-option buffer lsp_servers %{
-    [solargraph]
-    root_globs = [ "Gemfile" ]
-    args = [ "stdio" ]
-    settings_section = "_"
-    [solargraph.settings._]
-    # See https://github.com/castwide/solargraph/blob/master/lib/solargraph/language_server/host.rb
-    diagnostics = true
-
     [ruby-lsp]
-    root_globs = [ "Gemfile" ]
+    root_globs = [ "Gemfile", ".git", ".hg" ]
     args = [ "stdio" ]
   }
+
+  set-option -add buffer lsp_servers "
+    #opt{lsp_server_solargraph}
+  "
 }
 
 hook -group lsp-filetype-sql global BufSetOption filetype=sql %{
   set-option buffer lsp_servers %{
     [sqls]
-    roots = [ ".git", ".hg" ]
+    root_globs = [ ".git", ".hg" ]
   }
+
+  set-option -add buffer lsp_servers "
+    #opt{lsp_server_sqruff}
+  "
 }
 
 hook -group lsp-filetype-systemd global BufSetOption filetype=systemd %{
