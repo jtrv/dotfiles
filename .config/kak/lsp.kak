@@ -1,28 +1,3 @@
-# Bound lsp-exit's shutdown wait. Upstream lsp-exit (rc/lsp.kak) loops FOREVER
-# waiting for kak-lsp to delete its session dir. But kak's exit and kak-lsp's
-# shutdown can deadlock in a circular wait (kak stops servicing the server while
-# waiting; the server can't finish flushing to kak, so it never removes the dir),
-# leaving kak un-quittable and blocking whatever launched it. Cap the wait at ~3s
-# so exit always proceeds; a still-wedged server is reaped when kak's client dies.
-# Applied on KakBegin, which fires after all startup config (incl. the plugin,
-# which defines lsp-exit at source time) — so this -override always wins, and it
-# survives plugin updates.
-hook -group lsp-exit-timeout global KakBegin .* %{
-    define-command -override -hidden lsp-exit -params 0..1 -docstring %{
-        lsp-exit: shutdown language servers associated with current editor session
-    } %{
-        lsp-send kakoune/exit
-        evaluate-commands %sh{
-            existing_session_dir=${kak_opt_lsp_pid_file%.ref/*}
-            i=0
-            while [ -e "${existing_session_dir}" ] && [ "$i" -lt 100 ]; do
-                sleep .030
-                i=$((i + 1))
-            done
-        }
-    }
-}
-
 set-option global lsp_auto_highlight_references true
 set-option global lsp_auto_show_code_actions true
 set-option global lsp_diagnostic_line_error_sign '║'
