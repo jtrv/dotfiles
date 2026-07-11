@@ -10,12 +10,13 @@ https://github.com/Delapouite/kakoune-text-objects
 https://github.com/eburghar/kakship
 https://github.com/ElectricR/Encapsul8
 https://github.com/enricozb/popup.kak
-https://github.com/eraserhd/kak-ansi
 https://github.com/greenfork/active-window.kak
 https://github.com/jtrv/caser
+https://github.com/jtrv/colorcol-rs
 https://github.com/jtrv/grug
+https://github.com/jtrv/kak-ansi-rs
 https://github.com/jtrv/kakpipe
-https://github.com/jtrv/kak-rainbower
+https://github.com/jtrv/kak-rainbow-rs
 https://github.com/jtrv/number-toggle.kak
 https://github.com/jtrv/sudo-write.kak
 https://github.com/kakoune-lsp/kakoune-lsp
@@ -23,8 +24,6 @@ https://github.com/kirusfg/indent.kak
 https://github.com/kkga/ui.kak
 https://github.com/krobelus/kakoune-boost
 https://github.com/occivink/kakoune-phantom-selection
-https://github.com/saifulapm/pi.kak
-https://github.com/SolitudeSF/colorcol
 https://github.com/theowenyoung/kakoune-buffer-manager
 https://github.com/your-tools/skyspell
 https://gitlab.com/Screwtapello/kakoune-state-save.git

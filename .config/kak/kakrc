@@ -37,8 +37,8 @@ provide-module "number_toggle_kak" %{
 
 # rainbow delimiters + current scope
 provide-module "kak_rainbower" %{
-  bundle kak-rainbower https://github.com/jtrv/kak-rainbower
-  bundle-install-hook kak-rainbower %{ g++ ./rc/rainbower.cpp -O2 -o ./rc/rainbower }
+  bundle kak-rainbow-rs https://github.com/jtrv/kak-rainbow-rs
+  bundle-install-hook kak-rainbow-rs %{ cargo install --locked --path . ; cargo clean }
 }
 
 set-option global git_diff_add_char "▍"
@@ -73,11 +73,11 @@ bundle active-window.kak https://github.com/greenfork/active-window.kak %{
 
 bundle auto-pairs.kak https://github.com/alexherbo2/auto-pairs.kak %{ enable-auto-pairs }
 
-bundle colorcol https://github.com/SolitudeSF/colorcol
-bundle-install-hook colorcol %{ nimble install colorcol }
+bundle colorcol-rs https://github.com/jtrv/colorcol-rs
+bundle-install-hook colorcol-rs %{ cargo install --locked --path . ; cargo clean }
 
 bundle grug https://github.com/jtrv/grug
-bundle-install-hook grug %{ cargo install --locked --force --path . ; cargo clean }
+bundle-install-hook grug %{ cargo install --locked --path . ; cargo clean }
 
 bundle indent.kak https://github.com/kirusfg/indent.kak %{
   set-indent global 2 false
@@ -85,11 +85,11 @@ bundle indent.kak https://github.com/kirusfg/indent.kak %{
   enable-auto-indent
 }
 
-bundle kak-ansi https://github.com/eraserhd/kak-ansi
-bundle-install-hook kak-ansi %{ make }
+bundle kak-ansi-rs https://github.com/jtrv/kak-ansi-rs
+bundle-install-hook kak-ansi-rs %{ cargo install --locked --path . ; cargo clean }
 
 bundle popup.kak https://github.com/enricozb/popup.kak
-bundle-install-hook popup.kak %{ cargo install --path . ; cargo clean }
+bundle-install-hook popup.kak %{ cargo install --locked --path . ; cargo clean }
 
 bundle kak-live-grep https://codeberg.org/raiguard/kak-live-grep.
 
@@ -129,13 +129,13 @@ bundle kakpipe https://github.com/jtrv/kakpipe %{
   require-module "kakpipe"
   complete-command kakpipe shell
 }
-bundle-install-hook kakpipe %{ cargo install --path . ; cargo clean }
+bundle-install-hook kakpipe %{ cargo install --locked --path . ; cargo clean }
 
 bundle kakship https://github.com/eburghar/kakship %{
   require-module kakship
   kakship-enable
 }
-bundle-install-hook kakship %{ cargo install --path . ; cargo clean }
+bundle-install-hook kakship %{ cargo install --locked --path . ; cargo clean }
 
 bundle-noload skyspell https://github.com/your-tools/skyspell %{
   cargo binstall -y skyspell_kak --git https://github.com/your-tools/skyspell
@@ -720,7 +720,7 @@ bundle kakoune-buffer-manager https://github.com/theowenyoung/kakoune-buffer-man
 }
 
 bundle caser https://github.com/jtrv/caser %{ require-module caser-recommended-bindings }
-bundle-install-hook caser %{ cargo install --path . ; cargo clean }
+bundle-install-hook caser %{ cargo install --locked  --path . ; cargo clean }
 
 declare-user-mode dev
   map global user d -docstring 'dev' %{: enter-user-mode dev <ret>}
@@ -742,7 +742,7 @@ map global user g -docstring 'grep' %{:grep }
 
 bundle reasymotion https://github.com/astaugaard/reasymotion
 set-face global REasymotionForeground "%opt{crust}ff,%opt{peach}ff+F"
-bundle-install-hook reasymotion %{ cargo install --path . ; cargo clean }
+bundle-install-hook reasymotion %{ cargo install --locked --path . ; cargo clean }
 declare-user-mode hop
   map global user h -docstring 'hop' %{: enter-user-mode hop <ret>}
   map global hop i -docstring 'word initial'  %{:reasymotion-on-letter-to-word <ret>}
