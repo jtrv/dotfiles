@@ -139,7 +139,7 @@ keybinding:
         optionMenu-alt1: '?' # show help menu
         select: '<space>'
         goInto: '<enter>'
-        openRecentRepos: '<c-r>'
+        openRecentRepos: ''
         confirm: '<enter>'
         remove: 'd'
         new: 'n'
@@ -226,7 +226,7 @@ keybinding:
         pasteCommits: 'V'
         tagCommit: 'T'
         checkoutCommit: '<space>'
-        resetCherryPick: '<c-R>'
+        resetCherryPick: '<c-r>'
         copyCommitMessageToClipboard: '<c-y>'
         openLogMenu: '<c-l>'
         viewBisectOptions: 'b'
