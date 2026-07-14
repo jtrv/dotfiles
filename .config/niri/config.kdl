@@ -22,15 +22,6 @@ input {
     focus-follows-mouse
 }
 
-gestures {
-    hot-corners {
-        top-left
-        top-right
-        bottom-left
-        bottom-right
-    }
-}
-
 cursor {
     hide-when-typing
     hide-after-inactive-ms 1000
