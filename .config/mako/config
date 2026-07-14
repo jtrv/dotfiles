@@ -53,5 +53,11 @@ invisible=1
 [summary="Volume *"]
 history=0
 
+# grim/wlroots warning fires on every capture; flameshot has no setting to silence it.
+# Body-matched so other flameshot warnings still get through.
+[app-name="flameshot" body~="grim's screenshot component is implemented based on wlroots"]
+invisible=1
+history=0
+
 [mode=dnd]
 invisible=1
