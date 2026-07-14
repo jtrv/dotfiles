@@ -21,11 +21,11 @@
   ;; hold spc for space layer
   spc (tap-hold  200    210    spc  (layer-while-held space))
 
-  ;; xcape
-  esc (tap-hold  200    150    esc  ctl)
-
   ;; tap 4, hold 4 = voxtype push-to-talk (emits f13 while held)
   4   (tap-hold  200    150    4    f13)
+
+  ;; xcape
+  esc (tap-hold  200    150    esc  ctl)
 
   ;; playerctl controls
   mpp (cmd playerctl play-pause)
@@ -39,6 +39,10 @@
   ;; key volume
   kvlu (tap-hold 200    200    @svlu  (macro-repeat @svlu 50))
   kvld (tap-hold 200    200    @svld  (macro-repeat @svld 50))
+
+  ;; niri workspace scrolling
+  nwsu (cmd niri msg action focus-workspace-up)
+  nwsd (cmd niri msg action focus-workspace-down)
 )
 
 (defchordsv2
@@ -52,8 +56,4 @@
   (i o)   bspc                                    50 first-release ()
   (l ;)   (tap-hold 200 150 del (multi alt met))  50 first-release ()
   (o p)   end                                     50 first-release ()
-
-  (met mmid)  @mpp                               50 first-release ()
-  (met mwu)   @svlu                              50 first-release ()
-  (met mwd)   @svld                              50 first-release ()
 )

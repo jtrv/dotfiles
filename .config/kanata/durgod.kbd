@@ -1,4 +1,6 @@
 (defcfg
+  concurrent-tap-hold yes
+  danger-enable-cmd yes
   linux-dev-names-include (
     ;; "Logitech MX Ergo"
     "Hoksi Technology DGK68C Consumer Control"
@@ -6,9 +8,6 @@
     "Hoksi Technology DGK68C"
     "Hoksi Technology DGK68C System Control"
   )
-  concurrent-tap-hold yes
-  danger-enable-cmd yes
-  process-unmapped-keys no
 )
 
 (defsrc
@@ -24,7 +23,7 @@
 (include shared.kbd)
 
 (deflayer base
-  grv   1     2     3     4     5     6     7     8     9     0     -     =     bspc  home
+  grv   1     2     3     @4    5     6     7     8     9     0     -     =     bspc  home
   tab   q     w     @e    r     t     y     u     @i    o     p     [     ]     \     end
   @esc  @a    @s    @d    @f    g     h     @j    @k    @l    @;    '     ret         pgup
   sft   z     x     c     v     b     n     m     ,     .     /     sft         up    pgdn
@@ -40,5 +39,5 @@
   _     _     _     _     _     _     _     _     pgdn  pgup  _     _           _     _
   _     _     _                       _                             _     _     _     _
   ;; Mouse
-  _     @mpp  _     @svlu @svld @mpr  @mnx  _     _
+  _     _     _     @nwsu @nwsd _     _     _     _
 )
