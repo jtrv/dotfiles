@@ -20,16 +20,16 @@ LOGS="$XDG_DATA_HOME"/rate-mirrors/logs
 echo "Evaluating mirrors..."
 
 { rate-mirrors \
-	--save "$RESULTS"/mirrorlist \
-	arch >"$LOGS"/arch.log; } 2>&1 &&
-  	echo "Arch mirrors evaluated, view log in $LOGS/arch.log" &&
-  	notify-send -t "$NOTIFY_TIME" "Update Mirrors" "Arch mirrors evaluated." &
+  --save "$RESULTS"/mirrorlist \
+  arch >"$LOGS"/arch.log; } 2>&1 &&
+  echo "Arch mirrors evaluated, view log in $LOGS/arch.log" &&
+  notify-send -t "$NOTIFY_TIME" "Update Mirrors" "Arch mirrors evaluated." &
 
 { rate-mirrors \
-	--save "$RESULTS"/chaotic-mirrorlist \
-	chaotic-aur >"$LOGS"/chaotic.log; } 2>&1 &&
-  	echo "Chaotic mirrors evaluated, view log in $LOGS/chaotic.log" &&
-  	notify-send -t "$NOTIFY_TIME" "Update Mirrors" "Chaotic mirrors evaluated." &
+  --save "$RESULTS"/chaotic-mirrorlist \
+  chaotic-aur >"$LOGS"/chaotic.log; } 2>&1 &&
+  echo "Chaotic mirrors evaluated, view log in $LOGS/chaotic.log" &&
+  notify-send -t "$NOTIFY_TIME" "Update Mirrors" "Chaotic mirrors evaluated." &
 
 wait
 
