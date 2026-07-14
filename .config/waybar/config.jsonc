@@ -78,23 +78,23 @@
 
     "clock": {
         "interval": 1,
-        "format": "{:%I:%M}",
-        "format-alt": "{:%m.%d %a | %I:%M %p %Z}",
+        "format": "{:%H:%M}",
+        "format-alt": "{:%m.%d %a %H:%M %Z}",
         "tooltip": true,
         "tooltip-format": "{tz_list}",
-        "timezone-tooltip-format": "{:%m.%d %a | %H:%M %Z}",
+        "timezone-tooltip-format": "{:%m.%d | %H:%M %Z}",
         "timezones": [
             "",
+            "UTC",
             "America/Los_Angeles",
             "America/Chicago",
             "America/New_York",
-            "Iran",
-            "PRC",
-            "Japan",
-            "UTC",
+            "Asia/Tehran",
+            "Asia/Shanghai",
+            "Asia/Tokyo",
         ],
         "actions": {
-            "on-click-middle": "tz_up",
+            "on-click-right": "tz_up",
         },
     },
 
@@ -152,9 +152,9 @@
     },
 
     "mpris": {
-    	"format": "󰝚 {dynamic}",
+        "format": "󰝚 {dynamic}",
         "dynamic-order": ["title", "artist", "album" ],
-    	"ignored-players": ["firefox"]
+        "ignored-players": ["firefox"]
     },
 
     "network": {
@@ -176,31 +176,31 @@
     "custom/pomodoro": {
         "format": "{}",
         "return-type": "json",
-        "exec": "~/.local/bin/waybar-module-pomodoro --no-icons --no-work-icons",
-        "on-click": "~/.local/bin/waybar-module-pomodoro toggle",
-        "on-click-right": "~/.local/bin/waybar-module-pomodoro reset",
+        "exec": "waybar-module-pomodoro --no-icons --no-work-icons",
+        "on-click": "waybar-module-pomodoro toggle",
+        "on-click-right": "waybar-module-pomodoro reset",
     },
 
     "privacy": {
-    	"icon-size": 16,
-    	"modules": [
-    		{
-    			"type": "screenshare",
-    			"tooltip": true,
-    			"tooltip-icon-size": 24,
-    		},
-    		{
-    			"type": "audio-in",
-    			"tooltip": true,
-    			"tooltip-icon-size": 24,
-    		}
-    	],
-    	"ignore-monitor": true,
+        "icon-size": 16,
+        "modules": [
+            {
+                "type": "screenshare",
+                "tooltip": true,
+                "tooltip-icon-size": 24,
+            },
+            {
+                "type": "audio-in",
+                "tooltip": true,
+                "tooltip-icon-size": 24,
+            }
+        ],
+        "ignore-monitor": true,
     },
 
     "systemd-failed-units": {
-    	"format": " {nr_failed}",
-    	"on-click": "alacritty msg create-window --class=popup -e 'waybar-systemd-failed-units' &",
+        "format": " {nr_failed}",
+        "on-click": "alacritty msg create-window --class=popup -e 'waybar-systemd-failed-units' &",
     },
 
     "wireplumber": {
