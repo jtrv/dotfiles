@@ -142,12 +142,6 @@ window-rule {
     exclude app-id="signal"
     exclude title="^Picture-in-Picture$"
 }
-window-rule {
-    open-fullscreen true
-    open-floating true
-
-    match app-id="flameshot"
-}
 
 // Key bindings
 binds {
