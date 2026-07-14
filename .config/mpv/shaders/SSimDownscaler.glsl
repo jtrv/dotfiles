@@ -12,8 +12,8 @@
 // License along with this library.
 
 //!HOOK POSTKERNEL
-//!BIND HOOKED
 //!BIND PREKERNEL
+//!BIND HOOKED
 //!SAVE L2
 //!WIDTH NATIVE_CROPPED.w
 //!WHEN NATIVE_CROPPED.h POSTKERNEL.h >
@@ -53,8 +53,8 @@ vec4 hook() {
 }
 
 //!HOOK POSTKERNEL
-//!BIND HOOKED
 //!BIND L2
+//!BIND HOOKED
 //!SAVE L2
 //!WHEN NATIVE_CROPPED.w POSTKERNEL.w >
 //!COMPONENTS 3
@@ -151,7 +151,7 @@ vec4 hook() {
 
     float Sl = Luma(max(avg[1] - avg[0] * avg[0], 0.));
     float Sh = Luma(max(avg[2] - avg[0] * avg[0], 0.));
-    return vec4(avg[0], mix(sqrt((Sh + sigma_nsq) / (Sl + sigma_nsq)) * (1. + oversharp), clamp(Sh / Sl, 0., 1.), int(Sl > Sh)));
+    return vec4(avg[0], mix(sqrt((Sh + sigma_nsq) / (Sl + sigma_nsq)) * (1. + oversharp), clamp(Sh / Sl, 0., 1.), float(Sl > Sh)));
 }
 
 //!HOOK POSTKERNEL
