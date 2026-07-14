@@ -184,8 +184,8 @@ binds {
     Mod+Shift+M          allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
     Mod+Ctrl+M           allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
 
-    XF86MonBrightnessUp   { spawn "brightnessctl" "+1%"; }
-    XF86MonBrightnessDown { spawn "brightnessctl" "-1%"; }
+    XF86MonBrightnessUp   allow-when-locked=true { spawn "brightnessctl" "-n" "s" "+10%"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "-n" "s" "10%-"; }
 
     // --- Notifications (Mako) ---
     Mod+Ctrl+Period       { spawn "makoctl" "dismiss" "-a"; }
