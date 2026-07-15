@@ -63,7 +63,7 @@ set -gx HISTFILE "$XDG_STATE_HOME/bash/history"
 # Misc
 set -gx ATUIN_NOBIND                "true"
 set -gx BAT_PAGER                   "kak"
-set -gx BROWSER                     "firefox"
+set -gx BROWSER                     "firefox-devedition"
 set -gx CARAPACE_BRIDGES            "fish,bash,inshellisense"
 set -gx CONCEAL_FINDER              "skim"
 set -gx DO_NOT_TRACK                "true"
