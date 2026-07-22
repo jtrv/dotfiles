@@ -12,7 +12,6 @@ set -gx XDG_STATE_HOME    "$HOME/.local/state"
 # Cache
 set -gx BUNDLE_USER_CACHE "$XDG_CACHE_HOME/bundle"
 set -gx CODEX_HOME        "$XDG_CACHE_HOME/codex"
-set -gx CODEX_COLLAB_NO_UPDATE_CHECK 1
 set -gx LESSHISTFILE      "$XDG_CACHE_HOME/less/history"
 set -gx TEXMFVAR          "$XDG_CACHE_HOME/texlive/texmf-var"
 
