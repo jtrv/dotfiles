@@ -9,4 +9,5 @@ AGENTS.md
 mise.local.toml
 skyspell-ignore.toml
 
+.claude
 **/.claude/settings.local.json
