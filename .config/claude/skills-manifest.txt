@@ -1,0 +1,28 @@
+# Claude skills manifest — 2026-07-22
+# bespoke = tracked in dotfiles; others re-install via find-skills / marketplace
+
+name                             version  source
+caveman                          —      bespoke
+caveman-commit                   —      bespoke
+codebase-design                  —      bespoke
+domain-modeling                  —      bespoke
+dotfiles                         —      bespoke
+find-skills                      —      bespoke
+grilling                         —      bespoke
+grill-me                         —      bespoke
+grill-with-docs                  —      bespoke
+html-report                      —      bespoke
+impeccable                       3.8.0    marketplace/find-skills
+improve-codebase-architecture    —      bespoke
+last30days                       3.8.3    https://github.com/mvanhorn/last30days-skill
+security-audit                   —      bespoke
+tdd                              —      bespoke
+to-prd                           —      bespoke
+vercel-composition-patterns      —      Engineering
+vercel-optimize                  —      Vercel Engineering
+vercel-react-best-practices      —      Vercel Engineering
+vercel-react-native-skills       —      Engineering
+vercel-react-view-transitions    —      Vercel Engineering
+web-design-guidelines            —      bespoke
+writing-guidelines               —      bespoke
+writing-skills                   —      bespoke
