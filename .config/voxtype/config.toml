@@ -66,7 +66,7 @@ max_duration_secs = 60
 
 [audio.feedback]
 # Enable audio feedback sounds (beeps when recording starts/stops)
-enabled = true
+enabled = false
 #
 # Sound theme: "default", "subtle", "mechanical", or path to custom theme directory
 theme = "default"
@@ -78,7 +78,7 @@ volume = 0.7
 # Execution mode: "local" (default) or "remote"
 # - local: Use whisper.cpp locally via FFI
 # - remote: Send audio to OpenAI-compatible API endpoint
- mode = "local"
+mode = "local"
 
 # Model to use for transcription (local mode)
 # Options: tiny, tiny.en, base, base.en, small, small.en, medium, medium.en, large-v3, large-v3-turbo
@@ -100,7 +100,7 @@ translate = false
 # Load model on-demand when recording starts (true) or keep loaded (false)
 # When true, model is loaded when recording starts and unloaded after transcription
 # When false, model is kept in memory for faster response times (default)
-on_demand_loading = false
+on_demand_loading = true
 flash_attention = false
 gpu_isolation = false
 
