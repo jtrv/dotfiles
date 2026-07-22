@@ -139,3 +139,8 @@ decorations = "None"
 [general]
 live_config_reload = true
 ipc_socket = true
+
+[[keyboard.bindings]]
+key = "Return"
+mods = "Shift"
+chars = "\u001B\r"
