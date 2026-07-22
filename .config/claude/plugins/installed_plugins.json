@@ -1,0 +1,154 @@
+{
+  "version": 2,
+  "plugins": {
+    "rust-analyzer-lsp@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/home/sugimoto/.config/claude/plugins/cache/claude-plugins-official/rust-analyzer-lsp/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-05-22T23:08:30.482Z",
+        "lastUpdated": "2026-05-22T23:08:30.482Z"
+      }
+    ],
+    "typescript-lsp@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/home/sugimoto/.config/claude/plugins/cache/claude-plugins-official/typescript-lsp/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-06-11T23:11:33.545Z",
+        "lastUpdated": "2026-06-11T23:11:33.545Z"
+      }
+    ],
+    "context7@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/home/sugimoto/.config/claude/plugins/cache/claude-plugins-official/context7/unknown",
+        "version": "unknown",
+        "installedAt": "2026-06-11T23:12:45.204Z",
+        "lastUpdated": "2026-07-22T21:14:47.539Z"
+      }
+    ],
+    "code-simplifier@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/home/sugimoto/.config/claude/plugins/cache/claude-plugins-official/code-simplifier/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-06-11T23:12:51.489Z",
+        "lastUpdated": "2026-06-11T23:12:51.489Z"
+      }
+    ],
+    "playwright@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/home/sugimoto/.config/claude/plugins/cache/claude-plugins-official/playwright/unknown",
+        "version": "unknown",
+        "installedAt": "2026-06-11T23:12:57.875Z",
+        "lastUpdated": "2026-07-22T21:14:47.540Z"
+      }
+    ],
+    "security-guidance@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/home/sugimoto/.config/claude/plugins/cache/claude-plugins-official/security-guidance/2.0.6",
+        "version": "2.0.6",
+        "installedAt": "2026-06-11T23:13:12.499Z",
+        "lastUpdated": "2026-06-16T02:33:24.536Z"
+      }
+    ],
+    "ralph-loop@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/home/sugimoto/.config/claude/plugins/cache/claude-plugins-official/ralph-loop/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-06-11T23:13:16.280Z",
+        "lastUpdated": "2026-06-11T23:13:16.280Z"
+      }
+    ],
+    "vercel@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/home/sugimoto/.config/claude/plugins/cache/claude-plugins-official/vercel/0.44.0",
+        "version": "0.44.0",
+        "installedAt": "2026-06-11T23:13:23.993Z",
+        "lastUpdated": "2026-06-16T02:33:26.224Z",
+        "gitCommitSha": "6e51924cb249e2941de005d59f1ac6f768477b98"
+      }
+    ],
+    "pyright-lsp@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/home/sugimoto/.config/claude/plugins/cache/claude-plugins-official/pyright-lsp/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-06-11T23:13:40.244Z",
+        "lastUpdated": "2026-06-11T23:13:40.244Z"
+      }
+    ],
+    "learning-output-style@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/home/sugimoto/.config/claude/plugins/cache/claude-plugins-official/learning-output-style/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-06-11T23:14:10.660Z",
+        "lastUpdated": "2026-06-11T23:14:10.660Z"
+      }
+    ],
+    "gopls-lsp@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/home/sugimoto/.config/claude/plugins/cache/claude-plugins-official/gopls-lsp/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-06-11T23:14:20.479Z",
+        "lastUpdated": "2026-06-11T23:14:20.479Z"
+      }
+    ],
+    "remember@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/home/sugimoto/.config/claude/plugins/cache/claude-plugins-official/remember/0.8.3",
+        "version": "0.8.3",
+        "installedAt": "2026-06-11T23:14:55.881Z",
+        "lastUpdated": "2026-06-26T21:19:00.141Z",
+        "gitCommitSha": "a4ff96f38622f7c4920dc349d59cc980663336f4"
+      }
+    ],
+    "skill-creator@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/home/sugimoto/.config/claude/plugins/cache/claude-plugins-official/skill-creator/unknown",
+        "version": "unknown",
+        "installedAt": "2026-06-11T23:15:03.437Z",
+        "lastUpdated": "2026-07-22T21:14:47.538Z"
+      }
+    ],
+    "ponytail@ponytail": [
+      {
+        "scope": "user",
+        "installPath": "/home/sugimoto/.config/claude/plugins/cache/ponytail/ponytail/4.8.4",
+        "version": "4.8.4",
+        "installedAt": "2026-06-26T22:28:25.272Z",
+        "lastUpdated": "2026-07-01T18:43:02.815Z",
+        "gitCommitSha": "16f6cbf4b87792938e47b0f8c650b6d80fcbc98c"
+      }
+    ],
+    "context-mode@context-mode": [
+      {
+        "scope": "user",
+        "installPath": "/home/sugimoto/.config/claude/plugins/cache/context-mode/context-mode/1.0.169",
+        "version": "1.0.169",
+        "installedAt": "2026-07-01T18:52:21.005Z",
+        "lastUpdated": "2026-07-16T01:48:34.150Z",
+        "gitCommitSha": "3fbc6ea6569db1b1c6524d3543dc95f50bb5363a"
+      }
+    ],
+    "codex@openai-codex": [
+      {
+        "scope": "user",
+        "installPath": "/home/sugimoto/.config/claude/plugins/cache/openai-codex/codex/1.0.6",
+        "version": "1.0.6",
+        "installedAt": "2026-07-22T21:01:14.851Z",
+        "lastUpdated": "2026-07-22T21:01:14.851Z",
+        "gitCommitSha": "db52e28f4d9ded852ab3942cea316258ae4ef346"
+      }
+    ]
+  }
+}
