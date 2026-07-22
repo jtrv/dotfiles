@@ -77,8 +77,6 @@ overview {
 }
 
 spawn-at-startup "waybar"        // status bar
-spawn-at-startup "mako"          // notifications
-spawn-at-startup "swayidle" "-w" // idle lock + suspend
 spawn-at-startup "alacritty" "--daemon" // terminal daemon
 
 screenshot-path "~/pictures/screenshots/%Y-%m-%d_%H-%M-%S.png"
@@ -94,7 +92,6 @@ layer-rule {
     place-within-backdrop true
 }
 
-// Window rules let you adjust behavior for individual windows.
 window-rule {
     open-floating true
 
@@ -134,11 +131,9 @@ window-rule {
     exclude app-id="signal"
     exclude title="^Picture-in-Picture$"
 }
-window-rule {
-    open-fullscreen true
-    open-floating true
 
-    match app-id="flameshot"
+window-rule {
+    match app-id=".espanso-wrapped"
 }
 
 // Key bindings
@@ -153,7 +148,7 @@ binds {
 
     // --- Custom Tools ---
     Mod+Return  hotkey-overlay-title="terminal: alacritty"          { spawn "alacritty" "msg" "create-window"; }
-    Mod+Shift+E hotkey-overlay-title="emoji picker: bemoji"         { spawn "bemoji"; }
+    Mod+Shift+E hotkey-overlay-title="emoji picker: bemoji"         { spawn "bemoji" "-n"; }
     Mod+Shift+P hotkey-overlay-title="clipboard menu: clipcat-menu" { spawn "clipcat-menu"; }
     Mod+Shift+B hotkey-overlay-title="pomodoro toggle"              { spawn "waybar-module-pomodoro" "toggle"; }
     Mod+V       hotkey-overlay-title="volume mixer: wiremix"        { spawn "alacritty" "msg" "create-window" "--class=popup" "--command=wiremix"; }
