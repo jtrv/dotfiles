@@ -1,0 +1,6 @@
+# Applies only to the dotfiles bare repo (work-tree = $HOME).
+# fsmonitor/untrackedCache over all of $HOME make `git status` take ~12s
+# (cold recursive scan). Disable them here; other repos keep the global setting.
+[core]
+  fsmonitor = false
+  untrackedCache = false
