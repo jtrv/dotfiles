@@ -1,17 +1,13 @@
-# Applies only to the dotfiles bare repo (work-tree = $HOME), via an
-# includeIf "gitdir:~/.config/dotfiles" block in ~/.config/git/config.
-# Keeps the bare repo's behavioral config in version control so a fresh
-# clone reproduces it — no manual `git config` bootstrap steps needed.
+# Applied via includeIf "gitdir:~/.config/dotfiles" in ~/.config/git/config.
+# Keeps the dotfiles bare repo's behavioral config in version control.
+# fsmonitor/untrackedCache off: work-tree is all of $HOME, so a monitored
+# scan makes `git status` take ~12s. Other repos keep the global setting.
 [core]
-  # fsmonitor/untrackedCache over all of $HOME make `git status` take ~12s
-  # (cold recursive scan). Other repos keep the global setting.
   fsmonitor = false
   untrackedCache = false
 [status]
-  # $HOME is full of untracked files; only show tracked ones.
   showUntrackedFiles = false
 [gc]
-  # no auto-gc on the giant $HOME worktree
   auto = 0
 [advice]
   addIgnoredFile = false
