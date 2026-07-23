@@ -7,8 +7,8 @@ hotkey-overlay {
     hide-not-bound
 }
 
-output "DisplayPort-0" {
-    mode "3440x1440@120.00"
+output "DP-1" {
+    mode "3440x1440@120.000"
     scale 1
 }
 
@@ -61,8 +61,6 @@ layout {
         urgent-color "#f38ba8"
     }
     struts{
-        left 1
-        right 1
         top 1
         bottom 1
     }
@@ -85,9 +83,10 @@ overview {
     backdrop-color "#00000000"
 }
 
-spawn-at-startup "waybar"        // status bar
-spawn-at-startup "mako"          // notifications
 spawn-at-startup "alacritty" "--daemon" // terminal daemon
+spawn-at-startup "mako"                 // notifications
+spawn-at-startup "niri-edge-pan"        // niri-edge-pan
+spawn-at-startup "waybar"               // status bar
 
 screenshot-path "~/pictures/screenshots/%Y-%m-%d_%H-%M-%S.png"
 
