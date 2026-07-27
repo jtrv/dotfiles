@@ -5,7 +5,9 @@ assume_yes = true
 notify_each_step = true
 
 # Disable specific steps - same options as the command line flag
-disable = ["containers", "protonup", "kakoune", "uv", "yazi"]
+# system: nixos-rebuild --upgrade follows channels, not ~/repos/nixos-config;
+# rebuild with `nixos-rebuild switch --flake ~/repos/nixos-config#morpheus`
+disable = ["containers", "protonup", "kakoune", "system", "uv", "yazi"]
 
 # Ignore failures for these steps
 ignore_failures = ["git_repos"]
@@ -41,15 +43,8 @@ self_update = true
 
 # Custom commands
 [commands]
-"arch-audit" = "arch-audit -C always -r -f '%n	%t	%r' | column -s '	' -t | $EDITOR"
-"config submodules" = "config submodule update"
-"kakoune" = "pushd ~/repos/kakoune/; sudo make install; popd; kak -ui dummy -e 'hook global User bundle-after-install %{ quit! }; bundle-update'"
 "kak-tree-sitter" = "ktsctl sync -a"
 # "proton" = "protonup-rs -q"
 "uv tools" = "uv tool upgrade --all"
 "yazi" = "ya pkg upgrade"
 "warehouse" = "warehouse"
-
-[linux]
-arch_package_manager = "paru"
-enable_tlmgr = true
