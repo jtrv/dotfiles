@@ -1,1 +1,1 @@
-complete -c "kbin" -x -a '(/bin/ls $HOME/.local/bin)'
+complete -c "kbin" -x -a '(ls $HOME/.local/bin)'
