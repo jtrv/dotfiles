@@ -4,7 +4,7 @@ if status is-interactive
 
 alias ani     "ani-cli -q best --skip" # weeb out in S-rank ultra-fidelity 8k lossless greenray
 alias boi     "wikiman"
-alias bls     "/bin/ls"
+alias bls     "command ls"
 alias bup     "bun update -g --latest"
 alias cat     "bat"
 alias cbin    "yes | cargo binstall"
