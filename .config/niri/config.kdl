@@ -84,7 +84,6 @@ overview {
 }
 
 spawn-at-startup "alacritty" "--daemon" // terminal daemon
-spawn-at-startup "mako"                 // notifications
 spawn-at-startup "niri-edge-pan"        // niri-edge-pan
 spawn-at-startup "waybar"               // status bar
 
