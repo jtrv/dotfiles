@@ -1,0 +1,96 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# ponytail: no shell here (nothing types at this prompt), so no character/vimcmd/jobs/sudo/
+# shlvl/cloud/language-runtime modules — those exist to orient a human typing commands.
+# This renders once per turn; keep it to what a glance needs: where, git state, Claude's own
+# telemetry (model, context %, diff size, rate-limit headroom) fed in via env vars from statusline.sh.
+format = """
+$directory\
+$git_branch\
+$git_status\
+${env_var.CC_MODEL}\
+${env_var.CC_CTX_OK}\
+${env_var.CC_CTX_WARN}\
+${env_var.CC_CTX_HIGH}\
+${env_var.CC_LINES}\
+${env_var.CC_RATE_5H}\
+${env_var.CC_RATE_7D}\
+${env_var.CC_PONYTAIL}\
+${env_var.CC_CAVEMAN}"""
+
+[directory]
+fish_style_pwd_dir_length = 1
+truncation_length = 4
+
+[git_branch]
+format = "[$symbol$branch(:$remote_branch)]($style) "
+
+[git_status]
+format = "([$all_status$ahead_behind]($style) )"
+conflicted = "🏳 "
+ahead = "🏎💨"
+behind = "😰"
+diverged = "😵"
+untracked = "🤷‍"
+stashed = "📦"
+modified = "📝"
+staged = '[$count󰜅 ](bold green)'
+renamed = "👅"
+deleted = "🗑 "
+
+[env_var.CC_MODEL]
+variable = "CC_MODEL"
+symbol = "󰚩 "
+style = "bold purple"
+format = "[$symbol$env_value]($style) "
+
+# context-window used%, split into three mutually-exclusive vars so color follows severity
+[env_var.CC_CTX_OK]
+variable = "CC_CTX_OK"
+symbol = "◔ "
+style = "bold green"
+format = "[$symbol$env_value]($style) "
+
+[env_var.CC_CTX_WARN]
+variable = "CC_CTX_WARN"
+symbol = "◔ "
+style = "bold yellow"
+format = "[$symbol$env_value]($style) "
+
+[env_var.CC_CTX_HIGH]
+variable = "CC_CTX_HIGH"
+symbol = "◔ "
+style = "bold red"
+format = "[$symbol$env_value]($style) "
+
+[env_var.CC_LINES]
+variable = "CC_LINES"
+style = "dimmed"
+format = "[$env_value]($style) "
+
+[env_var.CC_RATE_5H]
+variable = "CC_RATE_5H"
+symbol = "󰥔 "
+style = "bold cyan"
+format = "[$symbol$env_value]($style) "
+
+[env_var.CC_RATE_7D]
+variable = "CC_RATE_7D"
+symbol = "󰃭 "
+style = "bold blue"
+format = "[$symbol$env_value]($style) "
+
+# icon alone at "full" (CC_PONYTAIL=""), icon+word for lite/ultra, hidden entirely when
+# unset (var stays unset only when the ponytail flag file itself is absent)
+[env_var.CC_PONYTAIL]
+variable = "CC_PONYTAIL"
+symbol = "󱁶 "
+style = "bold 108"
+format = "[$symbol$env_value]($style) "
+
+# same hide-at-default pattern; icon = md-text_short (terse output), earthy brown for "caveman"
+[env_var.CC_CAVEMAN]
+variable = "CC_CAVEMAN"
+symbol = "󰦩 "
+style = "bold 130"
+format = "[$symbol$env_value]($style) "
