@@ -1,0 +1,421 @@
+#!/usr/bin/env python3
+"""niri-edge-pan - navigate when the pointer hits a screen edge.
+
+Left/right edges pan columns (focus-column-left/right); top/bottom edges switch
+workspaces (focus-workspace-up/down). Works both in normal mode and in the
+Overview.
+
+Why this exists: niri has no real edge gesture (niri-wm/niri#4069 is still open).
+The usual trick - focus-follows-mouse + thin struts - only works by accident: it
+relies on the *neighbouring* window's CSD shadow/overflow peeking past the
+monitor edge for FFM to land on. Apps that draw such an overflow (Firefox,
+Electron, Spotify) never let the pointer leave them, so you cannot pan away from
+those windows at all. SSD apps like Alacritty happen to work.
+
+A layer-shell surface on the `top` layer sits above normal windows *and* stays on
+top of the Overview, so no client overflow can steal the pointer and the gesture
+works in both. That makes it deterministic and toolkit-independent.
+
+One discrete step per excursion: it fires on enter and re-arms only after the
+pointer leaves, so resting at the edge will not run away scrolling. It only fires
+when there is actually a neighbour in that direction - otherwise the focus action
+is a no-op that still triggers warp-mouse-to-focus, teleporting the pointer to
+the current window's centre.
+
+Top edge only: waybar's exclusive zone keeps windows ~32px below y=0, so after a
+workspace switch the pointer (at y=0) is outside the new window and
+warp-mouse-to-focus yanks it to the window's vertical centre. niri skips that
+warp while a tablet tool is in proximity, and on proximity-out it moves the
+pointer to the pen's last position "to avoid discontinuity". So we wrap the
+action in a fake uinput pen held at the pointer's exact spot: pen in, act (no
+warp), pen out (pointer "moves" to where it already is). Net motion: zero.
+The bottom edge doesn't need this: the pointer's max y coincides exactly with
+the window's bottom edge, and niri's in-bounds check is inclusive.
+"""
+
+import argparse
+import json
+import subprocess
+import sys
+import time
+
+# ponytail: one step per excursion, no acceleration/repeat. Add only if resting
+# at the edge to pan several steps turns out to be something you actually want.
+
+# edge -> (niri action, kind, direction). kind picks the neighbour check.
+EDGES = {
+    "left":   ("focus-column-left",   "h", "left"),
+    "right":  ("focus-column-right",  "h", "right"),
+    "top":    ("focus-workspace-up",  "v", "up"),
+    "bottom": ("focus-workspace-down", "v", "down"),
+}
+
+
+def _focused_ws(workspaces):
+    return next((w for w in workspaces if w.get("is_focused")), None)
+
+
+def horizontal_neighbor(windows, workspaces, direction):
+    """True if the current column has an adjacent column in `direction`.
+
+    Pure, so it's testable. We locate the current column via the focused
+    workspace's active_window_id rather than a window's is_focused flag, because
+    in the Overview *no* window is focused - that flag is why horizontal panning
+    used to silently die there.
+    """
+    fw = _focused_ws(workspaces)
+    if fw is None:
+        return False
+    cur = next((w for w in windows if w.get("id") == fw.get("active_window_id")), None)
+    if cur is None or cur.get("is_floating"):
+        return False
+    pos = (cur.get("layout") or {}).get("pos_in_scrolling_layout")
+    if not pos:
+        return False
+    col, ws = pos[0], fw.get("id")
+    cols = [
+        p[0]
+        for w in windows
+        if w.get("workspace_id") == ws and not w.get("is_floating")
+        for p in [(w.get("layout") or {}).get("pos_in_scrolling_layout")]
+        if p
+    ]
+    if not cols:
+        return False
+    return col > min(cols) if direction == "left" else col < max(cols)
+
+
+def vertical_neighbor(workspaces, direction):
+    """True if the focused workspace has one above/below it on its own output.
+
+    niri keeps one empty trailing workspace, so `down` is available from any real
+    workspace; only the empty tail (idx == max) and the top (idx == min) are dead
+    ends, and those are exactly what we must not fire on to avoid the warp.
+    """
+    fw = _focused_ws(workspaces)
+    if fw is None or fw.get("idx") is None:
+        return False
+    idx, out = fw["idx"], fw.get("output")
+    idxs = [w["idx"] for w in workspaces if w.get("output") == out and w.get("idx") is not None]
+    if not idxs:
+        return False
+    return idx > min(idxs) if direction == "up" else idx < max(idxs)
+
+
+def _json(subcmd):
+    out = subprocess.run(
+        ["niri", "msg", "--json", subcmd],
+        capture_output=True, text=True, timeout=1,
+    )
+    return json.loads(out.stdout)
+
+
+def has_neighbor(kind, direction):
+    try:
+        workspaces = _json("workspaces")
+        if kind == "v":
+            return vertical_neighbor(workspaces, direction)
+        return horizontal_neighbor(_json("windows"), workspaces, direction)
+    except (OSError, subprocess.TimeoutExpired, ValueError):
+        return False  # uncertain -> do nothing, never a spurious warp
+
+
+class EdgeLatch:
+    """Fire once per excursion; re-arm only after the pointer leaves.
+
+    Split out from the GTK code so the state machine is testable headless.
+    """
+
+    def __init__(self):
+        self.inside = False
+        self.armed = True
+
+    def enter(self):
+        """Return True if this enter should fire the action."""
+        self.inside = True
+        if not self.armed:
+            return False
+        self.armed = False
+        return True
+
+    def leave(self):
+        self.inside = False
+        self.armed = True
+
+
+def self_check():
+    latch = EdgeLatch()
+    assert latch.enter() is True, "first contact must fire"
+    assert latch.enter() is False, "re-entering without leaving must not fire"
+    latch.leave()
+    assert latch.enter() is True, "must re-arm after leaving"
+    latch.leave()
+    latch.leave()
+    assert latch.enter() is True, "repeated leaves must stay armed"
+
+    # --- horizontal (columns), current column via workspace.active_window_id ---
+    wid = [0]
+
+    def win(ws, col, floating=False):
+        wid[0] += 1
+        return {
+            "id": wid[0], "workspace_id": ws, "is_floating": floating,
+            "layout": {"pos_in_scrolling_layout": [col, 1]},
+        }
+
+    def wsp(id, idx, active_window_id, output="DP-1", focused=False):
+        return {"id": id, "idx": idx, "output": output,
+                "is_focused": focused, "active_window_id": active_window_id}
+
+    # cols 1,2,3 on ws8; active window is the col-2 one -> neighbours both ways.
+    c1, c2, c3 = win(8, 1), win(8, 2), win(8, 3)
+    wins = [c1, c2, c3]
+    ws_mid = [wsp(8, 2, c2["id"], focused=True)]
+    assert horizontal_neighbor(wins, ws_mid, "left")
+    assert horizontal_neighbor(wins, ws_mid, "right")
+    # active window is leftmost -> only right.
+    ws_left = [wsp(8, 2, c1["id"], focused=True)]
+    assert not horizontal_neighbor(wins, ws_left, "left")
+    assert horizontal_neighbor(wins, ws_left, "right")
+    # active window is rightmost -> only left.
+    ws_right = [wsp(8, 2, c3["id"], focused=True)]
+    assert horizontal_neighbor(wins, ws_right, "left")
+    assert not horizontal_neighbor(wins, ws_right, "right")
+    # lone column -> nothing either way.
+    only = win(9, 1)
+    ws_lone = [wsp(9, 3, only["id"], focused=True)]
+    assert not horizontal_neighbor([only], ws_lone, "left")
+    assert not horizontal_neighbor([only], ws_lone, "right")
+    # floating active window -> never pans.
+    flt = win(9, 1, floating=True)
+    assert not horizontal_neighbor([flt], [wsp(9, 3, flt["id"], focused=True)], "right")
+    # no focused workspace -> never pans.
+    assert not horizontal_neighbor(wins, [wsp(8, 2, c2["id"])], "left")
+
+    # --- vertical (workspaces) by idx within the focused output ---
+    # focused idx 2 of {1..6} -> both directions.
+    grid = [wsp(i, i, None, focused=(i == 2)) for i in range(1, 7)]
+    assert vertical_neighbor(grid, "up") and vertical_neighbor(grid, "down")
+    # focused is top (idx 1) -> only down.
+    top = [wsp(i, i, None, focused=(i == 1)) for i in range(1, 7)]
+    assert not vertical_neighbor(top, "up") and vertical_neighbor(top, "down")
+    # focused is the empty tail (idx 6, the max) -> only up.
+    bot = [wsp(i, i, None, focused=(i == 6)) for i in range(1, 7)]
+    assert vertical_neighbor(bot, "up") and not vertical_neighbor(bot, "down")
+    # other output's workspaces must not count.
+    mixed = [wsp(1, 1, None, output="DP-1", focused=True),
+             wsp(2, 2, None, output="HDMI-A-1")]
+    assert not vertical_neighbor(mixed, "up") and not vertical_neighbor(mixed, "down")
+
+    print("self-check ok")
+
+
+def run_action(action):
+    try:
+        subprocess.run(["niri", "msg", "action", action], check=False, timeout=2)
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        print(f"niri-edge-pan: {action} failed: {exc}", file=sys.stderr)
+
+
+class PenGuard:
+    """Suppress warp-mouse-to-focus around an action without moving the pointer.
+
+    See the module docstring: niri's move_cursor_to_focused_tile returns early
+    while tablet_cursor_location is set, and proximity-out warps the pointer to
+    the pen's position - which we place exactly where the pointer already is.
+    """
+
+    def __init__(self, width, height):
+        from evdev import AbsInfo, UInput, ecodes as e
+
+        self.e = e
+        # abs max == screen size (not size-1): libinput scales value/max*size,
+        # so integer positions map through exactly, no rounding drift.
+        self.ui = UInput(
+            {
+                e.EV_KEY: [e.BTN_TOOL_PEN, e.BTN_TOUCH, e.BTN_STYLUS],
+                e.EV_ABS: [
+                    (e.ABS_X, AbsInfo(0, 0, width, 0, 0, 100)),
+                    (e.ABS_Y, AbsInfo(0, 0, height, 0, 0, 100)),
+                    (e.ABS_PRESSURE, AbsInfo(0, 0, 4095, 0, 0, 0)),
+                ],
+            },
+            name="niri-edge-pan pen",
+        )
+
+    def run(self, x, y, fn):
+        e, ui = self.e, self.ui
+        ui.write(e.EV_ABS, e.ABS_X, int(x))
+        ui.write(e.EV_ABS, e.ABS_Y, int(y))
+        ui.write(e.EV_KEY, e.BTN_TOOL_PEN, 1)
+        ui.syn()
+        time.sleep(0.03)  # let niri ingest the proximity before the action
+        try:
+            fn()  # niri msg returns after the action (and its warp decision)
+        finally:
+            ui.write(e.EV_KEY, e.BTN_TOOL_PEN, 0)
+            ui.syn()
+
+
+def _monitor_size():
+    from gi.repository import Gdk
+
+    geo = Gdk.Display.get_default().get_monitor(0).get_geometry()
+    return geo.width, geo.height
+
+
+def build_strip(edge, action, kind, direction, thickness, dwell_ms, inset, pen=None):
+    import cairo
+    import gi
+
+    gi.require_version("Gtk", "3.0")
+    gi.require_version("GtkLayerShell", "0.1")
+    from gi.repository import GdkPixbuf  # noqa: F401  (ensures typelib load order)
+    from gi.repository import Gdk, GLib, Gtk, GtkLayerShell
+
+    window = Gtk.Window()
+    GtkLayerShell.init_for_window(window)
+    GtkLayerShell.set_layer(window, GtkLayerShell.Layer.TOP)
+    GtkLayerShell.set_namespace(window, "niri-edge-pan")
+
+    E = GtkLayerShell.Edge
+    anchor = {"left": E.LEFT, "right": E.RIGHT, "top": E.TOP, "bottom": E.BOTTOM}[edge]
+    GtkLayerShell.set_anchor(window, anchor, True)
+    # Stretch along the edge; the two perpendicular anchors span its full length.
+    # Inset those ends so the screen corners stay free for niri's hot-corners.
+    perp = (E.TOP, E.BOTTOM) if kind == "h" else (E.LEFT, E.RIGHT)
+    for p in perp:
+        GtkLayerShell.set_anchor(window, p, True)
+        if inset > 0:
+            GtkLayerShell.set_margin(window, p, inset)
+    # -1 = reserve nothing AND ignore other surfaces' exclusive zones, so we sit
+    # on the true screen edge. With 0 the compositor pushes us clear of waybar's
+    # reserved strip, landing the top edge just *below* the bar instead of at y=0.
+    GtkLayerShell.set_exclusive_zone(window, -1)
+    GtkLayerShell.set_keyboard_mode(window, GtkLayerShell.KeyboardMode.NONE)
+
+    # h-strips are thin & tall, v-strips thin & wide; -1 means "fill the anchor".
+    window.set_size_request(*((thickness, -1) if kind == "h" else (-1, thickness)))
+
+    # Fully transparent: this strip must be invisible, only an input target.
+    visual = window.get_screen().get_rgba_visual()
+    if visual is not None:
+        window.set_visual(visual)
+    window.set_app_paintable(True)
+
+    def on_draw(_widget, ctx):
+        ctx.set_operator(cairo.OPERATOR_SOURCE)
+        ctx.set_source_rgba(0, 0, 0, 0)
+        ctx.paint()
+        return False
+
+    window.connect("draw", on_draw)
+
+    latch = EdgeLatch()
+    pending = {"id": 0}
+    state = {"x": 0}  # screen x of the last (mouse) enter; where the pen goes
+
+    def is_pen(event):
+        # Our own fake pen's proximity lands on this strip and produces GTK
+        # crossing events; those must not trip the latch or re-fire.
+        dev = event.get_source_device()
+        return dev is not None and dev.get_source() in (
+            Gdk.InputSource.PEN, Gdk.InputSource.ERASER)
+
+    def act():
+        # Only move if there's actually a neighbour that way; otherwise the focus
+        # action is a no-op that still warps the pointer to the current centre.
+        if not has_neighbor(kind, direction):
+            return
+        if pen is not None:
+            # Top strip sits at y=0; hold the pen there so proximity-out "moves"
+            # the pointer to where it already is. (With --dwell-ms the pointer
+            # may have slid along the strip since enter; a few px of x drift is
+            # invisible and can't cause a leave, the strip spans the width.)
+            pen.run(state["x"], 0, lambda: run_action(action))
+        else:
+            run_action(action)
+
+    def fire():
+        pending["id"] = 0
+        if latch.inside:
+            act()
+        return GLib.SOURCE_REMOVE
+
+    def on_enter(_w, event):
+        if is_pen(event):
+            return False
+        state["x"] = inset + int(event.x)
+        if not latch.enter():
+            return False
+        if dwell_ms > 0:
+            pending["id"] = GLib.timeout_add(dwell_ms, fire)
+        else:
+            act()
+        return False
+
+    def on_leave(_w, event):
+        if is_pen(event):
+            return False
+        latch.leave()
+        if pending["id"]:
+            GLib.source_remove(pending["id"])
+            pending["id"] = 0
+        return False
+
+    window.add_events(Gdk.EventMask.ENTER_NOTIFY_MASK | Gdk.EventMask.LEAVE_NOTIFY_MASK)
+    window.connect("enter-notify-event", on_enter)
+    window.connect("leave-notify-event", on_leave)
+    window.show_all()
+    return window
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    ap.add_argument("--edges", default="left,right,top,bottom",
+                    help="comma list of edges to arm: left,right,top,bottom "
+                         "(default: all four)")
+    ap.add_argument("--thickness", type=int, default=1,
+                    help="strip thickness in px (default: 1)")
+    # Resistance knob: 0 fires the instant you touch the edge, which is snappy but
+    # also fires on a fast sweep into the edge (e.g. reaching for waybar at the
+    # top). Raise it if you get accidental steps; this is #4069's `resistance`.
+    ap.add_argument("--dwell-ms", type=int, default=0,
+                    help="hold at the edge this long before firing (default: 0)")
+    ap.add_argument("--inset", type=int, default=24,
+                    help="px kept clear at each corner so hot-corners still fire "
+                         "(default: 24; use 0 if you disable hot-corners)")
+    ap.add_argument("--self-check", action="store_true", help="run logic test and exit")
+    args = ap.parse_args()
+
+    if args.self_check:
+        self_check()
+        return
+
+    import gi
+
+    gi.require_version("Gtk", "3.0")
+    from gi.repository import Gtk
+
+    edges = [e.strip() for e in args.edges.split(",") if e.strip()]
+    unknown = [e for e in edges if e not in EDGES]
+    if unknown:
+        sys.exit(f"niri-edge-pan: unknown edge(s): {', '.join(unknown)}")
+    pen = None
+    if "top" in edges:
+        try:
+            pen = PenGuard(*_monitor_size())
+        except Exception as exc:  # no uinput access / no evdev -> old behaviour
+            print(f"niri-edge-pan: warp guard disabled ({exc}); "
+                  "top edge will warp the pointer", file=sys.stderr)
+
+    for edge in edges:
+        action, kind, direction = EDGES[edge]
+        build_strip(edge, action, kind, direction, args.thickness, args.dwell_ms,
+                    args.inset, pen=pen if edge == "top" else None)
+
+    Gtk.main()
+
+
+if __name__ == "__main__":
+    main()
