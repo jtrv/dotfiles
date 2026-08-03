@@ -21,6 +21,7 @@ bandwhich
 base
 base-devel
 bat
+bc
 bemoji
 binsider
 blender
@@ -128,6 +129,7 @@ git-filter-repo
 github-cli
 glib2-docs
 glow
+gnome-keyring
 gnu-netcat
 go-yq
 gobject-introspection
@@ -136,9 +138,7 @@ gpg-tui
 gping
 grim
 gst-plugin-pipewire
-gst-plugins-bad
 gst-plugins-good
-gst-plugins-ugly
 gtk-doc
 harper
 helvum
@@ -157,6 +157,7 @@ iw
 iwd
 j4-dmenu-desktop
 jaq
+jdk21-openjdk
 jless
 jp2a
 jpegoptim
@@ -165,6 +166,7 @@ kakoune
 kdeconnect
 kmon
 kondo
+kooha
 koreader-bin
 kvantum-qt5
 kvantum-theme-catppuccin-git
@@ -176,9 +178,6 @@ lazysql
 lbzip2
 leanify-git
 lemurs
-lib32-gst-plugins-base
-lib32-gst-plugins-base-libs
-lib32-gst-plugins-good
 lib32-libngtcp2
 lib32-libpulse
 lib32-pipewire
@@ -235,6 +234,7 @@ ntp
 nuspell
 nvtop
 nwg-look
+obsidian
 oculante
 odt2txt
 openssh
@@ -267,7 +267,7 @@ polly
 presenterm
 procs
 progress
-proton-cachyos
+proton-cachyos-native
 proton-cachyos-slr
 pueue
 pv
@@ -281,12 +281,12 @@ qbittorrent
 qpdf
 qt5ct
 qt6-tools
+qt6-wayland
 qt6ct
 rate-mirrors
 rawtherapee
 rbenv
 rclone
-readest
 redshift
 rescrobbled-git
 responsively
@@ -306,6 +306,7 @@ samply
 sassc
 screenkey
 scx-scheds
+scx-tools
 sd
 sdcv
 shellcheck-bin
@@ -314,6 +315,7 @@ signal-desktop
 sioyek
 skim
 sl
+slurp
 snap-pac
 snap-sync
 sniffglue
@@ -325,7 +327,6 @@ strace
 stremio
 sudo-rs
 sunshine
-superhtml
 swaybg
 swayidle
 sxiv
@@ -387,6 +388,7 @@ watchexec
 waybar
 wd719x-firmware
 webtorrent-mpv-hook
+wf-recorder
 wget2
 whosthere-bin
 wikiman
@@ -406,6 +408,7 @@ xbanish
 xcape
 xcolor
 xcwd-git
+xdg-desktop-portal-gnome
 xdg-desktop-portal-termfilechooser-hunkyburrito-git
 xdg-ninja-git
 xdg-utils
@@ -414,6 +417,7 @@ xf86-video-ati
 xh
 xlockmore
 xorg-server
+xorg-server-xvfb
 xorg-xclipboard
 xorg-xev
 xorg-xinit
