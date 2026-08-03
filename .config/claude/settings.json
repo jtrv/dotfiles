@@ -1,0 +1,220 @@
+{
+  "env": {},
+  "permissions": {
+    "deny": [
+      "Read(**/.env)",
+      "Read(**/.env.local)",
+      "Read(**/.env.*.local)",
+      "Read(**/.env.production)",
+      "Read(**/.env.development)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)",
+      "Read(**/*.p12)",
+      "Read(**/*.pfx)",
+      "Read(**/id_rsa)",
+      "Read(**/id_ecdsa)",
+      "Read(**/id_ed25519)",
+      "Read(**/.ssh/**)",
+      "Read(**/.aws/**)",
+      "Read(**/.gnupg/**)",
+      "Read(**/.netrc)",
+      "Read(**/.npmrc)",
+      "Read(**/.pypirc)",
+      "Read(**/.git-credentials)",
+      "Read(**/credentials.json)",
+      "Read(**/secrets.json)",
+      "Read(**/secrets.yaml)",
+      "Read(**/secrets.yml)",
+      "Read(**/terraform.tfvars)"
+    ],
+    "defaultMode": "auto"
+  },
+  "model": "opus",
+  "skillOverrides": {
+    "find-skills": "off",
+    "grill-me": "off",
+    "grill-with-docs": "off",
+    "web-design-guidelines": "off",
+    "writing-skills": "off",
+    "vercel-composition-patterns": "off",
+    "vercel-optimize": "off",
+    "vercel-react-best-practices": "off",
+    "vercel-react-native-skills": "off",
+    "vercel-react-view-transitions": "off"
+  },
+  "hooks": {
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"/home/sugimoto/.config/claude/hooks/nosleep.sh\" release"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"/home/sugimoto/.config/claude/hooks/block-secrets.sh\"",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "bash \"/home/sugimoto/.config/claude/hooks/nosleep.sh\" acquire"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"/home/sugimoto/.config/claude/hooks/nosleep.sh\" release"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"/home/sugimoto/.config/claude/hooks/context-mode-cache-heal.mjs\""
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cat \"/home/sugimoto/.config/claude/skills/caveman/SKILL.md\"; echo \"SESSION DEFAULT: caveman level = lite. Begin every response at caveman lite unless user switches via /caveman full|ultra.\""
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"/home/sugimoto/.config/claude/hooks/capture-window.sh\""
+          }
+        ]
+      },
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash '/home/sugimoto/.config/claude/hooks/herdr-agent-state.sh' session",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Context was just compacted. Summaries drift: re-read any state.md/ledger and the relevant ~/.config/claude/contexts/ file before continuing; treat compaction-summary claims about decisions and constraints as unverified until checked against the ledger.'"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"/home/sugimoto/.config/claude/hooks/nosleep.sh\" release"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"/home/sugimoto/.config/claude/hooks/caveman-track.sh\""
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"/home/sugimoto/.config/claude/hooks/nosleep.sh\" acquire"
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Preserve verbatim in the summary: current objective; decisions with status (accepted/provisional/superseded); failed attempts and why; constraints and rules currently in effect; the exact next action. If a state.md or ledger file exists for this task, note its path prominently.'"
+          }
+        ]
+      }
+    ]
+  },
+  "enableWorkflows": true,
+  "statusLine": {
+    "type": "command",
+    "command": "bash \"/home/sugimoto/.config/claude/statusline/statusline.sh\""
+  },
+  "enabledPlugins": {
+    "code-simplifier@claude-plugins-official": false,
+    "codex@openai-codex": true,
+    "context-mode@context-mode": true,
+    "context7@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": false,
+    "learning-output-style@claude-plugins-official": true,
+    "playwright@claude-plugins-official": true,
+    "ponytail@ponytail": true,
+    "pyright-lsp@claude-plugins-official": false,
+    "ralph-loop@claude-plugins-official": true,
+    "remember@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "security-guidance@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "vercel@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "context-mode": {
+      "source": {
+        "source": "github",
+        "repo": "mksglu/context-mode"
+      }
+    },
+    "openai-codex": {
+      "source": {
+        "source": "github",
+        "repo": "openai/codex-plugin-cc"
+      }
+    },
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
+      }
+    },
+    "scroll-world": {
+      "source": {
+        "source": "github",
+        "repo": "oso95/scroll-world"
+      }
+    }
+  },
+  "skipWorkflowUsageWarning": true,
+  "theme": "dark",
+  "editorMode": "normal",
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true
+}
