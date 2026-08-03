@@ -1,13 +1,14 @@
-AGENTS.md
-.aider*
-*.env
+.claude
 .env
 .env.*
-.goosehints
 .mcp.json
 .my-notes*
+
+AGENTS.md
+config.local.toml
 mise.local.toml
 skyspell-ignore.toml
+graphify*
 
-.claude
 **/.claude/settings.local.json
+*.env

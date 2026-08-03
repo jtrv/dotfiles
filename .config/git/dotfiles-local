@@ -1,0 +1,13 @@
+# Applied via includeIf "gitdir:~/.config/dotfiles" in ~/.config/git/config.
+# Keeps the dotfiles bare repo's behavioral config in version control.
+# fsmonitor/untrackedCache off: work-tree is all of $HOME, so a monitored
+# scan makes `git status` take ~12s. Other repos keep the global setting.
+[core]
+  fsmonitor = false
+  untrackedCache = false
+[status]
+  showUntrackedFiles = false
+[gc]
+  auto = 0
+[advice]
+  addIgnoredFile = false
