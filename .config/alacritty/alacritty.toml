@@ -95,19 +95,19 @@ builtin_box_drawing = true
 size = 11.5
 
 [font.bold]
-family = "BlexMono Nerd Font"
+family = "BlexMono Nerd Font Mono"
 style = "Bold"
 
 [font.bold_italic]
-family = "BlexMono Nerd Font"
+family = "BlexMono Nerd Font Mono"
 style = "Bold Italic"
 
 [font.italic]
-family = "BlexMono Nerd Font"
+family = "BlexMono Nerd Font Mono"
 style = "Italic"
 
 [font.normal]
-family = "BlexMono Nerd Font"
+family = "BlexMono Nerd Font Mono"
 style = "Regular"
 
 [hints]
