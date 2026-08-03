@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+# niri-viewport — float a niri window and resize it to a device/viewport size.
+#
+# Pick a window (skim), pick a device (skim), and it floats + resizes the
+# window via `niri msg`. Handy for previewing responsive UI at real phone,
+# tablet, and laptop dimensions. Sizes are logical points / CSS px, matching
+# each device's viewport (portrait for phones/tablets, landscape for laptops).
+#
+# Usage: niri-viewport            # pick window + device interactively
+#        niri-viewport --id 42    # skip the window picker, resize window 42
+set -euo pipefail
+
+for dep in niri sk jq awk; do
+  command -v "$dep" >/dev/null 2>&1 ||
+    { printf 'niri-viewport: required tool %q not found\n' "$dep" >&2; exit 1; }
+done
+
+# --- resolve the target window id ---
+id=""
+if [ "${1:-}" = "--id" ] && [ -n "${2:-}" ]; then
+  id=$2
+else
+  # Focused window floats to the top of the list; hidden id column is what we
+  # return, the app-id + title is what's shown.
+  win=$(niri msg --json windows |
+    jq -r 'sort_by(.is_focused | not)[]
+           | [.id, ((if .is_focused then "● " else "  " end)
+                    + (.app_id // "?") + " — " + (.title // "(no title)"))]
+           | @tsv' |
+    sk -d '\t' --with-nth=2 --prompt='window ❯ ' \
+       --header='Select a window to resize (Esc to cancel)') || exit 0
+  [ -n "${win:-}" ] || exit 0
+  IFS=$'\t' read -r id _ <<<"$win"
+fi
+[ -n "$id" ] || { echo 'niri-viewport: no window selected' >&2; exit 1; }
+
+# --- pick a device / viewport (label <TAB> width <TAB> height) ---
+devices=$(cat <<'EOF'
+iPhone SE	375	667
+iPhone 13 mini	375	812
+iPhone 13 / 14	390	844
+iPhone 15 / 16	393	852
+iPhone 15 / 16 Pro Max	430	932
+iPhone 14 Pro Max	428	926
+Android (small)	360	800
+Galaxy S22	360	780
+Pixel 5	393	851
+Pixel 7 / 8	412	915
+iPad Mini	744	1133
+iPad Air	820	1180
+iPad Pro 11"	834	1194
+iPad Pro 12.9"	1024	1366
+Laptop 1280×800	1280	800
+MacBook Air 13"	1280	832
+Laptop 1366×768	1366	768
+Laptop 1440×900	1440	900
+Desktop 1920×1080	1920	1080
+EOF
+)
+
+sel=$(printf '%s\n' "$devices" |
+  awk -F'\t' '{printf "%s\t%s\t%s\t%s × %s\n", $1, $2, $3, $2, $3}' |
+  sk -d '\t' --with-nth=1,4 --prompt='device ❯ ' \
+     --header="Viewport for window $id (Esc to cancel)") || exit 0
+[ -n "${sel:-}" ] || exit 0
+IFS=$'\t' read -r label W H _ <<<"$sel"
+[ -n "$W" ] && [ -n "$H" ] || { echo 'niri-viewport: bad selection' >&2; exit 1; }
+
+# --- apply ---
+niri msg action move-window-to-floating --id "$id"
+niri msg action set-window-width  --id "$id" "$W"
+niri msg action set-window-height --id "$id" "$H"
+printf 'niri-viewport: window %s → %s (%s × %s)\n' "$id" "$label" "$W" "$H"
