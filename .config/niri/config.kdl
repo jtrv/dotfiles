@@ -8,7 +8,7 @@ hotkey-overlay {
 }
 
 output "DP-1" {
-    mode "3440x1440@120.000"
+    mode "3440x1440@60.000"
     scale 1
 }
 
