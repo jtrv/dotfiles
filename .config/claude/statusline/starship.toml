@@ -34,14 +34,14 @@ diverged = "😵"
 untracked = "🤷‍"
 stashed = "📦"
 modified = "📝"
-staged = '[$count󰜅](bold green)'
+staged = '[$count󰜅 ](bold green)'
 renamed = "👅"
 deleted = "🗑 "
 
 [env_var.CC_MODEL]
 variable = "CC_MODEL"
 symbol = "󰚩 "
-style = "bold magenta"
+style = "bold purple"
 format = "[$symbol$env_value]($style) "
 
 # context-window used%, split into three mutually-exclusive vars so color follows severity

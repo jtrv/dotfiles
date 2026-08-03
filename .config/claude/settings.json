@@ -1,4 +1,5 @@
 {
+  "env": {},
   "permissions": {
     "deny": [
       "Read(**/.env)",
@@ -28,8 +29,28 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "opus",
+  "model": "claude-fable-5[1m]",
+  "effortLevel": "medium",
+  "skillOverrides": {
+    "find-skills": "on",
+    "writing-skills": "on",
+    "vercel-composition-patterns": "off",
+    "vercel-optimize": "off",
+    "vercel-react-best-practices": "off",
+    "vercel-react-native-skills": "off",
+    "vercel-react-view-transitions": "off"
+  },
   "hooks": {
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"/home/sugimoto/.config/claude/hooks/nosleep.sh\" release"
+          }
+        ]
+      }
+    ],
     "PreToolUse": [
       {
         "matcher": "*",
@@ -38,6 +59,20 @@
             "type": "command",
             "command": "bash \"/home/sugimoto/.config/claude/hooks/block-secrets.sh\"",
             "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "bash \"/home/sugimoto/.config/claude/hooks/nosleep.sh\" acquire"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"/home/sugimoto/.config/claude/hooks/nosleep.sh\" release"
           }
         ]
       }
@@ -66,14 +101,23 @@
             "command": "\"/home/sugimoto/.config/claude/hooks/capture-window.sh\""
           }
         ]
+      },
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Context was just compacted. Summaries drift: re-read any state.md/ledger and the relevant ~/.config/claude/contexts/ file before continuing; treat compaction-summary claims about decisions and constraints as unverified until checked against the ledger.'"
+          }
+        ]
       }
     ],
-    "SubagentStop": [
+    "Stop": [
       {
         "hooks": [
           {
             "type": "command",
-            "command": "\"/home/sugimoto/.config/claude/hooks/notify-subagent-done.sh\""
+            "command": "bash \"/home/sugimoto/.config/claude/hooks/nosleep.sh\" release"
           }
         ]
       }
@@ -86,6 +130,24 @@
             "command": "bash \"/home/sugimoto/.config/claude/hooks/caveman-track.sh\""
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"/home/sugimoto/.config/claude/hooks/nosleep.sh\" acquire"
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Preserve verbatim in the summary: current objective; decisions with status (accepted/provisional/superseded); failed attempts and why; constraints and rules currently in effect; the exact next action. If a state.md or ledger file exists for this task, note its path prominently.'"
+          }
+        ]
       }
     ]
   },
@@ -95,30 +157,23 @@
     "command": "bash \"/home/sugimoto/.config/claude/statusline/statusline.sh\""
   },
   "enabledPlugins": {
-    "rust-analyzer-lsp@claude-plugins-official": true,
-    "typescript-lsp@claude-plugins-official": true,
-    "context7@claude-plugins-official": true,
-    "code-simplifier@claude-plugins-official": true,
-    "playwright@claude-plugins-official": true,
-    "security-guidance@claude-plugins-official": true,
-    "ralph-loop@claude-plugins-official": true,
-    "vercel@claude-plugins-official": true,
-    "pyright-lsp@claude-plugins-official": true,
-    "learning-output-style@claude-plugins-official": true,
-    "gopls-lsp@claude-plugins-official": true,
-    "remember@claude-plugins-official": true,
-    "skill-creator@claude-plugins-official": true,
-    "ponytail@ponytail": true,
+    "codex@openai-codex": true,
     "context-mode@context-mode": true,
-    "codex@openai-codex": true
+    "context7@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": false,
+    "learning-output-style@claude-plugins-official": true,
+    "playwright@claude-plugins-official": true,
+    "ponytail@ponytail": true,
+    "pyright-lsp@claude-plugins-official": false,
+    "ralph-loop@claude-plugins-official": true,
+    "remember@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "security-guidance@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "vercel@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
-    "ponytail": {
-      "source": {
-        "source": "github",
-        "repo": "DietrichGebert/ponytail"
-      }
-    },
     "context-mode": {
       "source": {
         "source": "github",
@@ -130,9 +185,17 @@
         "source": "github",
         "repo": "openai/codex-plugin-cc"
       }
+    },
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
+      }
     }
   },
   "skipWorkflowUsageWarning": true,
   "theme": "dark",
-  "editorMode": "normal"
+  "editorMode": "normal",
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true
 }
