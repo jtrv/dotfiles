@@ -13,12 +13,12 @@ set -gx XDG_STATE_HOME    "$HOME/.local/state"
 set -gx BUNDLE_USER_CACHE "$XDG_CACHE_HOME/bundle"
 set -gx CODEX_HOME        "$XDG_CACHE_HOME/codex"
 set -gx LESSHISTFILE      "$XDG_CACHE_HOME/less/history"
+set -gx PUB_CACHE         "$XDG_CACHE_HOME/pub"
 set -gx TEXMFVAR          "$XDG_CACHE_HOME/texlive/texmf-var"
 
 # Config
 set -gx AWS_CONFIG_FILE             "$XDG_CONFIG_HOME/aws/config"
 set -gx AWS_SHARED_CREDENTIALS_FILE "$XDG_CONFIG_HOME/aws/credentials"
-set -gx BIOME_CONFIG_PATH           "$XDG_CONFIG_HOME/biome/biome.json"
 set -gx BUNDLE_USER_CONFIG          "$XDG_CONFIG_HOME/bundle"
 set -gx CLAUDE_CONFIG_DIR           "$XDG_CONFIG_HOME/claude"
 set -gx DOTFILES                    "$XDG_CONFIG_HOME/dotfiles"
@@ -57,6 +57,7 @@ set -gx W3M_DIR            "$XDG_DATA_HOME/w3m"
 set -gx XAUTHORITY "$XDG_RUNTIME_DIR/Xauthority"
 
 # State
+set -gx ANALYZER_STATE_LOCATION_OVERRIDE "$XDG_STATE_HOME/Dart/analysis_server"
 set -gx HISTFILE "$XDG_STATE_HOME/bash/history"
 
 # Misc

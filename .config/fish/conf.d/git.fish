@@ -5,7 +5,22 @@ function __git_back_in_time
   echo "commit --amend % --no-edit --date='$TODAY'"
 end
 
-# abbr --command git bit --set-cursor --function __git_back_in_time
+function __git_new_gh_repo
+  set CWD_NAME (basename "$PWD")
+  set GH_USER (gh auth status -a | awk 'NR==2 {print $7}')
+echo "init; git add . ; git commit -e
+set REPO_NAME $CWD_NAME%
+set TRUNK_N main
+
+gh repo create --private \$REPO_NAME
+git remote add origin https://github.com/$GH_USER/\$REPO_NAME.git
+git branch -M \$TRUNK_N; git push -u origin \$TRUNK_N"
+end
+
+
+abbr -c git -a bit --set-cursor -f __git_back_in_time
+abbr -c git -a new --set-cursor -f __git_new_gh_repo
+
 
 # Add git aliases
 complete -f -c git -n '__fish_use_subcommand' -a skip -d 'Skip worktree changes for a file'
