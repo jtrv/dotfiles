@@ -10,7 +10,7 @@ hand-written and tracked. On a new machine, reinstall from the sources below.
 | caveman-commit | — | github.com/JuliusBrussee/caveman |
 | color-expert | — | github.com/meodai/skill.color-expert |
 | graphify | — | safishamsi (github.com/sponsors/safishamsi; see SKILL.md) |
-| impeccable | 4.0.2 | unverified — see SKILL.md |
+| impeccable | 4.0.2 | github.com/pbakaus/impeccable (impeccable.style; `npx impeccable install`) |
 | last30days | — | github.com/mvanhorn/last30days-skill |
 | vercel-composition-patterns | — | vercel (see metadata.json) |
 | vercel-optimize | — | vercel |
@@ -18,7 +18,7 @@ hand-written and tracked. On a new machine, reinstall from the sources below.
 | vercel-react-native-skills | — | vercel |
 | vercel-react-view-transitions | — | vercel |
 | web-design-guidelines | 1.0.0 | vercel |
-| writing-skills | — | unverified — see SKILL.md |
+| writing-skills | — | github.com/obra/superpowers (skills/writing-skills) |
 
 Adding a vendored skill → add a row here. Writing a skill yourself → track it in
 dotfiles instead.
