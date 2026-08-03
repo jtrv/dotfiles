@@ -7,7 +7,7 @@ description: Generate a polished, self-contained single-file HTML report with an
 
 One self-contained `.html` file. Tailwind and (only if diagrams are needed) Mermaid from CDNs; no other scripts, no interactivity. The file must render offline-ish (CDN-only deps) and survive being emailed or committed.
 
-Ask where to save only if no location is implied; default to a `reports/` dir next to the work, else the OS temp dir. Open it for the user afterwards when a display exists (`xdg-open` / `open`).
+Ask where to save only if no location is implied; default to a `reports/` dir next to the work, else the OS temp dir. Open it for the user afterwards when a display exists: use `$BROWSER "$file"` if `$BROWSER` is set, else fall back to `xdg-open` / `open`.
 
 ## Scaffold
 
@@ -68,6 +68,27 @@ Skip diagrams entirely for inventory/status reports — badges and tables carry 
 - **Before/after pairs** — two columns side by side, each diagram ≤~320px tall so the pair fits without scrolling.
 
 Label things inside diagrams with `text-xs uppercase tracking-wider` — schematic, not UI.
+
+## Visual examples (design reports)
+
+When the report recommends something the reader must *see* to judge — a font, a color, a component shape, a spacing scale — **render the real thing, don't just name it.** A design/typography/color report that says "use Fraunces" or "primary #E8590C" in plain text has failed: the reader can't compare options they can't see. Show, don't list.
+
+- **Fonts** — load each candidate from the Google Fonts CSS CDN in `<head>` (same CDN-only rule as Tailwind/Mermaid) and set a real specimen in it: the actual recipe title, a section header, a body line, and sample numerals — in the actual family, at the proposed weights/sizes. Verify each family loads first (`curl -s -o /dev/null -w '%{http_code}' 'https://fonts.googleapis.com/css2?family=<Family>:wght@400;600;700'` returns `200`). For a variable font, exercise the axis (`font-variation-settings: 'wght' 600`). Put each pairing option in its own card so specimens sit side by side for comparison.
+  ```html
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <!-- then: <h3 style="font-family:'Fraunces',serif;font-weight:600">Roast Chicken</h3> -->
+  ```
+- **Colors** — render a real swatch for every value with its **literal hex printed on/under it**, not a prose list. Show light AND dark rows. Then apply the palette in context — a small mock (a recipe card, a button, a chip) painted with the actual roles — because a palette is judged by how roles interact, not as isolated squares.
+  ```html
+  <div style="background:#E8590C" class="h-14 rounded flex items-end p-1">
+    <span class="text-white text-[10px] font-mono">#E8590C primary</span>
+  </div>
+  ```
+- **Components / shape / spacing** — CSS-approximate the actual widget (card, chip, button, app bar) with the *exact* proposed tokens — corner radius, elevation/shadow, border width+opacity, padding — so "Soft 16dp / no shadow" vs "Editorial 8dp / hairline" are compared as rendered objects, not adjectives. Render a spacing scale as literal gap bars labeled with their dp.
+- **Layout** — give each option (pairing, palette, shape personality) its own card, and where practical show the same mock content rendered through each option so only the variable under review changes. This is the design-report analog of before/after pairs.
+
+Still no interactivity and no JS beyond Mermaid — these specimens are pure HTML/CSS. Keep the page self-contained; CDN fonts are fine (they're the subject).
 
 ## Style
 
