@@ -6,6 +6,8 @@ hand-written and tracked. On a new machine, reinstall from the sources below.
 
 | Skill | Version | Source |
 |---|---|---|
+| caveman | — | github.com/JuliusBrussee/caveman |
+| caveman-commit | — | github.com/JuliusBrussee/caveman |
 | color-expert | — | github.com/meodai/skill.color-expert |
 | graphify | — | safishamsi (github.com/sponsors/safishamsi; see SKILL.md) |
 | impeccable | 4.0.2 | unverified — see SKILL.md |
