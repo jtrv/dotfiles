@@ -7,9 +7,7 @@ description: >
   (agent-caused erosion) — or says "geiger", "architectural mistakes", "bad
   patterns in the structure", or wants architecture rules enforced in CI. Covers import/module dependency graphs
   (internal code structure), NOT package-manager dependencies: not for
-  npm/pip updates, vulnerability audits, or line-level code review. For
-  interactive deepening-refactor proposals the user invokes
-  /improve-codebase-architecture instead.
+  npm/pip updates, vulnerability audits, or line-level code review.
 ---
 
 # geiger
