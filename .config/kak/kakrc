@@ -77,7 +77,7 @@ bundle colorcol-rs https://github.com/jtrv/colorcol-rs
 bundle-install-hook colorcol-rs %{ cargo install --locked --path . ; cargo clean }
 
 bundle grug https://github.com/jtrv/grug
-bundle-install-hook grug %{ cargo install --locked --force --path . ; cargo clean }
+bundle-install-hook grug %{ cargo install --locked --path . ; cargo clean }
 
 bundle indent.kak https://github.com/kirusfg/indent.kak %{
   set-indent global 2 false
@@ -655,8 +655,6 @@ map global normal /     -docstring 'search'                      %{/(?i)}
 map global normal <a-/> -docstring 'search backwards'            %{<a-/>(?i)}
 map global normal ?     -docstring '(extend) search'             %{?(?i)}
 map global normal <a-?> -docstring '(extend) search backwards'   %{<a-?>(?i)}
-map global normal s     -docstring 'select'                      %{s(?i)}
-map global normal S     -docstring 'select with splits'          %{S(?i)}
 
 define-command -hidden regex-assertions %{
 info -title 'assertions' '<c-i>:    ignore case  (?i)
