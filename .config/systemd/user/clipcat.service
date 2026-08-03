@@ -1,13 +1,10 @@
 [Unit]
 Description=Clipcat Daemon
-After=default.target
+PartOf=graphical-session.target
+After=graphical-session.target
 
 [Service]
-Type=forking
-ExecPre=/usr/bin/clipcatctl kill
-ExecStart=/usr/bin/clipcatd --replace
-ExecStop=/usr/bin/clipcatctl kill
-PIDFile=/run/user/1000/clipcatd.pid
+ExecStart=/usr/bin/clipcatd --no-daemon --replace
 Restart=on-failure
 
 [Install]
