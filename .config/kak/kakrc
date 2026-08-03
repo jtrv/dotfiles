@@ -91,7 +91,7 @@ bundle-install-hook kak-ansi-rs %{ cargo install --locked --path . ; cargo clean
 bundle popup.kak https://github.com/enricozb/popup.kak
 bundle-install-hook popup.kak %{ cargo install --locked --path . ; cargo clean }
 
-bundle kak-live-grep https://codeberg.org/raiguard/kak-live-grep.
+bundle kak-live-grep https://codeberg.org/raiguard/kak-live-grep
 
 bundle-noload kak-tree-sitter https://git.sr.ht/~hadronized/kak-tree-sitter
 bundle-install-hook kak-tree-sitter %{ cargo install kak-tree-sitter ktsctl ; cargo clean }
@@ -718,7 +718,7 @@ bundle kakoune-buffer-manager https://github.com/theowenyoung/kakoune-buffer-man
 }
 
 bundle caser https://github.com/jtrv/caser %{ require-module caser-recommended-bindings }
-bundle-install-hook caser %{ cargo install --locked  --path . ; cargo clean }
+bundle-install-hook caser %{ cargo install --locked --path . ; cargo clean }
 
 declare-user-mode dev
   map global user d -docstring 'dev' %{: enter-user-mode dev <ret>}
