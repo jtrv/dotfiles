@@ -31,11 +31,8 @@
   },
   "model": "opus",
   "skillOverrides": {
-    "find-skills": "off",
-    "grill-me": "off",
-    "grill-with-docs": "off",
-    "web-design-guidelines": "off",
-    "writing-skills": "off",
+    "find-skills": "on",
+    "writing-skills": "on",
     "vercel-composition-patterns": "off",
     "vercel-optimize": "off",
     "vercel-react-best-practices": "off",
@@ -169,7 +166,6 @@
     "command": "bash \"/home/sugimoto/.config/claude/statusline/statusline.sh\""
   },
   "enabledPlugins": {
-    "code-simplifier@claude-plugins-official": false,
     "codex@openai-codex": true,
     "context-mode@context-mode": true,
     "context7@claude-plugins-official": true,
@@ -203,12 +199,6 @@
       "source": {
         "source": "github",
         "repo": "DietrichGebert/ponytail"
-      }
-    },
-    "scroll-world": {
-      "source": {
-        "source": "github",
-        "repo": "oso95/scroll-world"
       }
     }
   },
