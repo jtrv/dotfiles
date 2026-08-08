@@ -1,226 +1,220 @@
-# Catppuccin theme for Kakoune
+# Catppuccin Mocha
+#
+# Base: https://github.com/catppuccin/kakoune (whiskers-generated, verbatim).
+# Local additions, each marked below: LSP faces, tree-sitter faces, the
+# mode-change statusline hooks, WhitespaceIndent, and kak-rainbow-rs colors.
+# Keep the latte file in step -- it is this file with the palette swapped and
+# its deviations marked.
 
-# Color palette
-declare-option  -hidden str rosewater "rgba:f5e0dc" # rgb:f5e0dc
-declare-option  -hidden str flamingo  "rgba:f2cdcd" # rgb:f2cdcd
-declare-option  -hidden str pink      "rgba:f5c2e7" # rgb:f5c2e7
-declare-option  -hidden str mauve     "rgba:cba6f7" # rgb:cba6f7
-declare-option  -hidden str red       "rgba:f38ba8" # rgb:f38ba8
-declare-option  -hidden str maroon    "rgba:eba0ac" # rgb:eba0ac
-declare-option  -hidden str peach     "rgba:fab387" # rgb:fab387
-declare-option  -hidden str yellow    "rgba:f9e2af" # rgb:f9e2af
-declare-option  -hidden str green     "rgba:a6e3a1" # rgb:a6e3a1
-declare-option  -hidden str teal      "rgba:94e2d5" # rgb:94e2d5
-declare-option  -hidden str sky       "rgba:89dceb" # rgb:89dceb
-declare-option  -hidden str sapphire  "rgba:74c7ec" # rgb:74c7ec
-declare-option  -hidden str blue      "rgba:89b4fa" # rgb:89b4fa
-declare-option  -hidden str lavender  "rgba:b4befe" # rgb:b4befe
-declare-option  -hidden str text      "rgba:cdd6f4" # rgb:cdd6f4
-declare-option  -hidden str subtext1  "rgba:bac2de" # rgb:bac2de
-declare-option  -hidden str subtext0  "rgba:a6adc8" # rgb:a6adc8
-declare-option  -hidden str overlay2  "rgba:9399b2" # rgb:9399b2
-declare-option  -hidden str overlay1  "rgba:7f849c" # rgb:7f849c
-declare-option  -hidden str overlay0  "rgba:6c7086" # rgb:6c7086
-declare-option  -hidden str surface2  "rgba:585b70" # rgb:585b70
-declare-option  -hidden str surface1  "rgba:45475a" # rgb:45475a
-declare-option  -hidden str surface0  "rgba:313244" # rgb:313244
-declare-option  -hidden str base      "rgba:1e1e2e" # rgb:1e1e2e
-declare-option  -hidden str mantle    "rgba:181825" # rgb:181825
-declare-option  -hidden str crust     "rgba:11111b" # rgb:11111b
+evaluate-commands %sh{
+    rosewater='rgb:f5e0dc'
+    flamingo='rgb:f2cdcd'
+    pink='rgb:f5c2e7'
+    mauve='rgb:cba6f7'
+    red='rgb:f38ba8'
+    maroon='rgb:eba0ac'
+    peach='rgb:fab387'
+    yellow='rgb:f9e2af'
+    green='rgb:a6e3a1'
+    teal='rgb:94e2d5'
+    sky='rgb:89dceb'
+    sapphire='rgb:74c7ec'
+    blue='rgb:89b4fa'
+    lavender='rgb:b4befe'
+    text='rgb:cdd6f4'
+    subtext1='rgb:bac2de'
+    subtext0='rgb:a6adc8'
+    overlay2='rgb:9399b2'
+    overlay1='rgb:7f849c'
+    overlay0='rgb:6c7086'
+    surface2='rgb:585b70'
+    surface1='rgb:45475a'
+    surface0='rgb:313244'
+    base='rgb:1e1e2e'
+    mantle='rgb:181825'
+    crust='rgb:11111b'
 
-declare-option  -hidden str background "%opt{mantle}ff"
-declare-option  -hidden str foreground "%opt{text}ff"
+    echo "
+        set-face global title  ${text}+b
+        set-face global header ${subtext0}+b
+        set-face global bold   ${maroon}+b
+        set-face global italic ${maroon}+i
+        set-face global mono   ${green}
+        set-face global block  ${sapphire}
+        set-face global link   ${blue}
+        set-face global bullet ${peach}
+        set-face global list   ${peach}
 
-# Markup
-set-face global block  "%opt{sapphire}ff"
-set-face global bold   "%opt{mauve}ff"
-set-face global bullet "%opt{green}ff"
-set-face global header "%opt{red}ff"
-set-face global italic "%opt{lavender}ff"
-set-face global link   "%opt{green}ff"
-set-face global list   "%opt{text}ff"
-set-face global mono   "%opt{green}ff"
-set-face global title  "%opt{rosewater}ff"
+        set-face global Default            ${text},${base}
+        set-face global PrimarySelection   ${text},${surface2}
+        set-face global SecondarySelection ${text},${surface2}
+        set-face global PrimaryCursor      ${crust},${rosewater}
+        set-face global SecondaryCursor    ${text},${overlay0}
+        set-face global PrimaryCursorEol   ${surface2},${lavender}
+        set-face global SecondaryCursorEol ${surface2},${overlay1}
+        set-face global LineNumbers        ${overlay1},${base}
+        set-face global LineNumberCursor   ${rosewater},${surface2}+b
+        set-face global LineNumbersWrapped ${rosewater},${surface2}
+        set-face global MenuForeground     ${text},${surface1}+b
+        set-face global MenuBackground     ${text},${surface0}
+        set-face global MenuInfo           ${crust},${teal}
+        set-face global Information        ${crust},${teal}
+        set-face global Error              ${crust},${red}
+        set-face global StatusLine         ${text},${mantle}
+        set-face global StatusLineMode     ${crust},${yellow}
+        set-face global StatusLineInfo     ${crust},${teal}
+        set-face global StatusLineValue    ${crust},${yellow}
+        set-face global StatusCursor       ${crust},${rosewater}
+        set-face global Prompt             ${teal},${base}+b
+        set-face global MatchingChar       ${maroon},${base}
+        set-face global Whitespace         ${overlay1},${base}+f
+        set-face global WrapMarker         Whitespace
+        set-face global BufferPadding      ${base},${base}
 
-# Code
-set-face global attribute     "%opt{green}ff"
-set-face global builtin       "%opt{lavender}ff+b"
-set-face global comment       "%opt{overlay0}ff"
-set-face global documentation comment
-set-face global function      "%opt{sky}ff"
-set-face global keyword       "%opt{blue}ff"
-set-face global meta          "%opt{pink}ff"
-set-face global module        "%opt{maroon}ff"
-set-face global operator      "%opt{blue}ff"
-set-face global string        "%opt{green}ff"
-set-face global type          "%opt{rosewater}ff"
-set-face global value         "%opt{peach}ff"
-set-face global variable      "%opt{text}ff"
+        set-face global value         ${peach}
+        set-face global type          ${blue}
+        set-face global variable      ${text}
+        set-face global module        ${maroon}
+        set-face global function      ${blue}
+        set-face global string        ${green}
+        set-face global keyword       ${mauve}
+        set-face global operator      ${sky}
+        set-face global attribute     ${green}
+        set-face global comment       ${overlay0}
+        set-face global documentation comment
+        set-face global meta          ${yellow}
+        set-face global builtin       ${red}
 
-# Builtins
-set-face global BufferPadding      "%opt{background},%opt{crust}ff"
-set-face global Default            "%opt{text}ff,%opt{background}"
-set-face global Error              "%opt{red}ff,%opt{base}ff"
-set-face global Information        "%opt{text}ff,%opt{surface1}ff+b"
-set-face global LineNumberCursor   "%opt{lavender}ff,%opt{surface2}ff+b"
-set-face global LineNumbers        "%opt{overlay0}ff,%opt{background}"
-set-face global LineNumbersWrapped "%opt{teal}ff,%opt{mantle}ff+i"
-set-face global MatchingChar       "%opt{maroon}ff,%opt{base}ff"
-set-face global MenuBackground     "%opt{text}ff,%opt{surface0}ff"
-set-face global MenuForeground     "%opt{text}ff,%opt{surface2}ff+b"
-set-face global MenuInfo           "%opt{mantle}ff,%opt{blue}ff"
-set-face global Prompt             "%opt{green}ff,%opt{base}ff"
-set-face global StatusCursor       "%opt{mantle}ff,%opt{lavender}ff"
-set-face global StatusLineInfo     "%opt{background},%opt{green}ff"
-set-face global StatusLineMode     "%opt{base}ff,%opt{yellow}ff"
-set-face global StatusLine         "%opt{lavender}ff,%opt{mantle}ff"
-set-face global Whitespace         "%opt{overlay0}ff,%opt{background}+f"
-set-face global WrapMarker         Whitespace
-set-face global WhitespaceIndent   "%opt{surface0}ff,default+f"
+        # --- local: upstream has no indent guide face ---
+        set-face global WhitespaceIndent ${surface0},default+f
 
-set-face global PrimaryCursorEol   "%opt{surface2}ff,%opt{mauve}ff"
-set-face global PrimaryCursor      "%opt{background},%opt{rosewater}ff"
-set-face global PrimarySelection   "default,%opt{lavender}4d"
+        # --- local: kak-lsp ---
+        set-face global InlayDiagnosticError      ${red},${base}
+        set-face global InlayDiagnosticHint       ${lavender},${base}
+        set-face global InlayDiagnosticInfo       ${sky},${base}+d
+        set-face global InlayDiagnosticWarning    ${peach},${base}
+        set-face global DiagnosticError           default,+c@InlayDiagnosticError
+        set-face global DiagnosticHint            +u@InlayDiagnosticHint
+        set-face global DiagnosticInfo            InlayDiagnosticInfo
+        set-face global DiagnosticWarning         +U@InlayDiagnosticWarning
+        set-face global DiagnosticTagDeprecated   +s
+        set-face global DiagnosticTagUnnecessary  +cs
+        set-face global LineFlagError             ${red},${base}
+        set-face global LineFlagHint              default
+        set-face global LineFlagInfo              default
+        set-face global LineFlagWarning           ${yellow},${base}
+        set-face global ReferenceBind             default,${surface0}+bu
+        set-face global Reference                 default,${surface0}
+        set-face global InlayHint                 ${overlay0},${base}
+        set-face global InlayCodeLens             ${overlay0},${base}
+        set-face global InfoDefault               ${text},${surface1}+b
+        set-face global InfoBlock                 ${sapphire},${surface1}+b
+        set-face global InfoBlockQuote            ${green},${surface1}+b
+        set-face global InfoBullet                ${green},${surface1}+b
+        set-face global InfoHeader                ${red},${surface1}+bu
+        set-face global InfoLink                  ${green},${surface1}+bi
+        set-face global InfoLinkMono              ${green},${surface1}+bi
+        set-face global InfoMono                  ${green},${surface1}+b
+        set-face global InfoRule                  ${text},${surface1}+b
+        set-face global InfoDiagnosticError       ${red},${surface1}+b
+        set-face global InfoDiagnosticHint        ${lavender},${surface1}+b
+        set-face global InfoDiagnosticInformation ${sky},${surface1}+b
+        set-face global InfoDiagnosticWarning     ${peach},${surface1}+b
 
-set-face global SecondaryCursorEol "%opt{surface2}ff,%opt{maroon}ff"
-set-face global SecondaryCursor    "%opt{mantle}ff,%opt{teal}cc"
-set-face global SecondarySelection "default,%opt{lavender}1f"
+        # --- local: tree-sitter ---
+        set-face global ts_attribute                   ${blue}
+        set-face global ts_comment                     ${overlay0}+i
+        set-face global ts_conceal                     ${mauve}+i
+        set-face global ts_constant                    ${peach}
+        set-face global ts_constant_builtin_boolean    ${sky}
+        set-face global ts_constant_character          ${yellow}
+        set-face global ts_constant_macro              ${mauve}
+        set-face global ts_constructor                 ${sapphire}
+        set-face global ts_diff_plus                   ${green}
+        set-face global ts_diff_minus                  ${red}
+        set-face global ts_diff_delta                  ${blue}
+        set-face global ts_diff_delta_moved            ${mauve}
+        set-face global ts_error                       ${red}+b
+        set-face global ts_function                    ${blue}
+        set-face global ts_function_builtin            ${blue}+i
+        set-face global ts_function_macro              ${mauve}
+        set-face global ts_hint                        ${blue}+b
+        set-face global ts_info                        ${green}+b
+        set-face global ts_keyword                     ${mauve}
+        set-face global ts_keyword_conditional         ${mauve}+i
+        set-face global ts_keyword_control_conditional ${mauve}+i
+        set-face global ts_keyword_control_directive   ${mauve}+i
+        set-face global ts_keyword_control_import      ${mauve}+i
+        set-face global ts_keyword_directive           ${mauve}+i
+        set-face global ts_label                       ${sapphire}+i
+        set-face global ts_markup_bold                 ${peach}+b
+        set-face global ts_markup_heading              ${red}
+        set-face global ts_markup_heading_1            ${red}
+        set-face global ts_markup_heading_2            ${mauve}
+        set-face global ts_markup_heading_3            ${green}
+        set-face global ts_markup_heading_4            ${yellow}
+        set-face global ts_markup_heading_5            ${pink}
+        set-face global ts_markup_heading_6            ${sapphire}
+        set-face global ts_markup_heading_marker       ${peach}+b
+        set-face global ts_markup_italic               ${pink}+i
+        set-face global ts_markup_list_checked         ${green}
+        set-face global ts_markup_list_numbered        ${blue}+i
+        set-face global ts_markup_list_unchecked       ${sapphire}
+        set-face global ts_markup_list_unnumbered      ${mauve}
+        set-face global ts_markup_link_label           ${blue}
+        set-face global ts_markup_link_url             ${sapphire}+u
+        set-face global ts_markup_link_uri             ${sapphire}+u
+        set-face global ts_markup_link_text            ${blue}
+        set-face global ts_markup_quote                ${subtext0}
+        set-face global ts_markup_raw                  ${green}
+        set-face global ts_markup_strikethrough        ${subtext0}+s
+        set-face global ts_namespace                   ${blue}+i
+        set-face global ts_operator                    ${sky}
+        set-face global ts_property                    ${sky}
+        set-face global ts_punctuation                 ${overlay1}
+        set-face global ts_punctuation_special         ${sky}
+        set-face global ts_special                     ${blue}
+        set-face global ts_spell                       ${mauve}
+        set-face global ts_string                      ${green}
+        set-face global ts_string_regex                ${peach}
+        set-face global ts_string_regexp               ${peach}
+        set-face global ts_string_escape               ${mauve}
+        set-face global ts_string_special              ${blue}
+        set-face global ts_string_special_path         ${green}
+        set-face global ts_string_special_symbol       ${mauve}
+        set-face global ts_string_symbol               ${red}
+        set-face global ts_tag                         ${mauve}
+        set-face global ts_tag_error                   ${red}
+        set-face global ts_text                        ${text}
+        set-face global ts_text_title                  ${mauve}
+        set-face global ts_type                        ${yellow}
+        set-face global ts_type_enum_variant           ${flamingo}
+        set-face global ts_variable                    ${text}
+        set-face global ts_variable_builtin            ${red}
+        set-face global ts_variable_other_member       ${sapphire}
+        set-face global ts_variable_parameter          ${maroon}+i
+        set-face global ts_warning                     ${peach}+b
 
-# Switching to normal = lavender/green
-hook global ModeChange ".*:normal" %{
-  set-face global StatusLineInfo "%opt{background},%opt{green}ff"
-  set-face global StatusLineMode "%opt{background},%opt{lavender}ff"
-  set-face global StatusLine     "%opt{lavender}ff,%opt{mantle}ff"
+        # --- local: statusline follows the mode ---
+        hook global ModeChange '.*:normal' %{
+            set-face global StatusLineInfo ${crust},${green}
+            set-face global StatusLineMode ${crust},${lavender}
+            set-face global StatusLine     ${lavender},${mantle}
+        }
+        hook global ModeChange '.*:insert' %{
+            set-face global StatusLineInfo ${crust},${mauve}
+            set-face global StatusLineMode ${crust},${peach}
+            set-face global StatusLine     ${peach},${mantle}
+        }
+    "
 }
 
-# Switching to insert = peach/mauve
-hook global ModeChange ".*:insert" %{
-  set-face global StatusLineInfo "%opt{background},%opt{mauve}ff"
-  set-face global StatusLineMode "%opt{background},%opt{peach}ff"
-  set-face global StatusLine     "%opt{peach}ff,%opt{mantle}ff"
-}
-
-# LSP
-
-# Faces used by inlay diagnostics.
-set-face global InlayDiagnosticError           "%opt{red}ff,%opt{background}"
-set-face global InlayDiagnosticHint            "%opt{lavender}ff,%opt{background}"
-set-face global InlayDiagnosticInfo            "%opt{sky}ff,%opt{background}+d"
-set-face global InlayDiagnosticWarning         "%opt{peach}ff,%opt{background}"
-# Faces used by inline diagnostics.
-set-face global DiagnosticError                default,+c@InlayDiagnosticError
-set-face global DiagnosticHint                 +u@InlayDiagnosticHint
-set-face global DiagnosticInfo                 InlayDiagnosticInfo
-set-face global DiagnosticWarning              +U@InlayDiagnosticWarning
-set-face global DiagnosticTagDeprecated        +s
-set-face global DiagnosticTagUnnecessary       +cs
-# Faces used by line flags
-set-face global LineFlagError                  "%opt{red}ff,%opt{background}"
-set-face global LineFlagHint                   default
-set-face global LineFlagInfo                   default
-set-face global LineFlagWarning                "%opt{yellow}ff,%opt{background}"
-# Face for highlighting references.
-set-face global ReferenceBind                  "default,%opt{surface0}ff+bu"
-set-face global Reference                      "default,%opt{surface0}ff"
-# Face for inlay hints.
-set-face global InlayHint                      "%opt{overlay0}ff,%opt{background}"
-set-face global InlayCodeLens                  "%opt{overlay0}ff,%opt{background}"
-# Faces used for hover info
-set-face global InfoDefault                    "%opt{text}ff,%opt{surface1}ff+b"
-set-face global InfoBlock                      "%opt{sapphire}ff,%opt{surface1}ff+b"
-set-face global InfoBlockQuote                 "%opt{green}ff,%opt{surface1}ff+b"
-set-face global InfoBullet                     "%opt{green}ff,%opt{surface1}ff+b"
-set-face global InfoHeader                     "%opt{red}ff,%opt{surface1}ff+bu"
-set-face global InfoLink                       "%opt{green}ff,%opt{surface1}ff+bi"
-set-face global InfoLinkMono                   "%opt{green}ff,%opt{surface1}ff+bi"
-set-face global InfoMono                       "%opt{green}ff,%opt{surface1}ff+b"
-set-face global InfoRule                       "%opt{text}ff,%opt{surface1}ff+b"
-set-face global InfoDiagnosticError            "%opt{red}ff,%opt{surface1}ff+b"
-set-face global InfoDiagnosticHint             "%opt{lavender}ff,%opt{surface1}ff+b"
-set-face global InfoDiagnosticInformation      "%opt{sky}ff,%opt{surface1}ff+b"
-set-face global InfoDiagnosticWarning          "%opt{peach}ff,%opt{surface1}ff+b"
-
-# Tree-Sitter
-set-face global ts_attribute                    "%opt{blue}ff"
-set-face global ts_comment                      "%opt{overlay0}ff+i"
-set-face global ts_conceal                      "%opt{mauve}ff+i"
-set-face global ts_constant                     "%opt{peach}ff"
-set-face global ts_constant_builtin_boolean     "%opt{sky}ff"
-set-face global ts_constant_character           "%opt{yellow}ff"
-set-face global ts_constant_macro               "%opt{mauve}ff"
-set-face global ts_constructor                  "%opt{sapphire}ff"
-set-face global ts_diff_plus                    "%opt{green}ff"
-set-face global ts_diff_minus                   "%opt{red}ff"
-set-face global ts_diff_delta                   "%opt{blue}ff"
-set-face global ts_diff_delta_moved             "%opt{mauve}ff"
-set-face global ts_error                        "%opt{red}ff+b"
-set-face global ts_function                     "%opt{blue}ff"
-set-face global ts_function_builtin             "%opt{blue}ff+i"
-set-face global ts_function_macro               "%opt{mauve}ff"
-set-face global ts_hint                         "%opt{blue}ff+b"
-set-face global ts_info                         "%opt{green}ff+b"
-set-face global ts_keyword                      "%opt{mauve}ff"
-set-face global ts_keyword_conditional          "%opt{mauve}ff+i"
-set-face global ts_keyword_control_conditional  "%opt{mauve}ff+i"
-set-face global ts_keyword_control_directive    "%opt{mauve}ff+i"
-set-face global ts_keyword_control_import       "%opt{mauve}ff+i"
-set-face global ts_keyword_directive            "%opt{mauve}ff+i"
-set-face global ts_label                        "%opt{sapphire}ff+i"
-set-face global ts_markup_bold                  "%opt{peach}ff+b"
-set-face global ts_markup_heading               "%opt{red}ff"
-set-face global ts_markup_heading_1             "%opt{red}ff"
-set-face global ts_markup_heading_2             "%opt{mauve}ff"
-set-face global ts_markup_heading_3             "%opt{green}ff"
-set-face global ts_markup_heading_4             "%opt{yellow}ff"
-set-face global ts_markup_heading_5             "%opt{pink}ff"
-set-face global ts_markup_heading_6             "%opt{sapphire}ff"
-set-face global ts_markup_heading_marker        "%opt{peach}ff+b"
-set-face global ts_markup_italic                "%opt{pink}ff+i"
-set-face global ts_markup_list_checked          "%opt{green}ff"
-set-face global ts_markup_list_numbered         "%opt{blue}ff+i"
-set-face global ts_markup_list_unchecked        "%opt{sapphire}ff"
-set-face global ts_markup_list_unnumbered       "%opt{mauve}ff"
-set-face global ts_markup_link_label            "%opt{blue}ff"
-set-face global ts_markup_link_url              "%opt{sapphire}ff+u"
-set-face global ts_markup_link_uri              "%opt{sapphire}ff+u"
-set-face global ts_markup_link_text             "%opt{blue}ff"
-set-face global ts_markup_quote                 "%opt{subtext0}ff"
-set-face global ts_markup_raw                   "%opt{green}ff"
-set-face global ts_markup_strikethrough         "%opt{subtext0}ff+s"
-set-face global ts_namespace                    "%opt{blue}ff+i"
-set-face global ts_operator                     "%opt{sky}ff"
-set-face global ts_property                     "%opt{sky}ff"
-set-face global ts_punctuation                  "%opt{overlay1}ff"
-set-face global ts_punctuation_special          "%opt{sky}ff"
-set-face global ts_special                      "%opt{blue}ff"
-set-face global ts_spell                        "%opt{mauve}ff"
-set-face global ts_string                       "%opt{green}ff"
-set-face global ts_string_regex                 "%opt{peach}ff"
-set-face global ts_string_regexp                "%opt{peach}ff"
-set-face global ts_string_escape                "%opt{mauve}ff"
-set-face global ts_string_special               "%opt{blue}ff"
-set-face global ts_string_special_path          "%opt{green}ff"
-set-face global ts_string_special_symbol        "%opt{mauve}ff"
-set-face global ts_string_symbol                "%opt{red}ff"
-set-face global ts_tag                          "%opt{mauve}ff"
-set-face global ts_tag_error                    "%opt{red}ff"
-set-face global ts_text                         "%opt{text}ff"
-set-face global ts_text_title                   "%opt{mauve}ff"
-set-face global ts_type                         "%opt{yellow}ff"
-set-face global ts_type_enum_variant            "%opt{flamingo}ff"
-set-face global ts_variable                     "%opt{text}ff"
-set-face global ts_variable_builtin             "%opt{red}ff"
-set-face global ts_variable_other_member        "%opt{sapphire}ff"
-set-face global ts_variable_parameter           "%opt{maroon}ff+i"
-set-face global ts_warning                      "%opt{peach}ff+b"
-
-# kak-rainbow-rs — the plugin's defaults are hardcoded RainbowBrackets hues plus
-# a mocha-mantle scope background, so they have to follow the flavor too.
-# `try` keeps the colorscheme loadable when the plugin isn't present.
+# --- local: kak-rainbow-rs ---
+# The plugin defaults to hardcoded RainbowBrackets hues and a mocha-mantle scope
+# background, so the colors have to follow the flavor too. try keeps this file
+# loadable when the plugin is absent.
 try %{
-  set-option global rainbow_colors            rgb:fab387 rgb:f9e2af rgb:a6e3a1 rgb:89dceb rgb:89b4fa rgb:cba6f7
-  set-option global background_rainbow_colors rgb:3f343b rgb:3f3b41 rgb:323b3f rgb:2e3a4a rgb:2e344c rgb:38324c
-  set-option global rainbow_cursor_scope_color "rgb:181825"
+    set-option global rainbow_colors            rgb:fab387 rgb:f9e2af rgb:a6e3a1 rgb:89dceb rgb:89b4fa rgb:cba6f7
+    set-option global background_rainbow_colors rgb:3f343b rgb:3f3b41 rgb:323b3f rgb:2e3a4a rgb:2e344c rgb:38324c
+    set-option global rainbow_cursor_scope_color rgb:181825
 }
-
-
