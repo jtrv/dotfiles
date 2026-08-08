@@ -35,6 +35,39 @@ evaluate-commands %sh{
     crust='rgb:11111b'
 
     echo "
+        # --- local: the palette as options too ---
+        # kakrc's REasymotion faces and the espresso scheme reference
+        # %opt{<colour>}ff, which upstream's shell-variable structure does not
+        # provide. Emitted from the same variables so there is still one source
+        # of truth per flavor. Re-declaring updates the value, so switching
+        # flavors rewrites these rather than erroring.
+        declare-option -hidden str rosewater rgba:${rosewater#rgb:}
+        declare-option -hidden str flamingo  rgba:${flamingo#rgb:}
+        declare-option -hidden str pink      rgba:${pink#rgb:}
+        declare-option -hidden str mauve     rgba:${mauve#rgb:}
+        declare-option -hidden str red       rgba:${red#rgb:}
+        declare-option -hidden str maroon    rgba:${maroon#rgb:}
+        declare-option -hidden str peach     rgba:${peach#rgb:}
+        declare-option -hidden str yellow    rgba:${yellow#rgb:}
+        declare-option -hidden str green     rgba:${green#rgb:}
+        declare-option -hidden str teal      rgba:${teal#rgb:}
+        declare-option -hidden str sky       rgba:${sky#rgb:}
+        declare-option -hidden str sapphire  rgba:${sapphire#rgb:}
+        declare-option -hidden str blue      rgba:${blue#rgb:}
+        declare-option -hidden str lavender  rgba:${lavender#rgb:}
+        declare-option -hidden str text      rgba:${text#rgb:}
+        declare-option -hidden str subtext1  rgba:${subtext1#rgb:}
+        declare-option -hidden str subtext0  rgba:${subtext0#rgb:}
+        declare-option -hidden str overlay2  rgba:${overlay2#rgb:}
+        declare-option -hidden str overlay1  rgba:${overlay1#rgb:}
+        declare-option -hidden str overlay0  rgba:${overlay0#rgb:}
+        declare-option -hidden str surface2  rgba:${surface2#rgb:}
+        declare-option -hidden str surface1  rgba:${surface1#rgb:}
+        declare-option -hidden str surface0  rgba:${surface0#rgb:}
+        declare-option -hidden str base      rgba:${base#rgb:}
+        declare-option -hidden str mantle    rgba:${mantle#rgb:}
+        declare-option -hidden str crust     rgba:${crust#rgb:}
+
         set-face global title  ${text}+b
         set-face global header ${subtext0}+b
         set-face global bold   ${maroon}+b
