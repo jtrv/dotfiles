@@ -223,7 +223,7 @@
     "context7@claude-plugins-official": true,
     "gopls-lsp@claude-plugins-official": false,
     "learning-output-style@claude-plugins-official": true,
-    "playwright@claude-plugins-official": true,
+    "playwright@claude-plugins-official": false,
     "ponytail@ponytail": true,
     "pyright-lsp@claude-plugins-official": false,
     "ralph-loop@claude-plugins-official": true,
@@ -255,7 +255,7 @@
     }
   },
   "skipWorkflowUsageWarning": true,
-  "theme": "dark",
+  "theme": "auto",
   "editorMode": "normal",
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true
