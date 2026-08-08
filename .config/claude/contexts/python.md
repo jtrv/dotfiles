@@ -137,9 +137,10 @@ above). Mostly anti-Java-isms:
   checking files that can break the build while still reading green — strictly worse
   than no change. Ask what a speed-up stops checking; measure claimed numbers
   yourself.
-- **Independent adversarial review:** fresh agent told to hunt defects, findings back
-  to the implementer, re-review; ~3 rounds. Cross-model plan refutation is the
-  `plan-refute` skill.
+- **Review goes cross-model:** hand the diff to Codex (`codex:codex-rescue`), told
+  to hunt defects and not praise. Findings back to the implementer; re-review only
+  what changed. A same-family reviewer mostly confirms — leaving the family is the
+  point. Plans get the same treatment via the `plan-refute` skill.
 - **Mutation testing** (break wiring, confirm red) and **negative controls** (remove
   the fix, confirm the regression test fails).
 - **Reproduce empirically** in a separate `git worktree` — never stash/reset in a

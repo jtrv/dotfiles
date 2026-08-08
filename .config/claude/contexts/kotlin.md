@@ -124,9 +124,10 @@ rules, translated:
   full-suite load = load flake — say so; don't "fix" the test and destroy its signal.
 - **A test asserting a default you changed** gets updated to pin the NEW value —
   never loosened or deleted.
-- **Independent adversarial review:** fresh agent told to hunt defects, findings back
-  to the implementer, re-review; ~3 rounds. Cross-model plan refutation is the
-  `plan-refute` skill.
+- **Review goes cross-model:** hand the diff to Codex (`codex:codex-rescue`), told
+  to hunt defects and not praise. Findings back to the implementer; re-review only
+  what changed. A same-family reviewer mostly confirms — leaving the family is the
+  point. Plans get the same treatment via the `plan-refute` skill.
 - **Mutation testing** (break wiring, confirm red) and **negative controls** (remove
   the fix, confirm the regression test fails).
 - **Reproduce empirically** in a separate `git worktree` — never stash/reset in a
