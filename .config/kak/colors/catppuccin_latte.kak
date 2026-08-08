@@ -1,32 +1,32 @@
 # Catppuccin theme for Kakoune
 
 # Color palette
-declare-option  -hidden str rosewater "rgba:f5e0dc" # rgb:f5e0dc
-declare-option  -hidden str flamingo  "rgba:f2cdcd" # rgb:f2cdcd
-declare-option  -hidden str pink      "rgba:f5c2e7" # rgb:f5c2e7
-declare-option  -hidden str mauve     "rgba:cba6f7" # rgb:cba6f7
-declare-option  -hidden str red       "rgba:f38ba8" # rgb:f38ba8
-declare-option  -hidden str maroon    "rgba:eba0ac" # rgb:eba0ac
-declare-option  -hidden str peach     "rgba:fab387" # rgb:fab387
-declare-option  -hidden str yellow    "rgba:f9e2af" # rgb:f9e2af
-declare-option  -hidden str green     "rgba:a6e3a1" # rgb:a6e3a1
-declare-option  -hidden str teal      "rgba:94e2d5" # rgb:94e2d5
-declare-option  -hidden str sky       "rgba:89dceb" # rgb:89dceb
-declare-option  -hidden str sapphire  "rgba:74c7ec" # rgb:74c7ec
-declare-option  -hidden str blue      "rgba:89b4fa" # rgb:89b4fa
-declare-option  -hidden str lavender  "rgba:b4befe" # rgb:b4befe
-declare-option  -hidden str text      "rgba:cdd6f4" # rgb:cdd6f4
-declare-option  -hidden str subtext1  "rgba:bac2de" # rgb:bac2de
-declare-option  -hidden str subtext0  "rgba:a6adc8" # rgb:a6adc8
-declare-option  -hidden str overlay2  "rgba:9399b2" # rgb:9399b2
-declare-option  -hidden str overlay1  "rgba:7f849c" # rgb:7f849c
-declare-option  -hidden str overlay0  "rgba:6c7086" # rgb:6c7086
-declare-option  -hidden str surface2  "rgba:585b70" # rgb:585b70
-declare-option  -hidden str surface1  "rgba:45475a" # rgb:45475a
-declare-option  -hidden str surface0  "rgba:313244" # rgb:313244
-declare-option  -hidden str base      "rgba:1e1e2e" # rgb:1e1e2e
-declare-option  -hidden str mantle    "rgba:181825" # rgb:181825
-declare-option  -hidden str crust     "rgba:11111b" # rgb:11111b
+declare-option  -hidden str rosewater "rgba:dc8a78" # rgb:dc8a78
+declare-option  -hidden str flamingo  "rgba:dd7878" # rgb:dd7878
+declare-option  -hidden str pink      "rgba:ea76cb" # rgb:ea76cb
+declare-option  -hidden str mauve     "rgba:8839ef" # rgb:8839ef
+declare-option  -hidden str red       "rgba:d20f39" # rgb:d20f39
+declare-option  -hidden str maroon    "rgba:e64553" # rgb:e64553
+declare-option  -hidden str peach     "rgba:fe640b" # rgb:fe640b
+declare-option  -hidden str yellow    "rgba:df8e1d" # rgb:df8e1d
+declare-option  -hidden str green     "rgba:40a02b" # rgb:40a02b
+declare-option  -hidden str teal      "rgba:179299" # rgb:179299
+declare-option  -hidden str sky       "rgba:04a5e5" # rgb:04a5e5
+declare-option  -hidden str sapphire  "rgba:209fb5" # rgb:209fb5
+declare-option  -hidden str blue      "rgba:1e66f5" # rgb:1e66f5
+declare-option  -hidden str lavender  "rgba:7287fd" # rgb:7287fd
+declare-option  -hidden str text      "rgba:4c4f69" # rgb:4c4f69
+declare-option  -hidden str subtext1  "rgba:5c5f77" # rgb:5c5f77
+declare-option  -hidden str subtext0  "rgba:6c6f85" # rgb:6c6f85
+declare-option  -hidden str overlay2  "rgba:7c7f93" # rgb:7c7f93
+declare-option  -hidden str overlay1  "rgba:8c8fa1" # rgb:8c8fa1
+declare-option  -hidden str overlay0  "rgba:9ca0b0" # rgb:9ca0b0
+declare-option  -hidden str surface2  "rgba:acb0be" # rgb:acb0be
+declare-option  -hidden str surface1  "rgba:bcc0cc" # rgb:bcc0cc
+declare-option  -hidden str surface0  "rgba:ccd0da" # rgb:ccd0da
+declare-option  -hidden str base      "rgba:eff1f5" # rgb:eff1f5
+declare-option  -hidden str mantle    "rgba:e6e9ef" # rgb:e6e9ef
+declare-option  -hidden str crust     "rgba:dce0e8" # rgb:dce0e8
 
 declare-option  -hidden str background "%opt{mantle}ff"
 declare-option  -hidden str foreground "%opt{text}ff"
@@ -78,12 +78,15 @@ set-face global Whitespace         "%opt{overlay0}ff,%opt{background}+f"
 set-face global WrapMarker         Whitespace
 set-face global WhitespaceIndent   "%opt{surface0}ff,default+f"
 
-set-face global PrimaryCursorEol   "%opt{surface2}ff,%opt{mauve}ff"
-set-face global PrimaryCursor      "%opt{background},%opt{rosewater}ff"
+# latte deviation: mocha uses %opt{background} / %opt{surface2} as the cursor
+# foregrounds — near-black there, near-white here, so the pure palette swap left
+# the main cursor at 2.17 contrast. Dark/light foregrounds picked per accent.
+set-face global PrimaryCursorEol   "%opt{base}ff,%opt{mauve}ff"
+set-face global PrimaryCursor      "%opt{text}ff,%opt{rosewater}ff"
 set-face global PrimarySelection   "default,%opt{lavender}4d"
 
-set-face global SecondaryCursorEol "%opt{surface2}ff,%opt{maroon}ff"
-set-face global SecondaryCursor    "%opt{mantle}ff,%opt{teal}cc"
+set-face global SecondaryCursorEol "%opt{base}ff,%opt{maroon}ff"
+set-face global SecondaryCursor    "%opt{text}ff,%opt{teal}cc"
 set-face global SecondarySelection "default,%opt{lavender}1f"
 
 # Switching to normal = lavender/green
@@ -93,11 +96,13 @@ hook global ModeChange ".*:normal" %{
   set-face global StatusLine     "%opt{lavender}ff,%opt{mantle}ff"
 }
 
-# Switching to insert = peach/mauve
+# Switching to insert = red/mauve
+# (latte deviation: mocha uses peach here, but latte's peach #fe640b carries
+#  only 2.45 contrast against the near-white statusline text; red gives 4.46)
 hook global ModeChange ".*:insert" %{
   set-face global StatusLineInfo "%opt{background},%opt{mauve}ff"
-  set-face global StatusLineMode "%opt{background},%opt{peach}ff"
-  set-face global StatusLine     "%opt{peach}ff,%opt{mantle}ff"
+  set-face global StatusLineMode "%opt{background},%opt{red}ff"
+  set-face global StatusLine     "%opt{red}ff,%opt{mantle}ff"
 }
 
 # LSP
@@ -218,9 +223,9 @@ set-face global ts_warning                      "%opt{peach}ff+b"
 # a mocha-mantle scope background, so they have to follow the flavor too.
 # `try` keeps the colorscheme loadable when the plugin isn't present.
 try %{
-  set-option global rainbow_colors            rgb:fab387 rgb:f9e2af rgb:a6e3a1 rgb:89dceb rgb:89b4fa rgb:cba6f7
-  set-option global background_rainbow_colors rgb:3f343b rgb:3f3b41 rgb:323b3f rgb:2e3a4a rgb:2e344c rgb:38324c
-  set-option global rainbow_cursor_scope_color "rgb:181825"
+  set-option global rainbow_colors            rgb:fe640b rgb:df8e1d rgb:40a02b rgb:04a5e5 rgb:1e66f5 rgb:8839ef
+  set-option global background_rainbow_colors rgb:f1e0d9 rgb:ede5db rgb:dae7dc rgb:d2e8f3 rgb:d6e0f5 rgb:e2dbf4
+  set-option global rainbow_cursor_scope_color "rgb:e6e9ef"
 }
 
 
