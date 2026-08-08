@@ -55,6 +55,7 @@ cargo-tarpaulin
 cargo-udeps
 cargo-update
 catdoc
+catppuccin-cursors-latte
 catppuccin-cursors-mocha
 ccache
 chaotic-keyring
@@ -295,7 +296,6 @@ responsively
 revive
 ripgrep-all
 rkhunter
-rofi
 rsync
 ruby
 ruby-build

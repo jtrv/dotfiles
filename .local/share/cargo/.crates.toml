@@ -56,6 +56,7 @@
 "mise 2026.4.5 (registry+https://github.com/rust-lang/crates.io-index)" = ["mise"]
 "netwatch-tui 0.28.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["netwatch"]
 "protonup-rs 0.11.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["protonup-rs"]
+"purrista 0.1.0 (path+file:///home/sugimoto/repos/purrista)" = ["purrista"]
 "putzen-cli 3.3.3 (registry+https://github.com/rust-lang/crates.io-index)" = ["putzen"]
 "qrtool 0.13.2 (registry+https://github.com/rust-lang/crates.io-index)" = ["qrtool"]
 "ripdrag 0.4.11 (registry+https://github.com/rust-lang/crates.io-index)" = ["ripdrag"]
