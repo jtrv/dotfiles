@@ -81,7 +81,7 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "opus",
+  "model": "fable",
   "skillOverrides": {
     "find-skills": "on",
     "writing-skills": "on",
@@ -98,6 +98,10 @@
           {
             "type": "command",
             "command": "bash \"/home/sugimoto/.config/claude/hooks/nosleep.sh\" release"
+          },
+          {
+            "type": "command",
+            "command": "bash \"/home/sugimoto/.config/claude/hooks/herdr-codex-state.sh\" clear"
           }
         ]
       }
@@ -124,6 +128,10 @@
           {
             "type": "command",
             "command": "bash \"/home/sugimoto/.config/claude/hooks/nosleep.sh\" release"
+          },
+          {
+            "type": "command",
+            "command": "bash \"/home/sugimoto/.config/claude/hooks/herdr-codex-state.sh\" clear"
           }
         ]
       }
@@ -179,6 +187,10 @@
           {
             "type": "command",
             "command": "bash \"/home/sugimoto/.config/claude/hooks/nosleep.sh\" release"
+          },
+          {
+            "type": "command",
+            "command": "bash \"/home/sugimoto/.config/claude/hooks/herdr-codex-state.sh\" stop"
           }
         ]
       }
