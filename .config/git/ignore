@@ -5,8 +5,10 @@
 .my-notes*
 
 AGENTS.md
+config.local.toml
 mise.local.toml
 skyspell-ignore.toml
+graphify*
 
 **/.claude/settings.local.json
 *.env

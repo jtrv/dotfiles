@@ -1,4 +1,5 @@
 {
+  "env": {},
   "permissions": {
     "deny": [
       "Read(**/.env)",
@@ -6,29 +7,101 @@
       "Read(**/.env.*.local)",
       "Read(**/.env.production)",
       "Read(**/.env.development)",
+      "Read(**/.env.staging)",
+      "Read(**/.env.test)",
       "Read(**/*.pem)",
       "Read(**/*.key)",
       "Read(**/*.p12)",
       "Read(**/*.pfx)",
+      "Read(**/*.jks)",
+      "Read(**/*.keystore)",
+      "Read(**/*.ppk)",
+      "Read(**/*.asc)",
+      "Read(**/*.gpg)",
+      "Read(**/*.p8)",
+      "Read(**/*.kdbx)",
+      "Read(**/*.ovpn)",
       "Read(**/id_rsa)",
+      "Read(**/id_dsa)",
       "Read(**/id_ecdsa)",
       "Read(**/id_ed25519)",
       "Read(**/.ssh/**)",
       "Read(**/.aws/**)",
       "Read(**/.gnupg/**)",
+      "Read(**/.kube/**)",
+      "Read(**/.docker/**)",
+      "Read(**/.azure/**)",
+      "Read(**/.config/gcloud/**)",
+      "Read(**/.local/share/keyrings/**)",
+      "Read(**/.password-store/**)",
       "Read(**/.netrc)",
       "Read(**/.npmrc)",
       "Read(**/.pypirc)",
       "Read(**/.git-credentials)",
+      "Read(**/.htpasswd)",
+      "Read(**/.pgpass)",
+      "Read(**/.my.cnf)",
+      "Read(**/.authinfo)",
+      "Read(**/.authinfo.gpg)",
+      "Read(**/credentials)",
       "Read(**/credentials.json)",
+      "Read(**/credentials.yaml)",
+      "Read(**/credentials.yml)",
+      "Read(**/credentials.toml)",
+      "Read(**/credentials.ini)",
+      "Read(**/credentials.csv)",
+      "Read(**/.credentials.json)",
+      "Read(**/.credentials.yaml)",
+      "Read(**/.credentials.yml)",
+      "Read(**/secret.json)",
+      "Read(**/secret.yaml)",
+      "Read(**/secret.yml)",
       "Read(**/secrets.json)",
       "Read(**/secrets.yaml)",
       "Read(**/secrets.yml)",
-      "Read(**/terraform.tfvars)"
+      "Read(**/secrets.toml)",
+      "Read(**/secrets.ini)",
+      "Read(**/secrets.txt)",
+      "Read(**/secrets.enc)",
+      "Read(**/secrets.env)",
+      "Read(**/terraform.tfvars)",
+      "Read(**/*service-account*.json)",
+      "Read(**/*service_account*.json)",
+      "Read(**/*serviceaccount*.json)",
+      "Read(**/*client_secret*)",
+      "Read(**/*serviceAccountKey*)",
+      "Read(**/*firebase-adminsdk*)",
+      "Read(**/auth.json)",
+      "Read(**/.auth.json)",
+      "Read(**/gh/hosts.yml)",
+      "Read(**/gh/hosts.yaml)",
+      "Read(**/rclone.conf)",
+      "Read(**/age/keys.txt)",
+      "Read(**/mise.local.toml)"
     ],
     "defaultMode": "auto"
   },
+  "model": "opus",
+  "skillOverrides": {
+    "find-skills": "on",
+    "writing-skills": "on",
+    "vercel-composition-patterns": "off",
+    "vercel-optimize": "off",
+    "vercel-react-best-practices": "off",
+    "vercel-react-native-skills": "off",
+    "vercel-react-view-transitions": "off"
+  },
   "hooks": {
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"/home/sugimoto/.config/claude/hooks/nosleep.sh\" release"
+          }
+        ]
+      }
+    ],
     "PreToolUse": [
       {
         "matcher": "*",
@@ -41,6 +114,16 @@
           {
             "type": "command",
             "command": "bash \"/home/sugimoto/.config/claude/hooks/nosleep.sh\" acquire"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"/home/sugimoto/.config/claude/hooks/nosleep.sh\" release"
           }
         ]
       }
@@ -69,37 +152,28 @@
             "command": "\"/home/sugimoto/.config/claude/hooks/capture-window.sh\""
           }
         ]
+      },
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash '/home/sugimoto/.config/claude/hooks/herdr-agent-state.sh' session",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Context was just compacted. Summaries drift: re-read any state.md/ledger and the relevant ~/.config/claude/contexts/ file before continuing; treat compaction-summary claims about decisions and constraints as unverified until checked against the ledger.'"
+          }
+        ]
       }
     ],
     "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash \"/home/sugimoto/.config/claude/hooks/nosleep.sh\" release"
-          },
-          {
-            "type": "command",
-            "command": "bash \"/home/sugimoto/.config/claude/hooks/notify-done.sh\""
-          }
-        ]
-      }
-    ],
-    "Notification": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash \"/home/sugimoto/.config/claude/hooks/nosleep.sh\" release"
-          },
-          {
-            "type": "command",
-            "command": "bash \"/home/sugimoto/.config/claude/hooks/notify-done.sh\""
-          }
-        ]
-      }
-    ],
-    "SessionEnd": [
       {
         "hooks": [
           {
@@ -126,6 +200,16 @@
           }
         ]
       }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Preserve verbatim in the summary: current objective; decisions with status (accepted/provisional/superseded); failed attempts and why; constraints and rules currently in effect; the exact next action. If a state.md or ledger file exists for this task, note its path prominently.'"
+          }
+        ]
+      }
     ]
   },
   "enableWorkflows": true,
@@ -134,30 +218,23 @@
     "command": "bash \"/home/sugimoto/.config/claude/statusline/statusline.sh\""
   },
   "enabledPlugins": {
-    "rust-analyzer-lsp@claude-plugins-official": true,
-    "typescript-lsp@claude-plugins-official": true,
-    "context7@claude-plugins-official": true,
-    "code-simplifier@claude-plugins-official": true,
-    "playwright@claude-plugins-official": true,
-    "security-guidance@claude-plugins-official": true,
-    "ralph-loop@claude-plugins-official": true,
-    "vercel@claude-plugins-official": true,
-    "pyright-lsp@claude-plugins-official": true,
-    "learning-output-style@claude-plugins-official": true,
-    "gopls-lsp@claude-plugins-official": true,
-    "remember@claude-plugins-official": true,
-    "skill-creator@claude-plugins-official": true,
-    "ponytail@ponytail": true,
+    "codex@openai-codex": true,
     "context-mode@context-mode": true,
-    "codex@openai-codex": true
+    "context7@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": false,
+    "learning-output-style@claude-plugins-official": true,
+    "playwright@claude-plugins-official": false,
+    "ponytail@ponytail": true,
+    "pyright-lsp@claude-plugins-official": false,
+    "ralph-loop@claude-plugins-official": true,
+    "remember@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "security-guidance@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "vercel@claude-plugins-official": false
   },
   "extraKnownMarketplaces": {
-    "ponytail": {
-      "source": {
-        "source": "github",
-        "repo": "DietrichGebert/ponytail"
-      }
-    },
     "context-mode": {
       "source": {
         "source": "github",
@@ -169,10 +246,17 @@
         "source": "github",
         "repo": "openai/codex-plugin-cc"
       }
+    },
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
+      }
     }
   },
   "skipWorkflowUsageWarning": true,
-  "theme": "dark",
+  "theme": "auto",
   "editorMode": "normal",
-  "model": "opus"
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true
 }

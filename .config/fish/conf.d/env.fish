@@ -13,6 +13,7 @@ set -gx XDG_STATE_HOME    "$HOME/.local/state"
 set -gx BUNDLE_USER_CACHE "$XDG_CACHE_HOME/bundle"
 set -gx CODEX_HOME        "$XDG_CACHE_HOME/codex"
 set -gx LESSHISTFILE      "$XDG_CACHE_HOME/less/history"
+set -gx PUB_CACHE         "$XDG_CACHE_HOME/pub"
 set -gx TEXMFVAR          "$XDG_CACHE_HOME/texlive/texmf-var"
 
 # Config
@@ -56,6 +57,7 @@ set -gx W3M_DIR            "$XDG_DATA_HOME/w3m"
 set -gx XAUTHORITY "$XDG_RUNTIME_DIR/Xauthority"
 
 # State
+set -gx ANALYZER_STATE_LOCATION_OVERRIDE "$XDG_STATE_HOME/Dart/analysis_server"
 set -gx HISTFILE "$XDG_STATE_HOME/bash/history"
 
 # Misc

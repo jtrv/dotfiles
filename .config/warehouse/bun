@@ -10,6 +10,8 @@ bash-language-server
 caniuse-lite
 knip
 madge
+oxfmt
+oxlint
 prettier
 purgecss
 skills

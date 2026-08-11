@@ -1,4 +1,4 @@
-daemonize = true
+daemonize = false
 max_history = 100
 
 [log]
