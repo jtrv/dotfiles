@@ -1,0 +1,6 @@
+basedpyright v1.39.0
+graphifyy v0.9.25
+markitdown v0.1.5
+python-lsp-server v1.14.0
+ruff v0.15.9
+skillspector v2.3.11 [required:  git+https://github.com/NVIDIA/skillspector.git]
