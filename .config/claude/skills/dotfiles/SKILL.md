@@ -9,10 +9,10 @@ The dotfiles are a **bare git repo**: git dir `$DOTFILES` (`~/.config/dotfiles`)
 work-tree `$HOME`. Every git call needs both flags:
 
 ```sh
-/usr/bin/git --git-dir="$DOTFILES" --work-tree="$HOME" <cmd>
+command git --git-dir="$DOTFILES" --work-tree="$HOME" <cmd>
 ```
 
-Use `/usr/bin/git` (not a shell alias) so it works regardless of shell config.
+Use `command git` (not a shell alias) so it works regardless of shell config.
 Pathspecs are matched against the cwd — pass **absolute `$HOME/...` paths**, not
 the `../../` paths that `status` prints.
 
