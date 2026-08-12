@@ -5,7 +5,7 @@
       "repo": "anthropics/claude-plugins-official"
     },
     "installLocation": "/home/sugimoto/.config/claude/plugins/marketplaces/claude-plugins-official",
-    "lastUpdated": "2026-08-03T20:41:46.745Z"
+    "lastUpdated": "2026-07-27T05:29:00.395Z"
   },
   "ponytail": {
     "source": {
@@ -21,7 +21,7 @@
       "repo": "mksglu/context-mode"
     },
     "installLocation": "/home/sugimoto/.config/claude/plugins/marketplaces/context-mode",
-    "lastUpdated": "2026-07-02T17:10:52.070Z"
+    "lastUpdated": "2026-07-25T02:00:27.333Z"
   },
   "openai-codex": {
     "source": {
@@ -29,6 +29,6 @@
       "repo": "openai/codex-plugin-cc"
     },
     "installLocation": "/home/sugimoto/.config/claude/plugins/marketplaces/openai-codex",
-    "lastUpdated": "2026-07-22T21:00:59.498Z"
+    "lastUpdated": "2026-07-22T00:30:36.882Z"
   }
 }

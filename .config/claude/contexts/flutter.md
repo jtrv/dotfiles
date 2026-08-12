@@ -40,9 +40,19 @@ speed-up stops checking, and measure its claimed numbers yourself (a handoff doc
 is the compiler" measured at 28%).
 
 **Standing rules** (with `very_good_analysis` or any strict lint set): zero warnings
-*and* zero infos; no `!` bang operators; exhaustive `switch` with no `default` arm;
-explicit null handling. `// ignore:` is a last resort with a documented reason; respect
-any ignore budget.
+*and* zero infos; exhaustive `switch` with no `default` arm; explicit null handling.
+`// ignore:` is a last resort with a documented reason; respect any ignore budget — and
+if that budget is a `grep -c` for a literal string, the string counts inside prose
+comments too, so don't write it in explanatory text.
+
+**`!` is a claim, not a smell.** A blanket "no bang operators" rule doesn't survive
+contact with real Dart — `Map[]` is unconditionally nullable, so every SQL row read is
+`row['col']!`, and Dart can't promote a non-local field or carry a `.where` filter into
+the closure that follows it. Those bangs are the language, not sloppiness. The rule that
+holds: **a `!` the reader can't verify from the adjacent lines needs a comment naming the
+invariant it relies on** (`// Safe: PowerSync only omits opData for delete`). One that
+asserts an invariant nothing establishes is the bug — fix it at the type. Audit for the
+uncommented, unguarded ones; leave the mechanical ones alone.
 
 **Named idioms** (only what the lint set can't check — don't restate lints):
 
@@ -92,6 +102,21 @@ Notes:
 - **A test asserting a default you changed** gets updated to pin the NEW value — never
   loosened to `isNotNull` or deleted. The assertion is the record of the decision.
 - **`TMPDIR` must exist** or `flutter test` dies with an unrelated-looking error.
+
+**Race idioms are mandatory, not stylistic.** Each of these is a test that passes on your
+machine and fails in CI:
+
+- **Poll, don't assume, after an un-awaited write.** A `waitFor()` helper that retries the
+  read until it matches (or times out) — never a bare read on the next line, and never a
+  fixed `pump(Duration(...))` tuned until it went green.
+- **Pump until the target is on screen before tapping it.** SnackBar actions are the
+  classic: the tap lands on nothing while the bar is still animating in, and the failure
+  reads as "action didn't fire" rather than "wasn't there yet".
+- **Fire-and-forget db work outlives the test.** Wrap it best-effort — an unhandled async
+  error after teardown fails a *different*, innocent test, which is the worst possible
+  place to spend debugging time.
+- **Real IO inside a `testWidgets` body must be synchronous or under `tester.runAsync`.**
+  The fake clock doesn't drive real async, so anything else hangs until timeout.
 
 ## 2. See the UI: headless screen capture
 
@@ -172,9 +197,10 @@ PNG shows what its name claims; only then reason about the design.
 
 ## 3. Review discipline
 
-- **Independent adversarial review:** fresh agent, told to hunt defects and not
-  praise; findings back to the implementer, then re-review. ~3 rounds, each finds
-  something real.
+- **Review goes cross-model:** hand the diff to Codex (`codex:codex-rescue`), told
+  to hunt defects and not praise. Findings back to the implementer; re-review only
+  what changed. A same-family reviewer mostly confirms — leaving the family is the
+  point. Plans get the same treatment via the `plan-refute` skill.
 - **Mutation testing:** break each piece of wiring on purpose; if no test fails, the
   test defends nothing.
 - **Negative controls:** remove the fix, confirm the regression test fails.

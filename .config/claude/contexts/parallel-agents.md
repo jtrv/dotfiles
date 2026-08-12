@@ -1,3 +1,5 @@
 # Parallel edit agents
 
 When multiple agents edit one working tree concurrently, each brief must forbid `git stash`, `git reset`, `git checkout`/`git restore` outside the agent's assigned files, and any other tree-wide git state change — one agent stashing silently wipes the others' uncommitted edits. For a pristine baseline, use an isolated `git worktree`. Commit each agent's files as soon as it finishes; don't batch.
+
+If agents run on separate branches, the worktree *is* the lease — git refuses two checkouts of one branch within one clone, so name them deterministically and on conflict refuse rather than force. Ban `push --force`: a non-fast-forward bounces a stale worker, which is the only fencing git gives you. Reclaiming a slot means killing the whole process tree and verifying it's dead *first* — never take a branch back from a live worker; if the kill won't take, park the slot for a human. Skip heartbeats, TTL reclaim, and queue daemons; if you're reaching for those, the answer is fewer agents.
