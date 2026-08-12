@@ -1,12 +1,7 @@
-@ast-grep/cli
 @ast-grep/napi
 @fsouza/prettierd
-@olrtg/emmet-language-server
 @openai/codex
-@prisma/language-server
-@tailwindcss/language-server
 @unocss/cli
-bash-language-server
 caniuse-lite
 knip
 madge
@@ -15,11 +10,7 @@ oxlint
 prettier
 purgecss
 skills
-svelte-language-server
 type-coverage
 typescript
-typescript-language-server
 unocss-language-server
 vercel
-vscode-langservers-extracted
-yaml-language-server
