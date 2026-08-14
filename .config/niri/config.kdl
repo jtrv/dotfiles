@@ -83,10 +83,17 @@ overview {
     backdrop-color "#00000000"
 }
 
-spawn-at-startup "alacritty" "--daemon" // terminal daemon
-spawn-at-startup "mako"                 // notifications
-spawn-at-startup "niri-edge-pan"        // niri-edge-pan
-spawn-at-startup "waybar"               // status bar
+// terminal daemon
+spawn-at-startup "alacritty" "--daemon"
+
+// notifications
+spawn-at-startup "mako"
+
+// status bar
+spawn-at-startup "waybar"
+
+// hot-edges to swap windows / workspaces with cursor
+spawn-at-startup "niri-edge-pan"
 
 screenshot-path "~/pictures/screenshots/%Y-%m-%d_%H-%M-%S.png"
 
