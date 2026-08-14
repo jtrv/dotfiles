@@ -1,0 +1,1932 @@
+/* ---------------------------------------------------------------------------
+ * Catppuccin for tidal-hifi, both flavors in one file.
+ *
+ * The palette is defined twice -- mocha by default, latte under
+ * prefers-color-scheme: light -- and every rule below refers to it by name. The
+ * app is Electron and never sets nativeTheme.themeSource, so Chromium repaints
+ * the moment the desktop flavor changes. Nothing rewrites this file and no
+ * restart is needed, which is why `purrista` does not list it as a surface.
+ *
+ * The cue Chromium actually reads is the GTK theme, on X11 and Wayland alike --
+ * flipping the portal's org.freedesktop.appearance colour-scheme on its own
+ * leaves the app where it was. `purrista` sets gsettings gtk-theme, so both
+ * paths work, but a light desktop that keeps a dark GTK theme will not.
+ *
+ * Keep new colours in the palette below rather than inlining a hex, or that
+ * colour will be stuck on one flavor.
+ *
+ * config.json is tracked next to this file, but the app rewrites it on exit --
+ * edit it only while tidal-hifi is closed or the change is lost. Two values in
+ * it matter: theme "Catppuccin.css", which selects this file, and Wayland
+ * support under flags. The rest is defaults and window geometry.
+ * ------------------------------------------------------------------------- */
+
+:root {
+  --ctp-base: #1e1e2e;
+  --ctp-blue: #89b4fa;
+  --ctp-crust: #11111b;
+  --ctp-green: #a6e3a1;
+  --ctp-mantle: #181825;
+  --ctp-mauve: #cba6f7;
+  --ctp-overlay0: #6c7086;
+  --ctp-overlay1: #7f849c;
+  --ctp-overlay2: #9399b2;
+  --ctp-red: #f38ba8;
+  --ctp-subtext0: #a6adc8;
+  --ctp-subtext1: #bac2de;
+  --ctp-surface0: #313244;
+  --ctp-surface1: #45475a;
+  --ctp-surface2: #585b70;
+  --ctp-teal: #94e2d5;
+  --ctp-text: #cdd6f4;
+  --ctp-yellow: #f9e2af;
+  --ctp-base-cc: #1e1e2ecc;
+  --ctp-crust-1a: #11111b1a;
+  --ctp-crust-33: #11111b33;
+  --ctp-crust-66: #11111b66;
+  --ctp-crust-99: #11111b99;
+  --ctp-crust-cc: #11111bcc;
+  --ctp-mantle-33: #18182533;
+  --ctp-mantle-80: #18182580;
+  --ctp-mantle-99: #18182599;
+  --ctp-mantle-cc: #181825cc;
+  --ctp-surface0-1a: #3132441a;
+  --ctp-surface0-33: #31324433;
+  --ctp-surface0-66: #31324466;
+  --ctp-text-0d: #cdd6f40d;
+  --ctp-text-14: #cdd6f414;
+  --ctp-text-1a: #cdd6f41a;
+  --ctp-text-26: #cdd6f426;
+  --ctp-text-33: #cdd6f433;
+  --ctp-text-59: #cdd6f459;
+  --ctp-text-66: #cdd6f466;
+  --ctp-text-99: #cdd6f499;
+  --ctp-text-cc: #cdd6f4cc;
+  --ctp-text-f2: #cdd6f4f2;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --ctp-base: #eff1f5;
+    --ctp-blue: #1e66f5;
+    --ctp-crust: #dce0e8;
+    --ctp-green: #40a02b;
+    --ctp-mantle: #e6e9ef;
+    --ctp-mauve: #8839ef;
+    --ctp-overlay0: #9ca0b0;
+    --ctp-overlay1: #8c8fa1;
+    --ctp-overlay2: #7c7f93;
+    --ctp-red: #d20f39;
+    --ctp-subtext0: #6c6f85;
+    --ctp-subtext1: #5c5f77;
+    --ctp-surface0: #ccd0da;
+    --ctp-surface1: #bcc0cc;
+    --ctp-surface2: #acb0be;
+    --ctp-teal: #179299;
+    --ctp-text: #4c4f69;
+    --ctp-yellow: #df8e1d;
+    --ctp-base-cc: #eff1f5cc;
+    --ctp-crust-1a: #dce0e81a;
+    --ctp-crust-33: #dce0e833;
+    --ctp-crust-66: #dce0e866;
+    --ctp-crust-99: #dce0e899;
+    --ctp-crust-cc: #dce0e8cc;
+    --ctp-mantle-33: #e6e9ef33;
+    --ctp-mantle-80: #e6e9ef80;
+    --ctp-mantle-99: #e6e9ef99;
+    --ctp-mantle-cc: #e6e9efcc;
+    --ctp-surface0-1a: #ccd0da1a;
+    --ctp-surface0-33: #ccd0da33;
+    --ctp-surface0-66: #ccd0da66;
+    --ctp-text-0d: #4c4f690d;
+    --ctp-text-14: #4c4f6914;
+    --ctp-text-1a: #4c4f691a;
+    --ctp-text-26: #4c4f6926;
+    --ctp-text-33: #4c4f6933;
+    --ctp-text-59: #4c4f6959;
+    --ctp-text-66: #4c4f6966;
+    --ctp-text-99: #4c4f6999;
+    --ctp-text-cc: #4c4f69cc;
+    --ctp-text-f2: #4c4f69f2;
+  }
+}
+
+html {
+  --sidebar-background: var(--ctp-crust);
+  --sidebar-hover-background: var(--ctp-surface2);
+  --sidebar-menu-top-text: var(--ctp-subtext0);
+  --sidebar-menu-playlist-text: var(--ctp-subtext0);
+  --search-background: var(--ctp-crust);
+  --main-background: var(--ctp-base);
+  --main-navigation-control-background: var(--ctp-crust);
+  --main-feed-button-background: var(--ctp-crust);
+  --player-control-background: var(--ctp-surface0);
+  --player-control-active-button: var(--ctp-mauve);
+  --player-progress-bar: var(--ctp-mauve);
+  --indicator-hifi-background: var(--ctp-green);
+  --indicator-hifi-span: var(--ctp-crust);
+  --player-control-favorite: var(--ctp-red);
+  --search-dialog-background: var(--ctp-surface0);
+  --right-queue-background: var(--ctp-crust);
+  --market-divider-fill-color: transparent;
+  --market-header-divider-color: transparent;
+  --market-core-divider-10-color: transparent;
+  --market-core-divider-20-color: transparent;
+  --market-row-normal-state-separator-color: transparent;
+  --market-row-hover-state-separator-color: transparent;
+  --market-row-hover-state-bg-color: transparent;
+  --market-row-normal-state-bg-color: transparent;
+}
+
+#sidebar {
+  background-color: var(--ctp-crust);
+}
+
+[class*=_sidebarWrapper_] {
+  background-color: var(--ctp-crust);
+}
+
+#sidebar [class*=_header_] {
+  background-color: var(--ctp-crust);
+}
+
+[class*=_navigationItem_] {
+  color: var(--ctp-subtext0);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+[class*=_navigationItem_]:hover {
+  background-color: var(--ctp-surface2);
+  color: var(--ctp-text);
+}
+[class*=_navigationItem_][data-status=active], [class*=_navigationItem_][aria-current=page] {
+  color: var(--ctp-text);
+}
+
+[class*=_contentItem_] {
+  color: var(--ctp-subtext0);
+  transition: background-color 0.15s ease;
+}
+[class*=_contentItem_]:hover {
+  background-color: var(--ctp-surface2);
+  color: var(--ctp-subtext1);
+}
+[class*=_contentItem_][data-status=active] {
+  color: var(--ctp-mauve);
+}
+
+[class*=_collectionWrapper_] {
+  border-color: var(--ctp-surface0);
+}
+
+[class*=_fixedNavigation_] {
+  border-color: var(--ctp-surface0);
+}
+
+#sidebar ::-webkit-scrollbar {
+  width: 6px;
+}
+
+#sidebar ::-webkit-scrollbar-thumb {
+  background-color: var(--ctp-surface2);
+  border-radius: 3px;
+}
+
+#sidebar ::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+[class*=_actionButton_] {
+  color: var(--ctp-subtext0);
+}
+[class*=_actionButton_]:hover {
+  color: var(--ctp-text);
+  background-color: var(--ctp-surface2);
+}
+
+#mainHeader {
+  background-color: var(--ctp-crust);
+}
+
+[data-test=header] {
+  background-color: var(--ctp-crust);
+}
+
+[data-test=navigation-arrows] button {
+  color: var(--ctp-subtext0);
+  background-color: var(--ctp-crust);
+  border-color: var(--ctp-surface0);
+}
+[data-test=navigation-arrows] button:hover {
+  background-color: var(--ctp-surface2);
+  color: var(--ctp-text);
+}
+[data-test=navigation-arrows] button:disabled {
+  color: var(--ctp-surface1);
+}
+
+[class*=_logo_][href="/"] {
+  color: var(--ctp-text);
+}
+
+[class*=_buttonContainer_] button {
+  color: var(--ctp-subtext0);
+}
+[class*=_buttonContainer_] button:hover {
+  color: var(--ctp-text);
+}
+
+[class*=_searchField_][class*=_searchField_] {
+  background-color: var(--ctp-crust);
+  color: var(--ctp-text);
+  border-color: transparent;
+  border-radius: 8px;
+}
+[class*=_searchField_][class*=_searchField_]::placeholder {
+  color: var(--ctp-subtext0);
+}
+[class*=_searchField_][class*=_searchField_]:focus {
+  border-color: var(--ctp-surface1);
+  background-color: var(--ctp-surface0);
+}
+
+input[class*=_searchField_] {
+  background-color: var(--ctp-crust);
+  color: var(--ctp-text);
+  border-color: transparent;
+  border-radius: 8px;
+}
+input[class*=_searchField_]::placeholder {
+  color: var(--ctp-subtext0);
+}
+input[class*=_searchField_]:focus {
+  border-color: var(--ctp-surface1);
+  background-color: var(--ctp-surface0);
+}
+
+[class*=_searchFieldWithPopover_] [class*=_container_] {
+  background-color: var(--ctp-crust);
+  border-color: transparent;
+  border-radius: 8px;
+}
+[class*=_searchFieldWithPopover_] [class*=_container_]:focus-within {
+  border-color: var(--ctp-surface1);
+  background-color: var(--ctp-surface0);
+}
+
+[class*=_searchFieldFilter_] {
+  background-color: var(--ctp-surface0);
+  color: var(--ctp-text);
+  border-color: var(--ctp-surface1);
+}
+
+#main {
+  background-color: var(--ctp-base);
+}
+
+[class*=_mainContainer_] {
+  background-color: var(--ctp-base);
+}
+
+[class*=_containerRow_] {
+  background-color: var(--ctp-base);
+}
+[class*=_containerRow_]:hover {
+  background-color: var(--ctp-base) !important;
+}
+
+.mainContent {
+  color: var(--ctp-text);
+}
+
+[class*=_headerContainer_] {
+  background-color: var(--ctp-base);
+}
+
+[class*=_dataContainer_] {
+  background-color: var(--ctp-base);
+}
+
+[class*=_detailContainer_] {
+  background-color: var(--ctp-base);
+}
+
+[class*=_actionContainer_] button:hover {
+  background-color: var(--ctp-surface2);
+  color: var(--ctp-text);
+}
+
+[id^=footerPlayer] {
+  background-color: var(--ctp-crust);
+}
+
+[class*=_footerPlayerWrapper_] {
+  background-color: var(--ctp-crust);
+}
+
+[class*=_controlWrapper_] {
+  background-color: var(--ctp-surface0);
+}
+
+[class*=_mediaControlButtons_] button {
+  color: var(--ctp-subtext0);
+}
+[class*=_mediaControlButtons_] button:hover {
+  color: var(--ctp-text);
+}
+[class*=_mediaControlButtons_] button[data-status=playing], [class*=_mediaControlButtons_] button[aria-pressed=true] {
+  color: var(--ctp-mauve);
+}
+
+[class*=_progressBar_] [class*=_progressBarFill_] {
+  background-color: var(--ctp-mauve);
+}
+
+[class*=_volume_] {
+  color: var(--ctp-subtext0);
+}
+[class*=_volume_]:hover {
+  color: var(--ctp-text);
+}
+
+[class*=_trackListWrapper_] {
+  background-color: var(--ctp-base);
+}
+
+[class*=_tracklistHeaderContainer_] {
+  background-color: var(--ctp-base);
+}
+
+[class*=_trackRow_] {
+  color: var(--ctp-subtext1);
+}
+[class*=_trackRow_]:hover {
+  background-color: var(--ctp-surface0);
+  color: var(--ctp-text);
+}
+[class*=_trackRow_][data-status=playing] {
+  color: var(--ctp-mauve);
+  background-color: var(--ctp-overlay0);
+}
+
+[class*=_mediaPlayerControls_] button {
+  color: var(--ctp-subtext0);
+}
+[class*=_mediaPlayerControls_] button:hover {
+  color: var(--ctp-text);
+}
+[class*=_mediaPlayerControls_] button[data-status=playing] {
+  color: var(--ctp-mauve);
+}
+
+[class*=_favoriteButton_] {
+  color: var(--ctp-subtext0);
+}
+[class*=_favoriteButton_]:hover {
+  color: var(--ctp-red);
+}
+[class*=_favoriteButton_][data-favorite=true] {
+  color: var(--ctp-red);
+}
+
+[class*=_feedModule_] {
+  background-color: var(--ctp-base);
+}
+[class*=_feedModule_]:hover {
+  background-color: var(--ctp-base) !important;
+}
+
+/* No :hover pair -- this is the row wrapper around a shelf of cards, not a card
+ * (1342x246 against 178x230), so hovering anywhere in "Because you listened
+ * to" tinted the whole shelf. The card rule below carries the hover. */
+[class*=_cardContainer_] {
+  background-color: var(--ctp-base);
+  transition: background-color 0.15s ease;
+}
+
+[class*=_feedTitle_] {
+  color: var(--ctp-text);
+}
+
+[class*=_subtitle_] {
+  color: var(--ctp-subtext0);
+}
+
+[class*=_container_][class*=_header_] {
+  background-color: var(--ctp-base);
+}
+
+[class*=_stickyHeader_] {
+  background-color: var(--ctp-base);
+}
+
+[class*=_sectionHeader_] {
+  background-color: var(--ctp-base) !important;
+}
+
+#main [class*=_header_] {
+  background-color: transparent;
+}
+
+[class*=_header_] [class*=_marketText_] {
+  color: var(--ctp-text);
+}
+
+[class*=_headerColumn_] {
+  color: var(--ctp-subtext0);
+}
+
+[class*=_overline_] {
+  color: var(--ctp-subtext0);
+}
+
+[class*=_feedItem_],
+[class*=_feedCard_] {
+  background-color: var(--ctp-surface0);
+  border-color: var(--ctp-surface0);
+}
+
+[class*=_textContainer_] {
+  color: var(--ctp-text);
+}
+
+[class*=_filter_] {
+  color: var(--ctp-subtext0);
+}
+
+a {
+  color: var(--ctp-teal);
+}
+a:hover {
+  color: var(--ctp-blue);
+}
+
+::selection {
+  background-color: var(--ctp-overlay0);
+  color: var(--ctp-text);
+}
+
+[class*=_queueWrapper_] {
+  background-color: var(--ctp-surface0);
+}
+
+[class*=_modal_],
+[class*=_dialog_] {
+  background-color: var(--ctp-surface0);
+  color: var(--ctp-text);
+}
+
+[class*=_contextMenuWrapper_] {
+  background-color: var(--ctp-surface0);
+  border-color: var(--ctp-surface1);
+}
+
+[class*=_contextMenuItem_] {
+  color: var(--ctp-subtext1);
+}
+[class*=_contextMenuItem_]:hover {
+  background-color: var(--ctp-surface2);
+  color: var(--ctp-text);
+}
+
+#footerPlayer,
+[data-test=footer-player] {
+  background-color: var(--ctp-crust);
+  border-top: 1px solid var(--ctp-surface0);
+}
+
+#footerPlayer [class*=_leftColumn_] {
+  color: var(--ctp-text);
+}
+#footerPlayer [class*=_leftColumn_] a {
+  color: var(--ctp-text);
+}
+#footerPlayer [class*=_leftColumn_] a:hover {
+  color: var(--ctp-blue);
+}
+
+[data-test=footer-track-title] a {
+  color: var(--ctp-text);
+}
+[data-test=footer-track-title] a:hover {
+  color: var(--ctp-blue);
+}
+
+#footerPlayer [class*=_descriptionText_] a {
+  color: var(--ctp-subtext1);
+}
+#footerPlayer [class*=_descriptionText_] a:hover {
+  color: var(--ctp-blue);
+}
+
+[class*=_playingFrom_] {
+  color: var(--ctp-subtext0);
+}
+[class*=_playingFrom_] a {
+  color: var(--ctp-blue);
+}
+
+#playbackControlBar button,
+[data-test=play-controls] button {
+  color: var(--ctp-subtext0);
+  transition: color 0.15s ease;
+}
+#playbackControlBar button:hover,
+[data-test=play-controls] button:hover {
+  color: var(--ctp-text);
+}
+#playbackControlBar button.withBackground[aria-checked=true],
+[data-test=play-controls] button.withBackground[aria-checked=true] {
+  background-color: var(--ctp-surface0);
+}
+#playbackControlBar button.withBackground[aria-checked=true] path,
+[data-test=play-controls] button.withBackground[aria-checked=true] path {
+  fill: var(--ctp-mauve);
+}
+
+[class*=_playbackButton_] button {
+  color: var(--ctp-text);
+}
+
+#progressBar,
+[data-test=progress-bar] {
+  color: var(--ctp-mauve);
+}
+
+[class*=_progressBarWrapper_] {
+  color: var(--ctp-mauve);
+}
+
+[class*=_indicator_][class*=_fillingBlock_] {
+  background-color: var(--ctp-mauve);
+}
+
+[data-test=footer-favorite-button][aria-checked=true] svg,
+[data-test=now-playing-favorite-button][aria-checked=true] svg {
+  color: var(--ctp-red);
+}
+
+[data-test=now-playing],
+#nowPlaying,
+[class*=_nowPlayingContainer_] {
+  background-color: var(--ctp-base) !important;
+  background-image: none !important;
+  color: var(--ctp-text);
+}
+
+[class*=_innerContainer_] {
+  background-color: transparent;
+}
+
+#nowPlayingHeader,
+[data-test=header-container] {
+  background-color: transparent;
+}
+
+[class*=_playingFrom_] {
+  color: var(--ctp-subtext0);
+}
+[class*=_playingFrom_] a {
+  color: var(--ctp-teal);
+}
+[class*=_playingFrom_] a:hover {
+  color: var(--ctp-blue);
+}
+
+[class*=_baseButton_][data-test=close-now-playing],
+[class*=_baseButton_][data-test=request-fullscreen],
+[class*=_closeButton_] {
+  color: var(--ctp-subtext0);
+  background-color: transparent;
+}
+[class*=_baseButton_][data-test=close-now-playing]:hover,
+[class*=_baseButton_][data-test=request-fullscreen]:hover,
+[class*=_closeButton_]:hover {
+  color: var(--ctp-text);
+  background-color: var(--ctp-surface2);
+}
+[class*=_baseButton_][data-test=close-now-playing] span,
+[class*=_baseButton_][data-test=request-fullscreen] span,
+[class*=_closeButton_] span {
+  color: var(--ctp-subtext1);
+}
+
+[class*=_leftColumn_][class*=_albumMediaQueries_],
+[class*=_leftColumn_] {
+  color: var(--ctp-text);
+}
+
+.overlay[class*=_albumImageOverlay_],
+[class*=_albumImageOverlay_] {
+  color: var(--ctp-text);
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+[class*=_infoWrapper_] {
+  background-color: transparent;
+}
+
+[data-test=now-playing-track-title] {
+  color: var(--ctp-text);
+}
+
+[class*=_artistNameColor_] {
+  color: var(--ctp-subtext1);
+}
+[class*=_artistNameColor_]:hover {
+  color: var(--ctp-blue);
+}
+
+[class*=_subTitleText_] {
+  color: var(--ctp-subtext1);
+}
+[class*=_subTitleText_] a {
+  color: var(--ctp-subtext1);
+}
+[class*=_subTitleText_] a:hover {
+  color: var(--ctp-blue);
+}
+
+[class*=_buttonsContainer_] [data-test=now-playing-favorite-button],
+[class*=_buttonsContainer_] [data-test=now-playing-context-menu] {
+  color: var(--ctp-subtext0);
+}
+[class*=_buttonsContainer_] [data-test=now-playing-favorite-button]:hover,
+[class*=_buttonsContainer_] [data-test=now-playing-context-menu]:hover {
+  color: var(--ctp-text);
+  background-color: var(--ctp-surface2);
+}
+
+[class*=_tabs_][class*=_tabItems_] {
+  background-color: transparent;
+  border-color: var(--ctp-surface1);
+}
+
+[class*=_tabItem_] {
+  color: var(--ctp-subtext0);
+  background-color: transparent;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+[class*=_tabItem_]:hover {
+  color: var(--ctp-text);
+  background-color: var(--ctp-surface2);
+}
+[class*=_tabItem_] span,
+[class*=_tabItem_] [data-wave-color] {
+  color: inherit !important;
+}
+[class*=_tabItem_] svg {
+  color: inherit;
+}
+
+[class*=_tabItem_][class*=_activeTab_] {
+  color: var(--ctp-text);
+}
+
+[class*=_tabPanelStyles_] {
+  background-color: transparent;
+  color: var(--ctp-text);
+}
+
+[class*=_playQueueTab_] {
+  background-color: transparent;
+}
+
+[class*=_playQueueItemsContainer_],
+[data-test=nowplaying-playqueue] {
+  background-color: transparent;
+}
+
+[class*=_stickyHeader_] {
+  background-color: var(--ctp-base);
+  color: var(--ctp-text);
+}
+
+[class*=_groupTitle_] {
+  color: var(--ctp-text);
+  background-color: transparent;
+}
+[class*=_groupTitle_] a {
+  color: var(--ctp-teal);
+}
+[class*=_groupTitle_] a:hover {
+  color: var(--ctp-blue);
+}
+
+[class*=_clearButton_] {
+  color: var(--ctp-subtext0);
+}
+[class*=_clearButton_]:hover {
+  color: var(--ctp-text);
+  background-color: var(--ctp-surface2);
+}
+
+[data-test=playqueue-item] {
+  color: var(--ctp-subtext1);
+  background-color: transparent;
+}
+[data-test=playqueue-item]:hover {
+  background-color: var(--ctp-surface2);
+}
+
+[class*=_containerPriorityHistory_] {
+  opacity: 0.6;
+}
+[class*=_containerPriorityHistory_]:hover {
+  opacity: 1;
+}
+
+[class*=_titleLink_] {
+  color: var(--ctp-text);
+}
+[class*=_titleLink_]:hover {
+  color: var(--ctp-blue);
+}
+
+[class*=_textHigh_] {
+  color: var(--ctp-mauve);
+}
+
+[class*=_nowPlayingIconContainer_] {
+  color: var(--ctp-mauve);
+}
+
+[class*=_iconHigh_] {
+  color: var(--ctp-mauve);
+}
+
+[class*=_artistText_] {
+  color: var(--ctp-subtext0);
+}
+[class*=_artistText_] a {
+  color: var(--ctp-subtext0);
+}
+[class*=_artistText_] a:hover {
+  color: var(--ctp-blue);
+}
+
+[class*=_titleArtistGroup_] {
+  color: var(--ctp-text);
+}
+
+[class*=_actions_] button {
+  color: var(--ctp-subtext0);
+}
+/* TIDAL sets this icon's colour itself, which beats an injected rule unless
+ * forced. Left unforced it stayed subtext0, and against surface2 that measured
+ * 2.29:1 in the player bar -- surface0 is one step off crust and reads. */
+[class*=_actions_] button:hover {
+  color: var(--ctp-text) !important;
+  background-color: var(--ctp-surface0);
+}
+
+[class*=_removeButton_] {
+  color: var(--ctp-subtext0);
+}
+[class*=_removeButton_]:hover {
+  color: var(--ctp-red);
+  background-color: var(--ctp-surface2);
+}
+
+[class*=_nowPlayingCell_] {
+  background-color: transparent;
+}
+
+[class*=_bottomGradient_] {
+  background: linear-gradient(transparent, var(--ctp-base));
+}
+
+[class*=_dropContainer_] {
+  background-color: transparent;
+}
+
+[class*=_suggestionsTab_] {
+  background-color: transparent;
+  color: var(--ctp-text);
+}
+
+[class*=_creditsTab_] {
+  background-color: transparent;
+  color: var(--ctp-text);
+}
+[class*=_creditsTab_] [class*=_divider_] {
+  background-color: var(--ctp-surface0) !important;
+}
+
+[data-test=mp-toggle-now-playing],
+[class*=_toggleButton_] {
+  color: var(--ctp-subtext0);
+}
+[data-test=mp-toggle-now-playing]:hover,
+[class*=_toggleButton_]:hover {
+  color: var(--ctp-text);
+}
+
+[class*=_nowPlayingVisible_] {
+  background-color: inherit;
+}
+
+[class*=_toggleArrowIcon_] {
+  color: inherit;
+}
+
+[class*=_nowPlayingButton_] {
+  color: var(--ctp-subtext0);
+}
+[class*=_nowPlayingButton_]:hover {
+  color: var(--ctp-text);
+}
+
+[data-test=playqueue-scroll]::-webkit-scrollbar {
+  width: 6px;
+}
+[data-test=playqueue-scroll]::-webkit-scrollbar-thumb {
+  background-color: var(--ctp-surface2);
+  border-radius: 3px;
+}
+[data-test=playqueue-scroll]::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.os-theme-tidal .os-scrollbar-handle {
+  background-color: var(--ctp-surface2);
+  border-radius: 3px;
+}
+.os-theme-tidal .os-scrollbar-track {
+  background-color: transparent;
+}
+
+.settings-window {
+  --black: var(--ctp-base);
+  --black-lighter: var(--ctp-crust);
+  --black-lightest: var(--ctp-surface0);
+  --grey-darkest: var(--ctp-surface1);
+  --grey-darker: var(--ctp-surface2);
+  --grey: var(--ctp-subtext0);
+  --white: var(--ctp-text);
+  --tidal-blue: var(--ctp-teal);
+  --tidal-red: var(--ctp-red);
+  color: var(--ctp-text);
+  background: var(--ctp-base);
+  overflow: hidden;
+}
+
+.settings-window__wrapper {
+  background: var(--ctp-base);
+  box-shadow: inset 0 0 2px 0 var(--ctp-crust);
+}
+
+.settings-window__close-button:hover {
+  background: var(--ctp-surface0);
+}
+
+.tabs__trigger + label {
+  color: var(--ctp-subtext0);
+}
+.tabs__trigger + label:hover {
+  color: var(--ctp-text);
+}
+
+.tabs__trigger:checked + label {
+  color: var(--ctp-mauve);
+}
+
+.tabs__separator {
+  border-color: var(--ctp-surface1);
+}
+
+.settings input:checked + label {
+  border-bottom: 2px solid var(--ctp-mauve);
+  color: var(--ctp-mauve);
+}
+
+.tabs__content::-webkit-scrollbar-thumb {
+  background-color: var(--ctp-surface2);
+}
+
+.group {
+  border-bottom: none;
+}
+
+.group__title {
+  color: var(--ctp-text);
+}
+
+.group__option {
+  background: var(--ctp-surface0);
+  border-color: var(--ctp-surface0);
+}
+
+.group__options-group {
+  background: var(--ctp-surface0);
+  border-color: var(--ctp-surface0);
+}
+.group__options-group .group__option {
+  border-bottom-color: var(--ctp-surface1);
+}
+
+.group__content h4 {
+  color: var(--ctp-text);
+}
+
+.group__content p,
+.group__description p {
+  color: var(--ctp-subtext1);
+}
+
+.group__description .text-input {
+  border-bottom: solid 1px var(--ctp-surface1);
+  color: var(--ctp-text);
+}
+
+.group__description .text-input:focus {
+  border-color: var(--ctp-mauve);
+  color: var(--ctp-text);
+}
+
+.text-input {
+  background-color: var(--ctp-surface1);
+  color: var(--ctp-text);
+  border-color: var(--ctp-surface1);
+}
+.text-input::placeholder {
+  color: var(--ctp-subtext0);
+}
+
+.tags__tag {
+  background: var(--ctp-blue);
+  color: var(--ctp-base);
+}
+.tags__tag:hover, .tags__tag:focus-within {
+  background: var(--ctp-mauve);
+}
+
+.tags__tag__text {
+  color: inherit;
+}
+
+.tags__tag__remove {
+  color: inherit;
+  opacity: 0.8;
+}
+.tags__tag__remove:hover {
+  opacity: 1;
+}
+
+.button {
+  background: var(--ctp-surface0);
+  color: var(--ctp-text);
+  border-color: var(--ctp-surface1);
+}
+.button:hover {
+  background: var(--ctp-surface1);
+}
+.button.primary {
+  background: var(--ctp-mauve);
+  color: var(--ctp-base);
+}
+.button.primary:hover {
+  background: var(--ctp-blue);
+}
+
+.select-input {
+  background-color: var(--ctp-surface0);
+  color: var(--ctp-text);
+  border-color: var(--ctp-surface1);
+}
+
+.select-input option {
+  background-color: var(--ctp-surface0);
+}
+
+.select-input option:disabled {
+  color: var(--ctp-subtext0);
+}
+
+.hotkey-binding kbd {
+  background: var(--ctp-mauve);
+  color: var(--ctp-base);
+}
+
+.hotkey-binding.editing {
+  background: var(--ctp-surface1);
+}
+
+.switch {
+  border: none;
+  background-color: transparent;
+}
+
+.switch input:checked + .switch__slider {
+  background-color: var(--ctp-mauve);
+}
+
+.switch input:checked + .switch__slider::before {
+  background-color: var(--ctp-base);
+}
+
+.switch input:focus + .switch__slider {
+  box-shadow: none;
+}
+
+.switch:has(:focus-visible) {
+  outline: 2px solid var(--ctp-mauve);
+  outline-offset: 2px;
+  border-radius: 40px;
+}
+
+.switch__slider {
+  background-color: var(--ctp-surface2);
+}
+
+.switch__slider::before {
+  background-color: var(--ctp-subtext0);
+}
+
+.textarea {
+  background: var(--ctp-surface0);
+  color: var(--ctp-subtext1);
+  border-color: var(--ctp-surface1);
+}
+
+.footer__note {
+  color: var(--ctp-subtext0);
+}
+
+.footer__button {
+  color: var(--ctp-teal);
+}
+
+.footer__button:hover {
+  color: var(--ctp-green);
+}
+
+.external-link {
+  color: var(--ctp-teal);
+}
+.external-link:hover {
+  color: var(--ctp-green);
+}
+
+.file-msg {
+  color: var(--ctp-teal) !important;
+}
+
+[class*=sidebarWrapper] {
+  background-color: var(--ctp-crust);
+}
+
+#sidebar [class*=header_] {
+  background-color: var(--ctp-crust);
+}
+
+[class*=logoWrapper] {
+  background-color: var(--ctp-crust);
+}
+
+[class*=logoButton],
+[data-test=sidebar-logo] {
+  color: var(--ctp-text);
+}
+
+[class*=versionBadge] {
+  color: var(--ctp-subtext0);
+}
+
+[class*=submenu_] {
+  background-color: var(--ctp-surface0);
+  border-color: var(--ctp-surface1);
+}
+
+[class*=submenuItem] {
+  color: var(--ctp-subtext0);
+}
+[class*=submenuItem]:hover {
+  background-color: var(--ctp-surface2);
+  color: var(--ctp-text);
+}
+
+[class*=collapseButton],
+[data-test=sidebar-collapse],
+[data-test=sidebar-expand] {
+  color: var(--ctp-subtext0);
+}
+[class*=collapseButton]:hover,
+[data-test=sidebar-collapse]:hover,
+[data-test=sidebar-expand]:hover {
+  color: var(--ctp-text);
+  background-color: var(--ctp-surface2);
+}
+
+[data-test=shortcut-list] [class*=shortcutItem] {
+  color: var(--ctp-subtext1);
+}
+[data-test=shortcut-list] [class*=shortcutItem]:hover {
+  background-color: var(--ctp-surface2);
+}
+[data-test=shortcut-list] [class*=textWrapper] {
+  color: var(--ctp-subtext1);
+}
+
+[data-test=create-folder-or-playlist] {
+  color: var(--ctp-subtext0);
+}
+[data-test=create-folder-or-playlist]:hover {
+  color: var(--ctp-text);
+  background-color: var(--ctp-surface2);
+}
+
+[class*=logo_][class*=logoVisible] {
+  color: var(--ctp-text);
+}
+
+[data-test=header-profile-menu-button],
+[class*=profileMenuButton] {
+  color: var(--ctp-subtext0);
+}
+[data-test=header-profile-menu-button]:hover,
+[class*=profileMenuButton]:hover {
+  color: var(--ctp-text);
+}
+
+[class*=profilePicture] {
+  border-color: var(--ctp-surface0);
+}
+
+[class*=searchField] {
+  background-color: var(--ctp-crust);
+  color: var(--ctp-text);
+  border-color: transparent;
+  border-radius: 8px;
+}
+[class*=searchField]::placeholder {
+  color: var(--ctp-subtext0);
+}
+[class*=searchField]:focus, [class*=searchField]:focus-within {
+  border-color: var(--ctp-surface1);
+  background-color: var(--ctp-surface0);
+}
+
+[class*=searchFieldWithPopover] [class*=container] {
+  background-color: var(--ctp-crust);
+  border-color: transparent;
+  border-radius: 8px;
+}
+[class*=searchFieldWithPopover] [class*=container]:focus-within {
+  border-color: var(--ctp-surface1);
+  background-color: var(--ctp-surface0);
+}
+
+[data-test=search-popover-container] {
+  background-color: var(--ctp-surface0);
+}
+
+.mainContent {
+  color: var(--ctp-text);
+  background-color: var(--ctp-base);
+}
+
+[class*=pageHeader] {
+  background-color: var(--ctp-base);
+}
+
+[class*=feed_][data-test=home-page-feed],
+[class*=feed_] {
+  background-color: var(--ctp-base);
+}
+
+[data-test=spotlight-banner] [class*=slide_] {
+  background-color: var(--ctp-surface0);
+}
+[data-test=spotlight-banner] [class*=leftSection] {
+  color: var(--ctp-text);
+}
+[data-test=spotlight-banner] [class*=brandingTitle] {
+  color: var(--ctp-text);
+}
+
+[class*=cardContainer],
+[class*=card_] {
+  background-color: var(--ctp-base);
+  transition: background-color 0.15s ease;
+}
+/* cardContainer is deliberately absent -- see the note on its rule above. */
+[class*=card_]:hover {
+  background-color: var(--ctp-surface0);
+}
+
+[class*=textContent] {
+  color: var(--ctp-text);
+}
+
+[class*=subtitle] {
+  color: var(--ctp-subtext1);
+}
+
+[class*=description] {
+  color: var(--ctp-subtext1);
+}
+
+[class*=headerTitleContainer] {
+  color: var(--ctp-text);
+}
+
+[class*=headerText] {
+  color: var(--ctp-text);
+}
+
+[class*=marketText] {
+  color: inherit;
+}
+
+[data-test=view-all-link],
+[class*=viewAllButton] {
+  color: var(--ctp-teal);
+}
+[data-test=view-all-link]:hover,
+[class*=viewAllButton]:hover {
+  color: var(--ctp-blue);
+}
+
+/* One hover affordance everywhere: a filled mauve disc with a base glyph.
+ *
+ * TIDAL builds this button differently in each context -- sometimes the outer
+ * container carries the class and the inner button is bare, sometimes the
+ * reverse -- and none of them carry a radius, so a fill alone draws a tile.
+ * Painting every element whose class contains playButton and blanking its
+ * descendants means whichever one is outermost draws the disc and the nested
+ * ones stay out of the way, without naming a shape per context.
+ *
+ * The descendants have to be blanked rather than left alone: TIDAL nests a
+ * white `_fx_` div inside for a frosted look, which over a filled disc washed
+ * the mauve out to the translucent grey that made these look unrelated. The
+ * glyph needs forcing for the same reason -- its svg carries its own fill,
+ * which resolved dark and left 1.47:1 against the mauve. */
+[class*=playButton] {
+  background-color: var(--ctp-mauve) !important;
+  border-radius: 50% !important;
+}
+
+[class*=playButton] * {
+  background-color: transparent !important;
+  color: var(--ctp-base) !important;
+  fill: currentColor !important;
+}
+
+/* The transport control is not a hover affordance -- it is always visible and
+ * reads as a bare glyph on the player bar, so it opts out of the disc. */
+#footerPlayer [class*=playButton],
+#footerPlayer [class*=playbackButton] {
+  background-color: transparent !important;
+  border-radius: 0 !important;
+}
+
+#footerPlayer [class*=playButton] *,
+#footerPlayer [class*=playbackButton] * {
+  color: var(--ctp-text) !important;
+  fill: currentColor !important;
+}
+
+[class*=headerContainer] {
+  background-color: var(--ctp-base);
+}
+
+[class*=detailContainer] {
+  background-color: var(--ctp-base);
+}
+
+[class*=sortButton] {
+  color: var(--ctp-subtext0);
+}
+[class*=sortButton]:hover {
+  color: var(--ctp-text);
+}
+
+[class*=trackListWrapper] {
+  background-color: var(--ctp-base);
+}
+
+[data-test=tracklist-row],
+[class*=trackRow_] {
+  color: var(--ctp-subtext1);
+}
+/* surface2 is four steps off base under latte, so the hovered row landed as a
+ * grey slab that swallowed the play disc sitting in its index column. */
+[data-test=tracklist-row]:hover,
+[class*=trackRow_]:hover {
+  background-color: var(--ctp-surface0);
+  color: var(--ctp-text);
+}
+[data-test=tracklist-row][data-status=playing], [data-test=tracklist-row][data-test-is-playing=true],
+[class*=trackRow_][data-status=playing],
+[class*=trackRow_][data-test-is-playing=true] {
+  color: var(--ctp-mauve);
+  background-color: var(--ctp-overlay0);
+}
+
+[class*=album] {
+  color: var(--ctp-subtext1);
+}
+
+[class*=favoriteButton] {
+  color: var(--ctp-subtext0);
+}
+[class*=favoriteButton]:hover {
+  color: var(--ctp-red);
+}
+[class*=favoriteButton][aria-checked=true] {
+  color: var(--ctp-red);
+}
+
+[data-test=explicit-badge],
+[class*=explicitBadge],
+[data-test=quality-badge-LOSSLESS],
+[class*=qualityBadgeContainer] {
+  color: var(--ctp-subtext0);
+}
+
+#footerPlayer [class*=background_] {
+  background-color: var(--ctp-crust) !important;
+}
+
+[class*=playerContent] {
+  background-color: var(--ctp-crust);
+}
+
+[data-test=track-info],
+[class*=trackInfo] {
+  color: var(--ctp-text);
+}
+
+[class*=artworkContainer],
+[data-test=player-details-toggle-now-playing] {
+  border-color: var(--ctp-surface0);
+}
+
+[class*=trackContent] {
+  color: var(--ctp-text);
+}
+
+[class*=titleArtistStack] {
+  color: var(--ctp-text);
+}
+
+[class*=titleContainer] a {
+  color: var(--ctp-text);
+}
+[class*=titleContainer] a:hover {
+  color: var(--ctp-blue);
+}
+
+[class*=artist_] [class*=item_],
+[class*=artist_] [class*=link_] {
+  color: var(--ctp-subtext1);
+}
+[class*=artist_] [class*=item_]:hover,
+[class*=artist_] [class*=link_]:hover {
+  color: var(--ctp-blue);
+}
+
+[class*=playingFromText] a {
+  color: var(--ctp-teal);
+}
+[class*=playingFromText] a:hover {
+  color: var(--ctp-blue);
+}
+
+#footerPlayer [class*=actions_] button {
+  color: var(--ctp-subtext0);
+}
+#footerPlayer [class*=actions_] button:hover {
+  color: var(--ctp-text);
+}
+
+[class*=blockButton] {
+  color: var(--ctp-subtext0);
+}
+[class*=blockButton]:hover {
+  color: var(--ctp-text);
+}
+
+[class*=contextMenuButton] {
+  color: var(--ctp-subtext0);
+}
+[class*=contextMenuButton]:hover {
+  color: var(--ctp-text);
+}
+
+[class*=centerSection] {
+  background-color: transparent;
+}
+
+#playbackControlBar button[aria-checked=true] path,
+[data-test=play-controls] button[aria-checked=true] path {
+  fill: var(--ctp-mauve);
+}
+#playbackControlBar button.withBackground, #playbackControlBar button[class*=activeButton],
+[data-test=play-controls] button.withBackground,
+[data-test=play-controls] button[class*=activeButton] {
+  background-color: var(--ctp-surface0);
+}
+
+[class*=shuffleButton][aria-checked=true],
+[data-test=shuffle][aria-checked=true] {
+  color: var(--ctp-mauve);
+}
+
+[class*=repeatButton][aria-checked=true],
+[data-test=repeat][aria-checked=true] {
+  color: var(--ctp-mauve);
+}
+
+[class*=skipButton] {
+  color: var(--ctp-subtext0);
+}
+[class*=skipButton]:hover {
+  color: var(--ctp-text);
+}
+
+[class*=playbackButton],
+[data-test=play-controls] [class*=playButtonInner] {
+  color: var(--ctp-text);
+  background-color: transparent;
+}
+
+[class*=scrubberRow] {
+  color: var(--ctp-subtext0);
+}
+
+[class*=scrubberBar] {
+  background-color: var(--ctp-surface2);
+}
+
+/* TIDAL paints the elapsed/remaining labels rgba(255,255,255,.35), which is
+ * 1.32:1 on the latte player bar and outranks an unforced injected rule. */
+[class*=scrubberTime],
+[class*=scrubberTimeText] {
+  color: var(--ctp-subtext0) !important;
+}
+
+[class*=fillingBlock][class*=indicator] {
+  background-color: var(--ctp-mauve);
+}
+
+[class*=fillingBlock][class*=range] {
+  background-color: var(--ctp-surface2);
+}
+
+[class*=knob] {
+  background-color: var(--ctp-mauve);
+}
+
+[class*=toolTip] {
+  background-color: var(--ctp-surface1);
+  color: var(--ctp-text);
+}
+
+[class*=rightSection] {
+  color: var(--ctp-subtext0);
+}
+
+[class*=utilityContainer] {
+  color: var(--ctp-subtext0);
+}
+
+[class*=utilityButtons] button {
+  color: var(--ctp-subtext0);
+}
+[class*=utilityButtons] button:hover {
+  color: var(--ctp-text);
+}
+
+[data-test=play-queue-button] {
+  color: var(--ctp-subtext0);
+  background-color: transparent !important;
+}
+[data-test=play-queue-button]:hover {
+  color: var(--ctp-text);
+}
+[data-test=play-queue-button][aria-pressed=true] {
+  color: var(--ctp-mauve);
+}
+
+[data-test=volume] {
+  color: var(--ctp-subtext0);
+}
+[data-test=volume]:hover {
+  color: var(--ctp-text);
+}
+
+[class*=sliderContainer] {
+  background-color: transparent;
+}
+
+[class*=newNowPlaying] {
+  background-color: var(--ctp-base) !important;
+  background-image: none !important;
+  --market-button-focus-ring-color: transparent;
+  --market-core-focus-ring-color: var(--ctp-mauve);
+}
+
+[data-test=now-playing-similar-tracks] [class*=radioSection] [class*=card_] {
+  background-color: transparent;
+}
+[data-test=now-playing-similar-tracks] [class*=radioSection] [class*=contentContainer] {
+  color: var(--ctp-subtext1);
+}
+[data-test=now-playing-similar-tracks] [class*=radioSection] [class*=subtitle] {
+  color: var(--ctp-subtext0);
+}
+
+[data-test=now-playing-mixes-and-radio-header],
+[data-test=now-playing-mixes-and-radio-scroll] {
+  background-color: transparent !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+[data-test=now-playing-mixes-and-radio-scroll] [class*=card] {
+  background-color: transparent !important;
+}
+
+#playQueueSidebar {
+  background-color: var(--ctp-crust) !important;
+  background: var(--ctp-crust) !important;
+  border: none !important;
+  border-color: transparent !important;
+  border-width: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+#playQueueSidebar > * {
+  background-color: var(--ctp-crust) !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+[class*=playQueueWrapper] {
+  background-color: var(--ctp-crust);
+}
+
+[data-test=playqueue-header] {
+  background-color: var(--ctp-crust);
+}
+[data-test=playqueue-header] [class*=headerButton] {
+  color: var(--ctp-subtext0);
+}
+[data-test=playqueue-header] [class*=headerButton]:hover {
+  color: var(--ctp-text);
+}
+
+[data-test=playqueue-save-button],
+[data-test=playqueue-close-button] {
+  color: var(--ctp-subtext0);
+}
+[data-test=playqueue-save-button]:hover,
+[data-test=playqueue-close-button]:hover {
+  color: var(--ctp-text);
+}
+
+[data-test=playqueue-title] {
+  color: var(--ctp-text);
+}
+
+[class*=playQueueItemsContainer],
+[data-test=playqueue] {
+  background-color: transparent;
+}
+
+[class*=playQueueItems] {
+  background-color: transparent;
+}
+
+#playQueueSidebar [class*=stickyHeader] {
+  background-color: var(--ctp-crust);
+  color: var(--ctp-text);
+}
+
+[data-test=playqueue-item] {
+  color: var(--ctp-subtext1);
+  background-color: transparent;
+  border-bottom: 1px solid var(--ctp-surface0);
+}
+[data-test=playqueue-item]:hover {
+  background-color: var(--ctp-surface2);
+}
+[data-test=playqueue-item] img {
+  border-radius: 4px;
+}
+[data-test=playqueue-item] [class*=artist] {
+  color: var(--ctp-subtext0);
+}
+[data-test=playqueue-item] [class*=duration] {
+  color: var(--ctp-subtext0);
+}
+
+[class*=dragHandle] {
+  color: var(--ctp-subtext0);
+}
+[class*=dragHandle]:hover {
+  color: var(--ctp-text);
+}
+
+[data-test=playqueue-item] [class*=more],
+[data-test=playqueue-item] [class*=menu] {
+  color: var(--ctp-subtext0);
+}
+[data-test=playqueue-item] [class*=more]:hover,
+[data-test=playqueue-item] [class*=menu]:hover {
+  color: var(--ctp-text);
+}
+
+#playQueueSidebar [class*=actions_] button {
+  color: var(--ctp-subtext0);
+}
+#playQueueSidebar [class*=actions_] button:hover {
+  color: var(--ctp-text);
+  background-color: var(--ctp-surface2);
+}
+
+[class*=removeButton],
+[data-test=remove-button] {
+  color: var(--ctp-subtext0);
+}
+[class*=removeButton]:hover,
+[data-test=remove-button]:hover {
+  color: var(--ctp-red);
+  background-color: var(--ctp-surface2);
+}
+
+[class*=bottomGradient] {
+  background: linear-gradient(transparent, var(--ctp-crust));
+}
+
+[data-test=playqueue-scroll]::-webkit-scrollbar {
+  width: 6px;
+}
+[data-test=playqueue-scroll]::-webkit-scrollbar-thumb {
+  background-color: var(--ctp-surface2);
+  border-radius: 3px;
+}
+[data-test=playqueue-scroll]::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+[class*=notificationWrapper] {
+  background-color: var(--ctp-surface0);
+  color: var(--ctp-text);
+}
+
+[class*=marketButton][class*=primary] {
+  background-color: var(--ctp-mauve);
+  color: var(--ctp-base);
+}
+[class*=marketButton][class*=primary]:hover {
+  opacity: 0.9;
+}
+[class*=marketButton][class*=secondary] {
+  background-color: var(--ctp-surface0);
+  color: var(--ctp-text);
+  border-color: var(--ctp-surface1);
+}
+[class*=marketButton][class*=secondary]:hover {
+  background-color: var(--ctp-surface2);
+}
+[class*=marketButton][class*=tertiary] {
+  color: var(--ctp-subtext0);
+}
+[class*=marketButton][class*=tertiary]:hover {
+  color: var(--ctp-text);
+  background-color: var(--ctp-surface2);
+}
+
+/* ---------------------------------------------------------------------------
+ * Design-token overrides.
+ *
+ * The rules above target TIDAL's older class names. Everything below covers the
+ * two token systems TIDAL layers on top of them -- "wave" and Square's "market"
+ * -- which this theme predates. Both ship dark-mode values only: white text and
+ * near-black surfaces, hardcoded rather than derived. Under mocha that went
+ * unnoticed, since white on dark is what the theme wanted anyway; under latte it
+ * left white text on light backgrounds all over the app.
+ *
+ * Both blocks need `!important`, for two different reasons. The market tokens
+ * are set as inline styles on a wrapper div, and nothing but `!important`
+ * outranks an inline declaration. The wave tokens are plain `:root` rules, but
+ * tidal-hifi applies this file through Electron's `webContents.insertCSS`,
+ * which lands it in Blink's *injected* origin -- that origin loses to the
+ * page's own author stylesheet whenever specificity ties, and `:root` against
+ * `:root` always ties. Without `!important` every line below is dead: TIDAL's
+ * dark-mode value wins and the app keeps painting white text on latte.
+ * DevTools shows this as `origin: "injected"` on the losing rule.
+ * ------------------------------------------------------------------------- */
+
+:root {
+  --wave-color-text-main: var(--ctp-text) !important;
+  --wave-color-text-secondary: var(--ctp-subtext1) !important;
+  --wave-color-text-tertiary: var(--ctp-overlay2) !important;
+  --wave-color-text-placeholder: var(--ctp-overlay0) !important;
+  --wave-color-text-disabled: var(--ctp-overlay0) !important;
+
+  --wave-color-solid-contrast-fill: var(--ctp-text) !important;
+  --wave-color-solid-contrast-dark: var(--ctp-subtext1) !important;
+  --wave-color-solid-contrast-darker: var(--ctp-subtext0) !important;
+  --wave-color-solid-contrast-darkest: var(--ctp-overlay1) !important;
+
+  --wave-color-opacity-contrast-fill-transparent: var(--ctp-text) !important;
+  --wave-color-opacity-contrast-fill-ultra-thin: var(--ctp-text-1a) !important;
+  --wave-color-opacity-contrast-fill-thin: var(--ctp-text-33) !important;
+  --wave-color-opacity-contrast-fill-regular: var(--ctp-text-66) !important;
+  --wave-color-opacity-contrast-fill-thick: var(--ctp-text-99) !important;
+  --wave-color-opacity-contrast-fill-ultra-thick: var(--ctp-text-cc) !important;
+
+  --wave-color-solid-base-fill: var(--ctp-crust) !important;
+  --wave-color-solid-base-bright: var(--ctp-mantle) !important;
+  --wave-color-solid-base-brighter: var(--ctp-base) !important;
+  --wave-color-solid-base-brightest: var(--ctp-surface0) !important;
+
+  --wave-color-opacity-base-fill-transparent: var(--ctp-crust) !important;
+  --wave-color-opacity-base-fill-ultra-thin: var(--ctp-crust-1a) !important;
+  --wave-color-opacity-base-fill-thin: var(--ctp-crust-33) !important;
+  --wave-color-opacity-base-fill-regular: var(--ctp-crust-66) !important;
+  --wave-color-opacity-base-fill-thick: var(--ctp-crust-99) !important;
+  --wave-color-opacity-base-fill-ultra-thick: var(--ctp-crust-cc) !important;
+
+  --wave-color-opacity-base-bright-transparent: var(--ctp-mantle) !important;
+  --wave-color-opacity-base-bright-thin: var(--ctp-mantle-33) !important;
+  --wave-color-opacity-base-bright-thick: var(--ctp-mantle-99) !important;
+  --wave-color-opacity-base-bright-ultra-thick: var(--ctp-mantle-cc) !important;
+
+  --wave-color-opacity-base-brighter-ultra-thick: var(--ctp-base-cc) !important;
+  --wave-color-opacity-base-brightest-ultra-thin: var(--ctp-surface0-1a) !important;
+  --wave-color-opacity-base-brightest-thin: var(--ctp-surface0-33) !important;
+  --wave-color-opacity-base-brightest-regular: var(--ctp-surface0-66) !important;
+
+  --wave-color-material-dark: var(--ctp-mantle-80) !important;
+  --wave-color-material-light: var(--ctp-crust-33) !important;
+
+  --wave-color-solid-accent-fill: var(--ctp-teal) !important;
+}
+
+/* TIDAL paints the document black and relies on its own surfaces covering it.
+ * Any gap between them showed through as black under latte. */
+body {
+  background-color: var(--ctp-base) !important;
+}
+
+/* `*-white`, `*-black` and `*-inverse` name a literal rather than a role, and
+ * TIDAL uses them for foregrounds on coloured fills, so they keep their values.
+ * The exception is fill-white, which paints the selected sidebar entry against
+ * a light background and has to darken with everything else. */
+[style*="--market-core-text"] {
+  --market-core-text-10-color: var(--ctp-text) !important;
+  /* text-20 is the artist line under every feed card. subtext0 measured 4.37:1
+   * on latte base, under the 4.5 floor; subtext1 is 5.52:1. */
+  --market-core-text-20-color: var(--ctp-subtext1) !important;
+  --market-core-text-30-color: var(--ctp-overlay1) !important;
+  --market-core-text-inverse-color: var(--ctp-base) !important;
+
+  --market-core-fill-10-color: var(--ctp-subtext1) !important;
+  --market-core-fill-20-color: var(--ctp-text-59) !important;
+  --market-core-fill-30-color: var(--ctp-text-26) !important;
+  --market-core-fill-40-color: var(--ctp-text-14) !important;
+  --market-core-fill-50-color: var(--ctp-text-0d) !important;
+  --market-core-fill-white-color: var(--ctp-text) !important;
+  --market-core-fill-inverse-color: var(--ctp-base) !important;
+
+  --market-core-emphasis-10-color: var(--ctp-text-f2) !important;
+  --market-core-emphasis-20-color: var(--ctp-text-59) !important;
+  --market-core-emphasis-30-color: var(--ctp-text-26) !important;
+  --market-core-emphasis-40-color: var(--ctp-text-14) !important;
+  --market-core-emphasis-fill-color: var(--ctp-text) !important;
+  --market-core-emphasis-text-color: var(--ctp-text) !important;
+
+  --market-core-surface-5-color: var(--ctp-crust) !important;
+  --market-core-surface-10-color: var(--ctp-mantle) !important;
+  --market-core-surface-20-color: var(--ctp-base) !important;
+  --market-core-surface-30-color: var(--ctp-surface0) !important;
+  --market-core-surface-inverse-color: var(--ctp-text) !important;
+
+  --market-core-focus-color: var(--ctp-blue) !important;
+  --market-core-focus-ring-color: var(--ctp-blue) !important;
+
+  /* Accent roles, not literals like the black/white pair above. The quality
+   * badge fades one tier gradient in and colours its label from these, so they
+   * are what makes a HIGH track read teal and a MAX track gold. */
+  --market-core-yellow-text-color: var(--ctp-yellow) !important;
+  --market-core-teal-text-color: var(--ctp-teal) !important;
+}
+
+/* TIDAL paints these three itself, late enough in the cascade to outrank the
+ * plain rules above. */
+[class*=shortcutItem] {
+  background-color: var(--ctp-surface0) !important;
+}
+
+[class*=submenu_] {
+  background-color: var(--ctp-surface0) !important;
+  border-color: var(--ctp-surface1) !important;
+}
+
+[class*=sidebarWrapper] {
+  background-color: var(--ctp-crust) !important;
+}
+
+/* Pseudo-elements TIDAL frosts chrome with. They carry hardcoded dark-mode
+ * literals rather than tokens, so no amount of token work reaches them, and
+ * nothing in this file matched them before. The player's ::after is the loud
+ * one: rgba(40,40,40,.75) over the bar rendered it as #4f5054 under latte,
+ * which is where the illegible transport controls came from. Keep the blur --
+ * only the tint has a flavor. Mantle rather than crust because the literal sat
+ * a step above the bar it covered, and mantle is the step that stays a step in
+ * both directions. */
+[class*=_player_]::after {
+  background-color: var(--ctp-mantle-cc) !important;
+}
+
+[class*=_player_]::before {
+  background-image: linear-gradient(transparent, var(--ctp-crust-33)) !important;
+}
+
+[class*=_sidebarWrapper_]::after {
+  background-color: var(--ctp-text-14) !important;
+}
+
+/* The same rgba(40,40,40,.75) the player scrim used, on the only two other
+ * elements carrying it -- a sweep of every computed background in the document
+ * found exactly these. Both sit on the crust header, where the literal read as
+ * a dark blob rather than the raised chrome it is meant to be. */
+[data-test=navigation-arrows],
+[class*=searchFieldWithinSearchFieldWithPopover] {
+  background-color: var(--ctp-mantle-cc) !important;
+}
+
+/* The expanded now-playing view fills the viewport with a colour sampled off
+ * the album art, written as an inline style, so only `!important` reaches it.
+ * The sample is neither flavor and cannot be predicted -- #162a7e for one
+ * record, #5d3c2a for the last -- while every foreground in the view is a
+ * palette colour picked against base, so latte kept landing dark on dark.
+ *
+ * Knocked back rather than replaced: at 0.15 the tint still reads as the
+ * record's colour, but the surface stays within a step of base, which is what
+ * the foregrounds were chosen for. The blue above composites to #ced3e3, where
+ * body text measures 5.35:1. */
+[class*=_nowPlaying_] [class*=_background_],
+[class*=_fullscreen_] [class*=_background_] {
+  opacity: 0.15 !important;
+}
+
+/* Scrolling adds `_scrolled_` to the header, which fades in an rgba(0,0,0,.35)
+ * scrim behind a mask-image that ramps it out down the bar. That exists to
+ * dissolve content under a header TIDAL leaves transparent; the rules above
+ * paint ours opaque crust, so the scrim has nothing left to do but tint the bar
+ * grey from a soft edge -- the gradient that appears partway down a page. */
+[class*=_header_]::before {
+  background-color: transparent !important;
+}
+
+/* TIDAL stacks five dark-mode literals on the MAX pill -- a black border, a grey
+ * radial sheen, a white bevel shadow, an amber ::before wash, and #ffbf00 label
+ * text -- so it lands on latte as a black blob. Only the accent is worth
+ * keeping, and it has to move to the hairline: latte's yellow is 1.76:1 as text
+ * on this chrome, against 5.22:1 for the neutral it replaces. */
+[class*=qualityBadgeContainer] [class*=_badge_] {
+  background-color: var(--ctp-surface0) !important;
+  background-image: none !important;
+  border-color: var(--ctp-surface1) !important;
+  box-shadow: none !important;
+}
+
+/* The tier has to survive the retint, so the hairline carries it: TIDAL ships
+ * one badge with a `_high_` or `_max_` modifier and no modifier for the rest. */
+[class*=qualityBadgeContainer] [class*=_badge_][class*=_high_] {
+  border-color: var(--ctp-teal) !important;
+}
+
+[class*=qualityBadgeContainer] [class*=_badge_][class*=_max_] {
+  border-color: var(--ctp-yellow) !important;
+}
+
+/* ::before is the hover wash TIDAL fades in, not decoration. Its literal is a
+ * light grey, which does nothing over a light pill. */
+[class*=qualityBadgeContainer] [class*=_badge_]::before {
+  background-color: var(--ctp-text-14) !important;
+}
+
+/* Both are blooms centred in the pill -- one radial per tier plus a shared glow
+ * div -- sized to read against near-black. The tier now speaks through the
+ * hairline and the label instead, so the wash is just haze in the middle. */
+[class*=qualityBadgeContainer] [class*=_badge_] [class*=_glowEffect_],
+[class*=qualityBadgeContainer] [class*=_badge_] [class*=_gradient] {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* TIDAL paints this from the tier's own token, which would read yellow on MAX
+ * and teal on HIGH -- but latte's yellow measures 1.7:1 against the pill where
+ * the neutral gets 5.17:1, so the tier stays on the hairline and the label
+ * stays legible. The glow behind it goes either way. */
+[class*=qualityBadgeContainer] [class*=_badge_] span {
+  color: var(--ctp-text) !important;
+  text-shadow: none !important;
+}

@@ -172,6 +172,13 @@ playwright test` (hangs, zombie processes).
 - Scrollbars don't paint in Chromium headless screenshots — content renders
   wider than a real desktop user sees; prefer viewport captures over `fullPage`
   (whose headless software raster also silently truncates very tall pages).
+- **`webServer` takes its own port and never reuses.** `command: 'bun run build &&
+  PORT=3100 bun run start'`, with `webServer.url` *and* `use.baseURL` both on 3100 —
+  moving one and not the other reads as a broken app. `reuseExistingServer: false`:
+  the command contains the build, so reuse skips it and shoots the previous build.
+  Playwright then kills the spawned shell and not the server under it, so
+  `tool/shots.sh` frees that one port first or every second run dies on
+  `EADDRINUSE`.
 - Seed realistic data — empty states flatter the layout. Read **every** PNG and
   confirm it shows what its name claims — green runs still capture the wrong
   thing.
