@@ -66,8 +66,16 @@ case "${1:-}" in
     # Pane needs its real state visible (approval prompt, session end):
     # stop the watcher; its EXIT trap restores the idle title so herdr's
     # blocked/idle screen rules win again.
-    sid=$(jq -r '.session_id // empty' 2>/dev/null)
+    #
+    # NOT for the 60s "waiting for your input" idle notification — that fires
+    # on every quiet turn end and is exactly the case this hook exists for.
+    # Letting it through killed the watcher ~60s in, every time (journal:
+    # started 15:29:26, stopped 15:30:27). Only a real blocker clears.
+    hook=$(cat 2>/dev/null)
+    sid=$(printf '%s' "$hook" | jq -r '.session_id // empty' 2>/dev/null)
     [ -n "$sid" ] || exit 0
+    msg=$(printf '%s' "$hook" | jq -r '.message // empty' 2>/dev/null)
+    case "$msg" in *"waiting for your input"*) exit 0 ;; esac
     systemctl --user stop "claude-herdr-codex-${sid}" 2>/dev/null
     ;;
   codex-wait)
