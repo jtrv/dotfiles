@@ -575,30 +575,6 @@ hook global BufSetOption filetype=yo-prompt %{
 }
 
 
-define-command zeal -docstring '
-  zeal <docset:api> : search for an api within a zeal docset
-' -params 0.. %{ evaluate-commands %sh{
-  if [ $# -eq 0 ]; then
-    echo '
-      prompt -shell-script-candidates %{
-        rg -No "\p{L}+\w+" "$kak_buffile" \
-          | sort -u \
-          | sed "s/^/$kak_opt_filetype:/"
-      } \
-      -init "%opt{filetype}:" \
-      zeal %{ terminal devour zeal %val{text} }
-    '
-  else
-    echo "terminal devour zeal $*"
-  fi
-}}
-complete-command zeal shell-script-candidates %{
-  rg -No '\p{L}+\w+' "$kak_buffile" |
-   sort -u |
-   sed "s/^/$kak_opt_filetype:/"
-}
-
-
 ###################### KEYBINDINGS ######################
 
 map global user <space> : -docstring 'prompt'
@@ -941,8 +917,6 @@ map global user w -docstring 'write' %{:write <ret>}
 map global user x -docstring 'xargs' %{:xargs <ret>}
 
 map global user y -docstring 'yo' %{:yo-buffer <ret>}
-
-map global user z -docstring 'zeal' %{:zeal <ret>}
 
 # contextual scripts
 hook global WinSetOption filetype=git-commit    %{ source '~/.config/kak/contexts/commit.kak'      }
