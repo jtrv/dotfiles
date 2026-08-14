@@ -38,6 +38,20 @@ The suite is the agent's only sensor.
   it shows; reading it is cheaper than another round of reasoning. Video is human
   triage.
 
+## Serving the app under test
+
+The harness's server is not the human's dev server. Give it its own port (`PORT=3100`,
+never the framework default already in use — 3000, 5173, 8000, 8080) and point the
+client at the same one. Moving the server and leaving `baseURL` behind fails as a
+broken app, not as the config typo it is.
+
+- **Never reuse a running server when the harness command also builds.** Reuse skips
+  the build and tests whatever was compiled last time: green, fast, and a picture of
+  code already changed. A stale pass is worse than no pass.
+- **Runners kill the shell they spawned, not the server under it.** The port stays
+  held and the *next* run dies on `EADDRINUSE`. Free that one port in the task script
+  before starting — only ever the automation's own, never whatever holds the dev port.
+
 ## Per ecosystem
 
 **TypeScript/bun — Playwright** (the capture rig's sibling runner, in the gate this

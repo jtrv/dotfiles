@@ -267,7 +267,7 @@
     }
   },
   "skipWorkflowUsageWarning": true,
-  "theme": "auto",
+  "theme": "custom:catppuccin",
   "editorMode": "normal",
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true
