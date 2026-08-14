@@ -25,7 +25,7 @@
         "installPath": "/home/sugimoto/.config/claude/plugins/cache/claude-plugins-official/context7/unknown",
         "version": "unknown",
         "installedAt": "2026-06-11T23:12:45.204Z",
-        "lastUpdated": "2026-08-03T20:41:46.975Z"
+        "lastUpdated": "2026-08-14T00:31:59.168Z"
       }
     ],
     "playwright@claude-plugins-official": [
@@ -34,16 +34,16 @@
         "installPath": "/home/sugimoto/.config/claude/plugins/cache/claude-plugins-official/playwright/unknown",
         "version": "unknown",
         "installedAt": "2026-06-11T23:12:57.875Z",
-        "lastUpdated": "2026-08-03T20:41:46.976Z"
+        "lastUpdated": "2026-08-14T00:31:59.167Z"
       }
     ],
     "security-guidance@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "/home/sugimoto/.config/claude/plugins/cache/claude-plugins-official/security-guidance/2.0.6",
-        "version": "2.0.6",
+        "installPath": "/home/sugimoto/.config/claude/plugins/cache/claude-plugins-official/security-guidance/2.0.7",
+        "version": "2.0.7",
         "installedAt": "2026-06-11T23:13:12.499Z",
-        "lastUpdated": "2026-06-16T02:33:24.536Z"
+        "lastUpdated": "2026-08-14T00:20:42.535Z"
       }
     ],
     "ralph-loop@claude-plugins-official": [
@@ -77,10 +77,10 @@
     "remember@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "/home/sugimoto/.config/claude/plugins/cache/claude-plugins-official/remember/0.14.0",
-        "version": "0.14.0",
+        "installPath": "/home/sugimoto/.config/claude/plugins/cache/claude-plugins-official/remember/0.20.0",
+        "version": "0.20.0",
         "installedAt": "2026-06-11T23:14:55.881Z",
-        "lastUpdated": "2026-08-03T20:41:50.732Z",
+        "lastUpdated": "2026-08-14T00:20:46.197Z",
         "gitCommitSha": "a4ff96f38622f7c4920dc349d59cc980663336f4"
       }
     ],
@@ -90,7 +90,7 @@
         "installPath": "/home/sugimoto/.config/claude/plugins/cache/claude-plugins-official/skill-creator/unknown",
         "version": "unknown",
         "installedAt": "2026-06-11T23:15:03.437Z",
-        "lastUpdated": "2026-08-03T20:41:46.977Z"
+        "lastUpdated": "2026-08-14T00:31:59.168Z"
       }
     ],
     "ponytail@ponytail": [
@@ -109,7 +109,7 @@
         "installPath": "/home/sugimoto/.config/claude/plugins/cache/context-mode/context-mode/1.0.169",
         "version": "1.0.169",
         "installedAt": "2026-07-01T18:52:21.005Z",
-        "lastUpdated": "2026-08-03T20:47:42.706Z",
+        "lastUpdated": "2026-08-14T00:15:14.395Z",
         "gitCommitSha": "3fbc6ea6569db1b1c6524d3543dc95f50bb5363a"
       }
     ],
@@ -121,6 +121,24 @@
         "installedAt": "2026-07-22T21:01:14.851Z",
         "lastUpdated": "2026-07-22T21:01:14.851Z",
         "gitCommitSha": "db52e28f4d9ded852ab3942cea316258ae4ef346"
+      }
+    ],
+    "gopls-lsp@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/home/sugimoto/.config/claude/plugins/cache/claude-plugins-official/gopls-lsp/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-08-04T00:15:13.837Z",
+        "lastUpdated": "2026-08-04T00:15:13.837Z"
+      }
+    ],
+    "pyright-lsp@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/home/sugimoto/.config/claude/plugins/cache/claude-plugins-official/pyright-lsp/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-08-04T00:15:13.837Z",
+        "lastUpdated": "2026-08-04T00:15:13.837Z"
       }
     ]
   }
