@@ -74,6 +74,7 @@ ddcci-driver-linux-dkms
 devour
 difftastic
 discord_arch_electron
+diskwatch
 docbook-xml
 docbook-xsl
 docker
@@ -220,6 +221,7 @@ mpv-thumbfast-git
 mpv-uosc-git
 namcap
 needrestart
+netwatch-tui
 nfs-utils
 ngrep
 nim
@@ -336,6 +338,7 @@ sxiv
 syncthing
 systemd-resolvconf
 systeroid
+syswatch
 sysz
 tailspin
 taplo-cli
