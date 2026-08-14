@@ -4,6 +4,7 @@
 In-depth per-context instructions live in `~/.config/claude/contexts/`. Before working in a matching context, Read the file — do not proceed on memory of it:
 - `parallel-agents.md` — spawning multiple agents that edit the same working tree
 - `long-tasks.md` — any task spanning sessions or > ~1 hour; before /compact; when resuming or handing off work
+- `e2e.md` — writing, running, or gating on end-to-end tests in any language; also read it before adding an E2E tier that may not be worth having
 - `flutter.md` — editing, testing, or committing Dart/Flutter code (also surfaced as the `flutter` skill)
 - `kotlin.md` — editing, testing, or committing Kotlin or Gradle files (also surfaced as the `kotlin` skill)
 - `rust.md` — editing, testing, or committing Rust code (also surfaced as the `rust` skill)

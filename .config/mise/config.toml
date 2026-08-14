@@ -3,8 +3,10 @@
 # mise shims shadow the nix copies. only tools nix doesn't provide stay global;
 # per-project versions still work via .mise.toml.
 [tools]
-biome = "latest"
-usage = "latest"
+aichat = "latest"
+ruby = "latest"   # no ruby interpreter in packages.nix, only the LSPs
+usage = "latest"  # mise completion dependency
+herdr = "latest"
 
 [settings]
 plugin_autoupdate_last_check_duration = '1 day'

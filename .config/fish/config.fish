@@ -6,4 +6,3 @@ if status is-interactive
   starship init fish          | source
   fish_config theme choose catppuccin-mocha
 end
-

@@ -7,30 +7,81 @@
       "Read(**/.env.*.local)",
       "Read(**/.env.production)",
       "Read(**/.env.development)",
+      "Read(**/.env.staging)",
+      "Read(**/.env.test)",
       "Read(**/*.pem)",
       "Read(**/*.key)",
       "Read(**/*.p12)",
       "Read(**/*.pfx)",
+      "Read(**/*.jks)",
+      "Read(**/*.keystore)",
+      "Read(**/*.ppk)",
+      "Read(**/*.asc)",
+      "Read(**/*.gpg)",
+      "Read(**/*.p8)",
+      "Read(**/*.kdbx)",
+      "Read(**/*.ovpn)",
       "Read(**/id_rsa)",
+      "Read(**/id_dsa)",
       "Read(**/id_ecdsa)",
       "Read(**/id_ed25519)",
       "Read(**/.ssh/**)",
       "Read(**/.aws/**)",
       "Read(**/.gnupg/**)",
+      "Read(**/.kube/**)",
+      "Read(**/.docker/**)",
+      "Read(**/.azure/**)",
+      "Read(**/.config/gcloud/**)",
+      "Read(**/.local/share/keyrings/**)",
+      "Read(**/.password-store/**)",
       "Read(**/.netrc)",
       "Read(**/.npmrc)",
       "Read(**/.pypirc)",
       "Read(**/.git-credentials)",
+      "Read(**/.htpasswd)",
+      "Read(**/.pgpass)",
+      "Read(**/.my.cnf)",
+      "Read(**/.authinfo)",
+      "Read(**/.authinfo.gpg)",
+      "Read(**/credentials)",
       "Read(**/credentials.json)",
+      "Read(**/credentials.yaml)",
+      "Read(**/credentials.yml)",
+      "Read(**/credentials.toml)",
+      "Read(**/credentials.ini)",
+      "Read(**/credentials.csv)",
+      "Read(**/.credentials.json)",
+      "Read(**/.credentials.yaml)",
+      "Read(**/.credentials.yml)",
+      "Read(**/secret.json)",
+      "Read(**/secret.yaml)",
+      "Read(**/secret.yml)",
       "Read(**/secrets.json)",
       "Read(**/secrets.yaml)",
       "Read(**/secrets.yml)",
-      "Read(**/terraform.tfvars)"
+      "Read(**/secrets.toml)",
+      "Read(**/secrets.ini)",
+      "Read(**/secrets.txt)",
+      "Read(**/secrets.enc)",
+      "Read(**/secrets.env)",
+      "Read(**/terraform.tfvars)",
+      "Read(**/*service-account*.json)",
+      "Read(**/*service_account*.json)",
+      "Read(**/*serviceaccount*.json)",
+      "Read(**/*client_secret*)",
+      "Read(**/*serviceAccountKey*)",
+      "Read(**/*firebase-adminsdk*)",
+      "Read(**/auth.json)",
+      "Read(**/.auth.json)",
+      "Read(**/gh/hosts.yml)",
+      "Read(**/gh/hosts.yaml)",
+      "Read(**/rclone.conf)",
+      "Read(**/age/keys.txt)",
+      "Read(**/mise.local.toml)"
     ],
     "defaultMode": "auto"
   },
-  "model": "claude-fable-5[1m]",
-  "effortLevel": "medium",
+  "model": "opus",
   "skillOverrides": {
     "find-skills": "on",
     "writing-skills": "on",
@@ -103,6 +154,16 @@
         ]
       },
       {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash '/home/sugimoto/.config/claude/hooks/herdr-agent-state.sh' session",
+            "timeout": 10
+          }
+        ]
+      },
+      {
         "matcher": "compact",
         "hooks": [
           {
@@ -162,7 +223,7 @@
     "context7@claude-plugins-official": true,
     "gopls-lsp@claude-plugins-official": false,
     "learning-output-style@claude-plugins-official": true,
-    "playwright@claude-plugins-official": true,
+    "playwright@claude-plugins-official": false,
     "ponytail@ponytail": true,
     "pyright-lsp@claude-plugins-official": false,
     "ralph-loop@claude-plugins-official": true,
@@ -171,7 +232,7 @@
     "security-guidance@claude-plugins-official": true,
     "skill-creator@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
-    "vercel@claude-plugins-official": true
+    "vercel@claude-plugins-official": false
   },
   "extraKnownMarketplaces": {
     "context-mode": {
@@ -194,7 +255,7 @@
     }
   },
   "skipWorkflowUsageWarning": true,
-  "theme": "dark",
+  "theme": "auto",
   "editorMode": "normal",
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true
