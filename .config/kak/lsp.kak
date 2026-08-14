@@ -115,6 +115,36 @@ declare-option -hidden str lsp_server_basedpyright %{
   typeCheckingMode = "standard"
 }
 
+# jedi/rope fallback - only worth it for rope's extract-method refactors
+declare-option -hidden str lsp_server_pylsp %{
+  [pylsp]
+  root_globs = [ "requirements.txt", "setup.py", "pyproject.toml", ".git", ".hg" ]
+  settings_section = "_"
+  [pylsp.settings._]
+  pylsp.plugins.jedi_completion.include_params = true
+}
+
+# only for repos that mandate eslint plugins oxlint can't replicate; globs are
+# flat-config (eslint 9+). format.enable stays false so it can't fight tsserver.
+declare-option -hidden str lsp_server_eslint %{
+  [vscode-eslint-language-server]
+  root_globs = [ "eslint.config.js", "eslint.config.mjs", "eslint.config.cjs", "eslint.config.ts" ]
+  args = [ "--stdio" ]
+  workaround_eslint = true
+  [vscode-eslint-language-server.settings]
+  nodePath = ""
+  codeActionsOnSave = { mode = "all", "source.fixAll.eslint" = true }
+  format = { enable = false }
+  quiet = false
+  rulesCustomizations = []
+  run = "onType"
+  validate = "on"
+  experimental = {}
+  problems = { shortenToSingleLine = false }
+  codeAction.disableRuleComment = { enable = true, location = "separateLine" }
+  codeAction.showDocumentation = { enable = true }
+}
+
 # same tsserver engine as typescript-language-server, just a faster/maintained wrapper;
 # toggle this ON and the plain typescript-language-server block OFF (never both - two tsservers)
 declare-option -hidden str lsp_server_vtsls %{
@@ -170,7 +200,8 @@ hook -group lsp-filetype-css global BufSetOption filetype=(?:css|less|scss) %{
     [vscode-css-language-server.settings]
     css.format.enable = true
     css.validProperties = []
-    css.validate = false
+    # was false because biome linted CSS; biome is opt-in now, so validate here again
+    css.validate = true
     css.lint.unknownAtRules = "ignore"
     scss.validProperties = []
     scss.format.enable = true
@@ -180,8 +211,11 @@ hook -group lsp-filetype-css global BufSetOption filetype=(?:css|less|scss) %{
     less.validate = true
   }
 
+  # biome opt-in: vscode-css already advertises provideFormatter, and biome does too,
+  # so both active made lsp-formatting pop a picker. vscode-css keeps it because biome
+  # cannot format scss/less (scss is parse-only there, less unsupported).
   set-option -add buffer lsp_servers "
-    %opt{lsp_server_biome}
+    #opt{lsp_server_biome}
     #opt{lsp_server_emmet}
     #opt{lsp_server_superhtml}
     #opt{lsp_server_unocss}
@@ -249,8 +283,11 @@ hook -group lsp-filetype-html global BufSetOption filetype=html %{
     validate.enable = true
   }
 
+  # biome opt-in: its HTML support is experimental and off unless
+  # html.experimentalFullSupportEnabled is set in biome.json, so the block was a
+  # no-op that still claimed textDocument/formatting against vscode-html.
   set-option -add buffer lsp_servers "
-    %opt{lsp_server_biome}
+    #opt{lsp_server_biome}
     #opt{lsp_server_emmet}
     #opt{lsp_server_superhtml}
     #opt{lsp_server_unocss}
@@ -260,37 +297,57 @@ hook -group lsp-filetype-html global BufSetOption filetype=html %{
 hook -group lsp-filetype-javascript global BufSetOption filetype=(?:javascript|typescript) %{
   set-option buffer lsp_servers %{
     [typescript-language-server]
-    root_globs = [ "package.json", "tsjson", "jsjson", ".git", ".hg" ]
+    # root_globs were "tsjson"/"jsjson" - typos for tsconfig.json/jsconfig.json.
+    # root_globs only pick the project root; they never gate a server (rc/lsp.kak:20),
+    # so a typo'd glob silently roots the server at the buffer's own directory.
+    root_globs = [ "package.json", "tsconfig.json", "jsconfig.json", ".git", ".hg" ]
     args = [ "--stdio" ]
     settings_section = "_"
     [typescript-language-server.settings._]
     quotePreference = "auto"
-    typescript.format.semicolons = "remove"
+    # oxfmt owns formatting (below). This only stops tsserver from formatting;
+    # it does NOT unclaim the capability, so it cannot prevent the picker on its
+    # own - see the map below.
+    typescript.format.enable = false
+    javascript.format.enable = false
+    typescript.inlayHints.parameterNames.enabled = "literals"
+    typescript.inlayHints.variableTypes.enabled = true
 
-    [vscode-eslint-language-server]
-    root_globs = [ ".eslintrc", ".eslintrc.json" ]
-    args = [ "--stdio" ]
-    workaround_eslint = true
-    [vscode-eslint-language-server.settings]
-    nodePath = ""
-    codeActionsOnSave = { mode = "all", "source.fixAll.eslint" = true }
-    format = { enable = true }
-    quiet = false
-    rulesCustomizations = []
-    run = "onType"
-    validate = "on"
-    experimental = {}
-    problems = { shortenToSingleLine = false }
-    codeAction.disableRuleComment = { enable = true, location = "separateLine" }
-    codeAction.showDocumentation = { enable = true }
+    # Lint + fixes. oxlint 1.76's LSP advertises codeActionProvider
+    # (source.fixAll.oxc) and diagnostics but NOT documentFormattingProvider,
+    # so it cannot collide with tsserver over textDocument/formatting.
+    # --type-aware is accepted alongside --lsp; rules still come from .oxlintrc.json.
+    # Use .oxlintrc.json, not a .ts config: a JS/TS config that writes to stdout
+    # corrupts the LSP stream (oxc#20320).
+    [oxlint]
+    root_globs = [ ".oxlintrc.json", "package.json", ".git", ".hg" ]
+    args = [ "--lsp", "--type-aware" ]
+
+    # Formatter. Separate binary from oxlint, separate LSP server: `oxfmt --lsp`
+    # advertises documentFormattingProvider and nothing else, so it is the only
+    # server here claiming textDocument/formatting. Config: .oxfmtrc.json.
+    [oxfmt]
+    root_globs = [ ".oxfmtrc.json", "package.json", ".git", ".hg" ]
+    args = [ "--lsp" ]
   }
 
+  # biome moved to opt-in: it duplicates oxlint's diagnostics and adds a second
+  # formatter, and root_globs cannot scope it to biome.json repos.
+  # vscode-eslint dropped: its globs predated flat config, so it rooted at the
+  # buffer dir, found no eslint.config.*, reported nothing - and still claimed
+  # textDocument/formatting, making lsp-formatting a three-way picker.
   set-option -add buffer lsp_servers "
-    %opt{lsp_server_biome}
+    #opt{lsp_server_biome}
+    #opt{lsp_server_eslint}
     #opt{lsp_server_emmet}
     #opt{lsp_server_unocss}
     #opt{lsp_server_vtsls}
   "
+
+  # typescript-language-server hardcodes documentFormattingProvider at initialize
+  # (lib/cli.mjs) and kak-lsp routes on the advertised capability, not on settings,
+  # so it always offers a tsserver/oxfmt picker here. Name the server up front.
+  map buffer lsp f '<esc>: lsp-formatting oxfmt<ret>' -docstring 'format buffer (oxfmt)'
 }
 
 hook -group lsp-filetype-json global BufSetOption filetype=(?:json|jsonc) %{
@@ -390,8 +447,12 @@ hook -group lsp-filetype-nix global BufSetOption filetype=nix %{
     [nixd.settings.nixd.formatting]
     command = [ "nixfmt" ]
     [nixd.settings.nixd.options.nixos]
-    # options for the current host (HOSTNAME) -> completion for services.*, etc.
-    expr = "(builtins.getFlake \"/home/sugimoto/repos/nixos-config\").nixosConfigurations.${builtins.getEnv \"HOSTNAME\"}.options"
+    # options for the current host -> completion for services.*, etc.
+    # Reads /etc/hostname rather than getEnv "HOSTNAME": bash sets HOSTNAME
+    # automatically but fish does not, so under kak launched from fish the env
+    # lookup returned "" and this expr never resolved. readFile keeps it
+    # host-derived, so the same config works on morpheus and thiccpad.
+    expr = "(builtins.getFlake \"/home/sugimoto/repos/nixos-config\").nixosConfigurations.${builtins.replaceStrings [\"\\n\"] [\"\"] (builtins.readFile /etc/hostname)}.options"
   }
 
   set-option -add buffer lsp_servers "
@@ -408,19 +469,14 @@ hook -group lsp-filetype-prisma global BufSetOption filetype=prisma %{
   }
 }
 
+# basedpyright owns types/nav/hover, ruff owns lint+format. pylsp dropped: jedi is
+# non-incremental and strictly weaker here, and pylsp ships autopep8/yapf, so it also
+# competed with ruff for textDocument/formatting.
 hook -group lsp-filetype-python global BufSetOption filetype=python %{
   set-option buffer lsp_servers %{
-    [pylsp]
-    root_globs = [ "requirements.txt", "setup.py", "pyproject.toml", ".git", ".hg" ]
-    settings_section = "_"
-    [pylsp.settings._]
-    # See https://github.com/python-lsp/python-lsp-server#configuration
-    # pylsp.configurationSources = [ "flake8" ]
-    pylsp.plugins.jedi_completion.include_params = true
-
     [ruff]
     args = [ "server", "--quiet" ]
-    root_globs = [ "requirements.txt", "setup.py", "pyproject.toml", ".git", ".hg" ]
+    root_globs = [ "pyproject.toml", "ruff.toml", ".ruff.toml", "uv.lock", ".git", ".hg" ]
     settings_section = "_"
     [ruff.settings._.globalSettings]
     organizeImports = true
@@ -428,7 +484,8 @@ hook -group lsp-filetype-python global BufSetOption filetype=python %{
   }
 
   set-option -add buffer lsp_servers "
-    #opt{lsp_server_basedpyright}
+    %opt{lsp_server_basedpyright}
+    #opt{lsp_server_pylsp}
   "
 }
 

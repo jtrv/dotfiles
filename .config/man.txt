@@ -1,0 +1,24 @@
+Which doc tool for which question
+=================================
+
+Nix
+---
+manix <query>        what does this option/function mean — offline search of
+                     nixos + home-manager options and nixpkgs docs
+nix-search-tv        what exists — fuzzy TUI over packages + options, use when
+                     you don't know the name yet
+nixos-option <opt>   what is this option set to in MY evaluated config
+
+CLI / system
+------------
+tldr <cmd>           (tealdeer) instant usage examples for a command you know
+wikiman              full-text fzf search over man pages + arch wiki + tldr,
+                     use when you don't know which page has the answer
+man <cmd>            the canonical reference once you know the page
+
+Libraries / languages
+---------------------
+dedoc                devdocs offline (cargo-installed, synced in bootstrap.nix)
+
+Overlap note: wikiman ships the same tldr-pages as tealdeer; tealdeer kept
+only for the faster direct-lookup UX.

@@ -22,6 +22,17 @@ evaluate-commands %sh{ kak-tree-sitter -vvv -dks --init "$kak_session" }
 
 ################### DISPLAY ###################
 
+# rainbow delimiters + current scope
+provide-module "kak_rainbower" %{
+  bundle kak-rainbow-rs https://github.com/jtrv/kak-rainbow-rs
+  bundle-install-hook kak-rainbow-rs %{ cargo install --locked --path . ; cargo clean }
+}
+# The colorscheme sets this plugin's colors, and set-option on an undeclared
+# option fails -- so the module has to be loaded before the colorscheme, not
+# lazily inside "ui". Without this the plugin's own defaults win, which are
+# mocha-mantle and RainbowBrackets hues.
+require-module "kak_rainbower"
+
 colorscheme catppuccin_mocha
 
 set-option global ui_options terminal_assistant=none
@@ -33,12 +44,6 @@ provide-module "number_toggle_kak" %{
     require-module "number-toggle"
     set-option global number_toggle_params -hlcursor -cursor-separator '┼'
   }
-}
-
-# rainbow delimiters + current scope
-provide-module "kak_rainbower" %{
-  bundle kak-rainbow-rs https://github.com/jtrv/kak-rainbow-rs
-  bundle-install-hook kak-rainbow-rs %{ cargo install --locked --path . ; cargo clean }
 }
 
 set-option global git_diff_add_char "▍"
@@ -91,7 +96,7 @@ bundle-install-hook kak-ansi-rs %{ cargo install --locked --path . ; cargo clean
 bundle popup.kak https://github.com/enricozb/popup.kak
 bundle-install-hook popup.kak %{ cargo install --locked --path . ; cargo clean }
 
-bundle kak-live-grep https://codeberg.org/raiguard/kak-live-grep.
+bundle kak-live-grep https://codeberg.org/raiguard/kak-live-grep
 
 bundle-noload kak-tree-sitter https://git.sr.ht/~hadronized/kak-tree-sitter
 bundle-install-hook kak-tree-sitter %{ cargo install kak-tree-sitter ktsctl ; cargo clean }
@@ -655,8 +660,6 @@ map global normal /     -docstring 'search'                      %{/(?i)}
 map global normal <a-/> -docstring 'search backwards'            %{<a-/>(?i)}
 map global normal ?     -docstring '(extend) search'             %{?(?i)}
 map global normal <a-?> -docstring '(extend) search backwards'   %{<a-?>(?i)}
-map global normal s     -docstring 'select'                      %{s(?i)}
-map global normal S     -docstring 'select with splits'          %{S(?i)}
 
 define-command -hidden regex-assertions %{
 info -title 'assertions' '<c-i>:    ignore case  (?i)
@@ -720,7 +723,7 @@ bundle kakoune-buffer-manager https://github.com/theowenyoung/kakoune-buffer-man
 }
 
 bundle caser https://github.com/jtrv/caser %{ require-module caser-recommended-bindings }
-bundle-install-hook caser %{ cargo install --locked  --path . ; cargo clean }
+bundle-install-hook caser %{ cargo install --locked --path . ; cargo clean }
 
 declare-user-mode dev
   map global user d -docstring 'dev' %{: enter-user-mode dev <ret>}

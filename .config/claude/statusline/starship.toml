@@ -2,30 +2,51 @@
 
 # ponytail: no shell here (nothing types at this prompt), so no character/vimcmd/jobs/sudo/
 # shlvl/cloud/language-runtime modules — those exist to orient a human typing commands.
-# This renders once per turn; keep it to what a glance needs: where, git state, Claude's own
-# telemetry (model, context %, diff size, rate-limit headroom) fed in via env vars from statusline.sh.
+# This renders once per turn; keep it to what a glance needs: where, git state, then telemetry
+# fed in via env vars from statusline.sh — who is answering and how (model, then the response
+# modes), the weekly limits that decide whether to start something big, the 5h one, and
+# context %, which turns over fastest. Diff size trails the lot: it is the one number here
+# that reports what already happened rather than what is left, so nothing waits on it.
 format = """
 $directory\
 $git_branch\
 $git_status\
 ${env_var.CC_MODEL}\
-${env_var.CC_CTX_OK}\
-${env_var.CC_CTX_WARN}\
-${env_var.CC_CTX_HIGH}\
-${env_var.CC_LINES}\
-${env_var.CC_RATE_5H}\
-${env_var.CC_RATE_7D}\
 ${env_var.CC_PONYTAIL}\
-${env_var.CC_CAVEMAN}"""
+${env_var.CC_CAVEMAN}\
+${env_var.CC_RATE_7D}\
+${env_var.CC_RATE_5H}\
+${env_var.CC_CODEX}\
+${env_var.CC_CTX}\
+${env_var.CC_LINES}"""
+
+# Colour carries role, not decoration. Five families, and a chip's family says what kind of
+# fact it is before you have read it:
+#   sky      #7DD3FC  place — where the work is happening (cwd, branch, tree state)
+#   violet   #A78BFA  Claude itself; #C4B5FD one step back for its budgets
+#   mauve    #8B85B0  how Claude is answering — deliberately the quietest thing here
+#   teal     #74AA9C  the other provider (cool, so it never reads as ours)
+#   amber    #FBBF24  warn, and #F87171 high — the alarm channel, used NOWHERE else
+# Hue groups; lightness and weight rank within a group. Nothing is green: a second
+# everything-is-fine colour buys no information, and green-to-red is the ladder that
+# collapses first under deuteranopia. Unremarkable readings sit at neutral instead.
 
 [directory]
 fish_style_pwd_dir_length = 1
 truncation_length = 4
+style = "bold #7DD3FC"
 
+# same hue as the directory, one weight down: cwd and branch are one phrase, and the cwd
+# is the half you navigate by
 [git_branch]
+style = "#7DD3FC"
 format = "[$symbol$branch(:$remote_branch)]($style) "
 
+# the emoji already carry their own colour, so the style only has to not shout — the
+# default here is bold red, which put a permanent alarm-coloured chip next to every
+# uncommitted file
 [git_status]
+style = "#7DD3FC"
 format = "([$all_status$ahead_behind]($style) )"
 conflicted = "🏳 "
 ahead = "🏎💨"
@@ -34,33 +55,29 @@ diverged = "😵"
 untracked = "🤷‍"
 stashed = "📦"
 modified = "📝"
-staged = '[$count󰜅 ](bold green)'
+staged = '[$count󰜅 ](#7DD3FC)'
 renamed = "👅"
 deleted = "🗑 "
 
+# the brightest, most saturated chip in the bar, and the only thing wearing full violet:
+# who is answering outranks every number next to it. Stays md-robot rather than taking the
+# Anthropic mark — the vendor is a constant, the model is not, and the chip whose text
+# changes between sessions is better off wearing the generic glyph.
 [env_var.CC_MODEL]
 variable = "CC_MODEL"
 symbol = "󰚩 "
-style = "bold purple"
+style = "bold #A78BFA"
 format = "[$symbol$env_value]($style) "
 
-# context-window used%, split into three mutually-exclusive vars so color follows severity
-[env_var.CC_CTX_OK]
-variable = "CC_CTX_OK"
-symbol = "◔ "
-style = "bold green"
-format = "[$symbol$env_value]($style) "
-
-[env_var.CC_CTX_WARN]
-variable = "CC_CTX_WARN"
-symbol = "◔ "
-style = "bold yellow"
-format = "[$symbol$env_value]($style) "
-
-[env_var.CC_CTX_HIGH]
-variable = "CC_CTX_HIGH"
-symbol = "◔ "
-style = "bold red"
+# context-window used%. md-view_day is a framed pane — the window itself; magnitude is left
+# entirely to the colour and the digits, which is why the glyph does not vary with fill.
+# Neutral until it matters: a fresh window is the least interesting fact on this line. Like
+# every other reading here, the amber/red past the thresholds is repainted onto the digits
+# by statusline.sh, so the icon stays a fixed label and only the number changes state.
+[env_var.CC_CTX]
+variable = "CC_CTX"
+symbol = "󰕯 "
+style = "bold #94A3B8"
 format = "[$symbol$env_value]($style) "
 
 [env_var.CC_LINES]
@@ -68,29 +85,57 @@ variable = "CC_LINES"
 style = "dimmed"
 format = "[$env_value]($style) "
 
+# Claude's own rate limits: one step lighter than the model chip, so they read as belonging
+# to it without competing with it. Both windows share the shade — the icons already say
+# which is which, and a second violet would imply a difference in kind that isn't there.
+# The weekly window wears the real Anthropic mark (nf-cod-claude, U+EC82) and the codex chip
+# wears OpenAI's, so the two vendor budgets are labelled the same way and read as a pair
+# across the bar; the 5h clock in between belongs to the same violet family, so nothing is
+# ambiguous about whose window it is. This needs Nerd Fonts >= 3.5.0 — Arch ships 3.4.0, so
+# the symbols font from the 3.5.0 release is unpacked in ~/.local/share/fonts/nerd-fonts-3.5.0/
+# and alacritty falls back to it per glyph. Delete that directory and these two chips degrade
+# to blank boxes, nothing else breaks. It replaces md-asterisk, which was picked back when
+# that was the closest thing to the mark this font had.
+# Deliberately NOT Anthropic's terracotta: warm hues are reserved for the amber/red repaint
+# statusline.sh applies past 75%/90%, and a permanently orange number reads as a standing
+# warning even at 3%.
 [env_var.CC_RATE_5H]
 variable = "CC_RATE_5H"
 symbol = "󰥔 "
-style = "bold cyan"
+style = "bold #C4B5FD"
 format = "[$symbol$env_value]($style) "
 
 [env_var.CC_RATE_7D]
 variable = "CC_RATE_7D"
-symbol = "󰃭 "
-style = "bold blue"
+symbol = " "
+style = "bold #C4B5FD"
 format = "[$symbol$env_value]($style) "
 
-# icon alone at "full" (CC_PONYTAIL=""), icon+word for lite/ultra, hidden entirely when
-# unset (var stays unset only when the ponytail flag file itself is absent)
+# codex rate-limit windows: bare percentage while the plan reports one, self-labelled
+# ("5h 8%") only if it reports two. nf-cod-openai, the real mark, from the same 3.5.0 symbols
+# font as the Claude glyph above — no more hexagon standing in for its silhouette, and the
+# vendor-mark-labels-the-budget rule now holds on both sides of the bar.
+[env_var.CC_CODEX]
+variable = "CC_CODEX"
+symbol = " "
+style = "bold #74AA9C"
+format = "[$symbol$env_value]($style) "
+
+# icon + level word at every level; hidden entirely when unset (the var stays unset only
+# when the ponytail flag file itself is absent, which is what "mode off" looks like).
+# Both modes share one desaturated violet: they modify how Claude answers, so they sit in
+# its family, and they hold steady for whole sessions, so they are the part of the bar that
+# should recede. Caveman was 256-colour 130 — a standing orange chip in the alarm channel.
 [env_var.CC_PONYTAIL]
 variable = "CC_PONYTAIL"
 symbol = "󱁶 "
-style = "bold 108"
+style = "#8B85B0"
 format = "[$symbol$env_value]($style) "
 
-# same hide-at-default pattern; icon = md-text_short (terse output), earthy brown for "caveman"
+# same show-the-level pattern; icon = md-campfire, which names the mode more directly than
+# the generic md-text_short it replaced, and is the only non-round glyph in the bar
 [env_var.CC_CAVEMAN]
 variable = "CC_CAVEMAN"
-symbol = "󰦩 "
-style = "bold 130"
+symbol = "󰻝 "
+style = "#8B85B0"
 format = "[$symbol$env_value]($style) "

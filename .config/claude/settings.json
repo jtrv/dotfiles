@@ -6,29 +6,95 @@
       "Read(**/.env.*.local)",
       "Read(**/.env.production)",
       "Read(**/.env.development)",
+      "Read(**/.env.staging)",
+      "Read(**/.env.test)",
       "Read(**/*.pem)",
       "Read(**/*.key)",
       "Read(**/*.p12)",
       "Read(**/*.pfx)",
+      "Read(**/*.jks)",
+      "Read(**/*.keystore)",
+      "Read(**/*.ppk)",
+      "Read(**/*.asc)",
+      "Read(**/*.gpg)",
+      "Read(**/*.p8)",
+      "Read(**/*.kdbx)",
+      "Read(**/*.ovpn)",
       "Read(**/id_rsa)",
+      "Read(**/id_dsa)",
       "Read(**/id_ecdsa)",
       "Read(**/id_ed25519)",
       "Read(**/.ssh/**)",
       "Read(**/.aws/**)",
       "Read(**/.gnupg/**)",
+      "Read(**/.kube/**)",
+      "Read(**/.docker/**)",
+      "Read(**/.azure/**)",
+      "Read(**/.config/gcloud/**)",
+      "Read(**/.local/share/keyrings/**)",
+      "Read(**/.password-store/**)",
       "Read(**/.netrc)",
       "Read(**/.npmrc)",
       "Read(**/.pypirc)",
       "Read(**/.git-credentials)",
+      "Read(**/.htpasswd)",
+      "Read(**/.pgpass)",
+      "Read(**/.my.cnf)",
+      "Read(**/.authinfo)",
+      "Read(**/.authinfo.gpg)",
+      "Read(**/credentials)",
       "Read(**/credentials.json)",
+      "Read(**/credentials.yaml)",
+      "Read(**/credentials.yml)",
+      "Read(**/credentials.toml)",
+      "Read(**/credentials.ini)",
+      "Read(**/credentials.csv)",
+      "Read(**/.credentials.json)",
+      "Read(**/.credentials.yaml)",
+      "Read(**/.credentials.yml)",
+      "Read(**/secret.json)",
+      "Read(**/secret.yaml)",
+      "Read(**/secret.yml)",
       "Read(**/secrets.json)",
       "Read(**/secrets.yaml)",
       "Read(**/secrets.yml)",
-      "Read(**/terraform.tfvars)"
+      "Read(**/secrets.toml)",
+      "Read(**/secrets.ini)",
+      "Read(**/secrets.txt)",
+      "Read(**/secrets.enc)",
+      "Read(**/secrets.env)",
+      "Read(**/terraform.tfvars)",
+      "Read(**/*service-account*.json)",
+      "Read(**/*service_account*.json)",
+      "Read(**/*serviceaccount*.json)",
+      "Read(**/*client_secret*)",
+      "Read(**/*serviceAccountKey*)",
+      "Read(**/*firebase-adminsdk*)",
+      "Read(**/auth.json)",
+      "Read(**/.auth.json)",
+      "Read(**/gh/hosts.yml)",
+      "Read(**/gh/hosts.yaml)",
+      "Read(**/rclone.conf)",
+      "Read(**/age/keys.txt)",
+      "Read(**/mise.local.toml)"
     ],
     "defaultMode": "auto"
   },
   "hooks": {
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"/home/sugimoto/.config/claude/hooks/nosleep.sh\" release"
+          },
+          {
+            "type": "command",
+            "command": "bash \"/home/sugimoto/.config/claude/hooks/herdr-codex-state.sh\" clear"
+          }
+        ]
+      }
+    ],
     "PreToolUse": [
       {
         "matcher": "*",
@@ -41,6 +107,20 @@
           {
             "type": "command",
             "command": "bash \"/home/sugimoto/.config/claude/hooks/nosleep.sh\" acquire"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"/home/sugimoto/.config/claude/hooks/nosleep.sh\" release"
+          },
+          {
+            "type": "command",
+            "command": "bash \"/home/sugimoto/.config/claude/hooks/herdr-codex-state.sh\" clear"
           }
         ]
       }
@@ -69,6 +149,25 @@
             "command": "\"/home/sugimoto/.config/claude/hooks/capture-window.sh\""
           }
         ]
+      },
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash '/home/sugimoto/.config/claude/hooks/herdr-agent-state.sh' session",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Context was just compacted. Summaries drift: re-read any state.md/ledger and the relevant ~/.config/claude/contexts/ file before continuing; treat compaction-summary claims about decisions and constraints as unverified until checked against the ledger.'"
+          }
+        ]
       }
     ],
     "Stop": [
@@ -80,31 +179,7 @@
           },
           {
             "type": "command",
-            "command": "bash \"/home/sugimoto/.config/claude/hooks/notify-done.sh\""
-          }
-        ]
-      }
-    ],
-    "Notification": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash \"/home/sugimoto/.config/claude/hooks/nosleep.sh\" release"
-          },
-          {
-            "type": "command",
-            "command": "bash \"/home/sugimoto/.config/claude/hooks/notify-done.sh\""
-          }
-        ]
-      }
-    ],
-    "SessionEnd": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash \"/home/sugimoto/.config/claude/hooks/nosleep.sh\" release"
+            "command": "bash \"/home/sugimoto/.config/claude/hooks/herdr-codex-state.sh\" stop"
           }
         ]
       }
@@ -126,6 +201,16 @@
           }
         ]
       }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Preserve verbatim in the summary: current objective; decisions with status (accepted/provisional/superseded); failed attempts and why; constraints and rules currently in effect; the exact next action. If a state.md or ledger file exists for this task, note its path prominently.'"
+          }
+        ]
+      }
     ]
   },
   "enableWorkflows": true,
@@ -138,13 +223,13 @@
     "typescript-lsp@claude-plugins-official": true,
     "context7@claude-plugins-official": true,
     "code-simplifier@claude-plugins-official": true,
-    "playwright@claude-plugins-official": true,
+    "playwright@claude-plugins-official": false,
     "security-guidance@claude-plugins-official": true,
     "ralph-loop@claude-plugins-official": true,
-    "vercel@claude-plugins-official": true,
-    "pyright-lsp@claude-plugins-official": true,
+    "vercel@claude-plugins-official": false,
+    "pyright-lsp@claude-plugins-official": false,
     "learning-output-style@claude-plugins-official": true,
-    "gopls-lsp@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": false,
     "remember@claude-plugins-official": true,
     "skill-creator@claude-plugins-official": true,
     "ponytail@ponytail": true,
@@ -172,7 +257,19 @@
     }
   },
   "skipWorkflowUsageWarning": true,
-  "theme": "dark",
+  "theme": "custom:catppuccin",
   "editorMode": "normal",
-  "model": "opus"
+  "model": "fable",
+  "env": {},
+  "skillOverrides": {
+    "find-skills": "on",
+    "writing-skills": "on",
+    "vercel-composition-patterns": "off",
+    "vercel-optimize": "off",
+    "vercel-react-best-practices": "off",
+    "vercel-react-native-skills": "off",
+    "vercel-react-view-transitions": "off"
+  },
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true
 }

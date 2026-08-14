@@ -78,7 +78,7 @@ volume = 0.7
 # Execution mode: "local" (default) or "remote"
 # - local: Use whisper.cpp locally via FFI
 # - remote: Send audio to OpenAI-compatible API endpoint
- mode = "local"
+mode = "local"
 
 # Model to use for transcription (local mode)
 # Options: tiny, tiny.en, base, base.en, small, small.en, medium, medium.en, large-v3, large-v3-turbo

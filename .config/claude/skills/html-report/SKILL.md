@@ -7,7 +7,7 @@ description: Generate a polished, self-contained single-file HTML report with an
 
 One self-contained `.html` file. Tailwind and (only if diagrams are needed) Mermaid from CDNs; no other scripts, no interactivity. The file must render offline-ish (CDN-only deps) and survive being emailed or committed.
 
-Ask where to save only if no location is implied; default to a `reports/` dir next to the work, else the OS temp dir. Open it for the user afterwards when a display exists (`xdg-open` / `open`).
+Ask where to save only if no location is implied; default to a `reports/` dir next to the work, else the OS temp dir. Open it for the user afterwards when a display exists: use `$BROWSER "$file"` if `$BROWSER` is set, else fall back to `xdg-open` / `open`.
 
 ## Scaffold
 

@@ -8,7 +8,7 @@ hotkey-overlay {
 }
 
 output "DP-1" {
-    mode "3440x1440@120.000"
+    mode "3440x1440@60.000"
     scale 1
 }
 
@@ -83,9 +83,14 @@ overview {
     backdrop-color "#00000000"
 }
 
-spawn-at-startup "alacritty" "--daemon" // terminal daemon
-spawn-at-startup "niri-edge-pan"        // niri-edge-pan
-spawn-at-startup "waybar"               // status bar
+// terminal daemon
+spawn-at-startup "alacritty" "--daemon"
+
+// status bar
+spawn-at-startup "waybar"
+
+// hot-edges to swap windows / workspaces with cursor
+spawn-at-startup "niri-edge-pan"
 
 screenshot-path "~/pictures/screenshots/%Y-%m-%d_%H-%M-%S.png"
 
