@@ -22,6 +22,17 @@ evaluate-commands %sh{ kak-tree-sitter -vvv -dks --init "$kak_session" }
 
 ################### DISPLAY ###################
 
+# rainbow delimiters + current scope
+provide-module "kak_rainbower" %{
+  bundle kak-rainbow-rs https://github.com/jtrv/kak-rainbow-rs
+  bundle-install-hook kak-rainbow-rs %{ cargo install --locked --path . ; cargo clean }
+}
+# The colorscheme sets this plugin's colors, and set-option on an undeclared
+# option fails -- so the module has to be loaded before the colorscheme, not
+# lazily inside "ui". Without this the plugin's own defaults win, which are
+# mocha-mantle and RainbowBrackets hues.
+require-module "kak_rainbower"
+
 colorscheme catppuccin_mocha
 
 set-option global ui_options terminal_assistant=none
@@ -33,12 +44,6 @@ provide-module "number_toggle_kak" %{
     require-module "number-toggle"
     set-option global number_toggle_params -hlcursor -cursor-separator '┼'
   }
-}
-
-# rainbow delimiters + current scope
-provide-module "kak_rainbower" %{
-  bundle kak-rainbow-rs https://github.com/jtrv/kak-rainbow-rs
-  bundle-install-hook kak-rainbow-rs %{ cargo install --locked --path . ; cargo clean }
 }
 
 set-option global git_diff_add_char "▍"
@@ -570,30 +575,6 @@ hook global BufSetOption filetype=yo-prompt %{
 }
 
 
-define-command zeal -docstring '
-  zeal <docset:api> : search for an api within a zeal docset
-' -params 0.. %{ evaluate-commands %sh{
-  if [ $# -eq 0 ]; then
-    echo '
-      prompt -shell-script-candidates %{
-        rg -No "\p{L}+\w+" "$kak_buffile" \
-          | sort -u \
-          | sed "s/^/$kak_opt_filetype:/"
-      } \
-      -init "%opt{filetype}:" \
-      zeal %{ terminal devour zeal %val{text} }
-    '
-  else
-    echo "terminal devour zeal $*"
-  fi
-}}
-complete-command zeal shell-script-candidates %{
-  rg -No '\p{L}+\w+' "$kak_buffile" |
-   sort -u |
-   sed "s/^/$kak_opt_filetype:/"
-}
-
-
 ###################### KEYBINDINGS ######################
 
 map global user <space> : -docstring 'prompt'
@@ -936,8 +917,6 @@ map global user w -docstring 'write' %{:write <ret>}
 map global user x -docstring 'xargs' %{:xargs <ret>}
 
 map global user y -docstring 'yo' %{:yo-buffer <ret>}
-
-map global user z -docstring 'zeal' %{:zeal <ret>}
 
 # contextual scripts
 hook global WinSetOption filetype=git-commit    %{ source '~/.config/kak/contexts/commit.kak'      }

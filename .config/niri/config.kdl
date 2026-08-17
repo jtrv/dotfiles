@@ -76,8 +76,11 @@ overview {
     backdrop-color "#00000000"
 }
 
-spawn-at-startup "waybar"               // status bar
-spawn-at-startup "alacritty" "--daemon" // terminal daemon
+// terminal daemon
+spawn-at-startup "alacritty" "--daemon"
+
+// status bar
+spawn-at-startup "waybar"
 
 screenshot-path "~/pictures/screenshots/%Y-%m-%d_%H-%M-%S.png"
 

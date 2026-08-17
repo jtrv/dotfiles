@@ -1,2 +1,2 @@
-timeout 300  'baijia-suo -d; niri msg action power-off-monitors; systemd-inhibit --list --who=lock-no-sleep --no-legend | grep -q . || systemctl suspend' resume 'niri msg action power-on-monitors'
+timeout 300  'baijia-suo -d; niri msg action power-off-monitors; systemctl suspend' resume 'niri msg action power-on-monitors'
 before-sleep 'playerctl pause; baijia-suo -d'
