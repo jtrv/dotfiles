@@ -84,7 +84,7 @@ mode = "local"
 # Options: tiny, tiny.en, base, base.en, small, small.en, medium, medium.en, large-v3, large-v3-turbo
 # .en models are English-only but faster and more accurate for English
 # Or provide absolute path to a custom .bin model file
-model = "small.en"  # T480s CPU: small.en is the accuracy/latency sweet spot (large-v3-turbo lags without a GPU)
+model = "tiny.en"  # T480s CPU, no GPU: small.en took 126s on an 11s clip. tiny.en is 2x faster than this.
 
 # Language for transcription
 # Use "en" for English, "auto" for auto-detection
@@ -95,12 +95,12 @@ language = "en"
 translate = false
 
 # Number of CPU threads for inference (omit for auto-detection)
-# threads = 4
+threads = 6  # 4 physical cores + 2; 8 thrashes the hyperthreads, auto picks worse
 
 # Load model on-demand when recording starts (true) or keep loaded (false)
 # When true, model is loaded when recording starts and unloaded after transcription
 # When false, model is kept in memory for faster response times (default)
-on_demand_loading = true
+on_demand_loading = false  # keep resident; tiny.en is only 78MB
 flash_attention = false
 gpu_isolation = false
 
@@ -112,7 +112,7 @@ gpu_isolation = false
 # Speeds up transcription for clips under 22.5 seconds. Disabled by default
 # because some models (especially large-v3/turbo) may experience repetition
 # loops. Enable if you want faster transcription and don't experience issues.
-# context_window_optimization = true
+context_window_optimization = true  # 2.4x; skips encoding the 30s zero-pad
 
 # --- Remote mode settings (used when mode = "remote") ---
 # remote_endpoint = "http://192.168.1.100:8080"  # Required
@@ -290,6 +290,12 @@ waveform_gain = 10.0
 #     - "arrows"    - Media player style (▶ ● ↻ ■)
 #     - "text"      - Plain text ([MIC] [REC] [...] [OFF])
 icon_theme = "nerd-font"
+
+[vad]
+# gate, not a trimmer: a stray hotkey tap skips transcription instead of
+# hallucinating text. energy backend needs no model download.
+enabled = true
+backend = "energy"
 
 [meeting]
 enabled = false
