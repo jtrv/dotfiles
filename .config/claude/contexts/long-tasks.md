@@ -61,6 +61,19 @@ The transcript is ephemeral; the workspace is authoritative.
   required for claims. Cap the *dump*, never the finding count — "only report
   high-severity" and a low result cap are both read literally, and the agent
   reports less rather than filtering better. Filter in a second pass.
+- **Watch-fors:** the dispatcher names the specific values, files, or
+  conditions the agent must report verbatim. Significance is defined by
+  dispatcher foresight, not agent judgment — judging what matters is exactly
+  what a cheap fresh-context agent is worst at.
+- Reports also carry two one-liners: **anomalies** — anything that deviated
+  from expectations, reported even without an explanation (spotting weirdness
+  is the agent's job; judging its importance is the dispatcher's) — and
+  **discarded** — categories of output it chose not to report, so exclusions
+  are visible decisions the dispatcher can veto.
+- An agent that exhausts its budget never gets the same configuration with a
+  bigger budget. Budget exhaustion is a routing decision: raise effort, raise
+  model tier, split the task, or revise the plan — effort first, it's the
+  cheaper lever. Feed the failed-attempt summary into the next dispatch.
 - Fan-out agents get a written state brief (what's already known, what's
   been tested-and-rejected, "do not re-report X") so they return only
   deltas — and "nothing new" is declared a valid answer.
