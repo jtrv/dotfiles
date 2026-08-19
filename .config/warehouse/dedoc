@@ -4,7 +4,6 @@ axios
 bash
 browser_support_tables
 c
-cmake
 cpp
 css
 d3~7
@@ -20,7 +19,6 @@ fastapi
 fish~3.7
 flask~3.0
 git
-gnu_make
 go
 html
 javascript
@@ -72,7 +70,9 @@ svelte
 svg
 tailwindcss
 terraform
+threejs
 typescript
+typescript~5.1
 underscore
 vite
 vitest

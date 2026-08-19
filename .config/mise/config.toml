@@ -4,7 +4,6 @@
 # per-project versions still work via .mise.toml.
 [tools]
 aichat = "latest"
-ruby = "latest"   # no ruby interpreter in packages.nix, only the LSPs
 usage = "latest"  # mise completion dependency
 herdr = "latest"
 
