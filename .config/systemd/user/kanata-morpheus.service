@@ -1,5 +1,5 @@
 [Unit]
-Description=Kanata for morpheus keeb
+Description=Kanata keyboard remapper
 Documentation=https://github.com/jtroo/kanata
 
 [Service]
