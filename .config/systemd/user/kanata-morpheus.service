@@ -1,0 +1,10 @@
+[Unit]
+Description=Kanata for morpheus keeb
+Documentation=https://github.com/jtroo/kanata
+
+[Service]
+ExecStart=%h/.local/share/cargo/bin/kanata --cfg %h/.config/kanata/morpheus.kbd
+Restart=no
+
+[Install]
+WantedBy=default.target

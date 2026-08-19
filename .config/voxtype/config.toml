@@ -291,6 +291,12 @@ waveform_gain = 10.0
 #     - "text"      - Plain text ([MIC] [REC] [...] [OFF])
 icon_theme = "nerd-font"
 
+[vad]
+# gate, not a trimmer: a stray hotkey tap skips transcription instead of
+# hallucinating text. energy backend needs no model download.
+enabled = true
+backend = "energy"
+
 [meeting]
 enabled = false
 

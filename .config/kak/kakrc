@@ -575,30 +575,6 @@ hook global BufSetOption filetype=yo-prompt %{
 }
 
 
-define-command zeal -docstring '
-  zeal <docset:api> : search for an api within a zeal docset
-' -params 0.. %{ evaluate-commands %sh{
-  if [ $# -eq 0 ]; then
-    echo '
-      prompt -shell-script-candidates %{
-        rg -No "\p{L}+\w+" "$kak_buffile" \
-          | sort -u \
-          | sed "s/^/$kak_opt_filetype:/"
-      } \
-      -init "%opt{filetype}:" \
-      zeal %{ terminal devour zeal %val{text} }
-    '
-  else
-    echo "terminal devour zeal $*"
-  fi
-}}
-complete-command zeal shell-script-candidates %{
-  rg -No '\p{L}+\w+' "$kak_buffile" |
-   sort -u |
-   sed "s/^/$kak_opt_filetype:/"
-}
-
-
 ###################### KEYBINDINGS ######################
 
 map global user <space> : -docstring 'prompt'
@@ -942,8 +918,6 @@ map global user x -docstring 'xargs' %{:xargs <ret>}
 
 map global user y -docstring 'yo' %{:yo-buffer <ret>}
 
-map global user z -docstring 'zeal' %{:zeal <ret>}
-
 # contextual scripts
 hook global WinSetOption filetype=git-commit    %{ source '~/.config/kak/contexts/commit.kak'      }
 hook global WinSetOption filetype=cpp           %{ source '~/.config/kak/contexts/cpp.kak'         }
@@ -958,6 +932,7 @@ hook global WinSetOption filetype=javascript    %{ source '~/.config/kak/context
 hook global WinSetOption filetype=json          %{ source '~/.config/kak/contexts/json.kak'        }
 hook global WinSetOption filetype=latex         %{ source '~/.config/kak/contexts/latex.kak'       }
 hook global WinSetOption filetype=markdown      %{ source '~/.config/kak/contexts/markdown.kak'    }
+hook global WinSetOption filetype=nix           %{ source '~/.config/kak/contexts/nix.kak'         }
 hook global WinSetOption filetype=python        %{ source '~/.config/kak/contexts/python.kak'      }
 hook global WinSetOption filetype=e?ruby        %{ source '~/.config/kak/contexts/ruby.kak'        }
 hook global WinSetOption filetype=rust          %{ source '~/.config/kak/contexts/rust.kak'        }

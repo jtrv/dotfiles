@@ -12,3 +12,4 @@ graphify*
 
 **/.claude/settings.local.json
 *.env
+.config/agenix/

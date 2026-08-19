@@ -132,6 +132,11 @@ key = "N"
 mods = "Super"
 command = { program = "sh", args = ["-f", "-c", "alacritty msg create-window --working-directory \"$PWD\""] }
 
+[[keyboard.bindings]]
+key = "Return"
+mods = "Shift"
+chars = "\u001B\r"
+
 [window]
 opacity = 0.95
 decorations = "None"
