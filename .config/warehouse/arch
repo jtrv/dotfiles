@@ -114,7 +114,6 @@ fisher
 flameshot
 flatpak
 fortune-mod
-fprintd
 fuse-archive
 fuse-overlayfs
 fwupd
@@ -188,7 +187,6 @@ lib32-libngtcp2
 lib32-libpulse
 lib32-pipewire
 lib32-vulkan-radeon
-libfprint-cs9711-git
 libmakepkg-dropins
 libpulse
 libqalculate
@@ -253,7 +251,6 @@ otf-font-awesome
 ouch
 oxipng
 pacman-cleanup-hook
-pam-fprint-grosshack
 pandoc-bin
 papirus-folders-catppuccin-git
 paru
