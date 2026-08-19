@@ -93,6 +93,8 @@ electron
 epub-thumbnailer-git
 erdtree
 espanso-wayland-git
+ethtool
+evdi-dkms
 evsieve
 exercism-bin
 exfat-utils
@@ -129,6 +131,7 @@ gimp
 git
 git-delta
 git-filter-repo
+git-lfs
 github-cli
 glib2-docs
 glow
@@ -145,6 +148,7 @@ gst-plugins-good
 gtk-doc
 harper
 helvum
+hermes-streaming
 heroku-cli-bin
 hexedit
 htmlq
@@ -195,6 +199,7 @@ linux-cachyos-headers
 linux-firmware
 linux-firmware-qlogic
 linux-headers
+logseq-desktop
 lostfiles
 lrzip
 lsp-plugins

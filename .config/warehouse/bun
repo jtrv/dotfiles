@@ -15,6 +15,7 @@ oxlint
 prettier
 purgecss
 skills
+slopless
 svelte-language-server
 type-coverage
 typescript

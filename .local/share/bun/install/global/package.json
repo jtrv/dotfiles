@@ -17,6 +17,7 @@
     "prettier": "^3.8.4",
     "purgecss": "^8.0.0",
     "skills": "^1.5.13",
+    "slopless": "^0.2.35",
     "svelte-language-server": "^0.18.3",
     "type-coverage": "^2.29.7",
     "typescript": "^6.0.3",
