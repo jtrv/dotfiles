@@ -234,7 +234,8 @@
     "skill-creator@claude-plugins-official": true,
     "ponytail@ponytail": true,
     "context-mode@context-mode": true,
-    "codex@openai-codex": true
+    "codex@openai-codex": true,
+    "clangd-lsp@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "ponytail": {

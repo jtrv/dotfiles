@@ -31,7 +31,7 @@ repo.
 | JS/TS | From **repo root**: `madge --json --extensions ts,tsx,js,jsx --ts-config tsconfig.json . > /tmp/.../graph.json` | Scan `.`, never a subdir — subdir-relative node ids break the git join. `--extensions` is mandatory for TS (bare madge returns `{}` silently). Monorepo: run package install first (workspace imports drop silently otherwise), still scan from root. `depcruise -T json` also parses if madge unavailable. |
 | Python | nothing — built-in ast extractor | default via auto-detect |
 | Rust | `cargo modules dependencies --lib --no-externs --no-sysroot --no-fns --no-types --no-traits > graph.dot` (use `--bin <name>` for bin-only crates — `--lib` errors) | The script drops `label="owns"` containment edges (they fabricate cycles). Node ids are `crate::mod` paths — hidden_coupling can't join to git; say so in the report. |
-| Dart/Flutter | Per package (root run throws PubspecYamlNotFoundException): `lakos --metrics -f json . > graph.json`; trust lakos's own `isAcyclic`/NCCD numbers over recomputation when they disagree | Cross-package edges are invisible to lakos. Melos monorepo: also run `melos list --graph` (JSON adjacency — feeds to `--edges` as-is) for the package-level graph. |
+| Dart/Flutter | `scripts/dart_edges.py <repo_root> > edges.json` (madge-format; whole workspace in one run, resolves `package:` URIs across melos packages, wrapping-proof) | Do NOT use lakos for edges: **lakos 2.0.7 drops any import/export whose `show`/`hide` clause wraps to the next line** (dart format wraps at 80 cols — verified single-line-vs-wrapped controls, shiso 2026-08-16: 30% of edges lost, phantom hidden_coupling). lakos remains fine as a per-package NCCD/isAcyclic cross-check. Expect a low `node_git_match_rate` warning when the edge file includes test files (xray excludes them git-side) — explained, not a broken join. |
 | Anything else | none — **git-signals-only mode** | The script still emits hotspots and co-change; graph metrics and hidden_coupling need `--edges` from a native tool (e.g. `go mod graph`-style tooling, jdeps for Java). Report the reduced scope explicitly. |
 
 If the native tool isn't installed, offer to install it (`npm i -g madge`,
@@ -158,7 +158,7 @@ Rules of engagement:
   (fan_in, jaccard, last_active…) plus one code fact you actually read — no
   vibe sentences.
 
-**Deliverable**: verdict table (finding, class, evidence, suggested fix
+**Deliverable**: verdict table (ID, finding, class, evidence, suggested fix
 direction) + 3-line summary (extractor used, caps/warnings hit, headline
 verdict) in chat. Where relevant, price findings in agent terms — a high
 fan-in hub or wide propagation_cost means every AI-agent edit must read
@@ -171,7 +171,10 @@ way: (a) a module recurring in cycles/feedback_edges but absent from hubs →
 "pagerank hub-ranking trigger"; (b) a low_cohesion folder that materially
 informed an erosion verdict → "misplacement-tag trigger". Erosion first, sorted by severity proxy: cycle `size`,
 SDP `from_fan_in`, hub `fan_in+fan_out`, hotspot `score`, hidden-coupling
-`jaccard`. Don't paste the raw digest. If the user wants a document, use the
+`jaccard`. Number the rows `F1`, `F2`, … in final table order (first column);
+the unjudged list continues the same sequence. Phase 3.5, Phase 4, and any
+follow-up chat refer to findings by these IDs — "fix F2 and F4" must resolve
+unambiguously, so never renumber. Don't paste the raw digest. If the user wants a document, use the
 html-report skill.
 
 ## Phase 3.5 — Refute (optional: on "thorough" request, or when erosion verdicts ≥ 4)

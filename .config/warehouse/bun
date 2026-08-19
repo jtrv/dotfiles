@@ -10,6 +10,7 @@ oxlint
 prettier
 purgecss
 skills
+slopless
 type-coverage
 typescript
 unocss-language-server

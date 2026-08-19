@@ -7,7 +7,7 @@ function config-grep -d "grep config files in kak"
     --column \
     $argv \
     (config ls-files) |
-    kak -e "set-option buffer filetype grep"
+    kak -e "set-option buffer filetype grep; rename-buffer *grep*"
 end
 complete -c config-grep -w rg
 
@@ -31,7 +31,7 @@ function kg -d "grep with kakoune"
     --line-number \
     --column \
     $argv |
-    kak -e 'set-option buffer filetype grep'
+    kak -e 'set-option buffer filetype grep; rename-buffer *grep*'
 end
 complete -c kg -w rg
 
