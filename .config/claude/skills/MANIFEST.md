@@ -17,7 +17,6 @@ hand-written and tracked. On a new machine, reinstall from the sources below.
 | vercel-react-best-practices | — | vercel |
 | vercel-react-native-skills | — | vercel |
 | vercel-react-view-transitions | — | vercel |
-| web-design-guidelines | 1.0.0 | vercel |
 | writing-skills | 2026-07-27 | github.com/obra/superpowers (`skills/writing-skills`) |
 
 Adding a vendored skill → add a row here. Writing a skill yourself → track it in

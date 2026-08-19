@@ -10,15 +10,12 @@ find-skills                      —      bespoke
 flutter-verify-loop              —      bespoke
 grilling                         —      bespoke
 grill-me                         —      bespoke
-grill-with-docs                  —      bespoke
 html-report                      —      bespoke
 impeccable                       3.8.0    marketplace/find-skills
-improve-codebase-architecture    —      bespoke
 last30days                       3.8.3    https://github.com/mvanhorn/last30days-skill
 vercel-composition-patterns      —      Vercel Engineering
 vercel-optimize                  —      Vercel Engineering
 vercel-react-best-practices      —      Vercel Engineering
 vercel-react-native-skills       —      Vercel Engineering
 vercel-react-view-transitions    —      Vercel Engineering
-web-design-guidelines            —      bespoke
 writing-skills                   —      bespoke
