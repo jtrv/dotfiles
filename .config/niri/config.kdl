@@ -10,6 +10,7 @@ hotkey-overlay {
 output "eDP-1" {
     mode "1920x1080@60.05"
     scale 1
+    position x=0 y=0
 }
 
 input {
@@ -84,7 +85,6 @@ spawn-at-startup "waybar"
 
 screenshot-path "~/pictures/screenshots/%Y-%m-%d_%H-%M-%S.png"
 
-
 layer-rule {
     match namespace="^notifications$"
     block-out-from "screencast"
@@ -98,9 +98,7 @@ layer-rule {
 window-rule {
     open-floating true
 
-    match app-id="easyeffects"
     match app-id="imv"
-    match app-id="firefox" title="Pushbullet"
     match app-id="gimp"
     match app-id="popup"
     match app-id=".*" title=".*:notification"
@@ -108,7 +106,9 @@ window-rule {
     match app-id=".*" title=".*:dialog"
     match app-id=".*" title=".*:toolbar"
     match app-id=".*" title=".*:utility"
-    match title="^Picture-in-Picture$"
+    match app-id=".*" title="Pushbullet"
+    match app-id="^firefox.*" title="^Extension.*"
+    match app-id="^firefox.*" title="^Picture-in-Picture$"
 }
 
 window-rule {

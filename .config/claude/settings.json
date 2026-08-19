@@ -244,7 +244,8 @@
     "security-guidance@claude-plugins-official": true,
     "skill-creator@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
-    "vercel@claude-plugins-official": false
+    "vercel@claude-plugins-official": false,
+    "clangd-lsp@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "context-mode": {
@@ -267,7 +268,7 @@
     }
   },
   "skipWorkflowUsageWarning": true,
-  "theme": "auto",
+  "theme": "custom:catppuccin",
   "editorMode": "normal",
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true

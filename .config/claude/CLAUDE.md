@@ -12,6 +12,12 @@ In-depth per-context instructions live in `~/.config/claude/contexts/`. Before w
 - `typescript.md` — editing, testing, or committing TypeScript/JavaScript code, bun + oxlint/oxfmt (also surfaced as the `typescript` skill)
 - `go.md` — editing, testing, or committing Go code (also surfaced as the `go` skill)
 
+## Agent dispatch
+A classifier-blocked Agent dispatch gets ONE honestly reworded retry
+(loop/load-test and scraping-adjacent phrasing are known triggers). Blocked
+again: do the task in the main loop or park it for the user — never
+disguise it to slip past.
+
 ## Comments
 The default is no comment; adding one carries the burden of proof. A comment earns its place only when it holds a *why* the reader cannot recover from the code in front of them: a non-obvious constraint or invariant, a trap that will bite the next editor, the origin of a measured constant, the reason a simpler-looking alternative is wrong.
 Never write comments that:

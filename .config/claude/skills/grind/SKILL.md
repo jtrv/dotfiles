@@ -41,14 +41,21 @@ type) with this brief — filled in, not referenced:
 > Commit only the files you changed, message `<type>: <task summary>`.
 > FORBIDDEN: git stash, git reset, git checkout/restore on paths outside your
 > changed files, or any tree-wide git state change.
+> Watch-fors: <task-specific values/conditions to report verbatim, e.g. "the
+> exact error if migration X fails", "final count of Y" — omit line if none>.
 > Return ≤20 lines: DONE or BLOCKED(reason); files changed; tail of verify
-> output as evidence. No narrative.
+> output as evidence; each watch-for answered verbatim; ANOMALIES: one line,
+> anything that deviated from expectations even if unexplained (or "none");
+> DISCARDED: one line, what you chose not to report. No narrative.
 
 On the report:
 - **DONE** → check the box in PLAN.md, append one line to a `## Log` section
   (task, commit type, date). Do not read the diff — the verify tail is the evidence.
 - **BLOCKED** → mark the task `- [!] <task> — <reason>`, move to the next task
-  that doesn't depend on it.
+  that doesn't depend on it. If the reason looks like ran-out-of-room rather
+  than a genuine blocker, re-dispatch ONCE at a changed configuration — higher
+  effort first, model tier second, or split the task — with the failed-attempt
+  summary in the brief. Never re-dispatch the same configuration.
 
 Sequential by default. Parallelize only clearly independent tasks, and then
 each agent works in its own `git worktree` (EnterWorktree / worktree isolation),
