@@ -1,3 +1,6 @@
+# sh resolves to bash on this system; dash starts ~10x faster for %sh{} blocks
+command -q dash; and set -gx KAKOUNE_POSIX_SHELL (command -v dash)
+
 function config-grep -d "grep config files in kak"
   rg \
     --color=always \
