@@ -34,6 +34,7 @@ set -gx XINITRC                     "$XDG_CONFIG_HOME/X11/xinitrc"
 set -gx _JAVA_OPTIONS -Djava.util.prefs.userRoot="$XDG_CONFIG_HOME/java"
 
 # Data
+set -gx ANDROID_AVD_HOME   "$XDG_DATA_HOME/android/avd"
 set -gx ANDROID_HOME       "$XDG_DATA_HOME/android"
 set -gx ANDROID_USER_HOME  "$XDG_DATA_HOME/android"
 set -gx BUNDLE_USER_PLUGIN "$XDG_DATA_HOME/bundle"
@@ -51,6 +52,8 @@ set -gx NVM_DIR            "$XDG_DATA_HOME/nvm"
 set -gx PASSWORD_STORE_DIR "$XDG_DATA_HOME/pass"
 set -gx RBENV_ROOT         "$XDG_DATA_HOME/rbenv"
 set -gx RUSTUP_HOME        "$XDG_DATA_HOME/rustup"
+set -gx SSB_HOME           "$XDG_DATA_HOME/zoom"
+set -gx USQL_HISTORY       "$XDG_DATA_HOME/usql/history"
 set -gx WINEPREFIX         "$XDG_DATA_HOME/wine"
 set -gx W3M_DIR            "$XDG_DATA_HOME/w3m"
 

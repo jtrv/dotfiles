@@ -2,6 +2,7 @@
 
 ## Contexts
 In-depth per-context instructions live in `~/.config/claude/contexts/`. Before working in a matching context, Read the file — do not proceed on memory of it:
+- `artifacts.md` — publishing any Artifact that collects user decisions (triage boards, review forms, note collectors)
 - `parallel-agents.md` — spawning multiple agents that edit the same working tree
 - `long-tasks.md` — any task spanning sessions or > ~1 hour; before /compact; when resuming or handing off work
 - `e2e.md` — writing, running, or gating on end-to-end tests in any language; also read it before adding an E2E tier that may not be worth having, and before configuring any harness that starts a server of its own (E2E, screenshot/capture rigs, smoke tests)
@@ -12,6 +13,13 @@ In-depth per-context instructions live in `~/.config/claude/contexts/`. Before w
 - `typescript.md` — editing, testing, or committing TypeScript/JavaScript code, bun + oxlint/oxfmt (also surfaced as the `typescript` skill)
 - `go.md` — editing, testing, or committing Go code (also surfaced as the `go` skill)
 - `dotfiles.md` — anything touching the dotfiles: committing config changes ($DOTFILES bare repo / `config`), the `~/repos/dotfiles` staging worktree, converging branches, `converged/<branch>` drift tags (also surfaced as the `dotfiles` skill)
+
+## Watches
+Deferred-adoption decisions ("re-check X when it matures") have probe scripts
+in `~/.config/claude/watches/` — one per watch, each printing a single line:
+`NOT-READY` / `CHECK` / `UNKNOWN` + reason. Run the probe before re-researching
+a watch topic; investigate only on `CHECK`. Adding a watch = probe script +
+pointer from the doc or memory that defers the decision.
 
 ## Agent dispatch
 A classifier-blocked Agent dispatch gets ONE honestly reworded retry

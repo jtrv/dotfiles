@@ -297,6 +297,12 @@ icon_theme = "nerd-font"
 enabled = true
 backend = "energy"
 
+[vad]
+# gate, not a trimmer: a stray hotkey tap skips transcription instead of
+# hallucinating text. energy backend needs no model download.
+enabled = true
+backend = "energy"
+
 [meeting]
 enabled = false
 
