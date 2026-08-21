@@ -2,7 +2,7 @@
 
 if status is-interactive
 
-alias ani     "ani-cli -q best --skip" # weeb out in S-rank ultra-fidelity 8k lossless greenray
+alias adb='HOME="$XDG_DATA_HOME"/android adb'
 alias boi     "wikiman"
 alias bls     "command ls"
 alias bup     "bun update -g --latest"
@@ -18,9 +18,7 @@ alias d       "devour"
 alias dg      "diff-grep"
 alias feh     "feh --scale-down --image-bg black"
 alias fp      "sk --preview='bat --color=always {}'"
-alias g       "gemini"
 alias ghs     "gh auth switch"
-alias hn      "clx -an --no-less-verify"
 alias jls     "jless -r"
 alias j       "yazi"
 alias kab     "k ~/.config/fish/conf.d/abbreviations.fish"
@@ -36,7 +34,6 @@ alias lc      'lazygit --git-dir=$DOTFILES --work-tree=$HOME' # lazygit for conf
 alias lg      "lazygit"
 alias lh      "eza -la --color=always --ignore-glob='[a-z]*|[A-Z]*|[0-9]*'" # hidden only
 alias ll      "eza -l --color=always --git" # long format
-alias lmk     "lemmeknow"
 alias loc     "plocate"
 alias ls      "eza -l --color=always" # preferred listing
 alias lt      "erd -HIl --color=force" # tree listing
@@ -53,14 +50,13 @@ alias mrl     "mise run lint"
 alias mrp     "mise run deploy"
 alias mrs     "mise run serve"
 alias mv      "mv -i"
-alias nbg     "feh --randomize --bg-scale --no-fehbg ~/media/pictures/wallpapers/" # change bg
+alias mvn     "mvn -gs $XDG_CONFIG_HOME/maven/settings.xml"
 alias o       "xdg-open"
 alias py      "python"
 alias q       "exit"
 alias rm      "cnc"
 alias tf      "terraform"
 alias thes    "thesauromatic"
-alias tv      "lobster"
 alias wget    "wget2 --hsts-file='$XDG_DATA_HOME/wget-hsts'"
 alias wh      "wormhole-rs"
 
