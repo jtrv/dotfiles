@@ -12,6 +12,7 @@
 "kak-popup 0.7.0 (path+file:///home/sugimoto/.config/kak/bundle/popup.kak)" = ["kak-popup"]
 "kak-rainbow-rs 0.1.0 (path+file:///home/sugimoto/.config/kak/bundle/kak-rainbow-rs)" = ["kak-rainbow-rs"]
 "kak-tree-sitter 3.2.2 (registry+https://github.com/rust-lang/crates.io-index)" = ["kak-tree-sitter"]
+"kakpipe 0.5.7 (path+file:///home/sugimoto/.config/kak/bundle/kakpipe)" = ["kakpipe"]
 "kakship 0.2.9 (path+file:///home/sugimoto/.config/kak/bundle/kakship)" = ["kakship"]
 "ktsctl 3.1.4 (registry+https://github.com/rust-lang/crates.io-index)" = ["ktsctl"]
 "purrista 0.1.0 (path+file:///home/sugimoto/repos/purrista)" = ["purrista"]
