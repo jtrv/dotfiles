@@ -19,6 +19,8 @@ Machine-specific files make cross-machine merges lie in both directions: a merge
 
 ## Converging
 
+The invariant: **shared (non-machine-specific) changes flow to every branch, both ways; machine-specific files stay on the branch that owns them** (see Machine profiles). A convergence is complete only when both sides have merged the other's shared content — each branch's `converged/<branch>` tag marks where that last held. Merging the other machine in covers one direction; the other completes when they pull and merge back.
+
 Which branch gets which work:
 
 - **Live `<machine>` branch**: only commits that capture live `$HOME` state (the commit workflow below). Nothing else lands here directly.
