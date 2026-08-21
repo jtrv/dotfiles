@@ -19,9 +19,12 @@ Machine-specific files make cross-machine merges lie in both directions: a merge
 
 ## Converging
 
-- Staging → live: `config merge <machine>-wip` (or cherry-pick).
-- Live → staging: `git -C ~/repos/dotfiles merge <machine>` (fast-forward when wip has nothing new).
-- Cross-machine: machine branches meet via the bare repo's `origin` remote (github.com/jtrv/dotfiles). `config fetch origin`, then merge the **remote-tracking ref** — `config merge origin/<machine>`, never a local copy of another machine's branch (local copies go stale).
+Which branch gets which work:
+
+- **Live `<machine>` branch**: only commits that capture live `$HOME` state (the commit workflow below). Nothing else lands here directly.
+- **Staging `<machine>-wip` branch**: everything else — new configs, experiments, and **cross-machine merges**. Resolve and inspect there, then take it live with `config merge <machine>-wip` (a fast-forward when live hasn't moved).
+
+Cross-machine: machine branches meet via the bare repo's `origin` remote (github.com/jtrv/dotfiles). `config fetch origin`, then in the staging worktree: `git -C ~/repos/dotfiles merge <machine>` (catch up with live first), `git -C ~/repos/dotfiles merge origin/<machine>` — always the **remote-tracking ref**, never a local copy of another machine's branch (local copies go stale). Sweep per the machine profile, inspect, then fast-forward live.
 
 The lightweight tag `converged/<branch>` marks the last commit all sides agreed on; everything after it is unreconciled drift. Diff against it instead of re-deriving what changed:
 
