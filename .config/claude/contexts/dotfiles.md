@@ -14,7 +14,7 @@ Because both trees share one object store and ref set, commits, branches, and ta
 
 - Staging → live: `config merge <machine>-wip` (or cherry-pick).
 - Live → staging: `git -C ~/repos/dotfiles merge <machine>` (fast-forward when wip has nothing new).
-- Cross-machine: machine branches meet via the `upstream` remote (github.com/jtrv/dotfiles); merge the other machine's branch, resolve, push.
+- Cross-machine: machine branches meet via the bare repo's `origin` remote (github.com/jtrv/dotfiles). `config fetch origin`, then merge the **remote-tracking ref** — `config merge origin/<machine>`, never a local copy of another machine's branch (local copies go stale).
 
 The lightweight tag `converged/<branch>` marks the last commit all sides agreed on; everything after it is unreconciled drift. Diff against it instead of re-deriving what changed:
 
@@ -27,7 +27,7 @@ After a reconcile, move the tag to the agreed commit (the merge-base of the HEAD
 config -c tag.gpgsign=false tag -f converged/<branch> <agreed-commit>
 ```
 
-Always pass `-c tag.gpgsign=false` — `tag.gpgsign=true` is set globally and a signed tag fires a gpg pinentry an agent session can't answer. Cross-machine, push with `-f` (the tag moves): `config push -f upstream <branch> tag converged/<branch>`.
+Always pass `-c tag.gpgsign=false` — `tag.gpgsign=true` is set globally and a signed tag fires a gpg pinentry an agent session can't answer. Cross-machine, push with `-f` (the tag moves): `config push -f origin <branch> tag converged/<branch>`.
 
 ## Commit workflow
 
