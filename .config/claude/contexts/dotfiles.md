@@ -10,6 +10,13 @@ Because both trees share one object store and ref set, commits, branches, and ta
 
 **Never check out the live machine branch in the staging worktree.** The `$HOME` tree is ad-hoc (`--work-tree` flag), so git's double-checkout guard can't see it; two trees on one branch means a commit in one shows phantom changes in the other. Staging stays on `<machine>-wip`.
 
+## Machine profiles
+
+- **thiccpad** — NixOS laptop. Never bring arch-isms (`warehouse/arch`, pacman config) or desktop-only bits (evdi/hermes-streaming, other machines' systemd user units) onto this branch; on NixOS, systemd user units come from the system config, not `~/.config/systemd`.
+- **morpheus** — arch desktop. Owns `warehouse/arch`, `kanata-morpheus.service`, evdi/hermes-streaming.
+
+Machine-specific files make cross-machine merges lie in both directions: a merge can resurrect files this machine purged, and a deletion committed here propagates *silently* (no conflict) when the other machine merges this branch. So after every cross-machine merge, sweep against the profile: re-delete what isn't for this machine, and restore this machine's own files if the incoming branch had deleted them (`config log --diff-filter=D --oneline <merged-ref> -- <path>` shows what they dropped).
+
 ## Converging
 
 - Staging → live: `config merge <machine>-wip` (or cherry-pick).
