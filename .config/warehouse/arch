@@ -403,6 +403,7 @@ wine-mono
 wine-staging
 wiremix
 wireplumber
+wireproxy
 wl-clipboard
 wl-screenrec
 wmctrl
