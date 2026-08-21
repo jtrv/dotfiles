@@ -28,6 +28,12 @@ Which branch gets which work:
 
 Cross-machine: machine branches meet via the bare repo's `origin` remote (github.com/jtrv/dotfiles). `config fetch origin`, then in the staging worktree: `git -C ~/repos/dotfiles merge <machine>` (catch up with live first), `git -C ~/repos/dotfiles merge origin/<machine>` — always the **remote-tracking ref**, never a local copy of another machine's branch (local copies go stale). Sweep per the machine profile, inspect, then fast-forward live.
 
+Conflict handling during the merge:
+
+- **Machine-specific files and local-state manifests** (bun global package.json, cargo `.crates*`): resolve mechanically — profile decides keep/drop, manifests take this machine's side.
+- **Shared files**: work through conflicts **iteratively with the user** — one at a time, show both sides and what each machine intended, propose a resolution, get sign-off before the next.
+- After resolving, scan the merged result for silent duplication: the same change made on both sides can land twice at different offsets with no conflict (a doubled `[vad]` TOML section broke voxtype this way).
+
 The lightweight tag `converged/<branch>` marks the last commit all sides agreed on; everything after it is unreconciled drift. Diff against it instead of re-deriving what changed:
 
 - `config log --oneline converged/<branch>..<branch>` and `config diff converged/<branch>..<branch>`
