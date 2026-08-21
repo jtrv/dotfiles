@@ -313,13 +313,13 @@ define-command global-picker -docstring 'global-picker: Opens global search pick
   }
 }
 
-define-command glow -docstring '
-  glow [<files>]: glow utility wrapper
-  Open a glow formatted view of the provided files
+define-command mdcat -docstring '
+  mdcat [<files>]: mdcat utility wrapper
+  Open an mdcat formatted view of the provided files
 ' -params 1.. %{
-  kakpipe -n "glow %arg{@}" -- glow -s dark %arg{@};
+  kakpipe -n "mdcat %arg{@}" -- mdcat %arg{@};
 }
-complete-command -menu glow shell-script-candidates %{fd -e md}
+complete-command -menu mdcat shell-script-candidates %{fd -e md}
 
 define-command go -docstring '
   go [<arguments>]: go utility wrapper
