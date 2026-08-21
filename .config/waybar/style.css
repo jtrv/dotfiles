@@ -50,6 +50,7 @@
 #cpu,
 #custom-pomodoro,
 #disk,
+#custom-sleep-inhibitor,
 #idle_inhibitor,
 #idle_inhibitor.activated,
 #idle_inhibitor.deactivated,
@@ -78,6 +79,7 @@
 #cpu:hover,
 #custom-pomodoro:hover,
 #disk:hover,
+#custom-sleep-inhibitor:hover,
 #idle_inhibitor:hover,
 #memory:hover,
 #network:hover,
@@ -158,6 +160,14 @@
 }
 
 #idle_inhibitor.deactivated {
+  color: @overlay0;
+}
+
+#custom-sleep-inhibitor.activated {
+  color: @mauve;
+}
+
+#custom-sleep-inhibitor.deactivated {
   color: @overlay0;
 }
 
