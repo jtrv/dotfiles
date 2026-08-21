@@ -1,3 +1,3 @@
-set-option window formatcmd "jaq"
+set-option window formatcmd "jq"
 
 ui-lsp-enable
