@@ -15,6 +15,20 @@ Because both trees share one object store and ref set, commits, branches, and ta
 - **thiccpad** — NixOS laptop. Never bring arch-isms (`warehouse/arch`, pacman config) or desktop-only bits (evdi/hermes-streaming, other machines' systemd user units) onto this branch; on NixOS, systemd user units come from the system config, not `~/.config/systemd`.
 - **morpheus** — arch desktop. Owns `warehouse/arch`, `kanata-morpheus.service`, evdi/hermes-streaming.
 
+### Machine-specific paths
+
+Anything not listed here is shared. When a merge surfaces a new ambiguous path, ask the user which it is — then add the decision to this list.
+
+| Path | Ownership |
+|---|---|
+| `warehouse/arch`, `.config/pacman/` | morpheus (arch) |
+| `warehouse/uv` additions | morpheus; thiccpad keeps it empty (nixos-config carries tools) |
+| `.config/systemd/user/*` units | owning machine only; thiccpad tracks none (NixOS generates units) |
+| `.local/bin/waybar-sleep-inhibit` + its waybar config/style hunks | morpheus |
+| evdi/hermes-streaming (packages, virtual-display pinning) | morpheus |
+| bun global `package.json`, cargo `.crates*` | per-machine local state — never merged, each side keeps its own |
+| `kanata/*.kbd` | on every branch, per-machine by filename (`morpheus.kbd`, `thiccpad.kbd`, `shared.kbd`) — the good pattern; name-space new machine-specific files like this instead of adding rows here |
+
 Machine-specific files make cross-machine merges lie in both directions: a merge can resurrect files this machine purged, and a deletion committed here propagates *silently* (no conflict) when the other machine merges this branch. So after every cross-machine merge, sweep against the profile: re-delete what isn't for this machine, and restore this machine's own files if the incoming branch had deleted them (`config log --diff-filter=D --oneline <merged-ref> -- <path>` shows what they dropped).
 
 ## Converging
