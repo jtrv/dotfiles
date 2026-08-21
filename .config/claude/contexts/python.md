@@ -76,7 +76,9 @@ Never adopt pyrefly's baseline/bulk-suppress features (`pyrefly suppress`,
 
 **Watchlist:** `ty` (Astral) — re-evaluate when it hits 1.0 *and* closes two gaps:
 spec conformance (~76% as of 2026-07) and strict inference on unannotated code.
-It's the natural fit for the uv/ruff stack once mature.
+It's the natural fit for the uv/ruff stack once mature. Before re-researching,
+run `~/.config/claude/watches/ty.sh` (one line: NOT-READY / CHECK);
+investigate only on CHECK.
 
 ## 2. Cadence
 
