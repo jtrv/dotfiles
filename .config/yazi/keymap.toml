@@ -1,7 +1,7 @@
 [mgr]
 prepend_keymap = [
   # bak
-  { on = [ "B" ], run = 'shell "bak \"$@\" " --block --confirm', desc = "append '.bak' to filename" },
+  { on = [ "B" ], run = 'shell --block -- bak %s', desc = "append '.bak' to filename" },
 
   # chmod
   { on = [ "c", "m" ], run = "plugin chmod", desc = "Chmod on selected files" },
@@ -16,7 +16,7 @@ prepend_keymap = [
   { on = [ "<C-d>" ], run = "plugin diff", desc = "Diff the selected with the hovered file" },
 
   # editor
-  { on = [ "e" ], run = 'shell "$EDITOR \"$@\" " --block --confirm', desc = "Open selected files in $EDITOR" },
+  { on = [ "e" ], run = 'shell --block -- $EDITOR %s', desc = "Open selected files in $EDITOR" },
 
   # fuse-archive
   { on = [ "h" ], run = "plugin fuse-archive -- leave",     desc = "Leave / Unmount archive" },
@@ -56,8 +56,8 @@ prepend_keymap = [
   { on = [ "9" ], run = "plugin relative-motions 9", desc = "Move in relative steps" },
 
   # ripdrag
-  { on = [ "<C-k>" ], run = 'shell "ripdrag -abx \"$@\" 2>/dev/null &" --confirm', desc = "drag and drop selected items" },
-  { on = [ "<A-k>" ], run = 'shell "ripdrag -ab  \"$@\" 2>/dev/null &" --confirm', desc = "drag and drop selected items" },
+  { on = [ "<C-k>" ], run = 'shell -- ripdrag -abx %s 2>/dev/null &', desc = "drag and drop selected items" },
+  { on = [ "<A-k>" ], run = 'shell -- ripdrag -ab  %s 2>/dev/null &', desc = "drag and drop selected items" },
 
   # time-travel
   { on = [ "T", "h" ], run = "plugin time-travel prev", desc = "Go to previous snapshot" },
@@ -65,8 +65,8 @@ prepend_keymap = [
   { on = [ "T", "e" ], run = "plugin time-travel exit", desc = "Exit browsing snapshots" },
 
   # trash
-  { on = [ "t", "d" ], run = 'shell "conceal clean" --block --confirm',   desc = "destroy relative trash items" },
-  { on = [ "t", "r" ], run = 'shell "conceal restore" --block --confirm', desc = "restore relative trash items" },
+  { on = [ "t", "d" ], run = 'shell --block -- conceal clean',   desc = "destroy relative trash items" },
+  { on = [ "t", "r" ], run = 'shell --block -- conceal restore', desc = "restore relative trash items" },
 ]
 
 keymap = [
@@ -228,7 +228,7 @@ keymap = [
   { on = [ "?" ], run = "help", desc = "Open help" },
 ]
 
-[select]
+[pick]
 keymap = [
   { on = [ "<C-q>" ],   run = "close",          desc = "Cancel selection" },
   { on = [ "<Esc>" ],   run = "close",          desc = "Cancel selection" },
@@ -307,7 +307,7 @@ keymap = [
   { on = [ "?" ], run = "help", desc = "Open help" },
 ]
 
-[completion]
+[cmp]
 keymap = [
   { on = [ "<C-q>" ], run = "close",          desc = "Cancel completion" },
   { on = [ "<Tab>" ], run = "close --submit", desc = "Submit the completion" },

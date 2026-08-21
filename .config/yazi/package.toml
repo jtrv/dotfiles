@@ -9,11 +9,6 @@ rev = "4506f9d"
 hash = "4761fffb60a12d37096c34a356380cdf"
 
 [[plugin.deps]]
-use = "Reledia/glow"
-rev = "bd3eaa5"
-hash = "92b5c58159a51c567f82b618cee2b78"
-
-[[plugin.deps]]
 use = "ndtoan96/ouch"
 rev = "406ce6c"
 hash = "f5afc904d5106ee368c8aa2ded43bd74"
