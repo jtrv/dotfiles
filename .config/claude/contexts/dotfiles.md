@@ -12,7 +12,7 @@ Because both trees share one object store and ref set, commits, branches, and ta
 
 ## Machine profiles
 
-- **thiccpad** — NixOS laptop. Never bring arch-isms (`warehouse/arch`, pacman config) or desktop-only bits (evdi/hermes-streaming, other machines' systemd user units) onto this branch. home-manager *does* generate store symlinks under `~/.config/systemd/user/` — the rule is that this repo never tracks that directory, not that nothing appears there.
+- **thiccpad** — NixOS laptop, no home-manager. Never bring arch-isms (`warehouse/arch`, pacman config) or desktop-only bits (evdi/hermes-streaming, other machines' systemd user units) onto this branch; user units come from nixos-config, not `~/.config/systemd/user`.
 - **morpheus** — arch desktop. Owns `warehouse/arch`, `kanata-morpheus.service`, evdi/hermes-streaming.
 - **morpheus-nixos** — the desktop's in-progress NixOS migration; replaces `morpheus` at cutover. NixOS rules as for thiccpad, desktop ownership as for morpheus. Until cutover it converges as a third party — with three branches, convergence is pairwise merges, and each pair's state is judged separately.
 
@@ -24,7 +24,7 @@ Anything not listed here is shared. When a merge surfaces a new ambiguous path, 
 |---|---|
 | `warehouse/arch`, `.config/pacman/` | morpheus (arch) |
 | `warehouse/uv` additions | morpheus; thiccpad keeps it empty (nixos-config carries tools) |
-| `.config/systemd/user/*` units | owning machine only; NixOS machines track none (home-manager symlinks live there untracked) |
+| `.config/systemd/user/*` units | owning machine only; NixOS machines track none (units come from nixos-config) |
 | `.local/bin/waybar-sleep-inhibit` + its waybar config/style hunks | morpheus |
 | evdi/hermes-streaming (packages, virtual-display pinning) | morpheus |
 | bun global `package.json`, cargo `.crates*` | per-machine local state — never merged, each side keeps its own |
