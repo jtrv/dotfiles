@@ -12,7 +12,7 @@ In-depth per-context instructions live in `~/.config/claude/contexts/`. Before w
 - `python.md` — editing, testing, or committing Python code (also surfaced as the `python` skill)
 - `typescript.md` — editing, testing, or committing TypeScript/JavaScript code, bun + oxlint/oxfmt (also surfaced as the `typescript` skill)
 - `go.md` — editing, testing, or committing Go code (also surfaced as the `go` skill)
-- `dotfiles.md` — anything touching the dotfiles: committing config changes ($DOTFILES bare repo / `config`), the `~/repos/dotfiles` staging worktree, converging branches, `converged/<branch>` drift tags (also surfaced as the `dotfiles` skill)
+- `dotfiles.md` — anything touching the dotfiles: committing config changes ($DOTFILES bare repo / `config`), the `~/repos/dotfiles` staging worktree, converging machine branches and checking drift (also surfaced as the `dotfiles` skill)
 
 ## Watches
 Deferred-adoption decisions ("re-check X when it matures") have probe scripts
