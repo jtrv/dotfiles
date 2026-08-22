@@ -24,7 +24,7 @@ Anything not listed here is shared. When a merge surfaces a new ambiguous path, 
 |---|---|
 | `warehouse/arch`, `.config/pacman/` | morpheus (arch) |
 | `warehouse/uv` additions | morpheus; thiccpad keeps it empty (nixos-config carries tools) |
-| `.config/systemd/user/*` units | owning machine only; thiccpad tracks none (NixOS generates units) |
+| `.config/systemd/user/*` units | owning machine only; NixOS machines track none (home-manager symlinks live there untracked) |
 | `.local/bin/waybar-sleep-inhibit` + its waybar config/style hunks | morpheus |
 | evdi/hermes-streaming (packages, virtual-display pinning) | morpheus |
 | bun global `package.json`, cargo `.crates*` | per-machine local state — never merged, each side keeps its own |
@@ -73,7 +73,7 @@ config push origin <branch> +refs/tags/converged/<branch>:refs/tags/converged/<b
 2. **Read every diff** before grouping. Batch files per `diff` call. For large auto-generated tracking files (`.local/share/cargo/.crates*`, `bun/.../package.json`), a `--stat` + one spot-check is enough.
 3. **Surface candidates.** If relevant untracked files should ride along, ask the user; if added, redo 1–2.
 4. **Group into logical commits.** One concern per commit; keep related files together (e.g. a kanata keybind that shells into `niri msg` ships with the niri change). Auto-generated dep files get their own `deps:` commit.
-5. **Present the plan** as a table (commit subject → files) before committing. Note if the branch is ahead of upstream.
+5. **Present the plan** as a table (commit subject → files) before committing. Note if the branch is ahead of origin.
 6. **Commit iteratively.** One at a time, each with a one-line summary so the user can sign off as you go.
 7. **Never push** unless explicitly asked. Never `git add -A`/`.` — named absolute paths only, so a stray file never rides along.
 8. A diff with a small flaw (e.g. useless-use-of-cat): ask the user whether to fix it before committing.
