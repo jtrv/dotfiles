@@ -26,7 +26,7 @@
   # 10% green 90% base
   plus-style = "syntax #2c333a"
   # Should match the name of the bat theme
-  syntax-theme = "Catppuccin-mocha"
+  syntax-theme = "Catppuccin Mocha"
 
 [delta]
   features = catppuccin-mocha zebra-dark
