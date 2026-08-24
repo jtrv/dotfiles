@@ -74,7 +74,6 @@ set -gx DELTA_PAGER                 "kak"
 set -gx EDITOR                      "kak"
 set -gx fish_greeting
 set -gx HORS_ENGINE                 "google"
-set -gx KAKOUNE_POSIX_SHELL         (command -v dash)
 set -gx LAST30DAYS_MEMORY_DIR       "$XDG_DOCUMENTS_DIR/Last30Days"
 set -gx MANPAGER                    "kak -e 'set buffer filetype man'"
 set -gx PAGER                       "kak"
@@ -82,6 +81,10 @@ set -gx SCCACHE_DIRECT              true
 set -gx TERMINAL                    "alacritty"
 set -gx VISUAL                      "kak"
 set -gx VIRTUAL_ENV_DISABLE_PROMPT  true
+
+# sh resolves to bash on this system; dash starts ~10x faster for %sh{} blocks.
+# Leaving it unset when dash is missing — an empty value makes kakoune exec "".
+command -q dash; and set -gx KAKOUNE_POSIX_SHELL (command -v dash)
 
 set -gx FZF_DEFAULT_OPTS "\
 --ansi \
