@@ -7,14 +7,13 @@ grug -> /home/sugimoto/.config/kak/bundle/grug
 hexapoda -> https://github.com/rust-lang/crates.io-index
 hors -> https://github.com/rust-lang/crates.io-index
 kak-ansi-rs -> /home/sugimoto/.config/kak/bundle/kak-ansi-rs
-kak-lsp -> https://github.com/rust-lang/crates.io-index
 kak-popup -> /home/sugimoto/.config/kak/bundle/popup.kak
 kak-rainbow-rs -> /home/sugimoto/.config/kak/bundle/kak-rainbow-rs
 kakship -> /home/sugimoto/.config/kak/bundle/kakship
-kak-tree-sitter -> https://github.com/rust-lang/crates.io-index
-ktsctl -> https://github.com/rust-lang/crates.io-index
+purrista -> /home/sugimoto/repos/purrista
 putzen-cli -> https://github.com/rust-lang/crates.io-index
 rkak_easymotion -> /home/sugimoto/.config/kak/bundle/reasymotion
 seetui -> https://github.com/rust-lang/crates.io-index
+skyspell_kak -> https://github.com/your-tools/skyspell
 thesauromatic -> https://github.com/rust-lang/crates.io-index
 vortix -> https://github.com/rust-lang/crates.io-index

@@ -50,7 +50,6 @@ prettier
 pug
 puppeteer
 python~3.13
-pytorch~1
 rails~8.0
 react
 react_bootstrap
