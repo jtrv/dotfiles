@@ -81,7 +81,7 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "opus",
+  "model": "fable",
   "skillOverrides": {
     "find-skills": "on",
     "writing-skills": "on",
