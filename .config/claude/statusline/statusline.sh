@@ -18,11 +18,11 @@ removed=$(jq -r '.cost.total_lines_removed // 0' <<< "$input")
 # order (7d, then codex, then 5h) is fixed rather than a function of who is alarming.
 # ponytail: the override rides inside the env value — starship passes the escape through
 # untouched, which beats a matched pair of amber/red modules per column in the toml.
-# amber #FBBF24 / red #F87171 — the same two the context ladder uses in the toml, so one
-# alarm colour means one thing no matter which number is wearing it
+# catppuccin mocha yellow #f9e2af / red #f38ba8 — the same two the toml names as `yellow`
+# and `red`, so one alarm colour means one thing no matter which number is wearing it
 sev() { # $1 percent, $2 warn at, $3 high at — nothing at all while unremarkable
-    if [ "$1" -ge "${3:-90}" ]; then printf '\033[1;38;2;248;113;113m'
-    elif [ "$1" -ge "${2:-75}" ]; then printf '\033[1;38;2;251;191;36m'; fi
+    if [ "$1" -ge "${3:-90}" ]; then printf '\033[1;38;2;243;139;168m'
+    elif [ "$1" -ge "${2:-75}" ]; then printf '\033[1;38;2;249;226;175m'; fi
 }
 
 rate5h=$(jq -r '.rate_limits.five_hour.used_percentage | numbers | round' <<< "$input")
@@ -47,11 +47,11 @@ if [ -f "$codex_rollout" ]; then
         [ "$pct" -gt "$codex_max" ] && codex_max=$pct
     done < <(tac "$codex_rollout" | grep -m1 '"rate_limits":{' | jq -r '
         (.payload.rate_limits // .rate_limits) as $rl | [$rl.primary, $rl.secondary]
-        | map(select(. != null and .resets_at > now))
-        # a bare percentage is unambiguous while one window is live, which is the norm;
-        # the plan reporting two again is what earns them their labels back
-        | (length > 1) as $multi
-        | .[] | "\(.used_percent | round)\t\(if $multi then (if .window_minutes < 1440 then "5h" else "7d" end) else "" end)"')
+        | map(select(. != null and .resets_at > now)) | sort_by(.window_minutes) | reverse
+        # windows are labelled the way Claude labels its own: the vendor mark the toml
+        # prepends stands for the weekly one, and the 5h one wears the same clock glyph as
+        # the Claude 5h chip. Weekly first, so both providers read 7d-then-5h.
+        | .[] | "\(.used_percent | round)\t\(if .window_minutes < 1440 then "󰥔" else "" end)"')
     [ -n "$codex" ] && export CC_CODEX="$(sev "$codex_max")$codex"
 fi
 
