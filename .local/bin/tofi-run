@@ -1,4 +1,3 @@
 #!/bin/sh
 set -e
-# absolute path: ~/.local/bin comes first on PATH, so a bare tofi-run is this script
-exec $(/run/current-system/sw/bin/tofi-run) "$@"
+exec $(/usr/bin/tofi-run) "$@"

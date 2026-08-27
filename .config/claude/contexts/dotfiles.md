@@ -3,7 +3,7 @@
 One repo, two working trees per machine:
 
 - **Live**: bare git dir `$DOTFILES` (`~/.config/dotfiles`), work-tree `$HOME`, branch = machine name. Drive it with the `config` wrapper (= `command git --git-dir="$DOTFILES" --work-tree="$HOME"`). Pathspecs match against the cwd — pass absolute `$HOME/...` paths, never the `../../` paths `status` prints.
-- **Staging**: `~/repos/dotfiles`, a linked worktree on `<machine>-wip`. Plain `git` works there. **Cross-machine merges and experiments happen here, never on live**; ordinary commits land on live directly.
+- **Staging**: `~/repos/dotfiles` on `<machine>-wip` — a linked worktree of `$DOTFILES` (thiccpad) or, on morpheus, still a separate clone (`config fetch ~/repos/dotfiles <this>-wip` before step 7 there, or convert with `config worktree add`). Plain `git` works there. **Cross-machine merges and experiments happen here, never on live**; ordinary commits land on live directly.
 
 Both trees share one object store and ref set — no fetch/push between them. **Never check out the live machine branch in staging**: git's double-checkout guard can't see the ad-hoc `$HOME` tree, and two trees on one branch show phantom status changes in each other.
 
@@ -24,6 +24,15 @@ This table is the **single source of truth** for what is machine-specific; anyth
 | `kanata/*.kbd` | every branch, per-machine by filename (`morpheus.kbd`, `thiccpad.kbd`, `shared.kbd`) — prefer this name-spacing for new machine-specific files over new table rows |
 | `.config/environment.d/*` | morpheus — NixOS machines set the same vars via `environment.sessionVariables` in nixos-config |
 | `warehouse/bun` | per-machine additions, like `warehouse/uv` — keep this machine's side, report theirs |
+| `warehouse/dedoc` | union — docsets are cheap, take both sides |
+| `warehouse/{fish,go,ktsctl}`, `fish/fish_plugins`, `mpv/shaders/*`, `mise/config.toml` global `[tools]` | morpheus keeps them; NixOS machines drop what nixos-config installs |
+| `paru/paru.conf`, `.local/bin/mirrors`, topgrade `[linux]`/arch commands | arch machines (morpheus) |
+| firefox flavor: `BROWSER`, `mimeapps.list`, `mozilla/firefox/<profile>` dir | per-machine (thiccpad runs devedition) |
+| absolute tool paths in configs/scripts (`/usr/...` vs `/run/current-system/sw/...`: qt5ct/qt6ct, tofi-run) | per-machine |
+| secret access in scripts (`secli get` vs `/run/agenix/*`) | per-machine |
+| hardware tuning: `mpv.conf` scale/shader lines, `voxtype` model/threads, niri `output`/`struts`, waybar height/font, `easyeffects/*` presets | per-machine |
+| `fish/config.fish` ssh-agent fallback | morpheus (NixOS gets the agent from systemd) |
+| skyspell dict names in `kakrc` (`en_US-large`/`es` vs nix `en_US`/`es_ANY`) | per-machine |
 
 ## Converging
 
