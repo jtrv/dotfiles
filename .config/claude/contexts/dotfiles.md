@@ -3,7 +3,7 @@
 One repo, two working trees per machine:
 
 - **Live**: bare git dir `$DOTFILES` (`~/.config/dotfiles`), work-tree `$HOME`, branch = machine name. Drive it with the `config` wrapper (= `command git --git-dir="$DOTFILES" --work-tree="$HOME"`). Pathspecs match against the cwd — pass absolute `$HOME/...` paths, never the `../../` paths `status` prints.
-- **Staging**: `~/repos/dotfiles` on `<machine>-wip` — a linked worktree of `$DOTFILES` (thiccpad) or, on morpheus, still a separate clone (`config fetch ~/repos/dotfiles <this>-wip` before step 7 there, or convert with `config worktree add`). Plain `git` works there. **Cross-machine merges and experiments happen here, never on live**; ordinary commits land on live directly.
+- **Staging**: `~/repos/dotfiles`, a linked worktree on `<machine>-wip` (`config worktree add ~/repos/dotfiles <machine>-wip`). Plain `git` works there. **Cross-machine merges and experiments happen here, never on live**; ordinary commits land on live directly.
 
 Both trees share one object store and ref set — no fetch/push between them. **Never check out the live machine branch in staging**: git's double-checkout guard can't see the ad-hoc `$HOME` tree, and two trees on one branch show phantom status changes in each other.
 
