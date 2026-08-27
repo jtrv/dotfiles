@@ -1,5 +1,10 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
+# Catppuccin: sets the active palette. Palette tables MUST be defined after this
+# line -- see the [palettes.*] blocks at the end of this file. Shared with
+# ~/.config/starship.toml so the shell prompt and this bar name colours the same way.
+palette = "catppuccin_mocha"
+
 # ponytail: no shell here (nothing types at this prompt), so no character/vimcmd/jobs/sudo/
 # shlvl/cloud/language-runtime modules — those exist to orient a human typing commands.
 # This renders once per turn; keep it to what a glance needs: where, git state, then telemetry
@@ -22,11 +27,11 @@ ${env_var.CC_LINES}"""
 
 # Colour carries role, not decoration. Five families, and a chip's family says what kind of
 # fact it is before you have read it:
-#   sky      #7DD3FC  place — where the work is happening (cwd, branch, tree state)
-#   violet   #A78BFA  Claude itself; #C4B5FD one step back for its budgets
-#   mauve    #8B85B0  how Claude is answering — deliberately the quietest thing here
-#   teal     #74AA9C  the other provider (cool, so it never reads as ours)
-#   amber    #FBBF24  warn, and #F87171 high — the alarm channel, used NOWHERE else
+#   sky       place — where the work is happening (cwd, branch, tree state)
+#   mauve     Claude itself; lavender one step back for its budgets
+#   overlay1  how Claude is answering — deliberately the quietest thing here
+#   teal      the other provider (cool, so it never reads as ours)
+#   yellow, and red high — the alarm channel, used NOWHERE else
 # Hue groups; lightness and weight rank within a group. Nothing is green: a second
 # everything-is-fine colour buys no information, and green-to-red is the ladder that
 # collapses first under deuteranopia. Unremarkable readings sit at neutral instead.
@@ -34,50 +39,47 @@ ${env_var.CC_LINES}"""
 [directory]
 fish_style_pwd_dir_length = 1
 truncation_length = 4
-style = "bold #7DD3FC"
+style = "bold sky"
 
 # same hue as the directory, one weight down: cwd and branch are one phrase, and the cwd
 # is the half you navigate by
 [git_branch]
-style = "#7DD3FC"
+style = "sky"
 format = "[$symbol$branch(:$remote_branch)]($style) "
 
-# the emoji already carry their own colour, so the style only has to not shout — the
-# default here is bold red, which put a permanent alarm-coloured chip next to every
-# uncommitted file
 [git_status]
-style = "#7DD3FC"
-format = "([$all_status$ahead_behind]($style) )"
-conflicted = "🏳 "
-ahead = "🏎💨"
-behind = "😰"
-diverged = "😵"
-untracked = "🤷‍"
-stashed = "📦"
-modified = "📝"
-staged = '[$count󰜅 ](#7DD3FC)'
-renamed = "👅"
-deleted = "🗑 "
+format = '([$all_status$ahead_behind]($style))'
+style = "bold"
+conflicted = '[=$count](dimmed bold red) '
+ahead      = '[⇡$count](dimmed bold mauve) '
+behind     = '[⇣$count](dimmed bold mauve) '
+diverged   = '[⇡$ahead_count⇣$behind_count](dimmed bold mauve) '
+untracked  = '[?$count](dimmed bold blue) '
+stashed    = '[≡$count](dimmed bold teal) '
+modified   = '[!$count](dimmed bold yellow) '
+staged     = '[+$count](dimmed bold green) '
+renamed    = '[»$count](dimmed bold peach) '
+deleted    = '[✘$count](dimmed bold red) '
 
-# the brightest, most saturated chip in the bar, and the only thing wearing full violet:
+# the brightest, most saturated chip in the bar, and the only thing wearing full mauve:
 # who is answering outranks every number next to it. Stays md-robot rather than taking the
 # Anthropic mark — the vendor is a constant, the model is not, and the chip whose text
 # changes between sessions is better off wearing the generic glyph.
 [env_var.CC_MODEL]
 variable = "CC_MODEL"
 symbol = "󰚩 "
-style = "bold #A78BFA"
+style = "bold mauve"
 format = "[$symbol$env_value]($style) "
 
 # context-window used%. md-view_day is a framed pane — the window itself; magnitude is left
 # entirely to the colour and the digits, which is why the glyph does not vary with fill.
 # Neutral until it matters: a fresh window is the least interesting fact on this line. Like
-# every other reading here, the amber/red past the thresholds is repainted onto the digits
+# every other reading here, the yellow/red past the thresholds is repainted onto the digits
 # by statusline.sh, so the icon stays a fixed label and only the number changes state.
 [env_var.CC_CTX]
 variable = "CC_CTX"
 symbol = "󰕯 "
-style = "bold #94A3B8"
+style = "bold subtext0"
 format = "[$symbol$env_value]($style) "
 
 [env_var.CC_LINES]
@@ -87,7 +89,7 @@ format = "[$env_value]($style) "
 
 # Claude's own rate limits: one step lighter than the model chip, so they read as belonging
 # to it without competing with it. Both windows share the shade — the icons already say
-# which is which, and a second violet would imply a difference in kind that isn't there.
+# which is which, and a second mauve would imply a difference in kind that isn't there.
 # The weekly window wears the real Anthropic mark (nf-cod-claude, U+EC82) and the codex chip
 # wears OpenAI's, so the two vendor budgets are labelled the same way and read as a pair
 # across the bar; the 5h clock in between belongs to the same violet family, so nothing is
@@ -96,40 +98,41 @@ format = "[$env_value]($style) "
 # and alacritty falls back to it per glyph. Delete that directory and these two chips degrade
 # to blank boxes, nothing else breaks. It replaces md-asterisk, which was picked back when
 # that was the closest thing to the mark this font had.
-# Deliberately NOT Anthropic's terracotta: warm hues are reserved for the amber/red repaint
+# Deliberately NOT Anthropic's terracotta: warm hues are reserved for the yellow/red repaint
 # statusline.sh applies past 75%/90%, and a permanently orange number reads as a standing
 # warning even at 3%.
 [env_var.CC_RATE_5H]
 variable = "CC_RATE_5H"
 symbol = "󰥔 "
-style = "bold #C4B5FD"
+style = "bold lavender"
 format = "[$symbol$env_value]($style) "
 
 [env_var.CC_RATE_7D]
 variable = "CC_RATE_7D"
 symbol = " "
-style = "bold #C4B5FD"
+style = "bold lavender"
 format = "[$symbol$env_value]($style) "
 
-# codex rate-limit windows: bare percentage while the plan reports one, self-labelled
-# ("5h 8%") only if it reports two. nf-cod-openai, the real mark, from the same 3.5.0 symbols
-# font as the Claude glyph above — no more hexagon standing in for its silhouette, and the
-# vendor-mark-labels-the-budget rule now holds on both sides of the bar.
+# codex rate-limit windows, labelled exactly as Claude's are above: this vendor mark stands
+# for the weekly window and the 5h one carries the same clock glyph, so both budgets are read
+# the same way from either end of the bar and neither needs the words "5h"/"7d". Weekly first
+# where both are live; a lone window still wears its own label. nf-cod-openai, the real mark,
+# from the same 3.5.0 symbols font as the Claude glyph above.
 [env_var.CC_CODEX]
 variable = "CC_CODEX"
 symbol = " "
-style = "bold #74AA9C"
+style = "bold teal"
 format = "[$symbol$env_value]($style) "
 
 # icon + level word at every level; hidden entirely when unset (the var stays unset only
 # when the ponytail flag file itself is absent, which is what "mode off" looks like).
-# Both modes share one desaturated violet: they modify how Claude answers, so they sit in
+# Both modes share one desaturated shade: they modify how Claude answers, so they sit in
 # its family, and they hold steady for whole sessions, so they are the part of the bar that
 # should recede. Caveman was 256-colour 130 — a standing orange chip in the alarm channel.
 [env_var.CC_PONYTAIL]
 variable = "CC_PONYTAIL"
 symbol = "󱁶 "
-style = "#8B85B0"
+style = "overlay1"
 format = "[$symbol$env_value]($style) "
 
 # same show-the-level pattern; icon = md-campfire, which names the mode more directly than
@@ -137,5 +140,64 @@ format = "[$symbol$env_value]($style) "
 [env_var.CC_CAVEMAN]
 variable = "CC_CAVEMAN"
 symbol = "󰻝 "
-style = "#8B85B0"
+style = "overlay1"
 format = "[$symbol$env_value]($style) "
+
+# Catppuccin palettes -- https://github.com/catppuccin/starship
+# Toggle flavor with the top-level `palette = "..."` line near the top of this file.
+
+[palettes.catppuccin_mocha]
+rosewater = "#f5e0dc"
+flamingo = "#f2cdcd"
+pink = "#f5c2e7"
+mauve = "#cba6f7"
+red = "#f38ba8"
+maroon = "#eba0ac"
+peach = "#fab387"
+yellow = "#f9e2af"
+green = "#a6e3a1"
+teal = "#94e2d5"
+sky = "#89dceb"
+sapphire = "#74c7ec"
+blue = "#89b4fa"
+lavender = "#b4befe"
+text = "#cdd6f4"
+subtext1 = "#bac2de"
+subtext0 = "#a6adc8"
+overlay2 = "#9399b2"
+overlay1 = "#7f849c"
+overlay0 = "#6c7086"
+surface2 = "#585b70"
+surface1 = "#45475a"
+surface0 = "#313244"
+base = "#1e1e2e"
+mantle = "#181825"
+crust = "#11111b"
+
+[palettes.catppuccin_latte]
+rosewater = "#dc8a78"
+flamingo = "#dd7878"
+pink = "#ea76cb"
+mauve = "#8839ef"
+red = "#d20f39"
+maroon = "#e64553"
+peach = "#fe640b"
+yellow = "#df8e1d"
+green = "#40a02b"
+teal = "#179299"
+sky = "#04a5e5"
+sapphire = "#209fb5"
+blue = "#1e66f5"
+lavender = "#7287fd"
+text = "#4c4f69"
+subtext1 = "#5c5f77"
+subtext0 = "#6c6f85"
+overlay2 = "#7c7f93"
+overlay1 = "#8c8fa1"
+overlay0 = "#9ca0b0"
+surface2 = "#acb0be"
+surface1 = "#bcc0cc"
+surface0 = "#ccd0da"
+base = "#eff1f5"
+mantle = "#e6e9ef"
+crust = "#dce0e8"

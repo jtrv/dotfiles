@@ -227,6 +227,30 @@ define-command delta -docstring '
   ansi-fifo -name *delta* -- delta %arg{@};
 }
 
+define-command delta-buffers -docstring '
+  delta-buffers <buffer-a> <buffer-b>: delta utility
+  Generate a delta diff between <buffer-a> and <buffer-b>
+' -buffer-completion -params 2 %{ evaluate-commands %sh{
+  dir=$(mktemp -d)
+  echo "
+    evaluate-commands -buffer '$1' write -force $dir/a
+    evaluate-commands -buffer '$2' write -force $dir/b
+    kakpipe -N delta-buffers -- sh -c %{diff -u --label '$1' --label '$2' $dir/a $dir/b | delta --paging=never; rm -r $dir}
+  "
+}}
+
+define-command delta-selections -docstring '
+  delta-selections <buffer>: delta utility
+  Generate a delta diff between the selections and <buffer>
+' -buffer-completion -params 1 %{ evaluate-commands %sh{
+  dir=$(mktemp -d)
+  echo "
+    execute-keys '<a-|>sed -e ''\$a\\'' >> $dir/sel<ret>'
+    evaluate-commands -buffer '$1' write -force $dir/buf
+    kakpipe -N delta-selections -- sh -c %{diff -u --label '*selections*' --label '$1' $dir/sel $dir/buf | delta --paging=never; rm -r $dir}
+  "
+}}
+
 define-command dic -docstring '
   dic <query>: dic utility wrapper
   Generate dictionary results for the given query inside kakoune
@@ -267,6 +291,21 @@ define-command diff-buffers -docstring '
       sd -n 1 -- ''-{3} /tmp.*?$'' ''--- $1'' | \
       sd -n 1 -- ''\+{3} /tmp.*?$'' ''+++ $2'';
       rm $file1 $file2'
+    execute-keys '!<ret>gk'
+  "
+}}
+
+define-command diff-selections -docstring '
+  diff-selections <buffer>: diff utility
+  Generate a diff buffer between the selections and <buffer>
+' -buffer-completion -params 1 %{ evaluate-commands %sh{
+  dir=$(mktemp -d)
+  echo "
+    execute-keys '<a-|>sed -e ''\$a\\'' >> $dir/sel<ret>'
+    evaluate-commands -buffer '$1' write -force $dir/buf
+    edit! -scratch *diff-selections*
+    set buffer filetype diff
+    set-register | 'diff -u --label ''*selections*'' --label ''$1'' $dir/sel $dir/buf; rm -r $dir'
     execute-keys '!<ret>gk'
   "
 }}
@@ -554,6 +593,65 @@ hook global BufSetOption filetype=yo-prompt %{
   alias buffer write yo-buffer-write
   alias buffer w yo-buffer-write
 }
+
+define-command zet-buffers -docstring '
+  zet-buffers <command> <buffer>...: zet utility
+  Treat each buffer as a set of lines, combine them into a scratch buffer
+    union      lines appearing in ANY buffer
+    intersect  lines appearing in EVERY buffer
+    diff       lines appearing in the FIRST buffer and no other
+    single     lines appearing exactly once
+    multiple   lines appearing more than once
+  Each line is printed at most once, in order of first occurrence
+' -buffer-completion -params 2.. %{ evaluate-commands %sh{
+  op=$1; shift
+  case $op in
+    union|intersect|diff|single|multiple) ;;
+    *) echo "fail %{zet-buffers: expected union, intersect, diff, single or multiple}"; exit ;;
+  esac
+  dir=$(mktemp -d)
+  n=0
+  for buf in "$@"; do
+    n=$((n + 1))
+    echo "evaluate-commands -buffer '$buf' write -force $dir/$n"
+    files="$files $dir/$n"
+  done
+  echo "
+    edit! -scratch *zet-buffers*
+    set-register | 'zet $op$files; rm -r $dir'
+    execute-keys '!<ret>gexdgk'
+  "
+}}
+
+define-command zet-selections -docstring '
+  zet-selections <command> [<buffer>...]: zet utility
+  Like zet-buffers, but the selections are the FIRST set and each buffer another
+    union      lines appearing in ANY set
+    intersect  lines appearing in EVERY set
+    diff       lines appearing in the selections and no buffer
+    single     lines appearing exactly once
+    multiple   lines appearing more than once
+  Each line is printed at most once, in order of first occurrence
+' -buffer-completion -params 1.. %{ evaluate-commands %sh{
+  op=$1; shift
+  case $op in
+    union|intersect|diff|single|multiple) ;;
+    *) echo "fail %{zet-selections: expected union, intersect, diff, single or multiple}"; exit ;;
+  esac
+  dir=$(mktemp -d)
+  n=0
+  for buf in "$@"; do
+    n=$((n + 1))
+    echo "evaluate-commands -buffer '$buf' write -force $dir/$n"
+    files="$files $dir/$n"
+  done
+  echo "
+    execute-keys '<a-|>sed -e ''\$a\\'' >> $dir/0<ret>'
+    edit! -scratch *zet-selections*
+    set-register | 'zet $op $dir/0$files; rm -r $dir'
+    execute-keys '!<ret>gexdgk'
+  "
+}}
 
 
 ###################### KEYBINDINGS ######################
