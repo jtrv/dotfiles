@@ -11,6 +11,7 @@ $localip\
 $shlvl\
 $singularity\
 $kubernetes\
+$nats\
 $directory\
 $vcsh\
 $fossil_branch\
@@ -25,9 +26,11 @@ $hg_state\
 $pijul_channel\
 $docker_context\
 $package\
+$bun\
 $c\
 $cmake\
 $cobol\
+$cpp\
 $daml\
 $dart\
 $deno\
@@ -39,18 +42,20 @@ $fennel\
 $fortran\
 $gleam\
 $golang\
-$guix_shell\
+$gradle\
 $haskell\
 $haxe\
 $helm\
 $java\
 $julia\
 $kotlin\
-$gradle\
 $lua\
+$maven\
+$mojo\
 $nim\
 $nodejs\
 $ocaml\
+$odin\
 $opa\
 $perl\
 $php\
@@ -70,10 +75,13 @@ $terraform\
 $typst\
 $vlang\
 $vagrant\
+$xmake\
 $zig\
 $buf\
+$guix_shell\
 $nix_shell\
 $conda\
+$pixi\
 $meson\
 $spack\
 $memory_usage\
@@ -81,7 +89,6 @@ $aws\
 $gcloud\
 $openstack\
 $azure\
-$nats\
 $direnv\
 $env_var\
 $mise\
@@ -89,17 +96,16 @@ $crystal\
 $custom\
 $sudo\
 $cmd_duration\
-$time\
 $line_break\
 $jobs\
 $battery\
+$time\
 $status\
-$os\
 $container\
 $netns\
+$os\
 $shell\
 $character"""
-
 [aws]
 format = 'on [($profile )($region)$symbol]($style)'
 style = "bold yellow"
@@ -149,16 +155,18 @@ commit_hash_length = 4
 disabled = false
 
 [git_status]
-conflicted = "🏳 "
-ahead = "🏎💨"
-behind = "😰"
-diverged = "😵"
-untracked = "🤷‍"
-stashed = "📦"
-modified = "📝"
-staged = '[$count󰜅](bold green)'
-renamed = "👅"
-deleted = "🗑 "
+format = '([$all_status$ahead_behind]($style))'
+style = "bold"
+conflicted = '[=$count](dimmed bold red) '
+ahead      = '[⇡$count](dimmed bold mauve) '
+behind     = '[⇣$count](dimmed bold mauve) '
+diverged   = '[⇡$ahead_count⇣$behind_count](dimmed bold mauve) '
+untracked  = '[?$count](dimmed bold blue) '
+stashed    = '[≡$count](dimmed bold teal) '
+modified   = '[!$count](dimmed bold yellow) '
+staged     = '[+$count](dimmed bold green) '
+renamed    = '[»$count](dimmed bold peach) '
+deleted    = '[✘$count](dimmed bold red) '
 
 # hostname
 [hostname]
@@ -176,9 +184,6 @@ disabled = false
 disabled = false
 
 [terraform]
-disabled = false
-
-[time]
 disabled = false
 
 # Catppuccin palettes -- https://github.com/catppuccin/starship
