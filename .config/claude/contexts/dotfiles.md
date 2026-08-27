@@ -22,6 +22,8 @@ This table is the **single source of truth** for what is machine-specific; anyth
 | evdi/hermes-streaming (packages, virtual-display pinning) | morpheus |
 | bun global `package.json`, cargo `.crates*` | per-machine local state — never merged. Keep this machine's side, but **report what the other side had**; if it looks like new tools rather than version drift, ask |
 | `kanata/*.kbd` | every branch, per-machine by filename (`morpheus.kbd`, `thiccpad.kbd`, `shared.kbd`) — prefer this name-spacing for new machine-specific files over new table rows |
+| `.config/environment.d/*` | morpheus — NixOS machines set the same vars via `environment.sessionVariables` in nixos-config |
+| `warehouse/bun` | per-machine additions, like `warehouse/uv` — keep this machine's side, report theirs |
 
 ## Converging
 
