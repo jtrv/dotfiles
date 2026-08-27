@@ -131,6 +131,7 @@ git-delta
 git-filter-repo
 git-lfs
 github-cli
+glab
 glib2-docs
 glow
 gnome-keyring
@@ -318,7 +319,7 @@ sdcv
 shellcheck-bin
 shfmt
 signal-desktop
-sioyek
+sioyek-git
 skim
 sl
 slurp
