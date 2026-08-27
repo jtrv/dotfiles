@@ -11,6 +11,8 @@ Both trees share one object store and ref set — no fetch/push between them. **
 
 Branches: `thiccpad` (NixOS laptop, no home-manager), `morpheus` (arch desktop), `morpheus-nixos` (the desktop's NixOS migration; replaces `morpheus` at cutover — NixOS rules, desktop ownership).
 
+`morpheus-nixos` sticks to morpheus's changes and keeps desktop-specific state (ultrawide output, hermes pinning, edge-pan, GPU tooling) unless the change is NixOS-specific; shared updates flow in from any branch; archisms (pacman, arch warehouse) belong in nixos-config's `nixos/morpheus` dir, not this branch.
+
 This table is the **single source of truth** for what is machine-specific; anything not listed is shared. When a merge surfaces a new ambiguous path, ask the user, then record the decision here — never decide from vibes like "looks desktop-y".
 
 | Path | Ownership |
