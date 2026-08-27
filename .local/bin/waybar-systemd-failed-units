@@ -1,7 +1,8 @@
 #!/bin/sh
-systemctl_status_failed=$(
-  systemctl status --failed
-  systemctl status --user --failed
+
+systemctl_failed=$(
+	systemctl status --user --failed
+	systemctl status --failed
 )
 
-printf %s "$systemctl_status_failed" | tspin | kak
+printf %s "$systemctl_failed" | tspin | kak

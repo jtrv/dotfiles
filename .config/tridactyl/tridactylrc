@@ -15,6 +15,14 @@ bind C tabopen !chat
 bind J tabnext
 bind K tabprev
 "
+" history back/forward (tridactyl defaults, pinned for portability)
+bind H back
+bind L forward
+"
+" close tab / reopen last closed
+bind d tabclose
+bind u undo
+"
 " g keys to match kakoune
 bind gj scrollto 100
 bind gk scrollto 0
@@ -60,3 +68,10 @@ colors catppuccin
 " URL SPECIFIC
 autocmd DocStart https://ssh.cloud.google.com mode ignore
 autocmd DocStart https://monkeytype.com mode ignore
+"
+"
+" EXTENSION SHORTCUTS — set per-machine: about:addons → gear → Manage Extension Shortcuts
+" (Firefox keeps these in the profile's extension-settings.json; they don't sync)
+"   Alt+W        Bitwarden  — toggle popup
+"   Alt+Shift+W  Bitwarden  — autofill last used login
+"   Alt+Q        Sideberry  — toggle sidebar

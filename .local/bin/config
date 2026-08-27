@@ -1,2 +1,3 @@
 #!/bin/sh
+: "${DOTFILES:=$HOME/.config/dotfiles}"
 git --git-dir="$DOTFILES" --work-tree="$HOME" "$@"

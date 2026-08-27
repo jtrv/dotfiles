@@ -130,12 +130,6 @@ bundle kakoune-state-save https://gitlab.com/Screwtapello/kakoune-state-save.git
 
 bundle kakoune-text-objects https://github.com/Delapouite/kakoune-text-objects
 
-bundle kakpipe https://github.com/jtrv/kakpipe %{
-  require-module "kakpipe"
-  complete-command kakpipe shell
-}
-bundle-install-hook kakpipe %{ cargo install --locked --path . ; cargo clean }
-
 bundle kakship https://github.com/eburghar/kakship %{
   require-module kakship
   kakship-enable
@@ -155,32 +149,32 @@ bundle sudo-write.kak https://github.com/jtrv/sudo-write.kak %{
 
 ###################### COMMANDS ######################
 
-define-command kakpipe-alias -docstring '
- kakpipe-alias <command>: Forwards outputs of the command given as
+define-command fifo-alias -docstring '
+ fifo-alias <command>: Forwards outputs of the command given as
  parameter to a new fifo buffer and highlights text based on ansi color codes
 ' -params 1.. %{
-  kakpipe --scroll --rw -- %arg{@}
+  ansi-fifo -scroll -- %arg{@}
 }
-alias global : kakpipe-alias
+alias global : fifo-alias
 
 define-command bgsh -docstring '
   bgsh [<commands>]: background shell utility
   execute one-off commands in the background
-' -shell-completion -params .. %{ kakpipe-bg -- %arg{@} }
+' -shell-completion -params .. %{ ansi-fifo-bg -name *bg* -- %arg{@} }
 alias global :: bgsh
 
 define-command bun -docstring '
   bun [<arguments>]: bun utility wrapper
   Launch bun with the given arguments inside kakoune
 ' -params 1.. %{
-  kakpipe -n "bun %arg{@}" -S -V FORCE_COLOR=1 -- bun %arg{@}
+  ansi-fifo -name *bun* -scroll -- env FORCE_COLOR=1 bun %arg{@}
 }
 
 define-command cargo -docstring '
   cargo [<arguments>]: cargo utility wrapper
   Launch cargo with the given arguments inside kakoune
 ' -params 1.. %{
-  kakpipe -n "cargo %arg{@}" -S -- cargo --color=always %arg{@}
+  ansi-fifo -name *cargo* -scroll -- cargo --color=always %arg{@}
 }
 
 define-command cat -docstring '
@@ -188,9 +182,9 @@ define-command cat -docstring '
   Print the files (or buffile) using bat
 ' -params 1.. %{ evaluate-commands %sh{
   if [ $# -eq 0 ]; then
-    echo "kakpipe -n \"bat %val{buffile}\" -- bat --style=plain --color=always %val{buffile}"
+    echo "ansi-fifo -name *bat* -- bat --style=plain --color=always %val{buffile}"
   else
-    echo "kakpipe \"bat %arg{@}\" -- bat --style=plain --color=always %arg{@}"
+    echo "ansi-fifo -name *bat* -- bat --style=plain --color=always %arg{@}"
   fi
 }}
 
@@ -204,7 +198,7 @@ define-command comment -docstring '(Un)Comment lines' %{
 define-command docs -docstring '
   docs <docset> <args> : search for an api within a dedoc docset
 ' -params 1.. %{
-  popup --title dedoc --kak-script 'kakpipe -N docs -- printf %opt{popup_output}' -- docs %arg{@}
+  popup --title dedoc --kak-script 'ansi-fifo -name *docs* -- printf %opt{popup_output}' -- docs %arg{@}
 }
 complete-command docs shell-script-candidates %{
   if [ $kak_token_to_complete = 0 ]; then
@@ -230,7 +224,7 @@ define-command delta -docstring '
   delta [<arguments>]: delta utility wrapper
   Launch delta with the given arguments inside kakoune
 ' -shell-completion -params 1.. %{
-  kakpipe -- delta %arg{@};
+  ansi-fifo -name *delta* -- delta %arg{@};
 }
 
 define-command delta-buffers -docstring '
@@ -262,9 +256,9 @@ define-command dic -docstring '
   Generate dictionary results for the given query inside kakoune
 ' -params 0..2 %{ evaluate-commands %sh{
   if [ $# -eq 0 ]; then
-    echo "kakpipe -- dic %val{selection}"
+    echo "ansi-fifo -name *dic* -- dic %val{selection}"
   else
-    echo "kakpipe -- dic %arg{@}"
+    echo "ansi-fifo -name *dic* -- dic %arg{@}"
   fi
 }}
 
@@ -272,14 +266,14 @@ define-command diff -docstring '
   diff [<arguments>]: diff utility wrapper
   Generate a diff with the given arguments
 ' -shell-completion -params 1.. %{
-  kakpipe -- diff -u %arg{@}; set buffer filetype diff;
+  ansi-fifo -name *diff* -- diff -u %arg{@}; set buffer filetype diff;
 }
 
 define-command difft -docstring '
   difft [<arguments>]: difftastic utility wrapper
   Generate a diff with difftastic and the given arguments
 ' -shell-completion -params 1.. %{
-  kakpipe -- difft --width=%val{window_width} --color=always %arg{@};
+  ansi-fifo -name *difft* -- difft --width=%val{window_width} --color=always %arg{@};
 }
 
 define-command diff-buffers -docstring '
@@ -352,19 +346,19 @@ define-command global-picker -docstring 'global-picker: Opens global search pick
   }
 }
 
-define-command glow -docstring '
-  glow [<files>]: glow utility wrapper
-  Open a glow formatted view of the provided files
+define-command mdcat -docstring '
+  mdcat [<files>]: mdcat utility wrapper
+  Open an mdcat formatted view of the provided files
 ' -params 1.. %{
-  kakpipe -n "glow %arg{@}" -- glow -s dark %arg{@};
+  ansi-fifo -name *mdcat* -- mdcat %arg{@};
 }
-complete-command -menu glow shell-script-candidates %{fd -e md}
+complete-command -menu mdcat shell-script-candidates %{fd -e md}
 
 define-command go -docstring '
   go [<arguments>]: go utility wrapper
   Launch go with the given arguments inside kakoune
 ' -params 1.. %{
-  kakpipe -n "go %arg{@}" -S -- go %arg{@}
+  ansi-fifo -name *go* -scroll -- go %arg{@}
 }
 
 define-command grep-buffers -docstring '
@@ -382,7 +376,7 @@ define-command hey -docstring '
   hey <query>: hors utility wrapper
   Get an answer from one of the popular Q&A platforms
 ' -params 1.. %{
-  kakpipe -- hors -a -n 2 -p never %arg{@};
+  ansi-fifo -name *hors* -- hors -a -n 2 -p never %arg{@};
 }
 
 define-command kan -docstring '
@@ -405,13 +399,13 @@ define-command kelp -docstring '
   Show the --help output for the given command inside kakoune
 ' -shell-completion -params 0.. %{ evaluate-commands %sh{
   if [ $# -eq 0 ] && "$kak_selection" --help > /dev/null; then
-    echo "kakpipe -- \"$kak_selection\" --help"
+    echo "ansi-fifo -name *help* -- \"$kak_selection\" --help"
   elif [ $# -eq 0 ] && "$kak_selection" -h > /dev/null; then
-    echo "kakpipe -- \"$kak_selection\" -h"
+    echo "ansi-fifo -name *help* -- \"$kak_selection\" -h"
   elif "$*" --help > /dev/null; then
-    echo "kakpipe -- \"$*\" --help"
+    echo "ansi-fifo -name *help* -- \"$*\" --help"
   elif "$*" -h > /dev/null; then
-    echo "kakpipe -- \"$*\" -h"
+    echo "ansi-fifo -name *help* -- \"$*\" -h"
   fi
 }}
 
@@ -419,7 +413,7 @@ define-command npm -docstring '
   npm [<arguments>]: npm utility wrapper
   Launch npm with the given parameters inside kakoune
 ' -params 1.. %{
-  kakpipe -S -- npm %arg{@}
+  ansi-fifo -name *npm* -scroll -- npm %arg{@}
 }
 
 define-command pastel -docstring '
@@ -427,9 +421,9 @@ define-command pastel -docstring '
   Launch pastel with the given parameters inside kakoune
 ' -params 0.. %{ evaluate-commands %sh{
   if [ $# -eq 0 ]; then
-    echo "kakpipe -- unbuffer pastel color %val{selection}"
+    echo "ansi-fifo -name *pastel* -- unbuffer pastel color %val{selection}"
   else
-    echo "kakpipe -- unbuffer pastel %arg{@}"
+    echo "ansi-fifo -name *pastel* -- unbuffer pastel %arg{@}"
   fi
 }}
 
@@ -438,9 +432,9 @@ define-command pcsv -docstring '
   Print the files (or buffile) using bat and columns
 ' -file-completion -params .. %{ evaluate-commands %sh{
   if [ $# -eq 0 ]; then
-    echo "kakpipe -- pcsv %val{buffile}"
+    echo "ansi-fifo -name *pcsv* -- pcsv %val{buffile}"
   else
-    echo "kakpipe -- pcsv %arg{@}"
+    echo "ansi-fifo -name *pcsv* -- pcsv %arg{@}"
   fi
 }}
 
@@ -449,9 +443,9 @@ define-command ptsv -docstring '
   Print the files (or buffile) using bat and columns
 ' -file-completion -params .. %{ evaluate-commands %sh{
   if [ $# -eq 0 ]; then
-    echo "kakpipe -- ptsv %val{buffile}"
+    echo "ansi-fifo -name *ptsv* -- ptsv %val{buffile}"
   else
-    echo "kakpipe -- ptsv %arg{@}"
+    echo "ansi-fifo -name *ptsv* -- ptsv %arg{@}"
   fi
 }}
 
@@ -486,9 +480,9 @@ define-command rman -docstring '
   show a rustdoc page for the given module
 ' -params 1 %{ evaluate-commands %sh{
   if [ $# -eq 0 ]; then
-    echo "kakpipe -n \"rman %val{selection}\" -- rusty-man --viewer=rich %val{selection}"
+    echo "ansi-fifo -name *rman* -- rusty-man --viewer=rich %val{selection}"
   else
-    echo "kakpipe -n \"rman %arg{1}\" -- rusty-man --viewer=rich %arg{@}"
+    echo "ansi-fifo -name *rman* -- rusty-man --viewer=rich %arg{@}"
   fi
 }}
 
@@ -532,9 +526,9 @@ define-command thes -docstring '
   Generate thesaurus results for the given query
 ' -params 0..2 %{ evaluate-commands %sh{
   if [ $# -eq 0 ]; then
-    echo "kakpipe -- thesauromatic %val{selection} | col %val{window_width}"
+    echo "ansi-fifo -name *thes* -script \"thesauromatic %val{selection} | col %val{window_width}\""
   else
-    echo "kakpipe -- thesauromatic %arg{@} | col %val{window_width}"
+    echo "ansi-fifo -name *thes* -script \"thesauromatic %arg{@} | col %val{window_width}\""
   fi
 }}
 
@@ -543,9 +537,9 @@ define-command tldr -docstring '
   Cheatsheet for the given command
 ' -shell-completion -params 0.. %{ evaluate-commands %sh{
   if [ $# -eq 0 ]; then
-    echo "kakpipe -- tldr --color=always %val{selection}"
+    echo "ansi-fifo -name *tldr* -- tldr --color=always %val{selection}"
   else
-    echo "kakpipe -- tldr --color=always %arg{@}"
+    echo "ansi-fifo -name *tldr* -- tldr --color=always %arg{@}"
   fi
 }}
 
@@ -553,14 +547,14 @@ define-command watchexec -docstring '
   watchexec [<args>] <command>: watchexec utility wrapper
   execute the given command when the current directory changes
 ' -shell-completion -params 0.. %{
-  kakpipe -- watchexec %arg{@}
+  ansi-fifo -name *watchexec* -- watchexec %arg{@}
 }
 
 define-command watchthis -docstring '
   watchexec [<args>] <command>: watchexec utility wrapper
   execute the given command when the current file changes
 ' -shell-completion -params 0.. %{
-  kakpipe -- watchexec --watch %val{buffile} %arg{@}
+  ansi-fifo -name *watchexec* -- watchexec --watch %val{buffile} %arg{@}
 }
 
 define-command xargs -docstring '
@@ -573,30 +567,17 @@ define-command xargs -docstring '
 }
 
 define-command yo -docstring '
-  yo <query>: aichat utility wrapper
-  Query LLM and stream the response to a FIFO buffer
+  yo <query>: claude utility wrapper
+  Query Claude and stream the response to a fifo buffer
 
   Options:
-    -m, --model <MODEL>                  Select a LLM model
-    -r, --role <ROLE>                    Select a role
-    -s, --session [<SESSION>]            Start or join a session
-        --empty-session                  Ensure the session is empty
-        --save-session                   Ensure the new conversation is saved to the session
-    -a, --agent <AGENT>                  Start a agent
-        --agent-variable <NAME> <VALUE>  Set agent variables
-        --rag <RAG>                      Start a RAG
-    -e, --execute                        Execute commands in natural language
-    -c, --code                           Output code only
-    -f, --file <FILE>                    Include files with the message
-        --dry-run                        Display the message without sending it
-        --info                           Display information
-        --list-models                    List all available chat models
-        --list-roles                     List all roles
-        --list-sessions                  List all sessions
-        --list-agents                    List all agents
-        --list-rags                      List all RAGs
+    --model <MODEL>       Select a model (sonnet, opus, haiku)
+    -c, --continue        Continue the most recent conversation
+    -r, --resume <ID>     Resume a session
+    --append-system-prompt <PROMPT>  Extend the system prompt
 ' -params 1.. %{
-  kakpipe -w -- aichat %arg{@};
+  ansi-fifo -name *claude* -- claude -p %arg{@}
+  set-option buffer filetype markdown
 }
 define-command yo-buffer -docstring '
   opens a *yo-prompt* buffer for writing prompts to pass to yo
@@ -678,6 +659,8 @@ define-command zet-selections -docstring '
 map global user <space> : -docstring 'prompt'
 
 map global user / -docstring 'search' %{<a-;>: global-picker <ret>}
+
+map global user y -docstring 'yo' %{:yo-buffer <ret>}
 
 
 ###################### INSERT KEYS ######################
@@ -831,8 +814,8 @@ map global user i -docstring 'docs' %{:docs }
 
 declare-user-mode jump
   map global user j -docstring 'jump' %{: enter-user-mode jump <ret>}
-  map global jump c     -docstring 'next spell'            %{:skyspell-enable en_US-large ; skyspell-next <ret>}
-  map global jump <a-c> -docstring 'prev spell'            %{:skyspell-enable en_US-large ; skyspell-previous <ret>}
+  map global jump c     -docstring 'next spell'            %{:skyspell-enable en_US ; skyspell-next <ret>}
+  map global jump <a-c> -docstring 'prev spell'            %{:skyspell-enable en_US ; skyspell-previous <ret>}
   map global jump d     -docstring 'next diagnostic'       %{:lsp-diagnostics ; jump-next *diagnostics* <ret>}
   map global jump <a-d> -docstring 'prev diagnostic'       %{:lsp-diagnostics ; jump-previous *diagnostics* <ret>}
   map global jump f     -docstring 'next function'         %{:lsp-next-function <ret>}
@@ -896,8 +879,9 @@ bundle Encapsul8 https://github.com/ElectricR/Encapsul8 %{
 # spelling and grammar checking
 declare-user-mode spell
   map global user s -docstring 'spell' %{: enter-user-mode spell <ret>}
-  map global spell e -docstring 'english'    %{:skyspell-enable en_US-large <ret>}
-  map global spell E -docstring 'español'    %{:skyspell-enable es <ret>}
+  # enchant dict names, not nixpkgs attrs: hunspellDicts.en_US-large installs as en_US
+  map global spell e -docstring 'english'    %{:skyspell-enable en_US <ret>}
+  map global spell E -docstring 'español'    %{:skyspell-enable es_ANY <ret>}
   map global spell d -docstring 'disable'    %{:skyspell-disable <ret>}
   map global spell l -docstring 'list'       %{:skyspell-list <ret>}
   map global spell n -docstring 'next'       %{:skyspell-next <ret>}
@@ -1014,7 +998,6 @@ map global user w -docstring 'write' %{:write <ret>}
 # pipe selections as args with xargs
 map global user x -docstring 'xargs' %{:xargs <ret>}
 
-map global user y -docstring 'yo' %{:yo-buffer <ret>}
 
 # contextual scripts
 hook global WinSetOption filetype=git-commit    %{ source '~/.config/kak/contexts/commit.kak'      }

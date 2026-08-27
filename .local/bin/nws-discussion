@@ -1,23 +1,23 @@
 #!/bin/sh
-# requires secli, xh, jaq, sd, ipinfo.io token
+# requires xh, jq, sd, ipinfo.io token
 
-ipinfo_token=$(secli get ipinfo_token)
+ipinfo_token=$(cat /run/agenix/ipinfo-token)
 
 # get lat/lon
 coordinates=$(xh -Fb "https://ipinfo.io/?token=$ipinfo_token" |
-  jaq -r '.loc')
+  jq -r '.loc')
 
 # get corresponding weather office
 weather_office=$(xh -Fb "https://api.weather.gov/points/$coordinates" |
-  jaq -r '.properties.cwa')
+  jq -r '.properties.cwa')
 
 # get discussion url
 area_forecast_discussion_url=$(xh -Fb "https://api.weather.gov/products/types/AFD/locations/$weather_office" |
-  jaq -r '.["@graph"][0]["@id"]')
+  jq -r '.["@graph"][0]["@id"]')
 
 # get discussion raw text
 raw_text=$(xh -Fb "$area_forecast_discussion_url" |
-  jaq -r '.productText' |
+  jq -r '.productText' |
   sd '(\n| \n)' '
 ')
 

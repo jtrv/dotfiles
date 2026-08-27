@@ -2,7 +2,7 @@
 
 if status is-interactive
 
-alias adb='HOME="$XDG_DATA_HOME"/android adb'
+alias adb     "HOME='$XDG_DATA_HOME'/android adb"
 alias boi     "wikiman"
 alias bls     "command ls"
 alias bup     "bun update -g --latest"
@@ -33,7 +33,7 @@ alias la      "eza -al --color=always" # all files and dirs
 alias lc      'lazygit --git-dir=$DOTFILES --work-tree=$HOME' # lazygit for config files
 alias lg      "lazygit"
 alias lh      "eza -la --color=always --ignore-glob='[a-z]*|[A-Z]*|[0-9]*'" # hidden only
-alias ll      "eza -l --color=always --git" # long format
+alias ll      "eza -l --color=always --git" # long format + git
 alias loc     "plocate"
 alias ls      "eza -l --color=always" # preferred listing
 alias lt      "erd -HIl --color=force" # tree listing

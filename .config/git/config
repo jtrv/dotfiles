@@ -64,5 +64,5 @@
 [includeIf "gitdir:~/work/"]
   path = ./work
 
-[includeIf "gitdir:~/.config/dotfiles"]
+[includeIf "gitdir:~/.config/dotfiles/"]
   path = ./dotfiles-local
