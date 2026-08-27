@@ -43,7 +43,6 @@
   updateRefs = true
 [rerere]
   enabled = true
-  autoupdate = true
 [status]
   submoduleSummary = true
 [submodule]
