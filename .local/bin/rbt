@@ -1,7 +1,0 @@
-#!/bin/sh
-# systemctl kexec self-loads the BLS default entry before kexec.target,
-# so NixOS's prepare-kexec.service normally runs too late; start it first
-# (systemd #40743).
-set -e
-sudo systemctl start prepare-kexec.service
-sudo systemctl kexec
