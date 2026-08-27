@@ -1,0 +1,9 @@
+#!/bin/sh
+# Qt only reports a light/dark colorScheme through a platform theme that reads the
+# xdg-desktop-portal appearance setting. The session-wide QT_QPA_PLATFORMTHEME is
+# qt6ct (there for kvantum styling) and it reports Unknown, so sioyek's
+# use_system_theme would never fire. Override it for sioyek alone - sioyek paints
+# its own chrome from the ui_*_color settings, so it loses nothing by skipping
+# kvantum. ~/.local/bin is first in both the shell and systemd user PATH, so this
+# also covers launches from niri and the .desktop entry.
+QT_QPA_PLATFORMTHEME=xdgdesktopportal exec /usr/bin/sioyek "$@"
