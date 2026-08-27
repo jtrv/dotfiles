@@ -27,6 +27,13 @@
   ;; xcape
   esc (tap-hold  200    150    esc  ctl)
 
+  ;; hold jkl; (sft ctl alt met) + g toggles the gaming layer
+  gam (switch
+    ((and lsft lctl lalt lmet (layer gaming))) (layer-switch base)   break
+    ((and lsft lctl lalt lmet))                (layer-switch gaming) break
+    ()                                         g                     break
+  )
+
   ;; playerctl controls
   mpp (cmd playerctl play-pause)
   mpr (cmd playerctl previous)
@@ -46,14 +53,14 @@
 )
 
 (defchordsv2
-  (f j)   (caps-word 5000)                        50 first-release ()
+  (f j)   (caps-word 5000)                        50 first-release (gaming)
 
-  (s d)   (tap-hold 200 150 esc (multi alt ctl))  50 first-release ()
-  (w e)   tab                                     50 first-release ()
-  (q w)   home                                    50 first-release ()
+  (s d)   (tap-hold 200 150 esc (multi alt ctl))  50 first-release (gaming)
+  (w e)   tab                                     50 first-release (gaming)
+  (q w)   home                                    50 first-release (gaming)
 
-  (k l)   (tap-hold 200 150 ret (multi ctl alt))  50 first-release ()
-  (i o)   bspc                                    50 first-release ()
-  (l ;)   (tap-hold 200 150 del (multi alt met))  50 first-release ()
-  (o p)   end                                     50 first-release ()
+  (k l)   (tap-hold 200 150 ret (multi ctl alt))  50 first-release (gaming)
+  (i o)   bspc                                    50 first-release (gaming)
+  (l ;)   (tap-hold 200 150 del (multi alt met))  50 first-release (gaming)
+  (o p)   end                                     50 first-release (gaming)
 )
