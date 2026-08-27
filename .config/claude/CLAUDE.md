@@ -2,6 +2,7 @@
 
 ## Contexts
 In-depth per-context instructions live in `~/.config/claude/contexts/`. Before working in a matching context, Read the file — do not proceed on memory of it:
+- `artifacts.md` — publishing any Artifact that collects user decisions (triage boards, review forms, note collectors)
 - `parallel-agents.md` — spawning multiple agents that edit the same working tree
 - `long-tasks.md` — any task spanning sessions or > ~1 hour; before /compact; when resuming or handing off work
 - `e2e.md` — writing, running, or gating on end-to-end tests in any language; also read it before adding an E2E tier that may not be worth having, and before configuring any harness that starts a server of its own (E2E, screenshot/capture rigs, smoke tests)
@@ -11,6 +12,14 @@ In-depth per-context instructions live in `~/.config/claude/contexts/`. Before w
 - `python.md` — editing, testing, or committing Python code (also surfaced as the `python` skill)
 - `typescript.md` — editing, testing, or committing TypeScript/JavaScript code, bun + oxlint/oxfmt (also surfaced as the `typescript` skill)
 - `go.md` — editing, testing, or committing Go code (also surfaced as the `go` skill)
+- `dotfiles.md` — anything touching the dotfiles: committing config changes ($DOTFILES bare repo / `config`), the `~/repos/dotfiles` staging worktree, converging machine branches and checking drift (also surfaced as the `dotfiles` skill)
+
+## Watches
+Deferred-adoption decisions ("re-check X when it matures") have probe scripts
+in `~/.config/claude/watches/` — one per watch, each printing a single line:
+`NOT-READY` / `CHECK` / `UNKNOWN` + reason. Run the probe before re-researching
+a watch topic; investigate only on `CHECK`. Adding a watch = probe script +
+pointer from the doc or memory that defers the decision.
 
 ## Agent dispatch
 A classifier-blocked Agent dispatch gets ONE honestly reworded retry
@@ -34,7 +43,7 @@ Never add a "co-authored by Claude Code" trailer.
 When giving commands the user must run themselves (`! ...` session command, sudo, interactive login, key management), also put them on the clipboard via `clipcatctl insert <text>` (no `!` prefix) and say so. Multiple commands: insert each in reverse run order, so the first-to-run ends up as the active clip and the rest sit in clipcat history. Never copy secrets or fill-in values — copy the template with placeholders. Skip silently if `command -v clipcatctl` fails or the daemon is down.
 
 ## mise
-Use mise as the project runtime layer: pin tool versions in `mise.toml` (`[tools]`), hold project env vars in `[env]` (secrets go in an untracked `mise.local.toml`, never committed), and document runnable commands as `[tasks]` — build, fmt, dev, serve, test, lint, etc. — so `mise run <task>` is the canonical way to run them. When adding a tool, env var, or recurring command to a project, put it in `mise.toml` rather than README prose or ad-hoc shell. Prefer `mise run <task>` over invoking the underlying commands directly when a task exists.
+Use mise as the project runtime layer. Config lives at `<project-root>/.config/mise/config.toml` — pin tool versions there (`[tools]`), hold project env vars in `[env]` (secrets go in an untracked `.config/mise/config.local.toml`, never committed), and document runnable commands as `[tasks]` — build, fmt, dev, serve, test, lint, etc. — so `mise run <task>` is the canonical way to run them. A task longer than a couple of lines is an executable file task at `.config/mise/tasks/<name>` — shebang + `#MISE description="..."`, filename is the task name, a `.sh`/`.py` extension stripped — rather than a long TOML string. These run directly as well (`./.config/mise/tasks/check`), so a `package.json` script or CI step can call the path without mise on PATH. Keep `scripts/` for the source a task invokes (a `.ts` module, a helper), never for a task entry point. Do not add a root `mise.toml` alongside the `.config` layout — it takes precedence and shadows it. When adding a tool, env var, or recurring command to a project, put it in the mise config rather than README prose or ad-hoc shell. Prefer `mise run <task>` over invoking the underlying commands directly when a task exists.
 
 ## Preferred tools
 These are installed; reach for them over the generic default:

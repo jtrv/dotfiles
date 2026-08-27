@@ -21,6 +21,7 @@ set -gx AWS_CONFIG_FILE             "$XDG_CONFIG_HOME/aws/config"
 set -gx AWS_SHARED_CREDENTIALS_FILE "$XDG_CONFIG_HOME/aws/credentials"
 set -gx BUNDLE_USER_CONFIG          "$XDG_CONFIG_HOME/bundle"
 set -gx CLAUDE_CONFIG_DIR           "$XDG_CONFIG_HOME/claude"
+set -gx DOCKER_CONFIG               "$XDG_CONFIG_HOME/docker"
 set -gx DOTFILES                    "$XDG_CONFIG_HOME/dotfiles"
 set -gx GEMRC                       "$XDG_CONFIG_HOME/gem/gemrc"
 set -gx JUPYTER_CONFIG_DIR          "$XDG_CONFIG_HOME/jupyter"
@@ -33,6 +34,7 @@ set -gx XINITRC                     "$XDG_CONFIG_HOME/X11/xinitrc"
 set -gx _JAVA_OPTIONS -Djava.util.prefs.userRoot="$XDG_CONFIG_HOME/java"
 
 # Data
+set -gx ANDROID_AVD_HOME   "$XDG_DATA_HOME/android/avd"
 set -gx ANDROID_HOME       "$XDG_DATA_HOME/android"
 set -gx ANDROID_USER_HOME  "$XDG_DATA_HOME/android"
 set -gx BUNDLE_USER_PLUGIN "$XDG_DATA_HOME/bundle"
@@ -50,6 +52,8 @@ set -gx NVM_DIR            "$XDG_DATA_HOME/nvm"
 set -gx PASSWORD_STORE_DIR "$XDG_DATA_HOME/pass"
 set -gx RBENV_ROOT         "$XDG_DATA_HOME/rbenv"
 set -gx RUSTUP_HOME        "$XDG_DATA_HOME/rustup"
+set -gx SSB_HOME           "$XDG_DATA_HOME/zoom"
+set -gx USQL_HISTORY       "$XDG_DATA_HOME/usql/history"
 set -gx WINEPREFIX         "$XDG_DATA_HOME/wine"
 set -gx W3M_DIR            "$XDG_DATA_HOME/w3m"
 
@@ -64,7 +68,7 @@ set -gx HISTFILE "$XDG_STATE_HOME/bash/history"
 set -gx ATUIN_NOBIND                "true"
 set -gx BAT_PAGER                   "kak"
 set -gx BROWSER                     "firefox-devedition"
-set -gx CARAPACE_BRIDGES            "fish,bash,inshellisense"
+set -gx CARAPACE_BRIDGES            "fish,bash"
 set -gx CONCEAL_FINDER              "skim"
 set -gx DELTA_PAGER                 "kak"
 set -gx EDITOR                      "kak"
@@ -77,6 +81,10 @@ set -gx SCCACHE_DIRECT              true
 set -gx TERMINAL                    "alacritty"
 set -gx VISUAL                      "kak"
 set -gx VIRTUAL_ENV_DISABLE_PROMPT  true
+
+# sh resolves to bash on this system; dash starts ~10x faster for %sh{} blocks.
+# Leaving it unset when dash is missing — an empty value makes kakoune exec "".
+command -q dash; and set -gx KAKOUNE_POSIX_SHELL (command -v dash)
 
 set -gx FZF_DEFAULT_OPTS "\
 --ansi \

@@ -14,23 +14,23 @@ image_filter    = "triangle"
 
 [opener]
 edit = [
-	{ run = '$EDITOR "$@"', block = true,  for = "unix" },
+	{ run = '$EDITOR %s', block = true,  for = "unix" },
 ]
 open = [
-	{ run = 'xdg-open "$@"', desc = "Open", for = "linux" },
+	{ run = 'xdg-open %s', desc = "Open", for = "linux" },
 ]
 reveal = [
-	{ run = '''exiftool "$1"; echo "Press enter to exit"; read''', block = true, desc = "Show EXIF", for = "unix" },
+	{ run = '''exiftool %s1; echo "Press enter to exit"; read''', block = true, desc = "Show EXIF", for = "unix" },
 ]
 extract = [
-	{ run = 'ya pub extract --list "$@"', desc = "Extract here", for = "unix" },
+	{ run = 'ya pub extract --list %s', desc = "Extract here", for = "unix" },
 ]
 play = [
-	{ run = 'mpv "$@"', orphan = true, for = "unix" },
-	{ run = '''mediainfo "$1"; echo "Press enter to exit"; read''', block = true, desc = "Show media info", for = "unix" },
+	{ run = 'mpv %s', orphan = true, for = "unix" },
+	{ run = '''mediainfo %s1; echo "Press enter to exit"; read''', block = true, desc = "Show media info", for = "unix" },
 ]
 gimp = [
-	{ run = 'gimp "$@"', desc = "Gimp", orphan = true, for = "unix" },
+	{ run = 'gimp %s', desc = "Gimp", orphan = true, for = "unix" },
 ]
 
 [open]
@@ -79,16 +79,6 @@ rename_title  = "Rename:"
 rename_origin = "hovered"
 rename_offset = [ 0, 1, 50, 3 ]
 
-# trash
-trash_title 	= "Move {n} file{s} to trash? (y/N)"
-trash_origin	= "top-center"
-trash_offset	= [ 0, 2, 50, 3 ]
-
-# delete
-delete_title 	= "Delete {n} file{s} permanently? (y/N)"
-delete_origin	= "top-center"
-delete_offset	= [ 0, 2, 50, 3 ]
-
 # find
 find_title  = [ "Find next:", "Find previous:" ]
 find_origin = "top-center"
@@ -104,17 +94,28 @@ shell_title  = [ "Shell:", "Shell (block):" ]
 shell_origin = "top-center"
 shell_offset = [ 0, 2, 50, 3 ]
 
+[confirm]
+# trash
+trash_title 	= "Move {n} file{s} to trash?"
+trash_origin	= "top-center"
+trash_offset	= [ 0, 2, 50, 3 ]
+
+# delete
+delete_title 	= "Delete {n} file{s} permanently?"
+delete_origin	= "top-center"
+delete_offset	= [ 0, 2, 50, 3 ]
+
 # overwrite
-overwrite_title  = "Overwrite? (y/N)"
+overwrite_title  = "Overwrite?"
 overwrite_origin = "top-center"
 overwrite_offset = [ 0, 2, 50, 3 ]
 
 # quit
-quit_title  = "{n} task{s} running, quit now? (y/N)"
+quit_title  = "{n} task{s} running, quit now?"
 quit_origin = "top-center"
 quit_offset = [ 0, 2, 50, 3 ]
 
-[select]
+[pick]
 open_title  = "Open with:"
 open_origin = "hovered"
 open_offset = [ 0, 1, 50, 7 ]
@@ -132,5 +133,4 @@ prepend_previewers = [
   { mime = "application/*zip",            run = "ouch" },
   { mime = "application/subrip",          run = "mediainfo"},
   { mime = "{image,audio,video}/*",       run = "mediainfo"},
-  { mime = "text/markdown",               run = "glow" },
 ]

@@ -9,6 +9,7 @@ hand-written and tracked. On a new machine, reinstall from the sources below.
 | caveman | 2026-08-04 | github.com/JuliusBrussee/caveman (`skills/caveman`) |
 | caveman-commit | 2026-08-04 | github.com/JuliusBrussee/caveman (`skills/caveman-commit`) |
 | color-expert | 2026-07-30 | github.com/meodai/skill.color-expert (repo root is the skill) |
+| convert-documents-to-markdown | v0.2.3 | github.com/firecrawl/anydoc (`skills/convert-documents-to-markdown`; local edit: npx → bunx, reapply after reinstall) |
 | graphify | — | safishamsi (github.com/sponsors/safishamsi; see SKILL.md) |
 | impeccable | 4.0.4 | github.com/pbakaus/impeccable → `.claude/skills/impeccable` (impeccable.style; `bunx impeccable install`; note the npm package version, 3.5.0, tracks the installer, not the skill) |
 | last30days | — | github.com/mvanhorn/last30days-skill — installed tree is not the repo tree (local `assets/`, `agents/` vs upstream `.agents/`), so reinstall via its own installer rather than copying the repo over it |

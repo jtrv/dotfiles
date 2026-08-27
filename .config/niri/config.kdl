@@ -69,6 +69,8 @@ layout {
         urgent-color "#f38ba8"
     }
     struts{
+        left 1
+        right 1
         top 1
         bottom 1
     }
@@ -112,7 +114,6 @@ layer-rule {
     place-within-backdrop true
 }
 
-// Window rules let you adjust behavior for individual windows.
 window-rule {
     open-floating true
 
@@ -151,6 +152,10 @@ window-rule {
     exclude app-id="zoom"
     exclude app-id="signal"
     exclude title="^Picture-in-Picture$"
+}
+
+window-rule {
+    match app-id=".espanso-wrapped"
 }
 
 // Key bindings

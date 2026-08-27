@@ -6,7 +6,7 @@ notify_each_step = true
 
 # Disable specific steps - same options as the command line flag
 # system: nixos-rebuild --upgrade follows channels, not ~/repos/nixos-config;
-# rebuild with `nixos-rebuild switch --flake ~/repos/nixos-config#morpheus`
+# rebuild with `nixos-rebuild switch --flake ~/repos/nixos-config#thiccpad`
 disable = ["containers", "protonup", "kakoune", "system", "uv", "yazi"]
 
 # Ignore failures for these steps

@@ -1,4 +1,5 @@
 {
+  "env": {},
   "permissions": {
     "deny": [
       "Read(**/.env)",
@@ -79,6 +80,16 @@
       "Read(**/mise.local.toml)"
     ],
     "defaultMode": "auto"
+  },
+  "model": "fable",
+  "skillOverrides": {
+    "find-skills": "on",
+    "writing-skills": "on",
+    "vercel-composition-patterns": "off",
+    "vercel-optimize": "off",
+    "vercel-react-best-practices": "off",
+    "vercel-react-native-skills": "off",
+    "vercel-react-view-transitions": "off"
   },
   "hooks": {
     "Notification": [
@@ -219,31 +230,24 @@
     "command": "bash \"/home/sugimoto/.config/claude/statusline/statusline.sh\""
   },
   "enabledPlugins": {
-    "rust-analyzer-lsp@claude-plugins-official": true,
-    "typescript-lsp@claude-plugins-official": true,
-    "context7@claude-plugins-official": true,
-    "code-simplifier@claude-plugins-official": true,
-    "playwright@claude-plugins-official": false,
-    "security-guidance@claude-plugins-official": true,
-    "ralph-loop@claude-plugins-official": true,
-    "vercel@claude-plugins-official": false,
-    "pyright-lsp@claude-plugins-official": false,
-    "learning-output-style@claude-plugins-official": true,
-    "gopls-lsp@claude-plugins-official": false,
-    "remember@claude-plugins-official": true,
-    "skill-creator@claude-plugins-official": true,
-    "ponytail@ponytail": true,
-    "context-mode@context-mode": true,
     "codex@openai-codex": true,
+    "context-mode@context-mode": true,
+    "context7@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": false,
+    "learning-output-style@claude-plugins-official": true,
+    "playwright@claude-plugins-official": false,
+    "ponytail@ponytail": true,
+    "pyright-lsp@claude-plugins-official": false,
+    "ralph-loop@claude-plugins-official": true,
+    "remember@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "security-guidance@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "vercel@claude-plugins-official": false,
     "clangd-lsp@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
-    "ponytail": {
-      "source": {
-        "source": "github",
-        "repo": "DietrichGebert/ponytail"
-      }
-    },
     "context-mode": {
       "source": {
         "source": "github",
@@ -255,22 +259,17 @@
         "source": "github",
         "repo": "openai/codex-plugin-cc"
       }
+    },
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
+      }
     }
   },
   "skipWorkflowUsageWarning": true,
   "theme": "custom:catppuccin",
   "editorMode": "normal",
-  "model": "fable",
-  "env": {},
-  "skillOverrides": {
-    "find-skills": "on",
-    "writing-skills": "on",
-    "vercel-composition-patterns": "off",
-    "vercel-optimize": "off",
-    "vercel-react-best-practices": "off",
-    "vercel-react-native-skills": "off",
-    "vercel-react-view-transitions": "off"
-  },
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true
 }

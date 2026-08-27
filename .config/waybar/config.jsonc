@@ -2,7 +2,7 @@
     // Main bar
     "layer": "top",
     "position": "top",
-    "height": 31,
+    "height": 28,
     "name": "main",
     "reload_style_on_change": true,
 
