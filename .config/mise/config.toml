@@ -1,11 +1,16 @@
 # https://mise.jdx.dev/registry.html
-# global tools now come from nix (systemPackages) - keeping them here too means
-# mise shims shadow the nix copies. only tools nix doesn't provide stay global;
-# per-project versions still work via .mise.toml.
 [tools]
 aichat = "latest"
-usage = "latest"  # mise completion dependency
+biome = "latest"
+bun = "latest"
+cargo-binstall = "latest"
+dotenv-linter = "latest"
 herdr = "latest"
+node = "latest"
+revive = "latest"
+usage = "latest"
+uv = "latest"
+zig = "latest"
 
 [settings]
 plugin_autoupdate_last_check_duration = '1 day'

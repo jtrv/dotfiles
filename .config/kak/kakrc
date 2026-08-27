@@ -814,8 +814,8 @@ map global user i -docstring 'docs' %{:docs }
 
 declare-user-mode jump
   map global user j -docstring 'jump' %{: enter-user-mode jump <ret>}
-  map global jump c     -docstring 'next spell'            %{:skyspell-enable en_US ; skyspell-next <ret>}
-  map global jump <a-c> -docstring 'prev spell'            %{:skyspell-enable en_US ; skyspell-previous <ret>}
+  map global jump c     -docstring 'next spell'            %{:skyspell-enable en_US-large ; skyspell-next <ret>}
+  map global jump <a-c> -docstring 'prev spell'            %{:skyspell-enable en_US-large ; skyspell-previous <ret>}
   map global jump d     -docstring 'next diagnostic'       %{:lsp-diagnostics ; jump-next *diagnostics* <ret>}
   map global jump <a-d> -docstring 'prev diagnostic'       %{:lsp-diagnostics ; jump-previous *diagnostics* <ret>}
   map global jump f     -docstring 'next function'         %{:lsp-next-function <ret>}
@@ -879,9 +879,8 @@ bundle Encapsul8 https://github.com/ElectricR/Encapsul8 %{
 # spelling and grammar checking
 declare-user-mode spell
   map global user s -docstring 'spell' %{: enter-user-mode spell <ret>}
-  # enchant dict names, not nixpkgs attrs: hunspellDicts.en_US-large installs as en_US
-  map global spell e -docstring 'english'    %{:skyspell-enable en_US <ret>}
-  map global spell E -docstring 'español'    %{:skyspell-enable es_ANY <ret>}
+  map global spell e -docstring 'english'    %{:skyspell-enable en_US-large <ret>}
+  map global spell E -docstring 'español'    %{:skyspell-enable es <ret>}
   map global spell d -docstring 'disable'    %{:skyspell-disable <ret>}
   map global spell l -docstring 'list'       %{:skyspell-list <ret>}
   map global spell n -docstring 'next'       %{:skyspell-next <ret>}

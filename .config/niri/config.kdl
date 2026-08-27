@@ -7,10 +7,17 @@ hotkey-overlay {
     hide-not-bound
 }
 
-output "eDP-1" {
-    mode "1920x1080@60.05"
+output "DP-1" {
+    mode "3440x1440@60.000"
     scale 1
     position x=0 y=0
+}
+
+// hermes virtual display: pin the position so reconnects don't march it
+// rightward (niri remembers the last spot and appends past it each time);
+// no mode line - the client-requested mode arrives via EDID and must win
+output "Virtual-1" {
+    position x=3440 y=0
 }
 
 input {
@@ -21,6 +28,15 @@ input {
     }
     warp-mouse-to-focus
     focus-follows-mouse
+}
+
+gestures {
+    hot-corners {
+        top-left
+        top-right
+        bottom-left
+        bottom-right
+    }
 }
 
 cursor {
@@ -53,8 +69,6 @@ layout {
         urgent-color "#f38ba8"
     }
     struts{
-        left 1
-        right 1
         top 1
         bottom 1
     }
@@ -80,8 +94,14 @@ overview {
 // terminal daemon
 spawn-at-startup "alacritty" "--daemon"
 
+// notifications
+spawn-at-startup "mako"
+
 // status bar
 spawn-at-startup "waybar"
+
+// hot-edges to swap windows / workspaces with cursor
+spawn-at-startup "niri-edge-pan"
 
 screenshot-path "~/pictures/screenshots/%Y-%m-%d_%H-%M-%S.png"
 
@@ -95,6 +115,7 @@ layer-rule {
     place-within-backdrop true
 }
 
+// Window rules let you adjust behavior for individual windows.
 window-rule {
     open-floating true
 
