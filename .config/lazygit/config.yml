@@ -298,16 +298,6 @@ customCommands:
       - type: "input"
         title: "Email Address"
     loadingText: "Committing..."
-  - key: 'b'
-    description: "Blame file (tig)"
-    context: "files"
-    command: "tig blame -- {{.SelectedFile.Name}}"
-    output: terminal
-  - key: 'B'
-    description: "Blame file at revision (tig)"
-    context: "commitFiles"
-    command: "tig blame {{.SelectedSubCommit.Sha}} -- {{.SelectedCommitFile.Name}}"
-    output: terminal
   # Stash actions
   - key: 'g'
     description: "Use config"
@@ -317,28 +307,3 @@ customCommands:
     description: "Force write to index"
     context: "commitFiles"
     command: 'git restore --source {{ "stash@{" }}{{ .SelectedStashEntry.Index }}{{ "}" }} -- {{.SelectedCommitFile.Name}}'
-  # Tig integrations
-  - key: '<c-t>'
-    description: "View commit/file history (tig)"
-    context: "subCommits"
-    output: terminal
-  - key: '<c-t>'
-    description: "View commit/file history (tig)"
-    command: "tig show {{.SelectedSubCommit.Sha}}"
-    context: "commitFiles"
-    output: terminal
-  - key: '<c-t>'
-    description: "View commit/file history (tig)"
-    command: "tig {{.SelectedSubCommit.Sha}} -- {{.SelectedCommitFile.Name}}"
-    context: "localBranches"
-    output: terminal
-  - key: '<c-t>'
-    description: "View commit/file history (tig)"
-    command: "tig show {{.SelectedLocalBranch.Name}}"
-    context: "remoteBranches"
-    output: terminal
-  - key: '<c-t>'
-    description: "View commit/file history (tig)"
-    command: "tig show {{.SelectedRemoteBranch.RemoteName}}/{{.SelectedRemoteBranch.Name}}"
-    context: "global"
-    output: terminal
