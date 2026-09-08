@@ -3,7 +3,7 @@
 
 # @license: MIT
 # @usage: exercism-dl [<lang>]
-# @deps: exercism, jaq, xh
+# @deps: exercism, jq, xh
 
 set -e
 
@@ -21,7 +21,7 @@ fi
 for lang in $langs; do
   url="https://exercism.org/api/v2/tracks/$lang/exercises"
   exercises=$(xh -bF "$url" "Authorization: Bearer $token" |
-    jaq -r '.[] | .[] | select(.is_unlocked and .is_recommended) | .slug')
+    jq -r '.[] | .[] | select(.is_unlocked and .is_recommended) | .slug')
 
   cd "$lang" || continue
   lang_text=$(printf '%-15s' "$lang")
