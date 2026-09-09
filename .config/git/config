@@ -64,8 +64,6 @@
 [includeIf "gitdir:~/work/"]
   path = ./work
 
-# both stanzas needed: "dir/" (-> dir/**) matches linked-worktree gitdirs
-# but not the bare dir itself, which $DOTFILES names with no trailing slash
 [includeIf "gitdir:~/.config/dotfiles"]
   path = ./dotfiles-local
 [includeIf "gitdir:~/.config/dotfiles/"]
