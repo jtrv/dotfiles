@@ -1,2 +1,2 @@
 #!/bin/sh
-sdcv --color "$1" | html2text | mdcat
+sdcv --color "$1" | mcat
