@@ -301,12 +301,15 @@ customCommands:
   - key: 'b'
     description: "Blame file"
     context: "files"
-    command: "git blame --date=short -- {{.SelectedFile.Name | quote}} | delta --paging=always"
+    command: "kak {{.SelectedFile.Name | quote}} -e 'git blame'"
     output: terminal
   - key: 'B'
     description: "Blame file at revision"
     context: "commitFiles"
-    command: "git blame --date=short {{.SelectedSubCommit.Sha}} -- {{.SelectedCommitFile.Name | quote}} | delta --paging=always"
+    command: >-
+      kak -e 'git show {{.SelectedCommit.Hash}}:{{.SelectedCommitFile.Name}};
+      hook -once buffer BufCloseFifo .* %sh{ printf "evaluate-commands -client %s %%{
+      set-option buffer git_blob {{.SelectedCommit.Hash}}:{{.SelectedCommitFile.Name}}; git blame }" "$kak_client" }'
     output: terminal
   # Stash actions
   - key: 'g'
