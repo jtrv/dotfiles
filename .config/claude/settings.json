@@ -81,6 +81,7 @@
     ],
     "defaultMode": "auto"
   },
+  "model": "claude-fable-5-1[1m]",
   "skillOverrides": {
     "find-skills": "on",
     "writing-skills": "on",
@@ -266,10 +267,14 @@
       }
     }
   },
+  "modelSettings": {
+    "claude-fable-5-1": {
+      "effortLevel": "medium"
+    }
+  },
   "skipWorkflowUsageWarning": true,
   "theme": "custom:catppuccin",
   "editorMode": "normal",
   "inputNeededNotifEnabled": true,
-  "agentPushNotifEnabled": true,
-  "model": "claude-fable-5-1"
+  "agentPushNotifEnabled": true
 }
