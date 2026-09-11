@@ -112,7 +112,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"/home/sugimoto/.config/claude/hooks/block-secrets.sh\"",
+            "command": "bash \"/home/sugimoto/.config/agents/hooks/block-secrets.sh\"",
             "timeout": 10
           },
           {
@@ -176,7 +176,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo 'Context was just compacted. Summaries drift: re-read any state.md/ledger and the relevant ~/.config/claude/contexts/ file before continuing; treat compaction-summary claims about decisions and constraints as unverified until checked against the ledger.'"
+            "command": "echo 'Context was just compacted. Summaries drift: re-read any state.md/ledger and the relevant ~/.config/agents/contexts/ file before continuing; treat compaction-summary claims about decisions and constraints as unverified until checked against the ledger.'"
           }
         ]
       }
@@ -245,7 +245,8 @@
     "skill-creator@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
     "vercel@claude-plugins-official": false,
-    "clangd-lsp@claude-plugins-official": true
+    "clangd-lsp@claude-plugins-official": true,
+    "cloudflare@cloudflare": true
   },
   "extraKnownMarketplaces": {
     "context-mode": {
@@ -264,6 +265,12 @@
       "source": {
         "source": "github",
         "repo": "DietrichGebert/ponytail"
+      }
+    },
+    "cloudflare": {
+      "source": {
+        "source": "github",
+        "repo": "cloudflare/skills"
       }
     }
   },
