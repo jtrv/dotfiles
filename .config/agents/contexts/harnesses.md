@@ -72,7 +72,6 @@ changing how a harness finds instructions or skills, ask that harness something
 answerable only from the file you just wired up — a tool named in `AGENTS.md`,
 a skill name — rather than trusting that the path looks right.
 
-Codex's home is `$CODEX_HOME` (`$XDG_CACHE_HOME/codex`), not the `~/.config/codex`
-that sorting by name would suggest; that directory is a stale abandoned copy.
-Confirm with `codex doctor` before editing anything, or you will edit a config
-nothing reads.
+Codex's home is `$CODEX_HOME` (`$XDG_CACHE_HOME/codex`), not `~/.config/codex`
+as sorting by name would suggest. Confirm with `codex doctor` before editing
+anything, or you will edit a config nothing reads.

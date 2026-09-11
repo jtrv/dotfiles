@@ -74,6 +74,8 @@ rather than installed per harness.
 |---|---|---|---|
 | Global instructions | `@~/.config/agents/AGENTS.md` imported by `CLAUDE.md` | `$CODEX_HOME/AGENTS.md` symlink | `AGENTS.md` symlink |
 | Skills | `skills` -> `../agents/skills` | 29 per-skill symlinks inside `$CODEX_HOME/skills/` | `skills` symlink |
+| Harness-only instructions | Claude-only half of `CLAUDE.md` | — (Codex is the delegation target, not a delegator) | `agents/pi.md` via `extensions/instructions.ts` — the routing table minus Anthropic models |
+| Caveman on by default | `SessionStart` cats the skill; `caveman-track.sh` on `UserPromptSubmit` keeps the level flag | — | `extensions/caveman.ts` — injects the skill each turn, `/caveman` shells out to the same `caveman-track.sh`, so level and statusline agree across both |
 | Secret blocking | `PreToolUse` hook in settings.json | same script from `hooks.json` (planned, not built) | `extensions/block-secrets.ts` |
 | Statusline | `statusline/statusline.sh` into starship | built-in `tui.status_line` only, no script hook | `extensions/statusline.ts`, reusing the same script |
 
@@ -108,10 +110,6 @@ belong under `.config`. The catch is that the same directory also holds the
 stored OAuth login, every project's `trust_level`, memories, and the plugin and
 marketplace registrations made above: clearing `~/.cache` would take all of it.
 Codex has no way to split config from state, so this is a trade, not a bug.
-
-A stale `~/.config/codex` from 2026-07-21 also exists — an abandoned attempt at
-the config-dir layout. Nothing reads it. Left in place rather than deleted
-because it still holds a stored login.
 
 ## Marketplaces to re-add on a new machine
 
