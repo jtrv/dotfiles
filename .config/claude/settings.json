@@ -149,7 +149,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "cat \"/home/sugimoto/.config/claude/skills/caveman/SKILL.md\"; echo \"SESSION DEFAULT: caveman level = lite. Begin every response at caveman lite unless user switches via /caveman full|ultra.\""
+            "command": "cat \"/home/sugimoto/.config/claude/skills/caveman/SKILL.md\"; lvl=$(head -n1 \"${CLAUDE_CONFIG_DIR:-$HOME/.claude}/.caveman-active\" 2>/dev/null | tr -d '[:space:]'); echo \"SESSION DEFAULT: caveman level = ${lvl:-lite}. Begin every response at that level unless user switches via /caveman.\""
           }
         ]
       },
