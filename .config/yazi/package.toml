@@ -1,7 +1,7 @@
 [[plugin.deps]]
 use = "Ape/open-with-cmd"
-rev = "eba191d"
-hash = "722a60eca1b338c9c24bb508d2d48578"
+rev = "56705e2"
+hash = "7c84fff414a652c86c44523dbb08026f"
 
 [[plugin.deps]]
 use = "Sonico98/exifaudio"
@@ -20,12 +20,12 @@ hash = "9776f378459072b6c2875eae5addc49d"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:diff"
-rev = "c591a36"
+rev = "4dc7f1b"
 hash = "14558d2829c0aa05e99c57de8f74d199"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:git"
-rev = "c591a36"
+rev = "4dc7f1b"
 hash = "5bb0bfab901d3601c370eafdd66edd31"
 
 [[plugin.deps]]
@@ -35,13 +35,13 @@ hash = "6ea5f37c7f219671ec504cb8311f889d"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:mount"
-rev = "c591a36"
+rev = "4dc7f1b"
 hash = "b95f898e6dc60b52edbc415952e14395"
 
 [[plugin.deps]]
 use = "boydaihungst/mediainfo"
-rev = "73a3658"
-hash = "fa787a8ef785f2976ea2861f62b8c6c4"
+rev = "d2dd310"
+hash = "5ca9b76fe72f376768b7a8a39d8b81d6"
 
 [[plugin.deps]]
 use = "kirasok/torrent-preview"
@@ -65,13 +65,13 @@ hash = "3d52b2b88c91a4ece2f7ed68ff39bb7b"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:chmod"
-rev = "c591a36"
+rev = "4dc7f1b"
 hash = "87472b05a8c420100f6a2b9cde1e7746"
 
 [[plugin.deps]]
 use = "boydaihungst/fuse-archive"
-rev = "5b846f6"
-hash = "a81ee4b52c4352adef42ec7b493d3923"
+rev = "68b118b"
+hash = "d75b504e8306ef3f7ddfcdd2a90df0bb"
 
 [[plugin.deps]]
 use = "dedukun/relative-motions"
@@ -85,7 +85,7 @@ hash = "8b0e87c3176e0d44f79a8656f79f0fa"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:vcs-files"
-rev = "c591a36"
+rev = "4dc7f1b"
 hash = "853240b2454c93a93fd03fc9fd7e06e8"
 
 [[flavor.deps]]
