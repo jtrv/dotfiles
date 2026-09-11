@@ -20,7 +20,7 @@ end
 complete -c kk -F
 
 function kd -d "edit all fd results in kak"
-  k (rg -lI . | lscolors | sk --color=always --preview="_fzf_preview_file {}")
+  k (rg -lI . | lscolors | fzf --preview="_fzf_preview_file {}" --query="$argv")
 end
 
 function kg -d "grep with kakoune"
