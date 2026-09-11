@@ -21,6 +21,7 @@ set -gx AWS_CONFIG_FILE             "$XDG_CONFIG_HOME/aws/config"
 set -gx AWS_SHARED_CREDENTIALS_FILE "$XDG_CONFIG_HOME/aws/credentials"
 set -gx BUNDLE_USER_CONFIG          "$XDG_CONFIG_HOME/bundle"
 set -gx CLAUDE_CONFIG_DIR           "$XDG_CONFIG_HOME/claude"
+set -gx PI_CODING_AGENT_DIR         "$XDG_CONFIG_HOME/pi/agent"
 set -gx DOCKER_CONFIG               "$XDG_CONFIG_HOME/docker"
 set -gx DOTFILES                    "$XDG_CONFIG_HOME/dotfiles"
 set -gx GEMRC                       "$XDG_CONFIG_HOME/gem/gemrc"
@@ -62,7 +63,8 @@ set -gx XAUTHORITY "$XDG_RUNTIME_DIR/Xauthority"
 
 # State
 set -gx ANALYZER_STATE_LOCATION_OVERRIDE "$XDG_STATE_HOME/Dart/analysis_server"
-set -gx HISTFILE "$XDG_STATE_HOME/bash/history"
+set -gx HISTFILE                         "$XDG_STATE_HOME/bash/history"
+set -gx PI_CODING_AGENT_SESSION_DIR      "$XDG_STATE_HOME/pi/sessions"
 
 # Misc
 set -gx ATUIN_NOBIND                "true"
