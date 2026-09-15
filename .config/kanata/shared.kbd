@@ -46,10 +46,6 @@
   ;; key volume
   kvlu (tap-hold 200    200    @svlu  (macro-repeat @svlu 50))
   kvld (tap-hold 200    200    @svld  (macro-repeat @svld 50))
-
-  ;; niri workspace scrolling
-  nwsu (cmd niri msg action focus-workspace-up)
-  nwsd (cmd niri msg action focus-workspace-down)
 )
 
 (defchordsv2
