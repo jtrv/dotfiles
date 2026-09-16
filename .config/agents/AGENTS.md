@@ -22,6 +22,58 @@ in `~/.config/agents/watches/` — one per watch, each printing a single line:
 a watch topic; investigate only on `CHECK`. Adding a watch = probe script +
 pointer from the doc or memory that defers the decision.
 
+## Research
+Reports on how the agents themselves are set up and used — delegation,
+context handling, plugin and skill evaluations — live in
+`~/.config/agents/research/` (index in its `README.md`), date-prefixed.
+A session that produces one writes it there, not to a scratchpad. Read the
+index before re-researching a harness topic; a decision the report justified
+belongs in `PLUGINS.md`, a context file or a skill, with a pointer back.
+
+## Routing
+Which model takes which work, for whichever harness is steering the session.
+Read `contexts/harnesses.md` before changing routes or tier placement.
+A delegated worker does its task and does not route onward.
+Dispatch and escalation rationale: `research/2026-09-15-routing-instruction-fixes.md`.
+
+| Situation | Route |
+|---|---|
+| Sufficient context, straightforward | Stay here. Bulky byproduct (long test/log/grep output) → `ctx_execute`, printing the derived answer, never the dump |
+| Nontrivial plan or design ready, not yet built | `plan-refute` (its small-tactical-plan exemption applies) |
+| Implementation ready | Suggest the user run a review by a model from a different family than the one that wrote the code — a same-family reviewer shares its blind spots (user-invoked only) |
+| Repeated attempts have failed | Codex `gpt-6-astra` with the repro, evidence, and failed approaches; ask for a testable alternative explanation |
+| Substantial separable task, clear inputs and acceptance check | Codex `gpt-5.6-luna` (mechanical, near-zero judgment: fixtures, extraction, ordinary documentation updates — agent instructions follow the rule below) or `gpt-5.6-terra` (bounded coding or investigation needing judgment). Inspect the result. Quick tasks stay inline |
+| Demanding coding work — multi-file implementation, nontrivial refactor, sustained reliability over a long task | Codex `gpt-5.6-sol`. Inspect the result |
+| Ambiguous, hard debugging, substantial independent review | Codex `gpt-6-astra`, or stay here if this session is on the strongest tier |
+| Ordered queue of separable tasks | `grind` |
+| Agent instruction changes | Follow “Agent instructions get the strongest model” below |
+
+Codex tiers for delegated tasks: Luna → Terra → Sol → Astra; a blocked worker
+gets more effort before a higher tier. Luna is the mechanical tier, not a cheap
+coding default — start coding work at Terra. Skill-owned dispatch (`grind`
+workers, `plan-refute` refuters) is unchanged.
+
+### Dispatch per harness
+
+| Route | Claude Code | Codex | Pi |
+|---|---|---|---|
+| Codex `<model>` | `codex:codex-rescue` with `--model <model>` | `spawn_agent` with `model=<model>`, `fork_turns="none"` and a self-contained task brief | `delegate` with `runner=codex`, `model=<model>` |
+| Cross-family review | Suggest the user run `/codex:review`, or `/codex:adversarial-review` when the approach itself is in question | Suggest the user run `/code-review` in Claude Code (or another non-OpenAI reviewer) | `delegate` with `runner=agy` (Gemini) for a read-only review the session runs itself; or, on a non-OpenAI model, suggest the user run `codex review` |
+| `grind` | the `grind` skill | the `grind` skill, one fresh `spawn_agent` per task | the `grind` skill's in-session loop, one `delegate` child with `mode=write` per task; inspect its result before continuing |
+
+## Agent instructions get the strongest model
+Creating or substantively redesigning a skill, a context file, this file, a
+harness routing table, or an agent/subagent definition is done by the most
+capable model available — never delegated down a tier to save cost. These
+files steer every future session that loads them, so a flaw in one is paid
+again on each use, and it fails quietly: a vague trigger or a wrong rule looks
+fine and just makes later work worse. If the current session is not on the
+strongest model, keep drafts outside paths any harness loads as instructions
+or skills, and hand the design to the strongest model (or tell the user).
+Only that model finalizes and writes the change into loaded paths: an
+uncommitted edit is already live for later sessions. Typo fixes and mechanical
+renames are exempt.
+
 ## Comments
 The default is no comment; adding one carries the burden of proof. A comment earns its place only when it holds a *why* the reader cannot recover from the code in front of them: a non-obvious constraint or invariant, a trap that will bite the next editor, the origin of a measured constant, the reason a simpler-looking alternative is wrong.
 Never write comments that:
