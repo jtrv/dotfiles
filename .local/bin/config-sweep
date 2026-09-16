@@ -1,0 +1,78 @@
+#!/bin/sh
+# Mechanical half of the Ownership table in ~/.config/agents/contexts/dotfiles.md.
+# Run in the staging worktree after `git merge origin/<other>` (before commit):
+# every owned path goes back to what HEAD had (restored if HEAD tracks it,
+# removed if not), manifests report what the other side had, and files that mix
+# shared and per-machine hunks are listed for review by hand.
+# Keep the lists below in sync with the table; the table stays the source of truth.
+set -e
+cd "$(git rev-parse --show-toplevel)"
+other=$(git rev-parse -q --verify MERGE_HEAD) || { echo "no merge in progress" >&2; exit 1; }
+
+owned='
+.config/environment.d
+.config/mimeapps.list
+.config/mozilla/firefox
+.config/pacman
+.config/paru
+.config/qt5ct/qt5ct.conf
+.config/qt6ct/qt6ct.conf
+.config/systemd/user
+.config/udev/rules.d
+.config/voxtype/config.toml
+.config/fish/fish_plugins
+.config/mpv/shaders
+.config/warehouse/arch
+.config/warehouse/fish
+.config/warehouse/go
+.config/warehouse/ktsctl
+.local/bin/mirrors
+.local/bin/waybar-sleep-inhibit
+.local/bin/tofi-run
+readme.md
+'
+manifests='
+.config/warehouse/bun
+.config/warehouse/uv
+.config/warehouse/cargo
+.config/warehouse/dedoc
+.local/share/bun/install/global/package.json
+.local/share/cargo/.crates.toml
+.local/share/cargo/.crates2.json
+'
+mixed='
+.config/fish/config.fish
+.config/fish/conf.d/env.fish
+.config/kak/kakrc
+.config/mise/config.toml
+.config/mpv/mpv.conf
+.config/niri/config.kdl
+.config/topgrade.toml
+.config/waybar/config.jsonc
+.config/waybar/style.css
+.local/bin/exercism-dl
+.local/bin/nws-discussion
+.local/bin/nws-forecast
+'
+
+keep_ours() {
+  git rm -rfq --cached -- "$1" 2>/dev/null || true
+  rm -rf "$1"
+  git checkout -q HEAD -- "$1" 2>/dev/null || true
+}
+
+for p in $owned $manifests; do keep_ours "$p"; done
+
+echo "== theirs only (manifests, kept ours) =="
+for p in $manifests; do
+  case $p in .config/warehouse/*) ;; *) continue ;; esac
+  lines=$(git diff HEAD "$other" -- "$p" | grep "^+[^+]" | sed "s/^+//" || true)
+  [ -n "$lines" ] && printf "%s\n%s\n\n" "$p" "$lines"
+done
+
+echo "== review by hand (shared + per-machine hunks) =="
+for p in $mixed; do
+  git diff --quiet HEAD -- "$p" 2>/dev/null && git diff --cached --quiet HEAD -- "$p" 2>/dev/null || echo "$p"
+done
+echo "== remaining conflicts =="
+git diff --name-only --diff-filter=U
