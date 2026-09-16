@@ -1,0 +1,30 @@
+{
+  "packages": [
+    "npm:context-mode",
+    "git:github.com/DietrichGebert/ponytail",
+    "npm:@upstash/context7-pi"
+  ],
+  "lastChangelogVersion": "0.85.1",
+  "theme": "dark",
+  "terminal": {
+    "clearOnShrink": true,
+    "showTerminalProgress": true
+  },
+  "steeringMode": "all",
+  "followUpMode": "all",
+  "hideThinkingBlock": true,
+  "markdown": {
+    "mermaid": "streaming"
+  },
+  "showCacheMissNotices": true,
+  "collapseChangelog": true,
+  "quietStartup": true,
+  "enableInstallTelemetry": false,
+  "doubleEscapeAction": "tree",
+  "treeFilterMode": "user-only",
+  "tuiMode": "regular",
+  "fullscreenExitOutput": "resume-hint",
+  "fullscreenScrollbar": "hidden",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.6-sol"
+}
