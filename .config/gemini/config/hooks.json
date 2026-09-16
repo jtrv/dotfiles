@@ -1,0 +1,7 @@
+{
+  "agents-pretool": {
+    "PreToolUse": [
+      { "matcher": "*", "hooks": [{ "command": "bash ~/.config/agents/hooks/agy-pretool.sh", "timeout": 10 }] }
+    ]
+  }
+}
