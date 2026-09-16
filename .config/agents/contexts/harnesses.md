@@ -74,7 +74,11 @@ model does which kind of work, so where a model sits in it follows published
 agentic-coding results, not vibes or a model's launch post:
 
 - **DeepSWE** (deepswe.datacurve.ai): pass@1 on long-horizon tasks, with
-  agent steps, output tokens and cost per task, plotted per effort level. Use
+  agent steps, output tokens and cost per task, plotted per effort level.
+  The rendered page shows one effort per model; every effort row is in
+  `https://deepswe.datacurve.ai/artifacts/v1.1/leaderboard-live.json`
+  (`rows[]`, keyed by `model` and `reasoning_effort`), which `curl` + `jq`
+  reads directly. Use
   pass rate to compare capability. For near-ties, compare output tokens,
   measured runtime and cost under comparable settings. Steps are another
   signal; fewer steps alone prove neither less context use nor less wall time

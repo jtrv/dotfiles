@@ -21,6 +21,8 @@ pointer back to the report that justified it.
 - `lessons-from-memory.md` — what past sessions learned about running these agents, pulled from per-project memory and the `.remember` logs, each entry with its source.
 
 ### Delegation and subagents
+- `2026-09-16-gemini-3-8-flash-routing.md` — why Gemini 3.8 Flash gets a bounded one-shot row and nothing more: leaderboard snapshot (DeepSWE, RealSWE, Artificial Analysis incl. Omniscience, BenchLM), 30-day sentiment, and local `agy` probes where the unbounded run never finished.
+- `2026-09-16-last30days-gemini-3-8-flash-raw.md` — the raw sweep behind it.
 - `2026-09-15-routing-instruction-fixes.md` — routing contract checks, strongest-tier policy, benchmark wording, and live interrogation limits.
 - `2026-09-10-pi-subagents-options.md` — Astra research: Pi delegation packages ranked, literature on when multi-agent helps (Kim et al. 2026, Anthropic's research system, Cognition's counter-essay, MAST), the minimal-launcher option, adoption plan and risks.
 - `2026-09-10-pi-subagents-last30days.md` — 30-day sentiment sweep on subagents in terminal coding agents; Pi's creator's position, the fragmented `pi-subagents` namespace, practitioner convergence on read-heavy fan-out only.
