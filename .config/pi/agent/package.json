@@ -1,0 +1,6 @@
+{
+	"private": true,
+	"devDependencies": {
+		"typebox": "file:../../../.local/share/bun/install/global/node_modules/typebox"
+	}
+}

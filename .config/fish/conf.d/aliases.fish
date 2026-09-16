@@ -36,7 +36,7 @@ alias lh      "eza -la --color=always --ignore-glob='[a-z]*|[A-Z]*|[0-9]*'" # hi
 alias ll      "eza -l --color=always --git" # long format + git
 alias loc     "plocate"
 alias ls      "eza -l --color=always" # preferred listing
-alias lt      "erd -HIl --color=force" # tree listing
+alias lt      "eza -T --color=always" # tree listing
 alias mdc     "mdcat --columns=70"
 alias mkd     "mkdir -p"
 alias m       "qalc"

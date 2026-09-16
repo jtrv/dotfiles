@@ -14,10 +14,6 @@
   l   (tap-hold  200    150    l    alt)
   ;   (tap-hold  200    150    ;    met)
 
-  ;; pinky relief meta tap-holds
-  e   (tap-hold  200    175    e    met)
-  i   (tap-hold  200    175    i    met)
-
   ;; hold spc for space layer
   spc (tap-hold  200    210    spc  (layer-while-held space))
 
@@ -28,7 +24,7 @@
   esc (tap-hold  200    150    esc  ctl)
 
   ;; hold jkl; (sft ctl alt met) + g toggles the gaming layer
-  gam (switch
+  game (switch
     ((and lsft lctl lalt lmet (layer gaming))) (layer-switch base)   break
     ((and lsft lctl lalt lmet))                (layer-switch gaming) break
     ()                                         g                     break
@@ -46,10 +42,6 @@
   ;; key volume
   kvlu (tap-hold 200    200    @svlu  (macro-repeat @svlu 50))
   kvld (tap-hold 200    200    @svld  (macro-repeat @svld 50))
-
-  ;; niri workspace scrolling
-  nwsu (cmd niri msg action focus-workspace-up)
-  nwsd (cmd niri msg action focus-workspace-down)
 )
 
 (defchordsv2

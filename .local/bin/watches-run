@@ -1,6 +1,7 @@
 #!/bin/sh
 # Run all claude watch probes; desktop-notify any that hit CHECK.
-for probe in "$HOME"/.config/claude/watches/*.sh; do
+for probe in "$HOME"/.config/agents/watches/*.sh; do
+  [ -e "$probe" ] || { echo "no probes found" >&2; exit 1; }
   out=$("$probe" 2>/dev/null)
   case "$out" in
     CHECK*|UNKNOWN*) notify-send -u normal "watch: $(basename "$probe" .sh)" "$out" ;;
