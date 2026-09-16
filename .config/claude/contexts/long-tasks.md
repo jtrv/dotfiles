@@ -49,9 +49,9 @@ The transcript is ephemeral; the workspace is authoritative.
   boot, CI wait). Per-task budget → *graceful stop*, tell it to checkpoint and
   finish. Never kill on total runtime: it converts progressing runs into
   failures and takes the state.md refresh with it.
-- "Done" cites state — exit code, diff, test output. A second model's opinion
-  is not verification: judges barely beat chance at spotting a false success,
-  and agents over-claim most when they've failed.
+- "Done" cites state — exit code, diff, test output. A second model's approval
+  raises confidence but does not verify: judges barely beat chance at spotting
+  a false success, and agents over-claim most when they've failed.
 
 ## Subagent quarantine
 - Noisy work (repo exploration, log analysis, research sweeps, adversarial

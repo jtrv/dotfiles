@@ -71,7 +71,9 @@ Ordered. Step 1 concrete enough to execute immediately.
 
 ## RESUME mode
 
-1. Read HANDOFF.md. Do not trust it yet.
+1. Read HANDOFF.md. Do not trust it yet. Name the two or three claims whose
+   being wrong would most change Next steps; step 2 verifies those first.
+   "Side effects already performed" is binding regardless — never re-run one.
 2. Re-verify: compare recorded SHA/branch against `git log -1` and `git status`;
    re-run the recorded test command. Report drift explicitly:
    "handoff says X, repo shows Y."
