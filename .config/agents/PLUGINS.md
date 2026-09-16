@@ -13,6 +13,7 @@ vendored skills are a separate list in `skills/MANIFEST.md`.
 | Claude Code | marketplace plugin | `/plugin marketplace add <src>` then `/plugin install <name>@<market>` | `enabledPlugins` in `~/.config/claude/settings.json` |
 | Codex | marketplace plugin | `codex plugin marketplace add <src>` then `codex plugin add <name>@<market>` | git marketplaces: `[plugins."<name>@<market>"]` in `$CODEX_HOME/config.toml`. The `openai-curated-remote` catalog is enabled account-side and leaves no trace in config.toml — `codex plugin list` is the only local truth |
 | Pi | package, or a local extension | `pi install npm:<pkg>` / `pi install git:<host/user/repo>` | `$PI_CODING_AGENT_DIR/extensions/*.ts` are auto-discovered; packages listed by `pi list` |
+| Antigravity CLI (`agy`) | plugin directory with `plugin.json` | `agy plugin install <path>` copies it into `<gemini_dir>/antigravity-cli/plugins/` | `agy plugin list`. Its own format, so nothing below is shared with it — it gets the hand-written skills and `AGENTS.md`, nothing else yet |
 
 Two structural limits decide most of the table below:
 
@@ -39,7 +40,7 @@ and MCP rows.
 
 | Capability | Claude | Codex | Pi |
 |---|---|---|---|
-| context-mode — sandboxed execution + searchable session memory | `context-mode@context-mode` | `context-mode@context-mode`, same git marketplace | `npm:context-mode` — ships its own extension with `tool_call`/`session_start` handlers |
+| context-mode — sandboxed execution + searchable session memory | `context-mode@context-mode` | `context-mode@context-mode`, same git marketplace | `npm:context-mode` — ships its own extension with `tool_call`/`session_start` handlers. All three copies need `CONTEXT_MODE_DIR` or they litter `$HOME`; see `contexts/harnesses.md` |
 | ponytail — lazy-senior ruleset | `ponytail@ponytail` | `ponytail@ponytail` | `git:github.com/DietrichGebert/ponytail` |
 | context7 — live library docs | `context7@claude-plugins-official` | not in the catalog — added as an MCP server instead, `https://mcp.context7.com/mcp` (OAuth), the same Upstash endpoint the Claude plugin wraps | `npm:@upstash/context7-pi` — official, native tools, same repo as the Claude plugin |
 | cloudflare | `cloudflare@cloudflare` | `cloudflare@openai-curated-remote`, developer_name Cloudflare — the same skills, minus cloudflare-one, email-service, nextjs, sandbox-* and turnstile | — nothing from Cloudflare. Third parties repackage the `cf_*` tools, but handing an unaffiliated author API access to the account is not a trade worth making |
@@ -70,14 +71,16 @@ never mentions: as of this check, `vercel`, `codex-security`, `plugin-management
 These are tracked in dotfiles and shared by pointing every harness at one file,
 rather than installed per harness.
 
-| Capability | Claude | Codex | Pi |
-|---|---|---|---|
-| Global instructions | `@~/.config/agents/AGENTS.md` imported by `CLAUDE.md` | `$CODEX_HOME/AGENTS.md` symlink | `AGENTS.md` symlink |
-| Skills | `skills` -> `../agents/skills` | 29 per-skill symlinks inside `$CODEX_HOME/skills/` | `skills` symlink |
-| Harness-only instructions | Claude-only half of `CLAUDE.md` | — (Codex is the delegation target, not a delegator) | `agents/pi.md` via `extensions/instructions.ts` — the routing table minus Anthropic models |
-| Caveman on by default | `SessionStart` cats the skill; `caveman-track.sh` on `UserPromptSubmit` keeps the level flag | — | `extensions/caveman.ts` — injects the skill each turn, `/caveman` shells out to the same `caveman-track.sh`, so level and statusline agree across both |
-| Secret blocking | `PreToolUse` hook in settings.json | same script from `hooks.json` (planned, not built) | `extensions/block-secrets.ts` |
-| Statusline | `statusline/statusline.sh` into starship | built-in `tui.status_line` only, no script hook | `extensions/statusline.ts`, reusing the same script |
+| Capability | Claude | Codex | Pi | Antigravity |
+|---|---|---|---|---|
+| Global instructions | `@~/.config/agents/AGENTS.md` imported by `CLAUDE.md` | `$CODEX_HOME/AGENTS.md` symlink | `AGENTS.md` symlink | `GEMINI.md` symlink |
+| Skills | `skills` -> `../agents/skills` | 29 per-skill symlinks inside `$CODEX_HOME/skills/` | `skills` symlink | `antigravity-cli/skills` symlink; its bundled skills live apart in `antigravity-cli/builtin/` |
+| Harness-only instructions | Claude-only half of `CLAUDE.md` | Shared `AGENTS.md` supplies routing and dispatch | `agents/pi.md` via `extensions/instructions.ts` (routing is in shared `AGENTS.md`) | — |
+| Caveman on by default | `SessionStart` cats the skill; `caveman-track.sh` on `UserPromptSubmit` keeps the level flag | — | `extensions/caveman.ts` — injects the skill each turn, `/caveman` shells out to the same `caveman-track.sh`, so level and statusline agree across both | — |
+| Secret blocking | `PreToolUse` hook in settings.json | same script from `hooks.json` (planned, not built) | `extensions/block-secrets.ts` | `hooks/agy-pretool.sh` from `<gemini_dir>/config/hooks.json` — rewrites agy's payload for the same `block-secrets.sh`, and gates read-only delegate children |
+| Delegation | `Agent` tool (fresh subagents) | Native `spawn_agent`; explicit model selection uses `fork_turns="none"` and a self-contained brief | `extensions/delegate.ts` (+ `delegate/` modules) — child process gets only the task; runners pi, codex and agy; background with idle-time delivery, `delegate_jobs`, batches of two, git worktrees for writers | — not a delegator; reached as a Gemini worker or reviewer through Pi's `delegate runner=agy` |
+| Background shell | `run_in_background` on Bash, `Monitor` | — | `shell_bg` in `extensions/delegate.ts` — log under `$XDG_STATE_HOME/pi-delegate/logs`, one-shot `notify_on` line match, exit notice; `pi-background-tasks` rejected (see `research/2026-09-15-pi-delegate-build.md`) | — |
+| Statusline | `statusline/statusline.sh` into starship | built-in `tui.status_line` only, no script hook | `extensions/statusline.ts`, reusing the same script | — |
 
 Both Pi extensions shell out to the same scripts Claude uses. That is the point:
 one implementation, one place to fix a bug.
@@ -103,6 +106,7 @@ exist, and Codex ignores it in silence rather than erroring.
 | Claude | `CLAUDE_CONFIG_DIR=$XDG_CONFIG_HOME/claude` | config |
 | Pi | `PI_CODING_AGENT_DIR=$XDG_CONFIG_HOME/pi/agent` | config |
 | Codex | `CODEX_HOME=$XDG_CACHE_HOME/codex` | **cache** |
+| Antigravity | `--gemini_dir=$XDG_CONFIG_HOME/gemini`, passed by the `agy` fish function | config |
 
 Codex is the odd one out, and deliberately so — its home mixes config with
 ~100 MB of churning sqlite (`logs_2.sqlite` alone is 83 MB), which does not
@@ -110,6 +114,10 @@ belong under `.config`. The catch is that the same directory also holds the
 stored OAuth login, every project's `trust_level`, memories, and the plugin and
 marketplace registrations made above: clearing `~/.cache` would take all of it.
 Codex has no way to split config from state, so this is a trade, not a bug.
+
+Antigravity has no env var at all — `XDG_CONFIG_HOME` is ignored and `~/.gemini`
+is hardcoded. `--gemini_dir` moves everything, config and state together
+(`--app_data_dir` exists but rejects absolute paths); see `contexts/harnesses.md`.
 
 ## Marketplaces to re-add on a new machine
 
