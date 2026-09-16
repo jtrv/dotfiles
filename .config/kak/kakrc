@@ -346,13 +346,18 @@ define-command global-picker -docstring 'global-picker: Opens global search pick
   }
 }
 
-define-command mdcat -docstring '
-  mdcat [<files>]: mdcat utility wrapper
-  Open an mdcat formatted view of the provided files
+define-command mcat -docstring '
+  mcat [<files>]: mdcat utility wrapper
+  Open an mcat formatted view of the provided files
 ' -params 1.. %{
-  ansi-fifo -name *mdcat* -- mdcat %arg{@};
+  ansi-fifo -name *mcat* -- unbuffer mcat -P --toc --padding 1 %arg{@};
 }
-complete-command -menu mdcat shell-script-candidates %{fd -e md}
+complete-command -menu mcat shell-script-candidates %{fd -e md}
+hook global WinSetOption current_bufname=\*mcat\* %{
+  ui-trailing-spaces-disable
+  ui-line-numbers-disable
+}
+
 
 define-command go -docstring '
   go [<arguments>]: go utility wrapper
@@ -371,13 +376,6 @@ define-command grep-buffers -docstring '
     echo "grep %arg{@} %val{buflist}"
   fi
 }}
-
-define-command hey -docstring '
-  hey <query>: hors utility wrapper
-  Get an answer from one of the popular Q&A platforms
-' -params 1.. %{
-  ansi-fifo -name *hors* -- hors -a -n 2 -p never %arg{@};
-}
 
 define-command kan -docstring '
   kan <query>: man utility wrapper
@@ -1026,4 +1024,3 @@ hook global WinSetOption filetype=yaml          %{ source '~/.config/kak/context
 hook global WinSetOption current_bufname=\.env$         %{ set-option buffer filetype env;    source '~/.config/kak/contexts/env.kak' }
 hook global WinSetOption current_bufname=.*\.grep$      %{ set-option buffer filetype grep;   source '~/.config/kak/contexts/grep.kak' }
 hook global WinSetOption current_bufname=.*?\.prisma$   %{ set-option buffer filetype prisma; source '~/.config/kak/contexts/prisma.kak' }
-
