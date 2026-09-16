@@ -23,7 +23,7 @@ the lead accumulates only short reports.
    - No PLAN.md: create one containing just the section.
    - Grind only ever edits inside `## Execution queue` (and its `### Log`).
    A `- [D]` item is a human decision — skip it, never dispatch it.
-2. Determine the verify command once: from CLAUDE.md, justfile/Makefile, or
+2. Determine the verify command once: from AGENTS.md/CLAUDE.md, justfile/Makefile, or
    project type (Rust: `cargo nextest run` + `cargo clippy --all-targets -- -D warnings`).
    Record it at the top of the Execution queue so subagents and future
    sessions agree.
@@ -32,8 +32,10 @@ the lead accumulates only short reports.
 
 ## Loop
 
-For each first-unchecked task, dispatch ONE subagent (Agent tool, default
-type) with this brief — filled in, not referenced:
+For each first-unchecked task, dispatch ONE fresh-context worker (the
+"Fresh-context worker" route in `AGENTS.md`'s dispatch table; the worker gets
+the brief only, never the lead's reasoning) with this brief — filled in, not
+referenced:
 
 > Implement exactly this task, nothing else: <task text>.
 > Verify with: <verify command>. Do not stop until verify passes or you are
@@ -54,12 +56,13 @@ On the report:
 - **BLOCKED** → mark the task `- [!] <task> — <reason>`, move to the next task
   that doesn't depend on it. If the reason looks like ran-out-of-room rather
   than a genuine blocker, re-dispatch ONCE at a changed configuration — higher
-  effort first, model tier second, or split the task — with the failed-attempt
-  summary in the brief. Never re-dispatch the same configuration.
+  effort first, the next tier in `AGENTS.md`'s routing table second, or split
+  the task — with the failed-attempt summary in the brief. Never re-dispatch
+  the same configuration.
 
 Sequential by default. Parallelize only clearly independent tasks, and then
-each agent works in its own `git worktree` (EnterWorktree / worktree isolation),
-never a shared tree.
+each worker works in its own `git worktree` (the harness's worktree isolation,
+per the dispatch table), never a shared tree.
 
 ## Stop conditions
 
@@ -75,12 +78,17 @@ When the user asks for fully unattended, don't loop in-session. Write
 
 ```bash
 #!/usr/bin/env bash
-# One fresh claude process per iteration = fresh context per task.
+# One fresh agent process per iteration = fresh context per task.
+# RUN is the "headless one-task run" route from AGENTS.md's dispatch table;
+# pick the harness the user wants (all three read the shared AGENTS.md):
+#   claude -p "$BRIEF" --permission-mode acceptEdits
+#   codex exec --sandbox workspace-write --approve-for-me "$BRIEF" </dev/null
+#   pi -p "$BRIEF" </dev/null
 MAX=${1:-25}
+BRIEF="Read PLAN.md. Do exactly the first unchecked task. Verify with the command recorded in PLAN.md; commit only your changed files; check the box; append one Log line. If blocked, mark the task [!] with the reason. Then stop."
 for i in $(seq "$MAX"); do
   grep -q '^- \[ \]' PLAN.md || { echo "plan complete"; break; }
-  claude -p "Read PLAN.md. Do exactly the first unchecked task. Verify with the command recorded in PLAN.md; commit only your changed files; check the box; append one Log line. If blocked, mark the task [!] with the reason. Then stop." \
-    --permission-mode acceptEdits
+  claude -p "$BRIEF" --permission-mode acceptEdits
 done
 ```
 

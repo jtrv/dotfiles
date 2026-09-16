@@ -27,11 +27,16 @@ evidence; only surviving a kill attempt is.
 3. **Kill mandate**, verbatim in every refuter prompt: *"Refute this claim with
    a concrete code fact, doc citation, metric, or runnable check — or fail.
    Do not evaluate plausibility; attempt to kill."*
-4. **Prefer a different model family.** If the Codex CLI is available
-   (`command -v codex`), use `codex exec` with read access to the repo
-   (sandbox read-only) as the refuter. Cross-model refuters catch
+4. **Prefer a different model family.** Refuters are the "cross-family
+   refuter" route in `AGENTS.md`'s dispatch table: a read-only worker from a
+   family other than the model that wrote the plan (Codex from a Claude or Pi
+   session, Claude from a Codex session). Cross-model refuters catch
    correlated-training errors that same-model review endorses. Fall back to a
-   same-model subagent otherwise.
+   same-model fresh-context worker only when no other family's CLI is
+   installed. A Gemini refuter (`skills/agy/scripts/agy-run --model
+   gemini-3.8-flash-medium`, brief bounded to the files the claim names) adds a
+   third family alongside, never instead of, the others: it approves plans
+   readily (`research/2026-09-16-gemini-3-8-flash-routing.md`).
 5. **Disposition:**
    - Refuted → revise the plan step, or downgrade it to an open question in
      the plan doc. Note the refutation inline.
@@ -51,7 +56,9 @@ evidence; only surviving a kill attempt is.
   always refute — confidently-stated figures have measured wrong by 2–8× in
   past reviews; a refuter must recompute or re-source it independently.
 
-## Codex invocation shape
+## Refuter invocation shapes
+
+Codex as refuter (from a Claude Code or Pi session):
 
 ```sh
 codex exec --sandbox read-only \
@@ -65,5 +72,10 @@ Notes (smoke-tested 2026-07-29, codex-cli 0.144.6): `</dev/null` is required or
 codex blocks reading stdin; the repo must be a git repository or codex refuses
 the directory without `--skip-git-repo-check`.
 
-Parallelize refuters via background Bash or the codex-rescue agent when there
-are several claims.
+Claude as refuter (from a Codex session): the same prompt through
+`claude -p --allowedTools Read,Grep,Glob "<prompt>" </dev/null`. From Pi, the
+same prompt through `delegate` with `runner=codex` (or `runner=agy`), read-only.
+
+Parallelize refuters with the session harness's background mechanism (Claude
+Code: background Bash or the `codex:codex-rescue` agent; Codex: parallel
+`spawn_agent`; Pi: `delegate` batches) when there are several claims.

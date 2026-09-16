@@ -183,10 +183,11 @@ Adversarially re-test **erosion** verdicts only. For each: spawn a refuter
 that gets the digest + the finding + the claimed class — **never the judge's
 reasoning or evidence lines** (context asymmetry prevents anchoring). Kill
 mandate: "refute this classification with a concrete metric value or code
-fact, or fail." Prefer a *different model family* as refuter — if the Codex
-CLI is available (`command -v codex`), use `codex exec` with read access to
-the repo; cross-model refuters catch correlated-training errors that
-same-model review endorses. Otherwise a same-model subagent still helps.
+fact, or fail." Prefer a *different model family* as refuter — the
+"cross-family refuter" route in `AGENTS.md`'s dispatch table (invocation
+shapes in the `plan-refute` skill); cross-model refuters catch
+correlated-training errors that same-model review endorses. Otherwise a
+same-model fresh-context worker still helps.
 Refuted → downgrade to `unclear`, noting the refutation in the table.
 Unrefuted stays erosion — never upgrade confidence on agreement; agreement
 is not evidence.

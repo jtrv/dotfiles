@@ -62,6 +62,14 @@ workers, `plan-refute` refuters) is unchanged.
 | Gemini `gemini-3.8-flash` | `skills/agy/scripts/agy-run --model gemini-3.8-flash-medium "<brief>"` (read-only by default) | the same `agy-run` script from the shell | `delegate` with `runner=agy`, `model=gemini-3.8-flash-medium` |
 | Cross-family review | Suggest the user run `/codex:review`, or `/codex:adversarial-review` when the approach itself is in question; for a bounded read-only Gemini pass the session runs itself, the Gemini row above | Suggest the user run `/code-review` in Claude Code (or another non-OpenAI reviewer) | `delegate` with `runner=agy` (Gemini) for a read-only review the session runs itself; or, on a non-OpenAI model, suggest the user run `codex review` |
 | `grind` | the `grind` skill | the `grind` skill, one fresh `spawn_agent` per task | the `grind` skill's in-session loop, one `delegate` child with `mode=write` per task; inspect its result before continuing |
+| Fresh-context worker (one task, no parent reasoning, may edit) | `Agent` tool, default type; `isolation: "worktree"` when parallel | `spawn_agent` with `fork_turns="none"` | `delegate` with `mode=write` (its own worktree) |
+| Cross-family refuter (read-only; a family other than the session's own model) | `codex exec --sandbox read-only` (shape in the `plan-refute` skill); `agy-run` as a third family, never the only one | `claude -p --allowedTools Read,Grep,Glob "<brief>" </dev/null`; `agy-run` as a third family | `delegate` with `runner=codex` or `runner=agy`, read-only |
+| Headless one-task run (unattended loops) | `claude -p "<brief>" --permission-mode acceptEdits` | `codex exec --sandbox workspace-write --approve-for-me "<brief>" </dev/null` | `pi -p "<brief>" </dev/null` |
+
+Skills name a route from this table ("fresh-context worker", "cross-family
+refuter", "Gemini one-shot", "headless one-task run") and never a single
+harness's tool; the harness steering the session resolves the route here.
+Model choice inside a route follows the routing table above, not the skill.
 
 ## Agent instructions get the strongest model
 Creating or substantively redesigning a skill, a context file, this file, a
