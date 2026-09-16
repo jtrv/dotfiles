@@ -66,7 +66,7 @@ max_duration_secs = 60
 
 [audio.feedback]
 # Enable audio feedback sounds (beeps when recording starts/stops)
-enabled = true
+enabled = false
 #
 # Sound theme: "default", "subtle", "mechanical", or path to custom theme directory
 theme = "default"

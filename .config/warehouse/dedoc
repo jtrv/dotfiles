@@ -72,7 +72,9 @@ svelte
 svg
 tailwindcss
 terraform
+threejs
 typescript
+typescript~5.1
 underscore
 vite
 vitest

@@ -103,7 +103,7 @@ spawn-at-startup "waybar"
 // hot-edges to swap windows / workspaces with cursor
 spawn-at-startup "niri-edge-pan"
 
-screenshot-path "~/pictures/screenshots/%Y-%m-%d_%H-%M-%S.png"
+screenshot-path "~/media/pictures/screenshots/%Y-%m-%d_%H-%M-%S.png"
 
 layer-rule {
     match namespace="^notifications$"
@@ -178,8 +178,8 @@ binds {
     Mod+V       hotkey-overlay-title="volume mixer: wiremix"        { spawn "alacritty" "msg" "create-window" "--class=popup" "--command=wiremix"; }
 
     // --- Screenshot ---
-    Mod+S       hotkey-overlay-title="screenshot: gui"  { spawn "flameshot" "gui"; }
-    Mod+Shift+S hotkey-overlay-title="screenshot: full" { spawn "flameshot" "full"; }
+    Mod+S       hotkey-overlay-title="screenshot: region" { screenshot; }
+    Mod+Shift+S hotkey-overlay-title="screenshot: full"   { screenshot-screen; }
 
     // --- Media Keys ---
     XF86AudioPlay  allow-when-locked=true { spawn "playerctl" "play-pause"; }

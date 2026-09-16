@@ -235,7 +235,7 @@ define-command delta-buffers -docstring '
   echo "
     evaluate-commands -buffer '$1' write -force $dir/a
     evaluate-commands -buffer '$2' write -force $dir/b
-    kakpipe -N delta-buffers -- sh -c %{diff -u --label '$1' --label '$2' $dir/a $dir/b | delta --paging=never; rm -r $dir}
+    ansi-fifo -name *delta-buffers* -script %{diff -u --label '$1' --label '$2' $dir/a $dir/b | delta --paging=never; rm -r $dir}
   "
 }}
 
@@ -247,7 +247,7 @@ define-command delta-selections -docstring '
   echo "
     execute-keys '<a-|>sed -e ''\$a\\'' >> $dir/sel<ret>'
     evaluate-commands -buffer '$1' write -force $dir/buf
-    kakpipe -N delta-selections -- sh -c %{diff -u --label '*selections*' --label '$1' $dir/sel $dir/buf | delta --paging=never; rm -r $dir}
+    ansi-fifo -name *delta-selections* -script %{diff -u --label '*selections*' --label '$1' $dir/sel $dir/buf | delta --paging=never; rm -r $dir}
   "
 }}
 

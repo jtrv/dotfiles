@@ -298,6 +298,19 @@ customCommands:
       - type: "input"
         title: "Email Address"
     loadingText: "Committing..."
+  - key: 'b'
+    description: "Blame file"
+    context: "files"
+    command: "kak {{.SelectedFile.Name | quote}} -e 'git blame'"
+    output: terminal
+  - key: 'B'
+    description: "Blame file at revision"
+    context: "commitFiles"
+    command: >-
+      kak -e 'git show {{.SelectedCommit.Hash}}:{{.SelectedCommitFile.Name}};
+      hook -once buffer BufCloseFifo .* %sh{ printf "evaluate-commands -client %s %%{
+      set-option buffer git_blob {{.SelectedCommit.Hash}}:{{.SelectedCommitFile.Name}}; git blame }" "$kak_client" }'
+    output: terminal
   # Stash actions
   - key: 'g'
     description: "Use config"

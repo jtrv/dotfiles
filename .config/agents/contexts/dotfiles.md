@@ -11,6 +11,8 @@ Both trees share one object store and ref set — no fetch/push between them. **
 
 Branches: `thiccpad` (NixOS laptop, no home-manager), `morpheus` (arch desktop), `morpheus-nixos` (the desktop's NixOS migration; replaces `morpheus` at cutover — NixOS rules, desktop ownership).
 
+`morpheus-nixos` sticks to morpheus's changes and keeps desktop-specific state (ultrawide output, hermes pinning, edge-pan, GPU tooling) unless the change is NixOS-specific; shared updates flow in from any branch; archisms (pacman, arch warehouse) belong in nixos-config's `nixos/morpheus` dir, not this branch.
+
 This table is the **single source of truth** for what is machine-specific; anything not listed is shared. When a merge surfaces a new ambiguous path, ask the user, then record the decision here — never decide from vibes like "looks desktop-y".
 
 | Path | Ownership |
@@ -34,6 +36,7 @@ This table is the **single source of truth** for what is machine-specific; anyth
 | `easyeffects/*` | shared — every file is keyed by a device (autoload by alsa id, presets/irs by headphone or mic name) and inert elsewhere; union on merge, never sweep |
 | `fish/config.fish` ssh-agent fallback | morpheus (NixOS gets the agent from systemd) |
 | skyspell dict names in `kakrc` (`en_US-large`/`es` vs nix `en_US`/`es_ANY`) | per-machine |
+| `readme.md` | per-branch — describes that branch's OS and host |
 
 ## Converging
 
@@ -44,7 +47,7 @@ In the staging worktree, with `<this>` = this machine's branch and `<other>` = t
 1. `config fetch origin` (github.com/jtrv/dotfiles). Always merge **remote-tracking refs**; local copies of other machines' branches go stale.
 2. Drift check, both sides at once: `git log --left-right --oneline <this>...origin/<other>` (`<` ours only, `>` theirs only).
 3. `git merge <this>` (catch staging up with live), then `git merge origin/<other>`.
-4. Conflicts: table paths and manifests resolve mechanically per Ownership. Shared files resolve **iteratively with the user** — one at a time, both sides and intent shown, sign-off each. Note rerere is on with `autoupdate`: recorded resolutions reapply and self-stage; run `git rerere diff` and re-inspect anything that resolved without input.
+4. Conflicts: table paths and manifests resolve mechanically per Ownership. Shared files resolve **iteratively with the user** — one at a time, both sides and intent shown, sign-off each. Note rerere is on, with `autoupdate` disabled for this repo via the tracked `~/.config/git/dotfiles-local` include (global git config keeps it on): recorded resolutions reapply but stay unstaged — review each before `git add`.
 5. Sweep: re-delete what the table says isn't ours; restore our own files the incoming branch deleted — deletions propagate silently when our side hadn't touched the file (`git log --diff-filter=D --name-status <this>..origin/<other> -- <path>` lists what they dropped). Then scan for silent duplication: the same change made on both sides can land twice with no conflict (a doubled `[vad]` TOML section broke voxtype this way).
 6. **Checkpoint — before committing the merge**: show the user the incoming summary, planned deletions/restores, and everything mechanically discarded. Commit only after that.
 7. Take it live: `config status` effectively clean, then `config merge --ff-only <this>-wip`. A non-ff merge or overlapping dirty files would put the mess in the live `$HOME` tree — the thing staging exists to prevent. If live moved meanwhile, `git merge <this>` in staging again, then fast-forward.

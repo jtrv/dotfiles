@@ -81,7 +81,7 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "fable",
+  "model": "claude-fable-5-1[1m]",
   "skillOverrides": {
     "find-skills": "on",
     "writing-skills": "on",
@@ -272,6 +272,11 @@
         "source": "github",
         "repo": "cloudflare/skills"
       }
+    }
+  },
+  "modelSettings": {
+    "claude-fable-5-1": {
+      "effortLevel": "medium"
     }
   },
   "skipWorkflowUsageWarning": true,
