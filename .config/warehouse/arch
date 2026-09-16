@@ -26,7 +26,6 @@ bluetui
 bluez-utils
 bottom
 bpf
-bpftune-git
 breeze-icons
 brightnessctl
 btrfs-desktop-notification
@@ -65,6 +64,7 @@ docbook-xml
 docbook-xsl
 docker
 docker-compose
+docker-rootless-extras
 doctest
 dosfstools
 downgrade
@@ -207,6 +207,7 @@ pacman-cleanup-hook
 pandoc-bin
 papirus-folders-catppuccin-git
 paru
+passt
 pastel
 pay-respects-bin
 pbzip2
