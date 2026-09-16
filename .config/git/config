@@ -27,6 +27,15 @@
   cmd = difft --display inline "$LOCAL" "$REMOTE"
 [fetch]
   all = true
+# ssh signing. user.signingkey is in the untracked ./personal:
+#   signingkey = /home/sugimoto/.ssh/github-personal
+# morpheus: set that there (replacing the gpg key id) and upload the pubkey
+# as a signing key on github + codeberg; keep the old gpg pubkey so old
+# commits stay verified.
+[gpg]
+  format = ssh
+[gpg "ssh"]
+  allowedSignersFile = ~/.config/git/allowed_signers
 [help]
   autocorrect = prompt
 [init]

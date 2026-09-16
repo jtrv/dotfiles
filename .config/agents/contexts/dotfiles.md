@@ -36,6 +36,7 @@ This table is the **single source of truth** for what is machine-specific; anyth
 | `easyeffects/*` | shared — every file is keyed by a device (autoload by alsa id, presets/irs by headphone or mic name) and inert elsewhere; union on merge, never sweep |
 | `fish/config.fish` ssh-agent fallback | morpheus (NixOS gets the agent from systemd) |
 | skyspell dict names in `kakrc` (`en_US-large`/`es` vs nix `en_US`/`es_ANY`) | per-machine |
+| `.config/udev/rules.d/*` | morpheus — NixOS machines carry udev rules in nixos-config |
 | `readme.md` | per-branch — describes that branch's OS and host |
 
 ## Converging
@@ -48,7 +49,7 @@ In the staging worktree, with `<this>` = this machine's branch and `<other>` = t
 2. Drift check, both sides at once: `git log --left-right --oneline <this>...origin/<other>` (`<` ours only, `>` theirs only).
 3. `git merge <this>` (catch staging up with live), then `git merge origin/<other>`.
 4. Conflicts: table paths and manifests resolve mechanically per Ownership. Shared files resolve **iteratively with the user** — one at a time, both sides and intent shown, sign-off each. Note rerere is on, with `autoupdate` disabled for this repo via the tracked `~/.config/git/dotfiles-local` include (global git config keeps it on): recorded resolutions reapply but stay unstaged — review each before `git add`.
-5. Sweep: re-delete what the table says isn't ours; restore our own files the incoming branch deleted — deletions propagate silently when our side hadn't touched the file (`git log --diff-filter=D --name-status <this>..origin/<other> -- <path>` lists what they dropped). Then scan for silent duplication: the same change made on both sides can land twice with no conflict (a doubled `[vad]` TOML section broke voxtype this way).
+5. Sweep: run `config-sweep` (`.local/bin/config-sweep`, the table's mechanical half — keep its path lists in sync with the table). It resets every owned path and manifest to what HEAD had, prints the other side's manifest additions, and lists files that mix shared and per-machine hunks for review by hand. Then restore our own files the incoming branch deleted — deletions propagate silently when our side hadn't touched the file (`git log --diff-filter=D --name-status <this>..origin/<other> -- <path>` lists what they dropped). Then scan for silent duplication: the same change made on both sides can land twice with no conflict (a doubled `[vad]` TOML section broke voxtype this way).
 6. **Checkpoint — before committing the merge**: show the user the incoming summary, planned deletions/restores, and everything mechanically discarded. Commit only after that.
 7. Take it live: `config status` effectively clean, then `config merge --ff-only <this>-wip`. A non-ff merge or overlapping dirty files would put the mess in the live `$HOME` tree — the thing staging exists to prevent. If live moved meanwhile, `git merge <this>` in staging again, then fast-forward.
 8. Push only when asked: `config push origin <this>`. The pair is fully converged once the other machine runs this same flow there.
