@@ -33,8 +33,8 @@
 (deflayer base
    esc   mute  vold  volu  mmut  brdn  brup  dsp   wln   tls   blt   fav   home  end   ins  del
    grv   1     2     3     @4    5     6     7     8     9     0     -     =     bspc
-   tab   q     w     @e    r     t     y     u     @i    o     p     [     ]     \
-   @esc  @a    @s    @d    @f    @gam  h     @j    @k    @l    @;    '     ret
+   tab   q     w     e     r     t     y     u     i     o     p     [     ]     \
+   @esc  @a    @s    @d    @f    @game h     @j    @k    @l    @;    '     ret
    sft   z     x     c     v     b     n     m     ,     .     /     sft
    ctl   met   alt              @spc               alt   prnt  ctl   pgup  up    pgdn
                                                                      lft   down  rght
@@ -60,7 +60,7 @@
    esc   mute  vold  volu  mmut  brdn  brup  dsp   wln   tls   blt   fav   home  end   ins  del
    grv   1     2     3     4     5     6     7     8     9     0     -     =     bspc
    tab   q     w     e     r     t     y     u     i     o     p     [     ]     \
-   @esc  a     s     d     f     @gam  h     @j    @k    @l    @;    '     ret
+   @esc  a     s     d     f     @game h     @j    @k    @l    @;    '     ret
    lsft  z     x     c     v     b     n     m     ,     .     /     rsft
    lctl  lmet  lalt             spc                ralt  prnt  rctl  pgup  up    pgdn
                                                                      lft   down  rght

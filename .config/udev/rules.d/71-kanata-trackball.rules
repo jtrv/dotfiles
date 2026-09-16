@@ -1,0 +1,5 @@
+# libinput scales every pointer to 1000 DPI using the MOUSE_DPI udev property.
+# hwdb tags the MX Ergo 380@125 but never matches kanata's virtual-bus uinput
+# device, so a grabbed trackball runs ~2.6x slow. Copy the properties over.
+# Install: sudo install -Dm644 -t /etc/udev/rules.d ~/.config/udev/rules.d/71-kanata-trackball.rules && sudo udevadm control --reload
+ACTION=="add|change", SUBSYSTEM=="input", KERNEL=="event*", ATTRS{name}=="kanata", ENV{ID_INPUT_MOUSE}=="1", ENV{MOUSE_DPI}="380@125", ENV{ID_INPUT_TRACKBALL}="1"
