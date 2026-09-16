@@ -19,7 +19,6 @@ ghgrab -> https://github.com/rust-lang/crates.io-index
 grug -> /home/sugimoto/.config/kak/bundle/grug
 handlr-regex -> https://github.com/rust-lang/crates.io-index
 hexapoda -> https://github.com/rust-lang/crates.io-index
-hors -> https://github.com/rust-lang/crates.io-index
 iching -> https://github.com/rust-lang/crates.io-index
 kak-ansi-rs -> /home/sugimoto/.config/kak/bundle/kak-ansi-rs
 kak-lsp -> https://github.com/rust-lang/crates.io-index

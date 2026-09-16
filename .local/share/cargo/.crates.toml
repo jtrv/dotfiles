@@ -26,7 +26,6 @@
 "grug 0.1.0 (path+file:///home/sugimoto/.config/kak/bundle/grug)" = ["grug"]
 "handlr-regex 0.13.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["handlr"]
 "hexapoda 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["hexapoda"]
-"hors 0.8.2 (registry+https://github.com/rust-lang/crates.io-index)" = ["hors"]
 "iching 0.5.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["iching"]
 "kak-ansi-rs 0.1.0 (path+file:///home/sugimoto/.config/kak/bundle/kak-ansi-rs)" = ["kak-ansi-filter"]
 "kak-lsp 21.0.2 (registry+https://github.com/rust-lang/crates.io-index)" = ["kak-lsp"]
