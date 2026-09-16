@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+# Run one headless Antigravity (agy) turn and print only its final response.
+# Read-only by default; hooks/agy-pretool.sh enforces the mode via PI_DELEGATE_MODE.
+set -euo pipefail
+
+usage() {
+  cat <<'USAGE'
+usage: agy-run [--write] [--sandbox] [--model M] [--effort low|medium|high]
+               [--timeout SECS] [--add-dir DIR]... [--] TASK
+       agy-run ... -   (TASK from stdin)
+
+  --write     allow edit/shell tools (default: read-only allowlist)
+  --sandbox   agy's own sandbox; broken on this machine (EROFS installing CA), see SKILL.md
+  --timeout   agy --print-timeout in seconds (default 600)
+Env: AGY (binary path), AGY_GEMINI_DIR (default $XDG_CONFIG_HOME/gemini)
+USAGE
+}
+die() { echo "agy-run: $*" >&2; exit 2; }
+
+mode=read-only timeout_s=600
+extra=()
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --write) mode='write' ;;
+    --sandbox) extra+=(--sandbox) ;;
+    --model) extra+=(--model="${2:?--model needs a value}"); shift ;;
+    --effort) extra+=(--effort="${2:?--effort needs a value}"); shift ;;
+    --add-dir) extra+=(--add-dir="${2:?--add-dir needs a value}"); shift ;;
+    --timeout) timeout_s=${2:?--timeout needs a value}; shift ;;
+    -h|--help) usage; exit 0 ;;
+    --) shift; break ;;
+    -) break ;;
+    -*) die "unknown flag $1" ;;
+    *) break ;;
+  esac
+  shift
+done
+[[ $# -eq 1 ]] || { usage >&2; exit 2; }
+task=$1
+[[ $task == - ]] && task=$(cat)
+[[ -n $task ]] || die "empty task"
+# The task travels in argv (agy has no prompt-from-stdin), so it is process-visible and size-capped.
+(( $(printf %s "$task" | wc -c) <= 96 * 1024 )) || die "task exceeds 96 KiB; agy takes it as an argument"
+
+agy=${AGY:-$(command -v agy || true)}
+[[ -n $agy ]] || die "agy not found: install antigravity-cli (nixpkgs) or set AGY=/path/to/agy"
+
+gemini_dir=${AGY_GEMINI_DIR:-${XDG_CONFIG_HOME:-$HOME/.config}/gemini}
+hooks=$gemini_dir/config/hooks.json
+# Permissions are skipped below, so the PreToolUse gate is the only thing enforcing read-only.
+cmd=$(jq -r '[.[] | .PreToolUse[]? | select(.matcher == "*") | .hooks[]?.command // empty
+              | select(test("agy-pretool\\.sh"))][0] // empty' "$hooks" 2>/dev/null || true)
+[[ -n $cmd ]] || die "no wildcard PreToolUse hook running agy-pretool.sh in $hooks; refusing to launch unprompted"
+hook=${cmd#bash }; hook=${hook/#\~/$HOME}
+[[ -f $hook ]] || die "hook script missing: $hook"
+
+out=$(mktemp) err=$(mktemp)
+trap 'rm -f "$out" "$err"' EXIT
+rc=0
+PI_DELEGATE_MODE=$mode timeout $((timeout_s + 30)) "$agy" \
+  --gemini_dir="$gemini_dir" \
+  --dangerously-skip-permissions \
+  --output-format=stream-json \
+  --print-timeout="${timeout_s}s" \
+  "${extra[@]}" \
+  -p="$task" </dev/null >"$out" 2>"$err" || rc=$?
+
+result=$(grep '^{' "$out" | jq -c 'select(.event == "result") | .result' | tail -1 || true)
+if [[ -z $result ]]; then
+  cat "$err" >&2
+  die "no result event from agy (exit $rc)"
+fi
+if grep '^{' "$out" | jq -r 'select(.step_update.tool_info.parameters.BypassSandbox == true) | "bypass"' | grep -q bypass; then
+  echo "agy-run: warning: a tool call requested BypassSandbox" >&2
+fi
+jq -r '"agy-run: \(.status) turns=\(.num_turns) \(.duration_seconds)s tokens=\(.usage.total_tokens)"' <<<"$result" >&2
+if [[ $(jq -r .status <<<"$result") != SUCCESS ]]; then
+  jq -r '.error // "unknown error"' <<<"$result" >&2
+  exit 1
+fi
+jq -r .response <<<"$result"
