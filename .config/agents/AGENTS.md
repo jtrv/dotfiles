@@ -46,6 +46,7 @@ Dispatch and escalation rationale: `research/2026-09-15-routing-instruction-fixe
 | Demanding coding work — multi-file implementation, nontrivial refactor, sustained reliability over a long task | Codex `gpt-5.6-sol`. Inspect the result |
 | Ambiguous, hard debugging, substantial independent review | Codex `gpt-6-astra`, or stay here if this session is on the strongest tier |
 | Ordered queue of separable tasks | `grind` |
+| Bounded one-shot: a cheap different-family second opinion on a diff or file, a single question, an extra refuter on a plan | Gemini `gemini-3.8-flash` through `agy`, effort `medium` first, `high` when medium misses; never `low`. The brief sets hard boundaries ("view X once, then answer; no other files, no commands") or the run wanders and times out. Never multi-step or long-horizon work, and never the sole plan refuter — it approves plans readily. Rationale: `research/2026-09-16-gemini-3-8-flash-routing.md` |
 | Agent instruction changes | Follow “Agent instructions get the strongest model” below |
 
 Codex tiers for delegated tasks: Luna → Terra → Sol → Astra; a blocked worker
@@ -58,7 +59,8 @@ workers, `plan-refute` refuters) is unchanged.
 | Route | Claude Code | Codex | Pi |
 |---|---|---|---|
 | Codex `<model>` | `codex:codex-rescue` with `--model <model>` | `spawn_agent` with `model=<model>`, `fork_turns="none"` and a self-contained task brief | `delegate` with `runner=codex`, `model=<model>` |
-| Cross-family review | Suggest the user run `/codex:review`, or `/codex:adversarial-review` when the approach itself is in question | Suggest the user run `/code-review` in Claude Code (or another non-OpenAI reviewer) | `delegate` with `runner=agy` (Gemini) for a read-only review the session runs itself; or, on a non-OpenAI model, suggest the user run `codex review` |
+| Gemini `gemini-3.8-flash` | `skills/agy/scripts/agy-run --model gemini-3.8-flash-medium "<brief>"` (read-only by default) | the same `agy-run` script from the shell | `delegate` with `runner=agy`, `model=gemini-3.8-flash-medium` |
+| Cross-family review | Suggest the user run `/codex:review`, or `/codex:adversarial-review` when the approach itself is in question; for a bounded read-only Gemini pass the session runs itself, the Gemini row above | Suggest the user run `/code-review` in Claude Code (or another non-OpenAI reviewer) | `delegate` with `runner=agy` (Gemini) for a read-only review the session runs itself; or, on a non-OpenAI model, suggest the user run `codex review` |
 | `grind` | the `grind` skill | the `grind` skill, one fresh `spawn_agent` per task | the `grind` skill's in-session loop, one `delegate` child with `mode=write` per task; inspect its result before continuing |
 
 ## Agent instructions get the strongest model
@@ -97,7 +99,7 @@ These are installed; reach for them over the generic default:
 - **Code search/refactor**: `ast-grep` for structural (AST) search and rewrites — prefer over regex grep + hand edits. `rg` for text search, `rga` when content is inside PDFs/archives/docx/sqlite. `fd` for file discovery by name/type; `plocate` for instant whole-filesystem filename lookup.
 - **Line-set ops**: `zet union|intersect|diff` on files/streams — replaces `sort | comm`/`uniq` pipelines.
 - **Docs lookup**: `dedoc` — offline DevDocs (`dedoc search <docset> <query>`, `dedoc open`); ~80 docsets downloaded (rust, python, postgres, react, go…). Try before WebFetch/web search for API reference.
-- **Web/doc → text**: `reader <url>` renders a webpage as readable text for ingestion — prefer over raw curl/WebFetch HTML. `markitdown` converts local docx/pdf/pptx/xlsx to markdown.
+- **Web/doc → text**: `reader <url>` renders a webpage as readable text for ingestion — prefer over raw curl/WebFetch HTML. `bunx @firecrawl/anydoc <file>` converts local docx/pptx/xlsx/odt/rtf/epub/csv/pdf to markdown (cached after first run); `markitdown` only for html, images, audio.
 - **Diffs**: `difft` (difftastic) for syntax-aware diffs when reviewing changes (`GIT_EXTERNAL_DIFF=difft git diff`).
 - **Databases**: `usql` — one CLI for postgres/mysql/sqlite/etc. (`usql <url> -c '<sql>'`).
 
