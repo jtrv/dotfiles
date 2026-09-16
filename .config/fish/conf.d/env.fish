@@ -22,6 +22,9 @@ set -gx AWS_SHARED_CREDENTIALS_FILE "$XDG_CONFIG_HOME/aws/credentials"
 set -gx BUNDLE_USER_CONFIG          "$XDG_CONFIG_HOME/bundle"
 set -gx CLAUDE_CONFIG_DIR           "$XDG_CONFIG_HOME/claude"
 set -gx PI_CODING_AGENT_DIR         "$XDG_CONFIG_HOME/pi/agent"
+set -gx CONTEXT_MODE_DIR            "$XDG_STATE_HOME/context-mode"
+# context-mode ignores the override in silence unless the directory already exists
+test -d $CONTEXT_MODE_DIR; or mkdir -p $CONTEXT_MODE_DIR
 set -gx DOCKER_CONFIG               "$XDG_CONFIG_HOME/docker"
 set -gx DOTFILES                    "$XDG_CONFIG_HOME/dotfiles"
 set -gx GEMRC                       "$XDG_CONFIG_HOME/gem/gemrc"
@@ -75,7 +78,6 @@ set -gx CONCEAL_FINDER              "skim"
 set -gx DELTA_PAGER                 "kak"
 set -gx EDITOR                      "kak"
 set -gx fish_greeting
-set -gx HORS_ENGINE                 "google"
 set -gx LAST30DAYS_MEMORY_DIR       "$XDG_DOCUMENTS_DIR/Last30Days"
 set -gx MANPAGER                    "kak -e 'set buffer filetype man'"
 set -gx PAGER                       "kak"
