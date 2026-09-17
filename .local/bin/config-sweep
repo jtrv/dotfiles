@@ -27,7 +27,6 @@ owned='
 .config/warehouse/go
 .config/warehouse/ktsctl
 .local/bin/mirrors
-.local/bin/waybar-sleep-inhibit
 .local/bin/tofi-run
 readme.md
 '

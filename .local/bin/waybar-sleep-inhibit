@@ -1,0 +1,20 @@
+#!/bin/sh
+# Toggle a systemd sleep inhibitor (lock without suspend). Waybar custom
+# module calls `status` for display and `toggle` on click (signal 8 refresh).
+tag=waybar-sleep-inhibit
+case "$1" in
+toggle)
+    if ! pkill -f "^systemd-inhibit .*$tag"; then
+        setsid systemd-inhibit --what=sleep --who="$tag" \
+            --why="manually inhibited from waybar" sleep infinity >/dev/null 2>&1 &
+    fi
+    pkill -RTMIN+8 -x waybar
+    ;;
+*)
+    if pgrep -f "^systemd-inhibit .*$tag" >/dev/null; then
+        printf '{"text":"󰒲 ","class":"activated","tooltip":"Sleep inhibited"}\n'
+    else
+        printf '{"text":"󰒳 ","class":"deactivated","tooltip":"Sleep allowed"}\n'
+    fi
+    ;;
+esac

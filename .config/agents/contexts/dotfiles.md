@@ -20,7 +20,6 @@ This table is the **single source of truth** for what is machine-specific; anyth
 | `warehouse/arch`, `.config/pacman/` | arch machines (morpheus) |
 | `warehouse/uv` additions | morpheus; NixOS machines keep it empty (nixos-config carries tools) |
 | `.config/systemd/user/*` units | owning machine; NixOS machines track none (units come from nixos-config) |
-| `.local/bin/waybar-sleep-inhibit` + its waybar config/style hunks | morpheus |
 | evdi/hermes-streaming (packages, virtual-display pinning) | morpheus |
 | bun global `package.json`, cargo `.crates*` | per-machine local state — never merged. Keep this machine's side, but **report what the other side had**; if it looks like new tools rather than version drift, ask |
 | `kanata/*.kbd` | every branch, per-machine by filename (`morpheus.kbd`, `thiccpad.kbd`, `shared.kbd`) — prefer this name-spacing for new machine-specific files over new table rows |

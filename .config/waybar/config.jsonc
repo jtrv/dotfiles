@@ -28,6 +28,7 @@
         "wireplumber",
         "bluetooth",
         "idle_inhibitor",
+        "custom/sleep-inhibitor",
         "gamemode",
         "battery",
         "clock",
@@ -138,6 +139,15 @@
             "activated": " ",
             "deactivated": " "
         }
+    },
+
+    "custom/sleep-inhibitor": {
+        "format": "{}",
+        "return-type": "json",
+        "interval": "once",
+        "exec": "waybar-sleep-inhibit status",
+        "on-click": "waybar-sleep-inhibit toggle",
+        "signal": 8,
     },
 
     "memory": {
