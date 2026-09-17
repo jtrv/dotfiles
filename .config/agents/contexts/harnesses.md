@@ -176,12 +176,6 @@ cgroups would close it and were deliberately not built. Codex exits 0 on
 SIGTERM, so a killed job is detected from the result's `error`/status, never
 from `exit_code`.
 
-Test repos live outside `$HOME`, where git has no identity (it comes from the
-`includeIf "gitdir:~/"` includes, and so does the ssh signing key) while
-global `commit.gpgsign` is on. Make base commits with
-`-c commit.gpgsign=false -c user.email=x@y -c user.name=x`,
-or a worker's failed commit looks like a sandbox effect — it did, once.
-
 ## Antigravity only relocates by flag
 
 `agy` hardcodes `~/.gemini`, reads no `*_HOME` variable and ignores
