@@ -2,6 +2,7 @@
 
 ## Contexts
 In-depth per-context instructions live in `~/.config/agents/contexts/`. Before working in a matching context, Read the file — do not proceed on memory of it:
+- `ui.md` — any UI/UX work on any platform: screens, pages, dashboards, artifacts, charts; taste calls, colour choices, design review. Points at the per-platform capture rigs and the `impeccable`/`color-expert` skills
 - `artifacts.md` — publishing any Artifact that collects user decisions (triage boards, review forms, note collectors)
 - `parallel-agents.md` — spawning multiple agents that edit the same working tree
 - `long-tasks.md` — any task spanning sessions or > ~1 hour; before /compact; when resuming or handing off work
@@ -72,7 +73,10 @@ strongest model, keep drafts outside paths any harness loads as instructions
 or skills, and hand the design to the strongest model (or tell the user).
 Only that model finalizes and writes the change into loaded paths: an
 uncommitted edit is already live for later sessions. Typo fixes and mechanical
-renames are exempt.
+renames are exempt. Harness code — hooks, Pi extensions, delegate tooling —
+is under the same rule: it shapes every session the way an instruction file
+does, and a review of weaker-model lifecycle code found it missing its own
+guarantees (2026-09-15).
 
 ## Comments
 The default is no comment; adding one carries the burden of proof. A comment earns its place only when it holds a *why* the reader cannot recover from the code in front of them: a non-obvious constraint or invariant, a trap that will bite the next editor, the origin of a measured constant, the reason a simpler-looking alternative is wrong.
@@ -85,6 +89,11 @@ When deleting code, delete its comments with it and add none.
 
 ## Commits
 Never add a "co-authored by Claude Code" trailer.
+Inside `git commit -m "…"` the shell expands backticks, `$(…)` and `$VAR` — a
+message quoting a command runs it and splices the output into the message
+(it happened: a `flutter drive` profile build, committed as ~40 lines of
+body). Anything beyond a one-line subject goes to a scratchpad file and
+`git commit -F <file>`.
 
 ## Clipboard for user-run commands
 When giving commands the user must run themselves (`! ...` session command, sudo, interactive login, key management), also put them on the clipboard via `clipcatctl insert <text>` (no `!` prefix) and say so. Multiple commands: insert each in reverse run order, so the first-to-run ends up as the active clip and the rest sit in clipcat history. Never copy secrets or fill-in values — copy the template with placeholders. Skip silently if `command -v clipcatctl` fails or the daemon is down.

@@ -120,7 +120,9 @@ machine and fails in CI:
 
 ## 2. See the UI: headless screen capture
 
-Never do UI work blind — render real screens to PNGs and read them.
+Never do UI work blind — render real screens to PNGs and read them. How UI
+decisions are made (taste calls from rendered variants, bounded verification,
+which skills) is `ui.md`; this section is the Flutter rig it points at.
 
 A widget test pumps the real screen; `matchesGoldenFile` under `--update-goldens`
 *writes* the PNG:

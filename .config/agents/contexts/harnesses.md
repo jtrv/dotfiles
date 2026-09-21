@@ -36,6 +36,17 @@ on disk) before going further.
 `graphify` is a useful canary: it is vendored, so if it ever shows up staged,
 something added a directory wholesale.
 
+## Fold feedback before changing instructions
+
+Feedback memories are per project, so a correction learned in one repo never
+reaches a session in another until it is folded into a context or skill.
+Before editing any context, skill or `AGENTS.md`, run
+`../watches/feedback-graduation.sh`: CHECK lists feedback memories since the
+last review with the loaded file each names. Fold the ones that generalise,
+leave project-only ones as memory, then `feedback-graduation.sh ack`. The
+review record goes in `../research/` (first pass:
+`2026-09-18-warp-self-improving-agents-check.md`).
+
 ## Adding a skill
 
 Claude and Pi symlink the whole `skills` directory, so a new skill is visible to
@@ -145,6 +156,12 @@ Verify by interrogation after any change: a `pi -p` prompt that must call the
 tool and print its result, one per runner.
 
 ## Changing `delegate`
+
+This is harness code, so the strongest model writes it (`AGENTS.md`, "Agent
+instructions get the strongest model"). A Codex worker cannot write
+`$PI_CODING_AGENT_DIR` or reach the network from its sandbox: give it a
+scratch copy to edit and unit-test, then copy the result into place and run
+the live `pi -p` checks here.
 
 Tests run from the extensions dir: `bun test ./delegate.test.ts`, then
 `oxlint delegate.ts delegate/*.ts delegate.test.ts`. `tsc --noEmit` needs a
