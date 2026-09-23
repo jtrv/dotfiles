@@ -36,6 +36,9 @@ pointer back to the report that justified it.
 - `2026-07-30-last30days-context-rot-raw.md`, `2026-07-30-last30days-persistent-memory-raw.md` — the raw sweeps behind it.
 - `2026-07-07-last30days-context-optimization-plugins-raw.md` — context-mode, leanctx, rtk and the rest; the sweep that preceded adopting context-mode.
 
+### Teaching and learning projects
+- `2026-09-23-ai-tutoring-learning-projects.md` — evidence on agents that teach instead of doing (Bastani PNAS 2025, Anthropic skill-formation RCT, CS50 duck leakage, hint ladders, productive failure), baseline tests of an unguided agent, and the protocol behind the `tutor` skill.
+
 ### Architecture tooling
 - `2026-07-30-last30days-codebase-architecture-analysis-raw.md` — the sweep behind the `geiger` skill.
 
