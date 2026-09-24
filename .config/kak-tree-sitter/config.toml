@@ -1,1577 +1,471 @@
-# Top-level highlight capture group declarations. If your grammars uses a capture group that is not defined here, you
-# have to add it to the list.
-highlight.groups = [
-  "attribute",
-  "comment",
-  "comment.block",
-  "comment.line",
-  "comment.unused",
-  "constant",
-  "constant.builtin",
-  "constant.builtin.boolean",
-  "constant.character",
-  "constant.character.escape",
-  "constant.macro",
-  "constant.numeric",
-  "constant.numeric.float",
-  "constant.numeric.integer",
-  "constructor",
-  "diff.plus",
-  "diff.minus",
-  "diff.delta",
-  "diff.delta.moved",
-  "embedded",
-  "error",
-  "function",
-  "function.builtin",
+# Merged over kak-tree-sitter's built-in config (`ktsctl default-config`): list only
+# additions and overrides here. A copy of the full default drifts from the pinned
+# grammars and breaks their builds.
+
+[highlight]
+# The rest are nvim-treesitter capture names, used by queries such as sql, scala,
+# hare, hcl, ron, swift and graphql. Without a group those captures render plain;
+# kakrc links their ts_* faces to the helix-named equivalents.
+groups = [
   "function.definition",
-  "function.macro",
-  "function.method",
-  "function.special",
-  "hint",
-  "include",
-  "info",
-  "keyword",
-  "keyword.conditional",
-  "keyword.control",
-  "keyword.control.conditional",
-  "keyword.control.except",
-  "keyword.control.exception",
-  "keyword.control.import",
-  "keyword.control.repeat",
-  "keyword.control.return",
-  "keyword.directive",
-  "keyword.function",
   "keyword.import",
-  "keyword.operator",
-  "keyword.special",
-  "keyword.storage",
-  "keyword.storage.modifier",
-  "keyword.storage.modifier.mut",
-  "keyword.storage.modifier.ref",
-  "keyword.storage.type",
-  "label",
-  "load",
-  "markup.bold",
-  "markup.heading",
-  "markup.heading.1",
-  "markup.heading.2",
-  "markup.heading.3",
-  "markup.heading.4",
-  "markup.heading.5",
-  "markup.heading.6",
-  "markup.heading.marker",
-  "markup.italic",
-  "markup.link.label",
-  "markup.link.text",
-  "markup.link.url",
-  "markup.link.uri",
-  "markup.list.checked",
-  "markup.list.numbered",
-  "markup.list.unchecked",
-  "markup.list.unnumbered",
-  "markup.quote" ,
-  "markup.raw",
-  "markup.raw.block",
-  "markup.raw.inline",
-  "markup.strikethrough",
-  "namespace",
-  "operator",
-  "punctuation",
-  "punctuation.bracket",
-  "punctuation.delimiter",
-  "punctuation.special",
-  "special",
-  "string",
-  "string.escape",
-  "string.regexp",
-  "string.special",
-  "string.special.path",
-  "string.special.symbol",
-  "string.symbol",
-  "tag",
-  "tag.error",
-  "text",
-  "type",
-  "type.builtin",
-  "type.enum.variant",
-  "type.enum.variant.builtin",
-  "type.parameter",
-  "variable",
-  "variable.builtin",
-  "variable.other.member",
-  "variable.parameter",
-  "warning",
+  "boolean",
+  "character",
+  "conditional",
+  "escape",
+  "exception",
+  "field",
+  "float",
+  "markup.link",
+  "markup.list",
+  "markup.strong",
+  "method",
+  "module",
+  "number",
+  "parameter",
+  "property",
+  "repeat",
+  "storageclass",
 ]
 
-# asciidoc
-[grammar.asciidoc]
-source.git.url = "https://github.com/cathaysia/tree-sitter-asciidoc"
-source.git.pin = "master"
-path = "tree-sitter-asciidoc/src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "asciidoc.so"]
-link_flags = ["-O3"]
-
-[language.asciidoc]
-grammar = "asciidoc"
-
-[language.asciidoc.queries]
-source.git.url = "https://github.com/cathaysia/tree-sitter-asciidoc"
-source.git.pin = "master"
-path = "tree-sitter-asciidoc/queries"
-
-# asciidoc_inline
-[grammar.asciidoc_inline]
-source.git.url = "https://github.com/cathaysia/tree-sitter-asciidoc"
-source.git.pin = "master"
-path = "tree-sitter-asciidoc_inline/src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "asciidoc_inline.so"]
-link_flags = ["-O3"]
-
-[language.asciidoc_inline]
-grammar = "asciidoc_inline"
-
-[language.asciidoc_inline.queries]
-source.git.url = "https://github.com/cathaysia/tree-sitter-asciidoc"
-source.git.pin = "master"
-path = "tree-sitter-asciidoc_inline/queries"
-
-# astro
-[grammar.astro]
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.cc", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "astro.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# awk
-[grammar.awk]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "awk.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# bash
-[grammar.bash]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.cc", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "bash.so"]
-link_flags = ["-O3"]
-
-# bass
-# TODO
-
-# beancount
-# TODO
-
-# bibtex
-[grammar.bibtex]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "bibtex.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# bicep
-# TODO
-
-# c
-[grammar.c]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "c.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# cabal
-# TODO
-
-# cairo
-# TODO
-
-# capnp
-# TODO
-
-# clojure
-[grammar.clojure]
-source.git.url = "https://github.com/sogaiu/tree-sitter-clojure"
-source.git.pin = "master"
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "clojure.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-[language.clojure]
-grammar = "clojure"
-
-[language.clojure.queries]
-source.git.url = "https://github.com/sogaiu/tree-sitter-clojure"
-source.git.pin = "master"
-path = "queries"
-
-# cmake
-[grammar.cmake]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "../scanner.cc", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3", "-flto=auto", "-march=native"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "scanner.o", "-o", "cmake.so"]
-link_flags = ["-O3", "-lstdc++", "-flto=auto"]
-
-# comment
-[grammar.comment]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "comment.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# common-lisp
-[grammar.common-lisp]
-source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-commonlisp"
-source.git.pin = "master"
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "common-lisp.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-[language.common-lisp]
-grammar = "common-lisp"
-
-[language.common-lisp.queries]
-source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-commonlisp"
-source.git.pin = "master"
-path = "queries"
-
-
-# cpon
-# TODO
-
-# cpp
-[grammar.cpp]
-path = "src"
-compile = "sccache"
-compile_args = ["cc","-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "cpp.so"]
-link_flags = ["-fuse-ld=mold", "-O3", "-lstdc++"]
-
-# crystal
-# TODO
-
-# c-sharp
-[grammar.csharp]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "csharp.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# css
-[grammar.css]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "css.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# csv
-[grammar.csv]
-source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-csv"
-source.git.pin = "master"
-path = "csv/src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "csv.so"]
-link_flags = ["-O3"]
-
-[language.csv]
-grammar = "csv"
-
-[language.csv.queries]
-source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-csv"
-source.git.pin = "master"
-path = "csv/queries"
-
-# cue
-# TODO
-
-# d
-# TODO
-
-# dart
-# TODO
-
-# devicetree
-# TODO
-
-# dhall
-# TODO
-
-# diff
-[grammar.diff]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "diff.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# dockerfile
-[grammar.dockerfile]
-source.git.url = "https://github.com/camdencheek/tree-sitter-dockerfile"
-source.git.pin = "main"
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "dockerfile.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-[language.dockerfile]
-grammar = "dockerfile"
-
-[language.dockerfile.queries]
-source.git.url = "https://github.com/camdencheek/tree-sitter-dockerfile"
-source.git.pin = "main"
-path = "queries"
-
-# dot
-# TODO
-
-# dtd
-# TODO
-
-# ecma
-# TODO
-
-# edoc
-# TODO
-
-# eex
-# TODO
-
-# ejs
-# TODO
-
-# elixir
-
-[grammar.elixir]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "elixir.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# elm
-# TODO
-
-# elvish
-# TODO
-
-# env
-# TODO
-
-# erb
-# TODO
-
-# erlang
-# TODO
-
-# esdl
-# TODO
-
-# fish
-[grammar.fish]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "../scanner.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3", "-march=native", "-flto=auto"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "scanner.o", "-o", "fish.so"]
-link_flags = ["-O3", "-flto=auto"]
-
-# fortran
-# TODO
-
-# gdscript
-# TODO
-
-# git-attributes
-[grammar.git-attributes]
-source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-gitattributes"
-source.git.pin = "master"
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "git-attributes.so"]
-link_flags = ["-O3"]
-
-[language.git-attributes]
-grammar = "git-attributes"
-
-[language.git-attributes.queries]
-source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-gitattributes"
-source.git.pin = "master"
-path = "queries"
-
-# git-commit
-[grammar.git-commit]
-source.git.url = "https://github.com/gbprod/tree-sitter-gitcommit"
-source.git.pin = "main"
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "../scanner.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "scanner.o", "-o", "git-commit.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-[language.git-commit]
-grammar = "git-commit" 
-
-[language.git-commit.queries]
-source.git.url = "https://github.com/gbprod/tree-sitter-gitcommit"
-source.git.pin = "main"
-path = "queries"
-
-# git-config
-[grammar.git-config]
-source.git.url = "https://github.com/the-mikedavis/tree-sitter-git-config"
-source.git.pin = "main"
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "git-config.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-[language.git-config]
-grammar = "git-config"
-
-[language.git-config.queries]
-source.git.url = "https://github.com/the-mikedavis/tree-sitter-git-config"
-source.git.pin = "main"
-path = "queries"
-
-# git-ignore
-# TODO
-
-# git-rebase
-[grammar.git-rebase]
-source.git.url = "https://github.com/the-mikedavis/tree-sitter-git-rebase"
-source.git.pin = "main"
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "git-rebase.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-[language.git-rebase]
-grammar = "git-rebase"
-
-[language.git-rebase.queries]
-source.git.url = "https://github.com/the-mikedavis/tree-sitter-git-rebase"
-source.git.pin = "main"
-path = "queries"
-
-# gleam
-# TODO
-
-# glsl
-[grammar.glsl]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "glsl.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# go
-[grammar.go]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "go.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# godot-resource
-# TODO
-
-# gomod
-[grammar.go-mod]
-source.git.url = "https://github.com/camdencheek/tree-sitter-go-mod"
-source.git.pin = "main"
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "go-mod.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-[language.go-mod]
-grammar = "go-mod"
-
-[language.go-mod.queries]
-source.git.url = "https://github.com/camdencheek/tree-sitter-go-mod"
-source.git.pin = "main"
-path = "queries"
-
-# gotmpl
-# TODO
-
-# gowork
-# TODO
-
-# graphql
-[grammar.graphql]
-source.git.url = "https://github.com/bkegley/tree-sitter-graphql"
-source.git.pin = "master"
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "graphql.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-[language.graphql]
-grammar = "graphql"
-
-[language.graphql.queries]
-source.git.url = "https://github.com/bkegley/tree-sitter-graphql"
-source.git.pin = "master"
-path = "queries/graphql"
-
-# hare
-[grammar.hare]
-source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-hare"
-source.git.pin = "master"
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "hare.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-[language.hare]
-grammar = "hare"
-
-[language.hare.queries]
-source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-hare"
-source.git.pin = "master"
-path = "queries"
-
-# haskell
-[grammar.haskell]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "../scanner.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "scanner.o", "-o", "haskell.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# hcl
-# Grammar ships no highlight queries; queries sourced from nvim-treesitter.
-[grammar.hcl]
-source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-hcl"
-source.git.pin = "main"
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "hcl.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-[language.hcl]
-grammar = "hcl"
-
-[language.hcl.queries]
-# queries live on classic `master` (default `main` is the rewrite); non-default
-# branch, so pinned to a commit.
-source.git.url = "https://github.com/nvim-treesitter/nvim-treesitter"
-source.git.pin = "cf12346a3414fa1b06af75c79faebe7f76df080a"
-path = "queries/hcl"
-
-# heex
-# TODO
-
-# hosts
-# TODO
-
-# html
-[grammar.html]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "../scanner.cc", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "html.so"]
-link_flags = ["-fuse-ld=mold", "-O3", "-lstdc++"]
-
-# hurl
-# TODO
-
-# hyprlang
-[grammar.hyprlang]
-path = "src"
-compile = "sccache"
-compile_args = [ "cc" ,"-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "hyprlang.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# iex
-# TODO
-
-# ini
-[grammar.ini]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "ini.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-
-# java
-[grammar.java]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "java.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# javascript
-[grammar.javascript]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "javascript.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# jsdoc
-[grammar.jsdoc]
-source.git.url = "https://github.com/tree-sitter/tree-sitter-jsdoc"
-source.git.pin = "master"
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "jsdoc.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-[language.jsdoc]
-grammar = "jsdoc"
-
-[language.jsdoc.queries]
-source.git.url = "https://github.com/tree-sitter/tree-sitter-jsdoc"
-source.git.pin = "master"
-path = "queries"
-
-# json
-[grammar.json]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "json.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# jsonnet
-# TODO
-
-# julia
-[grammar.julia]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "-flto=auto", "../parser.c", "../scanner.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "-flto=auto", "parser.o", "scanner.o", "-o", "julia.so"]
-link_flags = ["-O3"]
-
-# just
-# Grammar ships no highlight queries; queries sourced from nvim-treesitter.
-[grammar.just]
-source.git.url = "https://github.com/IndianBoy42/tree-sitter-just"
-source.git.pin = "main"
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "just.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
+# Kakoune names these filetypes differently from kak-tree-sitter's languages, so
+# without the alias they never get tree-sitter highlighting.
+[language.make]
+aliases = ["makefile"]
 
 [language.just]
-grammar = "just"
+aliases = ["justfile"]
 
-[language.just.queries]
-# queries live on classic `master` (default `main` is the rewrite); non-default
-# branch, so pinned to a commit.
-source.git.url = "https://github.com/nvim-treesitter/nvim-treesitter"
-source.git.pin = "cf12346a3414fa1b06af75c79faebe7f76df080a"
-path = "queries/just"
+[language.ini]
+aliases = ["systemd"]
+
+[language.bash]
+aliases = ["sh", "env"]
+
+# Local query dirs: the upstream query source ships no textobjects.scm, so each
+# vendors its upstream queries at the installed pin and adds one. Re-copy them
+# when bumping that language's grammar pin.
+
+# helix 7275b7f queries plus helix master textobjects.scm
+[language.css.queries.source.local]
+path = "/home/sugimoto/.config/kak-tree-sitter/queries/css"
+
+# asciidoc
+[grammar.asciidoc.source.git]
+url = "https://github.com/cathaysia/tree-sitter-asciidoc"
+pin = "master"
+
+[grammar.asciidoc]
+path = "tree-sitter-asciidoc/src"
+compile_args = ["-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
+link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "{lang}.so"]
+
+[language.asciidoc.queries]
+path = "tree-sitter-asciidoc/queries"
+
+[language.asciidoc.queries.source.git]
+url = "https://github.com/cathaysia/tree-sitter-asciidoc"
+pin = "master"
+
+# asciidoc_inline
+[grammar.asciidoc_inline.source.git]
+url = "https://github.com/cathaysia/tree-sitter-asciidoc"
+pin = "master"
+
+[grammar.asciidoc_inline]
+path = "tree-sitter-asciidoc_inline/src"
+compile_args = ["-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
+link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "{lang}.so"]
+
+[language.asciidoc_inline.queries]
+path = "tree-sitter-asciidoc_inline/queries"
+
+[language.asciidoc_inline.queries.source.git]
+url = "https://github.com/cathaysia/tree-sitter-asciidoc"
+pin = "master"
+
+# clojure
+[grammar.clojure.source.git]
+url = "https://github.com/sogaiu/tree-sitter-clojure"
+pin = "master"
+
+[language.clojure.queries]
+path = "queries"
+
+[language.clojure.queries.source.git]
+url = "https://github.com/sogaiu/tree-sitter-clojure"
+pin = "master"
+
+# common-lisp
+[grammar.commonlisp.source.git]
+url = "https://github.com/tree-sitter-grammars/tree-sitter-commonlisp"
+pin = "master"
+
+[language.common-lisp]
+aliases = ["lisp"]
+grammar = "commonlisp"
+
+[language.common-lisp.queries]
+path = "queries/commonlisp"
+
+[language.common-lisp.queries.source.git]
+url = "https://github.com/nvim-treesitter/nvim-treesitter"
+pin = "cf12346a3414fa1b06af75c79faebe7f76df080a"
+
+# csv
+[grammar.csv.source.git]
+url = "https://github.com/tree-sitter-grammars/tree-sitter-csv"
+pin = "master"
+
+[grammar.csv]
+path = "csv/src"
+
+[language.csv.queries]
+path = "csv/queries"
+
+[language.csv.queries.source.git]
+url = "https://github.com/tree-sitter-grammars/tree-sitter-csv"
+pin = "master"
+
+# dockerfile
+[grammar.dockerfile.source.git]
+url = "https://github.com/camdencheek/tree-sitter-dockerfile"
+pin = "main"
+
+[grammar.dockerfile]
+compile_args = ["-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
+link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "{lang}.so"]
+
+[language.dockerfile.queries]
+path = "queries"
+
+[language.dockerfile.queries.source.git]
+url = "https://github.com/camdencheek/tree-sitter-dockerfile"
+pin = "main"
+
+# git-attributes
+[grammar.gitattributes.source.git]
+url = "https://github.com/tree-sitter-grammars/tree-sitter-gitattributes"
+pin = "master"
+
+[language.git-attributes]
+grammar = "gitattributes"
+
+[language.git-attributes.queries]
+path = "queries"
+
+[language.git-attributes.queries.source.git]
+url = "https://github.com/tree-sitter-grammars/tree-sitter-gitattributes"
+pin = "master"
+
+# git-config
+[grammar.git-config.source.git]
+url = "https://github.com/the-mikedavis/tree-sitter-git-config"
+pin = "main"
+
+[language.git-config.queries]
+path = "queries"
+
+[language.git-config.queries.source.git]
+url = "https://github.com/the-mikedavis/tree-sitter-git-config"
+pin = "main"
+
+# git-rebase
+[grammar.git-rebase.source.git]
+url = "https://github.com/the-mikedavis/tree-sitter-git-rebase"
+pin = "main"
+
+[language.git-rebase.queries]
+path = "queries"
+
+[language.git-rebase.queries.source.git]
+url = "https://github.com/the-mikedavis/tree-sitter-git-rebase"
+pin = "main"
+
+# go-mod
+[grammar.gomod.source.git]
+url = "https://github.com/camdencheek/tree-sitter-go-mod"
+pin = "main"
+
+[language.go-mod]
+grammar = "gomod"
+
+[language.go-mod.queries]
+path = "queries"
+
+[language.go-mod.queries.source.git]
+url = "https://github.com/camdencheek/tree-sitter-go-mod"
+pin = "main"
+
+# graphql
+[grammar.graphql.source.git]
+url = "https://github.com/bkegley/tree-sitter-graphql"
+pin = "master"
+
+[language.graphql.queries]
+path = "queries/graphql"
+
+[language.graphql.queries.source.git]
+url = "https://github.com/bkegley/tree-sitter-graphql"
+pin = "master"
+
+# hare
+[grammar.hare.source.git]
+url = "https://github.com/tree-sitter-grammars/tree-sitter-hare"
+pin = "master"
+
+[language.hare.queries]
+path = "queries"
+
+[language.hare.queries.source.git]
+url = "https://github.com/tree-sitter-grammars/tree-sitter-hare"
+pin = "master"
+
+# hcl
+[grammar.hcl.source.git]
+url = "https://github.com/tree-sitter-grammars/tree-sitter-hcl"
+pin = "main"
+
+[grammar.hcl]
+compile_args = ["-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
+link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "{lang}.so"]
+
+[language.hcl]
+aliases = ["terraform"]
+
+# nvim-treesitter cf12346 queries/hcl plus helix master textobjects.scm
+[language.hcl.queries.source.local]
+path = "/home/sugimoto/.config/kak-tree-sitter/queries/hcl"
+
+# jsdoc
+[grammar.jsdoc.source.git]
+url = "https://github.com/tree-sitter/tree-sitter-jsdoc"
+pin = "master"
+
+[grammar.jsdoc]
+compile_args = ["-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
+link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "{lang}.so"]
+
+[language.jsdoc.queries]
+path = "queries"
+
+[language.jsdoc.queries.source.git]
+url = "https://github.com/tree-sitter/tree-sitter-jsdoc"
+pin = "master"
 
 # kak
+[grammar.kak.source.git]
+url = "https://github.com/saifulapm/tree-sitter-kak"
+pin = "main"
+
 [grammar.kak]
-source.git.url = "https://github.com/saifulapm/tree-sitter-kak"
-source.git.pin = "main"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "../scanner.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "scanner.o", "-o", "kak.so"]
-link_flags = ["-fuse-ld=mold"]
+compile_args = ["-c", "-fpic", "../parser.c", "../scanner.c", "-I", ".."]
+link_args = ["-shared", "-fpic", "parser.o", "scanner.o", "-o", "{lang}.so"]
 
-[language.kak]
-queries.source.git.url = "https://github.com/saifulapm/tree-sitter-kak"
-queries.source.git.pin = "main"
-grammar = "kak"
-queries.path = "queries"
-
-# kdl
-[grammar.kdl]
-source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-kdl"
-source.git.pin = "master"
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "kdl.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-[language.kdl]
-grammar = "kdl"
-
-[language.kdl.queries]
-source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-kdl"
-source.git.pin = "master"
+[language.kak.queries]
 path = "queries"
 
-# koka
-[grammar.koka]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "koka.so"]
-link_flags = ["-fuse-ld=mold", "-O3" ]
-
-# kotlin
-[grammar.kotlin]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "kotlin.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# latex
-[grammar.latex]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "latex.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# lean
-# TODO
-
-# ledger
-# TODO
-
-# llvm
-[grammar.llvm]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "llvm.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-
-# llvm-mir
-# TODO
-
-# llvm-mir-yaml
-# TODO
-
-# lua
-[grammar.lua]
-source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-lua"
-source.git.pin = "main"
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "../scanner.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "scanner.o", "-o", "lua.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-[language.lua]
-grammar = "lua"
-
-[language.lua.queries]
-source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-lua"
-source.git.pin = "main"
-path = "queries"
-
-# make
-[grammar.make]
-source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-make"
-source.git.pin = "main"
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "make.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-[language.make]
-grammar = "make"
-
-[language.make.queries]
-source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-make"
-source.git.pin = "main"
-path = "queries"
-
-# markdoc
-# TODO
-
-# markdown
-[grammar.markdown]
-path = "tree-sitter-markdown/src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "markdown.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# markdown.inline
-[grammar."markdown.inline"]
-path = "tree-sitter-markdown-inline/src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "markdown.inline.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# matlab
-# TODO
-
-# mermaid
-[grammar.mermaid]
-source.git.url = "https://github.com/monaqa/tree-sitter-mermaid"
-source.git.pin = "master"
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "mermaid.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-[language.mermaid]
-grammar = "mermaid"
-
-[language.mermaid.queries]
-source.git.url = "https://github.com/monaqa/tree-sitter-mermaid"
-source.git.pin = "master"
-path = "queries"
-
-# meson
-# TODO
-
-# msbuild
-# TODO
-
-# nasm
-# TODO
-
-# nickel
-# TODO
-
-# nim
-[grammar.nim]
-path = "src"
-compile = "sccache"
-compile_args = [ "cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "nim.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# nix
-[grammar.nix]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "nix.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# nu
-[grammar.nu]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "nu.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# ocaml
-[grammar.ocaml]
-source.git.url = "https://github.com/tree-sitter/tree-sitter-ocaml"
-source.git.pin = "master"
-path = "grammars/ocaml/src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "ocaml.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-[language.ocaml]
-grammar = "ocaml"
-
-[language.ocaml.queries]
-source.git.url = "https://github.com/tree-sitter/tree-sitter-ocaml"
-source.git.pin = "master"
-path = "queries"
-
-# ocaml-interface
-[grammar.ocaml-interface]
-source.git.url = "https://github.com/tree-sitter/tree-sitter-ocaml"
-source.git.pin = "master"
-path = "grammars/interface/src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "ocaml-interface.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-[language.ocaml-interface]
-grammar = "ocaml-interface"
-
-[language.ocaml-interface.queries]
-source.git.url = "https://github.com/tree-sitter/tree-sitter-ocaml"
-source.git.pin = "master"
-path = "queries"
-
-# odin
-# TODO
-
-# opencl
-# TODO
-
-# openscad
-# TODO
-
-# org
-# TODO
-
-# pascal
-# TODO
-
-# passwd
-# TODO
-
-# pem
-# TODO
-
-# perl
-# TODO
-
-# php
-# TODO
-
-# po
-# TODO
-
-# ponylang
-# TODO
+[language.kak.queries.source.git]
+url = "https://github.com/saifulapm/tree-sitter-kak"
+pin = "main"
 
 # prisma
-[grammar.prisma]
-source.git.url = "https://github.com/victorhqc/tree-sitter-prisma"
-source.git.pin = "main"
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "prisma.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
+[grammar.prisma.source.git]
+url = "https://github.com/victorhqc/tree-sitter-prisma"
+pin = "main"
 
-[language.prisma]
-grammar = "prisma"
-
-[language.prisma.queries]
-source.git.url = "https://github.com/victorhqc/tree-sitter-prisma"
-source.git.pin = "main"
-path = "queries"
+# victorhqc/tree-sitter-prisma queries plus helix master textobjects.scm
+[language.prisma.queries.source.local]
+path = "/home/sugimoto/.config/kak-tree-sitter/queries/prisma"
 
 # protobuf
-[grammar.protobuf]
-source.git.url = "https://github.com/sdoerner/tree-sitter-proto"
-source.git.pin = "main"
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "protobuf.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
+[grammar.proto.source.git]
+url = "https://github.com/sdoerner/tree-sitter-proto"
+pin = "main"
 
 [language.protobuf]
-grammar = "protobuf"
+grammar = "proto"
 
 [language.protobuf.queries]
-source.git.url = "https://github.com/sdoerner/tree-sitter-proto"
-source.git.pin = "main"
 path = "queries"
 
-# prql
-# TODO
+[language.protobuf.queries.source.git]
+url = "https://github.com/sdoerner/tree-sitter-proto"
+pin = "main"
 
 # psv
-[grammar.psv]
-source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-csv"
-source.git.pin = "master"
-path = "psv/src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "psv.so"]
-link_flags = ["-O3"]
+[grammar.psv.source.git]
+url = "https://github.com/tree-sitter-grammars/tree-sitter-csv"
+pin = "master"
 
-[language.psv]
-grammar = "psv"
+[grammar.psv]
+path = "psv/src"
 
 [language.psv.queries]
-source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-csv"
-source.git.pin = "master"
 path = "psv/queries"
 
-
-# purescript
-[grammar.purescript]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "../scanner.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "scanner.o", "-o", "purescript.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# python
-[grammar.python]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "python.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# qml
-# TODO
-
-# r
-# TODO
-
-# racket
-# TODO
+[language.psv.queries.source.git]
+url = "https://github.com/tree-sitter-grammars/tree-sitter-csv"
+pin = "master"
 
 # regex
-[grammar.regex]
-source.git.url = "https://github.com/tree-sitter/tree-sitter-regex"
-source.git.pin = "master"
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "regex.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-[language.regex]
-grammar = "regex"
+[grammar.regex.source.git]
+url = "https://github.com/tree-sitter/tree-sitter-regex"
+pin = "master"
 
 [language.regex.queries]
-source.git.url = "https://github.com/tree-sitter/tree-sitter-regex"
-source.git.pin = "master"
 path = "queries"
 
-# rego
-# TODO
-
-# rescript
-# TODO
+[language.regex.queries.source.git]
+url = "https://github.com/tree-sitter/tree-sitter-regex"
+pin = "master"
 
 # requirements
-[grammar.requirements]
-source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-requirements"
-source.git.pin = "master"
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "requirements.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-[language.requirements]
-grammar = "requirements"
+[grammar.requirements.source.git]
+url = "https://github.com/tree-sitter-grammars/tree-sitter-requirements"
+pin = "master"
 
 [language.requirements.queries]
-source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-requirements"
-source.git.pin = "master"
 path = "queries"
 
-# rmarkdown
-# TODO
-
-# robot
-# TODO
+[language.requirements.queries.source.git]
+url = "https://github.com/tree-sitter-grammars/tree-sitter-requirements"
+pin = "master"
 
 # ron
+[grammar.ron.source.git]
+url = "https://github.com/tree-sitter-grammars/tree-sitter-ron"
+pin = "master"
 
 [grammar.ron]
-source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-ron"
-source.git.pin = "master"
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "./scanner.c", "./parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "ron.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-[language.ron]
-grammar = "ron"
+compile_args = ["-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
+link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "{lang}.so"]
 
 [language.ron.queries]
-source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-ron"
-source.git.pin = "master"
 path = "queries"
 
-# rst
-# TODO
-
-# ruby
-[grammar.ruby]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.cc", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "c++"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "ruby.so"]
-link_flags = ["-fuse-ld=mold", "-O3", "-lstdc++"]
-
-# rust
-[grammar.rust]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "rust.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# sage
-# TODO
+[language.ron.queries.source.git]
+url = "https://github.com/tree-sitter-grammars/tree-sitter-ron"
+pin = "master"
 
 # scala
-[grammar.scala]
-source.git.url = "https://github.com/tree-sitter/tree-sitter-scala"
-source.git.pin = "master"
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "scala.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
+[grammar.scala.source.git]
+url = "https://github.com/tree-sitter/tree-sitter-scala"
+pin = "master"
 
-[language.scala]
-grammar = "scala"
+[grammar.scala]
+compile_args = ["-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
+link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "{lang}.so"]
 
 [language.scala.queries]
-source.git.url = "https://github.com/tree-sitter/tree-sitter-scala"
-source.git.pin = "master"
 path = "queries"
 
-# scheme
-[grammar.scheme]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "scheme.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# scss
-[grammar.scss]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "scss.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# slint
-# TODO
-
-# smithy
-# TODO
-
-# sml
-# TODO
-
-# solidity
-# TODO
+[language.scala.queries.source.git]
+url = "https://github.com/tree-sitter/tree-sitter-scala"
+pin = "master"
 
 # sql
-# gh-pages branch carries the generated src/ (master omits it). ktsctl can't
-# check out a non-default branch by name, so pin the gh-pages tip commit.
+[grammar.sql.source.git]
+url = "https://github.com/DerekStride/tree-sitter-sql"
+pin = "851e9cb257ba7c66cc8c14214a31c44d2f1e954e"
+
 [grammar.sql]
-source.git.url = "https://github.com/DerekStride/tree-sitter-sql"
-source.git.pin = "851e9cb257ba7c66cc8c14214a31c44d2f1e954e"
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "sql.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
+compile_args = ["-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
+link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "{lang}.so"]
 
-[language.sql]
-grammar = "sql"
-
-[language.sql.queries]
-source.git.url = "https://github.com/DerekStride/tree-sitter-sql"
-source.git.pin = "851e9cb257ba7c66cc8c14214a31c44d2f1e954e"
-path = "queries"
+# DerekStride 851e9cb queries plus a hand-written textobjects.scm; re-copy
+# highlights.scm and indents.scm from upstream when bumping the grammar pin
+[language.sql.queries.source.local]
+path = "/home/sugimoto/.config/kak-tree-sitter/queries/sql"
 
 # sshclientconfig
-[grammar.sshclientconfig]
-source.git.url = "https://github.com/metio/tree-sitter-ssh-client-config"
-source.git.pin = "main"
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "sshclientconfig.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
+[grammar.ssh_client_config.source.git]
+url = "https://github.com/metio/tree-sitter-ssh-client-config"
+pin = "main"
 
 [language.sshclientconfig]
-grammar = "sshclientconfig"
+aliases = ["ssh"]
+grammar = "ssh_client_config"
 
 [language.sshclientconfig.queries]
-source.git.url = "https://github.com/metio/tree-sitter-ssh-client-config"
-source.git.pin = "main"
 path = "queries"
 
-# starlark
-# TODO
+[language.sshclientconfig.queries.source.git]
+url = "https://github.com/metio/tree-sitter-ssh-client-config"
+pin = "main"
 
 # svelte
-[grammar.svelte]
-source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-svelte"
-source.git.pin = "master"
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "../scanner.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "scanner.o", "-o", "svelte.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
+[grammar.svelte.source.git]
+url = "https://github.com/tree-sitter-grammars/tree-sitter-svelte"
+pin = "master"
 
-[language.svelte]
-grammar = "svelte"
+[grammar.svelte]
+compile_args = ["-c", "-fpic", "../parser.c", "../scanner.c", "-I", ".."]
+link_args = ["-shared", "-fpic", "parser.o", "scanner.o", "-o", "{lang}.so"]
 
 [language.svelte.queries]
-source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-svelte"
-source.git.pin = "master"
 path = "queries"
 
-# sway
-# TODO
+[language.svelte.queries.source.git]
+url = "https://github.com/tree-sitter-grammars/tree-sitter-svelte"
+pin = "master"
 
 # swift
-# with-generated-files branch carries the generated src/ (master omits it).
-# ktsctl can't check out a non-default branch by name, so pin the tip commit.
-[grammar.swift]
-source.git.url = "https://github.com/alex-pinkus/tree-sitter-swift"
-source.git.pin = "31d17fe7e818a2048c808b5c6fdc2dc792f4f5b5"
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "swift.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
+[grammar.swift.source.git]
+url = "https://github.com/alex-pinkus/tree-sitter-swift"
+pin = "31d17fe7e818a2048c808b5c6fdc2dc792f4f5b5"
 
-[language.swift]
-grammar = "swift"
+[grammar.swift]
+compile_args = ["-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
+link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "{lang}.so"]
 
 [language.swift.queries]
-source.git.url = "https://github.com/alex-pinkus/tree-sitter-swift"
-source.git.pin = "31d17fe7e818a2048c808b5c6fdc2dc792f4f5b5"
 path = "queries"
 
-# tablegen
-# TODO
-
-# task
-[grammar.task]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "task.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# tfvars
-# TODO
-
-# toml
-[grammar.toml]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "toml.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# tsq
-# TODO
+[language.swift.queries.source.git]
+url = "https://github.com/alex-pinkus/tree-sitter-swift"
+pin = "31d17fe7e818a2048c808b5c6fdc2dc792f4f5b5"
 
 # tsv
-[grammar.tsv]
-source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-csv"
-source.git.pin = "master"
-path = "tsv/src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "tsv.so"]
-link_flags = ["-O3"]
+[grammar.tsv.source.git]
+url = "https://github.com/tree-sitter-grammars/tree-sitter-csv"
+pin = "master"
 
-[language.tsv]
-grammar = "tsv"
+[grammar.tsv]
+path = "tsv/src"
 
 [language.tsv.queries]
-source.git.url = "https://github.com/tree-sitter-grammars/tree-sitter-csv"
-source.git.pin = "master"
 path = "tsv/queries"
 
-# twig
-# TODO
+[language.tsv.queries.source.git]
+url = "https://github.com/tree-sitter-grammars/tree-sitter-csv"
+pin = "master"
 
-# typescript
-[grammar.typescript]
-path = "typescript/src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "typescript.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# typst
-[grammar.typst]
-source.git.url = "https://github.com/uben0/tree-sitter-typst"
-source.git.pin = "master"
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "../scanner.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "scanner.o", "-o", "typst.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-[language.typst]
-grammar = "typst"
-
-[language.typst.queries]
-source.git.url = "https://github.com/uben0/tree-sitter-typst"
-source.git.pin = "master"
-path = "queries/typst"
-
-# ungrammar
-# TODO
-
-# unison
-[grammar.unison]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "unison.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# uxntal
-# TODO
-
-# v
-# TODO
-
-# vala
-# TODO
-
-# verilog
-[grammar.verilog]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "verilog.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# vhdl
-# TODO
-
-# vhs
-# TODO
-
-# vue
-[grammar.vue]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.cc", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "vue.so"]
-link_flags = ["-fuse-ld=mold", "-O3", "-lstdc++"]
-
-# wast
-# TODO
-
-# wat
-# TODO
-
-# wgsl
-# TODO
-
-# wit
-# TODO
-
-# xit
-# TODO
-
-# xml
-[grammar.xml]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "xml.so"]
-link_flags = ["-fuse-ld=mold", "-O3"]
-
-# yaml
-[grammar.yaml]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../scanner.cc", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "yaml.so"]
+# astro: its scanner is C++, so the default link misses libstdc++
+[grammar.astro]
 link_flags = ["-O3", "-lstdc++"]
 
-# yuck
-# TODO
+# csharp: KTS loads the symbol tree_sitter_<grammar name>; this grammar exports tree_sitter_c_sharp
+[grammar.c_sharp.source.git]
+url = "https://github.com/tree-sitter/tree-sitter-c-sharp"
+pin = "5b60f99545fea00a33bbfae5be956f684c4c69e2"
 
-# zig
-[grammar.zig]
-path = "src"
-compile = "sccache"
-compile_args = ["cc", "-c", "-fpic", "../parser.c", "-I", ".."]
-compile_flags = ["-fuse-ld=mold", "-O3"]
-link = "cc"
-link_args = ["-shared", "-fpic", "parser.o", "-o", "zig.so"]
-link_flags = ["-O3"]
+[grammar.c_sharp]
+compile_args = ["-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
+link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "{lang}.so"]
+
+[language.csharp]
+grammar = "c_sharp"
+
+# tsx: the default reuses the typescript grammar, which has no JSX nodes, so the tsx queries fail to compile
+[grammar.tsx.source.git]
+url = "https://github.com/tree-sitter/tree-sitter-typescript"
+pin = "b1bf4825d9eaa0f3bdeb1e52f099533328acfbdf"
+
+[grammar.tsx]
+path = "tsx/src"
+compile_args = ["-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
+link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "{lang}.so"]
+
+[language.tsx]
+grammar = "tsx"
