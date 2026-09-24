@@ -1,5 +1,8 @@
 # User-global instructions
 
+## Verbosity
+I have ADHD so please respond clearly and concisely.
+
 ## Contexts
 In-depth per-context instructions live in `~/.config/agents/contexts/`. Before working in a matching context, Read the file — do not proceed on memory of it:
 - `ui.md` — any UI/UX work on any platform: screens, pages, dashboards, artifacts, charts; taste calls, colour choices, design review. Points at the per-platform capture rigs and the `impeccable`/`color-expert` skills
@@ -36,6 +39,7 @@ Which model takes which work, for whichever harness is steering the session.
 Read `contexts/harnesses.md` before changing routes or tier placement.
 A delegated worker does its task and does not route onward.
 Dispatch and escalation rationale: `research/2026-09-15-routing-instruction-fixes.md`.
+Tier placement evidence: `research/2026-09-23-routing-tiers-opus-5-5-gpt-6.md`.
 
 | Situation | Route |
 |---|---|
@@ -43,15 +47,16 @@ Dispatch and escalation rationale: `research/2026-09-15-routing-instruction-fixe
 | Nontrivial plan or design ready, not yet built | `plan-refute` (its small-tactical-plan exemption applies) |
 | Implementation ready | Suggest the user run a review by a model from a different family than the one that wrote the code — a same-family reviewer shares its blind spots (user-invoked only) |
 | Repeated attempts have failed | Codex `gpt-6-astra` with the repro, evidence, and failed approaches; ask for a testable alternative explanation |
-| Substantial separable task, clear inputs and acceptance check | Codex `gpt-5.6-luna` (mechanical, near-zero judgment: fixtures, extraction, ordinary documentation updates — agent instructions follow the rule below) or `gpt-5.6-terra` (bounded coding or investigation needing judgment). Inspect the result. Quick tasks stay inline |
-| Demanding coding work — multi-file implementation, nontrivial refactor, sustained reliability over a long task | Codex `gpt-5.6-sol`. Inspect the result |
-| Ambiguous, hard debugging, substantial independent review | Codex `gpt-6-astra`, or stay here if this session is on the strongest tier |
+| Substantial separable task, clear inputs and acceptance check | Codex `gpt-6-luna` (mechanical, near-zero judgment: fixtures, extraction, renames) or `gpt-6-sol` (bounded coding or investigation needing judgment). Inspect the result. Quick tasks stay inline |
+| Substantial prose — documentation, READMEs, reports, summaries | Codex `gpt-6-sol` at default effort; short prose (commit/PR text, a paragraph) stays inline. Agent instructions follow the rule below. Evidence: `research/2026-09-24-prose-model-choice.md` |
+| Demanding coding work — multi-file implementation, nontrivial refactor, sustained reliability over a long task | Codex `gpt-6-sol`. Inspect the result |
+| Ambiguous, hard debugging, substantial independent review | Stay here if this session is on Opus 5.5 (the strongest tier); otherwise Codex `gpt-6-astra` |
 | Ordered queue of separable tasks | `grind` |
 | Agent instruction changes | Follow “Agent instructions get the strongest model” below |
 
-Codex tiers for delegated tasks: Luna → Terra → Sol → Astra; a blocked worker
-gets more effort before a higher tier. Luna is the mechanical tier, not a cheap
-coding default — start coding work at Terra. Skill-owned dispatch (`grind`
+Codex tiers for delegated tasks: Luna → Sol → Astra; a blocked worker gets more
+effort before a higher tier. Luna is the mechanical tier, not a cheap coding
+default — start coding work at Sol. Skill-owned dispatch (`grind`
 workers, `plan-refute` refuters) is unchanged.
 
 ### Dispatch per harness
@@ -65,7 +70,8 @@ workers, `plan-refute` refuters) is unchanged.
 ## Agent instructions get the strongest model
 Creating or substantively redesigning a skill, a context file, this file, a
 harness routing table, or an agent/subagent definition is done by the most
-capable model available — never delegated down a tier to save cost. These
+capable model available (currently Claude Opus 5.5) — never delegated down a
+tier to save cost. These
 files steer every future session that loads them, so a flaw in one is paid
 again on each use, and it fails quietly: a vague trigger or a wrong rule looks
 fine and just makes later work worse. If the current session is not on the

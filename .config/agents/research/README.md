@@ -21,6 +21,8 @@ pointer back to the report that justified it.
 - `lessons-from-memory.md` — what past sessions learned about running these agents, pulled from per-project memory and the `.remember` logs, each entry with its source.
 
 ### Delegation and subagents
+- `2026-09-24-prose-model-choice.md` — EQ-Bench, Arena and Artificial Analysis snapshot: GPT-6 Sol for delegated prose, Luna off documentation, Gemini Flash and Haiku avoided.
+- `2026-09-23-routing-tiers-opus-5-5-gpt-6.md` — Artificial Analysis snapshot placing Opus 5.5 as the strongest tier; GPT-6 Sol/Luna replace the 5.6 tiers (Codex >= 0.156.1).
 - `2026-09-15-routing-instruction-fixes.md` — routing contract checks, strongest-tier policy, benchmark wording, and live interrogation limits.
 - `2026-09-10-pi-subagents-options.md` — Astra research: Pi delegation packages ranked, literature on when multi-agent helps (Kim et al. 2026, Anthropic's research system, Cognition's counter-essay, MAST), the minimal-launcher option, adoption plan and risks.
 - `2026-09-10-pi-subagents-last30days.md` — 30-day sentiment sweep on subagents in terminal coding agents; Pi's creator's position, the fragmented `pi-subagents` namespace, practitioner convergence on read-heavy fan-out only.
