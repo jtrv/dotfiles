@@ -66,10 +66,10 @@ max_duration_secs = 60
 
 [audio.feedback]
 # Enable audio feedback sounds (beeps when recording starts/stops)
-enabled = false
+enabled = true
 #
 # Sound theme: "default", "subtle", "mechanical", or path to custom theme directory
-theme = "default"
+theme = "mechanical"
 #
 # Volume level (0.0 to 1.0)
 volume = 0.7
@@ -294,7 +294,7 @@ icon_theme = "nerd-font"
 [vad]
 # gate, not a trimmer: a stray hotkey tap skips transcription instead of
 # hallucinating text. energy backend needs no model download.
-enabled = true
+enabled = false
 backend = "energy"
 
 [meeting]
