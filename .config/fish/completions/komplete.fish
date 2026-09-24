@@ -1,1 +1,1 @@
-complete -c "komplete" -a '(ls -1N $PATH)'
+complete -c "komplete" -a '(command ls -1N $PATH)'

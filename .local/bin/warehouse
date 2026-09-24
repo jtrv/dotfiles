@@ -39,6 +39,6 @@ rg --color=never -o 'bundle.*(https.*?)("|\s|$)' -r '$1' \
 	"$CONFIG"/kak/kakrc 2>/dev/null | sort | keep kakoune
 
 [ -d "$DATA"/kak-tree-sitter/grammars ] &&
-	ls -1 "$DATA"/kak-tree-sitter/grammars | keep ktsctl
+	command ls -1 "$DATA"/kak-tree-sitter/grammars | keep ktsctl
 
 have uv && uv tool list --show-version-specifiers | rg --color=never '^\w' | keep uv
