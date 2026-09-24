@@ -65,4 +65,4 @@ In the staging worktree, with `<this>` = this machine's branch and `<other>` = t
 7. **Never push unasked. Never `git add -A`/`.`** — named absolute paths only, so a stray file never rides along. Under `~/.config/agents` this is not a nicety: vendored skills are untracked by policy and run to hundreds of files each, so a swept directory buries the real change. See `harnesses.md`.
 8. A diff with a small flaw (e.g. useless-use-of-cat): ask before committing.
 
-Messages: conventional-ish `area: summary` (`pi:`, `niri/kanata:`, `waybar:`, `deps:`); body only when the why isn't obvious from the diff. Splitting one file across commits: avoid — hand the user lazygit (`lc`) with a recommendation instead.
+Messages: conventional-ish `area: summary` (`pi:`, `niri/kanata:`, `waybar:`, `deps:`); body only when the why isn't obvious from the diff. Splitting one file across commits is fine when you can verify the staged version is non-destructive and works on its own — e.g. stage an edited copy with `hash-object -w` + `update-index --cacheinfo`, then check it parses/loads and that the working tree still holds the full change.
