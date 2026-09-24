@@ -48,6 +48,7 @@ seetui -> https://github.com/rust-lang/crates.io-index
 skim -> https://github.com/rust-lang/crates.io-index
 skyspell -> https://github.com/rust-lang/crates.io-index
 skyspell_kak -> https://github.com/rust-lang/crates.io-index
+sqruff -> https://github.com/rust-lang/crates.io-index
 systemd-lsp -> https://github.com/rust-lang/crates.io-index
 syswatch -> https://github.com/rust-lang/crates.io-index
 thesauromatic -> https://github.com/rust-lang/crates.io-index
