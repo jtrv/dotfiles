@@ -170,10 +170,16 @@ declare-option -hidden str lsp_server_solargraph %{
   diagnostics = true
 }
 
-# SQL linter/formatter (complements sqls, which does completion only); needs a .sqruff file
+declare-option -hidden str lsp_server_sqls %{
+  [sqls]
+  root_globs = [ ".git", ".hg" ]
+}
+
+# Live SQL diagnostics. sqruff reads .sqlfluff too; sqlfluff (contexts/sql.kak) stays
+# the formatter because sqruff 0.40 stops parsing tsql at the first table-level CHECK.
 declare-option -hidden str lsp_server_sqruff %{
   [sqruff]
-  root_globs = [ ".sqruff", ".git", ".hg" ]
+  root_globs = [ ".sqlfluff", ".sqruff", ".git", ".hg" ]
   args = [ "lsp" ]
 }
 
@@ -502,14 +508,14 @@ hook -group lsp-filetype-ruby global BufSetOption filetype=ruby %{
 }
 
 hook -group lsp-filetype-sql global BufSetOption filetype=sql %{
-  set-option buffer lsp_servers %{
-    [sqls]
-    root_globs = [ ".git", ".hg" ]
-  }
+  # lsp_servers (sqls, plus sqruff unless sql-linter-toggle picked sqlfluff) is set
+  # by sql-linter-apply in contexts/sql.kak.
 
-  set-option -add buffer lsp_servers "
-    #opt{lsp_server_sqruff}
-  "
+  # sqls 0.2.28 advertises formatting but only handles DML: it glues DDL tokens
+  # together (CREATETABLEdbo.c) and panics on a full schema file. sqruff formats only
+  # what it can parse, so sqlfluff (formatcmd in contexts/sql.kak) formats.
+  map buffer lsp f '<esc>: format<ret>' -docstring 'format buffer (sqlfluff)'
+  map buffer lsp L '<esc>: sql-linter-toggle<ret>' -docstring 'toggle SQL linter (sqruff/sqlfluff)'
 }
 
 hook -group lsp-filetype-systemd global BufSetOption filetype=systemd %{
