@@ -365,16 +365,25 @@ url = "https://github.com/tree-sitter/tree-sitter-scala"
 pin = "master"
 
 # sql
-[grammar.sql.source.git]
-url = "https://github.com/DerekStride/tree-sitter-sql"
-pin = "851e9cb257ba7c66cc8c14214a31c44d2f1e954e"
+# Local build of ~/repos/tree-sitter-sql branch `mine`: DerekStride main merged with
+# tsql-constraints (IDENTITY, named constraints, trailing comma), tsql-bracket-identifiers,
+# tsql-procedures (procedure bodies, @@vars, table hints, TOP), tsql-batches (top-level
+# DECLARE/WHILE/IF, GO) and grant-deny (GRANT/REVOKE/DENY). Rebuild: tree-sitter
+# generate, then cc -shared -fPIC -O2 -Isrc src/parser.c src/scanner.c -o <this path>
+# After overwriting the .so, restart the server (tree-sitter-shutdown, then re-run the
+# kakrc --init line): tree-sitter-reload keeps the old dlopen'd copy and then rejects
+# queries naming new node types, disabling sql until restart.
+[grammar.sql.source.local]
+path = "/home/sugimoto/.local/share/kak-tree-sitter/grammars/sql/mine.so"
 
 [grammar.sql]
 compile_args = ["-c", "-fpic", "../scanner.c", "../parser.c", "-I", ".."]
 link_args = ["-shared", "-fpic", "scanner.o", "parser.o", "-o", "{lang}.so"]
 
-# DerekStride 851e9cb queries plus a hand-written textobjects.scm; re-copy
-# highlights.scm and indents.scm from upstream when bumping the grammar pin
+# DerekStride queries (highlights.scm from the mine branch) plus a
+# hand-written textobjects.scm; re-copy them when rebuilding the grammar
+# then drop `@spell` from `(comment) @comment @spell`: kak-tree-sitter takes the
+# unknown spell capture and leaves comments unhighlighted (same for hcl)
 [language.sql.queries.source.local]
 path = "/home/sugimoto/.config/kak-tree-sitter/queries/sql"
 

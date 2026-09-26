@@ -80,7 +80,7 @@
 
 (null_lit) @constant
 
-(comment) @comment @spell
+(comment) @comment
 
 (identifier) @variable
 

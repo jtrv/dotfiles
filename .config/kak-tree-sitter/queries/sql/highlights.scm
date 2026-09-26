@@ -31,7 +31,7 @@
     parameter: [(literal)]?)))
 
 (literal) @string
-(comment) @comment @spell
+(comment) @comment
 (marginalia) @comment
 
 ((literal) @number
@@ -58,6 +58,7 @@
  (keyword_delimited)
  (keyword_replication)
  (keyword_auto_increment)
+ (keyword_identity)
  (keyword_default)
  (keyword_collate)
  (keyword_concurrently)
@@ -335,6 +336,25 @@
   (keyword_compression)
   (keyword_duplicate)
   (keyword_while)
+  (keyword_try)
+  (keyword_go)
+  (keyword_catch)
+  (keyword_throw)
+  (keyword_waitfor)
+  (keyword_delay)
+  (keyword_output)
+  (keyword_readonly)
+  (keyword_tran)
+  (keyword_top)
+  (keyword_percent)
+  (keyword_grant)
+  (keyword_revoke)
+  (keyword_deny)
+  (keyword_privileges)
+  (keyword_usage)
+  (keyword_connect)
+  (keyword_control)
+  (keyword_object)
 ] @keyword
 
 [
@@ -444,6 +464,11 @@
   ">="
   ">"
   "<>"
+  "+="
+  "-="
+  "*="
+  "/="
+  "%="
   (op_other)
   (op_unary_other)
 ] @operator
@@ -458,3 +483,8 @@
   ","
   "."
 ] @punctuation.delimiter
+
+; T-SQL @variables and @@system variables. Last, because kak-tree-sitter lets
+; the later pattern win over the positional identifier captures above.
+((identifier) @variable
+  (#match? @variable "^@"))
