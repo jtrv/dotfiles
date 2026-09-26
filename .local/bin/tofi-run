@@ -1,3 +1,7 @@
 #!/bin/sh
 set -e
-exec $(/usr/bin/tofi-run) "$@"
+# absolute path: ~/.local/bin comes first on PATH, so a bare tofi-run is this script
+for real in /run/current-system/sw/bin/tofi-run /usr/bin/tofi-run; do
+  [ -x "$real" ] && break
+done
+exec $("$real") "$@"

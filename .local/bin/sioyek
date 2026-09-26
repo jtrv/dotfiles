@@ -7,4 +7,7 @@
 # kvantum. ~/.local/bin is first in both the shell and systemd user PATH, so this
 # also covers launches from niri and the .desktop entry.
 # The portal theme also logs a harmless "Could not register app ID" on every start.
-QT_QPA_PLATFORMTHEME=xdgdesktopportal QT_LOGGING_RULES=qt.qpa.services=false exec /usr/bin/sioyek "$@"
+for real in /run/current-system/sw/bin/sioyek /usr/bin/sioyek; do
+  [ -x "$real" ] && break
+done
+QT_QPA_PLATFORMTHEME=xdgdesktopportal QT_LOGGING_RULES=qt.qpa.services=false exec "$real" "$@"

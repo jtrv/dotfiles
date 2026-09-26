@@ -15,8 +15,6 @@ owned='
 .config/mozilla/firefox
 .config/pacman
 .config/paru
-.config/qt5ct/qt5ct.conf
-.config/qt6ct/qt6ct.conf
 .config/systemd/user
 .config/udev/rules.d
 .config/voxtype/config.toml
@@ -28,7 +26,6 @@ owned='
 .config/warehouse/ktsctl
 .local/bin/mirrors
 .local/bin/waybar-sleep-inhibit
-.local/bin/tofi-run
 readme.md
 .config/niri/local.kdl
 .config/mpv/local.conf
