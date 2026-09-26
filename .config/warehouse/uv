@@ -4,3 +4,4 @@ markitdown v0.1.7
 python-lsp-server v1.15.0
 ruff v0.16.5
 skillspector v2.11.1 [required:  git+https://github.com/NVIDIA/skillspector.git]
+sqlfluff v4.3.0

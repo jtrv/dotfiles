@@ -12,6 +12,7 @@ django~5.1
 docker
 dom
 esbuild
+eslint_plugin_solid
 express
 fastapi
 fish~4.9
@@ -45,6 +46,7 @@ nextjs
 nim
 nix
 node
+node_mssql
 npm
 ocaml
 odin
@@ -57,16 +59,19 @@ python~3.14
 react
 react_bootstrap
 react_native
+react_redux
 react_router
 react~18
 redis
 redux
+redux_toolkit
 requests
 requirejs
 rust
 rxjs
 sass
 socketio~4
+solid
 sqlite
 svelte
 svg
@@ -74,6 +79,7 @@ tailwindcss
 terraform
 threejs
 tokio
+tsql
 typescript
 underscore
 vagrant
@@ -82,3 +88,4 @@ vitest
 web_extensions
 webpack~5
 zig
+zod
