@@ -1,3 +1,4 @@
+abtop -> https://github.com/rust-lang/crates.io-index
 bugstalker -> https://github.com/rust-lang/crates.io-index
 cargo-deny -> https://github.com/rust-lang/crates.io-index
 cargo-fix -> https://github.com/rust-lang/crates.io-index
@@ -12,12 +13,14 @@ conceal -> https://github.com/rust-lang/crates.io-index
 cpz -> https://github.com/rust-lang/crates.io-index
 crabz -> https://github.com/rust-lang/crates.io-index
 cymbal -> https://github.com/enricozb/cymbal
-dedoc -> https://github.com/toiletbril/dedoc
+dedoc -> /home/sugimoto/repos/dedoc
 depsguard -> https://github.com/rust-lang/crates.io-index
 dotenv-linter -> https://github.com/rust-lang/crates.io-index
+emplace -> https://github.com/rust-lang/crates.io-index
 ghgrab -> https://github.com/rust-lang/crates.io-index
 grug -> /home/sugimoto/.config/kak/bundle/grug
 handlr-regex -> https://github.com/rust-lang/crates.io-index
+heretek -> https://github.com/rust-lang/crates.io-index
 hexapoda -> https://github.com/rust-lang/crates.io-index
 iching -> https://github.com/rust-lang/crates.io-index
 kak-ansi-rs -> /home/sugimoto/.config/kak/bundle/kak-ansi-rs
@@ -35,11 +38,10 @@ mcat -> https://github.com/rust-lang/crates.io-index
 mergiraf -> https://github.com/rust-lang/crates.io-index
 mise -> https://github.com/rust-lang/crates.io-index
 netwatch-tui -> https://github.com/rust-lang/crates.io-index
+outside -> https://github.com/rust-lang/crates.io-index
 purrista -> /home/sugimoto/repos/purrista
-putzen-cli -> https://github.com/rust-lang/crates.io-index
 qrtool -> https://github.com/rust-lang/crates.io-index
 ripdrag -> https://github.com/rust-lang/crates.io-index
-rkak_easymotion -> /home/sugimoto/.config/kak/bundle/reasymotion
 rmz -> https://github.com/rust-lang/crates.io-index
 rusty-man -> https://github.com/rust-lang/crates.io-index
 sccache -> https://github.com/rust-lang/crates.io-index
