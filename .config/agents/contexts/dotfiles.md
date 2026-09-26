@@ -29,7 +29,7 @@ This table is the **single source of truth** for what is machine-specific; anyth
 | `mpv/local.conf` | per-branch, one `include=` of that branch's `hosts/<machine>.conf` |
 | `.config/environment.d/*` | morpheus — NixOS machines set the same vars via `environment.sessionVariables` in nixos-config |
 | `warehouse/bun` | per-machine additions, like `warehouse/uv` — keep this machine's side, report theirs |
-| `warehouse/dedoc` | union — docsets are cheap. The file is a `dedoc ls` snapshot that `warehouse` rewrites, so `dedoc download` the other side's docsets (`config-sweep` prints them) and take both sides in the file |
+| `warehouse/dedoc` | union — docsets are cheap. The file is a `dedoc ls` snapshot that `warehouse` rewrites, so `dedoc download` the other side's docsets (`config-sweep` prints them) and take both sides in the file. Names DevDocs calls unknown (tsql, zod, solid, react_redux, redux_toolkit, node_mssql) are built by `~/repos/dedoc-contrib` (github.com/jtrv/dedoc-contrib): `mise run build -- <names>` there, never `dedoc download` |
 | `warehouse/{fish,go,ktsctl}`, `fish/fish_plugins`, `mpv/shaders/*`, `mise/config.toml` global `[tools]` | morpheus keeps them; NixOS machines drop what nixos-config installs |
 | `paru/paru.conf`, `.local/bin/mirrors`, topgrade `[linux]`/arch commands | arch machines (morpheus) |
 | firefox flavor: `BROWSER`, `mimeapps.list`, `mozilla/firefox/<profile>` dir | per-machine (thiccpad runs devedition) |
