@@ -56,6 +56,7 @@ nginx
 nim
 nix
 node
+node_mssql
 npm
 ocaml
 odin
@@ -73,10 +74,12 @@ rails~8.0
 react
 react_bootstrap
 react_native
+react_redux
 react_router
 react~18
 redis
 redux
+redux_toolkit
 requests
 requirejs
 ruby~3.3
@@ -84,6 +87,7 @@ rust
 rxjs
 sass
 socketio~4
+solid
 sqlite
 svelte
 svg
@@ -91,6 +95,7 @@ tailwindcss
 terraform
 threejs
 tokio
+tsql
 typescript
 typescript~5.1
 underscore
@@ -101,3 +106,4 @@ web_extensions
 webpack~5
 yarn
 zig
+zod
