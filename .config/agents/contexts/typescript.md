@@ -42,9 +42,33 @@ still exits non-zero overall (verified on 1.4.0) — safe in a gate.
 
 - oxlint: `--type-aware --deny-warnings`; categories
   `correctness`/`suspicious`/`pedantic` at `"error"`; plugins `import`,
-  `typescript`, `unicorn`, `promise`, `oxc`; `import/no-cycle: "error"`.
+  `typescript`, `unicorn`, `promise`, `oxc`, `jsdoc` (configured below);
+  `import/no-cycle: "error"`.
   **No ignore-file baselines.** Disable comments are the `// ignore:` analog —
   last resort, documented reason.
+- oxlint `jsdoc` plugin: `pedantic` switches on `require-*` rules that demand
+  `{types}` TS already has and a filler line for every param, return and
+  yield of any block — a bare `/** @deprecated */` fails `require-returns`.
+  Add to `.oxlintrc.json` (verified 1.83: flags `@type` in `.ts`, accepts it
+  in `.js` where it is the type system, accepts the TSDoc tags):
+
+  ```json
+  "rules": {
+    "jsdoc/require-param": "off",
+    "jsdoc/require-param-type": "off",
+    "jsdoc/require-param-description": "off",
+    "jsdoc/require-returns": "off",
+    "jsdoc/require-returns-type": "off",
+    "jsdoc/require-returns-description": "off",
+    "jsdoc/require-property-type": "off",
+    "jsdoc/require-property-description": "off",
+    "jsdoc/require-yields": "off",
+    "jsdoc/check-tag-names": ["error", { "typed": true, "definedTags": ["remarks", "typeParam"] }]
+  },
+  "overrides": [{ "files": ["**/*.js"], "rules": {
+    "jsdoc/check-tag-names": ["error", { "definedTags": ["remarks", "typeParam"] }]
+  } }]
+  ```
 - Version coupling: `oxlint-tsgolint` pins an exact TypeScript patch — upgrade
   `typescript` and `oxlint-tsgolint` together. `tsc --noEmit` is the type
   gate's ground truth, period — `oxlint --type-check` is not a replacement.
@@ -122,6 +146,26 @@ TypeScript:
   idiom is what to write instead: `as const` object + derived union).
 - **Readonly by default**: `readonly` fields, `ReadonlyArray`/`readonly T[]` on
   public signatures; return new values over mutating arguments.
+
+JSDoc (the global Comments rule governs; this is the TS-specific part):
+
+- **Types live in TypeScript, never in JSDoc.** In `.ts`, no `{type}` in a
+  tag, no `@type`/`@typedef`. A block holds only what the signature can't:
+  units, invariants, what throws and when, side effects, why the contract is
+  surprising. A block that restates the name and params gets deleted, not
+  filled out.
+- **Not mandatory.** No coverage rule, no "every export gets a block" —
+  that manufactures `@param id - the id`. Exception: a *published* library
+  documents every exported symbol, because that text is the hover and the
+  `.d.ts` its consumers read. Use TSDoc syntax (`@param name - desc`,
+  `@remarks`, `@typeParam`).
+- **Tags that earn their place:** `@deprecated` naming the replacement
+  (`typescript/no-deprecated` is pedantic + type-aware, so callers already
+  fail the gate); `@throws`; `{@link Symbol}` over a backticked name (tsserver
+  resolves it and renames follow it); `@example` only when the call shape
+  isn't obvious; `@internal` + `stripInternal` in libraries.
+- **JSDoc-typed `.js` only when a tool loads the file raw**; gate it with
+  `checkJs` (or `// @ts-check`) and import types via `/** @import { T } from "./m" */`.
 
 Async (floating/misused promises are gated by the type-aware rules; these are
 the rest):
