@@ -26,6 +26,8 @@ This table is the **single source of truth** for what is machine-specific; anyth
 | `kanata/*.kbd` | every branch, per-machine by filename (`morpheus.kbd`, `thiccpad.kbd`, `shared.kbd`) — prefer this name-spacing for new machine-specific files over new table rows |
 | `niri/hosts/*.kdl` | every branch, per-machine by filename; `niri/config.kdl` is fully shared — machine settings (outputs, struts, per-host daemons and binds) go in the host file, never back into `config.kdl` |
 | `niri/local.kdl` | per-branch, one line including that branch's `hosts/<machine>.kdl` |
+| `mpv/hosts/*.conf` | every branch, per-machine by filename (GPU shader and scaler lines); `mpv.conf` is fully shared |
+| `mpv/local.conf` | per-branch, one `include=` of that branch's `hosts/<machine>.conf` |
 | `.config/environment.d/*` | morpheus — NixOS machines set the same vars via `environment.sessionVariables` in nixos-config |
 | `warehouse/bun` | per-machine additions, like `warehouse/uv` — keep this machine's side, report theirs |
 | `warehouse/dedoc` | union — docsets are cheap, take both sides |
@@ -34,7 +36,7 @@ This table is the **single source of truth** for what is machine-specific; anyth
 | firefox flavor: `BROWSER`, `mimeapps.list`, `mozilla/firefox/<profile>` dir | per-machine (thiccpad runs devedition) |
 | absolute tool paths in configs/scripts (`/usr/...` vs `/run/current-system/sw/...`: qt5ct/qt6ct, tofi-run) | per-machine |
 | secret access in scripts (`secli get` vs `/run/agenix/*`) | per-machine |
-| hardware tuning: `mpv.conf` scale/shader lines, `voxtype` model/threads, waybar height/font | per-machine |
+| hardware tuning: `voxtype` model/threads, waybar height/font | per-machine |
 | `easyeffects/*` | shared — every file is keyed by a device (autoload by alsa id, presets/irs by headphone or mic name) and inert elsewhere; union on merge, never sweep |
 | `fish/config.fish` ssh-agent fallback | morpheus (NixOS gets the agent from systemd) |
 | skyspell dict names in `kakrc` (`en_US-large`/`es` vs nix `en_US`/`es_ANY`) | per-machine |

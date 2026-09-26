@@ -31,6 +31,7 @@ owned='
 .local/bin/tofi-run
 readme.md
 .config/niri/local.kdl
+.config/mpv/local.conf
 '
 manifests='
 .config/warehouse/bun
@@ -46,7 +47,6 @@ mixed='
 .config/fish/conf.d/env.fish
 .config/kak/kakrc
 .config/mise/config.toml
-.config/mpv/mpv.conf
 .config/topgrade.toml
 .config/waybar/config.jsonc
 .config/waybar/style.css
