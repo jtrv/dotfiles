@@ -26,6 +26,13 @@ in `~/.config/agents/watches/` — one per watch, each printing a single line:
 a watch topic; investigate only on `CHECK`. Adding a watch = probe script +
 pointer from the doc or memory that defers the decision.
 
+## Wiki
+`~/notes/agent-wiki` is my personal knowledge base (Karpathy LLM-wiki
+pattern). When I ask to save, ingest or remember something about a topic,
+project or decision beyond the current repo, or ask what I know about
+something, read `~/notes/agent-wiki/AGENTS.md` first and work there. How
+agents should work still goes in harness memory, not the wiki.
+
 ## Research
 Reports on how the agents themselves are set up and used — delegation,
 context handling, plugin and skill evaluations — live in
