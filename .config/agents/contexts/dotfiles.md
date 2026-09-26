@@ -34,7 +34,7 @@ This table is the **single source of truth** for what is machine-specific; anyth
 | `paru/paru.conf`, `.local/bin/mirrors`, topgrade `[linux]`/arch commands | arch machines (morpheus) |
 | firefox flavor: `BROWSER`, `mimeapps.list`, `mozilla/firefox/<profile>` dir | per-machine (thiccpad runs devedition) |
 | absolute tool paths in configs/scripts (`/usr/...` vs `/run/current-system/sw/...`) | shared — probe both paths at run time (see `.local/bin/tofi-run`), never fork the file per machine |
-| secret access in scripts (`secli get` vs `/run/agenix/*`) | per-machine |
+| secret access in scripts (`secli get` on morpheus vs sops-nix `/run/secrets/*` on NixOS; agenix is gone) | per-machine |
 | hardware tuning: `voxtype` model/threads, waybar height/font | per-machine |
 | `easyeffects/*` | shared — every file is keyed by a device (autoload by alsa id, presets/irs by headphone or mic name) and inert elsewhere; union on merge, never sweep |
 | `fish/config.fish` ssh-agent fallback | morpheus (NixOS gets the agent from systemd) |
