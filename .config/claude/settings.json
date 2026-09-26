@@ -81,7 +81,6 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "claude-fable-5-1[1m]",
   "skillOverrides": {
     "find-skills": "on",
     "writing-skills": "on",
@@ -246,7 +245,8 @@
     "typescript-lsp@claude-plugins-official": true,
     "vercel@claude-plugins-official": false,
     "clangd-lsp@claude-plugins-official": true,
-    "cloudflare@cloudflare": true
+    "cloudflare@cloudflare": true,
+    "typesafe@typesafe-ai": true
   },
   "extraKnownMarketplaces": {
     "context-mode": {
@@ -271,6 +271,12 @@
       "source": {
         "source": "github",
         "repo": "cloudflare/skills"
+      }
+    },
+    "typesafe-ai": {
+      "source": {
+        "source": "github",
+        "repo": "typesafe-ai/skills"
       }
     }
   },

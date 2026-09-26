@@ -15,8 +15,6 @@ owned='
 .config/mozilla/firefox
 .config/pacman
 .config/paru
-.config/qt5ct/qt5ct.conf
-.config/qt6ct/qt6ct.conf
 .config/systemd/user
 .config/udev/rules.d
 .config/voxtype/config.toml
@@ -27,8 +25,9 @@ owned='
 .config/warehouse/go
 .config/warehouse/ktsctl
 .local/bin/mirrors
-.local/bin/tofi-run
 readme.md
+.config/niri/local.kdl
+.config/mpv/local.conf
 '
 manifests='
 .config/warehouse/bun
@@ -44,8 +43,6 @@ mixed='
 .config/fish/conf.d/env.fish
 .config/kak/kakrc
 .config/mise/config.toml
-.config/mpv/mpv.conf
-.config/niri/config.kdl
 .config/topgrade.toml
 .config/waybar/config.jsonc
 .config/waybar/style.css

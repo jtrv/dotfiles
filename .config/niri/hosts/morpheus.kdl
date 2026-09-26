@@ -1,0 +1,27 @@
+output "DP-1" {
+    mode "3440x1440@60.000"
+    scale 1
+    position x=0 y=0
+}
+
+// hermes virtual display: pin the position so reconnects don't march it
+// rightward (niri remembers the last spot and appends past it each time);
+// no mode line - the client-requested mode arrives via EDID and must win
+output "Virtual-1" {
+    position x=3440 y=0
+}
+
+gestures {
+    hot-corners {
+        top-left
+        top-right
+        bottom-left
+        bottom-right
+    }
+}
+
+// notifications
+spawn-at-startup "mako"
+
+// hot-edges to swap windows / workspaces with cursor
+spawn-at-startup "niri-edge-pan"

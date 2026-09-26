@@ -23,15 +23,19 @@ This table is the **single source of truth** for what is machine-specific; anyth
 | evdi/hermes-streaming (packages, virtual-display pinning) | morpheus |
 | bun global `package.json`, cargo `.crates*` | per-machine local state — never merged. Keep this machine's side, but **report what the other side had**; if it looks like new tools rather than version drift, ask |
 | `kanata/*.kbd` | every branch, per-machine by filename (`morpheus.kbd`, `thiccpad.kbd`, `shared.kbd`) — prefer this name-spacing for new machine-specific files over new table rows |
+| `niri/hosts/*.kdl` | every branch, per-machine by filename; `niri/config.kdl` is fully shared — machine settings (outputs, struts, per-host daemons and binds) go in the host file, never back into `config.kdl` |
+| `niri/local.kdl` | per-branch, one line including that branch's `hosts/<machine>.kdl` |
+| `mpv/hosts/*.conf` | every branch, per-machine by filename (GPU shader and scaler lines); `mpv.conf` is fully shared |
+| `mpv/local.conf` | per-branch, one `include=` of that branch's `hosts/<machine>.conf` |
 | `.config/environment.d/*` | morpheus — NixOS machines set the same vars via `environment.sessionVariables` in nixos-config |
 | `warehouse/bun` | per-machine additions, like `warehouse/uv` — keep this machine's side, report theirs |
-| `warehouse/dedoc` | union — docsets are cheap, take both sides |
+| `warehouse/dedoc` | union — docsets are cheap. The file is a `dedoc ls` snapshot that `warehouse` rewrites, so `dedoc download` the other side's docsets (`config-sweep` prints them) and take both sides in the file |
 | `warehouse/{fish,go,ktsctl}`, `fish/fish_plugins`, `mpv/shaders/*`, `mise/config.toml` global `[tools]` | morpheus keeps them; NixOS machines drop what nixos-config installs |
 | `paru/paru.conf`, `.local/bin/mirrors`, topgrade `[linux]`/arch commands | arch machines (morpheus) |
 | firefox flavor: `BROWSER`, `mimeapps.list`, `mozilla/firefox/<profile>` dir | per-machine (thiccpad runs devedition) |
-| absolute tool paths in configs/scripts (`/usr/...` vs `/run/current-system/sw/...`: qt5ct/qt6ct, tofi-run) | per-machine |
+| absolute tool paths in configs/scripts (`/usr/...` vs `/run/current-system/sw/...`) | shared — probe both paths at run time (see `.local/bin/tofi-run`), never fork the file per machine |
 | secret access in scripts (`secli get` vs `/run/agenix/*`) | per-machine |
-| hardware tuning: `mpv.conf` scale/shader lines, `voxtype` model/threads, niri `output`/`struts`, waybar height/font | per-machine |
+| hardware tuning: `voxtype` model/threads, waybar height/font | per-machine |
 | `easyeffects/*` | shared — every file is keyed by a device (autoload by alsa id, presets/irs by headphone or mic name) and inert elsewhere; union on merge, never sweep |
 | `fish/config.fish` ssh-agent fallback | morpheus (NixOS gets the agent from systemd) |
 | skyspell dict names in `kakrc` (`en_US-large`/`es` vs nix `en_US`/`es_ANY`) | per-machine |
@@ -53,6 +57,10 @@ In the staging worktree, with `<this>` = this machine's branch and `<other>` = t
 7. Take it live: `config status` effectively clean, then `config merge --ff-only <this>-wip`. A non-ff merge or overlapping dirty files would put the mess in the live `$HOME` tree — the thing staging exists to prevent. If live moved meanwhile, `git merge <this>` in staging again, then fast-forward.
 8. Push only when asked: `config push origin <this>`. The pair is fully converged once the other machine runs this same flow there.
 
+### Pending convergence steps
+
+One-time steps a branch owes at its next convergence. Do them during step 5, before the checkpoint, then delete the entry in the same merge.
+
 ## Commit workflow (live `$HOME` state, on the live branch)
 
 1. **Status.** Clean tree → say so, stop.
@@ -64,4 +72,4 @@ In the staging worktree, with `<this>` = this machine's branch and `<other>` = t
 7. **Never push unasked. Never `git add -A`/`.`** — named absolute paths only, so a stray file never rides along. Under `~/.config/agents` this is not a nicety: vendored skills are untracked by policy and run to hundreds of files each, so a swept directory buries the real change. See `harnesses.md`.
 8. A diff with a small flaw (e.g. useless-use-of-cat): ask before committing.
 
-Messages: conventional-ish `area: summary` (`pi:`, `niri/kanata:`, `waybar:`, `deps:`); body only when the why isn't obvious from the diff. Splitting one file across commits: avoid — hand the user lazygit (`lc`) with a recommendation instead.
+Messages: conventional-ish `area: summary` (`pi:`, `niri/kanata:`, `waybar:`, `deps:`); body only when the why isn't obvious from the diff. Splitting one file across commits is fine when you can verify the staged version is non-destructive and works on its own — e.g. stage an edited copy with `hash-object -w` + `update-index --cacheinfo`, then check it parses/loads and that the working tree still holds the full change.

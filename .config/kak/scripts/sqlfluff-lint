@@ -1,0 +1,4 @@
+#!/bin/sh
+# kakoune lintcmd: sqlfluff-lint <config> <file>, prints file:line:col: warning: msg
+sqlfluff lint --config "$1" --format json --nofail "$2" 2>/dev/null |
+  jq -r '.[] | .filepath as $f | .violations[] | "\($f):\(.start_line_no):\(.start_line_pos): warning: \(.code) \(.description)"'

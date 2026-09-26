@@ -1,0 +1,18 @@
+output "eDP-1" {
+    mode "1920x1080@60.05"
+    scale 1
+    position x=0 y=0
+}
+
+layout {
+    struts {
+        left 1
+        right 1
+    }
+}
+
+spawn-at-startup "vellum"
+
+binds {
+    Mod+D hotkey-overlay-title="annotate: vellum" { spawn "vellum" "toggle"; }
+}

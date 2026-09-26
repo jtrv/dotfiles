@@ -13,7 +13,7 @@ exercism_dir="$HOME/repos/exercism"
 cd "$exercism_dir"
 
 if [ $# -eq 0 ]; then
-  langs=$(ls)
+  langs=$(command ls)
 else
   langs="$*"
 fi

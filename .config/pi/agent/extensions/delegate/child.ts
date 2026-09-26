@@ -46,8 +46,8 @@ export function buildArgs(input: Task, cwd: string, output: string) {
 	const mode = input.mode ?? "read-only";
 	if (mode !== "read-only" && mode !== "write") throw new Error("Invalid mode");
 	if (input.runner === "codex") {
-		const model = input.model ?? "gpt-5.6-terra";
-		if (!["gpt-5.6-luna", "gpt-5.6-terra", "gpt-5.6-sol", "gpt-6-astra"].includes(model))
+		const model = input.model ?? "gpt-6-sol";
+		if (!["gpt-6-luna", "gpt-6-sol", "gpt-6-astra"].includes(model))
 			throw new Error("Invalid Codex model");
 		return {
 			model,
@@ -88,7 +88,7 @@ export function buildArgs(input: Task, cwd: string, output: string) {
 		};
 	}
 	if (input.runner !== "pi") throw new Error("Invalid runner");
-	const model = input.model ?? "openai-codex/gpt-5.6-sol";
+	const model = input.model ?? "openai-codex/gpt-6-sol";
 	const match = /^([^/\s]+)\/(\S+)$/.exec(model);
 	if (!match) throw new Error("Pi model must be provider/model");
 	return {
