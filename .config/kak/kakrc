@@ -382,7 +382,7 @@ define-command global-picker -docstring 'global-picker: Opens global search pick
 }
 
 define-command mcat -docstring '
-  mcat [<files>]: mdcat utility wrapper
+  mcat [<files>]: mcat utility wrapper
   Open an mcat formatted view of the provided files
 ' -params 1.. %{
   ansi-fifo -name *mcat* -- unbuffer mcat -P --toc --padding 1 %arg{@};
