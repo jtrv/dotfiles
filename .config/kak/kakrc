@@ -20,6 +20,14 @@ source "%val{config}/lsp.kak"
 
 evaluate-commands %sh{ kak-tree-sitter -vvv -dks --init "$kak_session" }
 
+# filetypes Kakoune does not detect, so their kak-tree-sitter grammars would never load
+hook global BufCreate .*\.([ct]sv|psv) %{ set-option buffer filetype %val{hook_param_capture_1} }
+hook global BufCreate .*/(\.gitconfig|\.git/config|git/config) %{ set-option buffer filetype git-config }
+hook global BufCreate .*/(\.gitattributes|git/attributes) %{ set-option buffer filetype git-attributes }
+hook global BufCreate .*/go\.mod %{ set-option buffer filetype go-mod }
+hook global BufCreate .*/requirements[^/]*\.txt %{ set-option buffer filetype requirements }
+hook global BufCreate .*\.svelte %{ set-option buffer filetype svelte }
+
 ################### DISPLAY ###################
 
 # rainbow delimiters + current scope
@@ -32,8 +40,39 @@ provide-module "kak_rainbower" %{
 # lazily inside "ui". Without this the plugin's own defaults win, which are
 # mocha-mantle and RainbowBrackets hues.
 require-module "kak_rainbower"
+# kak-tree-sitter adds its buffer highlighter asynchronously, after WinCreate
+# enabled rainbow, so it lands later in the buffer group and repaints the
+# brackets. Re-adding rainbow moves it back on top; the try skips buffers
+# where rainbow is off.
+define-command -override tree-sitter-user-after-highlighter %{
+  try %{
+    remove-highlighter buffer/rainbow
+    add-highlighter buffer/rainbow ranges rainbow
+  }
+}
 
 colorscheme catppuccin_mocha
+
+# Faces for the nvim-treesitter capture names added in kak-tree-sitter's
+# config.toml; kak-tree-sitter defaults them to `default` as they have no parent.
+# After the colorscheme: kak-tree-sitter links e.g. ts_markup_list_unnumbered
+# back to ts_markup_list, a face cycle until the colorscheme sets the child.
+set-face global ts_boolean      ts_constant_builtin_boolean
+set-face global ts_character    ts_constant_character
+set-face global ts_conditional  ts_keyword_conditional
+set-face global ts_escape       ts_constant_character_escape
+set-face global ts_exception    ts_keyword_control_exception
+set-face global ts_field        ts_variable_other_member
+set-face global ts_float        ts_constant_numeric_float
+set-face global ts_markup_link  ts_markup_link_text
+set-face global ts_markup_list  ts_markup_list_unnumbered
+set-face global ts_markup_strong ts_markup_bold
+set-face global ts_method       ts_function_method
+set-face global ts_module       ts_namespace
+set-face global ts_number       ts_constant_numeric
+set-face global ts_parameter    ts_variable_parameter
+set-face global ts_repeat       ts_keyword_control_repeat
+set-face global ts_storageclass ts_keyword_storage_modifier
 
 set-option global ui_options terminal_assistant=none
 set-option global scrolloff 1,3
@@ -96,8 +135,6 @@ bundle-install-hook kak-ansi-rs %{ cargo install --locked --path . ; cargo clean
 bundle popup.kak https://github.com/enricozb/popup.kak
 bundle-install-hook popup.kak %{ cargo install --locked --path . ; cargo clean }
 
-bundle kak-live-grep https://codeberg.org/raiguard/kak-live-grep
-
 bundle-noload kak-tree-sitter https://git.sr.ht/~hadronized/kak-tree-sitter
 bundle-install-hook kak-tree-sitter %{ cargo install kak-tree-sitter ktsctl ; cargo clean }
 
@@ -136,10 +173,8 @@ bundle kakship https://github.com/eburghar/kakship %{
 }
 bundle-install-hook kakship %{ cargo install --locked --path . ; cargo clean }
 
-bundle-noload skyspell https://github.com/your-tools/skyspell %{
-  cargo binstall -y skyspell_kak --git https://github.com/your-tools/skyspell
-  cargo clean
-}
+bundle-noload skyspell https://github.com/your-tools/skyspell
+bundle-install-hook skyspell %{ cargo binstall -y skyspell_kak --git https://github.com/your-tools/skyspell ; cargo clean }
 
 bundle sudo-write.kak https://github.com/jtrv/sudo-write.kak %{
   set-option global fprint_mode true
@@ -447,8 +482,8 @@ define-command ptsv -docstring '
   fi
 }}
 
-define-command qalc -docstring '
-  qalc <expression>: qalc utility wrapper
+define-command math -docstring '
+  math <expression>: qalc utility wrapper
   Replace the selection with the solution of the given expression where x=selection
 ' -params 0.. %{ evaluate-commands %sh{
   if [ $# -eq 0 ]; then
@@ -755,7 +790,7 @@ map global normal <c-p> -docstring 'file-picker'    %{:file-picker <ret>}
 ################# MODES ##################
 
 # free keys:
-# b e k m n o r , . '
+# b e h k m n o r , . '
 
 map global user a -docstring 'action' %{:lsp-code-actions <ret>}
 
@@ -771,10 +806,6 @@ bundle kakoune-buffers https://github.com/delapouite/kakoune-buffers %{
     alias global bl  buffer-last
     alias global bo  buffer-only
     alias global bo! buffer-only-force
-}
-
-bundle kakoune-buffer-manager https://github.com/theowenyoung/kakoune-buffer-manager %{
-  map global buffers e -docstring 'buffer editor'   %{:buffer-manager <ret>}
 }
 
 bundle caser https://github.com/jtrv/caser %{ require-module caser-recommended-bindings }
@@ -797,16 +828,6 @@ bundle kakoune-focus https://github.com/caksoylar/kakoune-focus %{
 }
 
 map global user g -docstring 'grep' %{:grep }
-
-bundle reasymotion https://github.com/astaugaard/reasymotion
-set-face global REasymotionForeground "%opt{crust}ff,%opt{peach}ff+F"
-bundle-install-hook reasymotion %{ cargo install --locked --path . ; cargo clean }
-declare-user-mode hop
-  map global user h -docstring 'hop' %{: enter-user-mode hop <ret>}
-  map global hop i -docstring 'word initial'  %{:reasymotion-on-letter-to-word <ret>}
-  map global hop w -docstring 'word'          %{:reasymotion-word <ret>}
-  map global hop l -docstring 'letter'        %{:reasymotion-on-letter-to-letter <ret>}
-  map global hop s -docstring 'selection'     %{:reasymotion-selection <ret>}
 
 map global user i -docstring 'docs' %{:docs }
 
@@ -839,6 +860,8 @@ map global user l -docstring 'lsp' %{: enter-user-mode lsp <ret>}
   map global lsp <minus> -docstring 'disable'   %{:lsp-disable-window <ret>}
   map global lsp <plus>  -docstring 'enable'    %{:lsp-enable-window <ret>}
 
+map global user m -docstring 'math' %{:math <ret>}
+
 # edit/extend/trim selections one by one
 bundle kakoune-phantom-selection https://github.com/occivink/kakoune-phantom-selection %{
   declare-user-mode phantom
@@ -848,8 +871,6 @@ bundle kakoune-phantom-selection https://github.com/occivink/kakoune-phantom-sel
   map global phantom n -docstring 'next'       %{:phantom-selection-iterate-next <ret>}
   map global phantom p -docstring 'previous'   %{:phantom-selection-iterate-prev <ret>}
 }
-
-map global user q -docstring 'qalc' %{:qalc <ret>}
 
 # select/edit surrounding chars and tags
 bundle Encapsul8 https://github.com/ElectricR/Encapsul8 %{
@@ -894,6 +915,7 @@ provide-module "ui" %{
     map global user u -docstring 'ui' %{: enter-user-mode ui <ret>}
     set-option global ui_wrap_flags -width 100 -word -indent -marker ~~
     set-face global TrailingSpace default,red
+    set-face global TodoComment "%opt{crust}ff,%opt{yellow}ff+bF"
 
     require-module "number_toggle_kak"
     define-command -override ui-line-numbers-toggle -docstring 'toggle line numbers' %{ number-toggle-toggle }
@@ -1015,7 +1037,8 @@ hook global WinSetOption filetype=python        %{ source '~/.config/kak/context
 hook global WinSetOption filetype=e?ruby        %{ source '~/.config/kak/contexts/ruby.kak'        }
 hook global WinSetOption filetype=rust          %{ source '~/.config/kak/contexts/rust.kak'        }
 hook global WinSetOption filetype=sh            %{ source '~/.config/kak/contexts/sh.kak'          }
-hook global WinSetOption filetype=systemd       %{ source '~/.config/kak/contexts/systemd.kak'   }
+hook global WinSetOption filetype=sql           %{ source '~/.config/kak/contexts/sql.kak'         }
+hook global WinSetOption filetype=systemd       %{ source '~/.config/kak/contexts/systemd.kak'     }
 hook global WinSetOption filetype=terraform     %{ source '~/.config/kak/contexts/terraform.kak'   }
 hook global WinSetOption filetype=typescript    %{ source '~/.config/kak/contexts/typescript.kak'  }
 hook global WinSetOption filetype=toml          %{ source '~/.config/kak/contexts/toml.kak'        }

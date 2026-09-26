@@ -205,8 +205,8 @@ function harness(dir: string, shutdowns: (() => Promise<void>)[], hooks: { isIdl
 				assert.equal(received.args.includes(task), false);
 				assert.equal(received.args.includes(`-p=${task}`), runner === "agy");
 				const expected = {
-					pi: ["-p", "--no-session", "--no-extensions", "--no-skills", "--no-prompt-templates", "--provider", "openai-codex", "--model", "gpt-5.6-sol", "--mode", "json", "--tools", "read,grep,find,ls"],
-					codex: ["exec", "--skip-git-repo-check", "-m", "gpt-5.6-terra", "-C", dir, "--sandbox", "read-only", "--ephemeral", "--json", "--output-last-message", received.args.at(-2), "-"],
+					pi: ["-p", "--no-session", "--no-extensions", "--no-skills", "--no-prompt-templates", "--provider", "openai-codex", "--model", "gpt-6-sol", "--mode", "json", "--tools", "read,grep,find,ls"],
+					codex: ["exec", "--skip-git-repo-check", "-m", "gpt-6-sol", "-C", dir, "--sandbox", "read-only", "--ephemeral", "--json", "--output-last-message", received.args.at(-2), "-"],
 					agy: [`--gemini_dir=${process.env.XDG_CONFIG_HOME}/gemini`, "--sandbox", "--dangerously-skip-permissions", "--output-format=stream-json", "--print-timeout=600s", `-p=${task}`],
 				};
 				assert.deepEqual(received.args, expected[runner]);
@@ -496,13 +496,13 @@ function harness(dir: string, shutdowns: (() => Promise<void>)[], hooks: { isIdl
 				const ordered = await c.call("delegate", {
 					runner: "pi",
 					cwd: order,
-					tasks: [{ task: first }, { task: secondTask, runner: "codex", model: "gpt-5.6-luna" }],
+					tasks: [{ task: first }, { task: secondTask, runner: "codex", model: "gpt-6-luna" }],
 				});
 				assert.deepEqual(
 					ordered.jobs.map((job: any) => [job.runner, job.state, job.result.model, job.result.final_text]),
 					[
-						["pi", "done", "openai-codex/gpt-5.6-sol", "FIRST"],
-						["codex", "done", "gpt-5.6-luna", "SECOND"],
+						["pi", "done", "openai-codex/gpt-6-sol", "FIRST"],
+						["codex", "done", "gpt-6-luna", "SECOND"],
 					],
 				);
 				assert.equal(await readFile(join(order, "first-saw-second"), "utf8"), "yes");
@@ -676,7 +676,7 @@ function harness(dir: string, shutdowns: (() => Promise<void>)[], hooks: { isIdl
 						mode: "write",
 						cwd: sub,
 						worktree: true,
-						tasks: [{ task: "cwd", runner: "pi" }, { task: "cwd", runner: "codex", model: "gpt-5.6-luna" }],
+						tasks: [{ task: "cwd", runner: "pi" }, { task: "cwd", runner: "codex", model: "gpt-6-luna" }],
 					});
 					assert.equal(isolated.state, "done");
 					const paths = isolated.jobs.map((job: any) => job.result.worktree_path);

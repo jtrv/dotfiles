@@ -36,7 +36,7 @@ evaluate-commands %sh{
 
     echo "
         # --- local: the palette as options too ---
-        # kakrc's REasymotion faces and the espresso scheme reference
+        # the espresso scheme references
         # %opt{<colour>}ff, which upstream's shell-variable structure does not
         # provide. Emitted from the same variables so there is still one source
         # of truth per flavor. Re-declaring updates the value, so switching

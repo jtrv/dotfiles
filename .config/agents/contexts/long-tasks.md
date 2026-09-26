@@ -53,6 +53,14 @@ The transcript is ephemeral; the workspace is authoritative.
   raises confidence but does not verify: judges barely beat chance at spotting
   a false success, and agents over-claim most when they've failed.
 
+## Open questions
+- Bank them, don't stop for them: push everything that does not depend on
+  an answer, then end with one concise report (`/html-report` when there is
+  enough to show) and one `AskUserQuestion` multi-choice batch, `preview`
+  for anything visual. The user is usually away while work runs; a mid-run
+  question stalls everything, and multi-choice is far faster to answer than
+  prose. Stop early only for a question that blocks all remaining work.
+
 ## Subagent quarantine
 - Noisy work (repo exploration, log analysis, research sweeps, adversarial
   review) goes to subagents; only conclusions return to the main window.

@@ -64,3 +64,4 @@
 "wthrr 1.2.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["wthrr"]
 "zet 2.0.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["zet"]
 "zomerth 0.1.0 (path+file:///home/sugimoto/repos/zomerth-rs)" = ["zomerth"]
+"sqruff 0.40.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["sqruff"]

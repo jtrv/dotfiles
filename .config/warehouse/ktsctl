@@ -9,8 +9,10 @@ clojure
 cmake
 comment
 common-lisp
+commonlisp
 cpp
 crystal
+c_sharp
 csharp
 css
 csv
@@ -20,12 +22,14 @@ dockerfile
 elixir
 fish
 git-attributes
+gitattributes
 git-commit
 git-config
 git-rebase
 glsl
 go
 go-mod
+gomod
 graphql
 hare
 haskell
@@ -59,6 +63,7 @@ ocaml
 ocaml-interface
 pest
 prisma
+proto
 protobuf
 psv
 purescript
@@ -74,6 +79,7 @@ scala
 scheme
 scss
 sql
+ssh_client_config
 sshclientconfig
 svelte
 swift

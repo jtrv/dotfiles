@@ -6,4 +6,5 @@
 # its own chrome from the ui_*_color settings, so it loses nothing by skipping
 # kvantum. ~/.local/bin is first in both the shell and systemd user PATH, so this
 # also covers launches from niri and the .desktop entry.
-QT_QPA_PLATFORMTHEME=xdgdesktopportal exec /usr/bin/sioyek "$@"
+# The portal theme also logs a harmless "Could not register app ID" on every start.
+QT_QPA_PLATFORMTHEME=xdgdesktopportal QT_LOGGING_RULES=qt.qpa.services=false exec /usr/bin/sioyek "$@"

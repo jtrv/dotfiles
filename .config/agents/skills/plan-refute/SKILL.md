@@ -50,6 +50,12 @@ evidence; only surviving a kill attempt is.
 - Anything citing a number (DB size, rate limit, API cap, store size limit):
   always refute — confidently-stated figures have measured wrong by 2–8× in
   past reviews; a refuter must recompute or re-source it independently.
+  Before dispatching, mark which constants the design *derives* and which
+  the plan merely *chose*. Refuters test the derived ones; a chosen one gets
+  swept across its real range first and reported as a curve, not a point. A
+  kill measured against an arbitrary constant is arithmetically right and
+  directionally wrong — one such verdict was written into a plan before the
+  user caught that the factor was never fixed by the design.
 
 ## Codex invocation shape
 

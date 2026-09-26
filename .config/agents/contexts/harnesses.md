@@ -36,6 +36,17 @@ on disk) before going further.
 `graphify` is a useful canary: it is vendored, so if it ever shows up staged,
 something added a directory wholesale.
 
+## Fold feedback before changing instructions
+
+Feedback memories are per project, so a correction learned in one repo never
+reaches a session in another until it is folded into a context or skill.
+Before editing any context, skill or `AGENTS.md`, run
+`../watches/feedback-graduation.sh`: CHECK lists feedback memories since the
+last review with the loaded file each names. Fold the ones that generalise,
+leave project-only ones as memory, then `feedback-graduation.sh ack`. The
+review record goes in `../research/` (first pass:
+`2026-09-18-warp-self-improving-agents-check.md`).
+
 ## Adding a skill
 
 Claude and Pi symlink the whole `skills` directory, so a new skill is visible to
@@ -73,26 +84,37 @@ The routing table (in `../AGENTS.md`, read by every harness) decides which
 model does which kind of work, so where a model sits in it follows published
 agentic-coding results, not vibes or a model's launch post:
 
-- **DeepSWE** (deepswe.datacurve.ai): pass@1 on long-horizon tasks, with
-  agent steps, output tokens and cost per task, plotted per effort level. Use
-  pass rate to compare capability. For near-ties, compare output tokens,
-  measured runtime and cost under comparable settings. Steps are another
-  signal; fewer steps alone prove neither less context use nor less wall time
+Four metrics decide a placement, all per task: **score** (pass@1), **cost**,
+**time** (agent wall time) and **tokens** (total, input included — input
+dominates, so output alone misleads). None is a tiebreaker. Every run spends
+subscription limits, context and wall time, so fewer tokens, less time and
+lower cost for the same score wins, and a higher tier has to earn what it
+costs on the other three with a score gain that matters for that row's work.
+Record all four in the snapshot.
+
+- **Artificial Analysis** (artificialanalysis.ai/agents/coding-agents) is the
+  primary source: it scores new models sooner than the others and reports all
+  four metrics per harness and effort level. Its index averages DeepSWE,
+  Terminal-Bench and SWE-Atlas-QnA; check the current component suites and
+  measurement definitions before comparing across versions. Wall time excludes
+  environment startup and verification. The charts render client-side, so a
+  plain fetch returns no numbers: load the page in a browser and read the rows
+  from the embedded Next.js payload (`self.__next_f`; each entry has
+  `hostModelSlug`, `displayLabel`, `indexScore` and a `mean` block with
+  `costUsd`, `agentWallTimeSec`, `steps` and the token counts).
+- **DeepSWE** (deepswe.datacurve.ai) augments it: pass@1 on long-horizon
+  tasks alone, with steps, output tokens and cost per effort level. Use it to
+  check that an AA placement holds on the long-horizon component by itself.
+  Steps are a signal, not a metric; fewer steps alone prove neither less
+  context use nor less wall time
   (see `../research/2026-08-25-post-counting-agent-turns.md`).
 - **RealSWE** (realswe.withspecific.com): real engineering tasks in private
   codebases licensed from companies, with code and solutions unavailable on
-  the public internet. Use it to check that a DeepSWE ranking
-  holds up outside public repos before trusting a tier for real work.
-
-Two aggregators are secondary references, for cross-checks and for models the
-two above have not scored yet:
-
-- **Artificial Analysis** (artificialanalysis.ai/agents/coding-agents): a
-  coding-agent index with runtime and token measurements. Check its current
-  component suites and measurement definitions before comparing results.
-- **BenchLM** (benchlm.ai): an aggregate benchmark reference. Read its agentic
-  and coding results and their weights; the headline score does not order
-  coding tiers on its own.
+  the public internet. Use it to check that a ranking holds up outside public
+  repos before trusting a tier for real work.
+- **BenchLM** (benchlm.ai) is a secondary cross-check: an aggregate benchmark
+  reference. Read its agentic and coding results and their weights; the
+  headline score does not order coding tiers on its own.
 
 When sources disagree, or a model has no entry, say so in the table's
 justification rather than picking whichever number suits. Comparative tier
@@ -145,6 +167,12 @@ Verify by interrogation after any change: a `pi -p` prompt that must call the
 tool and print its result, one per runner.
 
 ## Changing `delegate`
+
+This is harness code, so the strongest model writes it (`AGENTS.md`, "Agent
+instructions get the strongest model"). A Codex worker cannot write
+`$PI_CODING_AGENT_DIR` or reach the network from its sandbox: give it a
+scratch copy to edit and unit-test, then copy the result into place and run
+the live `pi -p` checks here.
 
 Tests run from the extensions dir: `bun test ./delegate.test.ts`, then
 `oxlint delegate.ts delegate/*.ts delegate.test.ts`. `tsc --noEmit` needs a
