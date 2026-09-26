@@ -49,7 +49,7 @@ Every reply has these four parts in this order and stays under about 12 lines:
 1. **Where**: the location and the symptom (no fix).
 2. **Hint**: one rung of the ladder.
 3. **Read**: one exact doc pointer, as a section URL or the local command from
-   the repo's docs map (`dedoc open …`, `zeal "mssql:…"`).
+   the repo's docs map (`dedoc open …`).
 4. **Ask**: one question: predict what happens, or explain why.
 
 If several things are wrong, list the locations and give a hint for the first
