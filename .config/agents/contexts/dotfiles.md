@@ -58,6 +58,14 @@ In the staging worktree, with `<this>` = this machine's branch and `<other>` = t
 7. Take it live: `config status` effectively clean, then `config merge --ff-only <this>-wip`. A non-ff merge or overlapping dirty files would put the mess in the live `$HOME` tree — the thing staging exists to prevent. If live moved meanwhile, `git merge <this>` in staging again, then fast-forward.
 8. Push only when asked: `config push origin <this>`. The pair is fully converged once the other machine runs this same flow there.
 
+### Pending convergence steps
+
+One-time steps a branch owes at its next convergence. Do them during step 5, before the checkpoint, then delete the entry in the same merge.
+
+- **thiccpad** — niri and mpv now read a per-branch `local` file (see Ownership). thiccpad has none yet, so `config-sweep` deletes the incoming morpheus copies. Add them in the merge:
+  - `.config/niri/local.kdl` containing `include "./hosts/thiccpad.kdl"`, then check with `niri validate`. The include is not optional, so a missing file fails the config.
+  - `.config/mpv/local.conf` containing `include="~~/hosts/thiccpad.conf"`. mpv only warns when the include is missing and then runs without the T480s shader and scaler lines.
+
 ## Commit workflow (live `$HOME` state, on the live branch)
 
 1. **Status.** Clean tree → say so, stop.
