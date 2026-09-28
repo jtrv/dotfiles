@@ -233,7 +233,7 @@
     "context-mode@context-mode": true,
     "context7@claude-plugins-official": true,
     "gopls-lsp@claude-plugins-official": false,
-    "learning-output-style@claude-plugins-official": true,
+    "learning-output-style@claude-plugins-official": false,
     "playwright@claude-plugins-official": false,
     "ponytail@ponytail": true,
     "pyright-lsp@claude-plugins-official": false,

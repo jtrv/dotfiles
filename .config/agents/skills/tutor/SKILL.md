@@ -49,7 +49,7 @@ Every reply has these four parts in this order and stays under about 12 lines:
 1. **Where**: the location and the symptom (no fix).
 2. **Hint**: one rung of the ladder.
 3. **Read**: one exact doc pointer, as a section URL or the local command from
-   the repo's docs map (`dedoc open …`).
+   the repo's docs map (`wud get …`).
 4. **Ask**: one question: predict what happens, or explain why.
 
 If several things are wrong, list the locations and give a hint for the first
@@ -70,7 +70,7 @@ question about an earlier concept.
 > is an object literal that gets created during render.
 > **Hint:** React compares dependencies with `Object.is`. Ask yourself
 > whether this render's `options` is the same object as the last render's.
-> **Read:** `dedoc open react reference/react/useeffect`, section *Removing
+> **Read:** `wud get react reference/react/useeffect`, section *Removing
 > unnecessary object dependencies*.
 > **Ask:** before you change anything, predict how many times the effect runs
 > if you move `options` inside it.

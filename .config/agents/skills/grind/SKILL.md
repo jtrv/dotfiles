@@ -53,6 +53,9 @@ referenced:
 On the report:
 - **DONE** → check the box in PLAN.md, append one line to a `## Log` section
   (task, commit type, date). Do not read the diff — the verify tail is the evidence.
+  Commit that edit by path (`git commit -- PLAN.md`), never `-a`/`-am`: a
+  running worker's half-done edits share the tree, and a sweep folds them
+  into your docs commit.
 - **BLOCKED** → mark the task `- [!] <task> — <reason>`, move to the next task
   that doesn't depend on it. If the reason looks like ran-out-of-room rather
   than a genuine blocker, re-dispatch ONCE at a changed configuration — higher

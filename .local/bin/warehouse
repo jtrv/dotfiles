@@ -36,7 +36,7 @@ have go && [ -d "$DATA"/go/bin ] &&
 	awk '$1 == "path" {print $2}' | sort -u | keep go
 
 rg --color=never -o 'bundle.*(https.*?)("|\s|$)' -r '$1' \
-	"$CONFIG"/kak/kakrc 2>/dev/null | sort | keep kakoune
+	"$CONFIG"/kak/kakrc 2>/dev/null | sort -u | keep kakoune
 
 [ -d "$DATA"/kak-tree-sitter/grammars ] &&
 	command ls -1 "$DATA"/kak-tree-sitter/grammars | keep ktsctl

@@ -32,6 +32,8 @@ check DENY file_path "$HOME/vault.kdbx"
 check DENY file_path "$HOME/work.ovpn"
 check DENY file_path "$HOME/AuthKey_ABC123.p8"
 check DENY file_path "$HOME/.authinfo.gpg"
+check DENY file_path "/etc/ssl/private/server.key"
+check DENY command   'cat tls-cert.pem'
 check DENY command   'cat ~/.config/codex/auth.json'
 
 echo "== pre-existing rules still fire =="
@@ -50,6 +52,9 @@ check ALLOW file_path "/srv/app/src/oauth.json"
 check ALLOW file_path "/srv/app/.env.example"
 check ALLOW file_path "/srv/app/src/auth.ts"
 check ALLOW file_path "/srv/app/public/cert.crt"
+check ALLOW command   "jq -r '.plugins | keys[]' installed_plugins.json"
+check ALLOW command   'jq -c ".x | with_entries(select(.key|test(\"a\")))" s.json'
+check ALLOW command   'jq ".[] | .key" f.json'
 check ALLOW file_path "$HOME/.ssh_config_notes.md"
 check ALLOW pattern   'session.credentials'
 check ALLOW pattern   'user.age'
