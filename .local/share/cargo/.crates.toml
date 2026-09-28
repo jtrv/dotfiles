@@ -61,9 +61,14 @@
 "systemd-lsp 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["systemd-lsp"]
 "syswatch 0.10.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["syswatch"]
 "thesauromatic 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["thesauromatic"]
+"tscan 0.1.0 (path+file:///home/sugimoto/repos/tscan-rs)" = ["tscan"]
 "typos-cli 1.50.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["typos"]
 "vortix 0.4.3 (registry+https://github.com/rust-lang/crates.io-index)" = ["vortix"]
 "waybar-module-pomodoro 0.3.0 (path+file:///home/sugimoto/repos/waybar-module-pomodoro)" = ["waybar-module-pomodoro"]
+"whats-up-doc 0.1.0 (path+file:///home/sugimoto/repos/whats-up-doc)" = [
+    "wud",
+    "wudc",
+]
 "wthrr 1.2.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["wthrr"]
 "zet 2.0.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["zet"]
 "zomerth 0.1.0 (path+file:///home/sugimoto/repos/zomerth-rs)" = ["zomerth"]
