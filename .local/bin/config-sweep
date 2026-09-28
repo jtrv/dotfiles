@@ -33,7 +33,7 @@ manifests='
 .config/warehouse/bun
 .config/warehouse/uv
 .config/warehouse/cargo
-.config/warehouse/dedoc
+.config/warehouse/wud
 .local/share/bun/install/global/package.json
 .local/share/cargo/.crates.toml
 .local/share/cargo/.crates2.json
