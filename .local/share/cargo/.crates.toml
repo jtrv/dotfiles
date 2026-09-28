@@ -2,7 +2,6 @@
 "caser-cli 0.1.0 (path+file:///home/sugimoto/.config/kak/bundle/caser)" = ["caser"]
 "colorcol 0.1.0 (path+file:///home/sugimoto/.config/kak/bundle/colorcol-rs)" = ["colorcol"]
 "cymbal 0.17.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["cymbal"]
-"dedoc 0.2.9 (registry+https://github.com/rust-lang/crates.io-index)" = ["dedoc"]
 "depsguard 0.1.40 (registry+https://github.com/rust-lang/crates.io-index)" = ["depsguard"]
 "grug 0.1.0 (path+file:///home/sugimoto/.config/kak/bundle/grug)" = ["grug"]
 "hexapoda 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["hexapoda"]
