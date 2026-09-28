@@ -16,4 +16,6 @@ rkak_easymotion -> /home/sugimoto/.config/kak/bundle/reasymotion
 seetui -> https://github.com/rust-lang/crates.io-index
 skyspell_kak -> https://github.com/your-tools/skyspell
 thesauromatic -> https://github.com/rust-lang/crates.io-index
+tscan -> /home/sugimoto/repos/tscan-rs
 vortix -> https://github.com/rust-lang/crates.io-index
+whats-up-doc -> /home/sugimoto/repos/whats-up-doc-kak-plugin

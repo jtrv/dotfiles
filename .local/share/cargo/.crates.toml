@@ -17,4 +17,9 @@
 "seetui 0.1.7 (registry+https://github.com/rust-lang/crates.io-index)" = ["seetui"]
 "skyspell_kak 3.0.2 (git+https://github.com/your-tools/skyspell#ae92ba3e497704a5e704b9bc35b5c5a2b5ce04a9)" = ["skyspell-kak"]
 "thesauromatic 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["thesauromatic"]
+"tscan 0.1.0 (path+file:///home/sugimoto/repos/tscan-rs)" = ["tscan"]
 "vortix 0.4.3 (registry+https://github.com/rust-lang/crates.io-index)" = ["vortix"]
+"whats-up-doc 0.1.0 (path+file:///home/sugimoto/repos/whats-up-doc-kak-plugin)" = [
+    "wud",
+    "wudc",
+]
