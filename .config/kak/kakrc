@@ -231,13 +231,15 @@ define-command comment -docstring '(Un)Comment lines' %{
 }
 
 define-command docs -docstring '
-  docs <docset> <args> : search for an api within a dedoc docset
+  docs <docset> [<query>] : pick an entry in a wud docset and read its section
 ' -params 1.. %{
-  popup --title dedoc --kak-script 'ansi-fifo -name *docs* -- printf %opt{popup_output}' -- docs %arg{@}
+  popup --title wud --kak-script %{
+    ansi-fifo -name *docs* -- sh -c %{printf %s "$2" | mcat --silent -e md -c -P -f -t catppuccin --toc --sc "$1xauto"} -- %val{window_width} %opt{popup_output}
+  } -- wud --print %arg{@}
 }
 complete-command docs shell-script-candidates %{
   if [ $kak_token_to_complete = 0 ]; then
-    dedoc ls -ln | awk -v ft="$kak_opt_filetype" '
+    wud ls | cut -f1 | awk -v ft="$kak_opt_filetype" '
       {
         if ($1 ~ ft)
           a[NR] = $1
@@ -251,7 +253,7 @@ complete-command docs shell-script-candidates %{
           print b[i]
       }'
   elif [ $kak_token_to_complete = 1 ]; then
-    dedoc ss -i --porcelain "$1"
+    wud ls --entries "$1"
   fi
 }
 
@@ -913,7 +915,7 @@ map global user t -docstring 'tree' %{: enter-user-mode tree-sitter <ret>}
 provide-module "ui" %{
   bundle ui.kak https://github.com/kkga/ui.kak %{
     map global user u -docstring 'ui' %{: enter-user-mode ui <ret>}
-    set-option global ui_wrap_flags -width 100 -word -indent -marker ~~
+    set-option global ui_wrap_flags -width 100 -word -indent
     set-face global TrailingSpace default,red
     set-face global TodoComment "%opt{crust}ff,%opt{yellow}ff+bF"
 

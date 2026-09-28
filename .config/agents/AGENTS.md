@@ -118,7 +118,7 @@ Use mise as the project runtime layer. Config lives at `<project-root>/.config/m
 These are installed; reach for them over the generic default:
 - **Code search/refactor**: `ast-grep` for structural (AST) search and rewrites — prefer over regex grep + hand edits. `rg` for text search, `rga` when content is inside PDFs/archives/docx/sqlite. `fd` for file discovery by name/type; `plocate` for instant whole-filesystem filename lookup.
 - **Line-set ops**: `zet union|intersect|diff` on files/streams — replaces `sort | comm`/`uniq` pipelines.
-- **Docs lookup**: `dedoc` — offline DevDocs (`dedoc search <docset> <query>`, `dedoc open`); ~80 docsets downloaded (rust, python, postgres, react, go…). Try before WebFetch/web search for API reference.
+- **Docs lookup**: `wud` — offline docs: DevDocs plus locally built docsets (tsql, solid, zod, redux, the Swift book). `wud find <docset|-a> <query> [--full]` searches names, or full text with `--full`; `wud get <docset> <entry>` prints that entry's section as Markdown when piped. Bare docset names resolve (`python` → newest `python~*`); ~90 installed (`wud ls`). A missing DevDocs docset: `wud install <slug>` (`wud ls --remote` lists them). Try before WebFetch/web search for API reference.
 - **Web/doc → text**: `reader <url>` renders a webpage as readable text for ingestion — prefer over raw curl/WebFetch HTML. `markitdown` converts local docx/pdf/pptx/xlsx to markdown.
 - **Diffs**: `difft` (difftastic) for syntax-aware diffs when reviewing changes (`GIT_EXTERNAL_DIFF=difft git diff`).
 - **Databases**: `usql` — one CLI for postgres/mysql/sqlite/etc. (`usql <url> -c '<sql>'`).

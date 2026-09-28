@@ -80,6 +80,7 @@ set -gx EDITOR                      "kak"
 set -gx fish_greeting
 set -gx LAST30DAYS_MEMORY_DIR       "$XDG_DOCUMENTS_DIR/Last30Days"
 set -gx MANPAGER                    "kak -e 'set buffer filetype man'"
+set -gx MCAT_PAGER                  "kak"
 set -gx PAGER                       "kak"
 set -gx SCCACHE_DIRECT              true
 set -gx TERMINAL                    "alacritty"
