@@ -36,7 +36,8 @@ deny() {
 # --- Secret file paths (any tool) ---
 paths=(
   '(^|[^[:alnum:]_.-])\.env([^[:alnum:]]|$)'   # .env, .env.local, .env.production
-  '\.(pem|key|p12|pfx|jks|keystore|ppk|asc|gpg|p8|kdbx|ovpn)([^[:alnum:]]|$)'
+  # A basename char must precede the dot: jq's `.key` / `select(.key|…)` has none.
+  '[[:alnum:]_-]\.(pem|key|p12|pfx|jks|keystore|ppk|asc|gpg|p8|kdbx|ovpn)([^[:alnum:]]|$)'
   'id_(rsa|dsa|ecdsa|ed25519)'
   '\.(ssh|aws|gnupg|kube|docker|azure|config/gcloud)/'
   '\.(npmrc|pypirc|netrc|git-credentials|htpasswd|pgpass|my\.cnf)([^[:alnum:]]|$)'
