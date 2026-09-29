@@ -5,6 +5,10 @@ from a Codex tier (Luna, Sol, Astra) or from Opus 5.5.
 
 ## Decision
 
+Superseded 2026-09-29 by `2026-09-29-gpt-6-1-sol-routing.md`: GPT-6.1 Sol
+medium beats Sonnet 5.5 high on all four metrics, so the route and the
+`sonnet-high` agent definition were removed.
+
 Sonnet 5.5 high takes the bounded coding or investigation half of the
 "substantial separable task" row, from Claude Code only, through the
 `sonnet-high` agent definition. Sol keeps that row in Codex and Pi, and keeps

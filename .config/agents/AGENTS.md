@@ -47,7 +47,7 @@ Read `contexts/harnesses.md` before changing routes or tier placement.
 A delegated worker does its task and does not route onward.
 Dispatch and escalation rationale: `research/2026-09-15-routing-instruction-fixes.md`.
 Tier placement evidence: `research/2026-09-23-routing-tiers-opus-5-5-gpt-6.md`,
-`research/2026-09-28-sonnet-5-5-routing.md`.
+`research/2026-09-29-gpt-6-1-sol-routing.md`.
 
 | Situation | Route |
 |---|---|
@@ -55,19 +55,17 @@ Tier placement evidence: `research/2026-09-23-routing-tiers-opus-5-5-gpt-6.md`,
 | Nontrivial plan or design ready, not yet built | `plan-refute` (its small-tactical-plan exemption applies) |
 | Implementation ready | Suggest the user run a review by a model from a different family than the one that wrote the code — a same-family reviewer shares its blind spots (user-invoked only) |
 | Repeated attempts have failed | Codex `gpt-6-astra` with the repro, evidence, and failed approaches; ask for a testable alternative explanation |
-| Substantial separable task, clear inputs and acceptance check | Codex `gpt-6-luna` (mechanical, near-zero judgment: fixtures, extraction, renames) or `gpt-6-sol` (bounded coding or investigation needing judgment; from Claude Code, Sonnet 5.5 high instead). Inspect the result. Quick tasks stay inline |
-| Substantial prose — documentation, READMEs, reports, summaries | Codex `gpt-6-sol` at default effort; short prose (commit/PR text, a paragraph) stays inline. Agent instructions follow the rule below. Evidence: `research/2026-09-24-prose-model-choice.md` |
-| Demanding coding work — multi-file implementation, nontrivial refactor, sustained reliability over a long task | Codex `gpt-6-sol`. Inspect the result |
+| Substantial separable task, clear inputs and acceptance check | Codex `gpt-6-luna` (mechanical, near-zero judgment: fixtures, extraction, renames) or `gpt-6.1-sol` (bounded coding or investigation needing judgment). Inspect the result. Quick tasks stay inline |
+| Substantial prose — documentation, READMEs, reports, summaries | Codex `gpt-6.1-sol` at default effort; short prose (commit/PR text, a paragraph) stays inline. Agent instructions follow the rule below. Evidence: `research/2026-09-24-prose-model-choice.md` |
+| Demanding coding work — multi-file implementation, nontrivial refactor, sustained reliability over a long task | Codex `gpt-6.1-sol`. Inspect the result |
 | Ambiguous, hard debugging, substantial independent review | Stay here if this session is on Opus 5.5 (the strongest tier); otherwise Codex `gpt-6-astra` |
 | Ordered queue of separable tasks | `grind` |
 | Agent instruction changes | Follow “Agent instructions get the strongest model” below |
 
 Codex tiers for delegated tasks: Luna → Sol → Astra; a blocked worker gets more
 effort before a higher tier. Luna is the mechanical tier, not a cheap coding
-default — start coding work at Sol. Sonnet 5.5 high replaces Sol only on the
-bounded-task row and only from Claude Code: it scores 1.7 points lower on
-a quarter of the tokens and half the time, but spends the Claude plan and
-shares Claude's blind spots, so cross-family rows stay on Codex. Skill-owned
+default — start coding work at Sol (`gpt-6.1-sol`) at Codex's default medium
+effort, which scored as well as its higher efforts for less. Skill-owned
 dispatch (`grind` workers, `plan-refute` refuters) is unchanged.
 
 ### Dispatch per harness
@@ -75,7 +73,6 @@ dispatch (`grind` workers, `plan-refute` refuters) is unchanged.
 | Route | Claude Code | Codex | Pi |
 |---|---|---|---|
 | Codex `<model>` | `codex:codex-rescue` with `--model <model>` | `spawn_agent` with `model=<model>`, `fork_turns="none"` and a self-contained task brief | `delegate` with `runner=codex`, `model=<model>` |
-| Sonnet 5.5 high | `Agent` with `subagent_type: sonnet-high` | not reachable — use Codex `gpt-6-sol` | not reachable — use Codex `gpt-6-sol` |
 | Cross-family review | Suggest the user run `/codex:review`, or `/codex:adversarial-review` when the approach itself is in question | Suggest the user run `/code-review` in Claude Code (or another non-OpenAI reviewer) | `delegate` with `runner=agy` (Gemini) for a read-only review the session runs itself; or, on a non-OpenAI model, suggest the user run `codex review` |
 | `grind` | the `grind` skill | the `grind` skill, one fresh `spawn_agent` per task | the `grind` skill's in-session loop, one `delegate` child with `mode=write` per task; inspect its result before continuing |
 
