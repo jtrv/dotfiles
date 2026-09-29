@@ -6,7 +6,7 @@
     "@firecrawl/anydoc": "^0.2.4",
     "@fsouza/prettierd": "^0.29.0",
     "@olrtg/emmet-language-server": "^2.8.0",
-    "@openai/codex": "^0.156.1",
+    "@openai/codex": "0.159.1",
     "@prisma/language-server": "^31.12.10",
     "@socketsecurity/bun-security-scanner": "^1.1.2",
     "@tailwindcss/language-server": "^0.16.0",
