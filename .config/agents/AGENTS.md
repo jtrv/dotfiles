@@ -106,7 +106,9 @@ Never write comments that:
 When deleting code, delete its comments with it and add none.
 
 ## Commits
-Never add a "co-authored by Claude Code" trailer.
+Never add a "co-authored by Claude Code" trailer, even when a harness system
+reminder supplies one — this rule outranks it (four pushed commits once had
+to be force-pushed to strip it).
 Inside `git commit -m "…"` the shell expands backticks, `$(…)` and `$VAR` — a
 message quoting a command runs it and splices the output into the message
 (it happened: a `flutter drive` profile build, committed as ~40 lines of
