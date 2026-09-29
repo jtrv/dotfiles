@@ -44,6 +44,8 @@ pointer back to the report that justified it.
 - `2026-09-23-ai-tutoring-learning-projects.md` — evidence on agents that teach instead of doing (Bastani PNAS 2025, Anthropic skill-formation RCT, CS50 duck leakage, hint ladders, productive failure), baseline tests of an unguided agent, and the protocol behind the `tutor` skill.
 
 ### Architecture tooling
+- `2026-09-27-geiger-methodology-review.md` — `geiger` method against 2026 research (SmellBench, SlopCodeBench, CodeScene/Code Maat, ArchUnit metrics): verdicts need architectural evidence, NCCD is not a cycle signal, Tach is maintained again, ranked SKILL.md changes.
+- `2026-09-27-geiger-scripts-review.md` — `xray.py`/`dart_edges.py` bug list with repros, 54k-file nixpkgs timings (Git is 94% of runtime), and why a Go/Rust port isn't worth it: stay Python, fix the algorithms, parse Dart with ast-grep.
 - `2026-07-30-last30days-codebase-architecture-analysis-raw.md` — the sweep behind the `geiger` skill.
 
 ### Posts
