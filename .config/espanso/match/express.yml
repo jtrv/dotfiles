@@ -1,0 +1,160 @@
+# Express routes, middleware and routers.
+# Avoid "{{" in replace text: espanso reads it as a variable.
+
+matches:
+  - trigger: ",,xapp"
+    label: "express: app skeleton"
+    replace: |
+      import express from 'express';
+
+      const app = express();
+      app.use(express.json());  // without it req.body is undefined
+
+      app.get('/health', (req, res) => res.json({ ok: true }));
+      $|$
+      // 404 for unmatched routes: after all routes
+      app.use((req, res) => res.status(404).json({ error: 'Not found' }));
+
+      // error handler: 4 args, registered last. Express 5 forwards async rejections here;
+      // Express 4 needs try/catch + next(err).
+      app.use((err, req, res, next) => {
+        console.error(err);
+        res.status(err.status ?? 500).json({ error: err.expose ? err.message : 'Internal error' });
+      });
+
+      const port = Number(process.env.PORT ?? 3000);
+      const server = app.listen(port, () => console.log(`listening on ${port}`));
+
+      process.on('SIGTERM', () => server.close(() => process.exit(0)));
+
+      // e.g. router in orders.js:
+      //   const router = express.Router();
+      //   router.get('/', async (req, res) => res.json(await listOrders()));
+      //   export default router;
+      // then here: import orders from './orders.js'; app.use('/orders', orders);
+      // e.g. static files: app.use(express.static('public'));
+      // try it: curl localhost:3000/health
+
+  - trigger: ",,xget"
+    label: "express: GET /:id with validation"
+    replace: |
+      app.get('/$|$/:id', async (req, res) => {
+        const id = Number(req.params.id);  // params are always strings
+        if (!Number.isInteger(id) || id < 1) {
+          return res.status(400).json({ error: 'id must be a positive integer' });  // return, or it falls through
+        }
+        const result = await pool.request()
+          .input('id', sql.Int, id)  // parameter, never string concatenation
+          .query('SELECT * FROM dbo.tbl WHERE id = @id');
+        const row = result.recordset[0];
+        if (!row) return res.sendStatus(404);
+        res.json(row);
+      });
+
+      // e.g. GET /work-orders/7 → 200 {…} · /work-orders/abc → 400 · /work-orders/999 → 404
+      // query string: /work-orders?status=open → req.query.status === 'open' (string or undefined)
+
+  - trigger: ",,xpost"
+    label: "express: POST with zod validation"
+    replace: |
+      import { z } from 'zod';
+
+      const CreateBody = z.object({
+        name: z.string().trim().min(1),
+        qty: z.coerce.number().int().positive(),
+      });
+
+      app.post('/$|$', async (req, res) => {
+        const parsed = CreateBody.safeParse(req.body);
+        if (!parsed.success) {
+          return res.status(400).json({ error: parsed.error.issues });
+        }
+        const { name, qty } = parsed.data;  // use parsed.data, not req.body
+        const result = await pool.request()
+          .input('name', sql.NVarChar(100), name)
+          .input('qty', sql.Int, qty)
+          .query('INSERT INTO dbo.tbl (name, qty) OUTPUT INSERTED.id VALUES (@name, @qty)');
+        res.status(201).json({ id: result.recordset[0].id });  // 201 for created
+      });
+
+      // e.g. curl -X POST localhost:3000/items -H 'Content-Type: application/json' -d '{"name":"PCB","qty":"5"}'
+      //   → 201 {"id":42}   (z.coerce turned "5" into 5)
+      // optional: z.string().optional() · default: z.number().default(1) · enum: z.enum(['open', 'done'])
+
+  - trigger: ",,xerr"
+    label: "express: error middleware"
+    replace: |
+      // Must have exactly 4 params or Express treats it as normal middleware. Register last.
+      app.use((err, req, res, next) => {
+        if (res.headersSent) return next(err);  // can't send twice
+        console.error(err);
+        const status = err.status ?? 500;
+        res.status(status).json({ error: status < 500 ? err.message : 'Internal error' });  // don't leak internals on 500
+      });$|$
+
+      // e.g. 404 from a route: const e = new Error('Work order not found'); e.status = 404; throw e;
+      // e.g. Express 4 async route: try { … } catch (err) { next(err); }
+
+  - trigger: ",,xlist"
+    label: "express: list with filters + paging"
+    replace: |
+      const ListQuery = z.object({
+        status: z.enum(['open', 'done']).optional(),
+        page: z.coerce.number().int().min(1).default(1),        // req.query values are strings
+        size: z.coerce.number().int().min(1).max(100).default(20),  // cap it: size=100000 is a DoS
+      });
+
+      app.get('/$|$', async (req, res) => {
+        const q = ListQuery.safeParse(req.query);
+        if (!q.success) return res.status(400).json({ error: q.error.issues });
+        const { status, page, size } = q.data;
+        const result = await pool.request()
+          .input('status', sql.VarChar(20), status ?? null)
+          .input('offset', sql.Int, (page - 1) * size)
+          .input('size', sql.Int, size)
+          .query(`SELECT id, status, due_date FROM dbo.tbl
+                  WHERE (@status IS NULL OR status = @status)  -- optional filter
+                  ORDER BY due_date, id
+                  OFFSET @offset ROWS FETCH NEXT @size ROWS ONLY`);
+        res.json({ page, size, items: result.recordset });
+      });
+      // e.g. GET /items?status=open&page=2 → { page: 2, size: 20, items: [...] }
+      // trap: ?status=a&status=b makes req.query.status an array
+
+  - trigger: ",,xcrud"
+    label: "express: PATCH and DELETE"
+    replace: |
+      // PUT = replace the whole thing · PATCH = change some fields · DELETE → 204
+      app.patch('/$|$/:id', async (req, res) => {
+        const body = CreateBody.partial().safeParse(req.body);  // CreateBody from ,,xpost; partial = every field optional
+        if (!body.success) return res.status(400).json({ error: body.error.issues });
+        const result = await pool.request()
+          .input('id', sql.Int, Number(req.params.id))
+          .input('name', sql.NVarChar(100), body.data.name ?? null)
+          .query(`UPDATE dbo.tbl SET name = COALESCE(@name, name)  -- keep old value when not sent
+                  OUTPUT INSERTED.* WHERE id = @id`);
+        if (result.recordset.length === 0) return res.sendStatus(404);
+        res.json(result.recordset[0]);
+      });
+
+      app.delete('/items/:id', async (req, res) => {
+        const result = await pool.request()
+          .input('id', sql.Int, Number(req.params.id))
+          .query('DELETE FROM dbo.tbl WHERE id = @id');
+        res.sendStatus(result.rowsAffected[0] === 0 ? 404 : 204);  // rowsAffected is an array
+      });
+      // trap: COALESCE means PATCH can't set a field to NULL; say so if asked
+
+  - trigger: ",,xrouter"
+    label: "express: router file"
+    replace: |
+      // items.js
+      import { Router } from 'express';
+      export const items = Router();
+
+      items.get('/', async (req, res) => { $|$ });     // → GET /items
+      items.get('/:id', async (req, res) => { });     // → GET /items/:id
+
+      // app.js: import { items } from './items.js'; app.use('/items', items);
+      // paths in the router are relative to the mount point ('/' here = /items)
+      // nested params: Router({ mergeParams: true }) to read the parent's :id

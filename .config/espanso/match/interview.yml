@@ -1,0 +1,48 @@
+# Interview helpers: ,,ihelp lists every interview trigger, ,,iplan pastes a plan (in kak: :iplan).
+# Avoid "{{" in replace text: espanso reads it as a variable.
+
+matches:
+  - trigger: ",,ihelp"
+    label: "interview: list triggers"
+    replace: |
+      // ,,qjoin  LEFT JOIN + count     ,,qtop   top-1 per group     ,,qdup   duplicates + delete
+      // ,,qanti  NOT EXISTS anti-join  ,,qpage  OFFSET/FETCH        ,,qlag   LAG + DATEDIFF
+      // ,,qrun   running total         ,,qtx    TRY/CATCH tx        ,,qproc  proc skeleton
+      // ,,qtable CREATE TABLE          ,,qidx   covering index      ,,qlock  race-safe update
+      // ,,qupsert upsert               ,,qins   INSERT + OUTPUT     ,,qdate  sargable date range
+      // ,,xapp   Express app           ,,xget   GET /:id            ,,xpost  POST + zod
+      // ,,xerr   error middleware      ,,xpool  mssql pool module   ,,xtx    mssql transaction
+      // ,,dload  fetch + render list   ,,ddel   event delegation    ,,dform  form submit
+      // ,,bqueue BullMQ queue+worker   ,,bcache Redis cache-aside
+      // ,,scomp  Solid component       ,,ssig   signal/memo/effect
+      // ,,uinit  bun setup + scripts   ,,userve Bun.serve routes    ,,utest  bun:test file
+      // ,,utserve test a server        ,,ufile  Bun.file / write / env
+      // ,,iplan   plan before coding (use this first when stuck)
+      // ,,qsel   basic SELECT          ,,qinner INNER JOIN          ,,qupd   UPDATE safely
+      // ,,qdel   DELETE safely         ,,qagg   GROUP BY aggregates ,,qcond  conditional counts
+      // ,,qcase  CASE/COALESCE/NULLIF  ,,qfn    string + date fns
+      // ,,jsort  sort comparators      ,,jmset  Map + Set           ,,jobj   objects, ?. ??
+      // ,,jjson  safe JSON.parse       ,,jtime  dates + Intl        ,,jerr   custom Error
+      // ,,jtext  string methods        ,,nesm   ESM setup + paths   ,,nfs    read file + argv
+      // ,,xlist  list + filters/paging ,,xcrud  PATCH + DELETE      ,,xrouter router file
+      // ,,cbase  CSS reset + tokens    ,,cgrid  grid board/cards    ,,cflex  flex row + center
+      // ,,cpill  status pill           ,,cmq    media queries
+      // (older, javascript.yml: ,,jcs class · ,,jfk for…in · ,,jfi filter · ,,jcl console.log)
+
+  - trigger: ",,iplan"
+    label: "interview: plan before coding (in kak use :iplan)"
+    replace: |
+      /*
+        PROBLEM (my words): $|$
+        INPUT:   shape + one example
+        OUTPUT:  shape + one example
+        EDGE CASES: empty · one item · duplicates · NULL/undefined · bad input · huge input
+        APPROACH (say it out loud before typing):
+          1.
+          2.
+        TESTS:
+          f(example) →
+          f([])      →
+          f(edge)    →
+        AFTER IT WORKS: what's slow? what would I change with more time?
+      */

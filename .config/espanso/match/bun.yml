@@ -1,0 +1,118 @@
+# Bun: setup, Bun.serve, bun:test, files.
+# Avoid "{{" in replace text: espanso reads it as a variable.
+
+matches:
+  - trigger: ",,uinit"
+    label: "bun: project setup commands + scripts"
+    replace: |
+      # bun init -y                        → package.json, tsconfig.json, index.ts
+      # bun add express zod mssql          → deps (lockfile: bun.lock, commit it)
+      # bun add -d @types/express          → dev deps
+      # bun --watch index.ts               → restart on change (--hot keeps state, reloads modules)
+      # bun test --watch                   → tests
+      # bun create vite web --template solid-ts
+      # .env is loaded automatically: process.env.X or Bun.env.X, no dotenv
+      "scripts": {
+        "dev": "bun --watch src/index.ts",
+        "start": "bun src/index.ts",
+        "test": "bun test"
+      }$|$
+
+  - trigger: ",,userve"
+    label: "bun: Bun.serve with routes"
+    replace: |
+      // Bun-only. On their stack (Node) this is Express: say so if you use it.
+      const server = Bun.serve({
+        port: Number(process.env.PORT ?? 3000),  // port: 0 picks a free port (tests)
+        routes: {
+          '/health': Response.json({ ok: true }),  // static response, built once
+          '/items/:id': {
+            GET: req => Response.json({ id: req.params.id }),  // params are strings
+          },
+          '/items': {
+            GET: () => Response.json(items),
+            POST: async req => {
+              const body = await req.json();  // throws on bad JSON: validate (zod) before use
+              $|$
+              return Response.json(body, { status: 201 });
+            },
+          },
+        },
+        fetch: () => new Response('Not found', { status: 404 }),  // anything no route matched
+        error: err => {
+          console.error(err);
+          return Response.json({ error: 'Internal error' }, { status: 500 });
+        },
+      });
+      console.log(`listening on ${server.url}`);
+
+      // e.g. curl localhost:3000/items/7 → {"id":"7"}
+      // e.g. query string: new URL(req.url).searchParams.get('status')
+      // e.g. wildcard: '/api/*': Response.json({ error: 'Not found' }, { status: 404 })
+
+  - trigger: ",,utest"
+    label: "bun: bun:test file"
+    replace: |
+      import { describe, test, expect, beforeEach, mock } from 'bun:test';
+      // file name: something.test.ts (bun test finds *.test.ts / *_test.ts / *.spec.ts)
+
+      describe('$|$', () => {
+        beforeEach(() => {
+          // reset state here: tests in a file share module state
+        });
+
+        test('happy path', () => {
+          expect(add(2, 3)).toBe(5);  // toBe = Object.is; objects/arrays need toEqual
+        });
+
+        test('edge cases', () => {
+          expect(groupBy([], x => x)).toEqual({});
+          expect(() => parse('')).toThrow('empty');
+        });
+
+        test('async', async () => {
+          await expect(load(-1)).rejects.toThrow();  // await it, or the test passes early
+        });
+
+        test('mock', () => {
+          const send = mock((msg: string) => true);
+          notify(send, 'hi');
+          expect(send).toHaveBeenCalledTimes(1);
+          expect(send).toHaveBeenCalledWith('hi');
+        });
+
+        test.each([[1, 1], [2, 4], [3, 9]])('square(%d) = %d', (n, sq) => {
+          expect(n * n).toBe(sq);
+        });
+      });
+      // run one: bun test -t 'edge' · only this file: bun test path/to/file.test.ts
+
+  - trigger: ",,utserve"
+    label: "bun: test an HTTP server"
+    replace: |
+      import { afterAll, beforeAll, expect, test } from 'bun:test';
+
+      let server: ReturnType<typeof Bun.serve>;
+      beforeAll(() => {
+        server = Bun.serve({ port: 0, routes: { '/health': Response.json({ ok: true }) } });  // port 0 = free port
+      });
+      afterAll(() => server.stop(true));  // or the test run hangs
+
+      test('GET /health', async () => {
+        const res = await fetch(new URL('/health', server.url));
+        expect(res.status).toBe(200);
+        expect(await res.json()).toEqual({ ok: true });
+      });$|$
+      // Express app instead: const s = app.listen(0); const port = s.address().port; … s.close()
+
+  - trigger: ",,ufile"
+    label: "bun: read/write files, env"
+    replace: |
+      const file = Bun.file('data.json');  // lazy: nothing is read yet
+      if (await file.exists()) {
+        const data = await file.json();  // also .text(), .arrayBuffer(), .stream()
+      }
+      await Bun.write('out.json', JSON.stringify(result, null, 2));  // creates or overwrites
+      const env = Bun.env.API_KEY;  // same as process.env; .env loads automatically
+      $|$
+      // Node-portable equivalent: import { readFile, writeFile } from 'node:fs/promises';

@@ -1,0 +1,87 @@
+# CSS: reset, grid, flex, pills, media queries.
+# Avoid "{{" in replace text: espanso reads it as a variable.
+
+matches:
+  - trigger: ",,cbase"
+    label: "css: base reset + tokens"
+    replace: |
+      :root {
+        --bg: #f5f7f9; --fg: #1b232c; --muted: #5b6875; --line: #d3d9df;
+        --accent: #0b6bcb; --late: #b3261e; --ok: #1f7a4d;
+        --radius: 6px; --gap: 12px;
+        font-family: system-ui, sans-serif;
+      }
+      *, *::before, *::after { box-sizing: border-box; }  /* width includes padding + border */
+      body { margin: 0; background: var(--bg); color: var(--fg); line-height: 1.5; }
+      img { max-width: 100%; display: block; }
+      button { font: inherit; cursor: pointer; }   /* buttons don't inherit fonts by default */
+      :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }  /* never remove focus outlines */
+      $|$
+
+  - trigger: ",,cgrid"
+    label: "css: grid board and card grid"
+    replace: |
+      /* station columns, scroll sideways when there are many */
+      .board {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(220px, 1fr);
+        gap: var(--gap, 12px);
+        overflow-x: auto;
+        align-items: start;  /* columns don't stretch to the tallest */
+      }
+      /* cards that wrap to fit any width, no media query */
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: var(--gap, 12px);
+      }
+      .cards > * { min-width: 0; }  /* long text otherwise blows the column out */
+      $|$
+      /* e.g. fixed layout: grid-template-columns: 240px 1fr;  (sidebar + main) */
+      /* e.g. span: .wide { grid-column: span 2; } */
+
+  - trigger: ",,cflex"
+    label: "css: flex row + centering"
+    replace: |
+      .row {
+        display: flex;
+        align-items: center;       /* cross axis (vertical in a row) */
+        justify-content: space-between;  /* main axis (horizontal in a row) */
+        gap: 8px;                  /* use gap, not margins between items */
+        flex-wrap: wrap;           /* wrap on narrow screens */
+      }
+      .row .grow { flex: 1; min-width: 0; }   /* takes the leftover space */
+      .row .push-right { margin-left: auto; } /* shove one item to the end */
+      .center { display: grid; place-items: center; }  /* center anything both ways */
+      .truncate { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+      $|$
+
+  - trigger: ",,cpill"
+    label: "css: status pill from data attribute"
+    replace: |
+      .pill {
+        display: inline-block; padding: 2px 8px; border-radius: 999px;
+        font-size: .8rem; font-weight: 600; text-transform: uppercase;
+        background: var(--line); color: var(--fg);
+      }
+      .pill[data-status="late"] { background: var(--late); color: #fff; }
+      .pill[data-status="done"] { background: var(--ok); color: #fff; }
+      $|$
+      /* e.g. HTML: <span class="pill" data-status="late">Late</span>  (keep the word: color alone isn't enough) */
+      /* e.g. JS:   el.dataset.status = 'done'; */
+
+  - trigger: ",,cmq"
+    label: "css: media queries"
+    replace: |
+      /* mobile first: base styles are for phones, widen from there */
+      @media (min-width: 768px) {
+        $|$
+      }
+      @media (prefers-color-scheme: dark) {
+        :root { --bg: #12171c; --fg: #e6ebf0; --line: #2f3944; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * { animation: none !important; transition: none !important; }
+      }
+      /* trap: without <meta name="viewport" content="width=device-width, initial-scale=1"> phones ignore these */

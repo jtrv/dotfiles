@@ -1,0 +1,59 @@
+# Redis cache-aside and BullMQ queues/workers.
+# Avoid "{{" in replace text: espanso reads it as a variable.
+
+matches:
+  - trigger: ",,bqueue"
+    label: "bullmq: queue + worker"
+    replace: |
+      import { Queue, Worker } from 'bullmq';
+
+      const connection = { host: process.env.REDIS_HOST ?? 'localhost', port: 6379 };
+      // Worker connection needs maxRetriesPerRequest: null if you pass your own ioredis instance.
+
+      const QUEUE = '$|$';  // Queue and Worker must use the same name
+      export const queue = new Queue(QUEUE, { connection });
+
+      await queue.add('lookup', { mpn }, {
+        jobId: mpn,  // dedupe: ignored while a job with this id is still stored
+        attempts: 5,
+        backoff: { type: 'exponential', delay: 1000 },
+        removeOnComplete: 1000,  // keep Redis from growing forever
+        removeOnFail: 5000,
+      });
+
+      const worker = new Worker(QUEUE, async job => {
+        // at-least-once delivery: this can run twice, so make it idempotent
+        return lookup(job.data.mpn);  // throw to fail/retry; return value is stored as the result
+      }, {
+        connection,
+        concurrency: 5,
+        limiter: { max: 120, duration: 60_000 },  // rate limit across this queue's workers
+      });
+
+      worker.on('failed', (job, err) => console.error(job?.id, err.message));
+      // shutdown: await worker.close(); await queue.close();
+
+      // e.g. BOM parts ['R10K', 'C1U', 'R10K'] → add each → 2 jobs (jobId drops the second R10K)
+      // e.g. run later: { delay: 5000 }
+      // e.g. nightly: await queue.upsertJobScheduler('nightly-refresh', { pattern: '0 2 * * *' }, { name: 'refresh' });
+      //   (older BullMQ: queue.add('refresh', {}, { repeat: { pattern: '0 2 * * *' } }))
+
+  - trigger: ",,bcache"
+    label: "redis: cache-aside"
+    replace: |
+      import Redis from 'ioredis';
+      const redis = new Redis(process.env.REDIS_URL);
+
+      async function cached(key, ttlSeconds, load) {
+        const hit = await redis.get(key);
+        if (hit !== null) return JSON.parse(hit);  // values are strings: serialize both ways
+        const value = await load();
+        await redis.set(key, JSON.stringify(value), 'EX', ttlSeconds);  // always a TTL, or stale forever
+        return value;
+      }
+      // on write: await redis.del(key) after the DB commit, so readers don't re-cache old data
+      $|$
+
+      // e.g. const part = await cached(`digikey:${mpn}`, 86400, () => fetchPart(mpn));
+      //   first call: miss → fetchPart runs · next 24 h: served from Redis
+      // name keys 'thing:id' so you can find and delete them
