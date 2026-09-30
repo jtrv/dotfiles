@@ -18,7 +18,7 @@ man <cmd>            the canonical reference once you know the page
 
 Libraries / languages
 ---------------------
-dedoc                devdocs offline (cargo-installed, synced in bootstrap.nix)
+wud                  devdocs + built docsets offline (cargo-installed, synced in bootstrap.nix)
 
 Overlap note: wikiman ships the same tldr-pages as tealdeer; tealdeer kept
 only for the faster direct-lookup UX.

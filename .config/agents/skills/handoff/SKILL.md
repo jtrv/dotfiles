@@ -66,8 +66,8 @@ Ordered. Step 1 concrete enough to execute immediately.
 
 4. Budget: ≤250 lines, hard cap 400. When cutting, cut in this order:
    prose → old decisions → traps. Never cut Failed approaches or Side effects.
-5. Tell the user the path and that they can `/clear` or start a fresh session
-   pointing at it.
+5. Tell the user the path and that they can start a fresh session pointing at
+   it (`/clear` in Claude Code, `/new` in Codex and Pi).
 
 ## RESUME mode
 

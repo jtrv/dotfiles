@@ -11,6 +11,13 @@ output "Virtual-1" {
     position x=3440 y=0
 }
 
+layout {
+    struts {
+        top 1
+        bottom 1
+    }
+}
+
 gestures {
     hot-corners {
         top-left

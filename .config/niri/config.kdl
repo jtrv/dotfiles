@@ -46,10 +46,6 @@ layout {
         inactive-color "#00000000"
         urgent-color "#f38ba8"
     }
-    struts{
-        top 1
-        bottom 1
-    }
     border { off; }
     tab-indicator {
         on

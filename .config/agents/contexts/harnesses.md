@@ -103,8 +103,12 @@ Record all four in the snapshot.
   `hostModelSlug`, `displayLabel`, `indexScore` and a `mean` block with
   `costUsd`, `agentWallTimeSec`, `steps` and the token counts).
 - **DeepSWE** (deepswe.datacurve.ai) augments it: pass@1 on long-horizon
-  tasks alone, with steps, output tokens and cost per effort level. Use it to
-  check that an AA placement holds on the long-horizon component by itself.
+  tasks alone, with steps, output tokens and cost per effort level. The
+  rendered page shows one effort per model; every effort row is in
+  `https://deepswe.datacurve.ai/artifacts/v1.1/leaderboard-live.json`
+  (`rows[]`, keyed by `model` and `reasoning_effort`), which `curl` + `jq`
+  reads directly. Use it to check that an AA placement holds on the
+  long-horizon component by itself.
   Steps are a signal, not a metric; fewer steps alone prove neither less
   context use nor less wall time
   (see `../research/2026-08-25-post-counting-agent-turns.md`).
@@ -199,11 +203,6 @@ its MCP servers) and is reparented before the first scan is unreachable;
 cgroups would close it and were deliberately not built. Codex exits 0 on
 SIGTERM, so a killed job is detected from the result's `error`/status, never
 from `exit_code`.
-
-Test repos live outside `$HOME`, where git has no identity (it comes from the
-`includeIf "gitdir:~/"` includes) while global `commit.gpgsign` is on. Make
-base commits with `-c commit.gpgsign=false -c user.email=x@y -c user.name=x`,
-or a worker's failed commit looks like a sandbox effect — it did, once.
 
 ## Antigravity only relocates by flag
 

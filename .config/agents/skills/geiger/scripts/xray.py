@@ -21,6 +21,8 @@ import subprocess
 import sys
 import time
 from collections import Counter, defaultdict
+from itertools import pairwise
+from pathlib import Path
 
 # ---------------------------------------------------------------- extraction
 
@@ -31,10 +33,10 @@ CODE_EXTS = {".py", ".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs", ".dart",
 # Excluded by default from graph AND git signals (--include-tests disables).
 TEST_GEN_RE = re.compile(
     r"(^|/)(tests?|__tests__|spec|specs|__generated__|generated|testdata)/"
-    r"|_test\.|\.test\.|\.spec\.|_spec\.|Test\.java|Tests?\.cs"
+    r"|(^|/)test_[^/]*\.py$|_test\.|\.test\.|\.spec\.|_spec\.|Test\.java|Tests?\.cs"
     r"|\.g\.dart|\.freezed\.dart|_pb2\.py|\.pb\.go|_generated\.|\.min\.js")
 
-BOT_AUTHOR_RE = re.compile(r"\[bot\]|dependabot|renovate|github-actions", re.I)
+BOT_AUTHOR_RE = re.compile(r"\[bot\]|dependabot|renovate|github-actions", re.IGNORECASE)
 
 # Barrel facades have max fan_in + re-export instability by design; as the
 # "stable" side of an SDP check they're pure noise (measured: 43/60 findings
@@ -46,10 +48,10 @@ def is_excluded(path, include_tests):
     return not include_tests and TEST_GEN_RE.search(path)
 
 
-def list_files(repo, include_tests=False):
+def list_files(repo, include_tests=False, code_only=True):
     try:
-        out = subprocess.run(["git", "-c", "core.quotepath=off", "-C", repo, "ls-files"],
-                             capture_output=True, text=True, check=True).stdout.splitlines()
+        out = subprocess.run(["git", "-c", "core.quotepath=off", "-C", repo, "ls-files", "-z"],
+                             capture_output=True, check=True).stdout.decode("utf-8", "surrogateescape").split("\0")
     except (subprocess.CalledProcessError, FileNotFoundError):
         out = []
         for root, dirs, files in os.walk(repo):
@@ -57,117 +59,257 @@ def list_files(repo, include_tests=False):
                        {".git", "node_modules", "build", "dist", "target", ".dart_tool", "__pycache__", "venv", ".venv"}]
             for f in files:
                 out.append(os.path.relpath(os.path.join(root, f), repo))
-    return [f for f in out if os.path.splitext(f)[1] in CODE_EXTS
+    return [f for f in out if f and (not code_only or os.path.splitext(f)[1] in CODE_EXTS)
             and not is_excluded(f, include_tests)]
-
-
-STDLIB = set(getattr(sys, "stdlib_module_names", ()))
 
 
 def _runtime_nodes(tree):
     """Walk the AST skipping `if TYPE_CHECKING:` bodies — type-only imports
     aren't runtime edges (they fabricate SDP violations and inflate cycles;
     confirmed on flask and click). Returns (nodes, skipped_import_count)."""
+    modules, flags, shadowed = set(), set(), set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            for alias in node.names:
+                name = alias.asname or alias.name.split(".")[0]
+                if alias.name == "typing":
+                    modules.add(name)
+                else:
+                    shadowed.add(name)
+        elif isinstance(node, ast.ImportFrom):
+            for alias in node.names:
+                name = alias.asname or alias.name
+                if node.module == "typing" and alias.name == "TYPE_CHECKING" and not node.level:
+                    flags.add(name)
+                else:
+                    shadowed.add(name)
+        elif isinstance(node, ast.Name) and isinstance(node.ctx, (ast.Store, ast.Del)):
+            shadowed.add(node.id)
+        elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+            shadowed.add(node.name)
+        elif isinstance(node, ast.arg):
+            shadowed.add(node.arg)
+    modules -= shadowed
+    flags -= shadowed
+
+    def runtime_value(node):
+        if isinstance(node, ast.Name) and node.id in flags:
+            return False
+        if (isinstance(node, ast.Attribute) and node.attr == "TYPE_CHECKING"
+                and isinstance(node.value, ast.Name) and node.value.id in modules):
+            return False
+        if isinstance(node, ast.Constant) and isinstance(node.value, bool):
+            return node.value
+        if isinstance(node, ast.UnaryOp) and isinstance(node.op, ast.Not):
+            value = runtime_value(node.operand)
+            return None if value is None else not value
+        if isinstance(node, ast.BoolOp):
+            values = [runtime_value(value) for value in node.values]
+            if isinstance(node.op, ast.And):
+                return False if False in values else (True if all(v is True for v in values) else None)
+            return True if True in values else (False if all(v is False for v in values) else None)
+        return None
+
     nodes, skipped, stack = [], 0, [tree]
     while stack:
         node = stack.pop()
         nodes.append(node)
         for child in ast.iter_child_nodes(node):
             if isinstance(child, ast.If):
-                t = child.test
-                name = t.attr if isinstance(t, ast.Attribute) else getattr(t, "id", None)
-                if name == "TYPE_CHECKING":
-                    skipped += sum(1 for stmt in child.body for n in ast.walk(stmt)
+                value = runtime_value(child.test)
+                if value is not None:
+                    omitted = child.body if value is False else child.orelse
+                    skipped += sum(1 for stmt in omitted for n in ast.walk(stmt)
                                    if isinstance(n, (ast.Import, ast.ImportFrom)))
-                    stack.extend(child.orelse)  # else-branch runs at runtime
+                    stack.extend(child.orelse if value is False else child.body)
                     continue
             stack.append(child)
     return nodes, skipped
 
 
 def extract_python(repo, files):
-    """Resolve python imports to repo-relative file paths via ast.
-    Ambiguous or stdlib-colliding names dropped; TYPE_CHECKING imports excluded."""
-    pyfiles = [f for f in files if f.endswith(".py")]
-    suffix_owners = defaultdict(set)  # dotted suffix -> candidate files
+    """Resolve imports from the repository root and explicit src/ roots.
+    Package directories are never themselves implicit source roots. Ambiguous
+    module identities are dropped. Importing a module also executes each of
+    its parent package initializers. Failed files are omitted from the graph.
+    """
+    pyfiles = sorted(f for f in files if f.endswith(".py"))
+    roots = {""}
     for f in pyfiles:
-        dotted = f[:-3].replace(os.sep, ".")
-        dotted = dotted[:-9] if dotted.endswith(".__init__") else dotted
-        parts = dotted.split(".")
-        for i in range(len(parts)):
-            suffix_owners[".".join(parts[i:])].add(f)
-    mod_map = {k: next(iter(v)) for k, v in suffix_owners.items()
-               if len(v) == 1 and k.split(".")[0] not in STDLIB}
-    edges = defaultdict(set)
+        parts = f.split("/")
+        for i, part in enumerate(parts[:-1]):
+            if part == "src":
+                roots.add("/".join(parts[:i + 1]) + "/")
+    owners = defaultdict(set)
+    identities, source_roots = {}, {}
+    root_owners = defaultdict(lambda: defaultdict(set))
+    for f in pyfiles:
+        root = max((r for r in roots if f.startswith(r)), key=len)
+        dotted = f[len(root):-3].replace("/", ".")
+        dotted = dotted.removesuffix(".__init__")
+        identities[f], source_roots[f] = dotted, root
+        for candidate_root in roots:
+            if f.startswith(candidate_root):
+                candidate = f[len(candidate_root):-3].replace("/", ".").removesuffix(".__init__")
+                owners[candidate].add(f)
+                root_owners[candidate_root][candidate].add(f)
+    mod_map = {k: next(iter(v)) for k, v in owners.items() if len(v) == 1}
+    root_maps = {root: {k: next(iter(v)) for k, v in names.items() if len(v) == 1}
+                 for root, names in root_owners.items()}
+    edges, failed, parsed = defaultdict(set), set(), set()
+    extract_python.type_only = 0
     for f in pyfiles:
         try:
-            tree = ast.parse(open(os.path.join(repo, f), encoding="utf-8", errors="replace").read())
-        except (SyntaxError, ValueError, OSError):
+            with open(os.path.join(repo, f), encoding="utf-8") as stream:
+                tree = ast.parse(stream.read())
+        except (SyntaxError, ValueError, OSError, UnicodeError):
+            failed.add(f)
             continue
-        pkg_parts = f[:-3].replace(os.sep, ".").split(".")[:-1]
+        parsed.add(f)
+        pkg_parts = identities[f].split(".")
+        if not f.endswith("/__init__.py"):
+            pkg_parts = pkg_parts[:-1]
         rt_nodes, skipped = _runtime_nodes(tree)
         extract_python.type_only += skipped
         for node in rt_nodes:
             names = []
+            lookup = mod_map
             if isinstance(node, ast.Import):
                 names = [a.name for a in node.names]
             elif isinstance(node, ast.ImportFrom):
-                if node.level:  # relative import
-                    if node.level > len(pkg_parts) + 1:
+                if node.level:
+                    lookup = root_maps[source_roots[f]]
+                    if node.level > len(pkg_parts):
                         continue
                     base = pkg_parts[:len(pkg_parts) - node.level + 1]
                     mod = ".".join(base + (node.module.split(".") if node.module else []))
                     names = [mod] + [mod + "." + a.name for a in node.names]
                 elif node.module:
                     names = [node.module] + [node.module + "." + a.name for a in node.names]
-            for n in names:
-                tgt = mod_map.get(n)
-                if tgt and tgt != f:
-                    edges[f].add(tgt)
-    return {f: sorted(edges.get(f, ())) for f in pyfiles}
+            for name in names:
+                parts = name.split(".")
+                for i in range(1, len(parts) + 1):
+                    tgt = lookup.get(".".join(parts[:i]))
+                    if tgt and tgt != f and (i == len(parts) or tgt.endswith("/__init__.py")):
+                        edges[f].add(tgt)
+    extract_python.coverage = {"discovered": len(pyfiles), "parsed": len(parsed),
+                               "failed": len(failed)}
+    return {f: sorted(edges[f] - failed) for f in sorted(parsed)}
 
 
 extract_python.type_only = 0  # reset by run(); accumulated per extraction
 
 
+def parse_dot(text):
+    """Parse a flat directed DOT graph (IDs, chains, attributes, isolates).
+    Subgraphs, ports and HTML IDs are rejected rather than partially parsed.
+    """
+    token_re = re.compile(r'\s+|//[^\n]*|/\*.*?\*/|\#[^\n]*|"(?:\\.|[^"\\])*"|->|[{}\[\];,=]|[A-Za-z_\x80-\uffff][\w\x80-\uffff]*|-?(?:\d+(?:\.\d*)?|\.\d+)', re.DOTALL)
+    tokens, pos = [], 0
+    for match in token_re.finditer(text):
+        if match.start() != pos:
+            raise ValueError("unsupported DOT syntax; use flat directed DOT or JSON")
+        pos = match.end()
+        token = match.group()
+        if token.isspace() or token.startswith(("//", "/*", "#")):
+            continue
+        tokens.append(token)
+    if pos != len(text):
+        raise ValueError("unsupported DOT syntax")
+    index = 0
+
+    def take():
+        nonlocal index
+        if index >= len(tokens):
+            raise ValueError("incomplete DOT graph")
+        value = tokens[index]
+        index += 1
+        return value
+
+    def identifier(token):
+        if token in {"{", "}", "[", "]", ";", ",", "=", "->", "subgraph"}:
+            raise ValueError("unsupported DOT identifier")
+        return json.loads(token) if token.startswith('"') else token
+
+    first = take()
+    if first == "strict":
+        first = take()
+    if first != "digraph":
+        raise ValueError("expected directed DOT graph")
+    if tokens[index] != "{":
+        identifier(take())
+    if take() != "{":
+        raise ValueError("expected DOT graph body")
+    edges = defaultdict(set)
+    while index < len(tokens) and tokens[index] != "}":
+        if tokens[index] == ";":
+            take()
+            continue
+        head = take()
+        ids = [identifier(head)]
+        if tokens[index] == "=":
+            take(); identifier(take())
+            continue
+        while tokens[index] == "->":
+            take(); ids.append(identifier(take()))
+        attrs = {}
+        while tokens[index] == "[":
+            take()
+            while tokens[index] != "]":
+                if tokens[index] in {",", ";"}:
+                    take()
+                    continue
+                key = identifier(take())
+                if take() != "=":
+                    raise ValueError("expected DOT attribute assignment")
+                attrs[key] = identifier(take())
+            take()
+        if head in {"node", "edge", "graph"} and len(ids) == 1:
+            continue
+        if attrs.get("label") == "owns":
+            continue
+        for node in ids:
+            edges.setdefault(node, set())
+        for source, target in pairwise(ids):
+            edges[source].add(target)
+    if take() != "}" or index != len(tokens):
+        raise ValueError("unsupported trailing DOT syntax")
+    return {k: sorted(v) for k, v in edges.items()}
+
+
 def parse_edges_file(path):
     """Accept madge JSON ({mod: [deps]}), depcruise JSON ({modules:[...]}),
     lakos/generic JSON ({nodes, edges:[{from,to}]}), or graphviz DOT."""
-    text = open(path, encoding="utf-8").read()
+    text = Path(path).read_text(encoding="utf-8")
     try:
         data = json.loads(text)
     except json.JSONDecodeError:
-        # DOT. Chains ("a" -> "b" -> "c") pair consecutively; containment
-        # (label="owns", cargo-modules) is not a dependency — skip it.
-        edges = defaultdict(set)
-        for stmt in re.split(r"[;\n]", text):
-            if "->" not in stmt or 'label="owns"' in stmt:
-                continue
-            ids = re.findall(r'"([^"]+)"', stmt.split("[")[0])
-            for a, b in zip(ids, ids[1:]):
-                if a != b:
-                    edges[a].add(b)
-        return {k: sorted(v) for k, v in edges.items()}
-    norm = lambda s: s.lstrip("/")  # lakos ids lead with '/'
-    if isinstance(data, dict) and "modules" in data:  # dependency-cruiser
+        return parse_dot(text)
+
+    def norm(s):
+        return os.path.normpath(s)
+    if isinstance(data, dict) and isinstance(data.get("modules"), list) and (any(isinstance(m, dict) for m in data["modules"]) or isinstance(data.get("summary"), dict)):  # dependency-cruiser
         edges = defaultdict(set)
         for m in data["modules"]:
             edges[norm(m["source"])].update(
                 norm(d["resolved"]) for d in m.get("dependencies", ())
-                if not d.get("couldNotResolve"))
+                if d.get("resolved") and not any(d.get(flag) for flag in
+                    ("couldNotResolve", "coreModule", "external", "matchesDoNotFollow", "dependencyTypesExternal"))
+                and not any(t.startswith("npm") for t in d.get("dependencyTypes", ())))
         return {k: sorted(v) for k, v in edges.items()}
-    if isinstance(data, dict) and "edges" in data:  # lakos / generic
+    if isinstance(data, dict) and isinstance(data.get("edges"), list) and ("nodes" in data or any(isinstance(e, dict) for e in data["edges"])):  # lakos / generic
         edges = defaultdict(set)
         nodes = data.get("nodes") or {}
         node_ids = (list(nodes) if isinstance(nodes, dict)
                     else [n.get("id") if isinstance(n, dict) else n for n in nodes])
         for e in data["edges"]:
-            edges[norm(e["from"])].add(norm(e["to"]))
+            edges[norm(e["from"].lstrip("/"))].add(norm(e["to"].lstrip("/")))
         for n in node_ids:
             if n:
-                edges.setdefault(norm(n), set())
+                edges.setdefault(norm(n.lstrip("/")), set())
         return {k: sorted(v) for k, v in edges.items()}
-    if isinstance(data, dict):  # madge adjacency
+    if isinstance(data, dict) and all(isinstance(v, list) and all(isinstance(x, str) for x in v)
+                                      for v in data.values()):  # madge adjacency
         return {norm(k): sorted({norm(x) for x in v}) for k, v in data.items()}
     raise ValueError("unrecognized edges format")
 
@@ -176,7 +318,7 @@ def align_to_git(adj, repo, include_tests):
     """Rename external-graph node ids to repo-relative git paths where a unique
     suffix match exists (madge scanned a subdir, lakos paths, etc.). The git
     join is load-bearing: hidden_coupling dies silently without it."""
-    gitfiles = list_files(repo, include_tests)
+    gitfiles = list_files(repo, True)
     fileset = set(gitfiles)
     by_suffix = defaultdict(list)
     for f in gitfiles:
@@ -186,18 +328,23 @@ def align_to_git(adj, repo, include_tests):
     rename, matched = {}, 0
     nodes = set(adj) | {d for v in adj.values() for d in v}
     for n in nodes:
-        if n in fileset:
-            rename[n] = n; matched += 1
+        normalized = os.path.normpath(n)
+        if os.path.isabs(normalized):
+            normalized = os.path.relpath(normalized, os.path.abspath(repo))
+        if normalized in fileset:
+            rename[n] = normalized; matched += 1
         else:
-            hits = by_suffix.get(n, [])
+            hits = by_suffix.get(normalized, [])
             if len(hits) == 1:
                 rename[n] = hits[0]; matched += 1
             else:
-                rename[n] = n
+                rename[n] = normalized
     new_adj = defaultdict(set)
-    for k, deps in adj.items():
-        new_adj[rename[k]].update(rename[d] for d in deps)
-    rate = matched / len(nodes) if nodes else 0.0
+    retained = {n for n in nodes if not is_excluded(rename[n], include_tests)}
+    for n in sorted(retained):
+        new_adj[rename[n]].update(rename[d] for d in adj.get(n, ()) if d in retained)
+    rate = (sum(rename[n] in fileset for n in retained) / len(retained)
+            if retained else 0.0)
     return {k: sorted(v) for k, v in new_adj.items()}, round(rate, 2)
 
 # ------------------------------------------------------------------- metrics
@@ -206,10 +353,10 @@ def tarjan_sccs(adj):
     """Iterative Tarjan. Returns list of SCCs (each a list of nodes)."""
     index, low, on_stack = {}, {}, set()
     stack, sccs, counter = [], [], [0]
-    for root in adj:
+    for root in sorted(adj):
         if root in index:
             continue
-        work = [(root, iter(adj.get(root, ())))]
+        work = [(root, iter(sorted(adj.get(root, ()))))]
         index[root] = low[root] = counter[0]; counter[0] += 1
         stack.append(root); on_stack.add(root)
         while work:
@@ -221,7 +368,7 @@ def tarjan_sccs(adj):
                 if nxt not in index:
                     index[nxt] = low[nxt] = counter[0]; counter[0] += 1
                     stack.append(nxt); on_stack.add(nxt)
-                    work.append((nxt, iter(adj.get(nxt, ()))))
+                    work.append((nxt, iter(sorted(adj.get(nxt, ())))))
                     advanced = True
                     break
                 elif nxt in on_stack:
@@ -270,11 +417,13 @@ def _cycle_path(scc, adj, cap=8):
 
 
 def compute_graph_metrics(adj, top, scope=None):
+    if top <= 0:
+        raise ValueError("--top must be positive")
     nodes = set(adj)
     for deps in adj.values():
         nodes.update(deps)
-    adj = {n: sorted({d for d in adj.get(n, ()) if d in nodes}) for n in nodes}
-    fan_out = {n: len(adj[n]) for n in nodes}
+    adj = {n: sorted({d for d in adj.get(n, ()) if d in nodes}) for n in sorted(nodes)}
+    fan_out = {n: len(adj[n]) for n in sorted(nodes)}
     fan_in = Counter()
     for n, deps in adj.items():
         for d in deps:
@@ -283,11 +432,11 @@ def compute_graph_metrics(adj, top, scope=None):
 
     # cycles: SCCs of size >1, plus self-loops (possible via --edges input)
     sccs = [s for s in tarjan_sccs(adj) if len(s) > 1 or s[0] in adj[s[0]]]
-    sccs.sort(key=len, reverse=True)
+    sccs.sort(key=lambda s: (-len(s), sorted(s)))
     cycle_nodes = {n for s in sccs for n in s}
 
     inst = {n: (fan_out[n] / (fan_in[n] + fan_out[n])) if fan_in[n] + fan_out[n] else None
-            for n in nodes}
+            for n in sorted(nodes)}
 
     def deg(n):
         return fan_in[n] + fan_out[n]
@@ -297,7 +446,7 @@ def compute_graph_metrics(adj, top, scope=None):
     p90 = degs[int(0.9 * (len(degs) - 1))] if len(degs) >= 20 else 0
     hubs_all = sorted((n for n in nodes
                        if fan_in[n] >= 2 and fan_out[n] >= 2 and deg(n) >= p90),
-                      key=deg, reverse=True)
+                      key=lambda n: (-deg(n), n))
     orphans_all = sorted(n for n in nodes if deg(n) == 0)
 
     # SDP: depend toward stability (any inversion violates it — Martin);
@@ -310,7 +459,7 @@ def compute_graph_metrics(adj, top, scope=None):
             if inst[n] is not None and inst[d] is not None and inst[d] - inst[n] > 0.4 and fan_in[n] >= 2:
                 sdp.append({"from": n, "to": d, "delta": round(inst[d] - inst[n], 2),
                             "from_fan_in": fan_in[n]})
-    sdp.sort(key=lambda e: (e["from_fan_in"], e["delta"]), reverse=True)
+    sdp.sort(key=lambda e: (-e["from_fan_in"], -e["delta"], e["from"], e["to"]))
 
     # PR mode: scope BEFORE top-N capping, else in-scope findings silently
     # vanish behind the cap while summary counts still include them.
@@ -327,7 +476,7 @@ def compute_graph_metrics(adj, top, scope=None):
     # (the DSM back-edge signal, without a DSM).
     feedback, layering = [], None
     if edge_count and len(nodes) <= 3000:
-        succ = {n: set(adj[n]) for n in nodes}
+        succ = {n: set(adj[n]) for n in sorted(nodes)}
         pred = defaultdict(set)
         for n, ds in adj.items():
             for d in ds:
@@ -337,17 +486,17 @@ def compute_graph_metrics(adj, top, scope=None):
             moved = True
             while moved:
                 moved = False
-                for n in [x for x in remaining if not (succ[x] & remaining - {x})]:
+                for n in [x for x in sorted(remaining) if not (succ[x] & remaining) - {x}]:
                     s2.append(n); remaining.discard(n); moved = True
-                for n in [x for x in remaining if not (pred[x] & remaining - {x})]:
+                for n in [x for x in sorted(remaining) if not (pred[x] & remaining) - {x}]:
                     s1.append(n); remaining.discard(n); moved = True
             if remaining:  # break a cycle: node with max out-in degree delta
-                n = max(remaining, key=lambda x: len(succ[x] & remaining) - len(pred[x] & remaining))
+                n = min(remaining, key=lambda x: (len(pred[x] & remaining) - len(succ[x] & remaining), x))
                 s1.append(n); remaining.discard(n)
         order = {n: i for i, n in enumerate(s1 + list(reversed(s2)))}
         feedback = sorted(({"from": n, "to": d, "span": order[n] - order[d]}
                            for n in nodes for d in adj[n] if order[d] <= order[n]),
-                          key=lambda e: e["span"], reverse=True)
+                          key=lambda e: (-e["span"], e["from"], e["to"]))
         layering = round(1 - len(feedback) / edge_count, 3)
         if scope is not None:  # layering_score stays whole-graph; edges scoped
             feedback = [e for e in feedback if e["from"] in scope or e["to"] in scope]
@@ -358,7 +507,7 @@ def compute_graph_metrics(adj, top, scope=None):
         for n in nodes:
             seen, frontier = {n}, [n]
             while frontier:
-                nxt = [d for f in frontier for d in adj[f] if d not in seen]
+                nxt = {d for f in frontier for d in adj[f]} - seen
                 seen.update(nxt); frontier = nxt
             ccd += len(seen)
         n_ = len(nodes)
@@ -381,7 +530,7 @@ def compute_graph_metrics(adj, top, scope=None):
             "propagation_cost": pc,
             "layering_score": layering,  # 1.0 = perfectly layerable
         },
-        # cut these imports and the graph becomes layerable; span = how far
+        # the complete uncapped cut set makes the graph layerable; span = how far
         # backward the edge jumps in the inferred layering
         "feedback_edges": feedback[:top],
         "feedback_truncated": max(0, len(feedback) - top),
@@ -398,6 +547,7 @@ def compute_graph_metrics(adj, top, scope=None):
                   "instability": round(inst[n], 2),
                   **({"role": "aggregator"} if fan_out[n] >= 20 and (inst[n] or 0) >= 0.9 else {})}
                  for n in hubs_all[:top]],
+        "hubs_truncated": max(0, len(hubs_all) - top),
         "orphans": orphans_all[:top], "orphans_truncated": max(0, len(orphans_all) - top),
         "sdp_violations": sdp[:top], "sdp_truncated": max(0, len(sdp) - top),
     }
@@ -438,13 +588,13 @@ def git_signals(repo, nodes, adj, top, include_tests=False, scope=None,
         # network (minutes); fall back to name-status there (no line counts).
         partial = subprocess.run(
             ["git", "-C", repo, "config", "--get", "remote.origin.partialclonefilter"],
-            capture_output=True, text=True).stdout.strip()
+            capture_output=True, text=True, check=False).stdout.strip()
         stat_flag = "--name-status" if partial else "--numstat"
         out = subprocess.run(
             ["git", "-c", "core.quotepath=off", "-C", repo, "log", "--no-merges",
-             stat_flag, "-M", "--format=%x00%an%x00%at",
+             stat_flag, "-M", "-z", "--format=%x00commit%x00%H%x00%an%x00%at%x00",
              f"--max-count={max_commits}"],
-            capture_output=True, text=True, check=True).stdout
+            capture_output=True, check=True, timeout=60).stdout.decode("utf-8", "surrogateescape")
     except (subprocess.CalledProcessError, FileNotFoundError):
         return None
 
@@ -458,40 +608,40 @@ def git_signals(repo, nodes, adj, top, include_tests=False, scope=None,
             seen.add(p); p = alias[p]
         return p
 
-    commits, author, epoch, files = [], None, None, []
-    for line in out.splitlines() + ["\x00"]:
-        if line.startswith("\x00"):
+    commits, window_ids = [], []
+    file_commits = defaultdict(list)
+    tokens = iter(out.split("\0"))
+    author, epoch, files, footprint = None, None, [], 0
+    for token in tokens:
+        record = token.lstrip("\n")
+        if record == "commit":
             if files and author is not None and not BOT_AUTHOR_RE.search(author):
-                commits.append((author, epoch, files))
-            parts = line.split("\x00")
-            author = parts[1] if len(parts) > 1 else ""
-            try:
-                epoch = int(parts[2])
-            except (IndexError, ValueError):
-                epoch = None
-            files = []
-        elif line.strip():
-            m = re.match(r"^(\d+|-)\t(\d+|-)\t(.+)$", line)
-            if m:  # numstat
-                add, dele, path = m.groups()
+                commits.append((author, epoch, files, footprint))
+            window_ids.append(next(tokens))
+            author, epoch = next(tokens), int(next(tokens))
+            files, footprint = [], 0
+        elif record:
+            if partial:
+                status = record
+                old = next(tokens) if status.startswith(("R", "C")) else None
+                new, lines = next(tokens), 0
+            else:
+                add, dele, new = record.split("\t", 2)
                 lines = (0 if add == "-" else int(add)) + (0 if dele == "-" else int(dele))
-                old, new = _split_rename(path)
-            else:  # name-status: "M\tpath" or "R100\told\tnew"
-                cols = line.split("\t")
-                if len(cols) < 2 or not re.match(r"^[A-Z]\d*$", cols[0]):
-                    continue
-                lines = 0
-                if cols[0][0] in "RC" and len(cols) >= 3:
-                    old, new = cols[1], cols[2]
-                else:
-                    old, new = None, cols[-1]
+                old = None
+                if not new:
+                    old, new = next(tokens), next(tokens)
+            footprint += 1
             if old:
                 alias[old] = cur(new)
             path = cur(new)
             if os.path.splitext(path)[1] in CODE_EXTS and not is_excluded(path, include_tests):
                 files.append((path, lines))
+                file_commits[path].append(window_ids[-1])
+    if files and author is not None and not BOT_AUTHOR_RE.search(author):
+        commits.append((author, epoch, files, footprint))
 
-    epochs = [e for _, e, _ in commits if e is not None]
+    epochs = [e for _, e, _, _ in commits if e is not None]
     lo, hi = (min(epochs), max(epochs)) if epochs else (0, 0)
     span = max(1, hi - lo)
     recent_cut = hi - 90 * 86400
@@ -507,20 +657,20 @@ def git_signals(repo, nodes, adj, top, include_tests=False, scope=None,
     author_last = {}         # author -> newest commit epoch (departure detection)
     first_author = {}        # file -> author of oldest windowed commit (DOA "FA")
     flat_window = (hi - lo) < 86400  # degenerate window (shallow clone / same-day
-    for who, e, fs in commits:      # import): decay meaningless, weight uniformly
+    for who, e, fs, footprint in commits:      # import): decay meaningless, weight uniformly
         w = 1.0 if (e is None or flat_window) else _decay((e - lo) / span)
-        if e is not None and who not in author_last:
-            author_last[who] = e  # newest-first: first hit = latest activity
+        if e is not None:
+            author_last[who] = max(e, author_last.get(who, e))
         for f, ln in fs:
             churn[f] += 1; decayed[f] += w; line_churn[f] += ln
             authors[f][who] += 1
             first_author[f] = who  # keeps overwriting -> oldest wins
             if e is not None and e >= recent_cut:
                 recent_w[f] += w
-            if f not in last_touched and e is not None:
-                last_touched[f] = e  # newest-first: first hit wins
+            if e is not None:
+                last_touched[f] = max(e, last_touched.get(f, e))
         names = sorted({f for f, _ in fs})
-        if len(names) <= max_files_per_commit:  # skip mass renames/reformats
+        if footprint <= max_files_per_commit:  # skip mass renames/reformats
             for i in range(len(names)):
                 for j in range(i + 1, len(names)):
                     co[(names[i], names[j])] += 1
@@ -533,17 +683,18 @@ def git_signals(repo, nodes, adj, top, include_tests=False, scope=None,
     # bound is documented in score_formula) — scope filter BEFORE shortlist
     candidates = ((f, dw) for f, dw in decayed.items()
                   if scope is None or f in scope)
-    for f, dw in sorted(candidates, key=lambda kv: kv[1], reverse=True)[:top * 10]:
+    for f, dw in sorted(candidates, key=lambda kv: (-kv[1], kv[0]))[:top * 10]:
         p = os.path.join(repo, f)
         if not os.path.isfile(p):
             continue  # deleted since
         loc = indent = 0
         try:
-            for line_ in open(p, encoding="utf-8", errors="replace"):
-                s = line_.expandtabs(4)
-                if s.strip():
-                    loc += 1
-                    indent += (len(s) - len(s.lstrip(" "))) // 4
+            with open(p, encoding="utf-8", errors="replace") as stream:
+                for line_ in stream:
+                    s = line_.expandtabs(4)
+                    if s.strip():
+                        loc += 1
+                        indent += (len(s) - len(s.lstrip(" "))) // 4
         except OSError:
             continue
         ac = authors[f]
@@ -557,26 +708,37 @@ def git_signals(repo, nodes, adj, top, include_tests=False, scope=None,
             "top_author_share": round(ac.most_common(1)[0][1] / total, 2) if total else None,
             "score": round(dw * (loc + indent)),
         })
-    hotspots.sort(key=lambda h: h["score"], reverse=True)
+    hotspots.sort(key=lambda h: (-h["score"], h["file"]))
     hot_files = {h["file"] for h in hotspots[:top]}
 
     # hot functions: which functions inside the top hotspots take the churn —
     # converts "read this 3000-line file" into "read these 3 functions".
     # Parsed from `git log -p` hunk headers (git's xfuncname context). Skipped
     # on partial clones (-p would lazy-fetch blobs).
+    enrichment = {"attempted": 0, "completed": 0, "timed_out": 0, "failed": 0,
+                  "skipped": len(hotspots[:top]) if partial else max(0, len(hotspots[:top]) - 10),
+                  "skip_reason": "partial clone" if partial else "at most 10 hotspots",
+                  "history": "file-touching commit IDs from main scan; no revision walk"}
     if not partial:
-        hunk_re = re.compile(r"^@@[^@]*@@ (.+)$", re.M)
+        hunk_re = re.compile(r"^@@[^@]*@@ (.+)$", re.MULTILINE)
         def_re = re.compile(r"(?:def|class|function|fn|func|interface|struct|impl)\s+([A-Za-z_][\w$]*)")
         call_re = re.compile(r"([A-Za-z_][\w$]*)\s*\(")
         for h in hotspots[:min(10, top)]:
+            enrichment["attempted"] += 1
             try:
                 logp = subprocess.run(
                     ["git", "-c", "core.quotepath=off", "-C", repo, "log",
-                     "--no-merges", "-p", "--format=", "-M", "--max-count=300",
+                     "--no-walk=unsorted", "--stdin", "-p", "--format=", "-M",
                      "--", h["file"]],
-                    capture_output=True, text=True, timeout=20).stdout
-            except (subprocess.TimeoutExpired, subprocess.CalledProcessError, FileNotFoundError):
+                    input="\n".join(file_commits[h["file"]]) + "\n",
+                    capture_output=True, text=True, check=True, timeout=20).stdout
+            except subprocess.TimeoutExpired:
+                enrichment["timed_out"] += 1
                 continue
+            except (subprocess.CalledProcessError, FileNotFoundError):
+                enrichment["failed"] += 1
+                continue
+            enrichment["completed"] += 1
             names = Counter()
             for ctx in hunk_re.findall(logp):
                 m = def_re.search(ctx) or call_re.search(ctx)
@@ -584,7 +746,8 @@ def git_signals(repo, nodes, adj, top, include_tests=False, scope=None,
                     names[m.group(1)] += 1
             if names:
                 h["hot_functions"] = [{"name": n, "touches": c}
-                                      for n, c in names.most_common(5)]
+                                      for n, c in sorted(names.items(), key=lambda kv: (-kv[1], kv[0]))[:5]]
+                h["hot_functions_truncated"] = max(0, len(names) - 5)
 
     # knowledge: DOA (Avelino truck-factor lineage) + git-only departure —
     # a knowledge island inside a hotspot/cycle outranks either signal alone
@@ -606,11 +769,11 @@ def git_signals(repo, nodes, adj, top, include_tests=False, scope=None,
         counts = Counter(a for f in flist for a in doa_authors[f] - removed)
         if not counts:
             break
-        removed.add(counts.most_common(1)[0][0]); tf += 1
+        removed.add(min(counts, key=lambda a: (-counts[a], a))); tf += 1
     departed = {a for a, e in author_last.items() if e < hi - 365 * 86400}
     islands = sorted((f for f, s in doa_authors.items()
                       if len(s) == 1 and (scope is None or f in scope)),
-                     key=lambda f: decayed[f], reverse=True)
+                     key=lambda f: (-decayed[f], f))
     stale = sorted(
         ({"file": f, "departed_share": round(
             sum(c for a, c in authors[f].items() if a in departed) / sum(authors[f].values()), 2)}
@@ -618,13 +781,14 @@ def git_signals(repo, nodes, adj, top, include_tests=False, scope=None,
          if (scope is None or f in scope)
          and sum(c for a, c in authors[f].items() if a in departed) * 2
              > sum(authors[f].values())),
-        key=lambda x: x["departed_share"], reverse=True)
+        key=lambda x: (-x["departed_share"], x["file"]))
     knowledge = {
         "truck_factor": tf,
         "islands": [{"file": f, "owner": next(iter(doa_authors[f])),
                      "is_hotspot": f in hot_files} for f in islands[:top]],
         "islands_truncated": max(0, len(islands) - top),
         "stale_ownership": stale[:top],
+        "stale_ownership_truncated": max(0, len(stale) - top),
         "note": ("DOA over the analyzed window only; departed = no commit in "
                  "12 months within window"),
     }
@@ -634,7 +798,7 @@ def git_signals(repo, nodes, adj, top, include_tests=False, scope=None,
         for d in deps:
             edge_pairs.add((n, d)); edge_pairs.add((d, n))
     hidden = []
-    for (a, b), c in co.most_common():
+    for (a, b), c in sorted(co.items(), key=lambda kv: (-kv[1], kv[0])):
         if c < 4:
             break
         if scope is not None and a not in scope and b not in scope:
@@ -646,7 +810,9 @@ def git_signals(repo, nodes, adj, top, include_tests=False, scope=None,
 
     churned_in_graph = sum(1 for f in churn if f in nodes)
     hot_all = {h["file"] for h in hotspots}  # scored set, pre-cap (compound needs it)
-    sizes = sorted(len(fs) for _, _, fs in commits)
+    sizes = sorted(footprint for _, _, _, footprint in commits)
+    co_scoped = [(pair, c) for pair, c in sorted(co.items(), key=lambda kv: (-kv[1], kv[0]))
+                 if scope is None or any(f in scope for f in pair)]
     stats = {
         "commits": len(commits),
         "median_files_per_commit": sizes[len(sizes) // 2] if sizes else 0,
@@ -656,6 +822,9 @@ def git_signals(repo, nodes, adj, top, include_tests=False, scope=None,
     }
     return {
         "commits_analyzed": len(commits), "commits_cap": max_commits,
+        "commits_scanned": len(window_ids),
+        "window": {"timestamp_basis": "author", "oldest": _date(lo), "as_of": _date(hi)},
+        "enrichment": enrichment,
         **({"line_churn_note": "lines_churned unavailable (blobless partial clone "
             "— numstat would lazy-fetch every blob)"} if partial else {}),
         "git_join": (round(churned_in_graph / len(churn), 2) if churn else None),
@@ -665,9 +834,11 @@ def git_signals(repo, nodes, adj, top, include_tests=False, scope=None,
                           "weight from last 90 days; scored from the top-10×N files "
                           "by decayed weight"),
         "hotspots": hotspots[:top],
+        "hotspots_truncated": max(0, len(hotspots) - top),
+        "hotspot_candidates_truncated": max(0, sum(scope is None or f in scope for f in decayed) - top * 10),
         "co_change_top": [{"a": a, "b": b, "co_commits": c}
-                          for (a, b), c in co.most_common()
-                          if scope is None or a in scope or b in scope][:top],
+                          for (a, b), c in co_scoped[:top]],
+        "co_change_top_truncated": max(0, len(co_scoped) - top),
         "hidden_coupling": hidden[:top], "hidden_truncated": max(0, len(hidden) - top),
         "knowledge": knowledge,
         "_hidden_all": [(h["a"], h["b"]) for h in hidden],
@@ -703,7 +874,7 @@ def folder_cohesion(adj, co2, top, scope=None):
                 if (a, b) in local_edges or (b, a) in local_edges or (min(a, b), max(a, b)) in co2:
                     rel += 1
         out.append({"folder": fold or ".", "files": len(fs), "cohesion": round(rel / tot, 2)})
-    out.sort(key=lambda x: x["cohesion"])
+    out.sort(key=lambda x: (x["cohesion"], x["folder"]))
     return [f for f in out if f["cohesion"] < 0.3][:top]
 
 # ------------------------------------------------------- baseline & PR scope
@@ -726,19 +897,26 @@ def _keys(raw, alias):
     }
 
 
-def apply_baseline(digest, raw, path, refresh, pr_mode, alias=None):
+def apply_baseline(digest, raw, path, refresh, pr_mode, alias=None, rebaseline=False):
     """raw = uncapped finding material: {cycles: [[members]], sdp: [(a,b)],
     hidden: [(a,b)], hubs: [ids], orphans: [ids]}. alias = git rename map
     (old path -> current path) applied to BASELINE entries at compare time."""
+    if refresh and os.path.exists(path) and not pr_mode and not rebaseline:
+        base = json.loads(Path(path).read_text())
+        if base.get("version") != 2:
+            raise ValueError("baseline upgrade requires --rebaseline")
+        current, previous = _keys(raw, {}), _keys(base, alias or {})
+        if any(current[k] - previous[k] for k in current):
+            raise ValueError("baseline growth refused; use --rebaseline explicitly")
     if refresh or not os.path.exists(path):
         if pr_mode:  # includes failed --changed refs: intent decides, not diff success
             digest.setdefault("warnings", []).append(
                 "baseline not written in PR mode (scoped run would freeze a partial view)")
             return
-        json.dump({"version": 2, **raw}, open(path, "w"), indent=1)
+        Path(path).write_text(json.dumps({"version": 2, **raw}, indent=1))
         digest["baseline"] = {"status": "refreshed" if refresh else "created", "path": path}
         return
-    base = json.load(open(path))
+    base = json.loads(Path(path).read_text())
     if base.get("version") != 2:
         digest.setdefault("warnings", []).append(
             "baseline file is pre-v2 (no rename-following) — run --refresh-baseline to upgrade")
@@ -775,8 +953,8 @@ def changed_scope(repo, base_ref, adj, include_tests):
     try:
         out = subprocess.run(
             ["git", "-c", "core.quotepath=off", "-C", repo, "diff",
-             "--name-only", f"{base_ref}...HEAD"],
-            capture_output=True, text=True, check=True).stdout.splitlines()
+             "--name-only", "-z", f"{base_ref}...HEAD"],
+            capture_output=True, check=True).stdout.decode("utf-8", "surrogateescape").split("\0")
     except (subprocess.CalledProcessError, FileNotFoundError):
         return None
     changed = {f for f in out if os.path.splitext(f)[1] in CODE_EXTS
@@ -821,17 +999,27 @@ def detect_tier3_triggers(digest, git_stats):
 # --------------------------------------------------------------------- main
 
 def run(repo, lang, edges_file, top, no_git, include_tests=False,
-        changed=None, baseline=None, refresh_baseline=False):
+        changed=None, baseline=None, refresh_baseline=False, rebaseline=False):
+    if top <= 0:
+        raise ValueError("--top must be positive")
+    discovered = list_files(repo, True, code_only=False)
+    eligible = [f for f in discovered if not is_excluded(f, include_tests)]
+    files = [f for f in eligible if os.path.splitext(f)[1] in CODE_EXTS]
+    discovered_counts = Counter(os.path.splitext(f)[1] for f in discovered)
+    eligible_counts = Counter(os.path.splitext(f)[1] for f in eligible)
+    coverage = {ext: {"discovered": count, "eligible": eligible_counts[ext],
+                      "parsed": None, "failed": None}
+                for ext, count in sorted(discovered_counts.items())}
     if edges_file:
         raw = parse_edges_file(edges_file)
         raw, match_rate = align_to_git(raw, repo, include_tests)
         source = f"external:{edges_file}"
     else:
-        files = list_files(repo, include_tests)
         py = [f for f in files if f.endswith(".py")]
         if py and (lang == "python" or len(py) >= len(files) * 0.2):
             extract_python.type_only = 0
             raw = extract_python(repo, py)
+            coverage[".py"].update({k: extract_python.coverage[k] for k in ("parsed", "failed")})
             source = f"builtin:python ({len(py)}/{len(files)} code files)"
         else:  # no extractor for this language — git-signals-only mode
             raw, source = {}, "none"
@@ -853,10 +1041,16 @@ def run(repo, lang, edges_file, top, no_git, include_tests=False,
     g = compute_graph_metrics(raw, top, scope_files)
     adj = g.pop("adj")
     full = g.pop("_full")
-    digest = {"extractor": source, **g}
+    digest = {"extractor": source, **g, "coverage": coverage,
+              "graph_scope": "eligible supplied nodes" if edges_file else "successfully parsed Python files"}
     if source.startswith("builtin:python") and extract_python.type_only:
         digest["summary"]["type_only_imports_excluded"] = extract_python.type_only
     warnings = []
+    if any(c["failed"] for c in coverage.values()):
+        warnings.append("parse/read failures omitted from graph; see coverage")
+    if not edges_file and any(c["eligible"] and c["parsed"] is None
+                              for ext, c in coverage.items() if ext in CODE_EXTS):
+        warnings.append("graph omits languages without an active extractor; see coverage")
     if source == "none":
         warnings.append("no graph extractor for this language — git signals only "
                         "(hotspots, co-change); graph metrics and hidden_coupling "
@@ -883,12 +1077,13 @@ def run(repo, lang, edges_file, top, no_git, include_tests=False,
             alias = git.pop("_alias")
             co2 = git.pop("_co2")
             if digest["summary"]["edges"]:
-                lows = folder_cohesion(adj, co2, top, scope_files)
+                lows = folder_cohesion(adj, co2, len(adj), scope_files)
                 if lows:
-                    digest["low_cohesion_folders"] = lows
+                    digest["low_cohesion_folders"] = lows[:top]
+                    digest["low_cohesion_folders_truncated"] = max(0, len(lows) - top)
             lt = git.pop("_last_touched")
-            for c in digest["cycles"]:
-                dates = [lt[m] for m in c["members"] if m in lt]
+            for c, members in zip(digest["cycles"], full["cycles"]):
+                dates = [lt[m] for m in members if m in lt]
                 c["last_active"] = max(dates) if dates else None
             if git["git_join"] is not None and git["git_join"] < 0.3 and digest["summary"]["edges"]:
                 warnings.append("git↔graph join rate low — hidden_coupling and "
@@ -938,12 +1133,206 @@ def run(repo, lang, edges_file, top, no_git, include_tests=False,
         raw_ids = {"cycles": full["cycles"], "sdp": full["sdp"],
                    "hidden": hidden_all, "hubs": full["hubs"],
                    "orphans": full["orphans"]}
-        apply_baseline(digest, raw_ids, baseline, refresh_baseline, pr_mode, alias)
+        apply_baseline(digest, raw_ids, baseline, refresh_baseline, pr_mode, alias, rebaseline)
 
     triggers = detect_tier3_triggers(digest, git_stats)
     if triggers:
         digest["tier3_triggers"] = triggers
     return digest
+
+
+def regression_tests():
+    import tempfile
+    from unittest.mock import patch
+
+    for source, skipped in (
+        ("from typing import TYPE_CHECKING as TC\nif TC: import other", 1),
+        ("TYPE_CHECKING=True\nif TYPE_CHECKING: import other", 0),
+        ("if obj.TYPE_CHECKING: import other", 0),
+        ("import typing as t\nif t.TYPE_CHECKING and unknown: import other", 1),
+        ("import typing as t\nif not t.TYPE_CHECKING: pass\nelse: import other", 1),
+    ):
+        assert _runtime_nodes(ast.parse(source))[1] == skipped
+    work = Path(__file__).resolve().parent.parent
+    with tempfile.TemporaryDirectory(prefix="xray-test-", dir=work) as td:
+        root = Path(td)
+        subprocess.run(["git", "-c", "core.fsmonitor=false", "init", "-q", td], check=True)
+
+        def write(name, text=""):
+            path = root / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(text)
+
+        for name, text in {
+            "main.py": "import local\nimport pkg.sub.mod\nimport service.api\n",
+            "pkg/__init__.py": "import main\n", "pkg/local.py": "",
+            "pkg/sub/__init__.py": "", "pkg/sub/mod.py": "from .. import local\n",
+            "src/service/__init__.py": "", "src/service/api.py": "from . import other\n",
+            "src/service/other.py": "", "bad.py": "def ???",
+            "tests/t.py": "", "test_api.py": "", "generated/g.py": "",
+        }.items():
+            write(name, text)
+        subprocess.run(["git", "-c", "core.fsmonitor=false", "-C", td, "add", "."], check=True)
+        files = list_files(td)
+        graph = extract_python(td, files)
+        assert "pkg/local.py" not in graph["main.py"]
+        assert set(graph["main.py"]) == {"pkg/__init__.py", "pkg/sub/__init__.py",
+                                          "pkg/sub/mod.py", "src/service/__init__.py", "src/service/api.py"}
+        assert "pkg/local.py" in graph["pkg/sub/mod.py"]
+        assert "src/service/other.py" in graph["src/service/api.py"]
+        assert "bad.py" not in graph and extract_python.coverage["failed"] == 1
+        digest = run(td, "python", None, 10, True)
+        assert digest["coverage"][".py"] == {"discovered": 12, "eligible": 9, "parsed": 8, "failed": 1}
+        assert "bad.py" not in digest["orphans"]
+        assert any({"main.py", "pkg/__init__.py"} <= set(c["members"]) for c in digest["cycles"])
+        for prefix in ("one", "two"):
+            write(prefix + "/src/shared/a.py", "from . import b\n")
+            write(prefix + "/src/shared/b.py")
+        relatives = extract_python(td, [prefix + "/src/shared/" + name + ".py"
+                                        for prefix in ("one", "two") for name in ("a", "b")])
+        assert relatives["one/src/shared/a.py"] == ["one/src/shared/b.py"]
+        assert relatives["two/src/shared/a.py"] == ["two/src/shared/b.py"]
+        for fmt in (
+            {"main.py": ["tests/t.py", "generated/g.py"], "tests/t.py": ["main.py"]},
+            {"modules": [{"source": "main.py", "dependencies": [{"resolved": "tests/t.py"}]}]},
+            {"nodes": ["main.py", "tests/t.py"], "edges": [{"from": "main.py", "to": "tests/t.py"}]},
+            'digraph { "main.py" -> "tests/t.py"; "tests/t.py" -> "main.py"; }',
+        ):
+            path = root / "edges.json"
+            path.write_text(fmt if isinstance(fmt, str) else json.dumps(fmt))
+            excluded = run(td, "auto", str(path), 10, True)
+            included = run(td, "auto", str(path), 10, True, True)
+            assert excluded["summary"]["nodes"] == 1 and excluded["summary"]["edges"] == 0
+            assert included["summary"]["nodes"] >= 2 and included["summary"]["edges"] > 0
+        aligned, _ = align_to_git({"t.py": ["main.py"], "./main.py": ["t.py"]}, td, False)
+        assert aligned == {"main.py": []}
+        assert parse_dot('digraph { isolated; a -> b; "c" -> "c"; "d" -> "e" [label = "owns"]; }') == {
+            "isolated": [], "a": ["b"], "b": [], "c": ["c"]}
+        try:
+            parse_dot("digraph { subgraph cluster { a -> b; } }")
+        except ValueError:
+            pass
+        else:
+            raise AssertionError("unsupported DOT was silently accepted")
+        for top in (0, -1):
+            result = subprocess.run([sys.executable, __file__, "--top", str(top)], capture_output=True, check=False)
+            assert result.returncode != 0 and b"positive" in result.stderr
+        empty = {"cycles": [], "sdp": [], "hidden": [], "hubs": [], "orphans": []}
+        baseline = str(root / "baseline.json")
+        apply_baseline({}, empty, baseline, False, False)
+        before = Path(baseline).read_bytes()
+        growth = {**empty, "cycles": [["a", "b"]]}
+        try:
+            apply_baseline({}, growth, baseline, True, False)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError("baseline growth accepted")
+        assert Path(baseline).read_bytes() == before
+        apply_baseline({}, growth, baseline, True, False, rebaseline=True)
+        apply_baseline({}, empty, baseline, True, False)
+        assert json.loads(Path(baseline).read_text())["cycles"] == []
+        tied = {"a": ["b", "c"], "b": ["a", "c"], "c": ["a", "b"],
+                "d": ["e"], "e": ["d"], "f": ["g"], "g": ["f"]}
+        for prefix in ("s", "t"):
+            tied.update({prefix: [prefix + "v"], prefix + "v": [prefix + str(i) for i in range(3)],
+                         prefix + "u1": [prefix], prefix + "u2": [prefix],
+                         **{prefix + str(i): [] for i in range(3)}})
+        write("ties.json", json.dumps(tied))
+        outputs = []
+        for seed in ("0", "1", "4"):
+            outputs.append(subprocess.run(
+                [sys.executable, __file__, "--repo", td, "--edges", str(root / "ties.json"), "--top", "1", "--no-git"],
+                capture_output=True, text=True, check=True, env={**os.environ, "PYTHONHASHSEED": seed}).stdout)
+        assert len(set(outputs)) == 1
+        tied_digest = json.loads(outputs[0])
+        assert tied_digest["hubs_truncated"] == 2 and tied_digest["cycles_truncated"] == 2
+        assert tied_digest["sdp_truncated"] == 1 and tied_digest["sdp_violations"][0]["from"] == "s"
+        layered = {f"{i}/{j}": [f"{i+1}/{k}" for k in range(6)] if i < 9 else []
+                   for i in range(10) for j in range(6)}
+        assert compute_graph_metrics(layered, 1)["summary"]["propagation_cost"] == round(1680 / 3600, 3)
+
+    with tempfile.TemporaryDirectory(prefix="git-test-", dir=work) as td:
+        root = Path(td)
+        subprocess.run(["git", "-c", "core.fsmonitor=false", "init", "-q", td], check=True)
+        env = {**os.environ, "GIT_CONFIG_GLOBAL": os.devnull, "GIT_CONFIG_NOSYSTEM": "1",
+               "GIT_AUTHOR_NAME": "Alice", "GIT_AUTHOR_EMAIL": "alice@example.invalid",
+               "GIT_COMMITTER_NAME": "Alice", "GIT_COMMITTER_EMAIL": "alice@example.invalid"}
+
+        def git(*args):
+            return subprocess.run(["git", "-C", td, *args], capture_output=True, text=True,
+                                  check=True, env=env).stdout
+
+        def commit(author_date, committer_date=None):
+            env["GIT_AUTHOR_DATE"] = author_date
+            env["GIT_COMMITTER_DATE"] = committer_date or author_date
+            git("add", ".")
+            git("-c", "commit.gpgsign=false", "commit", "-qm", "fixture")
+
+        git("init", "-q")
+        ring = {f"a{i:02}.py": [f"a{(i+1)%13:02}.py"] for i in range(13)}
+        odd = ["tab\tname.py", "line\nname.py", "back\\name.py", "space name.py"]
+        for name in [*ring, *odd]:
+            write(name, "x=0\n")
+        commit("2020-01-01T00:00:00Z")
+        write("a12.py", "x=1\n")
+        write("line\nname.py", "x=1\n")
+        commit("2026-09-01T00:00:00Z")
+        assert "line\nname.py" in changed_scope(td, "HEAD~1", ring, False)[0]
+        write("edges.json", json.dumps(ring))
+        digest = run(td, "auto", str(root / "edges.json"), 30, False)
+        assert digest["cycles"][0]["truncated"] == 1
+        assert digest["cycles"][0]["last_active"] == "2026-09-01"
+        assert set(odd) <= {h["file"] for h in digest["git"]["hotspots"]}
+        assert digest["git"]["enrichment"]["skipped"] == 7
+        git("mv", odd[0], "renamed\tfile.py")
+        commit("2026-09-02T00:00:00Z")
+        signals = git_signals(td, set(ring), ring, 30)
+        assert signals["_alias"][odd[0]] == "renamed\tfile.py"
+        assert next(h for h in signals["hotspots"] if h["file"] == "renamed\tfile.py")["commits"] == 2
+        write("a12.py", "x=2\n")
+        commit("2020-01-01T00:00:00Z", "2026-09-03T00:00:00Z")
+        signals = git_signals(td, set(ring), ring, 30)
+        assert signals["_last_touched"]["a12.py"] == "2026-09-01"
+        assert not signals["knowledge"]["stale_ownership"]
+        for i in range(4):
+            for name in ["mass_a.py", "mass_b.py", *[f"doc{j}.md" for j in range(21)]]:
+                write(name, f"x={i}\n")
+            commit(f"2026-09-{4+i:02}T00:00:00Z")
+        mass = {"mass_a.py": [], "mass_b.py": []}
+        signals = git_signals(td, set(mass), mass, 1, max_commits=4)
+        assert not signals["hidden_coupling"] and not signals["co_change_top"]
+        assert signals["_stats"]["median_files_per_commit"] == 23
+        assert signals["hotspots_truncated"] == 1
+        original = subprocess.run
+        queries = []
+
+        def recording(command, **kwargs):
+            if "-p" in command:
+                queries.append((command, kwargs["input"]))
+            return original(command, **kwargs)
+
+        with patch.object(subprocess, "run", side_effect=recording):
+            signals = git_signals(td, set(mass), mass, 1, max_commits=2)
+        expected = set(git("log", "--no-merges", "--max-count=2", "--format=%H").splitlines())
+        assert queries and all("--no-walk=unsorted" in cmd and set(data.splitlines()) == expected
+                               for cmd, data in queries)
+        assert signals["enrichment"]["completed"] == 1
+
+        def timeout(command, **kwargs):
+            if "-p" in command:
+                raise subprocess.TimeoutExpired(command, 20)
+            return original(command, **kwargs)
+
+        with patch.object(subprocess, "run", side_effect=timeout):
+            signals = git_signals(td, set(mass), mass, 1)
+        assert signals["enrichment"]["timed_out"] == 1
+        assert signals["enrichment"]["completed"] == 0
+        git("config", "remote.origin.partialclonefilter", "blob:none")
+        signals = git_signals(td, set(ring), ring, 30)
+        assert signals["enrichment"]["attempted"] == 0
+        assert signals["enrichment"]["skip_reason"] == "partial clone"
+        assert "renamed\tfile.py" in signals["_last_touched"]
 
 
 def self_test():
@@ -1018,37 +1407,37 @@ def self_test():
     assert _split_rename("src/{a.py => b.py}") == ("src/a.py", "src/b.py")
     assert _split_rename("a.py => b.py") == ("a.py", "b.py")
     assert _split_rename("plain.py") == (None, "plain.py")
-    with tempfile.TemporaryDirectory() as td:
+    with tempfile.TemporaryDirectory(dir=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) as td:
         # DOT: chained edges + owns filtering
         p = os.path.join(td, "g.dot")
-        open(p, "w").write('digraph {\n"a" -> "b" -> "c" [label="uses"];\n'
+        Path(p).write_text('digraph {\n"a" -> "b" -> "c" [label="uses"];\n'
                            '"c" -> "a" [label="uses"];\n"a" -> "a::f" [label="owns"];\n}')
         e = parse_edges_file(p)
         assert e["a"] == ["b"] and e["b"] == ["c"] and e["c"] == ["a"]
         assert "a::f" not in e.get("a", []) and not compute_graph_metrics(e, 5)["summary"]["acyclic"]
         # depcruise shape
         p2 = os.path.join(td, "dc.json")
-        json.dump({"modules": [{"source": "src/a.js",
+        Path(p2).write_text(json.dumps({"modules": [{"source": "src/a.js",
                                 "dependencies": [{"resolved": "src/b.js"},
                                                  {"resolved": "lodash", "couldNotResolve": True}]}],
-                   "summary": {}}, open(p2, "w"))
+                   "summary": {}}))
         assert parse_edges_file(p2) == {"src/a.js": ["src/b.js"]}
         # lakos-ish: leading-slash ids + string node list
         p3 = os.path.join(td, "lk.json")
-        json.dump({"nodes": ["/lib/a.dart", "/lib/iso.dart"],
-                   "edges": [{"from": "/lib/a.dart", "to": "/lib/b.dart"}]}, open(p3, "w"))
+        Path(p3).write_text(json.dumps({"nodes": ["/lib/a.dart", "/lib/iso.dart"],
+                   "edges": [{"from": "/lib/a.dart", "to": "/lib/b.dart"}]}))
         e3 = parse_edges_file(p3)
         assert e3["lib/a.dart"] == ["lib/b.dart"] and "lib/iso.dart" in e3
         # madge dup deps deduped
         p4 = os.path.join(td, "m.json")
-        json.dump({"a": ["b", "b"]}, open(p4, "w"))
+        Path(p4).write_text(json.dumps({"a": ["b", "b"]}))
         assert parse_edges_file(p4) == {"a": ["b"]}
         # TYPE_CHECKING imports excluded; else-branch imports NOT counted (codex m6)
         os.makedirs(os.path.join(td, "pkg"))
-        open(os.path.join(td, "pkg", "a.py"), "w").write(
+        Path(td, "pkg", "a.py").write_text(
             "import typing as t\nif t.TYPE_CHECKING:\n    from pkg.b import B\n"
             "else:\n    import os\n")
-        open(os.path.join(td, "pkg", "b.py"), "w").write("from pkg.a import A\n")
+        Path(td, "pkg", "b.py").write_text("from pkg.a import A\n")
         extract_python.type_only = 0
         e5 = extract_python(td, ["pkg/a.py", "pkg/b.py"])
         assert e5["pkg/a.py"] == [] and e5["pkg/b.py"] == ["pkg/a.py"]
@@ -1059,7 +1448,7 @@ def self_test():
                  "hubs": ["h"], "orphans": []}
         d1 = {"cycles": [], "sdp_violations": [], "hubs": [], "orphans": []}
         apply_baseline(d1, raw_a, bp, False, False)
-        assert d1["baseline"]["status"] == "created" and json.load(open(bp))["version"] == 2
+        assert d1["baseline"]["status"] == "created" and json.loads(Path(bp).read_text())["version"] == 2
         raw_b = {"cycles": [["a", "b"]], "sdp": [("s2", "v2")], "hidden": [("x", "y")],
                  "hubs": ["h"], "orphans": []}
         d2 = {"cycles": [], "sdp_violations": [{"from": "s2", "to": "v2"}],
@@ -1088,10 +1477,11 @@ def self_test():
               "git": {"hidden_coupling": []}}
         apply_baseline(d3, raw_b, bp, False, True)
         assert d3["baseline"]["diff"]["sdp"]["fixed"] is None
-        before = open(bp).read()
+        before = Path(bp).read_text()
         d4 = {}
         apply_baseline(d4, raw_a, bp, True, True)
-        assert "baseline" not in d4 and open(bp).read() == before
+        assert "baseline" not in d4 and Path(bp).read_text() == before
+    regression_tests()
     print("self-test OK")
 
 
@@ -1110,10 +1500,15 @@ if __name__ == "__main__":
                     help="ratchet file: created if missing, else findings marked new/known/fixed")
     ap.add_argument("--refresh-baseline", action="store_true",
                     help="rewrite the baseline file from current findings")
+    ap.add_argument("--rebaseline", action="store_true", help="allow baseline growth with --refresh-baseline")
     ap.add_argument("--self-test", action="store_true")
     a = ap.parse_args()
+    if a.top <= 0:
+        ap.error("--top must be positive")
+    if a.rebaseline and not (a.baseline and a.refresh_baseline):
+        ap.error("--rebaseline requires --baseline and --refresh-baseline")
     if a.self_test:
         self_test()
         sys.exit(0)
     print(json.dumps(run(a.repo, a.lang, a.edges, a.top, a.no_git, a.include_tests,
-                         a.changed, a.baseline, a.refresh_baseline), indent=1))
+                         a.changed, a.baseline, a.refresh_baseline, a.rebaseline), indent=1))

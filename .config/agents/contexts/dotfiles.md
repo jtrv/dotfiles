@@ -20,7 +20,6 @@ This table is the **single source of truth** for what is machine-specific; anyth
 | `warehouse/arch`, `.config/pacman/` | arch machines (morpheus) |
 | `warehouse/uv` additions | morpheus; NixOS machines keep it empty (nixos-config carries tools) |
 | `.config/systemd/user/*` units | owning machine; NixOS machines track none (units come from nixos-config) |
-| `.local/bin/waybar-sleep-inhibit` + its waybar config/style hunks | morpheus |
 | evdi/hermes-streaming (packages, virtual-display pinning) | morpheus |
 | bun global `package.json`, cargo `.crates*` | per-machine local state — never merged. Keep this machine's side, but **report what the other side had**; if it looks like new tools rather than version drift, ask |
 | `kanata/*.kbd` | every branch, per-machine by filename (`morpheus.kbd`, `thiccpad.kbd`, `shared.kbd`) — prefer this name-spacing for new machine-specific files over new table rows |
@@ -30,12 +29,12 @@ This table is the **single source of truth** for what is machine-specific; anyth
 | `mpv/local.conf` | per-branch, one `include=` of that branch's `hosts/<machine>.conf` |
 | `.config/environment.d/*` | morpheus — NixOS machines set the same vars via `environment.sessionVariables` in nixos-config |
 | `warehouse/bun` | per-machine additions, like `warehouse/uv` — keep this machine's side, report theirs |
-| `warehouse/dedoc` | union — docsets are cheap, take both sides |
+| `warehouse/wud` | union — docsets are cheap. The file is a `wud ls` snapshot that `warehouse` rewrites, so install the other side's docsets (`config-sweep` prints them) and take both sides in the file: `devdocs:<slug>` via `wud install`, `contrib:<name>` via `wudc build <name>` (never `wud install`) |
 | `warehouse/{fish,go,ktsctl}`, `fish/fish_plugins`, `mpv/shaders/*`, `mise/config.toml` global `[tools]` | morpheus keeps them; NixOS machines drop what nixos-config installs |
 | `paru/paru.conf`, `.local/bin/mirrors`, topgrade `[linux]`/arch commands | arch machines (morpheus) |
 | firefox flavor: `BROWSER`, `mimeapps.list`, `mozilla/firefox/<profile>` dir | per-machine (thiccpad runs devedition) |
 | absolute tool paths in configs/scripts (`/usr/...` vs `/run/current-system/sw/...`) | shared — probe both paths at run time (see `.local/bin/tofi-run`), never fork the file per machine |
-| secret access in scripts (`secli get` vs `/run/agenix/*`) | per-machine |
+| secret access in scripts (`secli get` on morpheus vs sops-nix `/run/secrets/*` on NixOS; agenix is gone) | per-machine |
 | hardware tuning: `voxtype` model/threads, waybar height/font | per-machine |
 | `easyeffects/*` | shared — every file is keyed by a device (autoload by alsa id, presets/irs by headphone or mic name) and inert elsewhere; union on merge, never sweep |
 | `fish/config.fish` ssh-agent fallback | morpheus (NixOS gets the agent from systemd) |
@@ -61,10 +60,6 @@ In the staging worktree, with `<this>` = this machine's branch and `<other>` = t
 ### Pending convergence steps
 
 One-time steps a branch owes at its next convergence. Do them during step 5, before the checkpoint, then delete the entry in the same merge.
-
-- **thiccpad** — niri and mpv now read a per-branch `local` file (see Ownership). thiccpad has none yet, so `config-sweep` deletes the incoming morpheus copies. Add them in the merge:
-  - `.config/niri/local.kdl` containing `include "./hosts/thiccpad.kdl"`, then check with `niri validate`. The include is not optional, so a missing file fails the config.
-  - `.config/mpv/local.conf` containing `include="~~/hosts/thiccpad.conf"`. mpv only warns when the include is missing and then runs without the T480s shader and scaler lines.
 
 ## Commit workflow (live `$HOME` state, on the live branch)
 

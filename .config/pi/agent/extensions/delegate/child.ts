@@ -139,8 +139,8 @@ function childEnv() {
 	];
 	return {
 		...Object.fromEntries(names.flatMap((key) => (process.env[key] === undefined ? [] : [[key, process.env[key]]]))),
-		// Signing needs gpg-agent and a display for pinentry, neither of which a headless child has;
-		// worker commits stay unsigned and the user's own config keeps signing everything else.
+		// SSH signing needs SSH_AUTH_SOCK, which is not forwarded; worker commits stay unsigned
+		// and the user's own config keeps signing everything else.
 		GIT_CONFIG_COUNT: "1",
 		GIT_CONFIG_KEY_0: "commit.gpgsign",
 		GIT_CONFIG_VALUE_0: "false",

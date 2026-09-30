@@ -25,6 +25,8 @@ pointer back to the report that justified it.
 - `2026-09-28-sonnet-5-5-routing.md` — Artificial Analysis snapshot with Sonnet 5.5 at every effort: Sonnet 5.5 high replaces Sol for bounded tasks from Claude Code only; Luna stays mechanical. Superseded next day by the GPT-6.1 Sol report.
 - `2026-09-24-prose-model-choice.md` — EQ-Bench, Arena and Artificial Analysis snapshot: GPT-6 Sol for delegated prose, Luna off documentation, Gemini Flash and Haiku avoided.
 - `2026-09-23-routing-tiers-opus-5-5-gpt-6.md` — Artificial Analysis snapshot placing Opus 5.5 as the strongest tier; GPT-6 Sol/Luna replace the 5.6 tiers (Codex >= 0.156.1).
+- `2026-09-16-gemini-3-8-flash-routing.md` — why Gemini 3.8 Flash gets a bounded one-shot row and nothing more: leaderboard snapshot (DeepSWE, RealSWE, Artificial Analysis incl. Omniscience, BenchLM), 30-day sentiment, and local `agy` probes where the unbounded run never finished.
+- `2026-09-16-last30days-gemini-3-8-flash-raw.md` — the raw sweep behind it.
 - `2026-09-15-routing-instruction-fixes.md` — routing contract checks, strongest-tier policy, benchmark wording, and live interrogation limits.
 - `2026-09-10-pi-subagents-options.md` — Astra research: Pi delegation packages ranked, literature on when multi-agent helps (Kim et al. 2026, Anthropic's research system, Cognition's counter-essay, MAST), the minimal-launcher option, adoption plan and risks.
 - `2026-09-10-pi-subagents-last30days.md` — 30-day sentiment sweep on subagents in terminal coding agents; Pi's creator's position, the fragmented `pi-subagents` namespace, practitioner convergence on read-heavy fan-out only.
@@ -44,6 +46,8 @@ pointer back to the report that justified it.
 - `2026-09-23-ai-tutoring-learning-projects.md` — evidence on agents that teach instead of doing (Bastani PNAS 2025, Anthropic skill-formation RCT, CS50 duck leakage, hint ladders, productive failure), baseline tests of an unguided agent, and the protocol behind the `tutor` skill.
 
 ### Architecture tooling
+- `2026-09-27-geiger-methodology-review.md` — `geiger` method against 2026 research (SmellBench, SlopCodeBench, CodeScene/Code Maat, ArchUnit metrics): verdicts need architectural evidence, NCCD is not a cycle signal, Tach is maintained again, ranked SKILL.md changes.
+- `2026-09-27-geiger-scripts-review.md` — `xray.py`/`dart_edges.py` bug list with repros, 54k-file nixpkgs timings (Git is 94% of runtime), and why a Go/Rust port isn't worth it: stay Python, fix the algorithms, parse Dart with ast-grep.
 - `2026-07-30-last30days-codebase-architecture-analysis-raw.md` — the sweep behind the `geiger` skill.
 
 ### Posts

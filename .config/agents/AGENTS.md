@@ -60,6 +60,7 @@ Tier placement evidence: `research/2026-09-23-routing-tiers-opus-5-5-gpt-6.md`,
 | Demanding coding work — multi-file implementation, nontrivial refactor, sustained reliability over a long task | Codex `gpt-6.1-sol`. Inspect the result |
 | Ambiguous, hard debugging, substantial independent review | Stay here if this session is on Opus 5.5 (the strongest tier); otherwise Codex `gpt-6-astra` |
 | Ordered queue of separable tasks | `grind` |
+| Bounded one-shot: a cheap different-family second opinion on a diff or file, a single question, an extra refuter on a plan | Gemini `gemini-3.8-flash` through `agy`, effort `medium` first, `high` when medium misses; never `low`. The brief sets hard boundaries ("view X once, then answer; no other files, no commands") or the run wanders and times out. Never multi-step or long-horizon work, and never the sole plan refuter — it approves plans readily. Rationale: `research/2026-09-16-gemini-3-8-flash-routing.md` |
 | Agent instruction changes | Follow “Agent instructions get the strongest model” below |
 
 Codex tiers for delegated tasks: Luna → Sol → Astra; a blocked worker gets more
@@ -73,8 +74,17 @@ dispatch (`grind` workers, `plan-refute` refuters) is unchanged.
 | Route | Claude Code | Codex | Pi |
 |---|---|---|---|
 | Codex `<model>` | `codex:codex-rescue` with `--model <model>` | `spawn_agent` with `model=<model>`, `fork_turns="none"` and a self-contained task brief | `delegate` with `runner=codex`, `model=<model>` |
-| Cross-family review | Suggest the user run `/codex:review`, or `/codex:adversarial-review` when the approach itself is in question | Suggest the user run `/code-review` in Claude Code (or another non-OpenAI reviewer) | `delegate` with `runner=agy` (Gemini) for a read-only review the session runs itself; or, on a non-OpenAI model, suggest the user run `codex review` |
+| Gemini `gemini-3.8-flash` | `skills/agy/scripts/agy-run --model gemini-3.8-flash-medium "<brief>"` (read-only by default) | the same `agy-run` script from the shell | `delegate` with `runner=agy`, `model=gemini-3.8-flash-medium` |
+| Cross-family review | Suggest the user run `/codex:review`, or `/codex:adversarial-review` when the approach itself is in question; for a bounded read-only Gemini pass the session runs itself, the Gemini row above | Suggest the user run `/code-review` in Claude Code (or another non-OpenAI reviewer) | `delegate` with `runner=agy` (Gemini) for a read-only review the session runs itself; or, on a non-OpenAI model, suggest the user run `codex review` |
 | `grind` | the `grind` skill | the `grind` skill, one fresh `spawn_agent` per task | the `grind` skill's in-session loop, one `delegate` child with `mode=write` per task; inspect its result before continuing |
+| Fresh-context worker (one task, no parent reasoning, may edit) | `Agent` tool, default type; `isolation: "worktree"` when parallel | `spawn_agent` with `fork_turns="none"` | `delegate` with `mode=write` (its own worktree) |
+| Cross-family refuter (read-only; a family other than the session's own model) | `codex exec --sandbox read-only` (shape in the `plan-refute` skill); `agy-run` as a third family, never the only one | `claude -p --allowedTools Read,Grep,Glob "<brief>" </dev/null`; `agy-run` as a third family | `delegate` with `runner=codex` or `runner=agy`, read-only |
+| Headless one-task run (unattended loops) | `claude -p "<brief>" --permission-mode acceptEdits` | `codex exec --sandbox workspace-write --approve-for-me "<brief>" </dev/null` | `pi -p "<brief>" </dev/null` |
+
+Skills name a route from this table ("fresh-context worker", "cross-family
+refuter", "Gemini one-shot", "headless one-task run") and never a single
+harness's tool; the harness steering the session resolves the route here.
+Model choice inside a route follows the routing table above, not the skill.
 
 ## Agent instructions get the strongest model
 Creating or substantively redesigning a skill, a context file, this file, a
@@ -123,7 +133,7 @@ These are installed; reach for them over the generic default:
 - **Code search/refactor**: `ast-grep` for structural (AST) search and rewrites — prefer over regex grep + hand edits. `rg` for text search, `rga` when content is inside PDFs/archives/docx/sqlite. `fd` for file discovery by name/type; `plocate` for instant whole-filesystem filename lookup.
 - **Line-set ops**: `zet union|intersect|diff` on files/streams — replaces `sort | comm`/`uniq` pipelines.
 - **Docs lookup**: `wud` — offline docs: DevDocs plus locally built docsets (tsql, solid, zod, redux, the Swift book). `wud find <docset|-a> <query> [--full]` searches names, or full text with `--full`; `wud get <docset> <entry>` prints that entry's section as Markdown when piped. Bare docset names resolve (`python` → newest `python~*`); ~90 installed (`wud ls`). A missing DevDocs docset: `wud install <slug>` (`wud ls --remote` lists them). Try before WebFetch/web search for API reference.
-- **Web/doc → text**: `reader <url>` renders a webpage as readable text for ingestion — prefer over raw curl/WebFetch HTML. `markitdown` converts local docx/pdf/pptx/xlsx to markdown.
+- **Web/doc → text**: `reader <url>` renders a webpage as readable text for ingestion — prefer over raw curl/WebFetch HTML. `bunx @firecrawl/anydoc <file>` converts local docx/pptx/xlsx/odt/rtf/epub/csv/pdf to markdown (cached after first run); `markitdown` only for html, images, audio.
 - **Diffs**: `difft` (difftastic) for syntax-aware diffs when reviewing changes (`GIT_EXTERNAL_DIFF=difft git diff`).
 - **Databases**: `usql` — one CLI for postgres/mysql/sqlite/etc. (`usql <url> -c '<sql>'`).
 
