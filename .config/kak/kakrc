@@ -231,6 +231,26 @@ define-command comment -docstring '(Un)Comment lines' %{
   } catch comment-line
 }
 
+define-command iplan -docstring 'Insert a commented problem-solving plan' %{
+  evaluate-commands -save-regs '"' %{
+    set-register '"' %{PROBLEM (rephrased):
+INPUT:   shape + example
+OUTPUT:  shape + example
+EDGE CASES: empty · only one item · duplicates · NULL/undefined · bad input · huge input
+APPROACH (out loud before typing):
+  1.
+  2.
+TESTS:
+  f(example) →
+  f([])      →
+  f(edge)    →
+COMPLETE: what's slow? what could I change with more time?
+}
+    execute-keys '<a-o>jPx'
+    try comment-line catch comment-block
+  }
+}
+
 define-command delta -docstring '
   delta [<arguments>]: delta utility wrapper
   Launch delta with the given arguments inside kakoune
