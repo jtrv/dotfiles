@@ -7,7 +7,7 @@
 
 set -e
 
-token=$(cat /run/agenix/exercism-token)
+token=$(cat /run/secrets/exercism-token)
 exercism_dir="$HOME/repos/exercism"
 
 cd "$exercism_dir"

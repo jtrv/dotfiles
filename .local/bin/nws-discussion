@@ -1,7 +1,7 @@
 #!/bin/sh
 # requires curl, jq, sd, ipinfo.io token
 
-ipinfo_token=$(cat /run/agenix/ipinfo-token)
+ipinfo_token=$(cat /run/secrets/ipinfo-token)
 
 # get lat/lon
 coordinates=$(curl -fsSL "https://ipinfo.io/?token=$ipinfo_token" |
