@@ -36,6 +36,7 @@ matches:
 
   # Print the current date
   - trigger: ",,date"
+    label: "insert today's date"
     replace: "{{mydate}}"
     vars:
       - name: mydate
