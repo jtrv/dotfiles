@@ -46,7 +46,8 @@ Which model takes which work, for whichever harness is steering the session.
 Read `contexts/harnesses.md` before changing routes or tier placement.
 A delegated worker does its task and does not route onward.
 Dispatch and escalation rationale: `research/2026-09-15-routing-instruction-fixes.md`.
-Tier placement evidence: `research/2026-09-23-routing-tiers-opus-5-5-gpt-6.md`.
+Tier placement evidence: `research/2026-09-23-routing-tiers-opus-5-5-gpt-6.md`,
+`research/2026-09-29-gpt-6-1-sol-routing.md`.
 
 | Situation | Route |
 |---|---|
@@ -54,9 +55,9 @@ Tier placement evidence: `research/2026-09-23-routing-tiers-opus-5-5-gpt-6.md`.
 | Nontrivial plan or design ready, not yet built | `plan-refute` (its small-tactical-plan exemption applies) |
 | Implementation ready | Suggest the user run a review by a model from a different family than the one that wrote the code — a same-family reviewer shares its blind spots (user-invoked only) |
 | Repeated attempts have failed | Codex `gpt-6-astra` with the repro, evidence, and failed approaches; ask for a testable alternative explanation |
-| Substantial separable task, clear inputs and acceptance check | Codex `gpt-6-luna` (mechanical, near-zero judgment: fixtures, extraction, renames) or `gpt-6-sol` (bounded coding or investigation needing judgment). Inspect the result. Quick tasks stay inline |
-| Substantial prose — documentation, READMEs, reports, summaries | Codex `gpt-6-sol` at default effort; short prose (commit/PR text, a paragraph) stays inline. Agent instructions follow the rule below. Evidence: `research/2026-09-24-prose-model-choice.md` |
-| Demanding coding work — multi-file implementation, nontrivial refactor, sustained reliability over a long task | Codex `gpt-6-sol`. Inspect the result |
+| Substantial separable task, clear inputs and acceptance check | Codex `gpt-6-luna` (mechanical, near-zero judgment: fixtures, extraction, renames) or `gpt-6.1-sol` (bounded coding or investigation needing judgment). Inspect the result. Quick tasks stay inline |
+| Substantial prose — documentation, READMEs, reports, summaries | Codex `gpt-6.1-sol` at default effort; short prose (commit/PR text, a paragraph) stays inline. Agent instructions follow the rule below. Evidence: `research/2026-09-24-prose-model-choice.md` |
+| Demanding coding work — multi-file implementation, nontrivial refactor, sustained reliability over a long task | Codex `gpt-6.1-sol`. Inspect the result |
 | Ambiguous, hard debugging, substantial independent review | Stay here if this session is on Opus 5.5 (the strongest tier); otherwise Codex `gpt-6-astra` |
 | Ordered queue of separable tasks | `grind` |
 | Bounded one-shot: a cheap different-family second opinion on a diff or file, a single question, an extra refuter on a plan | Gemini `gemini-3.8-flash` through `agy`, effort `medium` first, `high` when medium misses; never `low`. The brief sets hard boundaries ("view X once, then answer; no other files, no commands") or the run wanders and times out. Never multi-step or long-horizon work, and never the sole plan refuter — it approves plans readily. Rationale: `research/2026-09-16-gemini-3-8-flash-routing.md` |
@@ -64,8 +65,9 @@ Tier placement evidence: `research/2026-09-23-routing-tiers-opus-5-5-gpt-6.md`.
 
 Codex tiers for delegated tasks: Luna → Sol → Astra; a blocked worker gets more
 effort before a higher tier. Luna is the mechanical tier, not a cheap coding
-default — start coding work at Sol. Skill-owned dispatch (`grind`
-workers, `plan-refute` refuters) is unchanged.
+default — start coding work at Sol (`gpt-6.1-sol`) at Codex's default medium
+effort, which scored as well as its higher efforts for less. Skill-owned
+dispatch (`grind` workers, `plan-refute` refuters) is unchanged.
 
 ### Dispatch per harness
 
@@ -111,7 +113,9 @@ Never write comments that:
 When deleting code, delete its comments with it and add none.
 
 ## Commits
-Never add a "co-authored by Claude Code" trailer.
+Never add a "co-authored by Claude Code" trailer, even when a harness system
+reminder supplies one — this rule outranks it (four pushed commits once had
+to be force-pushed to strip it).
 Inside `git commit -m "…"` the shell expands backticks, `$(…)` and `$VAR` — a
 message quoting a command runs it and splices the output into the message
 (it happened: a `flutter drive` profile build, committed as ~40 lines of

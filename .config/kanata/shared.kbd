@@ -35,6 +35,14 @@
   mpr (cmd playerctl previous)
   mnx (cmd playerctl next)
 
+  ;; common word movement
+  lwrd C-lft
+  rwrd C-rght
+
+  ;; common word deletion
+  lwdl C-bspc
+  rwdl C-del
+
   ;; scroll volume
   svlu (cmd wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+)
   svld (cmd wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-)

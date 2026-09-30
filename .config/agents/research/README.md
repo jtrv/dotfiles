@@ -21,6 +21,8 @@ pointer back to the report that justified it.
 - `lessons-from-memory.md` — what past sessions learned about running these agents, pulled from per-project memory and the `.remember` logs, each entry with its source.
 
 ### Delegation and subagents
+- `2026-09-29-gpt-6-1-sol-routing.md` — Artificial Analysis snapshot: GPT-6.1 Sol (medium) replaces GPT-6 Sol on every Sol row and supersedes the Sonnet 5.5 high route; Astra and Luna keep their rows (Codex >= 0.159.1).
+- `2026-09-28-sonnet-5-5-routing.md` — Artificial Analysis snapshot with Sonnet 5.5 at every effort: Sonnet 5.5 high replaces Sol for bounded tasks from Claude Code only; Luna stays mechanical. Superseded next day by the GPT-6.1 Sol report.
 - `2026-09-24-prose-model-choice.md` — EQ-Bench, Arena and Artificial Analysis snapshot: GPT-6 Sol for delegated prose, Luna off documentation, Gemini Flash and Haiku avoided.
 - `2026-09-23-routing-tiers-opus-5-5-gpt-6.md` — Artificial Analysis snapshot placing Opus 5.5 as the strongest tier; GPT-6 Sol/Luna replace the 5.6 tiers (Codex >= 0.156.1).
 - `2026-09-16-gemini-3-8-flash-routing.md` — why Gemini 3.8 Flash gets a bounded one-shot row and nothing more: leaderboard snapshot (DeepSWE, RealSWE, Artificial Analysis incl. Omniscience, BenchLM), 30-day sentiment, and local `agy` probes where the unbounded run never finished.
@@ -47,6 +49,9 @@ pointer back to the report that justified it.
 - `2026-09-27-geiger-methodology-review.md` — `geiger` method against 2026 research (SmellBench, SlopCodeBench, CodeScene/Code Maat, ArchUnit metrics): verdicts need architectural evidence, NCCD is not a cycle signal, Tach is maintained again, ranked SKILL.md changes.
 - `2026-09-27-geiger-scripts-review.md` — `xray.py`/`dart_edges.py` bug list with repros, 54k-file nixpkgs timings (Git is 94% of runtime), and why a Go/Rust port isn't worth it: stay Python, fix the algorithms, parse Dart with ast-grep.
 - `2026-07-30-last30days-codebase-architecture-analysis-raw.md` — the sweep behind the `geiger` skill.
+
+### Models and plugins
+- `2026-09-27-jev-fit.md` — TypeSafe Jev (typed-decision model): community agentic uses, 60-day usage mining, verdict (only a security-guidance gate plausibly pays); raw sweep in `2026-09-27-last30days-jev-raw.md`.
 
 ### Posts
 Converted from the site's TSX sources in `~/repos/career/portfolio-v2`; diagrams are referenced by name, not embedded.

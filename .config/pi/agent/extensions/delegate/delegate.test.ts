@@ -205,8 +205,8 @@ function harness(dir: string, shutdowns: (() => Promise<void>)[], hooks: { isIdl
 				assert.equal(received.args.includes(task), false);
 				assert.equal(received.args.includes(`-p=${task}`), runner === "agy");
 				const expected = {
-					pi: ["-p", "--no-session", "--no-extensions", "--no-skills", "--no-prompt-templates", "--provider", "openai-codex", "--model", "gpt-6-sol", "--mode", "json", "--tools", "read,grep,find,ls"],
-					codex: ["exec", "--skip-git-repo-check", "-m", "gpt-6-sol", "-C", dir, "--sandbox", "read-only", "--ephemeral", "--json", "--output-last-message", received.args.at(-2), "-"],
+					pi: ["-p", "--no-session", "--no-extensions", "--no-skills", "--no-prompt-templates", "--provider", "openai-codex", "--model", "gpt-6.1-sol", "--mode", "json", "--tools", "read,grep,find,ls"],
+					codex: ["exec", "--skip-git-repo-check", "-m", "gpt-6.1-sol", "-C", dir, "--sandbox", "read-only", "--ephemeral", "--json", "--output-last-message", received.args.at(-2), "-"],
 					agy: [`--gemini_dir=${process.env.XDG_CONFIG_HOME}/gemini`, "--sandbox", "--dangerously-skip-permissions", "--output-format=stream-json", "--print-timeout=600s", `-p=${task}`],
 				};
 				assert.deepEqual(received.args, expected[runner]);
@@ -501,7 +501,7 @@ function harness(dir: string, shutdowns: (() => Promise<void>)[], hooks: { isIdl
 				assert.deepEqual(
 					ordered.jobs.map((job: any) => [job.runner, job.state, job.result.model, job.result.final_text]),
 					[
-						["pi", "done", "openai-codex/gpt-6-sol", "FIRST"],
+						["pi", "done", "openai-codex/gpt-6.1-sol", "FIRST"],
 						["codex", "done", "gpt-6-luna", "SECOND"],
 					],
 				);
