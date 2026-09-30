@@ -11,14 +11,8 @@ nixos-option <opt>   what is this option set to in MY evaluated config
 
 CLI / system
 ------------
-tldr <cmd>           (tealdeer) instant usage examples for a command you know
-wikiman              full-text fzf search over man pages + arch wiki + tldr,
-                     use when you don't know which page has the answer
 man <cmd>            the canonical reference once you know the page
 
 Libraries / languages
 ---------------------
 wud                  devdocs + built docsets offline (cargo-installed, synced in bootstrap.nix)
-
-Overlap note: wikiman ships the same tldr-pages as tealdeer; tealdeer kept
-only for the faster direct-lookup UX.
