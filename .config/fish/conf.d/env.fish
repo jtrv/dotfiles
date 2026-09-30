@@ -73,7 +73,7 @@ set -gx ATUIN_NOBIND                "true"
 set -gx BAT_PAGER                   "kak"
 set -gx BROWSER                     "firefox-devedition"
 set -gx CARAPACE_BRIDGES            "fish,bash"
-set -gx CONCEAL_FINDER              "skim"
+set -gx CONCEAL_FINDER              "fzf"
 set -gx DELTA_PAGER                 "kak"
 set -gx EDITOR                      "kak"
 set -gx fish_greeting
