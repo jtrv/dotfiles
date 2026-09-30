@@ -125,7 +125,9 @@ window-rule {
 }
 
 window-rule {
+    match app-id="^espanso$"
     match app-id=".espanso-wrapped"
+    open-floating true
 }
 
 // Key bindings

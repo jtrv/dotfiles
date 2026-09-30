@@ -1,0 +1,7 @@
+# Alacritty + Kakoune: Kakoune maps insert-mode <c-v> to paste its own " register,
+# which only syncs from the system clipboard on focus, so espanso's default Ctrl+V
+# pasted stale text. Ctrl+Shift+V is Alacritty's bracketed paste, inserted verbatim.
+# Clipboard backend for everything: typed newlines trigger Kakoune's auto-indent.
+filter_class: "Alacritty"
+backend: Clipboard
+paste_shortcut: "CTRL+SHIFT+V"

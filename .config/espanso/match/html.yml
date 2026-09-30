@@ -1,97 +1,121 @@
 matches:
 
   - trigger: ",,hdoc"
+    label: "html: document skeleton"
     replace: |
       <!DOCTYPE html>
 
   - trigger: ",,hmc"
+    label: "html: meta charset"
     replace: |
       <meta charset="UTF-8">
 
   - trigger: ",,hmv"
+    label: "html: meta viewport"
     replace: |
       <meta name="viewport" content="width=device-width, initial-scale=1">
 
   - trigger: ",,hma"
+    label: "html: meta author"
     replace: |
       <meta name="author" content="$|$">
 
   - trigger: ",,hmd"
+    label: "html: meta description"
     replace: |
       <meta name="description" content="$|$">
 
   - trigger: ",,hmk"
+    label: "html: meta keywords"
     replace: |
       <meta name="keywords" content="$|$">
 
   - trigger: ",,hmt"
+    label: "html: title"
     replace: |
       <title>$|$</title>
 
-  - trigger: ",,hd"
+  - trigger: ",,hdiv"
+    label: "html: div"
     replace: |
       <div>$|$</div>
 
   - trigger: ",,hhe"
+    label: "html: head"
     replace: |
       <head>$|$</head>
 
   - trigger: ",,hbo"
+    label: "html: body"
     replace: |
       <body>$|$</body>
 
   - trigger: ",,hat"
+    label: "html: anchor link"
     replace: |
       <a href="">$|$</a>
 
   - trigger: ",,hbt"
+    label: "html: button"
     replace: |
       <button type="button">$|$</button>
 
   - trigger: ",,hsti"
+    label: "html: inline style tag"
     replace: |
       <style>$|$</style>
 
   - trigger: ",,hste"
+    label: "html: stylesheet link"
     replace: |
       <link rel="stylesheet" type="text/css" href="$|$">
 
   - trigger: ",,hsci"
+    label: "html: inline script tag"
     replace: |
       <script>$|$</script>
 
   - trigger: ",,hsce"
+    label: "html: external script"
     replace: |
       <script type="text/javascript" src="$|$"></script>
 
   - trigger: ",,hfo"
+    label: "html: form"
     replace: |
       <form action="" method="">$|$</form>
 
   - trigger: ",,hla"
+    label: "html: label"
     replace: |
       <label for="">$|$</label>
 
   - trigger: ",,hsu"
+    label: "html: submit input"
     replace: |
       <input type="submit" value="$|$">
 
   - trigger: ",,hint"
+    label: "html: text input"
     replace: |
       <input type="text" name="" id="">
 
   - trigger: ",,hinp"
+    label: "html: password input"
     replace: |
       <input type="password" name="" id="">
 
   - trigger: ",,hinr"
+    label: "html: radio input"
     replace: |
       <input type="radio" name="" id="" value="">
 
   - trigger: ",,hinc"
+    label: "html: checkbox input"
     replace: |
       <input type="checkbox" name="" id="" value="">
 
   - trigger: ",,hinf"
+    label: "html: file input"
     replace: |
       <input type="file" name="" id="">
