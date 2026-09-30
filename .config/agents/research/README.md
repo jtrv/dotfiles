@@ -50,6 +50,9 @@ pointer back to the report that justified it.
 - `2026-09-27-geiger-scripts-review.md` — `xray.py`/`dart_edges.py` bug list with repros, 54k-file nixpkgs timings (Git is 94% of runtime), and why a Go/Rust port isn't worth it: stay Python, fix the algorithms, parse Dart with ast-grep.
 - `2026-07-30-last30days-codebase-architecture-analysis-raw.md` — the sweep behind the `geiger` skill.
 
+### Models and plugins
+- `2026-09-27-jev-fit.md` — TypeSafe Jev (typed-decision model): community agentic uses, 60-day usage mining, verdict (only a security-guidance gate plausibly pays); raw sweep in `2026-09-27-last30days-jev-raw.md`.
+
 ### Posts
 Converted from the site's TSX sources in `~/repos/career/portfolio-v2`; diagrams are referenced by name, not embedded.
 - `2026-08-15-post-sharpening-the-harness.md` — what the papers on context and agent design say, what this setup measures, what survived contact.
