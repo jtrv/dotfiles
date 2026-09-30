@@ -1,4 +1,5 @@
 abtop -> https://github.com/rust-lang/crates.io-index
+bdown -> /home/sugimoto/repos/bdown-rs
 bugstalker -> https://github.com/rust-lang/crates.io-index
 cargo-deny -> https://github.com/rust-lang/crates.io-index
 cargo-fix -> https://github.com/rust-lang/crates.io-index
@@ -54,9 +55,11 @@ sqruff -> https://github.com/rust-lang/crates.io-index
 systemd-lsp -> https://github.com/rust-lang/crates.io-index
 syswatch -> https://github.com/rust-lang/crates.io-index
 thesauromatic -> https://github.com/rust-lang/crates.io-index
+tscan -> /home/sugimoto/repos/tscan-rs-picker
 typos-cli -> https://github.com/rust-lang/crates.io-index
 vortix -> https://github.com/rust-lang/crates.io-index
 waybar-module-pomodoro -> /home/sugimoto/repos/waybar-module-pomodoro
+whats-up-doc -> /home/sugimoto/repos/whats-up-doc
 wthrr -> https://github.com/rust-lang/crates.io-index
 zet -> https://github.com/rust-lang/crates.io-index
 zomerth -> /home/sugimoto/repos/zomerth-rs
