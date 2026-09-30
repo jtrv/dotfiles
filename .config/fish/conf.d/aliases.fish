@@ -3,7 +3,6 @@
 if status is-interactive
 
 alias adb     "HOME='$XDG_DATA_HOME'/android adb"
-alias boi     "wikiman"
 alias bls     "command ls"
 alias bup     "bun update -g --latest"
 alias cat     "bat"
