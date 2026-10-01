@@ -1,11 +1,9 @@
 #!/bin/sh
-# requires curl, jq, sd, ipinfo.io token
-
-ipinfo_token=$(cat /run/secrets/ipinfo-token)
+# requires curl, jq, sd
 
 # get lat/lon
-coordinates=$(curl -fsSL "https://ipinfo.io/?token=$ipinfo_token" |
-  jq -r '.loc')
+coordinates=$(curl -fsSL https://ifconfig.co/json |
+  jq -r '"\(.latitude),\(.longitude)"')
 
 # get corresponding weather office
 weather_office=$(curl -fsSL "https://api.weather.gov/points/$coordinates" |

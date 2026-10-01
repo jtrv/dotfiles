@@ -1,12 +1,10 @@
 #!/bin/sh
-# requires curl, jq, rg, sd, ipinfo.io token
+# requires curl, jq, rg, sd
 
 bold=$(tput bold)
 normal=$(tput sgr0)
 
-ipinfo_token=$(cat /run/secrets/ipinfo-token)
-
-coordinates=$(curl -fsSL "https://ipinfo.io/?token=$ipinfo_token" | jq -r '.loc')
+coordinates=$(curl -fsSL https://ifconfig.co/json | jq -r '"\(.latitude),\(.longitude)"')
 
 forecast_url=$(curl -fsSL "https://api.weather.gov/points/$coordinates" | jq -r '.properties.forecast')
 
