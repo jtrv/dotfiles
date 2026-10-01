@@ -16,7 +16,7 @@ alias cp      "cp -i"
 alias d       "devour"
 alias dg      "diff-grep"
 alias feh     "feh --scale-down --image-bg black"
-alias fp      "sk --preview='bat --color=always {}'"
+alias fp      "fzf --preview='bat --color=always {}'"
 alias ghs     "gh auth switch"
 alias jls     "jless -r"
 alias j       "yazi"
@@ -36,7 +36,6 @@ alias ll      "eza -l --color=always --git" # long format + git
 alias loc     "plocate"
 alias ls      "eza -l --color=always" # preferred listing
 alias lt      "eza -T --color=always" # tree listing
-alias mdc     "mdcat --columns=70"
 alias mkd     "mkdir -p"
 alias m       "qalc"
 alias mr      "mise run"
@@ -56,7 +55,6 @@ alias q       "exit"
 alias rm      "cnc"
 alias tf      "terraform"
 alias thes    "thesauromatic"
-alias wget    "wget2 --hsts-file='$XDG_DATA_HOME/wget-hsts'"
 alias wh      "wormhole-rs"
 
 end

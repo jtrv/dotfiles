@@ -3,9 +3,9 @@
   iching --color=always divine &&
     echo
   if [ "$(date +%a)" = "Mon" ]; then
-    unbuffer wthrr
+    outside -o detailed
     nws-discussion
   else
-    unbuffer wthrr
+    outside -o detailed
   fi
 } | $PAGER
