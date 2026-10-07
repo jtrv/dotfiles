@@ -1,0 +1,2 @@
+#!/bin/sh
+journalctl -f -o json "$@" | hl -L -P -h '*'
