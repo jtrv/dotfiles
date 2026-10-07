@@ -21,7 +21,7 @@
 "thesauromatic 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["thesauromatic"]
 "tscan 0.1.0 (path+file:///home/sugimoto/repos/tscan-rs)" = ["tscan"]
 "vortix 0.4.3 (registry+https://github.com/rust-lang/crates.io-index)" = ["vortix"]
-"whats-up-doc 0.1.0 (path+file:///home/sugimoto/repos/whats-up-doc-kak-plugin)" = [
+"whats-up-doc 0.1.0 (path+file:///home/sugimoto/repos/whats-up-doc)" = [
     "wud",
     "wudc",
 ]
