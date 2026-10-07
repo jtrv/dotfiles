@@ -73,3 +73,21 @@ split. Folded, seven:
 
 Marker acked. The five duplicate no-coauthor memories could be deleted; not
 done, they are harmless and in other projects' dirs.
+
+## Second pass (2026-10-05, thiccpad)
+
+The probe said "since never" because the marker lives in
+`$XDG_STATE_HOME`, which is per machine, and the first pass was acked on
+another host. Seven of the nine memories carry epoch-0 mtimes (copied in
+without their timestamps), so they would show up on any host that has
+never acked. Nine reviewed, none folded:
+
+- Already graduated: the five no-coauthor duplicates (`AGENTS.md`
+  Commits), `workflow-failure-detection` (`CLAUDE.md` Workflow),
+  `use-mise-tasks-not-raw-nix` (`AGENTS.md` mise: "prefer `mise run
+  <task>` ... when a task exists").
+- Project-only, stay as memory: `tailor-duties-gov-swe` (already in
+  `job-hunt-local/CLAUDE.md`), `mise-verify-loop` (its general half is the
+  `flutter` skill).
+
+Marker acked on thiccpad.
