@@ -79,7 +79,7 @@ codex blocks reading stdin; the repo must be a git repository or codex refuses
 the directory without `--skip-git-repo-check`.
 
 Claude as refuter (from a Codex session): the same prompt through
-`claude -p --allowedTools Read,Grep,Glob "<prompt>" </dev/null`. From Pi, the
+`claude -p --allowedTools=Read,Grep,Glob "<prompt>" </dev/null`. From Pi, the
 same prompt through `delegate` with `runner=codex` (or `runner=agy`), read-only.
 
 Parallelize refuters with the session harness's background mechanism (Claude
