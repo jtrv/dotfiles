@@ -79,6 +79,21 @@
       "Read(**/age/keys.txt)",
       "Read(**/mise.local.toml)"
     ],
+    "ask": [
+      "Bash(rm -rf *)",
+      "Bash(rm -fr *)",
+      "Bash(git push *--force*)",
+      "Bash(git push -f*)",
+      "Bash(git push * -f)",
+      "Bash(git push * -f *)",
+      "Bash(git reset --hard*)",
+      "Bash(git clean -f*)",
+      "Bash(config push *--force*)",
+      "Bash(config push -f*)",
+      "Bash(config push * -f)",
+      "Bash(config push * -f *)",
+      "Bash(config reset --hard*)"
+    ],
     "defaultMode": "auto"
   },
   "skillOverrides": {
