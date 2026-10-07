@@ -3,7 +3,7 @@
   iching --color=always divine &&
     echo
   if [ "$(date +%a)" = "Mon" ]; then
-    outside -o detailed
+    outside -o detailed -u imperial
     nws-discussion
   else
     outside -o detailed
