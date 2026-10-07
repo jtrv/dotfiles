@@ -2,10 +2,8 @@
 {
   iching --color=always divine &&
     echo
+  outside -o detailed
   if [ "$(date +%a)" = "Mon" ]; then
-    outside -o detailed -u imperial
     nws-discussion
-  else
-    outside -o detailed
   fi
 } | $PAGER
