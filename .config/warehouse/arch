@@ -47,6 +47,7 @@ cargo-nextest
 cargo-update
 catppuccin-cursors-latte
 catppuccin-cursors-mocha
+ccache
 chaotic-keyring
 chaotic-mirrorlist
 checkbashisms
@@ -281,7 +282,6 @@ syswatch
 sysz
 tailspin
 taplo-cli
-tealdeer
 termshark
 termv-git
 terraform
@@ -323,10 +323,10 @@ vulkan-radeon
 watchexec
 waybar
 wd719x-firmware
+webstorm
 webtorrent-mpv-hook
 wget2
 whosthere-bin
-wikiman
 wiremix
 wireplumber
 wireproxy
