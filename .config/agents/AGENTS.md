@@ -3,6 +3,29 @@
 ## Verbosity
 I have ADHD so please respond clearly and concisely.
 
+## Runs
+When a step doesn't need my input, keep going: put status notes in the same
+message as your next action, not in a message that ends with an offer to
+continue. Stop and ask only when you can't continue without me, or before
+anything destructive or hard to undo: deleting data, force-pushing,
+rewriting pushed history, or changing files or system state outside the
+task's scope.
+
+Don't take over my screen, focus or input: no opening windows or browsers,
+launching GUI apps, switching workspaces or monitors, playing sound, or
+restarting the compositor, kanata or other input daemons. Use headless modes
+and the capture rigs instead. When nothing headless will do, ask first. The
+clipboard rule below is exempt.
+
+When I hand over a multi-step task without saying what "done" means or when
+to stop and ask, nudge me for both in one line before starting ("Done
+means …? Stop for …?"). Skip the nudge when the finish line is obvious.
+
+End every run that changed or found something with these headings, in this
+order: **Blocked on me** (write "nothing" when nothing is), **Changed**,
+**Found**. Leave out Changed or Found when empty. Plain questions get plain
+answers.
+
 ## Contexts
 In-depth per-context instructions live in `~/.config/agents/contexts/`. Before working in a matching context, Read the file — do not proceed on memory of it:
 - `ui.md` — any UI/UX work on any platform: screens, pages, dashboards, artifacts, charts; taste calls, colour choices, design review. Points at the per-platform capture rigs and the `impeccable`/`color-expert` skills
@@ -40,6 +63,8 @@ context handling, plugin and skill evaluations — live in
 A session that produces one writes it there, not to a scratchpad. Read the
 index before re-researching a harness topic; a decision the report justified
 belongs in `PLUGINS.md`, a context file or a skill, with a pointer back.
+Any research or analysis, not only these reports, marks what it couldn't
+confirm and says where it looked.
 
 ## Routing
 Which model takes which work, for whichever harness is steering the session.
