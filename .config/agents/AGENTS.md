@@ -16,6 +16,7 @@ In-depth per-context instructions live in `~/.config/agents/contexts/`. Before w
 - `python.md` — editing, testing, or committing Python code (also surfaced as the `python` skill)
 - `typescript.md` — editing, testing, or committing TypeScript/JavaScript code, bun + oxlint/oxfmt (also surfaced as the `typescript` skill)
 - `go.md` — editing, testing, or committing Go code (also surfaced as the `go` skill)
+- `nix.md` — building or packaging with Nix, editing nixpkgs or nixos-config, preparing a nixpkgs PR; also before running several Nix builds at once (also surfaced as the `nix` skill)
 - `harnesses.md` — changing the coding agents themselves (Claude Code, Codex, Pi): their config dirs, plugins, skills, extensions, and the symlink wiring that shares one AGENTS.md and one skills dir between them. Read before staging anything under `~/.config/agents`
 - `dotfiles.md` — anything touching the dotfiles: committing config changes ($DOTFILES bare repo / `config`), the `~/repos/dotfiles` staging worktree, converging machine branches and checking drift (also surfaced as the `dotfiles` skill)
 
