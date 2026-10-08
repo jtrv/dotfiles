@@ -1,16 +1,14 @@
 #!/bin/sh
-# requires secli, xh, jq, rg, sd, ipinfo.io token
+# requires curl, jq, rg, sd
 
 bold=$(tput bold)
 normal=$(tput sgr0)
 
-ipinfo_token=$(secli get ipinfo_token)
+coordinates=$(curl -fsSL https://ifconfig.co/json | jq -r '"\(.latitude),\(.longitude)"')
 
-coordinates=$(xh -Fb "https://ipinfo.io/?token=$ipinfo_token" | jq -r '.loc')
+forecast_url=$(curl -fsSL "https://api.weather.gov/points/$coordinates" | jq -r '.properties.forecast')
 
-forecast_url=$(xh -Fb "https://api.weather.gov/points/$coordinates" | jq -r '.properties.forecast')
-
-xh -Fb "$forecast_url" |
+curl -fsSL "$forecast_url" |
   jq -c '.properties.periods[] | {name, detailedForecast}' |
   rg --color=never -o 'name":"(.*?)","detailedForecast":"(.*?)"' -r "
 $bold\$1:$normal \$2" |

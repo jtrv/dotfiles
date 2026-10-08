@@ -1,0 +1,7 @@
+units: Imperial
+simple:
+  template: "{weather_icon} {temperature | round} {wind_speed | round}/{wind_gusts | round}"
+waybar:
+  text: "{weather_icon} {temperature | round}{temperature_unit} <U+F059D> {wind_speed | round}<U+EA9F>{wind_gusts | round}"
+  hot_temperature: 76
+  cold_temperature: 59

@@ -39,6 +39,7 @@ In-depth per-context instructions live in `~/.config/agents/contexts/`. Before w
 - `python.md` — editing, testing, or committing Python code (also surfaced as the `python` skill)
 - `typescript.md` — editing, testing, or committing TypeScript/JavaScript code, bun + oxlint/oxfmt (also surfaced as the `typescript` skill)
 - `go.md` — editing, testing, or committing Go code (also surfaced as the `go` skill)
+- `nix.md` — building or packaging with Nix, editing nixpkgs or nixos-config, preparing a nixpkgs PR; also before running several Nix builds at once (also surfaced as the `nix` skill)
 - `harnesses.md` — changing the coding agents themselves (Claude Code, Codex, Pi): their config dirs, plugins, skills, extensions, and the symlink wiring that shares one AGENTS.md and one skills dir between them. Read before staging anything under `~/.config/agents`
 - `dotfiles.md` — anything touching the dotfiles: committing config changes ($DOTFILES bare repo / `config`), the `~/repos/dotfiles` staging worktree, converging machine branches and checking drift (also surfaced as the `dotfiles` skill)
 
@@ -103,7 +104,7 @@ dispatch (`grind` workers, `plan-refute` refuters) is unchanged.
 | Cross-family review | Suggest the user run `/codex:review`, or `/codex:adversarial-review` when the approach itself is in question; for a bounded read-only Gemini pass the session runs itself, the Gemini row above | Suggest the user run `/code-review` in Claude Code (or another non-OpenAI reviewer) | `delegate` with `runner=agy` (Gemini) for a read-only review the session runs itself; or, on a non-OpenAI model, suggest the user run `codex review` |
 | `grind` | the `grind` skill | the `grind` skill, one fresh `spawn_agent` per task | the `grind` skill's in-session loop, one `delegate` child with `mode=write` per task; inspect its result before continuing |
 | Fresh-context worker (one task, no parent reasoning, may edit) | `Agent` tool, default type; `isolation: "worktree"` when parallel | `spawn_agent` with `fork_turns="none"` | `delegate` with `mode=write` (its own worktree) |
-| Cross-family refuter (read-only; a family other than the session's own model) | `codex exec --sandbox read-only` (shape in the `plan-refute` skill); `agy-run` as a third family, never the only one | `claude -p --allowedTools Read,Grep,Glob "<brief>" </dev/null`; `agy-run` as a third family | `delegate` with `runner=codex` or `runner=agy`, read-only |
+| Cross-family refuter (read-only; a family other than the session's own model) | `codex exec --sandbox read-only` (shape in the `plan-refute` skill); `agy-run` as a third family, never the only one | `claude -p --allowedTools=Read,Grep,Glob "<brief>" </dev/null`; `agy-run` as a third family | `delegate` with `runner=codex` or `runner=agy`, read-only |
 | Headless one-task run (unattended loops) | `claude -p "<brief>" --permission-mode acceptEdits` | `codex exec --sandbox workspace-write --approve-for-me "<brief>" </dev/null` | `pi -p "<brief>" </dev/null` |
 
 Skills name a route from this table ("fresh-context worker", "cross-family
