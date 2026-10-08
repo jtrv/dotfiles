@@ -3,6 +3,29 @@
 ## Verbosity
 I have ADHD so please respond clearly and concisely.
 
+## Runs
+When a step doesn't need my input, keep going: put status notes in the same
+message as your next action, not in a message that ends with an offer to
+continue. Stop and ask only when you can't continue without me, or before
+anything destructive or hard to undo: deleting data, force-pushing,
+rewriting pushed history, or changing files or system state outside the
+task's scope.
+
+Don't take over my screen, focus or input: no opening windows or browsers,
+launching GUI apps, switching workspaces or monitors, playing sound, or
+restarting the compositor, kanata or other input daemons. Use headless modes
+and the capture rigs instead. When nothing headless will do, ask first. The
+clipboard rule below is exempt.
+
+When I hand over a multi-step task without saying what "done" means or when
+to stop and ask, nudge me for both in one line before starting ("Done
+means …? Stop for …?"). Skip the nudge when the finish line is obvious.
+
+End every run that changed or found something with these headings, in this
+order: **Blocked on me** (write "nothing" when nothing is), **Changed**,
+**Found**. Leave out Changed or Found when empty. Plain questions get plain
+answers.
+
 ## Contexts
 In-depth per-context instructions live in `~/.config/agents/contexts/`. Before working in a matching context, Read the file — do not proceed on memory of it:
 - `ui.md` — any UI/UX work on any platform: screens, pages, dashboards, artifacts, charts; taste calls, colour choices, design review. Points at the per-platform capture rigs and the `impeccable`/`color-expert` skills
@@ -41,6 +64,8 @@ context handling, plugin and skill evaluations — live in
 A session that produces one writes it there, not to a scratchpad. Read the
 index before re-researching a harness topic; a decision the report justified
 belongs in `PLUGINS.md`, a context file or a skill, with a pointer back.
+Any research or analysis, not only these reports, marks what it couldn't
+confirm and says where it looked.
 
 ## Routing
 Which model takes which work, for whichever harness is steering the session.
@@ -133,7 +158,7 @@ Use mise as the project runtime layer. Config lives at `<project-root>/.config/m
 These are installed; reach for them over the generic default:
 - **Code search/refactor**: `ast-grep` for structural (AST) search and rewrites — prefer over regex grep + hand edits. `rg` for text search, `rga` when content is inside PDFs/archives/docx/sqlite. `fd` for file discovery by name/type; `plocate` for instant whole-filesystem filename lookup.
 - **Line-set ops**: `zet union|intersect|diff` on files/streams — replaces `sort | comm`/`uniq` pipelines.
-- **Docs lookup**: `wud` — offline docs: DevDocs plus locally built docsets (tsql, solid, zod, redux, the Swift book). `wud find <docset|-a> <query> [--full]` searches names, or full text with `--full`; `wud get <docset> <entry>` prints that entry's section as Markdown when piped. Bare docset names resolve (`python` → newest `python~*`); ~90 installed (`wud ls`). A missing DevDocs docset: `wud install <slug>` (`wud ls --remote` lists them). Try before WebFetch/web search for API reference.
+- **Docs lookup**: `wud` — offline docs: DevDocs plus locally built docsets (tsql, solid, zod, redux, the Swift book). `wud find <docset|-a> <query> [--full]` searches names, or full text with `--full`; `wud get <docset> <entry>` prints that entry's section as Markdown when piped. Bare docset names resolve (`python` → newest `python~*`); ~90 installed (`wud ls`). A missing docset: `wud add <slug>` (`wud ls --remote` lists them). Try before WebFetch/web search for API reference.
 - **Web/doc → text**: `reader <url>` renders a webpage as readable text for ingestion — prefer over raw curl/WebFetch HTML. `bunx @firecrawl/anydoc <file>` converts local docx/pptx/xlsx/odt/rtf/epub/csv/pdf to markdown (cached after first run); `markitdown` only for html, images, audio.
 - **Diffs**: `difft` (difftastic) for syntax-aware diffs when reviewing changes (`GIT_EXTERNAL_DIFF=difft git diff`).
 - **Databases**: `usql` — one CLI for postgres/mysql/sqlite/etc. (`usql <url> -c '<sql>'`).
