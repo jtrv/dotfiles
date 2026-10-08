@@ -5,7 +5,6 @@
     "@earendil-works/pi-coding-agent": "^0.87.1",
     "@firecrawl/anydoc": "^0.2.4",
     "@fsouza/prettierd": "^0.29.0",
-    "@microsoft/inshellisense": "^0.0.4",
     "@olrtg/emmet-language-server": "^2.8.0",
     "@openai/codex": "0.159.1",
     "@prisma/language-server": "^31.12.10",
