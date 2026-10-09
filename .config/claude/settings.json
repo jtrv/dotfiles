@@ -163,14 +163,6 @@
         "hooks": [
           {
             "type": "command",
-            "command": "cat \"/home/sugimoto/.config/claude/skills/caveman/SKILL.md\"; lvl=$(head -n1 \"${CLAUDE_CONFIG_DIR:-$HOME/.claude}/.caveman-active\" 2>/dev/null | tr -d '[:space:]'); echo \"SESSION DEFAULT: caveman level = ${lvl:-lite}. Begin every response at that level unless user switches via /caveman.\""
-          }
-        ]
-      },
-      {
-        "hooks": [
-          {
-            "type": "command",
             "command": "\"/home/sugimoto/.config/claude/hooks/capture-window.sh\""
           }
         ]
@@ -191,6 +183,14 @@
             "type": "command",
             "command": "bash '/home/sugimoto/.config/claude/hooks/herdr-agent-state.sh' session",
             "timeout": 10
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"/home/sugimoto/.config/agents/hooks/cholo-context.sh\""
           }
         ]
       }
@@ -214,14 +214,6 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"/home/sugimoto/.config/claude/hooks/caveman-track.sh\""
-          }
-        ]
-      },
-      {
-        "hooks": [
-          {
-            "type": "command",
             "command": "bash \"/home/sugimoto/.config/claude/hooks/nosleep.sh\" acquire"
           }
         ]
@@ -233,6 +225,16 @@
           {
             "type": "command",
             "command": "echo 'Preserve verbatim in the summary: current objective; decisions with status (accepted/provisional/superseded); failed attempts and why; constraints and rules currently in effect; the exact next action. If a state.md or ledger file exists for this task, note its path prominently.'"
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"/home/sugimoto/.config/agents/hooks/cholo-context.sh\""
           }
         ]
       }
@@ -250,7 +252,7 @@
     "gopls-lsp@claude-plugins-official": false,
     "learning-output-style@claude-plugins-official": false,
     "playwright@claude-plugins-official": false,
-    "ponytail@ponytail": true,
+    "ponytail@ponytail": false,
     "pyright-lsp@claude-plugins-official": false,
     "ralph-loop@claude-plugins-official": true,
     "remember@claude-plugins-official": true,
