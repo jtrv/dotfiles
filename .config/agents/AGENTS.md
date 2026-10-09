@@ -22,7 +22,7 @@ to stop and ask, nudge me for both in one line before starting ("Done
 means …? Stop for …?"). Skip the nudge when the finish line is obvious.
 
 End every run that changed or found something with these headings, in this
-order: **Blocked on me** (write "nothing" when nothing is), **Changed**,
+order: **Blocked on you** (write "nothing" when nothing is), **Changed**,
 **Found**. Leave out Changed or Found when empty. Plain questions get plain
 answers.
 
