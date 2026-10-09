@@ -1,0 +1,6 @@
+[Unit]
+Description=prune unreferenced uv cache entries
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/uv-cache-prune

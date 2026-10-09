@@ -1,0 +1,16 @@
+#!/bin/sh
+# drop uv cache entries nothing references any more.
+# niri-edge-pan's `uv run --script` holds uv's cache lock for as long as it
+# runs, so prune would wait forever; `--force` deletes the live script env
+# out from under it instead. So stop it, prune, and respawn it under niri.
+set -u
+PATH="$HOME/.local/share/mise/shims:$PATH"
+
+edge_pan=0
+pkill -f 'uv run --script .*niri-edge-pan' && edge_pan=1
+
+uv cache prune
+status=$?
+
+[ "$edge_pan" = 1 ] && niri msg action spawn -- niri-edge-pan
+exit "$status"
