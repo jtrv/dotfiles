@@ -150,6 +150,7 @@ binds {
     // --- Screenshot ---
     Mod+S       hotkey-overlay-title="screenshot: region" { screenshot; }
     Mod+Shift+S hotkey-overlay-title="screenshot: full"   { screenshot-screen; }
+    Mod+Ctrl+S  hotkey-overlay-title="screenshot: text (OCR)" { spawn "ocr-grab"; }
 
     // --- Media Keys ---
     XF86AudioPlay  allow-when-locked=true { spawn "playerctl" "play-pause"; }

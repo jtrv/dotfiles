@@ -391,34 +391,6 @@ hook -group lsp-filetype-json global BufSetOption filetype=(?:json|jsonc) %{
   "
 }
 
-hook -group lsp-filetype-latex global BufSetOption filetype=latex %{
-  set-option buffer lsp_servers %{
-    [texlab]
-    root_globs = [ ".git", ".hg" ]
-    [texlab.settings.texlab]
-    # See https://github.com/latex-lsp/texlab/wiki/Configuration
-    #
-    # Preview configuration for zathura with SyncTeX search.
-    # For other PDF viewers see https://github.com/latex-lsp/texlab/wiki/Previewing
-    forwardSearch.executable = "sioyek"
-    forwardSearch.args = [
-      "--reuse-window",
-      "--execute-command", "toggle_synctex",
-      "--inverse-search",
-      "texlab inverse-search -i '%%1' -l '%%2'",
-      "--forward-search-file", "%f",
-      "--forward-search-line", "%l",
-      "%p",
-    ]
-    chktex.onOpenAndSave = true
-    chktex.onEdit = true
-    build.onSave = true
-    build.forwardSearchAfter = true
-    build.args = [ "-pdf", "-interaction=nonstopmode", "-auxdir=.aux", "-synctex=1", "%f" ]
-  }
-}
-
-
 hook -group lsp-filetype-markdown global BufSetOption filetype=markdown %{
   set-option buffer lsp_servers %{
     [markdown-oxide]
@@ -531,5 +503,35 @@ hook -group lsp-filetype-toml global BufSetOption filetype=toml %{
     [taplo]
     root_globs = [ ".git", ".hg" ]
     args = [ "lsp", "stdio" ]
+  }
+}
+
+# Typst has no SyncTeX, so sioyek gets live reload but no click-to-source jump.
+# The PDF goes to /tmp so a preview build never overwrites a repo's checked
+# resume.pdf (those builds add --input tight and ATS guards the preview skips).
+# The mise config marks the Typst root first: the runway resumes import
+# "/profile/typst/template.typ", which only resolves from the job-hunt-* dir,
+# and that dir's mise env supplies TYPST_FONT_PATHS for the vendored fonts.
+hook -group lsp-filetype-typst global BufSetOption filetype=typst %{
+  set-option buffer lsp_servers %{
+    [tinymist]
+    root_globs = [ ".config/mise/config.toml", ".git", ".hg" ]
+    args = [ "lsp" ]
+    settings_section = "_"
+    [tinymist.settings._]
+    exportPdf = "onType"
+    outputPath = "/tmp/typst-preview/$dir/$name"
+    formatterMode = "typstyle"
+  }
+}
+
+define-command typst-sioyek -docstring 'open the live tinymist PDF for this buffer in sioyek' %{
+  nop %sh{
+    root=$(dirname "$kak_buffile")
+    while [ "$root" != / ] && [ ! -e "$root/.config/mise/config.toml" ] && [ ! -e "$root/.git" ]; do
+      root=$(dirname "$root")
+    done
+    rel=${kak_buffile#"$root"/}
+    setsid sioyek --reuse-window "/tmp/typst-preview/${rel%.typ}.pdf" >/dev/null 2>&1 </dev/null &
   }
 }

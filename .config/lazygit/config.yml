@@ -49,7 +49,7 @@ gui:
   nerdFontsVersion: "3" # nerd fonts version to use ("2" or "3"); empty means don't show nerd font icons
   showFileIcons: true # for hiding file icons in the file views
   splitDiff: 'auto' # one of 'auto' | 'always'
-  useHunkModeInStagingView: true
+  useHunkModeInDiffView: true
   skipRewordInEditorWarning: false # for skipping the confirmation before launching the reword editor
   border: 'rounded' # one of 'single' | 'double' | 'rounded' | 'hidden'
   animateExplosion: true # shows an explosion animation when nuking the working tree
@@ -135,7 +135,6 @@ keybinding:
     nextMatch: 'n'
     prevMatch: 'N'
     optionMenu: '?' # show help menu
-    optionMenu-alt1: <disabled> # show help menu
     select: '<space>'
     goInto: '<enter>'
     openRecentRepos: ''
@@ -226,7 +225,6 @@ keybinding:
     tagCommit: 'T'
     checkoutCommit: '<space>'
     resetCherryPick: '<c-r>'
-    copyCommitMessageToClipboard: '<c-y>'
     openLogMenu: '<c-l>'
     viewBisectOptions: 'b'
   stash:
@@ -306,9 +304,7 @@ customCommands:
     description: "Blame file at revision"
     context: "commitFiles"
     command: >-
-      kak -e 'git show {{.SelectedCommit.Hash}}:{{.SelectedCommitFile.Name}};
-      hook -once buffer BufCloseFifo .* %sh{ printf "evaluate-commands -client %s %%{
-      set-option buffer git_blob {{.SelectedCommit.Hash}}:{{.SelectedCommitFile.Name}}; git blame }" "$kak_client" }'
+      kak -e 'git show {{.SelectedCommit.Hash}}:{{.SelectedCommitFile.Name}}; hook -once buffer BufCloseFifo .* %sh{ printf "evaluate-commands -client %s %%{ set-option buffer git_blob {{.SelectedCommit.Hash}}:{{.SelectedCommitFile.Name}}; git blame }" "$kak_client" }'
     output: terminal
   # Stash actions
   - key: 'g'
