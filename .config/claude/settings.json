@@ -243,7 +243,8 @@
   "enableWorkflows": true,
   "statusLine": {
     "type": "command",
-    "command": "bash \"/home/sugimoto/.config/claude/statusline/statusline.sh\""
+    "command": "bash \"/home/sugimoto/.config/claude/statusline/statusline.sh\"",
+    "refreshInterval": 60
   },
   "enabledPlugins": {
     "codex@openai-codex": true,

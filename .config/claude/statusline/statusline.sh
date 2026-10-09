@@ -55,25 +55,39 @@ if [ -f "$codex_rollout" ]; then
     [ -n "$codex" ] && export CC_CODEX="$(sev "$codex_max")$codex"
 fi
 
-# the context window fills faster than any other number here, so it alarms earlier than the
-# 75/90 the rate limits use — 80% is already the point of no return for a long task
+# the context window fills faster than any other number here, so it gets its own, earlier
+# ladder, the same colours as the cache chip: green, amber from 30%, pink from 45%, red past 60%
 pct=$(jq -r '.context_window.used_percentage | numbers | round' <<< "$input")
-[ -n "$pct" ] && export CC_CTX="$(sev "$pct" 50 80)${pct}%"
+if [ -n "$pct" ]; then
+    if [ "$pct" -gt 60 ]; then ctx='\033[1;38;2;243;139;168m'
+    elif [ "$pct" -ge 45 ]; then ctx='\033[1;38;2;245;194;231m'
+    elif [ "$pct" -ge 30 ]; then ctx='\033[1;38;2;249;226;175m'
+    else ctx=''; fi
+    # the glyph rides inside the value, after the colour, so the icon repaints with the digits
+    export CC_CTX="$(printf "$ctx")󰕯 ${pct}%"
+fi
 
-# mode flags: first line of the file is the level, missing file = mode off. The level is
-# always spelled out — hiding it at "full" left the module as a lone icon that said only
-# "on", when which rung is enforced is the part worth reading. ponytail's flag is
-# plugin-managed; caveman's is written by hooks/caveman-track.sh, since caveman is a user
-# skill with no hook of its own.
-read_mode_flag() {
-    local flag="${CLAUDE_CONFIG_DIR:-$HOME/.claude}/$1"
-    [ -f "$flag" ] || return
-    local mode
-    mode=$(head -n1 "$flag" | tr -d '[:space:]')
-    echo "${mode:-full}"
-}
+# Prompt-cache time left. No API reports cache liveness, so this is the timestamp of the
+# last response in the transcript plus the TTL — the newest server-confirmed point the
+# cache was written or read. 3600 is the subscription's 1h TTL; an API-key session caches
+# for 5m and this chip would overstate it. Its own ladder, off the shared one: green while
+# warm, amber in the last 30 minutes, pink in the last 15, red once cold, when the next
+# send re-writes the whole context.
+transcript=$(jq -r '.transcript_path // empty' <<< "$input")
+if [ -f "$transcript" ]; then
+    last=$(tac "$transcript" | grep -m1 '"usage":{' | jq -r '.timestamp // empty | sub("\\.[0-9]+Z$"; "Z") | fromdateiso8601')
+    if [ -n "$last" ]; then
+        age=$(( $(date +%s) - last ))
+        if [ "$age" -ge 3600 ]; then color='\033[1;38;2;243;139;168m'
+        elif [ "$age" -ge 2700 ]; then color='\033[1;38;2;245;194;231m'
+        elif [ "$age" -ge 1800 ]; then color='\033[1;38;2;249;226;175m'
+        else color=''; fi
+        [ "$age" -lt 3600 ] && cache="$(( 60 - age / 60 ))m" || cache="cold"
+        export CC_CACHE="$(printf "$color")󰔟 $cache"
+    fi
+fi
 
-mode=$(read_mode_flag .ponytail-active) && [ -n "$mode" ] && export CC_PONYTAIL="$mode"
-mode=$(read_mode_flag .caveman-active) && [ -n "$mode" ] && export CC_CAVEMAN="$mode"
+# cholo has no levels: it is on whenever its hook would inject it, so mirror the hook's test.
+[ "${CHOLO_OFF:-}" != 1 ] && [ -f "$HOME/.config/agents/skills/cholo/SKILL.md" ] && export CC_CHOLO=cholo
 
 STARSHIP_CONFIG="$HOME/.config/claude/statusline/starship.toml" starship prompt
