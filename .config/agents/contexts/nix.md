@@ -26,7 +26,7 @@ Building, packaging and contributing with Nix on these machines: nixpkgs work in
   nixpkgs itself has no tasks, so plain `nix-build` is fine there.
 - Local package overrides, including test-skips for packages Hydra hasn't built,
   live in `nixos-config/nixos/pkgs/default.nix`.
-  `~/.config/agents/watches/nixpkgs-test-skips.sh` says when the skips can go.
+  Give each new test-skip a watch probe that says when it can go.
 - **Parallel builds starve each other.** With `cores = 0`, two agents each
   compiling Rust oversubscribe the CPU and can push the machine into swap, which
   is slower than running them in turn. `max-jobs` is per client, so the daemon
