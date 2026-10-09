@@ -1,7 +1,6 @@
 {
   "packages": [
     "npm:context-mode",
-    "git:github.com/DietrichGebert/ponytail",
     "npm:@upstash/context7-pi"
   ],
   "lastChangelogVersion": "0.85.1",

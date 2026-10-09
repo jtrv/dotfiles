@@ -47,6 +47,9 @@
   svlu (cmd wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+)
   svld (cmd wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-)
 
+  ;; ``` for markdown code fences
+  fence (macro grv grv grv)
+
   ;; key volume
   kvlu (tap-hold 200    200    @svlu  (macro-repeat @svlu 50))
   kvld (tap-hold 200    200    @svld  (macro-repeat @svld 50))

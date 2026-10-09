@@ -7,7 +7,8 @@ palette = "catppuccin_mocha"
 
 # ponytail: no shell here (nothing types at this prompt), so no character/vimcmd/jobs/sudo/
 # shlvl/cloud/language-runtime modules — those exist to orient a human typing commands.
-# This renders once per turn; keep it to what a glance needs: where, git state, then telemetry
+# This renders once per turn and once a minute (settings.json refreshInterval, for the cache
+# countdown); keep it to what a glance needs: where, git state, then telemetry
 # fed in via env vars from statusline.sh — who is answering and how (model, then the response
 # modes), the weekly limits that decide whether to start something big, the 5h one, and
 # context %, which turns over fastest. Diff size trails the lot: it is the one number here
@@ -17,12 +18,12 @@ $directory\
 $git_branch\
 $git_status\
 ${env_var.CC_MODEL}\
-${env_var.CC_PONYTAIL}\
-${env_var.CC_CAVEMAN}\
 ${env_var.CC_RATE_7D}\
 ${env_var.CC_RATE_5H}\
 ${env_var.CC_CODEX}\
 ${env_var.CC_CTX}\
+${env_var.CC_CACHE}\
+${env_var.CC_CHOLO}\
 ${env_var.CC_LINES}"""
 
 # Colour carries role, not decoration. Five families, and a chip's family says what kind of
@@ -73,14 +74,20 @@ format = "[$symbol$env_value]($style) "
 
 # context-window used%. md-view_day is a framed pane — the window itself; magnitude is left
 # entirely to the colour and the digits, which is why the glyph does not vary with fill.
-# Neutral until it matters: a fresh window is the least interesting fact on this line. Like
-# every other reading here, the yellow/red past the thresholds is repainted onto the digits
-# by statusline.sh, so the icon stays a fixed label and only the number changes state.
+# Green like the cache chip, by request; statusline.sh puts the glyph inside the value and
+# repaints glyph and digits together amber, pink, then red as the window fills.
 [env_var.CC_CTX]
 variable = "CC_CTX"
-symbol = "󰕯 "
-style = "bold subtext0"
-format = "[$symbol$env_value]($style) "
+style = "bold green"
+format = "[$env_value]($style) "
+
+# prompt-cache minutes left, beside context % because the context is what a cold cache
+# makes you pay to re-write. md-timer_sand, emitted by statusline.sh inside the value like
+# CC_CTX's glyph; green by request, repainted amber, pink, then red as the hour runs out.
+[env_var.CC_CACHE]
+variable = "CC_CACHE"
+style = "bold green"
+format = "[$env_value]($style) "
 
 [env_var.CC_LINES]
 variable = "CC_LINES"
@@ -124,24 +131,13 @@ symbol = " "
 style = "bold teal"
 format = "[$symbol$env_value]($style) "
 
-# icon + level word at every level; hidden entirely when unset (the var stays unset only
-# when the ponytail flag file itself is absent, which is what "mode off" looks like).
-# Both modes share one desaturated shade: they modify how Claude answers, so they sit in
-# its family, and they hold steady for whole sessions, so they are the part of the bar that
-# should recede. Caveman was 256-colour 130 — a standing orange chip in the alarm channel.
-[env_var.CC_PONYTAIL]
-variable = "CC_PONYTAIL"
-symbol = "󱁶 "
+# Hidden when cholo is off. A desaturated shade: the ruleset shapes how Claude builds, so it
+# sits in its family, and it holds steady for whole sessions, so it should recede.
+[env_var.CC_CHOLO]
+variable = "CC_CHOLO"
+symbol = "󰞧"
 style = "overlay1"
-format = "[$symbol$env_value]($style) "
-
-# same show-the-level pattern; icon = md-campfire, which names the mode more directly than
-# the generic md-text_short it replaced, and is the only non-round glyph in the bar
-[env_var.CC_CAVEMAN]
-variable = "CC_CAVEMAN"
-symbol = "󰻝 "
-style = "overlay1"
-format = "[$symbol$env_value]($style) "
+format = "[$symbol]($style) "
 
 # Catppuccin palettes -- https://github.com/catppuccin/starship
 # Toggle flavor with the top-level `palette = "..."` line near the top of this file.

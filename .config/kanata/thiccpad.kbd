@@ -44,7 +44,7 @@
 
 (deflayer space
    _     _     _     _     _     _     _     _     _     _     _     _     _     _     _     _
-   _     _     _     _     _     _     _     _     C-home C-end _     _     _     _
+   @fence _     _     _     _     _     _     _     C-home C-end _     _     _     _
    _     @lwdl @lwrd @rwrd @rwdl _     _     bspc  home  end   del   _     _     _
    _     @mpr  _     @mpp  @mnx  _     left  down  up    rght  _     _     _
    _     _     @kvld @kvlu _     _     _     _     pgdn  pgup  _     _

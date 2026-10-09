@@ -38,6 +38,7 @@ This table is the **single source of truth** for what is machine-specific; anyth
 | hardware tuning: `voxtype` model/threads, waybar height/font | per-machine |
 | `easyeffects/*` | shared — every file is keyed by a device (autoload by alsa id, presets/irs by headphone or mic name) and inert elsewhere; union on merge, never sweep |
 | `fish/config.fish` ssh-agent fallback | morpheus (NixOS gets the agent from systemd) |
+| `fish/conf.d/aliases.fish` `wget` → `wget2` alias | morpheus (thiccpad has no `wget2`) |
 | skyspell dict names in `kakrc` (`en_US-large`/`es` vs nix `en_US`/`es_ANY`) | per-machine |
 | `.config/udev/rules.d/*` | morpheus — NixOS machines carry udev rules in nixos-config |
 | `readme.md` | per-branch — describes that branch's OS and host |

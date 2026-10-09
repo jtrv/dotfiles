@@ -6,7 +6,6 @@ hand-written and tracked. On a new machine, reinstall from the sources below.
 
 | Skill | Version | Source |
 |---|---|---|
-| caveman | 2026-08-04 | github.com/JuliusBrussee/caveman (`skills/caveman`) |
 | caveman-commit | 2026-08-04 | github.com/JuliusBrussee/caveman (`skills/caveman-commit`) |
 | color-expert | 2026-07-30 | github.com/meodai/skill.color-expert (repo root is the skill) |
 | convert-documents-to-markdown | v0.2.3 | github.com/firecrawl/anydoc (`skills/convert-documents-to-markdown`; local edit: npx → bunx, reapply after reinstall) |
