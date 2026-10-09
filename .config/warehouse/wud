@@ -108,3 +108,4 @@ devdocs:web_extensions
 devdocs:webpack~5
 devdocs:yarn
 devdocs:zig
+zeal:tsdoc_contrib
