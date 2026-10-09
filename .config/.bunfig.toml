@@ -7,7 +7,8 @@ telemetry = false
 [test]
 coverage = true
 coverageThreshold = { line = 0.7, function = 0.8, statement = 0.9 }
-coverageReporter  = ["lcov"]
+coverageReporter = ["lcov"]
 
 [install]
 minimumReleaseAge = 604800
+minimumReleaseAgeExcludes = ["@openai/codex", "@anthropic-ai/claude-code"]
