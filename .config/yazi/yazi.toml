@@ -34,16 +34,8 @@ gimp = [
 ]
 
 [open]
-rules = [
-	{ mime = "text/*",  use = [ "edit", "reveal" ] },
-	{ mime = "image/*", use = [ "open", "gimp", "reveal" ] },
-	{ mime = "video/*", use = [ "play", "reveal" ] },
-	{ mime = "audio/*", use = [ "play", "reveal" ] },
-	{ mime = "inode/x-empty", use = [ "edit", "reveal" ] },
-
-	{ mime = "application/json", use = [ "edit", "reveal" ] },
-	{ mime = "*/javascript",     use = [ "edit", "reveal" ] },
-
+prepend_rules = [
+	{ mime = "image/*",                     use = [ "open", "gimp", "reveal" ] },
 	{ mime = "application/zip",             use = [ "extract", "reveal" ] },
 	{ mime = "application/gzip",            use = [ "extract", "reveal" ] },
 	{ mime = "application/x-tar",           use = [ "extract", "reveal" ] },
