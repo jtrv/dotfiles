@@ -4,6 +4,7 @@
 #
 #   quacks run <game dir> [variant] [-- game args]
 #   quacks mount|unmount|check|compress <game dir>
+#   quacks setup    fetch umu's runtime for the configured Proton (needs network)
 #
 # Settings come from ~/.config/quacks/config, then <game dir>/quacks.conf:
 # key=value lines, # comments, and [variant] sections that override the keys
@@ -15,7 +16,7 @@
 #   dlls       extra WINEDLLOVERRIDES entries
 #   args       extra arguments for exe, split on spaces
 #   env        KEY=VALUE exported to the game; repeatable
-#   proton     Proton install umu-run should use
+#   proton     Proton installs umu-run may use, space-separated; first found wins
 #   isolate    1 runs the game in the sandbox
 #   block_net  1 cuts the sandbox off from the network
 set -u
@@ -103,9 +104,10 @@ sandbox() {
         # binds below land inside this one, so it has to come first
         flags+=( --bind "$DATA/native-docs" "$HOME" )
     else
-        # umu-run execs Proton through the umu-shim kept here
+        # umu-run execs Proton through the umu-shim kept here and writes install
+        # markers into its runtimes, so the game gets a throwaway writable copy
         path="${XDG_DATA_HOME:-$HOME/.local/share}/umu"
-        flags+=( --tmpfs "$HOME" --ro-bind "$path" "$path" --bind "$WINEPREFIX" "$WINEPREFIX" )
+        flags+=( --tmpfs "$HOME" --overlay-src "$path" --tmp-overlay "$path" --bind "$WINEPREFIX" "$WINEPREFIX" )
     fi
     flags+=( --bind "$ROOT_MNT" "$ROOT_MNT" --chdir "$RUN_DIR" )
     # IPC stays shared: X's MIT-SHM needs it to talk to the X server.
@@ -122,6 +124,24 @@ sandbox() {
     status=$?
     rm -f "$info"
     return $status
+}
+
+find_proton() {
+    local proton
+    for proton in ${CONF[proton]:-}; do
+        [ -d "$proton" ] && { echo "$proton"; return; }
+    done
+    die "none of the proton paths in $CONFIG exist"
+}
+
+# The sandbox can't download, so umu's runtime is fetched here, outside it,
+# by booting a throwaway prefix: Proton's own code runs, no game does.
+setup_runtime() {
+    local proton tmp
+    proton=$(find_proton) || exit 1
+    tmp=$(mktemp -d)
+    WINEPREFIX="$tmp" PROTONPATH="$proton" GAMEID=umu-default umu-run wineboot -u
+    rm -rf "$tmp"
 }
 
 run_game() {
@@ -144,12 +164,15 @@ run_game() {
     if [ "${CONF[runner]}" = native ]; then
         cmd=( "./${CONF[exe]}" )
     else
-        [ -n "${CONF[proton]:-}" ] || die "no proton set in $CONFIG"
+        local proton
+        proton=$(find_proton) || exit 1
         export WINEPREFIX="$DATA/wine-prefix/$(basename "$GAME")"
         mkdir -p "$WINEPREFIX"
         # The sandbox keeps $HOME read-only, so umu must use a local Proton,
-        # skip its runtime updates and cache inside the bound prefix.
-        export PROTONPATH="${CONF[proton]}" UMU_RUNTIME_UPDATE=0 XDG_CACHE_HOME="$WINEPREFIX/.cache"
+        # skip its runtime updates, and cache (pressure-vessel's runtime copy
+        # included) inside the bound prefix.
+        export PROTONPATH="$proton" UMU_RUNTIME_UPDATE=0 XDG_CACHE_HOME="$WINEPREFIX/.cache"
+        export PRESSURE_VESSEL_VARIABLE_DIR="$WINEPREFIX/.cache/pressure-vessel"
         export WINEDLLOVERRIDES="winemenubuilder.exe=d;mshtml=d${CONF[dlls]:+;${CONF[dlls]}}"
         export WINE_LARGE_ADDRESS_AWARE=1 WINEDEBUG=fixme-all
         [ -n "${CONF[gameid]:-}" ] && export GAMEID="umu-${CONF[gameid]}"
@@ -171,7 +194,12 @@ for dep in dwarfs fuse-overlayfs bwrap; do
 done
 
 action=${1:-}
-[ $# -ge 2 ] || die "usage: quacks run|mount|unmount|check|compress <game dir> [variant] [-- args]"
+if [ "$action" = setup ]; then
+    load "$CONFIG"
+    setup_runtime
+    exit
+fi
+[ $# -ge 2 ] || die "usage: quacks run|mount|unmount|check|compress <game dir> [variant] [-- args], or quacks setup"
 GAME=$(readlink -f "$2")
 FL="$GAME/files"
 shift 2

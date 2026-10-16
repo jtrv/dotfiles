@@ -1,9 +1,10 @@
 # Defaults for every game; a game's quacks.conf can override any key.
 # See `quacks` (~/.local/bin/quacks) for the full key list.
 
-# A pacman-installed Proton: the -slr builds write under ~/.local/share/umu,
-# which the sandbox keeps read-only.
-proton=/usr/share/steam/compatibilitytools.d/proton-cachyos-native
+# First existing path wins: the pacman package on arch, the path nixos-config
+# links to pkgs.proton-cachyos on NixOS. Run `quacks setup` once per machine
+# (and after a Proton update) to fetch the umu runtime it needs.
+proton=/usr/share/steam/compatibilitytools.d/proton-cachyos-native /etc/quacks/proton
 
 isolate=1
 block_net=1
