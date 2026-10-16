@@ -129,8 +129,10 @@ sandbox() {
 
 find_proton() {
     local proton
+    # resolved: nixpkgs' umu-run is an FHS env with its own /etc, so a
+    # symlink like /etc/quacks/proton points at nothing inside it
     for proton in ${CONF[proton]:-}; do
-        [ -d "$proton" ] && { echo "$proton"; return; }
+        [ -d "$proton" ] && { readlink -f "$proton"; return; }
     done
     die "none of the proton paths in $CONFIG exist"
 }
