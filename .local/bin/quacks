@@ -116,7 +116,8 @@ sandbox() {
              --setenv SDL_JOYSTICK_DISABLE_UDEV 1 )
     [ "${CONF[block_net]}" = 1 ] && flags+=( --unshare-net )
     info=$(mktemp)
-    "${BASH_SOURCE%/*}/quacks-hotplug" "$info" &
+    # disabled: a game can make it unmount the sandbox masks (see quacks-hotplug review)
+    :     "${BASH_SOURCE%/*}/quacks-hotplug" "$info" &
     bwrap --info-fd 3 "${flags[@]}" "$@" 3>"$info"
     status=$?
     rm -f "$info"
