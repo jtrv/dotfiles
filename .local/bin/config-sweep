@@ -40,6 +40,7 @@ manifests='
 '
 mixed='
 .config/fish/config.fish
+.config/fish/conf.d/aliases.fish
 .config/fish/conf.d/env.fish
 .config/kak/kakrc
 .config/mise/config.toml
