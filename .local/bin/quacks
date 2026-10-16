@@ -107,6 +107,7 @@ sandbox() {
         # umu-run execs Proton through the umu-shim kept here and writes install
         # markers into its runtimes, so the game gets a throwaway writable copy
         path="${XDG_DATA_HOME:-$HOME/.local/share}/umu"
+        [ -d "$path" ] || die "no umu runtime yet: run quacks setup"
         flags+=( --tmpfs "$HOME" --overlay-src "$path" --tmp-overlay "$path" --bind "$WINEPREFIX" "$WINEPREFIX" )
     fi
     flags+=( --bind "$ROOT_MNT" "$ROOT_MNT" --chdir "$RUN_DIR" )
