@@ -1,0 +1,9 @@
+[Unit]
+Description=back up quacks game saves with restic
+ConditionPathIsMountPoint=/mnt/data
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/quacks-backup
+Nice=10
+IOSchedulingClass=idle
