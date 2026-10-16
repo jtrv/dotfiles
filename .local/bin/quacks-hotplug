@@ -1,0 +1,163 @@
+#!/usr/bin/env python3
+"""Mirrors gamepad hotplug into a running quacks sandbox.
+
+    quacks-hotplug <info file>
+
+The info file is where bwrap --info-fd writes the sandbox's pid. The sandbox
+only gets the gamepad nodes present at launch, so this binds newly connected
+ones into it and unmounts removed ones. Unmounting matters as much as adding:
+a stale bind opens whatever device later reuses that node's number, which
+may be a keyboard.
+"""
+import ctypes
+import fcntl
+import json
+import os
+import re
+import select
+import signal
+import subprocess
+import sys
+import time
+
+libc = ctypes.CDLL(None, use_errno=True)
+SYS_OPEN_TREE, SYS_MOVE_MOUNT = 428, 429
+OPEN_TREE_CLONE = 1
+MOVE_MOUNT_F_EMPTY_PATH = 4
+MNT_DETACH = 2
+PR_SET_PDEATHSIG = 1
+AT_FDCWD = -100
+NS_GET_USERNS = 0xB701
+# Wine and SDL find new gamepads through inotify on /dev/input, and an inotify
+# event fires when a path is created, before anything is mounted on it. So the
+# node is mounted outside /dev/input first and then announced via a symlink.
+STAGE = "/dev/.quacks-hotplug"
+NODE = re.compile(r"^/dev/input/(event|js)[0-9]+$")
+
+
+def log(msg):
+    print(f"quacks-hotplug: {msg}", file=sys.stderr, flush=True)
+
+
+def check(ret):
+    if ret < 0:
+        err = ctypes.get_errno()
+        raise OSError(err, os.strerror(err))
+    return ret
+
+
+def die_with_parent():
+    libc.prctl(PR_SET_PDEATHSIG, signal.SIGTERM)
+
+
+def in_sandbox(pid, fn, dev):
+    """Runs fn(dev) in a child that has joined the sandbox's namespaces."""
+    child = os.fork()
+    if child == 0:
+        code = 1
+        try:
+            mntns = os.open(f"/proc/{pid}/ns/mnt", os.O_RDONLY)
+            # bwrap nests the sandbox in a second user namespace that has no
+            # rights over its mounts, so join the one that owns them
+            userns = fcntl.ioctl(mntns, NS_GET_USERNS)
+            os.setns(userns, os.CLONE_NEWUSER)
+            fn(dev, mntns)
+            code = 0
+        except Exception as e:
+            log(f"{fn.__name__} {dev}: {e}")
+        os._exit(code)
+    return os.waitpid(child, 0)[1] == 0
+
+
+def attach(dev, mntns):
+    # Cloning a mount needs mount rights over the namespace it is cloned in,
+    # so clone it from a private copy of the host namespace owned by the
+    # sandbox's user namespace.
+    os.unshare(os.CLONE_NEWNS)
+    tree = check(libc.syscall(SYS_OPEN_TREE, AT_FDCWD, dev.encode(),
+                              OPEN_TREE_CLONE | os.O_CLOEXEC))
+    os.setns(mntns, os.CLONE_NEWNS)
+    if os.path.lexists(dev):
+        return
+    os.makedirs("/dev/input", exist_ok=True)
+    os.makedirs(STAGE, exist_ok=True)
+    stage = f"{STAGE}/{os.path.basename(dev)}"
+    open(stage, "w").close()
+    check(libc.syscall(SYS_MOVE_MOUNT, tree, b"", AT_FDCWD, stage.encode(),
+                       MOVE_MOUNT_F_EMPTY_PATH))
+    os.symlink(stage, dev)
+    log(f"added {dev}")
+
+
+def detach(dev, mntns):
+    os.setns(mntns, os.CLONE_NEWNS)
+    stage = f"{STAGE}/{os.path.basename(dev)}"
+    if os.path.islink(dev):
+        os.unlink(dev)
+        check(libc.umount2(stage.encode(), MNT_DETACH))
+        os.unlink(stage)
+    elif os.path.exists(dev):
+        check(libc.umount2(dev.encode(), MNT_DETACH))
+        os.unlink(dev)
+    else:
+        return
+    log(f"removed {dev}")
+
+
+def is_gamepad(dev):
+    props = subprocess.run(["udevadm", "info", "-q", "property", "-n", dev],
+                           capture_output=True, text=True).stdout
+    return "ID_INPUT_JOYSTICK=1" in props.splitlines()
+
+
+def sandbox_pid(info):
+    while True:
+        try:
+            with open(info) as f:
+                return json.load(f)["child-pid"]
+        except (OSError, ValueError, KeyError):
+            time.sleep(0.1)
+
+
+def main():
+    die_with_parent()
+    pid = sandbox_pid(sys.argv[1])
+    sandbox = os.pidfd_open(pid)
+    monitor = subprocess.Popen(
+        ["udevadm", "monitor", "--udev", "--property", "--subsystem-match=input"],
+        stdout=subprocess.PIPE, preexec_fn=die_with_parent)
+    # catch gamepads connected between bwrap starting and the monitor starting
+    for name in sorted(os.listdir("/dev/input")):
+        dev = f"/dev/input/{name}"
+        if NODE.match(dev) and is_gamepad(dev):
+            in_sandbox(pid, attach, dev)
+
+    out, buf, event = monitor.stdout.fileno(), b"", {}
+    while True:
+        ready, _, _ = select.select([out, sandbox], [], [])
+        if sandbox in ready:
+            break
+        chunk = os.read(out, 65536)
+        if not chunk:
+            break
+        *lines, buf = (buf + chunk).split(b"\n")
+        for line in lines:
+            line = line.decode(errors="replace").strip()
+            if "=" in line:
+                key, _, val = line.partition("=")
+                event[key] = val
+                continue
+            if line or not event:
+                continue
+            dev, action = event.get("DEVNAME", ""), event.get("ACTION")
+            if NODE.match(dev):
+                if action == "add" and event.get("ID_INPUT_JOYSTICK") == "1":
+                    in_sandbox(pid, attach, dev)
+                elif action == "remove":
+                    in_sandbox(pid, detach, dev)
+            event = {}
+    monitor.terminate()
+
+
+if __name__ == "__main__":
+    main()
