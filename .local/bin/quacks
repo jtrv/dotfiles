@@ -4,7 +4,8 @@
 #
 #   quacks run <game dir> [variant] [-- game args]
 #   quacks mount|unmount|check|compress <game dir>
-#   quacks setup    fetch umu's runtime for the configured Proton (needs network)
+#   quacks setup    install umu's runtime: copied from a runtime= path when one
+#                   exists, otherwise fetched for the configured Proton (network)
 #
 # Settings come from ~/.config/quacks/config, then <game dir>/quacks.conf:
 # key=value lines, # comments, and [variant] sections that override the keys
@@ -17,13 +18,15 @@
 #   args       extra arguments for exe, split on spaces
 #   env        KEY=VALUE exported to the game; repeatable
 #   proton     Proton installs umu-run may use, space-separated; first found wins
+#   runtime    prebuilt umu runtime dirs (holding steamrt4/), first found wins;
+#              run copies it in when the installed one is missing or differs
 #   isolate    1 runs the game in the sandbox
 #   block_net  1 cuts the sandbox off from the network
 set -u
 
 DATA="${XDG_DATA_HOME:-$HOME/.local/share}/quacks"
 CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/quacks/config"
-KEYS=" exe dir runner gameid dlls args env proton isolate block_net "
+KEYS=" exe dir runner gameid dlls args env proton runtime isolate block_net "
 
 die() { echo "quacks: $*" >&2; exit 1; }
 
@@ -92,7 +95,7 @@ sandbox() {
     for path in "$run/pipewire-0" "$run/pulse/native" "${XAUTHORITY:-}"; do
         [ -e "$path" ] && flags+=( --ro-bind "$path" "$path" )
     done
-    for path in /mnt /srv /media; do
+    for path in /mnt /srv /media /run/media; do
         [ -d "$path" ] && flags+=( --tmpfs "$path" )
     done
     for dev in /dev/input/js* /dev/input/event*; do
@@ -106,7 +109,7 @@ sandbox() {
     else
         # umu-run execs Proton through the umu-shim kept here and writes install
         # markers into its runtimes, so the game gets a throwaway writable copy
-        path="${XDG_DATA_HOME:-$HOME/.local/share}/umu"
+        path=$UMU
         [ -d "$path" ] || die "no umu runtime yet: run quacks setup"
         flags+=( --tmpfs "$HOME" --overlay-src "$path" --tmp-overlay "$path" --bind "$WINEPREFIX" "$WINEPREFIX" )
     fi
@@ -137,10 +140,37 @@ find_proton() {
     die "none of the proton paths in $CONFIG exist"
 }
 
+UMU="${XDG_DATA_HOME:-$HOME/.local/share}/umu"
+
+find_runtime() {
+    local runtime
+    for runtime in ${CONF[runtime]:-}; do
+        [ -d "$runtime/steamrt4" ] && { echo "$runtime"; return; }
+    done
+    return 1
+}
+
+# umu and pressure-vessel write into the runtime (install marker, .ref locks),
+# so a read-only one (a Nix store path) has to be copied into a user-owned dir
+copy_runtime() {
+    local src=$1 tmp
+    cmp -s "$src/steamrt4/VERSIONS.txt" "$UMU/steamrt4/VERSIONS.txt" && return 0
+    echo "quacks: installing umu runtime from $src" >&2
+    mkdir -p "$UMU"
+    tmp=$(mktemp -d "$UMU/.steamrt4.XXXXXX")
+    cp -a --reflink=auto "$src/steamrt4/." "$tmp/" && chmod -R u+w "$tmp" || { rm -rf "$tmp"; return 1; }
+    rm -rf "$UMU/steamrt4"
+    mv "$tmp" "$UMU/steamrt4"
+}
+
 # The sandbox can't download, so umu's runtime is fetched here, outside it,
 # by booting a throwaway prefix: Proton's own code runs, no game does.
 setup_runtime() {
-    local proton tmp
+    local proton runtime tmp
+    if runtime=$(find_runtime); then
+        copy_runtime "$runtime"
+        return
+    fi
     proton=$(find_proton) || exit 1
     tmp=$(mktemp -d)
     WINEPREFIX="$tmp" PROTONPATH="$proton" GAMEID=umu-default umu-run wineboot -u
@@ -167,8 +197,11 @@ run_game() {
     if [ "${CONF[runner]}" = native ]; then
         cmd=( "./${CONF[exe]}" )
     else
-        local proton
+        local proton runtime
         proton=$(find_proton) || exit 1
+        if runtime=$(find_runtime); then
+            copy_runtime "$runtime" || die "copying the umu runtime from $runtime failed"
+        fi
         export WINEPREFIX="$DATA/wine-prefix/$(basename "$GAME")"
         mkdir -p "$WINEPREFIX"
         # The sandbox keeps $HOME read-only, so umu must use a local Proton,
