@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+# Fill missing Lutris cover art and banners with SteamGridDB's top-ranked grid.
+# Run with Lutris closed: it rewrites pga.db rows on save and would drop the custom flags.
+set -euo pipefail
+
+key=${SGDB_API_KEY:-$(<"$HOME/.config/hermes/steamgriddb_api_key.txt")}
+data=$HOME/.local/share/lutris
+db=$data/pga.db
+api=https://www.steamgriddb.com/api/v2
+
+if pgrep -x lutris >/dev/null; then
+  echo "lutris is running; close it first" >&2
+  exit 1
+fi
+
+norm() { tr -cd '[:alnum:]' <<<"${1,,}"; }
+sgdb() { curl -fsS -H "Authorization: Bearer $key" "$api/$1"; }
+
+tmp=$(mktemp)
+trap 'rm -f "$tmp"' EXIT
+
+# kind dir dimensions flag-column
+fill() {
+  local dst=$data/$2/$slug.jpg url
+  [[ -s $dst ]] && return
+  if [[ -z $gid ]]; then
+    if [[ $service == steam && $service_id =~ ^[0-9]+$ ]]; then
+      gid=$(sgdb "games/steam/$service_id" | jq -r '.data.id // empty') || true
+    fi
+    if [[ -z $gid ]]; then
+      gid=$(sgdb "search/autocomplete/$(jq -rn --arg s "$name" '$s|@uri')" |
+        jq -r '.data[0] | select(.) | "\(.id)\t\(.name)"') || true
+      if [[ -n $gid ]]; then
+        # autocomplete always returns something; reject hits whose name shares no stem with ours
+        local ours theirs
+        ours=$(norm "$name") theirs=$(norm "${gid#*$'\t'}")
+        if [[ $ours == *"$theirs"* || $theirs == *"$ours"* ]]; then
+          echo "  matched \"$name\" -> \"${gid#*$'\t'}\""
+          gid=${gid%%$'\t'*}
+        else
+          echo "  rejected match \"$name\" -> \"${gid#*$'\t'}\""
+          gid=
+        fi
+      fi
+    fi
+    if [[ -z $gid ]]; then
+      echo "  no SteamGridDB match for \"$name\""
+      gid=none
+    fi
+  fi
+  [[ $gid == none ]] && return
+  url=$(sgdb "grids/game/$gid?dimensions=$3&nsfw=false&humor=false" | jq -r '.data[0].url // empty') || true
+  if [[ -z $url ]]; then
+    echo "  no $1 on SteamGridDB"
+    return
+  fi
+  curl -fsSL -o "$tmp" "$url"
+  mkdir -p "$data/$2"
+  magick "$tmp[0]" -quality 92 "$dst"
+  sqlite3 "$db" "update games set $4 = 1 where id = $id"
+  echo "  $1 <- $url"
+}
+
+while IFS=$'\t' read -r id slug name service service_id; do
+  gid=
+  echo "$slug"
+  fill cover coverart 600x900 has_custom_coverart_big
+  fill banner banners 460x215,920x430 has_custom_banner
+done < <(sqlite3 -separator $'\t' "$db" \
+  "select id, slug, name, ifnull(service, ''), ifnull(service_id, '') from games order by id")
