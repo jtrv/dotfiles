@@ -81,7 +81,7 @@ unmount_game() {
 # the mounted game files, the prefix (or the native games' home) and a
 # private /tmp.
 sandbox() {
-    local run="/run/user/$(id -u)" flags dev path info status
+    local run="/run/user/$(id -u)" flags dev path entry info status
     flags=(
         --ro-bind / / --proc /proc
         --dev /dev --dev-bind /dev/dri /dev/dri --tmpfs /dev/shm --dir /dev/input
@@ -107,11 +107,26 @@ sandbox() {
         # binds below land inside this one, so it has to come first
         flags+=( --bind "$DATA/native-docs" "$HOME" )
     else
-        # umu-run execs Proton through the umu-shim kept here and writes install
-        # markers into its runtimes, so the game gets a throwaway writable copy
-        path=$UMU
+        # umu writes its shim, lock and install marker here and pressure-vessel
+        # locks the platform's .ref, so the runtime is rebuilt on the tmpfs home
+        # from read-only binds of its entries. Binds, unlike an overlay, keep it
+        # on the prefix's filesystem, so pressure-vessel's ~570 MB per-prefix
+        # copy of it is a reflink.
+        path=$UMU/steamrt4
         [ -d "$path" ] || die "no umu runtime yet: run quacks setup"
-        flags+=( --tmpfs "$HOME" --overlay-src "$path" --tmp-overlay "$path" --bind "$WINEPREFIX" "$WINEPREFIX" )
+        flags+=( --tmpfs "$HOME" --dir "$path" --file 8 "$path/.installed.ok" )
+        for entry in "$path"/*; do
+            if [ -L "$entry" ]; then
+                flags+=( --symlink "$(readlink "$entry")" "$entry" )
+            else
+                flags+=( --ro-bind "$entry" "$entry" )
+            fi
+        done
+        # after the binds above, which it lands inside
+        for entry in "$path"/steamrt4_platform_*/files/.ref; do
+            flags+=( --bind-data 9 "$entry" )
+        done
+        flags+=( --bind "$WINEPREFIX" "$WINEPREFIX" )
     fi
     flags+=( --bind "$ROOT_MNT" "$ROOT_MNT" --chdir "$RUN_DIR" )
     # IPC stays shared: X's MIT-SHM needs it to talk to the X server.
@@ -124,7 +139,7 @@ sandbox() {
     info=$(mktemp)
     # disabled: a game can make it unmount the sandbox masks (see quacks-hotplug review)
     :     "${BASH_SOURCE%/*}/quacks-hotplug" "$info" &
-    bwrap --info-fd 3 "${flags[@]}" "$@" 3>"$info"
+    bwrap --info-fd 3 "${flags[@]}" "$@" 3>"$info" 8<<<ok 9</dev/null
     status=$?
     rm -f "$info"
     return $status
