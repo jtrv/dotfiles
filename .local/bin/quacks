@@ -10,6 +10,7 @@
 # Settings come from ~/.config/quacks/config, then <game dir>/quacks.conf:
 # key=value lines, # comments, and [variant] sections that override the keys
 # above them. Keys:
+#   name       game title for quacks-lutris-sync; unused here
 #   exe        program to run, relative to dir (required for run)
 #   dir        subfolder of the game files to run from
 #   runner     wine (default) or native
@@ -26,7 +27,7 @@ set -u
 
 DATA="${XDG_DATA_HOME:-$HOME/.local/share}/quacks"
 CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/quacks/config"
-KEYS=" exe dir runner gameid dlls args env proton runtime isolate block_net "
+KEYS=" name exe dir runner gameid dlls args env proton runtime isolate block_net "
 
 die() { echo "quacks: $*" >&2; exit 1; }
 
