@@ -244,6 +244,7 @@ qt6ct
 rate-mirrors
 rclone
 rescrobbled-git
+restic
 revive
 ripgrep-all
 rsync
@@ -265,7 +266,6 @@ sioyek-git
 skim
 sl
 slurp
-snap-pac
 snap-sync
 sniffglue
 spotify
@@ -295,6 +295,7 @@ texlive-humanities
 texlive-latexextra
 texlive-mathscience
 tidal-hifi-bin
+tinymist
 tmux
 tofi-git
 tokei
