@@ -37,15 +37,13 @@ self_update = true
 
 # Commands to run before anything
 [pre_commands]
-#"Emacs Snapshot" = "rm -rf ~/.emacs.d/elpa.bak && cp -rl ~/.emacs.d/elpa ~/.emacs.d/elpa.bak"
+"snapper snapshot" = "sudo snapper -c root create -c number -d topgrade"
 
 # Custom commands
 [commands]
-"arch-audit" = "arch-audit -C always -r -f '%n	%t	%r' | column -s '	' -t | $EDITOR"
-"config submodules" = "config submodule update"
+"arch audit" = "arch-audit -C always -r -f '%n	%t	%r' | column -s '	' -t | $EDITOR"
 "kakoune" = "pushd ~/repos/kakoune/; sudo make install; popd; kak -ui dummy -e 'hook global User bundle-after-install %{ quit! }; bundle-update'"
-"kak-tree-sitter" = "ktsctl sync -a"
-# "proton" = "protonup-rs -q"
+"tree-sitter" = "ktsctl sync -a"
 "uv tools" = "uv tool upgrade --all"
 "yazi" = "ya pkg upgrade"
 "warehouse" = "warehouse"
