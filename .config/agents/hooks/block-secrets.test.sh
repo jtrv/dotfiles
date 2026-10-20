@@ -64,6 +64,39 @@ check ALLOW command   'git pass-through --show'
 check ALLOW command   'env FOO=1 bun test'
 check ALLOW command   'bw list items'
 
+echo "== narrowed rules: real reads still DENY =="
+check DENY command   'cat ~/.npmrc'
+check DENY command   'cat .env'
+check DENY command   'jq -r .TOKEN .env'
+check DENY command   "jq -r '.token' ~/.config/gh/hosts.yml"
+check DENY command   'cat ~/.aws/credentials'
+check DENY command   'cat credentials.json'
+check DENY command   'env | rg -i cargo'
+check DENY command   'printenv'
+check DENY command   'env > out.txt'
+check DENY command   $'python3 - <<\'EOF\'\nprint(open(".env").read())\nEOF'
+check DENY command   $'cat <<EOF > f\n$(cat .env)\nEOF'
+check DENY command   $'cat > f <<\'EOF\'\nx\nEOF\ncat .env'
+
+echo "== narrowed rules: past false positives ALLOW =="
+check ALLOW command   "jq '.env' ~/.config/claude/settings.json"
+check ALLOW command   "sed -i 's/e.key === \"Enter\"/e.key === \"Tab\"/' src/App.tsx"
+check ALLOW command   $'python3 - <<\'EOF\'\ns = s.replace("a", "Command::new(\\"git\\").env(\\"PATH\\", p).env_clear()")\nEOF'
+check ALLOW command   'python3 -c "u = UInput({e.EV_KEY: [e.KEY_F13]})"'
+check ALLOW command   'reader.key(code, &d.conn)'
+check ALLOW command   "git ls-files | rg -i '\\.env|secret|\\.pem|key'"
+check ALLOW command   $'cat > PLAN.md <<\'EOF\'\nback up folders (no *.pem); the .env is loaded; ~/.my.cnf\nEOF'
+check ALLOW command   $'cat > notes.md <<-"EOF"\n\tsee .env\n\tEOF'
+check ALLOW command   'echo "frontend for AI Gateway (routing, budgets, credentials, logs)"'
+check ALLOW command   'grep -n "auth/credentials\|/auth/login" src/api.js'
+check ALLOW command   "rg -n \"join|env|HOME|XDG\" src/common.rs"
+check ALLOW command   "grep -E 'gamescope|env|xephyr' run.sh"
+check ALLOW command   "env | rg -i typesafe | sed 's/=.*/=<set>/'"
+check ALLOW command   "env | grep -i proxy | cut -d= -f1"
+check ALLOW command   "env | rg -i -c 'sgdb|steamgrid'"
+check DENY  command   "env | rg -i typesafe | sed 's/x/y/'"
+check DENY  command   "env | rg -i -C 2 token"
+
 echo "== escape hatch =="
 check ALLOW command   'SECRETS_OK=1 cat ~/.config/codex/auth.json'
 

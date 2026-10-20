@@ -18,8 +18,24 @@ target=$(jq -r '
 [[ -z "$target" ]] && exit 0
 [[ "$target" == *SECRETS_OK=1* ]] && exit 0
 
-# Drop safe template names before matching, so .env.example never trips the .env rule.
-scrubbed=$(sed -E 's/\.env\.(example|sample|template|dist|schema)[[:alnum:].]*//gi' <<<"$target")
+# Drop text that names no file being read before matching. A quoted-delimiter
+# heredoc fed to cat/tee is literal data the agent wrote (PLAN.md edits, configs,
+# docs); an interpreter heredoc is kept, since its body can open files. jq
+# filters (`'.env'`, `.key`) are object paths, and `e.key ===` / `.env(` /
+# `.key_event` are code. An env dump piped through a value-stripping sed/cut or
+# a counting grep prints no values. Safe template names keep .env.example off
+# the .env rule.
+scrubbed=$(awk '
+  skip { t = $0; sub(/^\t+/, "", t); if (t == delim) skip = 0; next }
+  /(^|[;&|(`[:space:]])(cat|tee)[[:space:]]/ && match($0, /<<-?[[:space:]]*["\047][A-Za-z_][A-Za-z0-9_]*["\047]/) {
+    delim = substr($0, RSTART, RLENGTH); gsub(/^<<-?[[:space:]]*["\047]|["\047]$/, "", delim)
+    print; skip = 1; next
+  }
+  { print }' <<<"$target" | sed -E \
+  -e "s/(^|[^[:alnum:]_-])jq([[:space:]]+-[[:alnum:]-]+)*[[:space:]]+'[^']*'/\1jq/g" \
+  -e 's/\.(env|key)[[:space:]]*[!=]==?//gi' \
+  -e "s/(printenv|env)[[:space:]]*(\|[^;&|]*)*\|[[:space:]]*(sed[[:space:]]+(-E[[:space:]]+)?'s\/=\.\*\/[^']*'|cut[[:space:]]+-d[[:space:]]*'?='?[[:space:]]*-f[[:space:]]*1|(rg|grep)([[:space:]]+-[[:alpha:]]+)*[[:space:]]+-[[:alpha:]]*c[[:alpha:]]*[[:space:]])/env-redacted/g" \
+  -e 's/\.env\.(example|sample|template|dist|schema)[[:alnum:].]*//gi')
 
 deny() {
   jq -nc --arg r "$1" '{
@@ -35,13 +51,18 @@ deny() {
 
 # --- Secret file paths (any tool) ---
 paths=(
-  '(^|[^[:alnum:]_.-])\.env([^[:alnum:]]|$)'   # .env, .env.local, .env.production
+  # A backslash before the dot is a search regex (`rg '\.env'`); `(` or `_`
+  # after it is a method call (`.env("PATH", …)`, `.env_clear()`).
+  '(^|[^[:alnum:]_.\\-])\.env([^[:alnum:]_(]|$)'   # .env, .env.local, .env.production
   # A basename char must precede the dot: jq's `.key` / `select(.key|…)` has none.
-  '[[:alnum:]_-]\.(pem|key|p12|pfx|jks|keystore|ppk|asc|gpg|p8|kdbx|ovpn)([^[:alnum:]]|$)'
+  '[[:alnum:]_-]\.(pem|key|p12|pfx|jks|keystore|ppk|asc|gpg|p8|kdbx|ovpn)([^[:alnum:]_(]|$)'
   'id_(rsa|dsa|ecdsa|ed25519)'
   '\.(ssh|aws|gnupg|kube|docker|azure|config/gcloud)/'
   '\.(npmrc|pypirc|netrc|git-credentials|htpasswd|pgpass|my\.cnf)([^[:alnum:]]|$)'
-  '(^|[/[:space:]"'"'"'=])credentials?(\.(json|ya?ml|ini|csv))?([^[:alnum:]/]|$)'
+  # The bare word is prose ("client credentials, logs"); a file needs an
+  # extension or a path separator in front of it.
+  '(^|[/[:space:]"'"'"'=])credentials?\.(json|ya?ml|ini|csv)([^[:alnum:]]|$)'
+  '/credentials?([[:space:]"'"'"';|)]|$)'
   # A leading dot puts the char before "credentials" outside the class above, so
   # ~/.claude/.credentials.json needs its own rule. Kept suffixed so it cannot
   # fire on a plain `obj.credentials` attribute access in code being read.
@@ -70,7 +91,8 @@ done
 
 # --- Bash-only: commands that print secrets even with no secret path in them ---
 cmds=(
-  '(^|[;&|(]|&&)[[:space:]]*(printenv|env)[[:space:]]*($|[|>])'  # env dump, not `env FOO=1 cmd`
+  # env dump, not `env FOO=1 cmd` or the `|env|` alternation inside a quoted regex
+  '(^|[;&|(]|&&)[[:space:]]*(printenv|env)[[:space:]]*($|>|\|[[:space:]])'
   '(^|[;&|(])[[:space:]]*export[[:space:]]+-p'
   'gh[[:space:]]+auth[[:space:]]+token'
   'aws[[:space:]]+configure[[:space:]]+get'
