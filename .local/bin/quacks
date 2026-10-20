@@ -81,13 +81,18 @@ mount_game() {
         "$FL/game-root" 9>&-
 }
 
-# Overlay first, it reads through the image. A busy mount is only detached
-# lazily, and then the work dir stays: fuse-overlayfs may still write to it.
+# Overlay first, it reads through the image. A killed sandbox's mount namespace
+# takes a moment to go away and holds the mounts until then, hence the retries.
+# A mount still busy after that is only detached lazily, and then the work dir
+# stays: fuse-overlayfs may still write to it.
 unmount_game() {
-    local mnt clean=1
+    local mnt try clean=1
     for mnt in "$FL/game-root" "$FL/.game-root-mnt"; do
         findmnt -rn --mountpoint "$mnt" >/dev/null || continue
-        fusermount3 -u "$mnt" 2>/dev/null && continue
+        for try in 1 2 3 4 5 6 7 8 9 10; do
+            fusermount3 -u "$mnt" 2>/dev/null && continue 2
+            sleep 0.5
+        done
         echo "quacks: $mnt is busy, detaching it lazily" >&2
         fusermount3 -u -z "$mnt"
         clean=
