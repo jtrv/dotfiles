@@ -80,8 +80,6 @@
       "Read(**/mise.local.toml)"
     ],
     "ask": [
-      "Bash(rm -rf *)",
-      "Bash(rm -fr *)",
       "Bash(git push *--force*)",
       "Bash(git push -f*)",
       "Bash(git push * -f)",
@@ -132,6 +130,16 @@
           {
             "type": "command",
             "command": "bash \"/home/sugimoto/.config/claude/hooks/nosleep.sh\" acquire"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"/home/sugimoto/.config/agents/hooks/guard-rm.sh\"",
+            "timeout": 10
           }
         ]
       }
@@ -307,5 +315,6 @@
   "theme": "custom:catppuccin",
   "editorMode": "normal",
   "inputNeededNotifEnabled": true,
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "switchModelsOnFlag": false
 }
