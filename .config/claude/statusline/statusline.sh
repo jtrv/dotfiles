@@ -87,6 +87,34 @@ if [ -f "$transcript" ]; then
     fi
 fi
 
+# Restart chip. A running claude keeps the binary, plugins, hooks and env it started with,
+# and /clear reloads none of them: a disabled plugin kept injecting for 12 days in processes
+# that predated the change (agents/research/2026-10-19-instruction-friction-audit.md).
+# The binary is checked directly — /proc/<pid>/exe against the installed symlink. Config has
+# no record of what the process loaded, so the first render for a process snapshots it,
+# keyed by pid plus start time so a reused pid starts clean, and later renders compare.
+# Only the keys a running process does not pick up are hashed, so a /model or permission
+# write to settings.json never trips it.
+claude_pid=$PPID
+for _ in 1 2 3; do
+    [ "$(cat /proc/$claude_pid/comm 2>/dev/null)" = claude ] && break
+    claude_pid=$(awk '{print $4}' /proc/$claude_pid/stat 2>/dev/null)
+done
+if [ "$(cat /proc/$claude_pid/comm 2>/dev/null)" = claude ]; then
+    cfg="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
+    running=$(readlink /proc/$claude_pid/exe); running=${running% (deleted)}
+    installed=$(readlink -f "$(command -v claude)")
+    loaded=$( { jq -cS '[.enabledPlugins, .hooks, .env]' "$cfg/settings.json"
+                jq -cS '.plugins | map_values(map(.version))' "$cfg/plugins/installed_plugins.json"
+              } 2>/dev/null | cksum)
+    snap="${XDG_RUNTIME_DIR:-/tmp}/claude-statusline/$claude_pid-$(awk '{print $22}' /proc/$claude_pid/stat)"
+    [ -f "$snap" ] || { mkdir -p "${snap%/*}"; printf '%s\n' "$loaded" > "$snap"; }
+    stale=""
+    [ -n "$installed" ] && [ "$running" != "$installed" ] && stale="${installed##*/}"
+    [ "$loaded" != "$(cat "$snap")" ] && stale="${stale:+$stale }config"
+    [ -n "$stale" ] && export CC_STALE="$stale"
+fi
+
 # cholo has no levels: it is on whenever its hook would inject it, so mirror the hook's test.
 [ "${CHOLO_OFF:-}" != 1 ] && [ -f "$HOME/.config/agents/skills/cholo/SKILL.md" ] && export CC_CHOLO=cholo
 
