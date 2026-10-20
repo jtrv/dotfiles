@@ -1,6 +1,6 @@
 [Unit]
 Description=back up quacks game saves with restic
-ConditionPathIsMountPoint=/mnt/data
+ConditionPathIsDirectory=/mnt/data/backups
 
 [Service]
 Type=oneshot
