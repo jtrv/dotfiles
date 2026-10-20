@@ -37,6 +37,7 @@ pointer back to the report that justified it.
 - `subagent-delegation-advisor-pattern.md` — the advisor/worker design document (uploaded 2026-08-15): one long-running advisor, fresh-context workers, model/effort tiers, plan-then-implement split. Its referenced companion `delegation-design-rationale.md` was never found on this machine.
 
 ### Context and memory
+- `2026-10-19-instruction-friction-audit.md` — a month of transcripts checked for skills, context files or plugins working against each other: trailer leaks, a disabled plugin surviving `/clear`, block-secrets false positives, a stale duplicate flutter skill, AGENTS.md gitignored.
 - `2026-09-18-warp-self-improving-agents-check.md` — Warp's inner-skill / human-feedback / scheduled-improver pattern checked against this setup: principles, disclosure and skills-vs-memory hold; the improver (feedback → loaded-file edits) is manual and unscheduled.
 - `2026-07-30-context-rot-persistent-memory.html` — combined findings of the six-agent sweep on context rot and on-disk memory; the "handoff over compaction" consensus that produced the `handoff` and `grind` skills.
 - `2026-07-30-last30days-context-rot-raw.md`, `2026-07-30-last30days-persistent-memory-raw.md` — the raw sweeps behind it.
