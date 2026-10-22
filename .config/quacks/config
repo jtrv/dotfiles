@@ -1,4 +1,3 @@
 # First existing path wins: the pacman package on arch, the path nixos-config
-# links to pkgs.proton-cachyos on NixOS. Run `quacks setup` once per machine
-# (and after a Proton update) to fetch the umu runtime it needs.
+# links to pkgs.proton-cachyos on NixOS.
 proton=/usr/share/steam/compatibilitytools.d/proton-cachyos-native /etc/quacks/proton
