@@ -1,3 +1,4 @@
 #!/bin/sh
 baijia-suo -d -A none -c 000000
+sleep 3
 exec niri msg action power-off-monitors
