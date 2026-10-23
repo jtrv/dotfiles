@@ -1,5 +1,8 @@
 daemonize = false
 max_history = 100
+# RAM only (tmpfs): nothing copied survives a reboot or lands in snapshots/backups
+history_file_path = "/run/user/1000/clipcatd-history"
+clear_history_on_start = true
 
 [log]
 # Emit log message to systemd-journald.
@@ -15,7 +18,8 @@ enable_primary = false
 # Ignore clips which match with one of the X11 `TARGETS`.
 sensitive_mime_types = ["x-kde-passwordManagerHint"]
 # Ignore text clips which match with one of the regular expressions.
-denied_text_regex_patterns = []
+# 2FA codes
+denied_text_regex_patterns = ['^\s*\d{6}\s*$']
 # Ignore text clips with a length <= `filter_text_min_length`, in characters (Unicode scalar value), not in byte.
 filter_text_min_length = 1
 # Ignore text clips with a length > `filter_text_max_length`, in characters (Unicode scalar value), not in byte.

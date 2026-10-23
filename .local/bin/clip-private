@@ -1,0 +1,11 @@
+#!/bin/sh
+# Pause clipcat history for 30s so a secret copied now is never recorded.
+# Clearing the clipboard before resuming matters: clipcat would otherwise
+# record whatever is still on it the moment the watcher comes back.
+clipcatctl disable-watcher
+notify-send -t 30000 -h string:x-canonical-private-synchronous:clip-private \
+  'clipboard' 'history paused for 30s'
+systemctl --user stop clip-private.timer 2>/dev/null
+systemd-run --user --quiet --collect --unit=clip-private \
+  --on-active=30 --timer-property=AccuracySec=1s \
+  sh -c 'wl-copy --clear; clipcatctl enable-watcher'
