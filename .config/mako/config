@@ -55,3 +55,11 @@ history=0
 
 [mode=dnd]
 invisible=1
+
+# usbguard-notifier: left click allows the device until it is unplugged,
+# middle click rejects it. its own 5s timeout is too short to read the device
+[app-name="usbguard-notifier"]
+on-button-left=invoke-action allow
+on-button-middle=invoke-action reject
+ignore-timeout=1
+default-timeout=30000
