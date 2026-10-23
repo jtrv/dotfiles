@@ -5,3 +5,6 @@ hook global BufCreate .*/(\.gitattributes|git/attributes) %{ set-option buffer f
 hook global BufCreate .*/go\.mod %{ set-option buffer filetype go-mod }
 hook global BufCreate .*/requirements[^/]*\.txt %{ set-option buffer filetype requirements }
 hook global BufCreate .*\.svelte %{ set-option buffer filetype svelte }
+hook global BufCreate .*\.env %{ set-option buffer filetype env }
+hook global BufCreate .*\.grep %{ set-option buffer filetype grep }
+hook global BufCreate .*\.prisma %{ set-option buffer filetype prisma }

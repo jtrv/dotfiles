@@ -1,5 +1,3 @@
-hook global WinSetOption current_bufname=.*\.grep$ %{ set-option buffer filetype grep }
-
 hook global WinSetOption filetype=grep %{
   ansi-enable
 
