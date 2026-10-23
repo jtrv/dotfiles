@@ -316,5 +316,6 @@
   "editorMode": "normal",
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
-  "switchModelsOnFlag": false
+  "switchModelsOnFlag": false,
+  "viewMode": "default"
 }
