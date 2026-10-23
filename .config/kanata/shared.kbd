@@ -30,10 +30,10 @@
     ()                                         g                     break
   )
 
-  ;; playerctl controls
-  mpp (cmd playerctl play-pause)
-  mpr (cmd playerctl previous)
-  mnx (cmd playerctl next)
+  ;; media keys (niri binds XF86Audio* to playerctl)
+  mpp pp
+  mpr prev
+  mnx next
 
   ;; common word movement
   lwrd C-lft
@@ -43,9 +43,9 @@
   lwdl C-bspc
   rwdl C-del
 
-  ;; scroll volume
-  svlu (cmd wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+)
-  svld (cmd wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-)
+  ;; scroll volume (niri binds XF86Audio*Volume to wpctl 1% steps)
+  svlu volu
+  svld vold
 
   ;; ``` for markdown code fences
   fence (macro grv grv grv)
