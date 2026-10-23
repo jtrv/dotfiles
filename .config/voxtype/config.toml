@@ -26,7 +26,7 @@ engine = "whisper"
 #
 # Enable this if you're on X11, using a compositor without key-release support,
 # or prefer a dedicated key like ScrollLock. Requires 'input' group membership.
-enabled = true
+enabled = false
 
 # Key to hold for push-to-talk (when enabled = true)
 # Common choices: SCROLLLOCK, PAUSE, RIGHTALT, F13-F24
