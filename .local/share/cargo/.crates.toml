@@ -11,6 +11,7 @@
 "kakship 0.2.9 (path+file:///home/sugimoto/.config/kak/bundle/kakship)" = ["kakship"]
 "mcdu 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)" = ["mcdu"]
 "purrista 0.1.0 (path+file:///home/sugimoto/repos/purrista)" = ["purrista"]
+"quacks 0.2.0 (path+file:///home/sugimoto/repos/quacks)" = ["quacks"]
 "rkak_easymotion 0.1.0 (path+file:///home/sugimoto/.config/kak/bundle/reasymotion)" = ["rkak_easymotion"]
 "skyhue 0.1.0 (path+file:///home/sugimoto/repos/skyhue)" = [
     "backtest",
