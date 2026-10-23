@@ -1,7 +1,9 @@
-set-option window formatcmd "prettierd format.html"
-
 define-command emmet -override %{ execute-keys  "giGl| emmet <ret>" }
 
-map window dev e -docstring "emmet"  ':emmet <ret>'
+hook global WinSetOption filetype=html %{
+  set-option window formatcmd "prettierd format.html"
 
-ui-lsp-enable
+  map window dev e -docstring "emmet"  ':emmet <ret>'
+
+  ui-lsp-enable
+}

@@ -1,8 +1,10 @@
-set-option window formatcmd "prettierd format.scss"
-
 define-command emmet -override %{ execute-keys  "giGl| emmet <ret>" }
 
-map window dev e -docstring "emmet"  ':emmet <ret>'
+hook global WinSetOption filetype=(css|scss) %{
+  set-option window formatcmd "prettierd format.scss"
 
-ui-colorcol-toggle
-ui-lsp-enable
+  map window dev e -docstring "emmet"  ':emmet <ret>'
+
+  ui-colorcol-toggle
+  ui-lsp-enable
+}

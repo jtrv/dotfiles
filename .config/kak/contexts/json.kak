@@ -1,3 +1,5 @@
-set-option window formatcmd "jq"
+hook global WinSetOption filetype=json %{
+  set-option window formatcmd "jq"
 
-ui-lsp-enable
+  ui-lsp-enable
+}

@@ -1,3 +1,5 @@
-set-option window formatcmd "dprint fmt --stdin=format.md --config=$XDG_CONFIG_HOME/dprint/dprint.json"
+hook global WinSetOption filetype=markdown %{
+  set-option window formatcmd "dprint fmt --stdin=format.md --config=$XDG_CONFIG_HOME/dprint/dprint.json"
 
-ui-lsp-enable
+  ui-lsp-enable
+}

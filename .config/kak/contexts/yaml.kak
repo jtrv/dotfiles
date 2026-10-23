@@ -1,11 +1,13 @@
-# indent.kak
-set-indent buffer 2 false 
+hook global WinSetOption filetype=yaml %{
+  # indent.kak
+  set-indent buffer 2 false 
 
-set-option window formatcmd "prettierd format.yml"
+  set-option window formatcmd "prettierd format.yml"
 
-set-option window lintcmd %{
-  run() {
-    # change [message-type] to message-type:
-    yamllint -f parsable "$1" | sed 's/ \[\(.*\)\] / \1: /'
-  } && run
+  set-option window lintcmd %{
+    run() {
+      # change [message-type] to message-type:
+      yamllint -f parsable "$1" | sed 's/ \[\(.*\)\] / \1: /'
+    } && run
+  }
 }
