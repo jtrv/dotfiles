@@ -88,7 +88,7 @@ provide-module "ui" %{
       ui-indent-enable
       ui-lint-enable
       ui-git-diff-enable
-      ui-rainbow-enable
+      try ui-rainbow-enable
       ui-todos-enable
       ui-trailing-spaces-enable
       ui-zdiff3-enable
