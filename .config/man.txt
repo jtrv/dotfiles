@@ -3,11 +3,10 @@ Which doc tool for which question
 
 Nix
 ---
-manix <query>        what does this option/function mean — offline search of
-                     nixos + home-manager options and nixpkgs docs
-nix-search-tv        what exists — fuzzy TUI over packages + options, use when
-                     you don't know the name yet
-nixos-option <opt>   what is this option set to in MY evaluated config
+wud find nix <name>  what does this lib function/builtin do (offline)
+nh search <query>    what exists — packages on search.nixos.org (online), use
+                     when you don't know the name yet; `nh search options` too
+nixos-option <opt>   an option's docs + its value in MY evaluated config
 
 CLI / system
 ------------

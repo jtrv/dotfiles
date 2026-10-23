@@ -1,4 +1,12 @@
 contrib:arch-wiki
+contrib:home_manager_options
+contrib:nix_builtins
+contrib:nix_darwin_options
+contrib:nix_manual
+contrib:nixos_manual
+contrib:nixos_options
+contrib:nixpkgs_lib
+contrib:nixpkgs_manual
 contrib:node_mssql
 contrib:react_redux
 contrib:redux_toolkit
