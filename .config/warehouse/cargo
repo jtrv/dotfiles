@@ -42,6 +42,7 @@ netwatch-tui -> https://github.com/rust-lang/crates.io-index
 outside -> https://github.com/rust-lang/crates.io-index
 purrista -> /home/sugimoto/repos/purrista
 qrtool -> https://github.com/rust-lang/crates.io-index
+quacks -> /home/sugimoto/repos/quacks
 ripdrag -> https://github.com/rust-lang/crates.io-index
 rmz -> https://github.com/rust-lang/crates.io-index
 sccache -> https://github.com/rust-lang/crates.io-index
