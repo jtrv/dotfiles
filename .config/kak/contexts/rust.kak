@@ -1,4 +1,5 @@
-set-option window formatcmd 'rustfmt --edition=2021'
-map window dev c -docstring "clippy"  ':cargo clippy --color=always<ret>'
+hook global WinSetOption filetype=rust %{
+  map window dev c -docstring 'clippy'  ':cargo clippy --color=always<ret>'
 
-ui-lsp-enable
+  ui-lsp-enable
+}

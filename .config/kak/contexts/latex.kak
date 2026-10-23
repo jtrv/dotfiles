@@ -1,1 +1,3 @@
-ui-lsp-enable
+hook global WinSetOption filetype=latex %{
+  ui-lsp-enable
+}

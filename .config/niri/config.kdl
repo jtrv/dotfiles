@@ -152,6 +152,11 @@ binds {
     Mod+Shift+S hotkey-overlay-title="screenshot: full"   { screenshot-screen; }
     Mod+Ctrl+S  hotkey-overlay-title="screenshot: text (OCR)" { spawn "ocr-grab"; }
 
+    // --- Voice + clipboard ---
+    // kanata sends KEY_F13 (holding 4), which xkb names XF86Tools
+    XF86Tools repeat=false { spawn "voxtype" "record" "toggle"; }
+    Mod+Ctrl+V hotkey-overlay-title="clipboard: pause history 30s" { spawn "clip-private"; }
+
     // --- Media Keys ---
     XF86AudioPlay  allow-when-locked=true { spawn "playerctl" "play-pause"; }
     XF86AudioStop  allow-when-locked=true { spawn "playerctl" "stop"; }

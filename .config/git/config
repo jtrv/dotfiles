@@ -11,7 +11,7 @@
 [core]
   autocrlf = input
   editor = kak
-  fsmonitor = true
+  fsmonitor = false
   pager = delta
   untrackedCache = true
 [diff]

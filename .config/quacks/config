@@ -1,14 +1,3 @@
-# Defaults for every game; a game's quacks.conf can override any key.
-# See `quacks` (~/.local/bin/quacks) for the full key list.
-
 # First existing path wins: the pacman package on arch, the path nixos-config
 # links to pkgs.proton-cachyos on NixOS.
 proton=/usr/share/steam/compatibilitytools.d/proton-cachyos-native /etc/quacks/proton
-
-# NixOS: nixos-config links a pinned steamrt4 here and quacks copies it in on
-# demand. Arch has none: run `quacks setup` once per machine (and after a
-# Proton update) to fetch the umu runtime instead.
-runtime=/etc/quacks/umu
-
-isolate=1
-block_net=1

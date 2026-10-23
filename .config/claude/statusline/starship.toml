@@ -18,6 +18,7 @@ $directory\
 $git_branch\
 $git_status\
 ${env_var.CC_MODEL}\
+${env_var.CC_STALE}\
 ${env_var.CC_RATE_7D}\
 ${env_var.CC_RATE_5H}\
 ${env_var.CC_CODEX}\
@@ -70,6 +71,16 @@ deleted    = '[✘$count](dimmed bold red) '
 variable = "CC_MODEL"
 symbol = "󰚩 "
 style = "bold mauve"
+format = "[$symbol$env_value]($style) "
+
+# this process is running an older claude binary (the value is the installed version) or
+# older plugins/hooks/env ("config") than disk — restart to pick them up. Beside the model
+# chip because it is about Claude itself; on the alarm channel because it wants an action.
+# md-restart.
+[env_var.CC_STALE]
+variable = "CC_STALE"
+symbol = "󰜉 "
+style = "bold yellow"
 format = "[$symbol$env_value]($style) "
 
 # context-window used%. md-view_day is a framed pane — the window itself; magnitude is left

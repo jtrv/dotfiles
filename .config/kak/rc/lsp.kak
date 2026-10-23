@@ -105,7 +105,6 @@ declare-option -hidden str lsp_server_unocss %{
   args = [ "--stdio" ]
 }
 
-# type-checker alternative to pylsp+jedi; toggle on with %opt in the python hook
 declare-option -hidden str lsp_server_basedpyright %{
   [basedpyright-langserver]
   root_globs = [ "requirements.txt", "setup.py", "pyproject.toml", "pyrightconfig.json", ".git", ".hg" ]
@@ -113,15 +112,6 @@ declare-option -hidden str lsp_server_basedpyright %{
   settings_section = "_"
   [basedpyright-langserver.settings._.basedpyright.analysis]
   typeCheckingMode = "standard"
-}
-
-# jedi/rope fallback - only worth it for rope's extract-method refactors
-declare-option -hidden str lsp_server_pylsp %{
-  [pylsp]
-  root_globs = [ "requirements.txt", "setup.py", "pyproject.toml", ".git", ".hg" ]
-  settings_section = "_"
-  [pylsp.settings._]
-  pylsp.plugins.jedi_completion.include_params = true
 }
 
 # only for repos that mandate eslint plugins oxlint can't replicate; globs are
@@ -409,7 +399,7 @@ hook -group lsp-filetype-markdown global BufSetOption filetype=markdown %{
 }
 
 # prose grammar/spell (harper-ls) for commit messages and plain text
-hook -group lsp-filetype-prose global BufSetOption filetype=(?:gitcommit|text) %{
+hook -group lsp-filetype-prose global BufSetOption filetype=(?:git-commit|text) %{
   set-option buffer lsp_servers "
     %opt{lsp_server_harper}
   "
@@ -463,7 +453,6 @@ hook -group lsp-filetype-python global BufSetOption filetype=python %{
 
   set-option -add buffer lsp_servers "
     %opt{lsp_server_basedpyright}
-    #opt{lsp_server_pylsp}
   "
 }
 
