@@ -1,5 +1,5 @@
 hook global WinSetOption filetype=python %{
-  set-indent buffer 4 false # indent.kak
+  set-indent buffer 4 false
 
   map window normal '#' -docstring 'comment'     %{:comment-line <ret>}
 

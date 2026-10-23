@@ -71,7 +71,7 @@ info -title 'assertions' '<c-i>:    ignore case  (?i)
 }
 
 # (Un)Comment Lines
-map global normal <#> -docstring 'comment'   %{:comment <ret>}
+map global normal '#' -docstring 'comment'   %{:comment <ret>}
 
 # new windows
 map global normal <c-n> -docstring 'new client'     %{:new <ret>}

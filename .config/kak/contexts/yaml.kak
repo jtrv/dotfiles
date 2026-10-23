@@ -1,6 +1,5 @@
 hook global WinSetOption filetype=yaml %{
-  # indent.kak
-  set-indent buffer 2 false 
+  set-indent buffer 2 false
 
   set-option window formatcmd "prettierd format.yml"
 

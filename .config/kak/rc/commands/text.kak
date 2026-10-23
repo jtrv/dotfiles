@@ -25,6 +25,10 @@ COMPLETE: what's slow? what could I change with more time?
   }
 }
 
+define-command emmet -docstring 'expand the emmet abbreviation on the current line' %{
+  execute-keys 'giGl|emmet <ret>'
+}
+
 define-command dic -docstring '
   dic <query>: dic utility wrapper
   Generate dictionary results for the given query inside kakoune

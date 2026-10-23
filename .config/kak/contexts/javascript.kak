@@ -1,7 +1,3 @@
-define-command emmet -override %{
-  execute-keys 'giGl|emmet <ret>'
-}
-
 hook global WinSetOption filetype=(javascript|typescript) %{
   map window dev e -docstring 'emmet'     %{:emmet <ret>}
 
