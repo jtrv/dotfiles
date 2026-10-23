@@ -10,7 +10,8 @@ Building, packaging and contributing with Nix on these machines: nixpkgs work in
 - Daemon settings are `max-jobs = 8`, `cores = 0` on 8 cores: every build may use
   every core, and up to 8 run at once. Check with
   `nix config show | rg '^(max-jobs|cores) '`.
-- Substituters: `cache.nixos.org` and `nyx-cache.chaotic.cx`. Most of a closure
+- Substituters: `cache.nixos.org` (Arch morpheus's `/etc/nix/nix.conf` also lists
+  `nyx-cache.chaotic.cx`; the NixOS configs do not). Most of a closure
   downloads; only changed derivations compile.
 - Offline docs before the web: `manix <query>` for option and lib docs,
   `nix-search-tv print | rg <q>` then `nix-search-tv preview 'nixpkgs/<name>'` to
