@@ -33,7 +33,7 @@ hook global WinSetOption filetype=sql %{
   # hand it stdin or a copy in /tmp, so resolve the buffer's config here and pass it in.
   evaluate-commands %sh{
     d=$(dirname "$kak_buffile")
-    while [ "$d" != / ] && [ ! -f "$d/.sqlfluff" ]; do d=$(dirname "$d"); done
+    while [ "$d" != / ] && [ "$d" != . ] && [ ! -f "$d/.sqlfluff" ]; do d=$(dirname "$d"); done
     [ -f "$d/.sqlfluff" ] || exit 0
     # fix exits 1 when violations it cannot fix remain; its output is still the fixed text
     printf 'set-option window formatcmd %%{sqlfluff fix -q --config %s - 2>/dev/null; [ $? -le 1 ]}\n' "$d/.sqlfluff"
