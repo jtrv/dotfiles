@@ -48,7 +48,7 @@ and MCP rows.
 | playwright — browser control | `playwright@claude-plugins-official`, currently disabled | `codex mcp add playwright -- npx @playwright/mcp@latest` | same server through `pi-mcp-adapter`. No native port exists — the third-party CDP extensions are unrelated code |
 | Codex bridge — rescue, review, adversarial review | `codex@openai-codex` | n/a, it is Codex | — |
 | Language servers — rust-analyzer, typescript, clangd on; gopls, pyright off | native `LSP` tool; the `*-lsp@claude-plugins-official` plugins only register which servers it may drive | — nothing in the catalog, no feature flag, and no vendor ships an LSP-over-MCP server; the `mise run check` gate covers diagnostics and ast-grep covers navigation. Deferred, watched by `watches/codex-lsp.sh` | `pi install npm:@narumitw/pi-lsp` — config-driven, zero deps, points at server binaries already installed. `pi-lens` is the maximalist alternative but duplicates oxlint/oxfmt/ast-grep |
-| Skill authoring | `skill-creator@claude-plugins-official` | bundled system skill | — |
+| Skill authoring | `skill-creator@claude-plugins-official` — chosen 2026-10-23 over the vendored `writing-skills` (obra/superpowers), which was deleted: it required `superpowers:*` skills never installed, while skill-creator updates near-daily and ships eval and description-tuning tooling | bundled system skill | — |
 | Curated memory | `remember@claude-plugins-official` | native, `features.memories` | — |
 | Response style | `learning-output-style@claude-plugins-official` | native, `personality` setting | — |
 | Autonomous loop | `ralph-loop@claude-plugins-official` | — (the `grind` skill covers this everywhere) | — |
@@ -75,11 +75,10 @@ rather than installed per harness.
 | Capability | Claude | Codex | Pi | Antigravity |
 |---|---|---|---|---|
 | Global instructions | `@~/.config/agents/AGENTS.md` imported by `CLAUDE.md` | `$CODEX_HOME/AGENTS.md` symlink | `AGENTS.md` symlink | `GEMINI.md` symlink |
-| Skills | `skills` -> `../agents/skills` | 29 per-skill symlinks inside `$CODEX_HOME/skills/` | `skills` symlink | `antigravity-cli/skills` symlink; its bundled skills live apart in `antigravity-cli/builtin/` |
+| Skills | `skills` -> `../agents/skills` | per-skill symlinks inside `$CODEX_HOME/skills/` (every skill dir except `synced/`) | `skills` symlink | `antigravity-cli/skills` symlink; its bundled skills live apart in `antigravity-cli/builtin/` |
 | Harness-only instructions | Claude-only half of `CLAUDE.md` | Shared `AGENTS.md` supplies routing and dispatch | `agents/pi.md` via `extensions/instructions.ts` (routing is in shared `AGENTS.md`) | — |
 | Secret blocking | `PreToolUse` hook in settings.json | same script from `hooks.json` (planned, not built) | `extensions/block-secrets.ts` | `hooks/agy-pretool.sh` from `<gemini_dir>/config/hooks.json` — rewrites agy's payload for the same `block-secrets.sh`, and gates read-only delegate children |
 | Recursive-rm guard | `PreToolUse` (Bash) hook `hooks/guard-rm.sh` → `guard-rm.py`: asks only when a target is outside temp dirs and shallower than 3 levels into `$HOME`, protected (`.config`, `.local`, keys, notes), a git repo, or unresolvable; replaced the blanket `Bash(rm -rf *)` ask rule. Tests (`guard-rm.test.sh`) run inside bwrap with `/` read-only and `$HOME` masked | — | — | — |
-| Delegation | `Agent` tool (fresh subagents); `skills/agy` for a Gemini worker via `agy-run` | Native `spawn_agent`; explicit model selection uses `fork_turns="none"` and a self-contained brief | `extensions/delegate.ts` (+ `delegate/` modules) — child process gets only the task; runners pi, codex and agy; background with idle-time delivery, `delegate_jobs`, batches of two, git worktrees for writers | — not a delegator; reached as a Gemini worker or reviewer through Pi's `delegate runner=agy` or Claude's `agy` skill |
 | Background shell | `run_in_background` on Bash, `Monitor` | — | `shell_bg` in `extensions/delegate.ts` — log under `$XDG_STATE_HOME/pi-delegate/logs`, one-shot `notify_on` line match, exit notice; `pi-background-tasks` rejected (see `research/2026-09-15-pi-delegate-build.md`) | — |
 | Statusline | `statusline/statusline.sh` into starship | built-in `tui.status_line` only, no script hook | `extensions/statusline.ts`, reusing the same script | — |
 
@@ -94,7 +93,8 @@ own link:
 
 ```sh
 cd "$CODEX_HOME/skills" && for d in ~/.config/agents/skills/*/; do
-  ln -sfn "$d" "$(basename "$d")"; done
+  [ "$(basename "$d")" = synced ] || ln -sfn "$d" "$(basename "$d")"; done
+find -L . -maxdepth 1 -type l -delete   # links to deleted skills
 ```
 
 `skills.extra_roots` looks like the tidy answer and is not: the key does not

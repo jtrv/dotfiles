@@ -94,15 +94,6 @@
     ],
     "defaultMode": "auto"
   },
-  "skillOverrides": {
-    "find-skills": "on",
-    "writing-skills": "on",
-    "vercel-composition-patterns": "off",
-    "vercel-optimize": "off",
-    "vercel-react-best-practices": "off",
-    "vercel-react-native-skills": "off",
-    "vercel-react-view-transitions": "off"
-  },
   "hooks": {
     "Notification": [
       {
