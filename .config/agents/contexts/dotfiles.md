@@ -29,7 +29,7 @@ This table is the **single source of truth** for what is machine-specific; anyth
 | `mpv/local.conf` | per-branch, one `include=` of that branch's `hosts/<machine>.conf` |
 | `.config/environment.d/*` | morpheus — NixOS machines set the same vars via `environment.sessionVariables` in nixos-config |
 | `warehouse/bun` | per-machine additions, like `warehouse/uv` — keep this machine's side, report theirs |
-| `warehouse/wud` | union — docsets are cheap. The file is a `wud ls` snapshot that `warehouse` rewrites, so install the other side's docsets (`config-sweep` prints them) and take both sides in the file: `wud add <name>` for both `devdocs:<slug>` and `contrib:<name>` |
+| `warehouse/wud` | per-machine, like the package manifests — never union. Keep this machine's side and **ask about every docset the other side has** (`config-sweep` prints them); install one only on a yes. The file is a `wud ls` snapshot that `warehouse` rewrites, so an installed docset lands in it on the next run |
 | `warehouse/{fish,go,ktsctl}`, `fish/fish_plugins`, `mpv/shaders/*`, `mise/config.toml` global `[tools]` | morpheus keeps them; NixOS machines drop what nixos-config installs |
 | `paru/paru.conf`, `.local/bin/mirrors`, topgrade `[linux]`/arch commands | arch machines (morpheus) |
 | firefox flavor: `BROWSER`, `mimeapps.list`, `mozilla/firefox/<profile>` dir | per-machine (thiccpad runs devedition) |
@@ -39,7 +39,7 @@ This table is the **single source of truth** for what is machine-specific; anyth
 | `easyeffects/*` | shared — every file is keyed by a device (autoload by alsa id, presets/irs by headphone or mic name) and inert elsewhere; union on merge, never sweep |
 | `fish/config.fish` ssh-agent fallback | morpheus (NixOS gets the agent from systemd) |
 | `fish/conf.d/aliases.fish` `wget` → `wget2` alias | morpheus (thiccpad has no `wget2`) |
-| skyspell dict names in `kakrc` (`en_US-large`/`es` vs nix `en_US`/`es_ANY`) | per-machine |
+| skyspell dict names in `kak/rc/modes.kak` (`en_US-large`/`es` vs nix `en_US`/`es_ANY`) | per-machine |
 | `.config/udev/rules.d/*` | morpheus — NixOS machines carry udev rules in nixos-config |
 | `readme.md` | per-branch — describes that branch's OS and host |
 
@@ -61,8 +61,6 @@ In the staging worktree, with `<this>` = this machine's branch and `<other>` = t
 ### Pending convergence steps
 
 One-time steps a branch owes at its next convergence. Do them during step 5, before the checkpoint, then delete the entry in the same merge.
-
-- **thiccpad**: morpheus kept `matching-algorithm`, `physical-keybindings` and `print-index` in `.config/tofi/config` and `.config/clipcat/tofi`; they are shared settings, not per-machine. Don't drop them again. Instead, move thiccpad off tofi 0.9.1 (which rejects them) to a build of tofi's git master, as morpheus runs (`tofi-git`), via an override in nixos-config. Check that both configs load before the checkpoint.
 
 ## Commit workflow (live `$HOME` state, on the live branch)
 

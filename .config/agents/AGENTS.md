@@ -17,6 +17,13 @@ restarting the compositor, kanata or other input daemons. Use headless modes
 and the capture rigs instead. When nothing headless will do, ask first. The
 clipboard rule below is exempt.
 
+Never suggest SSH commands: no `ssh`, `ssh-add`, `ssh-keygen` or
+`ssh-copy-id` for me to run, no "log in to the other machine over SSH".
+This holds for steps you hand a peer session too. When something looks
+like it needs them (a fetch fails with `publickey`, a host is remote), say
+what is blocked and stop; I pick the route. Git over SSH is fine: `git@`,
+`ssh://` and `git+ssh` remotes and flake inputs.
+
 When I hand over a multi-step task without saying what "done" means or when
 to stop and ask, nudge me for both in one line before starting ("Done
 means …? Stop for …?"). Skip the nudge when the finish line is obvious.

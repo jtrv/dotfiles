@@ -42,3 +42,6 @@ rg --color=never -o 'bundle.*(https.*?)("|\s|$)' -r '$1' \
 	command ls -1 "$DATA"/kak-tree-sitter/grammars | keep ktsctl
 
 have uv && uv tool list --show-version-specifiers | rg --color=never '^\w' | keep uv
+
+# a skipped `have` above leaves status 1, which systemd reports as a failure
+exit 0

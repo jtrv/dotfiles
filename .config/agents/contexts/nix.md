@@ -13,9 +13,13 @@ Building, packaging and contributing with Nix on these machines: nixpkgs work in
 - Substituters: `cache.nixos.org` (Arch morpheus's `/etc/nix/nix.conf` also lists
   `nyx-cache.chaotic.cx`; the NixOS configs do not). Most of a closure
   downloads; only changed derivations compile.
-- Offline docs before the web: `manix <query>` for option and lib docs,
-  `nix-search-tv print | rg <q>` then `nix-search-tv preview 'nixpkgs/<name>'` to
-  find packages, `nixos-option <opt>` for this machine's evaluated value.
+- Look things up before the web: `wud find nix <name>` (offline) for lib
+  functions and builtins (its builtins are Nix 2.11, and `lib.modules` is
+  missing), `nh search <q>` to find packages and `nh search options <q>` to find
+  options (both query search.nixos.org), `nix-locate <path>` for which package
+  ships a file, `nixos-option --flake .#<host> <opt>` for an option's docs and
+  this machine's value, offline and matching the pinned nixpkgs.
+  `nh os info` lists generations.
 
 ## Running builds
 - **A repo's mise tasks come first.** In `nixos-config` never run raw

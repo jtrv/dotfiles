@@ -42,7 +42,7 @@ mixed='
 .config/fish/config.fish
 .config/fish/conf.d/aliases.fish
 .config/fish/conf.d/env.fish
-.config/kak/kakrc
+.config/kak/rc/modes.kak
 .config/mise/config.toml
 .config/topgrade.toml
 .config/waybar/config.jsonc
