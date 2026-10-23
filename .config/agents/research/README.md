@@ -21,6 +21,7 @@ pointer back to the report that justified it.
 - `lessons-from-memory.md` — what past sessions learned about running these agents, pulled from per-project memory and the `.remember` logs, each entry with its source.
 
 ### Delegation and subagents
+- `2026-10-23-gemini-4-argon-routing.md` — Gemini 4 Argon replaces 3.8 Flash on the agy one-shot row; no coding tier (GPT-6.1 Sol dominates it); AA snapshot with the new index suites, RealSWE, BenchLM, a planted-flaw local probe, and the agy 1.4.6 tool rename that broke read-only children.
 - `2026-09-29-gpt-6-1-sol-routing.md` — Artificial Analysis snapshot: GPT-6.1 Sol (medium) replaces GPT-6 Sol on every Sol row and supersedes the Sonnet 5.5 high route; Astra and Luna keep their rows (Codex >= 0.159.1).
 - `2026-09-28-sonnet-5-5-routing.md` — Artificial Analysis snapshot with Sonnet 5.5 at every effort: Sonnet 5.5 high replaces Sol for bounded tasks from Claude Code only; Luna stays mechanical. Superseded next day by the GPT-6.1 Sol report.
 - `2026-09-24-prose-model-choice.md` — EQ-Bench, Arena and Artificial Analysis snapshot: GPT-6 Sol for delegated prose, Luna off documentation, Gemini Flash and Haiku avoided.

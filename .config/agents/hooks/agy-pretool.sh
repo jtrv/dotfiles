@@ -10,7 +10,7 @@ name=$(jq -r '.toolCall.name // ""' <<<"$input")
 
 if [[ "${PI_DELEGATE_MODE:-}" == read-only ]]; then
   case "$name" in
-    view_file|find_by_name|grep_search|list_dir|list_resources|read_resource|list_permissions|manage_task|ask_question|finish|wait|wait_5_seconds) ;;
+    read_file|view_file|find_by_name|grep_search|list_dir|list_resources|read_resource|list_permissions|manage_task|ask_question|finish|wait|wait_5_seconds) ;;
     *)
       jq -nc --arg n "$name" '{decision: "deny", reason: ("read-only delegate child: " + $n + " is not permitted")}'
       exit 0

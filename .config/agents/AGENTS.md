@@ -93,7 +93,7 @@ Tier placement evidence: `research/2026-09-23-routing-tiers-opus-5-5-gpt-6.md`,
 | Demanding coding work — multi-file implementation, nontrivial refactor, sustained reliability over a long task | Codex `gpt-6.1-sol`. Inspect the result |
 | Ambiguous, hard debugging, substantial independent review | Stay here if this session is on Opus 5.5 (the strongest tier); otherwise Codex `gpt-6-astra` |
 | Ordered queue of separable tasks | `grind` |
-| Bounded one-shot: a cheap different-family second opinion on a diff or file, a single question, an extra refuter on a plan | Gemini `gemini-3.8-flash` through `agy`, effort `medium` first, `high` when medium misses; never `low`. The brief sets hard boundaries ("view X once, then answer; no other files, no commands") or the run wanders and times out. Never multi-step or long-horizon work, and never the sole plan refuter — it approves plans readily. Rationale: `research/2026-09-16-gemini-3-8-flash-routing.md` |
+| Bounded one-shot: a cheap different-family second opinion on a diff or file, a single question, an extra refuter on a plan | Gemini `gemini-4-argon` through `agy`, effort `medium` first, `high` when medium misses; never `low`. The brief sets hard boundaries ("read X once, then answer; no other files, no commands") and names files by absolute path — read-only agy children cannot list or search. Never multi-step or long-horizon work, and never the sole plan refuter: one model is one family's blind spots. Never a coding tier — GPT-6.1 Sol beats it on score, cost, time and tokens. Rationale: `research/2026-10-23-gemini-4-argon-routing.md` |
 | Agent instruction changes | Follow “Agent instructions get the strongest model” below |
 
 Codex tiers for delegated tasks: Luna → Sol → Astra; a blocked worker gets more
@@ -107,7 +107,7 @@ dispatch (`grind` workers, `plan-refute` refuters) is unchanged.
 | Route | Claude Code | Codex | Pi |
 |---|---|---|---|
 | Codex `<model>` | `codex:codex-rescue` with `--model <model>` | `spawn_agent` with `model=<model>`, `fork_turns="none"` and a self-contained task brief | `delegate` with `runner=codex`, `model=<model>` |
-| Gemini `gemini-3.8-flash` | `skills/agy/scripts/agy-run --model gemini-3.8-flash-medium "<brief>"` (read-only by default) | the same `agy-run` script from the shell | `delegate` with `runner=agy`, `model=gemini-3.8-flash-medium` |
+| Gemini `gemini-4-argon` | `skills/agy/scripts/agy-run --model gemini-4-argon-medium "<brief>"` (read-only by default) | the same `agy-run` script from the shell | `delegate` with `runner=agy`, `model=gemini-4-argon-medium` |
 | Cross-family review | Suggest the user run `/codex:review`, or `/codex:adversarial-review` when the approach itself is in question; for a bounded read-only Gemini pass the session runs itself, the Gemini row above | Suggest the user run `/code-review` in Claude Code (or another non-OpenAI reviewer) | `delegate` with `runner=agy` (Gemini) for a read-only review the session runs itself; or, on a non-OpenAI model, suggest the user run `codex review` |
 | `grind` | the `grind` skill | the `grind` skill, one fresh `spawn_agent` per task | the `grind` skill's in-session loop, one `delegate` child with `mode=write` per task; inspect its result before continuing |
 | Fresh-context worker (one task, no parent reasoning, may edit) | `Agent` tool, default type; `isolation: "worktree"` when parallel | `spawn_agent` with `fork_turns="none"` | `delegate` with `mode=write` (its own worktree) |

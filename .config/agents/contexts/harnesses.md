@@ -33,7 +33,7 @@ name listed in `skills/MANIFEST.md`, means vendored content was swept in —
 unstage it (`config restore --staged <absolute paths>`, which leaves every file
 on disk) before going further.
 
-`graphify` is a useful canary: it is vendored, so if it ever shows up staged,
+`last30days` is a useful canary: it is vendored, so if it ever shows up staged,
 something added a directory wholesale.
 
 ## Fold feedback before changing instructions
@@ -57,7 +57,8 @@ Codex's system skills into the dotfiles tree. Re-link after adding one:
 
 ```sh
 cd "$CODEX_HOME/skills" && for d in ~/.config/agents/skills/*/; do
-  ln -sfn "$d" "$(basename "$d")"; done
+  [ "$(basename "$d")" = synced ] || ln -sfn "$d" "$(basename "$d")"; done
+find -L . -maxdepth 1 -type l -delete   # links to deleted skills
 ```
 
 `skills.extra_roots` looks like the tidy alternative and is not — the key does
@@ -94,14 +95,15 @@ Record all four in the snapshot.
 
 - **Artificial Analysis** (artificialanalysis.ai/agents/coding-agents) is the
   primary source: it scores new models sooner than the others and reports all
-  four metrics per harness and effort level. Its index averages DeepSWE,
-  Terminal-Bench and SWE-Atlas-QnA; check the current component suites and
-  measurement definitions before comparing across versions. Wall time excludes
-  environment startup and verification. The charts render client-side, so a
-  plain fetch returns no numbers: load the page in a browser and read the rows
-  from the embedded Next.js payload (`self.__next_f`; each entry has
-  `hostModelSlug`, `displayLabel`, `indexScore` and a `mean` block with
-  `costUsd`, `agentWallTimeSec`, `steps` and the token counts).
+  four metrics per harness and effort level. Its index components change
+  (2026-10: FrontierCode v1.1, Terminal-Bench v4, SWE-Atlas-QnA; earlier
+  DeepSWE): record them, and never compare index scores across versions. Wall
+  time excludes environment startup and verification. No browser needed: a
+  plain fetch carries the Next.js payload in `self.__next_f.push` chunks —
+  join and unescape them, then parse each object with `agentName` and
+  `displayLabel`; it holds `indexScore`, per-suite `evals[].mean.reward`, and
+  a `mean` block with `costUsd`, `agentWallTimeSec`, `steps` and the token
+  counts. Only default effort rows are published.
 - **DeepSWE** (deepswe.datacurve.ai) augments it: pass@1 on long-horizon
   tasks alone, with steps, output tokens and cost per effort level. The
   rendered page shows one effort per model; every effort row is in
@@ -130,6 +132,33 @@ they address tool contracts or the cost of repeated failure, not tier ranking.
 Record that evidence in a dated report and link it from the affected rule.
 Benchmarks measure a model under their own harness; an observed failure of a
 tier in this setup outranks a leaderboard position.
+
+### When a new model appears
+
+`../watches/new-models.sh` prints CHECK when `agy models` or Codex's model
+cache lists an id no review has covered. Place it in this order:
+
+1. **Which rows can it reach?** A model only competes on rows its harness can
+   dispatch: Codex models on the Codex rows, agy models on the Gemini row, and
+   so on. Same-family models are not cross-family reviewers.
+2. **Dominance first.** Against each row's current holder, compare the four
+   metrics from one source. Worse or equal on all four means it does not take
+   the row, with no further work. Better or equal on all four means it does.
+   Anything in between needs a judgment: does the score gain matter for that
+   row's work more than the extra cost, time and tokens?
+3. **Cross-check** on DeepSWE, RealSWE and BenchLM, and write down which ones
+   have no entry yet.
+4. **Probe locally** when a row would change and the model is reachable: one
+   bounded task shaped like the row's work, with planted answers, run on the
+   holder and the candidate at each effort. Record wall time and tokens from
+   the runner's stats line. It can veto a leaderboard pick, but n=1 does not
+   rank close models.
+5. **Write the dated report**, update `../AGENTS.md` (the row and its dispatch
+   line), every skill or extension that names the old model (`rg` the old
+   id across `~/.config/agents` and `$PI_CODING_AGENT_DIR/extensions`), and
+   run `new-models.sh ack`.
+
+Worked example: `../research/2026-10-23-gemini-4-argon-routing.md`.
 
 Dispatch and escalation rationale:
 `../research/2026-09-15-routing-instruction-fixes.md`.
@@ -178,8 +207,8 @@ instructions get the strongest model"). A Codex worker cannot write
 scratch copy to edit and unit-test, then copy the result into place and run
 the live `pi -p` checks here.
 
-Tests run from the extensions dir: `bun test ./delegate.test.ts`, then
-`oxlint delegate.ts delegate/*.ts delegate.test.ts`. `tsc --noEmit` needs a
+Tests run from the extensions dir: `bun test ./delegate/delegate.test.ts`, then
+`oxlint delegate.ts delegate/*.ts`. `tsc --noEmit` needs a
 scratch tsconfig pointing at Pi's global `node_modules`; none is committed.
 
 Background delivery cannot be observed with `pi -p`: print mode disposes the

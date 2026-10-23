@@ -34,9 +34,9 @@ evidence; only surviving a kill attempt is.
    correlated-training errors that same-model review endorses. Fall back to a
    same-model fresh-context worker only when no other family's CLI is
    installed. A Gemini refuter (`skills/agy/scripts/agy-run --model
-   gemini-3.8-flash-medium`, brief bounded to the files the claim names) adds a
-   third family alongside, never instead of, the others: it approves plans
-   readily (`research/2026-09-16-gemini-3-8-flash-routing.md`).
+   gemini-4-argon-medium`, brief bounded to the files the claim names) adds a
+   third family alongside, never instead of, the others
+   (`research/2026-10-23-gemini-4-argon-routing.md`).
 5. **Disposition:**
    - Refuted → revise the plan step, or downgrade it to an open question in
      the plan doc. Note the refutation inline.
