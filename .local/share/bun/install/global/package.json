@@ -2,7 +2,7 @@
   "dependencies": {
     "@anthropic-ai/claude-code": "2.1.309",
     "@ast-grep/cli": "0.51.0",
-    "@earendil-works/pi-coding-agent": "1.3.0",
+    "@earendil-works/pi-coding-agent": "1.4.0",
     "@firecrawl/anydoc": "0.2.4",
     "@fsouza/prettierd": "0.29.0",
     "@olrtg/emmet-language-server": "2.8.0",

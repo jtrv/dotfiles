@@ -10,8 +10,8 @@ hash = "4761fffb60a12d37096c34a356380cdf"
 
 [[plugin.deps]]
 use = "ndtoan96/ouch"
-rev = "cfe4f50"
-hash = "eff5702573b6cfba61e4ac8b1969629a"
+rev = "596b666"
+hash = "c2f4f4aca257dcceafa9e3b828dbf1c9"
 
 [[plugin.deps]]
 use = "Rolv-Apneseth/starship"
@@ -20,13 +20,13 @@ hash = "9776f378459072b6c2875eae5addc49d"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:diff"
-rev = "4dc7f1b"
+rev = "e0bbd20"
 hash = "14558d2829c0aa05e99c57de8f74d199"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:git"
-rev = "4dc7f1b"
-hash = "5bb0bfab901d3601c370eafdd66edd31"
+rev = "e0bbd20"
+hash = "347cc6b190eb0c2fd60513cc7ae37412"
 
 [[plugin.deps]]
 use = "Lil-Dank/lazygit"
@@ -35,13 +35,13 @@ hash = "6ea5f37c7f219671ec504cb8311f889d"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:mount"
-rev = "4dc7f1b"
-hash = "b95f898e6dc60b52edbc415952e14395"
+rev = "e0bbd20"
+hash = "ba1a606728adb75b091b6eaf3fd60372"
 
 [[plugin.deps]]
 use = "boydaihungst/mediainfo"
-rev = "d2dd310"
-hash = "5ca9b76fe72f376768b7a8a39d8b81d6"
+rev = "f1cec0b"
+hash = "fd9312e974c63438b1f8737711462d52"
 
 [[plugin.deps]]
 use = "kirasok/torrent-preview"
@@ -60,18 +60,18 @@ hash = "1c0465351f2a344e842f065ab316f265"
 
 [[plugin.deps]]
 use = "iynaix/time-travel"
-rev = "aaec6e2"
-hash = "3d52b2b88c91a4ece2f7ed68ff39bb7b"
+rev = "1cd63a0"
+hash = "4f75208f47a25a09d8062da5d31553db"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:chmod"
-rev = "4dc7f1b"
+rev = "e0bbd20"
 hash = "87472b05a8c420100f6a2b9cde1e7746"
 
 [[plugin.deps]]
 use = "boydaihungst/fuse-archive"
-rev = "68b118b"
-hash = "d75b504e8306ef3f7ddfcdd2a90df0bb"
+rev = "5731dea"
+hash = "df46d73c838dc8357fd69f98427b680b"
 
 [[plugin.deps]]
 use = "dedukun/relative-motions"
@@ -85,15 +85,15 @@ hash = "8b0e87c3176e0d44f79a8656f79f0fa"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:vcs-files"
-rev = "4dc7f1b"
-hash = "853240b2454c93a93fd03fc9fd7e06e8"
+rev = "e0bbd20"
+hash = "4f2a05edce73aef2bceb2ee2c134c8f2"
 
 [[flavor.deps]]
 use = "yazi-rs/flavors:catppuccin-mocha"
-rev = "20b47bf"
+rev = "1183892"
 hash = "ce320f877fe709b189433941aba747c4"
 
 [[flavor.deps]]
 use = "yazi-rs/flavors:catppuccin-latte"
-rev = "20b47bf"
+rev = "1183892"
 hash = "273ee53369ccfbf7feb9b0c65e387ed8"
