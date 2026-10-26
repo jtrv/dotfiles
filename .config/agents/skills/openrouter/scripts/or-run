@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+# One OpenRouter chat completion; prints only the reply text. Stats go to stderr.
+# The key never touches argv: curl reads the auth header from a process substitution.
+set -euo pipefail
+
+usage() {
+  cat <<'USAGE'
+usage: or-run --model ID [--system-file F] [--max-tokens N] [--temperature T]
+              [--allow-retention] [--timeout SECS] [--] TASK
+       or-run ... -   (TASK from stdin)
+
+  --model            OpenRouter model id, e.g. deepseek/deepseek-v4-pro-0813
+  --system-file      system prompt from a file
+  --allow-retention  drop the default zero-data-retention provider filter
+  --timeout          seconds (default 300)
+Env: OPENROUTER_API_KEY (required), OR_URL (default https://openrouter.ai/api/v1),
+     OR_CURL (curl binary, for tests)
+USAGE
+}
+die() { echo "or-run: $*" >&2; exit 2; }
+
+model='' system_file='' max_tokens='' temperature='' zdr=true timeout_s=300
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --model) model=${2:?--model needs a value}; shift ;;
+    --system-file) system_file=${2:?--system-file needs a value}; shift ;;
+    --max-tokens) max_tokens=${2:?--max-tokens needs a value}; shift ;;
+    --temperature) temperature=${2:?--temperature needs a value}; shift ;;
+    --allow-retention) zdr=false ;;
+    --timeout) timeout_s=${2:?--timeout needs a value}; shift ;;
+    -h|--help) usage; exit 0 ;;
+    --) shift; break ;;
+    -) break ;;
+    -*) die "unknown flag $1" ;;
+    *) break ;;
+  esac
+  shift
+done
+[[ $# -eq 1 ]] || { usage >&2; exit 2; }
+[[ -n $model ]] || die "--model is required (see SKILL.md for picks)"
+task=$1
+[[ $task == - ]] && task=$(cat)
+[[ -n $task ]] || die "empty task"
+[[ -z $system_file || -f $system_file ]] || die "no such system file: $system_file"
+[[ -n ${OPENROUTER_API_KEY:-} ]] || die "OPENROUTER_API_KEY is not set (see SKILL.md, Setup)"
+
+tmp=$(mktemp -d)
+trap 'rm -rf "$tmp"' EXIT
+printf %s "$task" >"$tmp/task"
+system=''
+[[ -n $system_file ]] && system=$(cat "$system_file")
+
+# zdr + data_collection=deny keeps the request on providers that neither retain nor
+# train on prompts; a model with no such provider fails loudly instead of leaking.
+jq -n --rawfile task "$tmp/task" --arg system "$system" --arg model "$model" \
+  --arg max "$max_tokens" --arg temp "$temperature" --argjson zdr "$zdr" '
+  {model: $model,
+   messages: ((if $system == "" then [] else [{role: "system", content: $system}] end)
+              + [{role: "user", content: $task}]),
+   usage: {include: true}}
+  + (if $max == "" then {} else {max_tokens: ($max | tonumber)} end)
+  + (if $temp == "" then {} else {temperature: ($temp | tonumber)} end)
+  + (if $zdr then {provider: {zdr: true, data_collection: "deny"}} else {} end)' >"$tmp/body"
+
+curl=${OR_CURL:-curl}
+code=$("$curl" -sS --max-time "$timeout_s" -o "$tmp/out" -w '%{http_code}' \
+  --config <(printf 'header = "Authorization: Bearer %s"\n' "$OPENROUTER_API_KEY") \
+  -H 'Content-Type: application/json' \
+  -H 'X-Title: or-run' \
+  --data-binary @"$tmp/body" \
+  "${OR_URL:-https://openrouter.ai/api/v1}/chat/completions") || die "request failed (curl exit $?)"
+
+if [[ $code != 2* ]] || jq -e '.error' "$tmp/out" >/dev/null 2>&1; then
+  msg=$(jq -r '.error.message // empty' "$tmp/out" 2>/dev/null || true)
+  echo "or-run: HTTP $code: ${msg:-$(head -c 500 "$tmp/out")}" >&2
+  exit 1
+fi
+jq -r '"or-run: \(.model) via \(.provider // "?") in=\(.usage.prompt_tokens // "?") out=\(.usage.completion_tokens // "?") cost=$\(.usage.cost // "?")"' "$tmp/out" >&2
+finish=$(jq -r '.choices[0].finish_reason // ""' "$tmp/out")
+[[ $finish == length ]] && echo "or-run: warning: stopped at max tokens" >&2
+content=$(jq -r '.choices[0].message.content // empty' "$tmp/out")
+[[ -n $content ]] || die "empty reply (finish_reason=${finish:-none})"
+printf '%s\n' "$content"
