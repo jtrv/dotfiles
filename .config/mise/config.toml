@@ -1,3 +1,4 @@
+#:schema https://mise.jdx.dev/schema/mise.json
 # https://mise.jdx.dev/registry.html
 # global tools now come from nix (systemPackages) - keeping them here too means
 # mise shims shadow the nix copies. only tools nix doesn't provide stay global;
@@ -8,7 +9,6 @@ usage = "latest"  # mise completion dependency
 herdr = "latest"
 
 [settings]
-plugin_autoupdate_last_check_duration = '1 day'
 env_file = '.env'
 idiomatic_version_file_enable_tools = [ 'crystal', 'elixir', 'go', 'java', 'node', 'python', 'ruby', 'terraform', 'yarn' ]
 experimental = true
