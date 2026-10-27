@@ -90,6 +90,7 @@ window-rule {
     match app-id="imv"
     match app-id="gimp"
     match app-id="popup"
+    match app-id="termfilechooser"
     match app-id=".*" title=".*:notification"
     match app-id=".*" title=".*:splash"
     match app-id=".*" title=".*:dialog"
