@@ -409,7 +409,7 @@ hook -group lsp-filetype-markdown global BufSetOption filetype=markdown %{
 
 # prose grammar/spell (harper-ls) for commit messages and plain text
 hook -group lsp-filetype-prose global BufSetOption filetype=(?:git-commit|text) %{
-  set-option buffer lsp_servers "
+  set-option -add buffer lsp_servers "
     %opt{lsp_server_harper}
   "
 }
@@ -521,6 +521,10 @@ hook -group lsp-filetype-typst global BufSetOption filetype=typst %{
     outputPath = "/tmp/typst-preview/$dir/$name"
     formatterMode = "typstyle"
   }
+
+  set-option -add buffer lsp_servers "
+    %opt{lsp_server_harper}
+  "
 }
 
 define-command typst-sioyek -docstring 'open the live tinymist PDF for this buffer in sioyek' %{
