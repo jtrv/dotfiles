@@ -7,6 +7,7 @@
 aichat = "latest"
 usage = "latest"  # mise completion dependency
 herdr = "latest"
+bun = "latest"
 
 [settings]
 env_file = '.env'

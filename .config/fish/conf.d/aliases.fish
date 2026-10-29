@@ -55,5 +55,7 @@ alias rm      "cnc"
 alias tf      "terraform"
 alias thes    "thesauromatic"
 alias wh      "wormhole-rs"
+alias zr      "cdr"
+
 
 end
