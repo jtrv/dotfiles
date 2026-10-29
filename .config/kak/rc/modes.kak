@@ -37,8 +37,8 @@ declare-user-mode dev
   map global dev s -docstring 'set filetype' %{:set-filetype <ret>}
 
 declare-user-mode jump
-  map global jump c     -docstring 'next spell'            %{:skyspell-enable en_US ; skyspell-next <ret>}
-  map global jump <a-c> -docstring 'prev spell'            %{:skyspell-enable en_US ; skyspell-previous <ret>}
+  map global jump c     -docstring 'next spell'            %{:try %{ skyspell-enable en_US } ; skyspell-next <ret>}
+  map global jump <a-c> -docstring 'prev spell'            %{:try %{ skyspell-enable en_US } ; skyspell-previous <ret>}
   map global jump d     -docstring 'next diagnostic'       %{:lsp-diagnostics ; jump-next *diagnostics* <ret>}
   map global jump <a-d> -docstring 'prev diagnostic'       %{:lsp-diagnostics ; jump-previous *diagnostics* <ret>}
   map global jump f     -docstring 'next function'         %{:lsp-next-function <ret>}
@@ -74,10 +74,14 @@ declare-user-mode phantom
 # spelling and grammar checking
 declare-user-mode spell
   # enchant dict names, not nixpkgs attrs: hunspellDicts.en_US-large installs as en_US
-  map global spell e -docstring 'english'    %{:skyspell-enable en_US <ret>}
-  map global spell E -docstring 'español'    %{:skyspell-enable es_ANY <ret>}
-  map global spell d -docstring 'disable'    %{:skyspell-disable <ret>}
-  map global spell l -docstring 'list'       %{:skyspell-list <ret>}
-  map global spell n -docstring 'next'       %{:skyspell-next <ret>}
-  map global spell p -docstring 'previous'   %{:skyspell-previous <ret>}
-  map global spell r -docstring 'replace'    %{:skyspell-replace <ret>}
+  map global spell a -docstring 'add: global'   %{:skyspell-add global <ret>}
+  map global spell A -docstring 'add: project'  %{:skyspell-add project <ret>}
+  map global spell d -docstring 'disable'       %{:skyspell-disable <ret>}
+  map global spell e -docstring 'english'       %{:try %{ skyspell-disable } ; skyspell-enable en_US <ret>}
+  map global spell E -docstring 'español'       %{:try %{ skyspell-disable } ; skyspell-enable es_ANY <ret>}
+  map global spell f -docstring 'add: file'     %{:skyspell-add file <ret>}
+  map global spell l -docstring 'list'          %{:skyspell-list <ret>}
+  map global spell n -docstring 'next'          %{:skyspell-next <ret>}
+  map global spell p -docstring 'previous'      %{:skyspell-previous <ret>}
+  map global spell r -docstring 'replace'       %{:skyspell-replace <ret>}
+  map global spell u -docstring 'undo add'      %{:skyspell-undo <ret>}
