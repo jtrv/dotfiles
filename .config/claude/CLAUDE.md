@@ -27,7 +27,3 @@ writes no record at all, so the journal shows it as still running; three
 dead agents were once reported as "nothing failed". Re-run dead agents in a
 fresh focused workflow, and forbid `WebFetch` in the re-run if that is where
 they hung.
-
-## graphify
-- **graphify** (`~/.config/agents/skills/graphify/SKILL.md`) - any input to knowledge graph. Trigger: `/graphify`
-When the user types `/graphify`, use the installed graphify skill or instructions before doing anything else.

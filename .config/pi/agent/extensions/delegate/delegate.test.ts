@@ -223,7 +223,7 @@ function harness(dir: string, shutdowns: (() => Promise<void>)[], hooks: { isIdl
 			assert.equal((await runDelegate({ runner: "pi", task: "auth" }, dir)).status, "failed");
 			assert.match((await runDelegate({ runner: "agy", task: "auth" }, dir)).error ?? "", /auth failed/);
 			assert.throws(() => buildArgs({ runner: "agy", task: "x", model: "claude-opus-4-6-thinking" }, dir, ""), /Invalid agy model/);
-			assert.ok(buildArgs({ runner: "agy", task: "x", model: "gemini-3.1-pro-high", timeout_s: 90 }, dir, "").args.includes("--print-timeout=90s"));
+			assert.ok(buildArgs({ runner: "agy", task: "x", model: "gemini-4-argon-high", timeout_s: 90 }, dir, "").args.includes("--print-timeout=90s"));
 			for (const cancel of [false, true]) {
 				const controller = new AbortController();
 				const launchDir = await mkdtemp(join(dir, "sleep-"));

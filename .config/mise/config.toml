@@ -11,7 +11,7 @@ bun = "latest"
 
 [settings]
 env_file = '.env'
-idiomatic_version_file_enable_tools = [ 'crystal', 'elixir', 'go', 'java', 'node', 'python', 'ruby', 'terraform', 'yarn' ]
+idiomatic_version_file_enable_tools = [ 'crystal', 'elixir', 'java', 'node', 'python', 'ruby', 'terraform', 'yarn' ]
 experimental = true
 # NixOS defaults to compiling python and node from source; nix-ld runs the prebuilt ones
 python.compile = false

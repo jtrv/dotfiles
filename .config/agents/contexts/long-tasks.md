@@ -55,8 +55,8 @@ The transcript is ephemeral; the workspace is authoritative.
 
 ## Open questions
 - Bank them, don't stop for them: push everything that does not depend on
-  an answer, then end with one concise report (`/html-report` when there is
-  enough to show) and one `AskUserQuestion` multi-choice batch, `preview`
+  an answer, then end with one concise report (an Artifact when there is
+  enough to show and the harness has one) and one `AskUserQuestion` multi-choice batch, `preview`
   for anything visual. The user is usually away while work runs; a mid-run
   question stalls everything, and multi-choice is far faster to answer than
   prose. Stop early only for a question that blocks all remaining work.

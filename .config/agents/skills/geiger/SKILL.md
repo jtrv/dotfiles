@@ -217,8 +217,8 @@ SDP `from_fan_in`, hub `fan_in+fan_out`, hotspot `score`, hidden-coupling
 `jaccard`. Number the rows `F1`, `F2`, … in final table order (first column);
 the unjudged list continues the same sequence. Phase 3.5, Phase 4, and any
 follow-up chat refer to findings by these IDs — "fix F2 and F4" must resolve
-unambiguously, so never renumber. Don't paste the raw digest. If the user wants a document, use the
-html-report skill.
+unambiguously, so never renumber. Don't paste the raw digest. If the user wants a document, publish
+it as an Artifact where the harness has one, else write Markdown.
 
 ## Phase 3.5 — Refute (on "thorough" request, or when any erosion verdict is high-impact or low-confidence)
 
