@@ -46,6 +46,7 @@
 "magic-wormhole-cli 0.8.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["wormhole-rs"]
 "markdown-oxide 0.25.12 (git+https://github.com/feel-ix-343/markdown-oxide#6a331655bc9f143004a727446d76450bfe5cff4b)" = ["markdown-oxide"]
 "mcat 0.6.6 (registry+https://github.com/rust-lang/crates.io-index)" = ["mcat"]
+"mcdu 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)" = ["mcdu"]
 "mergiraf 0.20.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["mergiraf"]
 "mise 2026.10.18 (registry+https://github.com/rust-lang/crates.io-index)" = ["mise"]
 "netwatch-tui 0.37.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["netwatch"]
