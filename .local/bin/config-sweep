@@ -26,6 +26,10 @@ owned='
 .config/warehouse/ktsctl
 .local/bin/mirrors
 readme.md
+'
+# Every branch needs its own copy: a branch that never tracked one keeps the
+# incoming copy instead of losing it (the shared config includes it).
+perbranch='
 .config/niri/local.kdl
 .config/mpv/local.conf
 '
@@ -59,6 +63,11 @@ keep_ours() {
 }
 
 for p in $owned $manifests; do keep_ours "$p"; done
+
+echo "== per-branch files HEAD lacked (kept theirs; point them at this branch's host file) =="
+for p in $perbranch; do
+  if git cat-file -e HEAD:"$p" 2>/dev/null; then keep_ours "$p"; else git cat-file -e :"$p" 2>/dev/null && echo "$p"; fi
+done
 
 echo "== theirs only (manifests, kept ours) =="
 for p in $manifests; do
