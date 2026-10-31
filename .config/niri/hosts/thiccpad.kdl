@@ -13,8 +13,6 @@ layout {
     }
 }
 
-spawn-at-startup "vellum"
-
 binds {
     Mod+D hotkey-overlay-title="annotate: vellum" { spawn "vellum" "toggle"; }
 }

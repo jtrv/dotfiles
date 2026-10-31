@@ -56,5 +56,7 @@ alias tf      "terraform"
 alias thes    "thesauromatic"
 alias wget    "wget2 --hsts-file='$XDG_DATA_HOME/wget-hsts'"
 alias wh      "wormhole-rs"
+alias zr      "cdr"
+
 
 end

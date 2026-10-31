@@ -312,19 +312,28 @@ hook -group lsp-filetype-javascript global BufSetOption filetype=(?:javascript|t
     # Lint + fixes. oxlint 1.76's LSP advertises codeActionProvider
     # (source.fixAll.oxc) and diagnostics but NOT documentFormattingProvider,
     # so it cannot collide with tsserver over textDocument/formatting.
-    # --type-aware is accepted alongside --lsp; rules still come from .oxlintrc.json.
     # Use .oxlintrc.json, not a .ts config: a JS/TS config that writes to stdout
     # corrupts the LSP stream (oxc#20320).
+    # Both oxc servers run the nearest node_modules/.bin copy at or above the
+    # root (servers start there; a monorepo hoists it): a newer global oxlint
+    # adds rules the repo's gate doesn't report, and its type-aware mode panics
+    # on the repo's older tsgolint.
     [oxlint]
     root_globs = [ ".oxlintrc.json", "package.json", ".git", ".hg" ]
-    args = [ "--lsp", "--type-aware" ]
+    command = "sh"
+    args = [ "-c", 'd=$PWD; while :; do b=$d/node_modules/.bin/oxlint; [ -x "$b" ] && exec "$b" "$@"; [ -z "$d" ] && exec oxlint "$@"; d=${d%/*}; done', "oxlint", "--lsp" ]
+    # --type-aware is ignored with --lsp: the server reads typeAware from its
+    # workspace/configuration reply for section oxc_language_server.
+    [oxlint.settings.oxc_language_server]
+    typeAware = true
 
     # Formatter. Separate binary from oxlint, separate LSP server: `oxfmt --lsp`
     # advertises documentFormattingProvider and nothing else, so it is the only
     # server here claiming textDocument/formatting. Config: .oxfmtrc.json.
     [oxfmt]
     root_globs = [ ".oxfmtrc.json", "package.json", ".git", ".hg" ]
-    args = [ "--lsp" ]
+    command = "sh"
+    args = [ "-c", 'd=$PWD; while :; do b=$d/node_modules/.bin/oxfmt; [ -x "$b" ] && exec "$b" "$@"; [ -z "$d" ] && exec oxfmt "$@"; d=${d%/*}; done', "oxfmt", "--lsp" ]
   }
 
   # biome moved to opt-in: it duplicates oxlint's diagnostics and adds a second
@@ -400,7 +409,7 @@ hook -group lsp-filetype-markdown global BufSetOption filetype=markdown %{
 
 # prose grammar/spell (harper-ls) for commit messages and plain text
 hook -group lsp-filetype-prose global BufSetOption filetype=(?:git-commit|text) %{
-  set-option buffer lsp_servers "
+  set-option -add buffer lsp_servers "
     %opt{lsp_server_harper}
   "
 }
@@ -512,6 +521,10 @@ hook -group lsp-filetype-typst global BufSetOption filetype=typst %{
     outputPath = "/tmp/typst-preview/$dir/$name"
     formatterMode = "typstyle"
   }
+
+  set-option -add buffer lsp_servers "
+    %opt{lsp_server_harper}
+  "
 }
 
 define-command typst-sioyek -docstring 'open the live tinymist PDF for this buffer in sioyek' %{

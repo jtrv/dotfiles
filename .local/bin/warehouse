@@ -35,8 +35,8 @@ have go && [ -d "$DATA"/go/bin ] &&
 	go version -m "$DATA"/go/bin/* 2>/dev/null |
 	awk '$1 == "path" {print $2}' | sort -u | keep go
 
-rg --color=never -o 'bundle.*(https.*?)("|\s|$)' -r '$1' \
-	"$CONFIG"/kak/kakrc "$CONFIG"/kak/rc -I 2>/dev/null | sort -u | keep kakoune
+rg --color=never --no-filename -o '^\s*bundle(-noload)?\s+\S+\s+(\S+)' -r '$2' \
+	"$CONFIG"/kak/kakrc "$CONFIG"/kak/rc 2>/dev/null | sort -u | keep kakoune
 
 [ -d "$DATA"/kak-tree-sitter/grammars ] &&
 	command ls -1 "$DATA"/kak-tree-sitter/grammars | keep ktsctl

@@ -12,6 +12,27 @@ define-command ui-zdiff3-disable %{ remove-highlighter window/zdiff3 }
 define-command ui-zdiff3-toggle %{ try ui-zdiff3-enable catch ui-zdiff3-disable }
 
 provide-module "ui" %{
+  # declared and mapped before the plugin loads: the mode popup lists keys in
+  # first-mapped order, and the plugin re-mapping its keys keeps their slots
+  declare-user-mode ui
+  map global ui / -docstring 'toggle search'            %{: ui-search-toggle <ret>}
+  map global ui b -docstring 'toggle blame'             %{: ui-blame-toggle <ret>}
+  map global ui c -docstring 'toggle cursor line'       %{: ui-cursorline-toggle <ret>}
+  map global ui C -docstring 'toggle cursor column'     %{: ui-cursorcolumn-toggle <ret>}
+  map global ui d -docstring 'toggle git diff'          %{: ui-git-diff-toggle <ret>}
+  map global ui i -docstring 'toggle indent'            %{: ui-indent-toggle <ret>}
+  map global ui k -docstring 'toggle kak-lsp'           %{: ui-lsp-toggle <ret>}
+  map global ui l -docstring 'toggle line numbers'      %{: ui-line-numbers-toggle <ret>}
+  map global ui L -docstring 'toggle lint diagnostics'  %{: ui-lint-toggle <ret>}
+  map global ui m -docstring 'toggle matching'          %{: ui-matching-toggle <ret>}
+  map global ui r -docstring 'toggle colorcol'          %{: ui-colorcol-toggle <ret>}
+  map global ui R -docstring 'toggle rainbow'           %{: ui-rainbow-toggle <ret>}
+  map global ui s -docstring 'toggle whitespaces'       %{: ui-whitespaces-toggle <ret>}
+  map global ui t -docstring 'toggle trailing spaces'   %{: ui-trailing-spaces-toggle <ret>}
+  map global ui w -docstring 'toggle wrap'              %{: ui-wrap-toggle <ret>}
+  map global ui x -docstring 'toggle todo comments'     %{: ui-todos-toggle <ret>}
+  map global ui z -docstring 'toggle zdiff3'            %{: ui-zdiff3-toggle <ret>}
+
   bundle ui.kak https://github.com/kkga/ui.kak %{
     set-option global ui_wrap_flags -width 100 -word -indent
     set-face global TrailingSpace default,red
@@ -22,13 +43,30 @@ provide-module "ui" %{
     define-command -override ui-line-numbers-enable -docstring 'enable line numbers' %{ number-toggle-enable }
     define-command -override ui-line-numbers-disable -docstring 'disable line numbers' %{ number-toggle-disable }
 
+    # git update-diff diffs against the index, so on an untracked file git
+    # fails and every WinDisplay logs "not in the index" to *debug*; checking
+    # per call also picks the file up once it's added
+    define-command -hidden ui-git-update-diff %{
+      evaluate-commands %sh{
+        cd "$(dirname "$kak_buffile")" 2>/dev/null &&
+          git ls-files --error-unmatch -- ":(literal)$kak_buffile" >/dev/null 2>&1 &&
+          echo "git update-diff"
+      }
+    }
+    define-command -override ui-git-diff-enable -docstring 'enable git diff' %{
+      add-highlighter window/git-diff flag-lines Default git_diff_flags
+      ui-git-update-diff
+      hook window -group ui-git-diff WinDisplay .* ui-git-update-diff
+      hook window -group ui-git-diff BufWritePost .* ui-git-update-diff
+      hook window -group ui-git-diff BufReload .* ui-git-update-diff
+      echo -markup "{Information}git diff enabled"
+    }
+
     define-command ui-blame-toggle %{ git blame }
-    map global ui b -docstring 'toggle blame'   %{: ui-blame-toggle <ret>}
 
     define-command ui-indent-enable %{ add-highlighter window/indent show-whitespaces -lf '' -tab '' -spc ' ' -indent '▏' }
     define-command ui-indent-disable %{ remove-highlighter window/indent }
     define-command ui-indent-toggle %{ try ui-indent-enable catch ui-indent-disable }
-    map global ui i -docstring 'toggle indent'   %{:ui-indent-toggle <ret>}
 
     define-command -override ui-lsp-enable %{
       echo -debug "Enabling LSP for filetype %opt{filetype}"
@@ -52,7 +90,6 @@ provide-module "ui" %{
       try ui-lsp-enable catch ui-lsp-disable
       trigger-user-hook ui-hl-changed
     }
-    map global ui k -docstring 'toggle kak-lsp'   %{:ui-lsp-toggle <ret>}
 
     require-module "kak_rainbower"
     declare-option -hidden bool rainbow_enabled false
@@ -66,7 +103,6 @@ provide-module "ui" %{
       set-option buffer rainbow_enabled false
     }
     define-command ui-rainbow-toggle %{ try ui-rainbow-enable catch ui-rainbow-disable }
-    map global ui R -docstring 'toggle rainbow'   %{:ui-rainbow-toggle <ret>}
 
     declare-option -hidden bool colorcol_enabled false
     define-command ui-colorcol-enable %{
@@ -79,9 +115,6 @@ provide-module "ui" %{
       set-option buffer colorcol_enabled false
     }
     define-command ui-colorcol-toggle %{ try ui-colorcol-enable catch ui-colorcol-disable }
-    map global ui r -docstring 'toggle colorcol'   %{:ui-colorcol-toggle <ret>}
-
-    map global ui z -docstring 'toggle zdiff3'   %{:ui-zdiff3-toggle <ret>}
 
     hook global WinCreate .* %{
       ui-line-numbers-enable

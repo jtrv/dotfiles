@@ -1,3 +1,4 @@
+#:schema https://mise.jdx.dev/schema/mise.json
 # https://mise.jdx.dev/registry.html
 [tools]
 aichat = "latest"

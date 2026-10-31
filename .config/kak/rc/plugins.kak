@@ -63,6 +63,17 @@ bundle-install-hook kakship %{ cargo install --locked --path . ; cargo clean }
 bundle-noload skyspell https://github.com/your-tools/skyspell
 bundle-install-hook skyspell %{ cargo binstall -y skyspell_kak --git https://github.com/your-tools/skyspell ; cargo clean }
 
+# skyspell's add-* only act on *spelling* list lines ("<file>: <range> <word>"),
+# so fake one for the word under the cursor; drop its jump to the list
+define-command -params 1 skyspell-add -docstring 'skyspell-add <global|file|project|extension|lang>: ignore the word under the cursor' %{
+  execute-keys <a-i>w
+  evaluate-commands %sh{
+    : "$kak_opt_skyspell_project"
+    kak_selection="$kak_buffile: $kak_selection_desc $kak_selection" \
+      skyspell-kak --lang "$kak_opt_skyspell_lang" "add-$1" | grep -vx skyspell-list
+  }
+}
+
 bundle sudo-write.kak https://github.com/jtrv/sudo-write.kak %{
   set-option global fprint_mode true
   alias global sw 'sudo-write'
