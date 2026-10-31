@@ -3,7 +3,7 @@
 # Run with Lutris closed: it rewrites pga.db rows on save and would drop the custom flags.
 set -euo pipefail
 
-key=${SGDB_API_KEY:-$(<"$HOME/.config/hermes/steamgriddb_api_key.txt")}
+key=${SGDB_API_KEY:-$(</run/secrets/steamgriddb-key)}
 data=$HOME/.local/share/lutris
 db=$data/pga.db
 api=https://www.steamgriddb.com/api/v2
