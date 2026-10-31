@@ -1,2 +1,0 @@
-#!/bin/sh
-awk '{printf("\"%s\" ",$0)} END { printf "\n" }'

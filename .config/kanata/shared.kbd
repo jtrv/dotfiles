@@ -14,10 +14,6 @@
   l   (tap-hold  200    150    l    alt)
   ;   (tap-hold  200    150    ;    met)
 
-  ;; pinky relief meta tap-holds
-  e   (tap-hold  200    175    e    met)
-  i   (tap-hold  200    175    i    met)
-
   ;; hold spc for space layer
   spc (tap-hold  200    210    spc  (layer-while-held space))
 
@@ -28,20 +24,31 @@
   esc (tap-hold  200    150    esc  ctl)
 
   ;; hold jkl; (sft ctl alt met) + g toggles the gaming layer
-  gam (switch
+  game (switch
     ((and lsft lctl lalt lmet (layer gaming))) (layer-switch base)   break
     ((and lsft lctl lalt lmet))                (layer-switch gaming) break
     ()                                         g                     break
   )
 
-  ;; playerctl controls
-  mpp (cmd playerctl play-pause)
-  mpr (cmd playerctl previous)
-  mnx (cmd playerctl next)
+  ;; media keys (niri binds XF86Audio* to playerctl)
+  mpp pp
+  mpr prev
+  mnx next
 
-  ;; scroll volume
-  svlu (cmd wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+)
-  svld (cmd wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-)
+  ;; common word movement
+  lwrd C-lft
+  rwrd C-rght
+
+  ;; common word deletion
+  lwdl C-bspc
+  rwdl C-del
+
+  ;; scroll volume (niri binds XF86Audio*Volume to wpctl 1% steps)
+  svlu volu
+  svld vold
+
+  ;; ``` for markdown code fences
+  fence (macro grv grv grv)
 
   ;; key volume
   kvlu (tap-hold 200    200    @svlu  (macro-repeat @svlu 50))

@@ -1,0 +1,76 @@
+# dotfiles
+
+One repo, two working trees per machine:
+
+- **Live**: bare git dir `$DOTFILES` (`~/.config/dotfiles`), work-tree `$HOME`, branch = machine name. Drive it with the `config` wrapper (= `command git --git-dir="$DOTFILES" --work-tree="$HOME"`). Pathspecs match against the cwd — pass absolute `$HOME/...` paths, never the `../../` paths `status` prints.
+- **Staging**: `~/repos/dotfiles`, a linked worktree on `<machine>-wip` (`config worktree add ~/repos/dotfiles <machine>-wip`). Plain `git` works there. **Cross-machine merges and experiments happen here, never on live**; ordinary commits land on live directly.
+
+Both trees share one object store and ref set — no fetch/push between them. **Never check out the live machine branch in staging**: git's double-checkout guard can't see the ad-hoc `$HOME` tree, and two trees on one branch show phantom status changes in each other.
+
+## Ownership
+
+Branches: `thiccpad` (NixOS laptop, no home-manager), `morpheus` (arch desktop), `morpheus-nixos` (the desktop's NixOS migration; replaces `morpheus` at cutover — NixOS rules, desktop ownership).
+
+`morpheus-nixos` sticks to morpheus's changes and keeps desktop-specific state (ultrawide output, hermes pinning, edge-pan, GPU tooling) unless the change is NixOS-specific; shared updates flow in from any branch; archisms (pacman, arch warehouse) belong in nixos-config's `nixos/morpheus` dir, not this branch.
+
+This table is the **single source of truth** for what is machine-specific; anything not listed is shared. When a merge surfaces a new ambiguous path, ask the user, then record the decision here — never decide from vibes like "looks desktop-y".
+
+| Path | Ownership |
+|---|---|
+| `warehouse/arch`, `.config/pacman/` | arch machines (morpheus) |
+| `warehouse/uv` additions | morpheus; NixOS machines keep it empty (nixos-config carries tools) |
+| `.config/systemd/user/*` units | owning machine; NixOS machines track none (units come from nixos-config) |
+| evdi/hermes-streaming (packages, virtual-display pinning) | morpheus |
+| bun global `package.json`, cargo `.crates*` | per-machine local state — never merged. Keep this machine's side, but **report what the other side had**; if it looks like new tools rather than version drift, ask |
+| `kanata/*.kbd` | every branch, per-machine by filename (`morpheus.kbd`, `thiccpad.kbd`, `shared.kbd`) — prefer this name-spacing for new machine-specific files over new table rows |
+| `niri/hosts/*.kdl` | every branch, per-machine by filename; `niri/config.kdl` is fully shared — machine settings (outputs, struts, per-host daemons and binds) go in the host file, never back into `config.kdl` |
+| `niri/local.kdl` | per-branch, one line including that branch's `hosts/<machine>.kdl` |
+| `mpv/hosts/*.conf` | every branch, per-machine by filename (GPU shader and scaler lines); `mpv.conf` is fully shared |
+| `mpv/local.conf` | per-branch, one `include=` of that branch's `hosts/<machine>.conf` |
+| `.config/environment.d/*` | morpheus — NixOS machines set the same vars via `environment.sessionVariables` in nixos-config |
+| `warehouse/bun` | per-machine additions, like `warehouse/uv` — keep this machine's side, report theirs |
+| `warehouse/wud` | per-machine, like the package manifests — never union. Keep this machine's side and **ask about every docset the other side has** (`config-sweep` prints them); install one only on a yes. The file is a `wud ls` snapshot that `warehouse` rewrites, so an installed docset lands in it on the next run |
+| `warehouse/{fish,go,ktsctl}`, `fish/fish_plugins`, `mpv/shaders/*`, `mise/config.toml` global `[tools]` | morpheus keeps them; NixOS machines drop what nixos-config installs |
+| `paru/paru.conf`, `.local/bin/mirrors`, topgrade `[linux]`/arch commands | arch machines (morpheus) |
+| firefox flavor: `BROWSER`, `mimeapps.list`, `mozilla/firefox/<profile>` dir | per-machine (thiccpad runs devedition) |
+| absolute tool paths in configs/scripts (`/usr/...` vs `/run/current-system/sw/...`) | shared — probe both paths at run time (see `.local/bin/tofi-run`), never fork the file per machine |
+| secret access in scripts (`secli get` on morpheus vs sops-nix `/run/secrets/*` on NixOS; agenix is gone) | per-machine |
+| hardware tuning: `voxtype` model/threads, waybar height/font | per-machine |
+| `easyeffects/*` | shared — every file is keyed by a device (autoload by alsa id, presets/irs by headphone or mic name) and inert elsewhere; union on merge, never sweep |
+| `fish/config.fish` ssh-agent fallback | morpheus (NixOS gets the agent from systemd) |
+| `fish/conf.d/aliases.fish` `wget` → `wget2` alias | morpheus (thiccpad has no `wget2`) |
+| skyspell dict names in `kak/rc/modes.kak` (`en_US-large`/`es` vs nix `en_US`/`es_ANY`) | per-machine |
+| `.config/udev/rules.d/*` | morpheus — NixOS machines carry udev rules in nixos-config |
+| `readme.md` | per-branch — describes that branch's OS and host |
+
+## Converging
+
+Invariant: **shared changes flow to every branch, both ways, pairwise; machine-specific files stay with their owner.** There are no convergence tags — the merge-base *is* the last convergence point, computed for free.
+
+In the staging worktree, with `<this>` = this machine's branch and `<other>` = the branch being converged:
+
+1. `config fetch origin` (github.com/jtrv/dotfiles). Always merge **remote-tracking refs**; local copies of other machines' branches go stale.
+2. Drift check, both sides at once: `git log --left-right --oneline <this>...origin/<other>` (`<` ours only, `>` theirs only).
+3. `git merge <this>` (catch staging up with live), then `git merge origin/<other>`.
+4. Conflicts: table paths and manifests resolve mechanically per Ownership. Shared files resolve **iteratively with the user** — one at a time, both sides and intent shown, sign-off each. Note rerere is on, with `autoupdate` disabled for this repo via the tracked `~/.config/git/dotfiles-local` include (global git config keeps it on): recorded resolutions reapply but stay unstaged — review each before `git add`.
+5. Sweep: run `config-sweep` (`.local/bin/config-sweep`, the table's mechanical half — keep its path lists in sync with the table). It resets every owned path and manifest to what HEAD had, prints the other side's manifest additions, and lists files that mix shared and per-machine hunks for review by hand. Then restore our own files the incoming branch deleted — deletions propagate silently when our side hadn't touched the file (`git log --diff-filter=D --name-status <this>..origin/<other> -- <path>` lists what they dropped). Then scan for silent duplication: the same change made on both sides can land twice with no conflict (a doubled `[vad]` TOML section broke voxtype this way).
+6. **Checkpoint — before committing the merge**: show the user the incoming summary, planned deletions/restores, and everything mechanically discarded. Commit only after that.
+7. Take it live: `config status` effectively clean, then `config merge --ff-only <this>-wip`. A non-ff merge or overlapping dirty files would put the mess in the live `$HOME` tree — the thing staging exists to prevent. If live moved meanwhile, `git merge <this>` in staging again, then fast-forward.
+8. Push only when asked: `config push origin <this>`. The pair is fully converged once the other machine runs this same flow there.
+
+### Pending convergence steps
+
+One-time steps a branch owes at its next convergence. Do them during step 5, before the checkpoint, then delete the entry in the same merge.
+
+## Commit workflow (live `$HOME` state, on the live branch)
+
+1. **Status.** Clean tree → say so, stop.
+2. **Read every diff** before grouping. Batch files per `diff` call; for large auto-generated tracking files (`cargo/.crates*`, bun `package.json`), `--stat` + a spot-check is enough.
+3. **Surface candidates.** Relevant untracked files: ask the user; if added, redo 1–2.
+4. **Group into logical commits.** One concern per commit; related files together (a kanata keybind that shells into `niri msg` ships with the niri change). Auto-generated dep files get their own `deps:` commit.
+5. **Present the plan** as a table (subject → files) before committing; note if the branch is ahead of origin.
+6. **Commit iteratively**, one at a time with a one-line summary so the user can sign off as you go.
+7. **Never push unasked. Never `git add -A`/`.`** — named absolute paths only, so a stray file never rides along. Under `~/.config/agents` this is not a nicety: vendored skills are untracked by policy and run to hundreds of files each, so a swept directory buries the real change. See `harnesses.md`.
+8. A diff with a small flaw (e.g. useless-use-of-cat): ask before committing.
+
+Messages: conventional-ish `area: summary` (`pi:`, `niri/kanata:`, `waybar:`, `deps:`); body only when the why isn't obvious from the diff. Splitting one file across commits is fine when you can verify the staged version is non-destructive and works on its own — e.g. stage an edited copy with `hash-object -w` + `update-index --cacheinfo`, then check it parses/loads and that the working tree still holds the full change.

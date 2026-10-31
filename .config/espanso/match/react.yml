@@ -1,28 +1,34 @@
 matches:
 
   - trigger: ",,rue"
+    label: "react: useEffect"
     replace: |
       useEffect(() => {$|$},[])
 
   - trigger: ",,rus"
+    label: "react: useState"
     replace: |
       const [$|$, set] = useState();
 
   - trigger: ",,ruc"
+    label: "react: useCallback"
     replace: |
       const $|$ = useCallback(() => { }, []);
 
   - trigger: ",,rum"
+    label: "react: useMemo"
     replace: |
       const $|$ = useMemo(() => { }, []);
 
   - trigger: ",,rfc"
+    label: "react: function component"
     replace: |
       import React from 'react'
 
       function $|$() { return ( <div> </div> ) }
 
   - trigger: ",,rcc"
+    label: "react: class component"
     replace: |
       import React, { Component } from 'react'
 

@@ -1,0 +1,41 @@
+# SolidJS components and reactivity.
+# Avoid "{{" in replace text: espanso reads it as a variable.
+
+matches:
+  - trigger: ",,scomp"
+    label: "solid: component"
+    replace: |
+      import { splitProps } from 'solid-js';
+
+      // Runs ONCE. No re-render: only the JSX expressions that read signals/props update.
+      // Don't destructure props (loses reactivity): props.name, or splitProps.
+      export function $|$(props) {
+        const [local, rest] = splitProps(props, ['label']);
+        return (
+          <div class="card" {...rest}>
+            {local.label}
+          </div>
+        );
+      }
+
+      // e.g. use: <Badge label="LATE" class="late" />   (class, not className)
+      // e.g. defaults: const merged = mergeProps({ size: 'md' }, props);  then merged.size
+
+  - trigger: ",,ssig"
+    label: "solid: signal, memo, effect"
+    replace: |
+      import { createSignal, createMemo, createEffect, onCleanup } from 'solid-js';
+
+      const [count, setCount] = createSignal(0);  // count() to read: it's a function
+      const doubled = createMemo(() => count() * 2);  // derived value; no dependency array
+
+      createEffect(() => {
+        // tracks whatever it reads. For side effects (DOM, sockets, timers), not for derived state.
+        const id = setInterval(() => console.log(doubled()), 1000);
+        onCleanup(() => clearInterval(id));
+      });
+      $|$
+
+      // e.g. setCount(5); setCount(c => c + 1);  → count() === 6, doubled() === 12
+      // e.g. JSX: <button onClick={() => setCount(c => c + 1)}>{count()}</button>
+      // trap: object signal needs a new object: setUser({ ...user(), name: 'Ana' })

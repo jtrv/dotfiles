@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Context Rot &amp; On-Disk Memory — Combined Findings, 6-Agent Research Sweep</title>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.1.11/dist/index.global.js" integrity="sha384-XXN6/S6yXj8EpXnBTw3JGR9ZM+hixGxFCLYn0FHtg9cWh0ziKmAgTPEhecbCDOmj" crossorigin="anonymous"></script>
+<style>
+  .band { border-left-width: 4px; }
+  a { text-decoration: underline; text-decoration-color: rgb(148 163 184 / .6); text-underline-offset: 2px; }
+  a:hover { text-decoration-color: rgb(79 70 229); }
+</style>
+</head>
+<body class="bg-stone-50 text-slate-900 font-sans">
+<main class="max-w-5xl mx-auto px-6 py-12 space-y-12">
+
+<header class="space-y-3">
+  <p class="text-xs uppercase tracking-widest text-slate-500 font-mono">2026-07-30 · 6 research agents · 2 web · 2 last30days (277 social items) · 2 Codex</p>
+  <h1 class="text-3xl font-serif font-semibold">Context Rot &amp; On-Disk Memory for Long-Running Agent Tasks</h1>
+  <p class="text-slate-600">Additive synthesis of all six passes, ending in a recommended stack for a single-user Claude Code setup.</p>
+  <div class="flex flex-wrap gap-2 text-xs pt-1">
+    <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-medium">emerald — adopt / strong consensus</span>
+    <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-medium">amber — situational / worth exploring</span>
+    <span class="px-2 py-0.5 rounded-full bg-red-100 text-red-800 font-medium">red — risk / failure mode</span>
+    <span class="px-2 py-0.5 rounded-full bg-slate-200 text-slate-700 font-medium">slate — skip for solo use</span>
+  </div>
+</header>
+
+<!-- ============ THE EVIDENCE ============ -->
+<section class="space-y-10">
+<h2 class="text-xl font-serif font-semibold border-b border-slate-200 pb-2">The evidence base</h2>
+
+<article id="evidence" class="bg-white rounded-xl border border-slate-200 p-6 space-y-3">
+  <h3 class="text-lg font-semibold">Context rot is measured, not folklore</h3>
+  <div class="flex gap-2 text-xs">
+    <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">settled science</span>
+    <span class="px-2 py-0.5 rounded-full bg-red-100 text-red-800">degrades non-uniformly</span>
+  </div>
+  <p class="font-mono text-sm text-slate-600">Chroma "Context Rot" (18 LLMs) · Liu et al. "Lost in the Middle" · MemSyco-Bench arXiv:2607.01071</p>
+  <p><strong>Problem:</strong> performance degrades unpredictably as input grows — distractors and semantic near-misses hurt most, and 61–62% of memory-related errors occur <em>after</em> correct retrieval.</p>
+  <p><strong>Resolution:</strong> Anthropic's guiding principle: the smallest set of high-signal tokens that maximizes the likely outcome — "it still fits" is not evidence it's harmless.</p>
+  <ul class="list-disc list-inside text-sm text-slate-600 space-y-0.5">
+    <li>Practitioner "smart window": ~first 120K tokens</li>
+    <li>Act at 60–70% full, not 95%</li>
+    <li>1M-token window ≠ project memory</li>
+  </ul>
+  <p class="text-xs text-slate-500"><a href="https://research.trychroma.com/context-rot">Chroma report</a> · <a href="https://arxiv.org/abs/2307.03172">Lost in the Middle</a> · <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Anthropic context engineering</a></p>
+</article>
+
+<article id="minimalism" class="bg-white rounded-xl border border-slate-200 p-6 space-y-3">
+  <h3 class="text-lg font-semibold">Anthropic's July "delete your context" move validated minimalism</h3>
+  <div class="flex gap-2 text-xs">
+    <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">this month's biggest story</span>
+    <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">free to apply today</span>
+  </div>
+  <p class="font-mono text-sm text-slate-600">system prompt ~2,686 → ~514 words (−80%) · /doctor audits CLAUDE.md bloat · HN 197 pts</p>
+  <p><strong>Problem:</strong> bloated CLAUDE.md files and over-constraining instructions tax every single session — "bloat is a bill you pay forever."</p>
+  <p><strong>Resolution:</strong> gotchas only; delete anything Claude can learn from reading the repo; never write the same rule twice; audit with <code class="font-mono text-sm bg-slate-100 px-1 rounded">/doctor</code>.</p>
+  <ul class="list-disc list-inside text-sm text-slate-600 space-y-0.5">
+    <li>No eval regression after the cut</li>
+    <li>Vercel: −80% tools → success 80%→100%</li>
+    <li>"Brief it, don't bury it"</li>
+  </ul>
+</article>
+</section>
+
+<!-- ============ STRATEGIES ============ -->
+<section class="space-y-10">
+<h2 class="text-xl font-serif font-semibold border-b border-slate-200 pb-2">Leading strategies</h2>
+
+<article id="handoff" class="bg-white rounded-xl border border-slate-200 p-6 space-y-3">
+  <h3 class="text-lg font-semibold">Handoff files over compaction — the month's consensus shift</h3>
+  <div class="flex gap-2 text-xs">
+    <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">adopt</span>
+    <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">all 6 agents converged here</span>
+  </div>
+  <p class="font-mono text-sm text-slate-600">handoff.md / state.md · fresh session &gt; another /compact cycle · Amp retired compaction for "handoff"</p>
+  <p><strong>Problem:</strong> /compact "drags the dead ends forward" — messy debugging and bad assumptions survive summarization; Codex team measured accuracy falling as compaction events accumulate.</p>
+  <p><strong>Resolution:</strong> before ending a session, write a self-contained restart packet (goal, current state, decisions, failed attempts, exact next action), then start fresh and have it read the packet.</p>
+  <ul class="list-disc list-inside text-sm text-slate-600 space-y-0.5">
+    <li>Highest-engagement item: 154K-view reel</li>
+    <li>Ledger = living; handoff = frozen snapshot</li>
+    <li>Key property: idempotency (done vs proposed side effects)</li>
+    <li>Counter-voice exists: "Codex compaction so good"</li>
+  </ul>
+</article>
+
+<article id="ledger" class="bg-white rounded-xl border border-slate-200 p-6 space-y-3">
+  <h3 class="text-lg font-semibold">One task ledger, separate from the plan and the journal</h3>
+  <div class="flex gap-2 text-xs">
+    <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">adopt</span>
+    <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">zero infrastructure</span>
+  </div>
+  <p class="font-mono text-sm text-slate-600">plan.md (stable steps) · state.md (volatile cursor, replace-in-place) · journal/ (append, rotated, never auto-loaded)</p>
+  <p><strong>Problem:</strong> a single growing markdown file mixes lifecycles — the plan churns on every event, the journal becomes expensive to load, and stale entries read as current state.</p>
+  <p><strong>Resolution:</strong> split by lifecycle; state.md carries objective, decisions (accepted/provisional/superseded), failed attempts, evidence pointers, and one executable next action.</p>
+  <ul class="list-disc list-inside text-sm text-slate-600 space-y-0.5">
+    <li>Every "done" claim points to evidence</li>
+    <li>Mark superseded, don't delete</li>
+    <li>Refresh at milestones, not per tool call</li>
+    <li>Manus recitation variant: rewrite todo at context tail</li>
+  </ul>
+</article>
+
+<article id="index" class="bg-white rounded-xl border border-slate-200 p-6 space-y-3">
+  <h3 class="text-lg font-semibold">Small always-loaded index + lazy hydration — the load-bearing trick everywhere</h3>
+  <div class="flex gap-2 text-xs">
+    <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">adopt</span>
+    <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">built into Claude Code</span>
+  </div>
+  <p class="font-mono text-sm text-slate-600">MEMORY.md (200 lines / 25KB cap) → topic files on demand · Skills: ~100-token frontmatter → SKILL.md &lt;2k → references</p>
+  <p><strong>Problem:</strong> if every durable note becomes startup context, persistence just moves the rot from the transcript into the system prompt (Cline's read-everything Memory Bank is the anti-pattern).</p>
+  <p><strong>Resolution:</strong> progressive disclosure at every layer — index → candidate summaries → selected artifact → cited fragment; one analysis measured a 500-token index vs 70k eager load (~140x).</p>
+  <ul class="list-disc list-inside text-sm text-slate-600 space-y-0.5">
+    <li>The index cap IS the mechanism</li>
+    <li>Index holds pointers, never copies</li>
+    <li>Auto-memory ships on by default (v2.1.59+)</li>
+  </ul>
+</article>
+
+<article id="subagents" class="bg-white rounded-xl border border-slate-200 p-6 space-y-3">
+  <h3 class="text-lg font-semibold">Sub-agent isolation: quarantine the noisy work</h3>
+  <div class="flex gap-2 text-xs">
+    <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">adopt for exploration</span>
+    <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">not for coupled coding</span>
+  </div>
+  <p class="font-mono text-sm text-slate-600">Task tool · only final report returns to parent · ~15x token cost in fan-outs · adversarial "branch and prune"</p>
+  <p><strong>Problem:</strong> repo exploration, test-log analysis, and research dump thousands of low-value tokens into the main window; but naive parallel sub-agents fail on tightly interdependent code (Anthropic and Cognition agree).</p>
+  <p><strong>Resolution:</strong> bounded contract per worker (scope, output schema, max return size, evidence required); parent keeps objective, ledger, and integration decisions.</p>
+  <ul class="list-disc list-inside text-sm text-slate-600 space-y-0.5">
+    <li>Watch "context laundering" (summary = raw dump)</li>
+    <li>Persist worker results as files, return an index</li>
+    <li>Re-state constraints in each delegation</li>
+  </ul>
+</article>
+
+<article id="compaction" class="bg-white rounded-xl border border-slate-200 p-6 space-y-3">
+  <h3 class="text-lg font-semibold">Compaction still matters — use it early, steered, and layered</h3>
+  <div class="flex gap-2 text-xs">
+    <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">use deliberately</span>
+    <span class="px-2 py-0.5 rounded-full bg-red-100 text-red-800">lossy by design</span>
+  </div>
+  <p class="font-mono text-sm text-slate-600">/compact [steering instruction] at ~60% · microcompact offloads bulky tool output to disk · auto fires ~83.5% (too late)</p>
+  <p><strong>Problem:</strong> observed 132k→2.3k token summaries (98% loss); constraints and safety rules are the <em>first</em> things lost ("governance decay", arXiv:2606.22528); repeated summary-of-summary cycles self-corrupt.</p>
+  <p><strong>Resolution:</strong> checkpoint-before-compact — refresh the ledger, then compact, then re-read the ledger; prefer clearing stale tool results (verbatim, accurate) over rewriting the narrative.</p>
+  <ul class="list-disc list-inside text-sm text-slate-600 space-y-0.5">
+    <li>Steer it: <span class="font-mono">/compact keep the migration plan</span></li>
+    <li>Decision drift: "SQLite unless X" → "uses SQLite"</li>
+    <li>Failed-path resurrection wastes turns</li>
+    <li>One study: tokens −75% but turns 4→14, net −14%</li>
+  </ul>
+</article>
+
+<article id="git" class="bg-white rounded-xl border border-slate-200 p-6 space-y-3">
+  <h3 class="text-lg font-semibold">Git as the memory substrate</h3>
+  <div class="flex gap-2 text-xs">
+    <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">adopt</span>
+    <span class="px-2 py-0.5 rounded-full bg-slate-200 text-slate-700">notes/custom refs: skip</span>
+  </div>
+  <p class="font-mono text-sm text-slate-600">task branch per long job · coherent milestone commits · worktree per concurrent agent · committed state.md rides with the code</p>
+  <p><strong>Problem:</strong> session transcripts are tool-specific and lossy; code and its task state drift apart unless checkpointed together.</p>
+  <p><strong>Resolution:</strong> commit memory files with the code they describe; crash recovery = checkout last checkpoint + read the ledger; git history doubles as the audit log.</p>
+  <ul class="list-disc list-inside text-sm text-slate-600 space-y-0.5">
+    <li>Commits at milestones, not per tool call</li>
+    <li>External state (DB migrations, deploys) needs explicit notes</li>
+    <li>Never commit secrets/transcripts for persistence</li>
+  </ul>
+</article>
+
+<article id="loops" class="bg-white rounded-xl border border-slate-200 p-6 space-y-3">
+  <h3 class="text-lg font-semibold">Fresh-context loops: Ralph, harnesses, PTY session rolling</h3>
+  <div class="flex gap-2 text-xs">
+    <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">for multi-day autonomous work</span>
+  </div>
+  <p class="font-mono text-sm text-slate-600">while :; do cat PROMPT.md | agent; done · Anthropic harness: claude-progress.txt + features.json + git log · ralph-loop plugin installed here</p>
+  <p><strong>Problem:</strong> any single session eventually enters the dumb zone; babysitting the window by hand doesn't scale to multi-day tasks.</p>
+  <p><strong>Resolution:</strong> make fresh context the default — each iteration reads progress file + git log, does ONE task, tests, commits, exits; immune to rot by construction.</p>
+  <ul class="list-disc list-inside text-sm text-slate-600 space-y-0.5">
+    <li>Displacing ever-longer-context approaches</li>
+    <li>Compaction alone officially "not sufficient" (Anthropic)</li>
+    <li>No drift detection — needs human check-ins</li>
+  </ul>
+</article>
+
+<article id="stores" class="bg-white rounded-xl border border-slate-200 p-6 space-y-3">
+  <h3 class="text-lg font-semibold">Structured stores (vectors, knowledge graphs, SQLite)</h3>
+  <div class="flex gap-2 text-xs">
+    <span class="px-2 py-0.5 rounded-full bg-slate-200 text-slate-700">skip until search demonstrably fails</span>
+    <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">files-first if you do</span>
+  </div>
+  <p class="font-mono text-sm text-slate-600">Mem0 62k★ · Letta/MemGPT · Zep/Graphiti (temporal KG) · cognee · Basic Memory · sqlite-vec/FTS5</p>
+  <p><strong>Problem:</strong> similarity is not authority — superseded memories rank high; embeddings have no native current-vs-obsolete; and the month's consensus ("markdown you own, not a black-box vector DB" — Karpathy's LLM Wiki) runs against DB-primary designs.</p>
+  <p><strong>Resolution:</strong> for one user: plain markdown + rg/grep first; if adding retrieval, keep files authoritative and the DB a rebuildable index (Basic Memory / memsearch / deja-vu pattern).</p>
+  <ul class="list-disc list-inside text-sm text-slate-600 space-y-0.5">
+    <li>Mem0's fault line: 13,700 preloaded vs 445 retrieved tokens</li>
+    <li>Counter: retrieval quality, staleness, another daemon</li>
+    <li>Vendor "90% savings" ≠ downstream task cost</li>
+    <li>Zep retired self-hosted CE; Letta $20/mo Pro</li>
+  </ul>
+</article>
+
+<article id="repomaps" class="bg-white rounded-xl border border-slate-200 p-6 space-y-3">
+  <h3 class="text-lg font-semibold">Persistent repo maps — the newest anti-rot niche</h3>
+  <div class="flex gap-2 text-xs">
+    <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">worth exploring</span>
+  </div>
+  <p class="font-mono text-sm text-slate-600">Graft (C daemon + SQLite, no LLM/API key) · Graphify ("70x") · JetBrains Context · codebase-memory-mcp (tree-sitter → KG) · Aider repo map (PageRank precedent)</p>
+  <p><strong>Problem:</strong> "agents blindly rebuild a mental map of your repo every session, then throw it away" — re-exploration is the silent per-session tax.</p>
+  <p><strong>Resolution:</strong> persist a codebase graph/architecture doc once, reuse across sessions; the cheapest version is a hand-maintained ARCHITECTURE.md pointer file.</p>
+  <ul class="list-disc list-inside text-sm text-slate-600 space-y-0.5">
+    <li>All shipped/relaunched within the last 30 days</li>
+    <li>Staleness on refactor is the open question</li>
+  </ul>
+</article>
+
+<article id="risks" class="bg-white rounded-xl border border-slate-200 p-6 space-y-3">
+  <h3 class="text-lg font-semibold">Failure modes: stale memory, poisoning, token bloat</h3>
+  <div class="flex gap-2 text-xs">
+    <span class="px-2 py-0.5 rounded-full bg-red-100 text-red-800">design against all three</span>
+  </div>
+  <p class="font-mono text-sm text-slate-600">OWASP Agentic ASI06 · CVE-2026-59726 (zero-auth memory store) · AgentBaiting: 800 fake skills/MCP servers · claude-mem issue #618</p>
+  <p><strong>Problem:</strong> auto-write pipelines durably store hallucinations (documented 11-day recovery); retrieval keeps working while the agent acts confidently on invalidated facts; memory layers themselves can bloat context (claude-mem users burning budgets in &lt;10 messages).</p>
+  <p><strong>Resolution:</strong> every nontrivial memory carries source, date, commit, and active/superseded status; treat retrieved memory as hypothesis to re-verify; never auto-persist fetched web content; audit periodically.</p>
+  <ul class="list-disc list-inside text-sm text-slate-600 space-y-0.5">
+    <li>Memory is context, not enforcement — hard rules need hooks</li>
+    <li>Vet MCP memory servers like any dependency</li>
+    <li>Unsolved in the literature: selective forgetting</li>
+  </ul>
+</article>
+</section>
+
+<!-- ============ TOOLS ============ -->
+<section class="space-y-6">
+<h2 class="text-xl font-serif font-semibold border-b border-slate-200 pb-2">Skills, plugins &amp; MCP servers surfaced</h2>
+<p class="text-sm text-slate-600">Everything named across the six passes, ranked for a single-user Claude Code setup. Stars as reported mid-2026.</p>
+
+<div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+<table class="w-full text-sm">
+  <thead class="bg-slate-100 text-left text-xs uppercase tracking-wider text-slate-600">
+    <tr><th class="px-4 py-2">Tool</th><th class="px-4 py-2">What it is</th><th class="px-4 py-2">Verdict</th></tr>
+  </thead>
+  <tbody class="divide-y divide-slate-100">
+    <tr><td class="px-4 py-2 font-mono">planning-with-files</td><td class="px-4 py-2">Manus-style crash-proof plan files, per-turn re-injection; resume 5.0 vs 13.3 turns</td><td class="px-4 py-2"><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-xs">try first</span></td></tr>
+    <tr><td class="px-4 py-2 font-mono">deja-vu</td><td class="px-4 py-2">Indexes session logs your agents already write; 17 CLIs; no LLM, no embeddings; 84.9% hit@1</td><td class="px-4 py-2"><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-xs">try first</span></td></tr>
+    <tr><td class="px-4 py-2 font-mono">post_compact_reminder</td><td class="px-4 py-2">Hook re-injecting "re-read your instructions" after compaction — fixes rule amnesia</td><td class="px-4 py-2"><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-xs">tiny, adopt pattern</span></td></tr>
+    <tr><td class="px-4 py-2 font-mono">claude-code-handoff-skill</td><td class="px-4 py-2">"Verified context bridge between sessions" — productizes the handoff.md pattern</td><td class="px-4 py-2"><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-xs">adopt pattern</span></td></tr>
+    <tr><td class="px-4 py-2 font-mono">Beads (bd)</td><td class="px-4 py-2">Yegge's git-backed task graph (JSONL truth, SQLite cache); queryable DAG replaces markdown TODOs</td><td class="px-4 py-2"><span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-xs">multi-day projects</span></td></tr>
+    <tr><td class="px-4 py-2 font-mono">memsearch</td><td class="px-4 py-2">Zilliz plugin: daily markdown + local embeddings; retrieval in an isolated subagent</td><td class="px-4 py-2"><span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-xs">lightweight semantic</span></td></tr>
+    <tr><td class="px-4 py-2 font-mono">episodic-memory</td><td class="px-4 py-2">obra/superpowers: semantic search over full past transcripts; Haiku subagent contains bloat</td><td class="px-4 py-2"><span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-xs">transcript recall</span></td></tr>
+    <tr><td class="px-4 py-2 font-mono">Amnesia</td><td class="px-4 py-2">New category: audits memory for contradictions instead of adding more</td><td class="px-4 py-2"><span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-xs">hygiene, watch</span></td></tr>
+    <tr><td class="px-4 py-2 font-mono">Remember</td><td class="px-4 py-2">Tiered rolling buffer (hourly→daily→7-day→archive), Haiku-compressed, &lt;$0.01/session — <em>already running in this environment</em></td><td class="px-4 py-2"><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-xs">installed</span></td></tr>
+    <tr><td class="px-4 py-2 font-mono">claude-mem</td><td class="px-4 py-2">Market leader (89k★): hooks capture → SQLite FTS + Chroma, progressive retrieval, Endless Mode</td><td class="px-4 py-2"><span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-xs">token-bloat backlash (#618)</span></td></tr>
+    <tr><td class="px-4 py-2 font-mono">agentmemory</td><td class="px-4 py-2">Karpathy LLM-Wiki pattern + KG + hybrid search; /recall /remember /handoff; 95.2% R@5 claim</td><td class="px-4 py-2"><span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-xs">reliability walk-back reported</span></td></tr>
+    <tr><td class="px-4 py-2 font-mono">Basic Memory</td><td class="px-4 py-2">MCP: markdown source of truth + rebuildable semantic index; Obsidian-friendly</td><td class="px-4 py-2"><span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-xs">right architecture</span></td></tr>
+    <tr><td class="px-4 py-2 font-mono">claude-self-reflect / claude-reflect</td><td class="px-4 py-2">Search all past conversations w/ decay · sync corrections into CLAUDE.md</td><td class="px-4 py-2"><span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-xs">niche</span></td></tr>
+    <tr><td class="px-4 py-2 font-mono">memU · turing-mem · Milepost · Opt Mem · Graft · Engraphis · claude-memory-compiler</td><td class="px-4 py-2">July's wave of local-first markdown/SQLite memory tools, all cross-agent (Claude Code + Codex + Cursor)</td><td class="px-4 py-2"><span class="px-2 py-0.5 rounded-full bg-slate-200 text-slate-700 text-xs">young, watch</span></td></tr>
+    <tr><td class="px-4 py-2 font-mono">Mem0/OpenMemory · Letta · Zep · mcp-memory-service · server-memory · Supermemory · Engram · mcp-memory-keeper</td><td class="px-4 py-2">Hosted/daemon memory platforms and the MCP long tail (137 servers cataloged)</td><td class="px-4 py-2"><span class="px-2 py-0.5 rounded-full bg-slate-200 text-slate-700 text-xs">skip for solo</span></td></tr>
+  </tbody>
+</table>
+</div>
+</section>
+
+<!-- ============ RECOMMENDATION ============ -->
+<section class="space-y-6">
+<h2 class="text-xl font-serif font-semibold border-b border-slate-200 pb-2">Recommended stack — single user, Claude Code</h2>
+
+<article class="rounded-xl bg-gradient-to-br from-slate-900 to-slate-800 text-stone-100 p-8 space-y-6">
+  <h3 class="text-lg font-semibold text-white">The boring stack wins: native features + files + discipline, plugins only where they close a real gap</h3>
+  <p class="text-sm text-stone-300">All six passes converged: the transcript is ephemeral, the workspace is authoritative. Layers below, top loads always, bottom loads on demand.</p>
+
+  <div class="space-y-2">
+    <div class="band border-emerald-400 bg-slate-800/60 rounded px-4 py-2">
+      <p class="text-xs uppercase tracking-wider text-emerald-300">Tier 0 — always loaded (keep tiny)</p>
+      <p class="text-sm">Lean CLAUDE.md (gotchas only, <span class="font-mono">/doctor</span>-audited) · auto-memory MEMORY.md index · hard rules as hooks, not prose</p>
+    </div>
+    <div class="band border-emerald-400 bg-slate-800/60 rounded px-4 py-2">
+      <p class="text-xs uppercase tracking-wider text-emerald-300">Tier 1 — per task</p>
+      <p class="text-sm">plan.md + state.md ledger on a task branch, committed with the code · refresh before /compact and session end · handoff.md + fresh session instead of repeated compaction</p>
+    </div>
+    <div class="band border-amber-400 bg-slate-800/60 rounded px-4 py-2">
+      <p class="text-xs uppercase tracking-wider text-amber-300">Tier 2 — hygiene automation</p>
+      <p class="text-sm">SessionStart hook re-injects state · PreCompact hook snapshots the ledger (post_compact_reminder pattern) · /compact steered at ~60%, never auto at 95%</p>
+    </div>
+    <div class="band border-amber-400 bg-slate-800/60 rounded px-4 py-2">
+      <p class="text-xs uppercase tracking-wider text-amber-300">Tier 3 — on demand only</p>
+      <p class="text-sm">Sub-agents for noisy exploration (bounded contracts) · skills' progressive disclosure · grep over memory topic files · past-session recall via deja-vu or memsearch if grep stops sufficing</p>
+    </div>
+    <div class="band border-slate-500 bg-slate-800/60 rounded px-4 py-2">
+      <p class="text-xs uppercase tracking-wider text-slate-400">Deliberately excluded</p>
+      <p class="text-sm">Vector DBs, knowledge graphs, hosted memory platforms, "remember everything" pipelines — add only when keyword search demonstrably fails at scale</p>
+    </div>
+  </div>
+
+  <div class="text-sm text-stone-300 space-y-1">
+    <p><strong class="text-white">Do this week:</strong> run <span class="font-mono">/doctor</span> on CLAUDE.md; adopt the <a class="text-emerald-300" href="#handoff">handoff-over-compaction</a> habit; add a PreCompact ledger-snapshot hook.</p>
+    <p><strong class="text-white">Trial next:</strong> <a class="text-emerald-300" href="#repomaps">planning-with-files</a> for multi-session tasks; deja-vu for zero-cost past-session recall (it indexes logs you already have); Beads if a project outgrows markdown TODOs.</p>
+    <p><strong class="text-white">Already covered here:</strong> the Remember plugin (rolling buffer) and this session's auto-memory directory are Tier 0/3 pieces of exactly this architecture.</p>
+  </div>
+</article>
+</section>
+
+<footer class="text-xs text-slate-500 pt-4 border-t border-slate-200">
+  Sources: 6 agent passes — web (Anthropic/OpenAI/Manus/Chroma engineering + arXiv), last30days (Reddit, X, HN, TikTok, Instagram, Threads, GitHub, Digg; 277 items, windows ending 2026-07-30), Codex (2 deep-research threads). Raw findings: scratchpad findings-*.md · ~/documents/Last30Days/*-raw-v3.md
+</footer>
+
+</main>
+</body>
+</html>

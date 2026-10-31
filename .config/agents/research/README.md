@@ -1,0 +1,69 @@
+# Research on how we set up and use our agents
+
+The home for research reports about the harnesses themselves — Claude Code,
+Codex, Pi — their plugins, skills, delegation patterns and context handling.
+Reports a session produces land here rather than in a scratchpad that dies
+with the session. Rules for *changing* the harnesses live in
+`../contexts/harnesses.md`; the inventory of what is installed where is
+`../PLUGINS.md`; deferred adoptions get a probe in `../watches/`. This
+directory holds the evidence those files cite.
+
+Conventions: date-prefix reports with the day the research was done
+(`YYYY-MM-DD-topic.md`); undated files are living digests. Raw `/last30days`
+output is kept with a `-raw` suffix; its processed counterpart, when one
+exists, carries the same date. Nothing here is tracked as a source of truth —
+a decision belongs in `PLUGINS.md`, a context file, or a skill, with a
+pointer back to the report that justified it.
+
+## Index
+
+### Digests
+- `lessons-from-memory.md` — what past sessions learned about running these agents, pulled from per-project memory and the `.remember` logs, each entry with its source.
+
+### Delegation and subagents
+- `2026-10-23-gemini-4-argon-routing.md` — Gemini 4 Argon replaces 3.8 Flash on the agy one-shot row; no coding tier (GPT-6.1 Sol dominates it); AA snapshot with the new index suites, RealSWE, BenchLM, a planted-flaw local probe, and the agy 1.4.6 tool rename that broke read-only children.
+- `2026-10-23-openrouter-prose-route.md` — Slop Index snapshot: new OpenRouter route via the `openrouter` skill; runway prose stays on GPT-6 Luna with DeepSeek V4 Pro 0813 as the A/B candidate; the docs prose row is unchanged (quality vs AI-likeness are different axes).
+- `2026-09-29-gpt-6-1-sol-routing.md` — Artificial Analysis snapshot: GPT-6.1 Sol (medium) replaces GPT-6 Sol on every Sol row and supersedes the Sonnet 5.5 high route; Astra and Luna keep their rows (Codex >= 0.159.1).
+- `2026-09-28-sonnet-5-5-routing.md` — Artificial Analysis snapshot with Sonnet 5.5 at every effort: Sonnet 5.5 high replaces Sol for bounded tasks from Claude Code only; Luna stays mechanical. Superseded next day by the GPT-6.1 Sol report.
+- `2026-09-24-prose-model-choice.md` — EQ-Bench, Arena and Artificial Analysis snapshot: GPT-6 Sol for delegated prose, Luna off documentation, Gemini Flash and Haiku avoided.
+- `2026-09-23-routing-tiers-opus-5-5-gpt-6.md` — Artificial Analysis snapshot placing Opus 5.5 as the strongest tier; GPT-6 Sol/Luna replace the 5.6 tiers (Codex >= 0.156.1).
+- `2026-09-16-gemini-3-8-flash-routing.md` — why Gemini 3.8 Flash gets a bounded one-shot row and nothing more: leaderboard snapshot (DeepSWE, RealSWE, Artificial Analysis incl. Omniscience, BenchLM), 30-day sentiment, and local `agy` probes where the unbounded run never finished.
+- `2026-09-16-last30days-gemini-3-8-flash-raw.md` — the raw sweep behind it.
+- `2026-09-15-routing-instruction-fixes.md` — routing contract checks, strongest-tier policy, benchmark wording, and live interrogation limits.
+- `2026-09-10-pi-subagents-options.md` — Astra research: Pi delegation packages ranked, literature on when multi-agent helps (Kim et al. 2026, Anthropic's research system, Cognition's counter-essay, MAST), the minimal-launcher option, adoption plan and risks.
+- `2026-09-10-pi-subagents-last30days.md` — 30-day sentiment sweep on subagents in terminal coding agents; Pi's creator's position, the fragmented `pi-subagents` namespace, practitioner convergence on read-heavy fan-out only.
+- `2026-09-15-pi-delegate-review.md` — Astra review of the finished build: 14 findings (process discovery can miss the root, survivors released as finished, worktree ownership, a symlink cwd escape, hang paths, unbounded backlog), `/proc` scan cost, simplification cuts, doc fixes.
+- `2026-09-15-pi-delegate-build.md` — what the five-step build shipped (kill sweep, background + progress, batches, worktrees, `shell_bg`), the lead's live checks, estimates vs actual size, Codex sandbox and Pi API findings, and the decisions taken.
+- `2026-09-15-pi-delegate-gaps-effort.md` — Astra review of closing five delegation gaps on Pi (background, fan-out, progress, worktrees, background shell): implementation sketches with Pi API citations, effort grades, the process-group kill hole and the read-isolation limit in `delegate.ts`.
+- `2026-09-10-pi-delegate-launcher-report.md` — build report for the `delegate` tool: registered schema, child command lines, test output, live transcripts.
+- `subagent-delegation-advisor-pattern.md` — the advisor/worker design document (uploaded 2026-08-15): one long-running advisor, fresh-context workers, model/effort tiers, plan-then-implement split. Its referenced companion `delegation-design-rationale.md` was never found on this machine.
+
+### Context and memory
+- `2026-10-19-instruction-friction-audit.md` — a month of transcripts checked for skills, context files or plugins working against each other: trailer leaks, a disabled plugin surviving `/clear`, block-secrets false positives, a stale duplicate flutter skill, AGENTS.md gitignored.
+- `2026-09-18-warp-self-improving-agents-check.md` — Warp's inner-skill / human-feedback / scheduled-improver pattern checked against this setup: principles, disclosure and skills-vs-memory hold; the improver (feedback → loaded-file edits) is manual and unscheduled.
+- `2026-07-30-context-rot-persistent-memory.html` — combined findings of the six-agent sweep on context rot and on-disk memory; the "handoff over compaction" consensus that produced the `handoff` and `grind` skills.
+- `2026-07-30-last30days-context-rot-raw.md`, `2026-07-30-last30days-persistent-memory-raw.md` — the raw sweeps behind it.
+- `2026-07-07-last30days-context-optimization-plugins-raw.md` — context-mode, leanctx, rtk and the rest; the sweep that preceded adopting context-mode.
+
+### Teaching and learning projects
+- `2026-09-23-ai-tutoring-learning-projects.md` — evidence on agents that teach instead of doing (Bastani PNAS 2025, Anthropic skill-formation RCT, CS50 duck leakage, hint ladders, productive failure), baseline tests of an unguided agent, and the protocol behind the `tutor` skill.
+
+### Architecture tooling
+- `2026-09-27-geiger-methodology-review.md` — `geiger` method against 2026 research (SmellBench, SlopCodeBench, CodeScene/Code Maat, ArchUnit metrics): verdicts need architectural evidence, NCCD is not a cycle signal, Tach is maintained again, ranked SKILL.md changes.
+- `2026-09-27-geiger-scripts-review.md` — `xray.py`/`dart_edges.py` bug list with repros, 54k-file nixpkgs timings (Git is 94% of runtime), and why a Go/Rust port isn't worth it: stay Python, fix the algorithms, parse Dart with ast-grep.
+- `2026-07-30-last30days-codebase-architecture-analysis-raw.md` — the sweep behind the `geiger` skill.
+
+### Models and plugins
+- `2026-09-27-jev-fit.md` — TypeSafe Jev (typed-decision model): community agentic uses, 60-day usage mining, verdict (only a security-guidance gate plausibly pays); raw sweep in `2026-09-27-last30days-jev-raw.md`.
+
+### Posts
+Converted from the site's TSX sources in `~/repos/career/portfolio-v2`; diagrams are referenced by name, not embedded.
+- `2026-08-15-post-sharpening-the-harness.md` — what the papers on context and agent design say, what this setup measures, what survived contact.
+- `2026-08-25-post-counting-agent-turns.md` — turns and wall time as the axis benchmarks leave out.
+
+## Not copied, but related
+
+- `~/documents/Last30Days/` — every raw sweep, including the job-search ones that are about using agents for a task rather than setting them up.
+- `~/repos/zhulong-theme/REFUTATION.md` and `~/repos/flect/reports/flect-refutation-2026-07-29.html` — refutation records for project specs; the protocol is summarised in the digest, the records stay with their projects.
+- `~/repos/career/job-hunt-swe/ai-job-search-research-report.md` — multi-agent orchestration applied to a search, not harness research.
+- `~/tmp/claude/reports/dark-palette-research.html` — design research, no agent content.

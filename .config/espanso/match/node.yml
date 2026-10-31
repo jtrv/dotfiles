@@ -1,0 +1,32 @@
+# Node: ESM setup, files, CLI args.
+# Avoid "{{" in replace text: espanso reads it as a variable.
+
+matches:
+  - trigger: ",,nesm"
+    label: "node: ESM setup and paths"
+    replace: |
+      // package.json: "type": "module"  → import/export in .js files.
+      // Without it: "SyntaxError: Cannot use import statement outside a module".
+      import path from 'node:path';
+      import { helper } from './util.js';  // Node ESM needs the .js extension on relative imports
+
+      const here = import.meta.dirname;     // no __dirname in ESM (Node 20.11+)
+      const dataFile = path.join(here, 'data.json');  // join, don't concatenate with '/'
+      $|$
+      // e.g. JSON import: import data from './data.json' with { type: 'json' };
+      // e.g. top-level await works in ESM: const rows = await load();
+      // CommonJS equivalent: const x = require('./x'); module.exports = { … }; __dirname
+
+  - trigger: ",,nfs"
+    label: "node: read file, CLI args"
+    replace: |
+      import { readFile, writeFile } from 'node:fs/promises';
+
+      const [, , inputPath = 'input.txt'] = process.argv;  // argv[0] = node, argv[1] = script
+      const text = await readFile(inputPath, 'utf8');     // without 'utf8' you get a Buffer
+      const lines = text.split(/\r?\n/).filter(Boolean);  // handles Windows line endings, drops blanks
+      $|$
+      await writeFile('out.json', JSON.stringify(result, null, 2));
+
+      // e.g. run: node script.js data.csv
+      // e.g. missing file: catch (err) { if (err.code === 'ENOENT') … }

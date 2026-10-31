@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # niri-viewport — float a niri window and resize it to a device/viewport size.
 #
-# Pick a window (skim), pick a device (skim), and it floats + resizes the
+# Pick a window (fzf), pick a device (fzf), and it floats + resizes the
 # window via `niri msg`. Handy for previewing responsive UI at real phone,
 # tablet, and laptop dimensions. Sizes are logical points / CSS px, matching
 # each device's viewport (portrait for phones/tablets, landscape for laptops).
@@ -10,7 +10,7 @@
 #        niri-viewport --id 42    # skip the window picker, resize window 42
 set -euo pipefail
 
-for dep in niri sk jq awk; do
+for dep in niri fzf jq awk; do
   command -v "$dep" >/dev/null 2>&1 ||
     { printf 'niri-viewport: required tool %q not found\n' "$dep" >&2; exit 1; }
 done
@@ -27,7 +27,7 @@ else
            | [.id, ((if .is_focused then "● " else "  " end)
                     + (.app_id // "?") + " — " + (.title // "(no title)"))]
            | @tsv' |
-    sk -d '\t' --with-nth=2 --prompt='window ❯ ' \
+    fzf -d '\t' --with-nth=2 --prompt='window ❯ ' \
        --header='Select a window to resize (Esc to cancel)') || exit 0
   [ -n "${win:-}" ] || exit 0
   IFS=$'\t' read -r id _ <<<"$win"
@@ -60,7 +60,7 @@ EOF
 
 sel=$(printf '%s\n' "$devices" |
   awk -F'\t' '{printf "%s\t%s\t%s\t%s × %s\n", $1, $2, $3, $2, $3}' |
-  sk -d '\t' --with-nth=1,4 --prompt='device ❯ ' \
+  fzf -d '\t' --with-nth=1,4 --prompt='device ❯ ' \
      --header="Viewport for window $id (Esc to cancel)") || exit 0
 [ -n "${sel:-}" ] || exit 0
 IFS=$'\t' read -r label W H _ <<<"$sel"

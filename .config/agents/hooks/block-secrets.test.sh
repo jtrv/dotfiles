@@ -1,0 +1,104 @@
+#!/usr/bin/env bash
+# Feeds synthetic PreToolUse payloads at block-secrets.sh and asserts deny/allow.
+# DENY cases are what we want blocked; ALLOW cases are the false positives we must not create.
+HOOK="$HOME/.config/agents/hooks/block-secrets.sh"
+fail=0
+
+check() { # check <expect: DENY|ALLOW> <field> <value>
+  local expect=$1 field=$2 value=$3 out verdict
+  out=$(jq -nc --arg v "$value" --arg f "$field" '{tool_input: {($f): $v}}' | bash "$HOOK")
+  if [[ -n "$out" ]]; then verdict=DENY; else verdict=ALLOW; fi
+  if [[ "$verdict" != "$expect" ]]; then
+    printf '  FAIL  expected %-5s got %-5s : %s\n' "$expect" "$verdict" "$value"
+    fail=1
+  else
+    printf '  ok    %-5s : %s\n' "$verdict" "$value"
+  fi
+}
+
+echo "== new path rules: must DENY =="
+check DENY file_path "$HOME/.config/codex/auth.json"
+check DENY file_path "$HOME/.config/pi/auth.json"
+check DENY file_path "$HOME/.local/share/com.vercel.cli/auth.json"
+check DENY file_path "$HOME/.claude/.credentials.json"
+check DENY file_path "$HOME/.config/gh/hosts.yml"
+check DENY file_path "$HOME/.config/rclone/rclone.conf"
+check DENY file_path "$HOME/.local/share/keyrings/login.keyring"
+check DENY file_path "$HOME/.password-store/mail/work.gpg"
+check DENY file_path "$HOME/.config/sops/age/keys.txt"
+check DENY file_path "$HOME/repos/quickword/mise.local.toml"
+check DENY file_path "$HOME/.my.cnf"
+check DENY file_path "$HOME/vault.kdbx"
+check DENY file_path "$HOME/work.ovpn"
+check DENY file_path "$HOME/AuthKey_ABC123.p8"
+check DENY file_path "$HOME/.authinfo.gpg"
+check DENY file_path "/etc/ssl/private/server.key"
+check DENY command   'cat tls-cert.pem'
+check DENY command   'cat ~/.config/codex/auth.json'
+
+echo "== pre-existing rules still fire =="
+check DENY file_path "/srv/app/.env"
+check DENY file_path "$HOME/.ssh/id_ed25519"
+check DENY command   'gh auth token'
+check DENY command   'gcloud auth print-access-token'
+check DENY command   'az account get-access-token'
+check DENY command   'pass show mail/work'
+check DENY command   'bw get password github'
+
+echo "== must ALLOW (false positives we must not introduce) =="
+check ALLOW file_path "$HOME/repos/quickword/mise.toml"
+check ALLOW file_path "$HOME/.config/mise/config.toml"
+check ALLOW file_path "/srv/app/src/oauth.json"
+check ALLOW file_path "/srv/app/.env.example"
+check ALLOW file_path "/srv/app/src/auth.ts"
+check ALLOW file_path "/srv/app/public/cert.crt"
+check ALLOW command   "jq -r '.plugins | keys[]' installed_plugins.json"
+check ALLOW command   'jq -c ".x | with_entries(select(.key|test(\"a\")))" s.json'
+check ALLOW command   'jq ".[] | .key" f.json'
+check ALLOW file_path "$HOME/.ssh_config_notes.md"
+check ALLOW pattern   'session.credentials'
+check ALLOW pattern   'user.age'
+check ALLOW pattern   'const authJson = 1'
+check ALLOW command   'rg "authentication" src/'
+check ALLOW command   'git pass-through --show'
+check ALLOW command   'env FOO=1 bun test'
+check ALLOW command   'bw list items'
+
+echo "== narrowed rules: real reads still DENY =="
+check DENY command   'cat ~/.npmrc'
+check DENY command   'cat .env'
+check DENY command   'jq -r .TOKEN .env'
+check DENY command   "jq -r '.token' ~/.config/gh/hosts.yml"
+check DENY command   'cat ~/.aws/credentials'
+check DENY command   'cat credentials.json'
+check DENY command   'env | rg -i cargo'
+check DENY command   'printenv'
+check DENY command   'env > out.txt'
+check DENY command   $'python3 - <<\'EOF\'\nprint(open(".env").read())\nEOF'
+check DENY command   $'cat <<EOF > f\n$(cat .env)\nEOF'
+check DENY command   $'cat > f <<\'EOF\'\nx\nEOF\ncat .env'
+
+echo "== narrowed rules: past false positives ALLOW =="
+check ALLOW command   "jq '.env' ~/.config/claude/settings.json"
+check ALLOW command   "sed -i 's/e.key === \"Enter\"/e.key === \"Tab\"/' src/App.tsx"
+check ALLOW command   $'python3 - <<\'EOF\'\ns = s.replace("a", "Command::new(\\"git\\").env(\\"PATH\\", p).env_clear()")\nEOF'
+check ALLOW command   'python3 -c "u = UInput({e.EV_KEY: [e.KEY_F13]})"'
+check ALLOW command   'reader.key(code, &d.conn)'
+check ALLOW command   "git ls-files | rg -i '\\.env|secret|\\.pem|key'"
+check ALLOW command   $'cat > PLAN.md <<\'EOF\'\nback up folders (no *.pem); the .env is loaded; ~/.my.cnf\nEOF'
+check ALLOW command   $'cat > notes.md <<-"EOF"\n\tsee .env\n\tEOF'
+check ALLOW command   'echo "frontend for AI Gateway (routing, budgets, credentials, logs)"'
+check ALLOW command   'grep -n "auth/credentials\|/auth/login" src/api.js'
+check ALLOW command   "rg -n \"join|env|HOME|XDG\" src/common.rs"
+check ALLOW command   "grep -E 'gamescope|env|xephyr' run.sh"
+check ALLOW command   "env | rg -i typesafe | sed 's/=.*/=<set>/'"
+check ALLOW command   "env | grep -i proxy | cut -d= -f1"
+check ALLOW command   "env | rg -i -c 'sgdb|steamgrid'"
+check DENY  command   "env | rg -i typesafe | sed 's/x/y/'"
+check DENY  command   "env | rg -i -C 2 token"
+
+echo "== escape hatch =="
+check ALLOW command   'SECRETS_OK=1 cat ~/.config/codex/auth.json'
+
+[[ $fail -eq 0 ]] && echo "ALL PASS" || echo "FAILURES"
+exit $fail

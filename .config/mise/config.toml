@@ -1,3 +1,4 @@
+#:schema https://mise.jdx.dev/schema/mise.json
 # https://mise.jdx.dev/registry.html
 # global tools now come from nix (systemPackages) - keeping them here too means
 # mise shims shadow the nix copies. only tools nix doesn't provide stay global;
@@ -6,9 +7,12 @@
 aichat = "latest"
 usage = "latest"  # mise completion dependency
 herdr = "latest"
+bun = "latest"
 
 [settings]
-plugin_autoupdate_last_check_duration = '1 day'
 env_file = '.env'
-idiomatic_version_file_enable_tools = [ 'crystal', 'elixir', 'go', 'java', 'node', 'python', 'ruby', 'terraform', 'yarn' ]
+idiomatic_version_file_enable_tools = [ 'crystal', 'elixir', 'java', 'node', 'python', 'ruby', 'terraform', 'yarn' ]
 experimental = true
+# NixOS defaults to compiling python and node from source; nix-ld runs the prebuilt ones
+python.compile = false
+node.compile = false

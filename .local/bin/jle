@@ -1,0 +1,4 @@
+#!/bin/sh
+since=${1:--3h}
+[ $# -gt 0 ] && shift
+journalctl -o json --since "$since" "$@" | hl -L -l e -h '*'

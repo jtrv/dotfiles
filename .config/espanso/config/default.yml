@@ -1,2 +1,4 @@
-search_shortcut: META+CTRL+E
+search_shortcut: META+CTRL+SHIFT+ALT+E
 search_trigger: ",,/"
+keyboard_layout:
+  layout: us

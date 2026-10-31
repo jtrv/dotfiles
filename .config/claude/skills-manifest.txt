@@ -2,8 +2,8 @@
 # bespoke = tracked in dotfiles; others re-install via find-skills / marketplace
 
 name                             version  source
-caveman                          —      bespoke
 caveman-commit                   —      bespoke
+cholo                            —      bespoke
 color-expert                     —      https://github.com/meodai/skill.color-expert
 dotfiles                         —      bespoke
 find-skills                      —      bespoke

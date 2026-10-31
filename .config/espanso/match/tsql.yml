@@ -1,0 +1,368 @@
+# T-SQL (SQL Server) patterns, with traps in comments.
+# Avoid "{{" in replace text: espanso reads it as a variable.
+
+matches:
+  - trigger: ",,qjoin"
+    label: "sql: LEFT JOIN + GROUP BY count"
+    replace: |
+      -- COUNT(child.id), not COUNT(*): COUNT(*) counts the NULL row as 1.
+      -- GROUP BY every non-aggregated column in SELECT.
+      SELECT p.id, p.name, COUNT(c.id) AS child_count
+      FROM dbo.$|$ p
+      LEFT JOIN dbo.child c ON c.parent_id = p.id  -- extra filters on c go HERE, not in WHERE (WHERE turns it into an INNER JOIN)
+      GROUP BY p.id, p.name
+      ORDER BY child_count DESC;
+
+      -- e.g. customer (1 Acme, 2 Bolt), work_order (10 → Acme, 11 → Acme):
+      --   1 Acme 2
+      --   2 Bolt 0   <- COUNT(*) would say 1
+
+  - trigger: ",,qtop"
+    label: "sql: top-1 per group (ROW_NUMBER)"
+    replace: |
+      -- ROW_NUMBER breaks ties arbitrarily; RANK/DENSE_RANK keep ties.
+      -- Add a unique tie-breaker to ORDER BY so the result is deterministic.
+      WITH ranked AS (
+        SELECT t.*,
+               ROW_NUMBER() OVER (PARTITION BY t.$|$ ORDER BY t.created_at DESC, t.id DESC) AS rn
+        FROM dbo.tbl t
+      )
+      SELECT * FROM ranked WHERE rn = 1;
+
+      -- e.g. newest step per work order: PARTITION BY wo_id ORDER BY completed_at DESC, id DESC
+      --   2nd newest: WHERE rn = 2 · top 3 each: WHERE rn <= 3
+
+  - trigger: ",,qdup"
+    label: "sql: find and delete duplicates"
+    replace: |
+      -- find
+      SELECT $|$, COUNT(*) AS n
+      FROM dbo.tbl
+      GROUP BY col
+      HAVING COUNT(*) > 1;  -- aggregates filter in HAVING, not WHERE
+
+      -- delete extras, keep the lowest id. Run the SELECT version first.
+      WITH d AS (
+        SELECT id, ROW_NUMBER() OVER (PARTITION BY col ORDER BY id) AS rn
+        FROM dbo.tbl
+      )
+      DELETE FROM d WHERE rn > 1;
+
+      -- e.g. part rows (1 'R10K') (2 'R10K') (3 'C1U')
+      --   find   → R10K 2
+      --   delete → removes id 2, keeps id 1
+
+  - trigger: ",,qanti"
+    label: "sql: anti-join (rows with no match)"
+    replace: |
+      -- NOT EXISTS, not NOT IN: one NULL in a NOT IN list returns zero rows.
+      SELECT p.*
+      FROM dbo.$|$ p
+      WHERE NOT EXISTS (
+        SELECT 1 FROM dbo.child c WHERE c.parent_id = p.id
+      );
+
+      -- e.g. customers with no work orders: FROM dbo.customer p … WHERE c.customer_id = p.id
+      -- NOT IN trap: WHERE id NOT IN (1, NULL) returns nothing, ever
+
+  - trigger: ",,qpage"
+    label: "sql: paging OFFSET/FETCH"
+    replace: |
+      -- ORDER BY is required. Unique tie-breaker (id) or rows repeat/vanish across pages.
+      -- Offset = (page - 1) * size, computed in the app, passed as parameters.
+      SELECT id, $|$
+      FROM dbo.tbl
+      ORDER BY created_at DESC, id DESC
+      OFFSET @offset ROWS FETCH NEXT @size ROWS ONLY;
+
+      -- e.g. page 3, 20 per page: @offset = (3 - 1) * 20 = 40, @size = 20 → rows 41–60
+      -- "page x of y" needs a separate SELECT COUNT(*) with the same WHERE
+
+  - trigger: ",,qlag"
+    label: "sql: time between rows (LAG + DATEDIFF)"
+    replace: |
+      -- First row per partition gets NULL from LAG.
+      -- DATEDIFF counts boundaries crossed, not elapsed time: use seconds and divide if precision matters.
+      SELECT $|$group_id, ts,
+             DATEDIFF(second,
+                      LAG(ts) OVER (PARTITION BY group_id ORDER BY ts),
+                      ts) / 60.0 AS minutes_since_prev
+      FROM dbo.tbl;
+
+      -- e.g. order 7 steps done at 08:00, 08:45, 10:00 → NULL, 45.0, 75.0
+      -- next row instead of previous: LEAD(ts) OVER (…)
+      -- trap: DATEDIFF(day, '23:59', '00:01 next day') = 1 although 2 minutes passed
+
+  - trigger: ",,qrun"
+    label: "sql: running total"
+    replace: |
+      -- Say ROWS explicitly: the default frame is RANGE (slower, lumps ties together).
+      SELECT group_id, ts, qty,
+             SUM(qty) OVER (PARTITION BY group_id ORDER BY ts, id
+                            ROWS UNBOUNDED PRECEDING) AS running_qty
+      FROM dbo.$|$;
+
+      -- e.g. qty 5, 3, 2 → running_qty 5, 8, 10
+      -- group total on every row (no ORDER BY, no frame): SUM(qty) OVER (PARTITION BY group_id)
+
+  - trigger: ",,qtx"
+    label: "sql: transaction with TRY/CATCH"
+    replace: |
+      SET XACT_ABORT ON;  -- most errors doom the tx, so nothing half-commits
+      BEGIN TRY
+        BEGIN TRAN;
+          $|$
+        COMMIT;
+      END TRY
+      BEGIN CATCH
+        IF @@TRANCOUNT > 0 ROLLBACK;
+        THROW;  -- rethrow; bare THROW needs the previous statement to end with ;
+      END CATCH;
+
+      -- e.g. move stock between bins: both commit, or neither
+      --   UPDATE dbo.bin SET qty = qty - @n WHERE id = @from;
+      --   UPDATE dbo.bin SET qty = qty + @n WHERE id = @to;
+
+  - trigger: ",,qproc"
+    label: "sql: stored procedure skeleton"
+    replace: |
+      CREATE OR ALTER PROCEDURE dbo.$|$
+        @id INT,
+        @result_id INT OUTPUT
+      AS
+      BEGIN
+        SET NOCOUNT ON;     -- stops "n rows affected" messages confusing drivers
+        SET XACT_ABORT ON;
+
+        IF NOT EXISTS (SELECT 1 FROM dbo.tbl WHERE id = @id)
+          THROW 50404, 'Not found', 1;  -- user error numbers must be >= 50000
+
+        BEGIN TRAN;
+          -- work
+          SET @result_id = @id;
+        COMMIT;
+      END;
+      -- call: DECLARE @r INT; EXEC dbo.proc @id = 1, @result_id = @r OUTPUT; SELECT @r;
+
+      -- e.g. validation error: THROW 50422, 'qty_pass + qty_fail must equal qty_in', 1;
+      -- e.g. inside CATCH: SELECT ERROR_NUMBER(), ERROR_MESSAGE();
+
+  - trigger: ",,qtable"
+    label: "sql: CREATE TABLE with keys and constraints"
+    replace: |
+      CREATE TABLE dbo.$|$ (
+        id          INT IDENTITY(1,1) NOT NULL CONSTRAINT PK_tbl PRIMARY KEY,
+        parent_id   INT NOT NULL CONSTRAINT FK_tbl_parent REFERENCES dbo.parent(id),
+        code        NVARCHAR(50) NOT NULL CONSTRAINT UQ_tbl_code UNIQUE,  -- NVARCHAR + N'...' literals for Unicode
+        qty         INT NOT NULL CONSTRAINT CK_tbl_qty CHECK (qty >= 0),  -- CHECK passes when the expression is NULL
+        status      VARCHAR(20) NOT NULL CONSTRAINT DF_tbl_status DEFAULT 'open',
+        created_at  DATETIME2(3) NOT NULL CONSTRAINT DF_tbl_created DEFAULT SYSUTCDATETIME()  -- store UTC
+      );
+      -- FKs are not indexed automatically: add an index on parent_id if you join on it.
+
+      -- e.g. composite unique:  CONSTRAINT UQ_step UNIQUE (wo_id, seq)
+      -- e.g. multi-column CHECK: CONSTRAINT CK_qty CHECK (qty_pass + qty_fail <= qty_in)
+      -- e.g. composite PK:       CONSTRAINT PK_x PRIMARY KEY (a_id, b_id)
+      -- e.g. cascade:            REFERENCES dbo.parent(id) ON DELETE CASCADE
+
+  - trigger: ",,qidx"
+    label: "sql: nonclustered covering index"
+    replace: |
+      -- Key columns: what you filter/join/sort on (equality columns first).
+      -- INCLUDE: what you only SELECT, so no lookup back to the table.
+      -- Every index costs on INSERT/UPDATE.
+      CREATE NONCLUSTERED INDEX IX_tbl_$|$
+        ON dbo.tbl (status, due_date)
+        INCLUDE (customer_id, qty);
+
+      -- e.g. serves: SELECT customer_id, qty FROM dbo.tbl WHERE status = 'open' AND due_date < @d
+      --   seek on (status, due_date); customer_id and qty come from INCLUDE
+      -- does NOT seek: WHERE due_date < @d alone (leading column status is missing)
+
+  - trigger: ",,qlock"
+    label: "sql: race-safe state change"
+    replace: |
+      -- Option A: conditional update. The WHERE is the guard; @@ROWCOUNT says who won.
+      -- Read @@ROWCOUNT immediately: any statement in between resets it.
+      UPDATE dbo.tbl
+      SET status = 'done', done_at = SYSUTCDATETIME()
+      WHERE id = @id AND status = 'started';
+      IF @@ROWCOUNT = 0
+        THROW 50409, 'Already done or not started', 1;
+
+      -- Option B: lock the row, then decide (inside a transaction).
+      -- UPDLOCK: others wait instead of reading the same old state. HOLDLOCK: hold until commit.
+      SELECT @status = status
+      FROM dbo.tbl WITH (UPDLOCK, HOLDLOCK)
+      WHERE id = @id;$|$
+
+      -- e.g. two kiosks send "complete step 12" at once:
+      --   kiosk A: UPDATE hits 1 row → wins
+      --   kiosk B: status is already 'done' → 0 rows → THROW 50409 → HTTP 409
+
+  - trigger: ",,qupsert"
+    label: "sql: upsert (update else insert)"
+    replace: |
+      -- Without UPDLOCK+HOLDLOCK two callers can both miss the UPDATE and both INSERT.
+      BEGIN TRAN;
+        UPDATE dbo.tbl WITH (UPDLOCK, HOLDLOCK)
+        SET val = @val
+        WHERE k = @k;
+        IF @@ROWCOUNT = 0
+          INSERT dbo.tbl (k, val) VALUES (@k, @val);
+      COMMIT;
+      -- MERGE works too but needs WITH (HOLDLOCK) for the same reason.$|$
+
+      -- e.g. cache a part lookup: @k = 'R10K-0603', @val = N'{"stock":1200}'
+      --   first call inserts, later calls update
+
+  - trigger: ",,qins"
+    label: "sql: INSERT returning new id"
+    replace: |
+      -- OUTPUT INSERTED.* works for multi-row inserts (like Postgres RETURNING).
+      -- Not @@IDENTITY: a trigger can change it. SCOPE_IDENTITY() is fine for one row.
+      INSERT INTO dbo.$|$ (col_a, col_b)
+      OUTPUT INSERTED.id
+      VALUES (@a, @b);
+
+      -- e.g. more columns back: OUTPUT INSERTED.id, INSERTED.created_at
+      -- e.g. many rows: INSERT … OUTPUT INSERTED.id SELECT a, b FROM #staging;
+      -- node: result.recordset[0].id
+
+  - trigger: ",,qdate"
+    label: "sql: sargable date range"
+    replace: |
+      -- No functions on the column (YEAR(col), CAST(col AS date)): that blocks index seeks.
+      -- Half-open range: >= start AND < next start. BETWEEN misses times on the last day.
+      WHERE $|$created_at >= @from
+        AND created_at <  DATEADD(day, 1, @to)
+
+      -- e.g. all of September 2026:
+      --   WHERE created_at >= '2026-09-01' AND created_at < '2026-10-01'
+      -- e.g. last 7 days: WHERE created_at >= DATEADD(day, -7, SYSUTCDATETIME())
+
+  - trigger: ",,qsel"
+    label: "sql: basic SELECT with filters"
+    replace: |
+      SELECT TOP (10) id, name, qty
+      FROM dbo.$|$
+      WHERE status IN ('open', 'hold')
+        AND name LIKE N'PCB%'          -- % any chars, _ one char; leading % can't use an index
+        AND qty BETWEEN 1 AND 10       -- inclusive both ends
+        AND notes IS NOT NULL          -- never = NULL
+      ORDER BY qty DESC, id;           -- TOP without ORDER BY = random rows
+      -- Runs in this order: FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY,
+      -- so a SELECT alias works in ORDER BY but not in WHERE.
+
+      -- e.g. unique values: SELECT DISTINCT status FROM dbo.work_order;
+      -- e.g. alias: SELECT qty * 2 AS double_qty … ORDER BY double_qty
+
+  - trigger: ",,qinner"
+    label: "sql: INNER JOIN across tables"
+    replace: |
+      SELECT wo.id, c.name AS customer, st.name AS station, s.completed_at
+      FROM dbo.work_order wo
+      JOIN dbo.customer c ON c.id = wo.customer_id     -- JOIN = INNER JOIN: drops rows with no match
+      JOIN dbo.wo_step s  ON s.wo_id = wo.id           -- one-to-many: one output row per step
+      JOIN dbo.station st ON st.id = s.station_id
+      WHERE wo.status = 'open'$|$;
+      -- trap: SUM(wo.qty) after joining steps counts each order once per step.
+      --   Aggregate the many side in a subquery/CTE first, then join.
+      -- missing rows? a JOIN had no match: switch it to LEFT JOIN to see which.
+
+      -- e.g. same table twice needs two aliases: JOIN dbo.station a … JOIN dbo.station b …
+
+  - trigger: ",,qupd"
+    label: "sql: UPDATE safely"
+    replace: |
+      -- 1. Run the WHERE as a SELECT first and check the row count.
+      -- 2. No WHERE = every row. Wrap in a transaction until you trust it.
+      BEGIN TRAN;
+        UPDATE dbo.$|$
+        SET status = 'done', updated_at = SYSUTCDATETIME()
+        WHERE id = @id;
+        SELECT @@ROWCOUNT AS rows_changed;  -- expected?
+      COMMIT;  -- or ROLLBACK if the count is wrong
+
+      -- e.g. update from another table:
+      --   UPDATE t SET t.qty = s.qty
+      --   FROM dbo.tbl t JOIN dbo.src s ON s.id = t.id
+      --   WHERE s.qty <> t.qty;
+      -- e.g. increment: SET qty = qty + 1
+
+  - trigger: ",,qdel"
+    label: "sql: DELETE safely"
+    replace: |
+      -- SELECT with the same WHERE first. No WHERE = every row.
+      BEGIN TRAN;
+        DELETE FROM dbo.$|$
+        WHERE id = @id;
+        SELECT @@ROWCOUNT AS rows_deleted;
+      COMMIT;  -- or ROLLBACK
+      -- error 547 = a foreign key still points at the row: delete children first (or ON DELETE CASCADE)
+      -- TRUNCATE TABLE: all rows, fast, resets IDENTITY, fails if any FK references the table
+
+      -- e.g. delete with a join: DELETE t FROM dbo.tbl t JOIN dbo.old o ON o.id = t.id;
+
+  - trigger: ",,qagg"
+    label: "sql: GROUP BY aggregates"
+    replace: |
+      SELECT station_id,
+             COUNT(*)                          AS steps,
+             SUM(qty_pass)                     AS passed,
+             AVG(CAST(qty_pass AS decimal(10, 2))) AS avg_pass,  -- AVG of INT returns INT (truncates)
+             MIN(completed_at)                 AS first_done,
+             MAX(completed_at)                 AS last_done
+      FROM dbo.$|$
+      GROUP BY station_id          -- every non-aggregated SELECT column goes here
+      HAVING COUNT(*) >= 5         -- filter groups (WHERE filters rows before grouping)
+      ORDER BY passed DESC;
+      -- trap: 5 / 2 = 2 in T-SQL (integer division). Use 5 * 1.0 / 2 or CAST.
+      -- trap: SUM/AVG/MIN/MAX skip NULLs; SUM of zero rows is NULL, not 0 → COALESCE(SUM(x), 0)
+
+      -- e.g. one-row totals: SELECT COUNT(*), SUM(qty) FROM dbo.tbl;  (no GROUP BY)
+
+  - trigger: ",,qcond"
+    label: "sql: conditional counts (pivot)"
+    replace: |
+      -- One row per station, one column per status.
+      SELECT station_id,
+             SUM(CASE WHEN status = 'open' THEN 1 ELSE 0 END) AS open_count,
+             SUM(CASE WHEN status = 'done' THEN 1 ELSE 0 END) AS done_count,
+             COUNT(CASE WHEN due_date < SYSUTCDATETIME() AND status <> 'done' THEN 1 END) AS late_count  -- COUNT skips the NULL from a missing ELSE
+      FROM dbo.$|$
+      GROUP BY station_id;
+
+      -- e.g. percent: 100.0 * SUM(CASE WHEN qty_fail = 0 THEN 1 ELSE 0 END) / COUNT(*) AS first_pass_pct
+
+  - trigger: ",,qcase"
+    label: "sql: CASE, COALESCE, NULLIF"
+    replace: |
+      SELECT id,
+             CASE
+               WHEN status = 'done' THEN 'done'
+               WHEN due_date < SYSUTCDATETIME() THEN 'late'   -- first match wins: order matters
+               ELSE 'on time'                                  -- no ELSE → NULL
+             END AS state,
+             COALESCE(notes, N'')                     AS notes,     -- first non-NULL
+             qty_pass * 1.0 / NULLIF(qty_in, 0)       AS yield      -- NULLIF avoids divide-by-zero (gives NULL)
+      FROM dbo.$|$;
+
+      -- e.g. simple CASE: CASE status WHEN 'open' THEN 1 WHEN 'hold' THEN 2 ELSE 3 END  (custom sort order)
+      -- ISNULL(x, 0) is T-SQL only and takes the first argument's type; COALESCE is standard
+
+  - trigger: ",,qfn"
+    label: "sql: string + date functions"
+    replace: |
+      -- strings
+      CONCAT(first, ' ', last)        -- NULL-safe; 'a' + NULL = NULL
+      LEN(s)                          -- ignores trailing spaces
+      TRIM(s), UPPER(s), LOWER(s), LEFT(s, 3), RIGHT(s, 4), SUBSTRING(s, 2, 3)  -- 1-based
+      REPLACE(s, '-', ''), CHARINDEX('-', s)  -- 0 when not found
+      STRING_AGG(name, ', ') WITHIN GROUP (ORDER BY name)  -- join rows into one string (with GROUP BY)
+      -- dates
+      SYSUTCDATETIME()                -- now, UTC, datetime2
+      CAST(ts AS date)                -- strip the time (not in WHERE on an indexed column)
+      DATEADD(day, 7, ts), DATEDIFF(minute, a, b), EOMONTH(ts), DATEPART(weekday, ts)
+      CONVERT(varchar(10), ts, 23)    -- 'yyyy-mm-dd'; FORMAT() works but is slow
+      $|$

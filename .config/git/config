@@ -11,7 +11,7 @@
 [core]
   autocrlf = input
   editor = kak
-  fsmonitor = true
+  fsmonitor = false
   pager = delta
   untrackedCache = true
 [diff]
@@ -27,6 +27,12 @@
   cmd = difft --display inline "$LOCAL" "$REMOTE"
 [fetch]
   all = true
+# ssh signing. user.signingkey is in the untracked ./personal:
+#   signingkey = /home/sugimoto/.ssh/github-personal
+[gpg]
+  format = ssh
+[gpg "ssh"]
+  allowedSignersFile = ~/.config/git/allowed_signers
 [help]
   autocorrect = prompt
 [init]
@@ -64,5 +70,7 @@
 [includeIf "gitdir:~/work/"]
   path = ./work
 
+[includeIf "gitdir:~/.config/dotfiles"]
+  path = ./dotfiles-local
 [includeIf "gitdir:~/.config/dotfiles/"]
   path = ./dotfiles-local

@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# Backs up quacks saves to a restic repo on the data HDD: every game's state
+# (overlay upper, Wine prefix or native home; on the NVMe) and quacks.conf. The password file sits beside the repo rather than in secli so
+# the backup stays readable when the NVMe dies; the HDD's LUKS covers it at
+# rest. Each machine's unit sets QUACKS_BACKUP_DIR when its disk differs.
+set -euo pipefail
+
+backups=${QUACKS_BACKUP_DIR:-/mnt/data/backups}
+export RESTIC_REPOSITORY=$backups/restic-quacks
+export RESTIC_PASSWORD_FILE=$backups/restic-quacks.pass
+data=${XDG_DATA_HOME:-$HOME/.local/share}/quacks
+games=$HOME/media/games
+
+# missing when the data disk isn't mounted: don't back up onto the root disk
+[ -d "$backups" ] || { echo "quacks-backup: $backups does not exist" >&2; exit 1; }
+if [ ! -e "$RESTIC_REPOSITORY" ]; then
+    (umask 077 && head -c 32 /dev/urandom | base64 >"$RESTIC_PASSWORD_FILE")
+    restic init
+fi
+
+shopt -s nullglob
+restic backup --quiet \
+    --exclude "$data/state/*/prefix/shadercache" \
+    --exclude "$data/state/*/prefix/.cache" \
+    --exclude "$data/state/*/work" \
+    "$data/state" "$games"/*/quacks/*/quacks.conf
+restic forget --quiet --prune --keep-daily 7 --keep-weekly 8 --keep-monthly 12

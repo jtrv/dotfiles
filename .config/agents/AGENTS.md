@@ -1,0 +1,180 @@
+# User-global instructions
+
+## Verbosity
+I have ADHD so please respond clearly and concisely.
+
+## Runs
+When a step doesn't need my input, keep going: put status notes in the same
+message as your next action, not in a message that ends with an offer to
+continue. Stop and ask only when you can't continue without me, or before
+anything destructive or hard to undo: deleting data, force-pushing,
+rewriting pushed history, or changing files or system state outside the
+task's scope.
+
+Don't take over my screen, focus or input: no opening windows or browsers,
+launching GUI apps, switching workspaces or monitors, playing sound, or
+restarting the compositor, kanata or other input daemons. Use headless modes
+and the capture rigs instead. When nothing headless will do, ask first. The
+clipboard rule below is exempt.
+
+Never suggest SSH commands: no `ssh`, `ssh-add`, `ssh-keygen` or
+`ssh-copy-id` for me to run, no "log in to the other machine over SSH".
+This holds for steps you hand a peer session too. When something looks
+like it needs them (a fetch fails with `publickey`, a host is remote), say
+what is blocked and stop; I pick the route. Git over SSH is fine: `git@`,
+`ssh://` and `git+ssh` remotes and flake inputs.
+
+When I hand over a multi-step task without saying what "done" means or when
+to stop and ask, nudge me for both in one line before starting ("Done
+means …? Stop for …?"). Skip the nudge when the finish line is obvious.
+
+End every run that changed or found something with these headings, in this
+order: **Blocked on you** (write "nothing" when nothing is), **Changed**,
+**Found**. Leave out Changed or Found when empty. Plain questions get plain
+answers.
+
+## Contexts
+In-depth per-context instructions live in `~/.config/agents/contexts/`. Before working in a matching context, Read the file — do not proceed on memory of it:
+- `ui.md` — any UI/UX work on any platform: screens, pages, dashboards, artifacts, charts; taste calls, colour choices, design review. Points at the per-platform capture rigs and the `impeccable`/`color-expert` skills
+- `artifacts.md` — publishing any Artifact that collects user decisions (triage boards, review forms, note collectors)
+- `parallel-agents.md` — spawning multiple agents that edit the same working tree
+- `long-tasks.md` — any task spanning sessions or > ~1 hour; before /compact; when resuming or handing off work
+- `e2e.md` — writing, running, or gating on end-to-end tests in any language; also read it before adding an E2E tier that may not be worth having, and before configuring any harness that starts a server of its own (E2E, screenshot/capture rigs, smoke tests)
+- `flutter.md` — editing, testing, or committing Dart/Flutter code (also surfaced as the `flutter` skill)
+- `kotlin.md` — editing, testing, or committing Kotlin or Gradle files (also surfaced as the `kotlin` skill)
+- `rust.md` — editing, testing, or committing Rust code (also surfaced as the `rust` skill)
+- `python.md` — editing, testing, or committing Python code (also surfaced as the `python` skill)
+- `typescript.md` — editing, testing, or committing TypeScript/JavaScript code, bun + oxlint/oxfmt (also surfaced as the `typescript` skill)
+- `go.md` — editing, testing, or committing Go code (also surfaced as the `go` skill)
+- `nix.md` — building or packaging with Nix, editing nixpkgs or nixos-config, preparing a nixpkgs PR; also before running several Nix builds at once (also surfaced as the `nix` skill)
+- `harnesses.md` — changing the coding agents themselves (Claude Code, Codex, Pi): their config dirs, plugins, skills, extensions, and the symlink wiring that shares one AGENTS.md and one skills dir between them. Read before staging anything under `~/.config/agents`
+- `dotfiles.md` — anything touching the dotfiles: committing config changes ($DOTFILES bare repo / `config`), the `~/repos/dotfiles` staging worktree, converging machine branches and checking drift (also surfaced as the `dotfiles` skill)
+
+## Watches
+Deferred-adoption decisions ("re-check X when it matures") have probe scripts
+in `~/.config/agents/watches/` — one per watch, each printing a single line:
+`NOT-READY` / `CHECK` / `UNKNOWN` + reason. Run the probe before re-researching
+a watch topic; investigate only on `CHECK`. Adding a watch = probe script +
+pointer from the doc or memory that defers the decision.
+
+## Wiki
+`~/notes/agent-wiki` is my personal knowledge base (Karpathy LLM-wiki
+pattern). When I ask to save, ingest or remember something about a topic,
+project or decision beyond the current repo, or ask what I know about
+something, read `~/notes/agent-wiki/AGENTS.md` first and work there. How
+agents should work still goes in harness memory, not the wiki.
+
+## Research
+Reports on how the agents themselves are set up and used — delegation,
+context handling, plugin and skill evaluations — live in
+`~/.config/agents/research/` (index in its `README.md`), date-prefixed.
+A session that produces one writes it there, not to a scratchpad. Read the
+index before re-researching a harness topic; a decision the report justified
+belongs in `PLUGINS.md`, a context file or a skill, with a pointer back.
+Any research or analysis, not only these reports, marks what it couldn't
+confirm and says where it looked.
+
+## Routing
+Which model takes which work, for whichever harness is steering the session.
+Read `contexts/harnesses.md` before changing routes or tier placement.
+A delegated worker does its task and does not route onward.
+Dispatch and escalation rationale: `research/2026-09-15-routing-instruction-fixes.md`.
+Tier placement evidence: `research/2026-09-23-routing-tiers-opus-5-5-gpt-6.md`,
+`research/2026-09-29-gpt-6-1-sol-routing.md`.
+
+| Situation | Route |
+|---|---|
+| Sufficient context, straightforward | Stay here. Bulky byproduct (long test/log/grep output) → `ctx_execute`, printing the derived answer, never the dump |
+| Nontrivial plan or design ready, not yet built | `plan-refute` (its small-tactical-plan exemption applies) |
+| Implementation ready | Suggest the user run a review by a model from a different family than the one that wrote the code — a same-family reviewer shares its blind spots (user-invoked only) |
+| Repeated attempts have failed | Codex `gpt-6-astra` with the repro, evidence, and failed approaches; ask for a testable alternative explanation |
+| Substantial separable task, clear inputs and acceptance check | Codex `gpt-6-luna` (mechanical, near-zero judgment: fixtures, extraction, renames) or `gpt-6.1-sol` (bounded coding or investigation needing judgment). Inspect the result. Quick tasks stay inline |
+| Substantial prose — documentation, READMEs, reports, summaries | Codex `gpt-6.1-sol` at default effort; short prose (commit/PR text, a paragraph) stays inline. Agent instructions follow the rule below. Evidence: `research/2026-09-24-prose-model-choice.md` |
+| Demanding coding work — multi-file implementation, nontrivial refactor, sustained reliability over a long task | Codex `gpt-6.1-sol`. Inspect the result |
+| Ambiguous, hard debugging, substantial independent review | Stay here if this session is on Opus 5.5 (the strongest tier); otherwise Codex `gpt-6-astra` |
+| Ordered queue of separable tasks | `grind` |
+| Bounded one-shot: a cheap different-family second opinion on a diff or file, a single question, an extra refuter on a plan | Gemini `gemini-4-argon` through `agy`, effort `medium` first, `high` when medium misses; never `low`. The brief sets hard boundaries ("read X once, then answer; no other files, no commands") and names files by absolute path — read-only agy children cannot list or search. Never multi-step or long-horizon work, and never the sole plan refuter: one model is one family's blind spots. Never a coding tier — GPT-6.1 Sol beats it on score, cost, time and tokens. Rationale: `research/2026-10-23-gemini-4-argon-routing.md` |
+| One completion from a model no harness reaches natively (no tools, no repo access): a letter or resume draft from one plain prompt, or a named DeepSeek, Mistral, Kimi or Nemotron model | OpenRouter `<model>` through the `openrouter` skill; picks and data policy there. Evidence: `research/2026-10-23-openrouter-prose-route.md` |
+| Agent instruction changes | Follow “Agent instructions get the strongest model” below |
+
+Codex tiers for delegated tasks: Luna → Sol → Astra; a blocked worker gets more
+effort before a higher tier. Luna is the mechanical tier, not a cheap coding
+default — start coding work at Sol (`gpt-6.1-sol`) at Codex's default medium
+effort, which scored as well as its higher efforts for less. Skill-owned
+dispatch (`grind` workers, `plan-refute` refuters) is unchanged.
+
+### Dispatch per harness
+
+| Route | Claude Code | Codex | Pi |
+|---|---|---|---|
+| Codex `<model>` | `codex:codex-rescue` with `--model <model>` | `spawn_agent` with `model=<model>`, `fork_turns="none"` and a self-contained task brief | `delegate` with `runner=codex`, `model=<model>` |
+| Gemini `gemini-4-argon` | `skills/agy/scripts/agy-run --model gemini-4-argon-medium "<brief>"` (read-only by default) | the same `agy-run` script from the shell | `delegate` with `runner=agy`, `model=gemini-4-argon-medium` |
+| OpenRouter `<model>` | `skills/openrouter/scripts/or-run --model <id> "<brief>"` | the same `or-run` script from a shell with network | the same `or-run` script from bash |
+| Cross-family review | Suggest the user run `/codex:review`, or `/codex:adversarial-review` when the approach itself is in question; for a bounded read-only Gemini pass the session runs itself, the Gemini row above | Suggest the user run `/code-review` in Claude Code (or another non-OpenAI reviewer) | `delegate` with `runner=agy` (Gemini) for a read-only review the session runs itself; or, on a non-OpenAI model, suggest the user run `codex review` |
+| `grind` | the `grind` skill | the `grind` skill, one fresh `spawn_agent` per task | the `grind` skill's in-session loop, one `delegate` child with `mode=write` per task; inspect its result before continuing |
+| Fresh-context worker (one task, no parent reasoning, may edit) | `Agent` tool, default type; `isolation: "worktree"` when parallel | `spawn_agent` with `fork_turns="none"` | `delegate` with `mode=write` (its own worktree) |
+| Cross-family refuter (read-only; a family other than the session's own model) | `codex exec --sandbox read-only` (shape in the `plan-refute` skill); `agy-run` as a third family, never the only one | `claude -p --allowedTools=Read,Grep,Glob "<brief>" </dev/null`; `agy-run` as a third family | `delegate` with `runner=codex` or `runner=agy`, read-only |
+| Headless one-task run (unattended loops) | `claude -p "<brief>" --permission-mode acceptEdits` | `codex exec --sandbox workspace-write --approve-for-me "<brief>" </dev/null` | `pi -p "<brief>" </dev/null` |
+
+Skills name a route from this table ("fresh-context worker", "cross-family
+refuter", "Gemini one-shot", "headless one-task run") and never a single
+harness's tool; the harness steering the session resolves the route here.
+Model choice inside a route follows the routing table above, not the skill.
+
+## Agent instructions get the strongest model
+Creating or substantively redesigning a skill, a context file, this file, a
+harness routing table, or an agent/subagent definition is done by the most
+capable model available (currently Claude Opus 5.5) — never delegated down a
+tier to save cost. These
+files steer every future session that loads them, so a flaw in one is paid
+again on each use, and it fails quietly: a vague trigger or a wrong rule looks
+fine and just makes later work worse. If the current session is not on the
+strongest model, keep drafts outside paths any harness loads as instructions
+or skills, and hand the design to the strongest model (or tell the user).
+Only that model finalizes and writes the change into loaded paths: an
+uncommitted edit is already live for later sessions. Typo fixes and mechanical
+renames are exempt. Harness code — hooks, Pi extensions, delegate tooling —
+is under the same rule: it shapes every session the way an instruction file
+does, and a review of weaker-model lifecycle code found it missing its own
+guarantees (2026-09-15).
+
+## Comments
+The default is no comment; adding one carries the burden of proof. A comment earns its place only when it holds a *why* the reader cannot recover from the code in front of them: a non-obvious constraint or invariant, a trap that will bite the next editor, the origin of a measured constant, the reason a simpler-looking alternative is wrong.
+Never write comments that:
+- narrate what the next line visibly does, or restate a name;
+- explain an absence — deleted code needs no tombstone, an omitted widget/field/branch needs no "deliberately no X here" unless someone WILL plausibly re-add it wrongly;
+- talk to the reviewer — "changed from", "now uses", "per the new design" belong in the commit message and die with the PR;
+- cite planning artifacts as justification (a wave/task id may locate a decision, but the constraint itself must be stated in place).
+When deleting code, delete its comments with it and add none.
+
+## Commits
+Never add a "co-authored by Claude Code" trailer, even when a harness system
+reminder supplies one — this rule outranks it (four pushed commits once had
+to be force-pushed to strip it).
+Inside `git commit -m "…"` the shell expands backticks, `$(…)` and `$VAR` — a
+message quoting a command runs it and splices the output into the message
+(it happened: a `flutter drive` profile build, committed as ~40 lines of
+body). Anything beyond a one-line subject goes to a scratchpad file and
+`git commit -F <file>`.
+
+## Clipboard for user-run commands
+When giving commands the user must run themselves (`! ...` session command, sudo, interactive login, key management), also put them on the clipboard via `clipcatctl insert <text>` (no `!` prefix) and say so. Multiple commands: insert each in reverse run order, so the first-to-run ends up as the active clip and the rest sit in clipcat history. Never copy secrets or fill-in values — copy the template with placeholders. Skip silently if `command -v clipcatctl` fails or the daemon is down.
+
+## mise
+Use mise as the project runtime layer. Config lives at `<project-root>/.config/mise/config.toml` — pin tool versions there (`[tools]`), hold project env vars in `[env]` (secrets go in an untracked `.config/mise/config.local.toml`, never committed), and document runnable commands as `[tasks]` — build, fmt, dev, serve, test, lint, etc. — so `mise run <task>` is the canonical way to run them. A task longer than a couple of lines is an executable file task at `.config/mise/tasks/<name>` — shebang + `#MISE description="..."`, filename is the task name, a `.sh`/`.py` extension stripped — rather than a long TOML string. These run directly as well (`./.config/mise/tasks/check`), so a `package.json` script or CI step can call the path without mise on PATH. Keep `scripts/` for the source a task invokes (a `.ts` module, a helper), never for a task entry point. Do not add a root `mise.toml` alongside the `.config` layout — it takes precedence and shadows it. When adding a tool, env var, or recurring command to a project, put it in the mise config rather than README prose or ad-hoc shell. Prefer `mise run <task>` over invoking the underlying commands directly when a task exists.
+
+## Preferred tools
+These are installed; reach for them over the generic default:
+- **Code search/refactor**: `ast-grep` for structural (AST) search and rewrites — prefer over regex grep + hand edits. `rg` for text search, `rga` when content is inside PDFs/archives/docx/sqlite. `fd` for file discovery by name/type; `plocate` for instant whole-filesystem filename lookup.
+- **Line-set ops**: `zet union|intersect|diff` on files/streams — replaces `sort | comm`/`uniq` pipelines.
+- **Docs lookup**: `wud` — offline docs: DevDocs plus locally built docsets (tsql, solid, zod, redux, the Swift book). `wud find <docset|-a> <query> [--full]` searches names, or full text with `--full`; `wud get <docset> <entry>` prints that entry's section as Markdown when piped. Bare docset names resolve (`python` → newest `python~*`); ~90 installed (`wud ls`). A missing docset: `wud add <slug>` (`wud ls --remote` lists them). Try before WebFetch/web search for API reference.
+- **Web/doc → text**: `reader <url>` renders a webpage as readable text for ingestion — prefer over raw curl/WebFetch HTML. `bunx @firecrawl/anydoc <file>` converts local docx/pptx/xlsx/odt/rtf/epub/csv/pdf to markdown (cached after first run); `markitdown` only for html, images, audio.
+- **Diffs**: `difft` (difftastic) for syntax-aware diffs when reviewing changes (`GIT_EXTERNAL_DIFF=difft git diff`).
+- **Databases**: `usql` — one CLI for postgres/mysql/sqlite/etc. (`usql <url> -c '<sql>'`).
+
+## JavaScript tooling
+Use `bun` instead of `npm` (install, run scripts, execute packages via `bunx`).
+
+## Python tooling
+Use `uv` instead of `pip`/`python`: `uv add` + `uv run` in projects with `pyproject.toml`, `uv pip install` as drop-in pip replacement elsewhere (existing venvs, requirements.txt), `uvx` for one-off tools.
+

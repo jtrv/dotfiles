@@ -1,0 +1,38 @@
+#!/usr/bin/env sh
+set -eu
+
+main="$HOME/.config/claude"
+export CLAUDE_CONFIG_DIR="$HOME/.config/claude-deepseek"
+mkdir -p "$CLAUDE_CONFIG_DIR/projects"
+
+# Login state (.credentials.json, .claude.json) must stay per-instance or the
+# two auth methods conflict. Transcripts stay apart too: a DeepSeek session
+# resumed by Anthropic claude fails on its foreign thinking blocks.
+for f in CLAUDE.md settings.json hooks skills skills-manifest.txt plugins \
+	statusline context-mode .remember .caveman-active .ponytail-active history.jsonl; do
+	[ -e "$main/$f" ] && [ ! -e "$CLAUDE_CONFIG_DIR/$f" ] && ln -s "$main/$f" "$CLAUDE_CONFIG_DIR/$f"
+done
+for mem in "$main"/projects/*/memory; do
+	[ -d "$mem" ] || continue
+	p="$CLAUDE_CONFIG_DIR/projects/$(basename "$(dirname "$mem")")"
+	mkdir -p "$p"
+	[ -e "$p/memory" ] || ln -s "$mem" "$p/memory"
+done
+
+export ANTHROPIC_BASE_URL="https://openrouter.ai/api"
+export ANTHROPIC_API_KEY=""
+export ANTHROPIC_AUTH_TOKEN="$(cat /run/secrets/openrouter-key)"
+unset CLAUDE_CODE_OAUTH_TOKEN
+
+m="deepseek/deepseek-v4.1-flash-1017"
+export ANTHROPIC_DEFAULT_FABLE_MODEL="$m" ANTHROPIC_DEFAULT_OPUS_MODEL="$m" \
+	ANTHROPIC_DEFAULT_SONNET_MODEL="$m" ANTHROPIC_DEFAULT_HAIKU_MODEL="$m" \
+	CLAUDE_CODE_SUBAGENT_MODEL="$m"
+
+export CLAUDE_CODE_EFFORT_LEVEL=high
+export CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY=1
+export CLAUDE_CODE_AUTO_COMPACT_WINDOW=500000
+# The main install owns updates; two updaters would race on the shared versions dir.
+export DISABLE_AUTOUPDATER=1
+
+exec claude "$@"

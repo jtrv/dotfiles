@@ -11,3 +11,5 @@
   auto = 0
 [advice]
   addIgnoredFile = false
+[rerere]
+  autoupdate = false

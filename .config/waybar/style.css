@@ -7,7 +7,7 @@
   box-shadow: none;
   text-shadow: none;
   font-family: "Blex Mono Nerd Font", sans-serif;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
 }
 
@@ -50,6 +50,7 @@
 #cpu,
 #custom-pomodoro,
 #disk,
+#custom-sleep-inhibitor,
 #idle_inhibitor,
 #idle_inhibitor.activated,
 #idle_inhibitor.deactivated,
@@ -66,7 +67,7 @@
 #workspaces,
 #window {
   padding: 0px 6px;
-  margin: 2px 3px 5px;
+  margin: 4px 3px 5px;
   background: @base;
   border-radius: 6px;
 }
@@ -78,6 +79,7 @@
 #cpu:hover,
 #custom-pomodoro:hover,
 #disk:hover,
+#custom-sleep-inhibitor:hover,
 #idle_inhibitor:hover,
 #memory:hover,
 #network:hover,
@@ -158,6 +160,14 @@
 }
 
 #idle_inhibitor.deactivated {
+  color: @overlay0;
+}
+
+#custom-sleep-inhibitor.activated {
+  color: @mauve;
+}
+
+#custom-sleep-inhibitor.deactivated {
   color: @overlay0;
 }
 

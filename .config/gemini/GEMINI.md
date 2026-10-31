@@ -1,0 +1,1 @@
+/home/sugimoto/.config/agents/AGENTS.md

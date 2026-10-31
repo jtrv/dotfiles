@@ -1,0 +1,66 @@
+# Vanilla DOM: fetch + render, delegation, forms.
+# Avoid "{{" in replace text: espanso reads it as a variable.
+
+matches:
+  - trigger: ",,dload"
+    label: "dom: fetch + render list"
+    replace: |
+      async function load() {
+        const res = await fetch('/api/$|$');
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);  // fetch only rejects on network errors, not 404/500
+        const rows = await res.json();
+        const list = document.querySelector('#list');
+        list.replaceChildren(...rows.map(row => {
+          const li = document.createElement('li');
+          li.textContent = row.name;  // textContent, not innerHTML: user data in innerHTML is XSS
+          li.dataset.id = row.id;
+          return li;
+        }));
+      }
+      load().catch(err => { document.querySelector('#error').textContent = err.message; });
+
+      // e.g. HTML: <ul id="list"></ul> <p id="error"></p>
+      // e.g. with query params: fetch(`/api/items?${new URLSearchParams({ status: 'open', page: 2 })}`)
+
+  - trigger: ",,ddel"
+    label: "dom: event delegation"
+    replace: |
+      // One listener on the parent: covers rows added later, no per-row listeners to leak.
+      document.querySelector('#list').addEventListener('click', e => {
+        const item = e.target.closest('[data-id]');  // target may be a child span/icon
+        if (!item) return;
+        const id = item.dataset.id;  // dataset values are strings
+        $|$
+      });
+
+      // e.g. <ul id="list"><li data-id="7">WO-7 <button>Done</button></li></ul>
+      //   click the button → closest('[data-id]') finds the li → id === '7' (string: Number(id) if needed)
+      // e.g. several actions: <button data-action="start"> → e.target.closest('[data-action]')?.dataset.action
+
+  - trigger: ",,dform"
+    label: "dom: form submit handler"
+    replace: |
+      document.querySelector('#form').addEventListener('submit', async e => {
+        e.preventDefault();  // else the page reloads
+        const form = e.currentTarget;  // currentTarget = the form; capture before any await
+        const data = Object.fromEntries(new FormData(form));  // every value is a string
+        const button = form.querySelector('button[type=submit]');
+        button.disabled = true;  // stop double submits
+        try {
+          const res = await fetch('/api/$|$', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },  // without it express.json() ignores the body
+            body: JSON.stringify(data),
+          });
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          form.reset();
+        } catch (err) {
+          console.error(err);
+        } finally {
+          button.disabled = false;
+        }
+      });
+
+      // e.g. <form id="form"><input name="name" required><input name="qty" type="number"><button type="submit">Save</button></form>
+      //   → data = { name: 'PCB', qty: '5' }   (qty is a string: Number(data.qty))
+      // trap: unchecked checkboxes are missing from FormData entirely

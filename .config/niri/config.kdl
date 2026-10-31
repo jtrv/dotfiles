@@ -7,19 +7,6 @@ hotkey-overlay {
     hide-not-bound
 }
 
-output "DP-1" {
-    mode "3440x1440@60.000"
-    scale 1
-    position x=0 y=0
-}
-
-// hermes virtual display: pin the position so reconnects don't march it
-// rightward (niri remembers the last spot and appends past it each time);
-// no mode line - the client-requested mode arrives via EDID and must win
-output "Virtual-1" {
-    position x=3440 y=0
-}
-
 input {
     touchpad {
         tap
@@ -28,15 +15,6 @@ input {
     }
     warp-mouse-to-focus
     focus-follows-mouse
-}
-
-gestures {
-    hot-corners {
-        top-left
-        top-right
-        bottom-left
-        bottom-right
-    }
 }
 
 cursor {
@@ -68,12 +46,6 @@ layout {
         inactive-color "#00000000"
         urgent-color "#f38ba8"
     }
-    struts{
-        left 1
-        right 1
-        top 1
-        bottom 1
-    }
     border { off; }
     tab-indicator {
         on
@@ -99,10 +71,7 @@ spawn-at-startup "alacritty" "--daemon"
 // status bar
 spawn-at-startup "waybar"
 
-// hot-edges to swap windows / workspaces with cursor
-spawn-at-startup "niri-edge-pan"
-
-screenshot-path "~/pictures/screenshots/%Y-%m-%d_%H-%M-%S.png"
+screenshot-path "~/media/pictures/screenshots/%Y-%m-%d_%H-%M-%S.png"
 
 layer-rule {
     match namespace="^notifications$"
@@ -114,12 +83,14 @@ layer-rule {
     place-within-backdrop true
 }
 
+// Window rules let you adjust behavior for individual windows.
 window-rule {
     open-floating true
 
     match app-id="imv"
     match app-id="gimp"
     match app-id="popup"
+    match app-id="termfilechooser"
     match app-id=".*" title=".*:notification"
     match app-id=".*" title=".*:splash"
     match app-id=".*" title=".*:dialog"
@@ -155,7 +126,9 @@ window-rule {
 }
 
 window-rule {
+    match app-id="^espanso$"
     match app-id=".espanso-wrapped"
+    open-floating true
 }
 
 // Key bindings
@@ -176,8 +149,14 @@ binds {
     Mod+V       hotkey-overlay-title="volume mixer: wiremix"        { spawn "alacritty" "msg" "create-window" "--class=popup" "--command=wiremix"; }
 
     // --- Screenshot ---
-    Mod+S       hotkey-overlay-title="screenshot: gui"  { spawn "flameshot" "gui"; }
-    Mod+Shift+S hotkey-overlay-title="screenshot: full" { spawn "flameshot" "full"; }
+    Mod+S       hotkey-overlay-title="screenshot: region" { screenshot; }
+    Mod+Shift+S hotkey-overlay-title="screenshot: full"   { screenshot-screen; }
+    Mod+Ctrl+S  hotkey-overlay-title="screenshot: text (OCR)" { spawn "ocr-grab"; }
+
+    // --- Voice + clipboard ---
+    // kanata sends KEY_F13 (holding 4), which xkb names XF86Tools
+    XF86Tools repeat=false { spawn "voxtype" "record" "toggle"; }
+    Mod+Ctrl+V hotkey-overlay-title="clipboard: pause history 30s" { spawn "clip-private"; }
 
     // --- Media Keys ---
     XF86AudioPlay  allow-when-locked=true { spawn "playerctl" "play-pause"; }
@@ -315,3 +294,6 @@ binds {
     Mod+Shift+Home { focus-window-top; }
     Mod+Shift+End  { focus-window-bottom; }
 }
+
+// local.kdl differs per branch and only includes hosts/<machine>.kdl
+include "./local.kdl"

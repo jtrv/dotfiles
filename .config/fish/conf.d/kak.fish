@@ -19,9 +19,10 @@ function kk -d "make path and edit in kak"
 end
 complete -c kk -F
 
-function kd -d "edit all fd results in kak"
-  k (rg -lI . | lscolors | sk --color=always --preview="_fzf_preview_file {}")
+function kd -d "edit fd results in kak"
+  k (fd $argv | fzf --preview="_fzf_preview_file {}")
 end
+complete -c kd -w fd
 
 function kg -d "grep with kakoune"
   rg \

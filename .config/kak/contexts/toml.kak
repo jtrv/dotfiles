@@ -1,1 +1,3 @@
-ui-lsp-enable
+hook global WinSetOption filetype=toml %{
+  ui-lsp-enable
+}

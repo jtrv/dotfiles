@@ -1,0 +1,50 @@
+# node-mssql: connection pool and transactions.
+# Avoid "{{" in replace text: espanso reads it as a variable.
+
+matches:
+  - trigger: ",,xpool"
+    label: "node: mssql pool module"
+    replace: |
+      import sql from 'mssql';
+
+      // One pool per process, created once. Never connect per request.
+      export const poolPromise = new sql.ConnectionPool({
+        server: process.env.DB_HOST ?? 'localhost',
+        database: process.env.DB_NAME,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,  // from env, never in git
+        options: { trustServerCertificate: true },  // local/dev self-signed cert only
+        pool: { max: 10 },
+      }).connect();
+
+      export { sql };
+      // usage: const pool = await poolPromise; await pool.request().input('id', sql.Int, id).query('...');
+      // shutdown: (await poolPromise).close();$|$
+
+      // e.g. const pool = await poolPromise;
+      //   const { recordset } = await pool.request()
+      //     .input('status', sql.VarChar(20), 'open')
+      //     .query('SELECT id, due_date FROM dbo.work_order WHERE status = @status');
+      //   recordset → [{ id: 1, due_date: Date }, …]
+
+  - trigger: ",,xtx"
+    label: "node: mssql transaction"
+    replace: |
+      const tx = new sql.Transaction(pool);
+      await tx.begin();
+      try {
+        // requests must be created from tx, not pool, or they run outside the transaction
+        const r = await new sql.Request(tx)
+          .input('id', sql.Int, id)
+          .query('UPDATE dbo.tbl SET status = @status WHERE id = @id');
+        $|$
+        await tx.commit();
+      } catch (err) {
+        await tx.rollback();
+        throw err;
+      }
+      // emit socket events / enqueue jobs AFTER commit, never inside
+
+      // e.g. two writes that must both land:
+      //   await new sql.Request(tx).input('id', sql.Int, id).query('UPDATE dbo.bin SET qty = qty - 1 WHERE id = @id');
+      //   await new sql.Request(tx).input('id', sql.Int, id).query('INSERT dbo.bin_log (bin_id) VALUES (@id)');

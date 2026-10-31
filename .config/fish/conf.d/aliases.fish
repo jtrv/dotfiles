@@ -3,7 +3,6 @@
 if status is-interactive
 
 alias adb     "HOME='$XDG_DATA_HOME'/android adb"
-alias boi     "wikiman"
 alias bls     "command ls"
 alias bup     "bun update -g --latest"
 alias cat     "bat"
@@ -17,9 +16,8 @@ alias cp      "cp -i"
 alias d       "devour"
 alias dg      "diff-grep"
 alias feh     "feh --scale-down --image-bg black"
-alias fp      "sk --preview='bat --color=always {}'"
+alias fp      "fzf --preview='bat --color=always {}'"
 alias ghs     "gh auth switch"
-alias jls     "jless -r"
 alias j       "yazi"
 alias kab     "k ~/.config/fish/conf.d/abbreviations.fish"
 alias kakrc   "k ~/.config/kak/kakrc"
@@ -36,8 +34,7 @@ alias lh      "eza -la --color=always --ignore-glob='[a-z]*|[A-Z]*|[0-9]*'" # hi
 alias ll      "eza -l --color=always --git" # long format + git
 alias loc     "plocate"
 alias ls      "eza -l --color=always" # preferred listing
-alias lt      "erd -HIl --color=force" # tree listing
-alias mdc     "mdcat --columns=70"
+alias lt      "eza -T --color=always" # tree listing
 alias mkd     "mkdir -p"
 alias m       "qalc"
 alias mr      "mise run"
@@ -57,7 +54,8 @@ alias q       "exit"
 alias rm      "cnc"
 alias tf      "terraform"
 alias thes    "thesauromatic"
-alias wget    "wget2 --hsts-file='$XDG_DATA_HOME/wget-hsts'"
 alias wh      "wormhole-rs"
+alias zr      "cdr"
+
 
 end

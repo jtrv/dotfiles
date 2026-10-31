@@ -21,6 +21,10 @@ set -gx AWS_CONFIG_FILE             "$XDG_CONFIG_HOME/aws/config"
 set -gx AWS_SHARED_CREDENTIALS_FILE "$XDG_CONFIG_HOME/aws/credentials"
 set -gx BUNDLE_USER_CONFIG          "$XDG_CONFIG_HOME/bundle"
 set -gx CLAUDE_CONFIG_DIR           "$XDG_CONFIG_HOME/claude"
+set -gx PI_CODING_AGENT_DIR         "$XDG_CONFIG_HOME/pi/agent"
+set -gx CONTEXT_MODE_DIR            "$XDG_STATE_HOME/context-mode"
+# context-mode ignores the override in silence unless the directory already exists
+test -d $CONTEXT_MODE_DIR; or mkdir -p $CONTEXT_MODE_DIR
 set -gx DOCKER_CONFIG               "$XDG_CONFIG_HOME/docker"
 set -gx DOTFILES                    "$XDG_CONFIG_HOME/dotfiles"
 set -gx GEMRC                       "$XDG_CONFIG_HOME/gem/gemrc"
@@ -40,7 +44,6 @@ set -gx ANDROID_USER_HOME  "$XDG_DATA_HOME/android"
 set -gx BUNDLE_USER_PLUGIN "$XDG_DATA_HOME/bundle"
 set -gx BUN_INSTALL        "$XDG_DATA_HOME/bun"
 set -gx CARGO_HOME         "$XDG_DATA_HOME/cargo"
-set -gx DEDOC_HOME         "$XDG_DATA_HOME/dedoc"
 set -gx FORTUNE_DIR        "$XDG_DATA_HOME/fortunes"
 set -gx GEM_HOME           "$XDG_DATA_HOME/gem"
 set -gx GNUPGHOME          "$XDG_DATA_HOME/gnupg"
@@ -62,20 +65,21 @@ set -gx XAUTHORITY "$XDG_RUNTIME_DIR/Xauthority"
 
 # State
 set -gx ANALYZER_STATE_LOCATION_OVERRIDE "$XDG_STATE_HOME/Dart/analysis_server"
-set -gx HISTFILE "$XDG_STATE_HOME/bash/history"
+set -gx HISTFILE                         "$XDG_STATE_HOME/bash/history"
+set -gx PI_CODING_AGENT_SESSION_DIR      "$XDG_STATE_HOME/pi/sessions"
 
 # Misc
 set -gx ATUIN_NOBIND                "true"
 set -gx BAT_PAGER                   "kak"
 set -gx BROWSER                     "firefox-devedition"
 set -gx CARAPACE_BRIDGES            "fish,bash"
-set -gx CONCEAL_FINDER              "skim"
+set -gx CONCEAL_FINDER              "fzf"
 set -gx DELTA_PAGER                 "kak"
 set -gx EDITOR                      "kak"
 set -gx fish_greeting
-set -gx HORS_ENGINE                 "google"
 set -gx LAST30DAYS_MEMORY_DIR       "$XDG_DOCUMENTS_DIR/Last30Days"
 set -gx MANPAGER                    "kak -e 'set buffer filetype man'"
+set -gx MCAT_PAGER                  "kak"
 set -gx PAGER                       "kak"
 set -gx SCCACHE_DIRECT              true
 set -gx TERMINAL                    "alacritty"

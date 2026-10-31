@@ -1,6 +1,5 @@
 (defcfg
   concurrent-tap-hold yes
-  danger-enable-cmd yes
   linux-dev-names-include (
     "Logitech MX Ergo"
     "Hoksi Technology DGK68C Consumer Control"
@@ -24,8 +23,8 @@
 
 (deflayer base
   grv   1     2     3     @4    5     6     7     8     9     0     -     =     bspc  home
-  tab   q     w     @e    r     t     y     u     @i    o     p     [     ]     \     end
-  @esc  @a    @s    @d    @f    @gam  h     @j    @k    @l    @;    '     ret         pgup
+  tab   q     w     e     r     t     y     u     i     o     p     [     ]     \     end
+  @esc  @a    @s    @d    @f    @game h     @j    @k    @l    @;    '     ret         pgup
   sft   z     x     c     v     b     n     m     ,     .     /     sft         up    pgdn
   ctl   met   alt                     @spc                          ctl   lft   down  rght
   ;; Mouse
@@ -33,10 +32,10 @@
 )
 
 (deflayer space
-  _     _     _     _     _     _     _     _     _     _     _     _     _     _     _
-  _     _     @kvld @kvlu _     _     _     bspc  home  end   del   _     _     _     _
+  @fence _     _     _     _     _     _     _     C-home C-end _     _     _     _     _
+  _     @lwdl @lwrd @rwrd @rwdl _     _     bspc  home  end   del   _     _     _     _
   _     @mpr  _     @mpp  @mnx  _     lft   down  up    rght  _     _     _           _
-  _     _     _     _     _     _     _     _     pgdn  pgup  _     _           _     _
+  _     _     @kvld @kvlu _     _     _     _     pgdn  pgup  _     _           _     _
   _     _     _                       _                             _     _     _     _
   ;; Mouse
   _     _     _     @svlu @svld _     _     _     _
@@ -47,7 +46,7 @@
 (deflayer gaming
   grv   1     2     3     4     5     6     7     8     9     0     -     =     bspc  home
   tab   q     w     e     r     t     y     u     i     o     p     [     ]     \     end
-  @esc  a     s     d     f     @gam  h     @j    @k    @l    @;    '     ret         pgup
+  @esc  a     s     d     f     @game h     @j    @k    @l    @;    '     ret         pgup
   lsft  z     x     c     v     b     n     m     ,     .     /     rsft        up    pgdn
   lctl  lmet  lalt                    spc                           rctl  lft   down  rght
   ;; Mouse

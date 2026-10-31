@@ -3,18 +3,21 @@ matches:
   # ARRAY METHODS
 
   - trigger: ",,jfi"
+    label: "js: array filter"
     replace: |
       const filteredArray = $|$.filter(item => {
         return condition;
       });
 
   - trigger: ",,jma"
+    label: "js: array map"
     replace: |
       const newArray = $|$.map(item => {
         return item;
       });
 
   - trigger: ",,jrd"
+    label: "js: array reduce"
     replace: |
       const result = $|$.reduce((accumulator, currentValue) => {
         return accumulator + currentValue;
@@ -23,6 +26,7 @@ matches:
   # ASYNCHRONOUS OPERATIONS
 
   - trigger: ",,jas"
+    label: "js: async function with try/catch"
     replace: |
       async function $|$() {
         try {
@@ -34,13 +38,18 @@ matches:
       }
 
   - trigger: ",,jfe"
+    label: "js: fetch with .then chain"
     replace: |
       fetch('$|$')
-        .then(response => response.json())
+        .then(response => {
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);  // fetch doesn't reject on 404/500
+          return response.json();
+        })
         .then(data => console.log(data))
         .catch(error => console.error('Error:', error));
 
   - trigger: ",,jpr"
+    label: "js: new Promise"
     replace: |
       new Promise((resolve, reject) => {
         $|$
@@ -48,7 +57,8 @@ matches:
 
   # CLASSES
 
-  - trigger: ",,jcl"
+  - trigger: ",,jcs"
+    label: "js: class with constructor"
     replace: |
       class $|$ {
         constructor() {
@@ -59,96 +69,117 @@ matches:
   # CONSOLE METHODS
 
   - trigger: ",,jce"
+    label: "js: console.error"
     replace: |
       console.error($|$)
 
   - trigger: ",,jcl"
+    label: "js: console.log"
     replace: |
       console.log($|$)
 
   - trigger: ",,jctm"
+    label: "js: console.time"
     replace: |
       console.time("$|$")
 
   - trigger: ",,jcte"
+    label: "js: console.timeEnd"
     replace: |
       console.timeEnd("$|$")
 
   # DOM MANIPULATION
 
   - trigger: ",,jae"
+    label: "js: window addEventListener"
     replace: |
       window.addEventListener('$|$', eventHandler);
 
   - trigger: ",,jcf"
+    label: "js: createDocumentFragment"
     replace: |
-      document.createDocumentFragment("$|$")
+      const frag = document.createDocumentFragment();$|$
 
   - trigger: ",,jev"
+    label: "js: event handler add/remove"
     replace: |
-      const handler$|$ = e => {}
+      const handler = e => {$|$};
       window.addEventListener('event', handler);
-      window.removeEventListener('event', handler);
+      window.removeEventListener('event', handler);  // must be the same function reference
 
   - trigger: ",,jgc"
+    label: "js: getElementsByClassName"
     replace: |
-      document.getElementByClassName("$|$")
+      document.getElementsByClassName("$|$")  // live HTMLCollection, not an array
 
   - trigger: ",,jgi"
+    label: "js: getElementById"
     replace: |
       document.getElementById("$|$")
 
   - trigger: ",,jqa"
+    label: "js: querySelectorAll"
     replace: |
       document.querySelectorAll("$|$")
 
   - trigger: ",,jqs"
+    label: "js: querySelector"
     replace: |
       document.querySelector("$|$")
 
   - trigger: ",,jre"
+    label: "js: window removeEventListener"
     replace: |
       window.removeEventListener('$|$', eventHandler);
 
   # FUNCTIONS AND ARROW FUNCTIONS
 
   - trigger: ",,jaf"
+    label: "js: arrow function"
     replace: |
       const $|$ = () =>
 
   - trigger: ",,jfn"
+    label: "js: function declaration"
     replace: |
       function $|$() { }
 
   # LOOPS
 
   - trigger: ",,jf+"
+    label: "js: for loop counting up"
     replace: |
       for (let i = 0; i < $|$.length; i++){ }
 
   - trigger: ",,jf-"
+    label: "js: for loop counting down"
     replace: |
-      for (let i = 0; i >= 0; i--){ }
+      for (let i = $|$.length - 1; i >= 0; i--){ }
 
-  - trigger: ",,jfi"
+  - trigger: ",,jfk"
+    label: "js: for...in (object keys)"
     replace: |
-      for (let $|$ in ){ }
+      for (const $|$ in obj){ }  // keys of an object; arrays: use for...of
 
   - trigger: ",,jfo"
+    label: "js: for...of"
     replace: |
-      for (let $|$ of ){ }
+      for (const $|$ of ){ }
 
   - trigger: ",,jwl"
+    label: "js: while loop"
     replace: |
       while ($|$){ }
 
   # MISCELLANEOUS
 
   - trigger: ",,jda"
+    label: "js: array destructuring"
     replace: |
       const [$|$] = ;
 
   - trigger: ",,jdb"
+    label: "js: debounce"
     replace: |
       function debounce(func, delay) {
         let timeoutId;
@@ -159,38 +190,47 @@ matches:
       }
 
   - trigger: ",,jco"
+    label: "js: object destructuring"
     replace: |
       const {$|$} = ;
 
   - trigger: ",,jlg"
+    label: "js: localStorage getItem"
     replace: |
       const value = localStorage.getItem('$|$');
 
   - trigger: ",,jls"
+    label: "js: localStorage setItem"
     replace: |
       localStorage.setItem('$|$', value);
 
   - trigger: ",,jpe"
+    label: "node: process.exit"
     replace: |
-      process.exit("$|$")
+      process.exit($|$)  // number: 0 ok, 1 error
 
   - trigger: ",,jpl"
+    label: "js: .then(console.log).catch(console.error)"
     replace: |
       .then(console.log).catch(console.error)
 
   - trigger: ",,jsi"
+    label: "js: setInterval"
     replace: |
       setInterval(() => {$|$}, interval)
 
   - trigger: ",,jss"
+    label: "js: JSON.stringify pretty"
     replace: |
-      JSON.stringify("$|$")
+      JSON.stringify($|$, null, 2)
 
   - trigger: ",,jst"
+    label: "js: setTimeout"
     replace: |
       setTimeout(() => {$|$}, delay)
 
   - trigger: ",,jth"
+    label: "js: throttle"
     replace: |
       function throttle(func, limit) {
         let inThrottle;
@@ -202,3 +242,113 @@ matches:
           }
         };
       }
+
+  # INTERVIEW BASICS
+
+  - trigger: ",,jsort"
+    label: "js: sort comparators"
+    replace: |
+      // Comparator returns negative (a first), positive (b first), 0 (keep).
+      nums.toSorted((a, b) => a - b);                        // ascending; b - a descending
+      names.toSorted((a, b) => a.localeCompare(b));          // strings
+      rows.toSorted((a, b) =>
+        a.station.localeCompare(b.station) || b.qty - a.qty  // two keys: station A→Z, then qty high→low
+      );
+      rows.toSorted((a, b) => new Date(a.due) - new Date(b.due));  // dates
+      $|$
+      // traps: .sort() mutates the array; toSorted() copies (older runtimes: [...rows].sort(...))
+      //        default sort compares strings: [10, 9, 1].sort() → [1, 10, 9]
+
+      // e.g. top 3 by qty: rows.toSorted((a, b) => b.qty - a.qty).slice(0, 3)
+      // e.g. max: Math.max(...nums)  (empty array → -Infinity)
+
+  - trigger: ",,jmset"
+    label: "js: Map and Set"
+    replace: |
+      const seen = new Set();
+      seen.add('R10K'); seen.has('R10K'); seen.size;          // true, 1
+      const unique = [...new Set(list)];
+
+      const byId = new Map(rows.map(r => [r.id, r]));          // lookup table
+      byId.get(7);                                             // keys keep their type: get('7') misses
+      const counts = new Map();
+      for (const r of rows) counts.set(r.status, (counts.get(r.status) ?? 0) + 1);
+      for (const [key, value] of counts) console.log(key, value);  // insertion order
+      $|$
+      // traps: JSON.stringify(map) → '{}': use Object.fromEntries(map) first
+      //        map[key] = … sets a plain property, not an entry: use set/get
+
+      // e.g. in both lists: a.filter(x => bSet.has(x))  (Set lookup is O(1), includes is O(n))
+
+  - trigger: ",,jobj"
+    label: "js: objects, ?. and ??"
+    replace: |
+      for (const [key, value] of Object.entries(obj)) { $|$ }  // also Object.keys / Object.values
+      const doubled = Object.fromEntries(Object.entries(obj).map(([k, v]) => [k, v * 2]));
+
+      const city = user?.address?.city ?? 'unknown';  // ?. stops at null/undefined
+      const qty = input.qty ?? 1;                      // ?? only replaces null/undefined; || also replaces 0 and ''
+      const merged = { ...defaults, ...options };      // later wins; shallow copy
+      const { qty: amount = 0, ...rest } = row;        // rename, default, collect the rest
+      Object.hasOwn(obj, 'key');                        // safer than obj.key !== undefined
+
+      // e.g. copy without one field: const { password, ...safe } = user;
+      // e.g. dynamic key: const patch = { [field]: value };
+
+  - trigger: ",,jjson"
+    label: "js: safe JSON.parse"
+    replace: |
+      function safeParse(text, fallback = null) {
+        try {
+          return JSON.parse(text);
+        } catch {
+          return fallback;  // JSON.parse throws on bad input: never parse user text bare
+        }
+      }$|$
+      // e.g. safeParse('{"a":1}') → { a: 1 } · safeParse('oops') → null
+      // traps: Date becomes a string (new Date(obj.created_at) to get it back),
+      //        undefined values vanish, Map/Set become {}, BigInt throws
+
+  - trigger: ",,jtime"
+    label: "js: dates and number formatting"
+    replace: |
+      const now = new Date();
+      now.toISOString();  // '2026-09-30T18:25:00.000Z' (UTC): store and send this
+      new Intl.DateTimeFormat('en-US', {
+        dateStyle: 'medium', timeStyle: 'short', timeZone: 'America/Los_Angeles',
+      }).format(now);     // 'Sep 30, 2026, 11:25 AM'
+      const minutes = (end - start) / 60_000;  // Date - Date = milliseconds
+      new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(12.5);  // '$12.50'
+      $|$
+      // traps: months are 0-based: new Date(2026, 8, 30) is Sep 30
+      //        new Date('2026-09-30') is UTC midnight → shows Sep 29 in Pacific time
+      //        toFixed(2) returns a string
+
+  - trigger: ",,jerr"
+    label: "js: custom error class"
+    replace: |
+      class HttpError extends Error {
+        constructor(status, message, options) {
+          super(message, options);  // options: { cause: originalError }
+          this.name = 'HttpError';
+          this.status = status;
+        }
+      }
+      $|$
+      // e.g. throw new HttpError(404, 'Work order not found');
+      // e.g. catch (err) { if (err instanceof HttpError) … else throw err; }  (rethrow what you don't handle)
+      // e.g. wrap: throw new HttpError(502, 'DigiKey lookup failed', { cause: err });
+      // trap: throw Error objects, not strings (strings have no stack trace)
+
+  - trigger: ",,jtext"
+    label: "js: string methods"
+    replace: |
+      s.trim(); s.toLowerCase(); s.includes('x'); s.startsWith('WO-');
+      s.split(',').map(part => part.trim());       // CSV-ish cells
+      s.replaceAll('-', '');                       // replace() only does the first match
+      s.slice(-4);                                 // last 4 chars; s.at(-1) last char
+      `WO-${String(id).padStart(4, '0')}`;         // 'WO-0007'
+      $|$
+      // e.g. case-insensitive equal: a.localeCompare(b, undefined, { sensitivity: 'base' }) === 0
+      // e.g. word count: s.trim().split(/\s+/).filter(Boolean).length
+      // trap: strings are immutable: s.trim() returns a new string, s is unchanged
