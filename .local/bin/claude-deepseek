@@ -10,13 +10,14 @@ mkdir -p "$CLAUDE_CONFIG_DIR/projects"
 # resumed by Anthropic claude fails on its foreign thinking blocks.
 for f in CLAUDE.md settings.json hooks skills skills-manifest.txt plugins \
 	statusline context-mode .remember .caveman-active .ponytail-active history.jsonl; do
-	[ -e "$main/$f" ] && [ ! -e "$CLAUDE_CONFIG_DIR/$f" ] && ln -s "$main/$f" "$CLAUDE_CONFIG_DIR/$f"
+	# Concurrent launches race on the same links; losing the race must not abort under set -e.
+	[ -e "$main/$f" ] && [ ! -e "$CLAUDE_CONFIG_DIR/$f" ] && { ln -s "$main/$f" "$CLAUDE_CONFIG_DIR/$f" 2>/dev/null || [ -e "$CLAUDE_CONFIG_DIR/$f" ]; }
 done
 for mem in "$main"/projects/*/memory; do
 	[ -d "$mem" ] || continue
 	p="$CLAUDE_CONFIG_DIR/projects/$(basename "$(dirname "$mem")")"
 	mkdir -p "$p"
-	[ -e "$p/memory" ] || ln -s "$mem" "$p/memory"
+	[ -e "$p/memory" ] || ln -s "$mem" "$p/memory" 2>/dev/null || [ -e "$p/memory" ]
 done
 
 export ANTHROPIC_BASE_URL="https://openrouter.ai/api"
