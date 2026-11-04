@@ -88,7 +88,7 @@ Tier placement evidence: `research/2026-09-23-routing-tiers-opus-5-5-gpt-6.md`,
 | Nontrivial plan or design ready, not yet built | `plan-refute` (its small-tactical-plan exemption applies) |
 | Implementation ready | Suggest the user run a review by a model from a different family than the one that wrote the code — a same-family reviewer shares its blind spots (user-invoked only) |
 | Repeated attempts have failed | Codex `gpt-6-astra` with the repro, evidence, and failed approaches; ask for a testable alternative explanation |
-| Substantial separable task, clear inputs and acceptance check | Codex `gpt-6-luna` (mechanical, near-zero judgment: fixtures, extraction, renames) or `gpt-6.1-sol` (bounded coding or investigation needing judgment). Inspect the result. Quick tasks stay inline |
+| Substantial separable task, clear inputs and acceptance check | Codex `gpt-6.1-terra` at effort `low` (mechanical, near-zero judgment: fixtures, extraction, renames; evidence: `research/2026-11-03-gpt-6-1-terra-routing.md`) or `gpt-6.1-sol` (bounded coding or investigation needing judgment). Inspect the result. Quick tasks stay inline |
 | Substantial prose — documentation, READMEs, reports, summaries | Codex `gpt-6.1-sol` at default effort; short prose (commit/PR text, a paragraph) stays inline. Agent instructions follow the rule below. Evidence: `research/2026-09-24-prose-model-choice.md` |
 | Demanding coding work — multi-file implementation, nontrivial refactor, sustained reliability over a long task | Codex `gpt-6.1-sol`. Inspect the result |
 | Ambiguous, hard debugging, substantial independent review | Stay here if this session is on Opus 5.5 (the strongest tier); otherwise Codex `gpt-6-astra` |
@@ -97,8 +97,8 @@ Tier placement evidence: `research/2026-09-23-routing-tiers-opus-5-5-gpt-6.md`,
 | One completion from a model no harness reaches natively (no tools, no repo access): a letter or resume draft from one plain prompt, or a named DeepSeek, Mistral, Kimi or Nemotron model | OpenRouter `<model>` through the `openrouter` skill; picks and data policy there. Evidence: `research/2026-10-23-openrouter-prose-route.md` |
 | Agent instruction changes | Follow “Agent instructions get the strongest model” below |
 
-Codex tiers for delegated tasks: Luna → Sol → Astra; a blocked worker gets more
-effort before a higher tier. Luna is the mechanical tier, not a cheap coding
+Codex tiers for delegated tasks: Terra → Sol → Astra; a blocked worker gets more
+effort before a higher tier. Terra is the mechanical tier, not a cheap coding
 default — start coding work at Sol (`gpt-6.1-sol`) at Codex's default medium
 effort, which scored as well as its higher efforts for less. Skill-owned
 dispatch (`grind` workers, `plan-refute` refuters) is unchanged.
@@ -107,7 +107,7 @@ dispatch (`grind` workers, `plan-refute` refuters) is unchanged.
 
 | Route | Claude Code | Codex | Pi |
 |---|---|---|---|
-| Codex `<model>` | `codex:codex-rescue` with `--model <model>` | `spawn_agent` with `model=<model>`, `fork_turns="none"` and a self-contained task brief | `delegate` with `runner=codex`, `model=<model>` |
+| Codex `<model>` | `codex:codex-rescue` with `--model <model>`, plus `--effort <effort>` when the row names one | `spawn_agent` with `model=<model>`, `fork_turns="none"` and a self-contained task brief (a per-call effort is unverified; the child may run at default medium) | `delegate` with `runner=codex`, `model=<model>`, plus `effort=<effort>` when the row names one |
 | Gemini `gemini-4-argon` | `skills/agy/scripts/agy-run --model gemini-4-argon-medium "<brief>"` (read-only by default) | the same `agy-run` script from the shell | `delegate` with `runner=agy`, `model=gemini-4-argon-medium` |
 | OpenRouter `<model>` | `skills/openrouter/scripts/or-run --model <id> "<brief>"` | the same `or-run` script from a shell with network | the same `or-run` script from bash |
 | Cross-family review | Suggest the user run `/codex:review`, or `/codex:adversarial-review` when the approach itself is in question; for a bounded read-only Gemini pass the session runs itself, the Gemini row above | Suggest the user run `/code-review` in Claude Code (or another non-OpenAI reviewer) | `delegate` with `runner=agy` (Gemini) for a read-only review the session runs itself; or, on a non-OpenAI model, suggest the user run `codex review` |

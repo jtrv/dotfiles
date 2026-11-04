@@ -41,7 +41,7 @@ hash = "ba1a606728adb75b091b6eaf3fd60372"
 [[plugin.deps]]
 use = "boydaihungst/mediainfo"
 rev = "f1cec0b"
-hash = "fd9312e974c63438b1f8737711462d52"
+hash = "88ff9c34996a06d1e49eedfe50fd33b3"
 
 [[plugin.deps]]
 use = "kirasok/torrent-preview"

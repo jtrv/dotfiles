@@ -273,6 +273,12 @@ function harness(dir: string, shutdowns: (() => Promise<void>)[], hooks: { isIdl
 			await assert.rejects(runDelegate({ runner: "pi", task: "third" }, dir), /concurrency limit/);
 			await Promise.all(jobs);
 			assert.throws(() => buildArgs({ runner: "codex", task: "x", model: "bad" }, dir, "out"), /Invalid Codex model/);
+			assert.throws(() => buildArgs({ runner: "codex", task: "x", model: "gpt-6-luna" }, dir, "out"), /Invalid Codex model/);
+			const terraLow = buildArgs({ runner: "codex", task: "x", model: "gpt-6.1-terra", effort: "low" }, dir, "out").args;
+			assert.deepEqual(terraLow.slice(terraLow.indexOf("-m"), terraLow.indexOf("-m") + 4), ["-m", "gpt-6.1-terra", "-c", "model_reasoning_effort=low"]);
+			assert.ok(!buildArgs({ runner: "codex", task: "x" }, dir, "out").args.includes("-c"));
+			assert.throws(() => buildArgs({ runner: "codex", task: "x", effort: "max" as "low" }, dir, "out"), /Invalid Codex effort/);
+			assert.throws(() => buildArgs({ runner: "pi", task: "x", effort: "low" }, dir, "out"), /effort is Codex only/);
 		}),
 	);
 
@@ -496,13 +502,13 @@ function harness(dir: string, shutdowns: (() => Promise<void>)[], hooks: { isIdl
 				const ordered = await c.call("delegate", {
 					runner: "pi",
 					cwd: order,
-					tasks: [{ task: first }, { task: secondTask, runner: "codex", model: "gpt-6-luna" }],
+					tasks: [{ task: first }, { task: secondTask, runner: "codex", model: "gpt-6.1-terra" }],
 				});
 				assert.deepEqual(
 					ordered.jobs.map((job: any) => [job.runner, job.state, job.result.model, job.result.final_text]),
 					[
 						["pi", "done", "openai-codex/gpt-6.1-sol", "FIRST"],
-						["codex", "done", "gpt-6-luna", "SECOND"],
+						["codex", "done", "gpt-6.1-terra", "SECOND"],
 					],
 				);
 				assert.equal(await readFile(join(order, "first-saw-second"), "utf8"), "yes");
@@ -676,7 +682,7 @@ function harness(dir: string, shutdowns: (() => Promise<void>)[], hooks: { isIdl
 						mode: "write",
 						cwd: sub,
 						worktree: true,
-						tasks: [{ task: "cwd", runner: "pi" }, { task: "cwd", runner: "codex", model: "gpt-6-luna" }],
+						tasks: [{ task: "cwd", runner: "pi" }, { task: "cwd", runner: "codex", model: "gpt-6.1-terra" }],
 					});
 					assert.equal(isolated.state, "done");
 					const paths = isolated.jobs.map((job: any) => job.result.worktree_path);

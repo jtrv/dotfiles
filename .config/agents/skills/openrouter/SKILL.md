@@ -31,7 +31,7 @@ Model ids and prices come from the keyless `https://openrouter.ai/api/v1/models`
 
 | Job | Model | Why |
 |---|---|---|
-| Polished prose that must not read AI-written (letters, messages, docs) | `deepseek/deepseek-v4-pro-0813` | Clean Slop Index score (19.4 overall, 24.0 email) with the lowest tells of the clean group, at $0.66/$1.98 per M tokens. Not yet A/B'd against `openai/gpt-6-luna`, the current runway pick. |
+| Polished prose that must not read AI-written (letters, messages, docs) | `deepseek/deepseek-v4-pro-0813` | Clean Slop Index score (19.4 overall, 24.0 email) with the lowest tells of the clean group, at $0.115/$4.60 per M tokens (2026-11-03). Won 2 of 3 blind picks on runway letters against GPT-6 Astra, Opus 5.5 and Fable 5.1 (2026-10-23); its errors strengthen claims, so fact-check the output. |
 | Fallback for that | `mistralai/mistral-large-4-0` | 18.8 overall. It is a reasoning model, so give it ≥1000 `--max-tokens` or its reasoning eats the reply. |
 
 Evidence and re-check steps: `~/notes/agent-wiki/wiki/ai-prose-model-choice.md`.

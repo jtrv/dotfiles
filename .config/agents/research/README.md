@@ -21,6 +21,7 @@ pointer back to the report that justified it.
 - `lessons-from-memory.md` — what past sessions learned about running these agents, pulled from per-project memory and the `.remember` logs, each entry with its source.
 
 ### Delegation and subagents
+- `2026-11-03-gpt-6-1-terra-routing.md` — GPT-6.1 Terra (low) replaces GPT-6 Luna on the mechanical row; Sol keeps its rows; AA Index v5.0 snapshot at every Terra effort, a planted-answer local probe that could not separate them, and Pi `delegate` gaining a Codex `effort` field.
 - `2026-10-23-gemini-4-argon-routing.md` — Gemini 4 Argon replaces 3.8 Flash on the agy one-shot row; no coding tier (GPT-6.1 Sol dominates it); AA snapshot with the new index suites, RealSWE, BenchLM, a planted-flaw local probe, and the agy 1.4.6 tool rename that broke read-only children.
 - `2026-10-23-openrouter-prose-route.md` — Slop Index snapshot: new OpenRouter route via the `openrouter` skill; runway prose stays on GPT-6 Luna with DeepSeek V4 Pro 0813 as the A/B candidate; the docs prose row is unchanged (quality vs AI-likeness are different axes).
 - `2026-09-29-gpt-6-1-sol-routing.md` — Artificial Analysis snapshot: GPT-6.1 Sol (medium) replaces GPT-6 Sol on every Sol row and supersedes the Sonnet 5.5 high route; Astra and Luna keep their rows (Codex >= 0.159.1).

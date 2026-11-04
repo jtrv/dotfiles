@@ -13,6 +13,7 @@ export type Task = {
 	task: string;
 	cwd?: string;
 	model?: string;
+	effort?: "low" | "medium" | "high" | "xhigh";
 	mode?: "read-only" | "write";
 	timeout_s?: number;
 	worktree?: boolean;
@@ -46,10 +47,13 @@ export function capped(text: string, limit = CAP) {
 export function buildArgs(input: Task, cwd: string, output: string) {
 	const mode = input.mode ?? "read-only";
 	if (mode !== "read-only" && mode !== "write") throw new Error("Invalid mode");
+	if (input.effort !== undefined && input.runner !== "codex") throw new Error("effort is Codex only");
 	if (input.runner === "codex") {
 		const model = input.model ?? "gpt-6.1-sol";
-		if (!["gpt-6-luna", "gpt-6.1-sol", "gpt-6-astra"].includes(model))
+		if (!["gpt-6.1-terra", "gpt-6.1-sol", "gpt-6-astra"].includes(model))
 			throw new Error("Invalid Codex model");
+		if (input.effort !== undefined && !["low", "medium", "high", "xhigh"].includes(input.effort))
+			throw new Error("Invalid Codex effort");
 		return {
 			model,
 			args: [
@@ -57,6 +61,7 @@ export function buildArgs(input: Task, cwd: string, output: string) {
 				"--skip-git-repo-check",
 				"-m",
 				model,
+				...(input.effort ? ["-c", `model_reasoning_effort=${input.effort}`] : []),
 				"-C",
 				cwd,
 				"--sandbox",

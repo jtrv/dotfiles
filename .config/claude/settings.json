@@ -297,16 +297,16 @@
       }
     }
   },
+  "viewMode": "default",
   "modelSettings": {
     "claude-fable-5-1": {
       "effortLevel": "medium"
     }
   },
   "skipWorkflowUsageWarning": true,
-  "theme": "custom:catppuccin",
+  "theme": "auto",
   "editorMode": "normal",
-  "inputNeededNotifEnabled": true,
-  "agentPushNotifEnabled": true,
   "switchModelsOnFlag": false,
-  "viewMode": "default"
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true
 }
