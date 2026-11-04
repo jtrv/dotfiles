@@ -11,6 +11,7 @@
     "knip": "^6.37.0",
     "live-server": "^1.2.2",
     "lsp-pi": "^1.0.5",
+    "madge": "8.0.0",
     "prettier": "^3.9.8",
     "prettier-plugin-css-order": "^2.2.0",
     "prettier-plugin-jsdoc": "^1.8.1",

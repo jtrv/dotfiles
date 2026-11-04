@@ -9,6 +9,7 @@ eslint-plugin-prettier
 knip
 live-server
 lsp-pi
+madge
 prettier
 prettier-plugin-css-order
 prettier-plugin-jsdoc
