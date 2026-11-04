@@ -18,27 +18,26 @@ This table is the **single source of truth** for what is machine-specific; anyth
 | Path | Ownership |
 |---|---|
 | `warehouse/arch`, `.config/pacman/` | arch machines (morpheus) |
-| `warehouse/uv` additions | morpheus; NixOS machines keep it empty (nixos-config carries tools) |
+| `warehouse/{uv,bun,cargo}` | per-machine. NixOS machines list only what nixos-config doesn't install: bootstrap replays these lists on a fresh install, on top of nix. Prune against `nix eval --json <nixos-config>#nixosConfigurations.<host>.config.environment.systemPackages` (pname and `meta.mainProgram`), never by eye |
 | `.config/systemd/user/*` units | owning machine; NixOS machines track none (units come from nixos-config) |
-| evdi/hermes-streaming (packages, virtual-display pinning) | morpheus |
+| evdi/hermes-streaming (packages, virtual-display pinning) | morpheus. nixos-config replaces hermes with sunshine, so the `Virtual-1` pin is probably dead after cutover (unconfirmed) |
 | bun global `package.json`, cargo `.crates*` | per-machine local state — never merged. Keep this machine's side, but **report what the other side had**; if it looks like new tools rather than version drift, ask |
 | `kanata/*.kbd` | every branch, per-machine by filename (`morpheus.kbd`, `thiccpad.kbd`, `shared.kbd`) — prefer this name-spacing for new machine-specific files over new table rows |
 | `niri/hosts/*.kdl` | every branch, per-machine by filename; `niri/config.kdl` is fully shared — machine settings (outputs, struts, per-host daemons and binds) go in the host file, never back into `config.kdl` |
-| `niri/local.kdl` | per-branch, one line including that branch's `hosts/<machine>.kdl` |
+| `niri/local.kdl` | per-branch, one line including that branch's `hosts/<machine>.kdl`. A branch that lacks it keeps the incoming copy (`config-sweep` flags it) — repoint it before committing |
 | `mpv/hosts/*.conf` | every branch, per-machine by filename (GPU shader and scaler lines); `mpv.conf` is fully shared |
-| `mpv/local.conf` | per-branch, one `include=` of that branch's `hosts/<machine>.conf` |
+| `mpv/local.conf` | per-branch, one `include=` of that branch's `hosts/<machine>.conf`; same missing-file handling as `niri/local.kdl` |
 | `.config/environment.d/*` | morpheus — NixOS machines set the same vars via `environment.sessionVariables` in nixos-config |
-| `warehouse/bun` | per-machine additions, like `warehouse/uv` — keep this machine's side, report theirs |
 | `warehouse/wud` | per-machine, like the package manifests — never union. Keep this machine's side and **ask about every docset the other side has** (`config-sweep` prints them); install one only on a yes. The file is a `wud ls` snapshot that `warehouse` rewrites, so an installed docset lands in it on the next run |
 | `warehouse/{fish,go,ktsctl}`, `fish/fish_plugins`, `mpv/shaders/*`, `mise/config.toml` global `[tools]` | morpheus keeps them; NixOS machines drop what nixos-config installs |
 | `paru/paru.conf`, `.local/bin/mirrors`, topgrade `[linux]`/arch commands | arch machines (morpheus) |
-| firefox flavor: `BROWSER`, `mimeapps.list`, `mozilla/firefox/<profile>` dir | per-machine (thiccpad runs devedition) |
+| firefox flavor: `BROWSER`, `mimeapps.list`, `mozilla/firefox/<profile>` dir | per-machine: arch morpheus runs firefox; NixOS hosts run devedition (nixos-config installs only that, and its profile differs from arch devedition's), so morpheus-nixos takes thiccpad's |
 | absolute tool paths in configs/scripts (`/usr/...` vs `/run/current-system/sw/...`) | shared — probe both paths at run time (see `.local/bin/tofi-run`), never fork the file per machine |
-| secret access in scripts (`secli get` on morpheus vs sops-nix `/run/secrets/*` on NixOS; agenix is gone) | per-machine |
-| hardware tuning: `voxtype` model/threads, waybar height/font | per-machine |
+| secret access in scripts (`secli get` on morpheus vs sops-nix `/run/secrets/*` on NixOS; agenix is gone) | per-machine. Secrets still missing from sops are listed in nixos-config `docs/plan.md` |
+| hardware tuning: `voxtype` model/threads, waybar height/font | per-machine. voxtype's evdev hotkey is off on NixOS (niri binds `voxtype record toggle`), so morpheus-nixos keeps the NixOS `enabled = false` |
 | `easyeffects/*` | shared — every file is keyed by a device (autoload by alsa id, presets/irs by headphone or mic name) and inert elsewhere; union on merge, never sweep |
 | `fish/config.fish` ssh-agent fallback | morpheus (NixOS gets the agent from systemd) |
-| `fish/conf.d/aliases.fish` `wget` → `wget2` alias | morpheus (thiccpad has no `wget2`) |
+| `fish/conf.d/aliases.fish` `wget` → `wget2` alias | morpheus (nix installs no `wget2`) |
 | skyspell dict names in `kak/rc/modes.kak` (`en_US-large`/`es` vs nix `en_US`/`es_ANY`) | per-machine |
 | `.config/udev/rules.d/*` | morpheus — NixOS machines carry udev rules in nixos-config |
 | `readme.md` | per-branch — describes that branch's OS and host |
