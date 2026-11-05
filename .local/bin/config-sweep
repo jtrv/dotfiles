@@ -11,6 +11,7 @@ other=$(git rev-parse -q --verify MERGE_HEAD) || { echo "no merge in progress" >
 
 owned='
 .config/environment.d
+.config/fontconfig/fonts.conf
 .config/mimeapps.list
 .config/mozilla/firefox
 .config/pacman
