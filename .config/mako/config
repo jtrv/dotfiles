@@ -18,7 +18,7 @@ actions=1
 history=1
 text-alignment=center
 default-timeout=7000
-font=Blex Mono Nerd Font 8
+font=monospace 8
 format=<b>%s</b>\n%b
 
 # Interactions
