@@ -29,6 +29,7 @@ This table is the **single source of truth** for what is machine-specific; anyth
 | `mpv/local.conf` | per-branch, one `include=` of that branch's `hosts/<machine>.conf`; same missing-file handling as `niri/local.kdl` |
 | `.config/environment.d/*` | morpheus — NixOS machines set the same vars via `environment.sessionVariables` in nixos-config |
 | `.config/fontconfig/fonts.conf` | morpheus — NixOS machines set the same aliases via `fonts.fontconfig.defaultFonts` in nixos-config |
+| `.config/gamemode.ini`, `.config/pipewire/pipewire.conf`, `.local/bin/steam` | morpheus — NixOS machines use `programs.gamemode.settings`, `services.pipewire.extraConfig` and `programs.steam` in nixos-config |
 | `warehouse/wud` | per-machine, like the package manifests — never union. Keep this machine's side and **ask about every docset the other side has** (`config-sweep` prints them); install one only on a yes. The file is a `wud ls` snapshot that `warehouse` rewrites, so an installed docset lands in it on the next run |
 | `warehouse/{fish,go,ktsctl}`, `fish/fish_plugins`, `mpv/shaders/*`, `mise/config.toml` global `[tools]` | morpheus keeps them; NixOS machines drop what nixos-config installs |
 | `paru/paru.conf`, `.local/bin/mirrors`, topgrade `[linux]`/arch commands | arch machines (morpheus) |
@@ -63,7 +64,8 @@ In the staging worktree, with `<this>` = this machine's branch and `<other>` = t
 One-time steps a branch owes at its next convergence. Do them during step 5, before the checkpoint, then delete the entry in the same merge.
 
 - **morpheus-nixos** (on morpheus): `bun remove -g @socketsecurity/bun-security-scanner`, then run `warehouse` so it leaves `warehouse/bun`. Bun loads a security scanner only from the project's own dependencies, so a global install is inert, and putting `[install.security]` in the shared bunfig breaks `bun install` in every project without it (tested 2026-11-03). Per-project wiring was declined.
-- **morpheus-nixos**: `git rm .config/fontconfig/fonts.conf` after pulling nixos-config and switching. `config-sweep` keeps whatever HEAD had, so the deletion will not arrive by merge.
+- **morpheus-nixos**: `git rm .config/fontconfig/fonts.conf .config/gamemode.ini .config/pipewire/pipewire.conf .local/bin/steam` after pulling nixos-config and switching. `config-sweep` keeps whatever HEAD had, so the deletion will not arrive by merge.
+- **morpheus-nixos**: delete `spawn-at-startup "waybar"` from `niri/hosts/morpheus.kdl`. nixos-config runs it as a user service there, and the spawn would add a second bar.
 
 ## Commit workflow (live `$HOME` state, on the live branch)
 
