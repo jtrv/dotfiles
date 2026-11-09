@@ -68,9 +68,6 @@ overview {
 // terminal daemon
 spawn-at-startup "alacritty" "--daemon"
 
-// status bar
-spawn-at-startup "waybar"
-
 screenshot-path "~/media/pictures/screenshots/%Y-%m-%d_%H-%M-%S.png"
 
 layer-rule {
