@@ -5,16 +5,9 @@
 caniuse-lite
 depcheck
 emmet-cli
-eslint-plugin-prettier
 knip
-live-server
 lsp-pi
 madge
-prettier
-prettier-plugin-css-order
-prettier-plugin-jsdoc
-prettier-plugin-organize-attributes
-prettier-plugin-tailwindcss
 prisma
 purgecss
 slopless
@@ -25,4 +18,3 @@ ts-node
 unocss-language-server
 vercel
 webtorrent-mpv-hook
-yarn

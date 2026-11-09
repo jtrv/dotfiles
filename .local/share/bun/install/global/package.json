@@ -7,16 +7,9 @@
     "caniuse-lite": "^1.0.30001810",
     "depcheck": "^1.4.7",
     "emmet-cli": "^1.2.1",
-    "eslint-plugin-prettier": "^5.5.6",
     "knip": "^6.37.0",
-    "live-server": "^1.2.2",
     "lsp-pi": "^1.0.5",
     "madge": "8.0.0",
-    "prettier": "^3.9.8",
-    "prettier-plugin-css-order": "^2.2.0",
-    "prettier-plugin-jsdoc": "^1.8.1",
-    "prettier-plugin-organize-attributes": "^1.0.0",
-    "prettier-plugin-tailwindcss": "^0.8.1",
     "prisma": "^8.0.0-rc.15",
     "purgecss": "^8.0.0",
     "slopless": "^0.2.38",
@@ -26,8 +19,7 @@
     "ts-node": "^10.9.2",
     "unocss-language-server": "^0.1.9",
     "vercel": "^59.23.2",
-    "webtorrent-mpv-hook": "^1.4.7",
-    "yarn": "^1.22.22"
+    "webtorrent-mpv-hook": "^1.4.7"
   },
   "trustedDependencies": [
     "@anthropic-ai/claude-code",
