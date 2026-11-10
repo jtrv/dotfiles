@@ -68,6 +68,7 @@
 "thesauromatic 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["thesauromatic"]
 "tscan 0.1.0 (path+file:///home/sugimoto/repos/tscan-rs-picker)" = ["tscan"]
 "typos-cli 1.51.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["typos"]
+"vellum 1.0.0 (git+https://github.com/greyxp1/vellum#1e6999730c980c246148f7878dae1de4f6e23b2c)" = ["vellum"]
 "vortix 0.5.4 (registry+https://github.com/rust-lang/crates.io-index)" = ["vortix"]
 "waybar-module-pomodoro 0.3.0 (path+file:///home/sugimoto/repos/waybar-module-pomodoro)" = ["waybar-module-pomodoro"]
 "whats-up-doc 0.1.0 (path+file:///home/sugimoto/repos/whats-up-doc)" = ["wud"]

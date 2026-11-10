@@ -36,6 +36,7 @@ lscolors -> https://github.com/rust-lang/crates.io-index
 magic-wormhole-cli -> https://github.com/rust-lang/crates.io-index
 markdown-oxide -> https://github.com/feel-ix-343/markdown-oxide
 mcat -> https://github.com/rust-lang/crates.io-index
+mcdu -> https://github.com/rust-lang/crates.io-index
 mergiraf -> https://github.com/rust-lang/crates.io-index
 mise -> https://github.com/rust-lang/crates.io-index
 netwatch-tui -> https://github.com/rust-lang/crates.io-index
@@ -57,6 +58,7 @@ syswatch -> https://github.com/rust-lang/crates.io-index
 thesauromatic -> https://github.com/rust-lang/crates.io-index
 tscan -> /home/sugimoto/repos/tscan-rs-picker
 typos-cli -> https://github.com/rust-lang/crates.io-index
+vellum -> https://github.com/greyxp1/vellum
 vortix -> https://github.com/rust-lang/crates.io-index
 waybar-module-pomodoro -> /home/sugimoto/repos/waybar-module-pomodoro
 whats-up-doc -> /home/sugimoto/repos/whats-up-doc
