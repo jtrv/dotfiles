@@ -1,2 +1,0 @@
-#!/bin/bash
-j4-dmenu-desktop --dmenu='dmenu -i -l 5 -g 5'

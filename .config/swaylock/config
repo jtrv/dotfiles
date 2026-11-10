@@ -6,7 +6,7 @@ daemonize
 color=000000
 
 # Font
-font="Blex Mono Nerd Font"
+font="monospace"
 font-size=33
 
 # Indicator

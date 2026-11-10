@@ -27,6 +27,9 @@ gestures {
     }
 }
 
+// status bar
+spawn-at-startup "waybar"
+
 // notifications
 spawn-at-startup "mako"
 

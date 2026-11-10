@@ -14,7 +14,7 @@
 
     "modules-center": [
         "mpris",
-        "custom/pomodoro",
+        "custom/focus",
     ],
 
     "modules-right": [
@@ -182,13 +182,15 @@
         "on-click-right": "alacritty msg create-window --class=popup -e sudo bandwhich &",
     },
 
-    // From: https://github.com/Andeskjerf/waybar-module-pomodoro
-    "custom/pomodoro": {
+    "custom/focus": {
         "format": "{}",
         "return-type": "json",
-        "exec": "waybar-module-pomodoro --no-icons --no-work-icons",
-        "on-click": "waybar-module-pomodoro toggle",
-        "on-click-right": "waybar-module-pomodoro reset",
+        // long-running: clicks go down its command FIFO, no process startup.
+        // timeout keeps a click from hanging if the script isn't running
+        "exec": "$HOME/repos/waybar-focus/waybar_focus.py",
+        "on-click": "timeout 1 sh -c 'echo click > $XDG_RUNTIME_DIR/waybar-focus/cmd'",
+        "on-click-middle": "timeout 1 sh -c 'echo new > $XDG_RUNTIME_DIR/waybar-focus/cmd'",
+        "on-click-right": "timeout 1 sh -c 'echo stop > $XDG_RUNTIME_DIR/waybar-focus/cmd'",
     },
 
     "privacy": {
