@@ -7,7 +7,6 @@ for pair in \
     GROQ_API_KEY:groq-key \
     OPENROUTER_API_KEY:openrouter-key
     set -l kv (string split : $pair)
-    test -r /run/secrets/$kv[2]; and set -gx $kv[1] (cat /run/secrets/$kv[2])
+    test -r /run/secrets/$kv[2]; and set -gx $kv[1] (string collect </run/secrets/$kv[2])
 end
 
-command -q gh; and set -gx GITHUB_PERSONAL_ACCESS_TOKEN (gh auth token 2>/dev/null)
