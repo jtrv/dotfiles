@@ -35,8 +35,9 @@
   cmd = difft --display inline "$LOCAL" "$REMOTE"
 [fetch]
   all = true
-# ssh signing. user.signingkey is set per host in /etc/gitconfig, pointing
-# at that host's sops key (nixos-config, nixos/common/default.nix)
+# ssh signing. user.signingkey is set per host: in /etc/gitconfig on NixOS
+# (sops key, nixos-config nixos/common/default.nix), in the untracked
+# ./personal on arch morpheus
 [gpg]
   format = ssh
 [gpg "ssh"]
@@ -75,6 +76,10 @@
   path = ./aliases
   path = ./delta
   path = ./mergiraf
+  path = ./secret
+
+[includeIf "gitdir:~/"]
+  path = ./personal
 
 [includeIf "gitdir:~/work/"]
   path = ./work
