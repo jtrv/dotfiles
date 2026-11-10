@@ -1,0 +1,12 @@
+[Unit]
+Description=Vellum screen annotation overlay
+After=graphical-session.target
+PartOf=graphical-session.target
+
+[Service]
+Type=exec
+ExecStart=%h/.local/share/cargo/bin/vellum
+Restart=on-failure
+
+[Install]
+WantedBy=graphical-session.target
