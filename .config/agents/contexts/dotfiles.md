@@ -65,7 +65,6 @@ One-time steps a branch owes at its next convergence. Do them during step 5, bef
 
 - **morpheus-nixos** (on morpheus): `bun remove -g @socketsecurity/bun-security-scanner`, then run `warehouse` so it leaves `warehouse/bun`. Bun loads a security scanner only from the project's own dependencies, so a global install is inert, and putting `[install.security]` in the shared bunfig breaks `bun install` in every project without it (tested 2026-11-03). Per-project wiring was declined.
 - **morpheus-nixos**: `git rm .config/fontconfig/fonts.conf .config/gamemode.ini .config/pipewire/pipewire.conf .local/bin/steam` after pulling nixos-config and switching. `config-sweep` keeps whatever HEAD had, so the deletion will not arrive by merge.
-- **morpheus-nixos**: delete `spawn-at-startup "waybar"` from `niri/hosts/morpheus.kdl`. nixos-config runs it as a user service there, and the spawn would add a second bar.
 
 ## Commit workflow (live `$HOME` state, on the live branch)
 
