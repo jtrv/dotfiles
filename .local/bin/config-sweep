@@ -10,6 +10,7 @@ set -e
 cd "$(git rev-parse --show-toplevel)"
 other=$(git rev-parse -q --verify MERGE_HEAD) || { echo "no merge in progress" >&2; exit 1; }
 base=$(git merge-base HEAD "$other")
+t=$(mktemp -d); trap 'rm -rf "$t"' EXIT
 git for-each-ref --format='%(objectname)' refs/remotes/origin | grep -qx "$other" ||
   echo "WARNING: merge source $other is not the tip of any origin/* ref (stale local branch or skipped fetch?)" >&2
 
@@ -85,9 +86,17 @@ done
 
 echo "== theirs only (manifests, kept ours) =="
 for p in $manifests; do
-  # .crates2.json is one long JSON line; .crates.toml carries the same entries
-  [ "$p" = .local/share/cargo/.crates2.json ] && continue
-  lines=$(git diff HEAD "$other" -- "$p" | sed -n '/^+++ /d; s/^+//p')
+  case $p in
+    # one long JSON line; .crates.toml carries the same entries
+    .local/share/cargo/.crates2.json) continue ;;
+    # report package names only: version bumps here are noise
+    */package.json|*/.crates.toml)
+      re='s/^    "\([^"]*\)": ".*/\1/p; s/^"\([^ ]*\) .*/\1/p'
+      git show HEAD:"$p" 2>/dev/null | sed -n "$re" | sort -u >"$t/n-ours"
+      git show "$other":"$p" 2>/dev/null | sed -n "$re" | sort -u >"$t/n-theirs"
+      lines=$(comm -13 "$t/n-ours" "$t/n-theirs") ;;
+    *) lines=$(git diff HEAD "$other" -- "$p" | sed -n '/^+++ /d; s/^+//p') ;;
+  esac
   [ -n "$lines" ] && printf "%s\n%s\n\n" "$p" "$lines"
 done
 
@@ -99,7 +108,6 @@ echo "== incoming deletions (restore ours with: git checkout HEAD -- <path>) =="
 git diff --cached --diff-filter=D --name-status HEAD
 
 echo "== changed on both sides, merged without conflict (check for doubled changes) =="
-t=$(mktemp -d); trap 'rm -rf "$t"' EXIT
 git diff --name-only "$base" HEAD | sort >"$t/ours"
 git diff --name-only "$base" "$other" | sort >"$t/theirs"
 git diff --cached --name-only HEAD | sort >"$t/staged"
