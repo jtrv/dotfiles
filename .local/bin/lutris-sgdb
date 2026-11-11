@@ -25,7 +25,8 @@ quacks_gameid() {
     /^gameid=/ { v = substr($0, 8); if (sec == "") top = v; else if (sec == want) mine = v }
     END { print (mine != "" ? mine : top) }' "$dir/quacks.conf"
 }
-sgdb() { curl -fsS -H "Authorization: Bearer $key" "$api/$1"; }
+# The header goes through --config so the key never shows in argv (ps, /proc/*/cmdline).
+sgdb() { curl -fsS --config <(printf 'header = "Authorization: Bearer %s"\n' "$key") "$api/$1"; }
 
 tmp=$(mktemp)
 trap 'rm -f "$tmp"' EXIT

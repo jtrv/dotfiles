@@ -20,7 +20,8 @@ fi
 
 for lang in $langs; do
   url="https://exercism.org/api/v2/tracks/$lang/exercises"
-  exercises=$(curl -fsSL "$url" -H "Authorization: Bearer $token" |
+  # Header via --config on stdin keeps the token out of argv (ps, /proc/*/cmdline).
+  exercises=$(printf 'header = "Authorization: Bearer %s"\n' "$token" | curl -fsSL --config - "$url" |
     jq -r '.[] | .[] | select(.is_unlocked and .is_recommended) | .slug')
 
   cd "$lang" || continue
