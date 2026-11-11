@@ -1,7 +1,7 @@
 {
   "packages": [
-    "npm:context-mode",
-    "npm:@upstash/context7-pi"
+    "npm:context-mode@1.0.169",
+    "npm:@upstash/context7-pi@0.1.2"
   ],
   "lastChangelogVersion": "0.85.1",
   "theme": "dark",

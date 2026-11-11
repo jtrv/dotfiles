@@ -272,32 +272,41 @@
     "context-mode": {
       "source": {
         "source": "github",
-        "repo": "mksglu/context-mode"
-      }
+        "repo": "mksglu/context-mode",
+        "ref": "v1.0.169"
+      },
+      "autoUpdate": false
     },
     "openai-codex": {
       "source": {
         "source": "github",
-        "repo": "openai/codex-plugin-cc"
-      }
+        "repo": "openai/codex-plugin-cc",
+        "ref": "v1.0.6"
+      },
+      "autoUpdate": false
     },
     "ponytail": {
       "source": {
         "source": "github",
-        "repo": "DietrichGebert/ponytail"
-      }
+        "repo": "DietrichGebert/ponytail",
+        "ref": "v4.9.0"
+      },
+      "autoUpdate": false
     },
     "cloudflare": {
       "source": {
         "source": "github",
         "repo": "cloudflare/skills"
-      }
+      },
+      "autoUpdate": false
     },
     "typesafe-ai": {
       "source": {
         "source": "github",
-        "repo": "typesafe-ai/skills"
-      }
+        "repo": "typesafe-ai/skills",
+        "ref": "v0.5.7"
+      },
+      "autoUpdate": false
     }
   },
   "viewMode": "default",
