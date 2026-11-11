@@ -27,6 +27,9 @@ gestures {
     }
 }
 
+// status bar: arch only, NixOS runs waybar as a user service (nixos-config)
+spawn-sh-at-startup "[ -e /etc/NIXOS ] || exec waybar"
+
 // notifications
 spawn-at-startup "mako"
 
