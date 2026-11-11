@@ -17,10 +17,9 @@ if status is-interactive
   # Never cached: the output hard-codes the current $PATH, so a cached copy would
   # restore whatever PATH the generating shell happened to have.
   mise activate fish | source
-  __cached_init pay-respects pay-respects fish --alias f
   __cached_init starship     starship init fish --print-full-init
 
-  # starship's git modules (its `git` profile) render in the background through
+  # starship's slow git modules (its `git` profile) render in the background through
   # fish-async-prompt (nixos-config packages.nix) and reach the prompt's top line via
   # STARSHIP_GIT. The plugin's child is not interactive, so it autoloads
   # functions/__starship_git.fish. While it runs, the last git info shows dimmed.
