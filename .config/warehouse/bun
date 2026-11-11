@@ -6,7 +6,6 @@
 @olrtg/emmet-language-server
 @openai/codex
 @prisma/language-server
-@socketsecurity/bun-security-scanner
 @tailwindcss/language-server
 bash-language-server
 knip
