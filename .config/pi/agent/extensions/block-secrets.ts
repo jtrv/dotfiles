@@ -6,7 +6,7 @@ import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 const HOOK = join(homedir(), ".config/agents/hooks/block-secrets.sh");
 
 export default function (pi: ExtensionAPI) {
-	pi.on("tool_call", (event) => {
+	pi.on("tool_call", async (event, ctx) => {
 		const res = spawnSync("bash", [HOOK], {
 			input: JSON.stringify({ tool_name: event.toolName, tool_input: event.input }),
 			encoding: "utf8",
@@ -27,8 +27,12 @@ export default function (pi: ExtensionAPI) {
 		} catch {
 			return;
 		}
-		if (out?.permissionDecision === "deny") {
-			return { block: true, reason: out.permissionDecisionReason ?? "blocked by block-secrets" };
+		const reason = out?.permissionDecisionReason ?? "blocked by block-secrets";
+		if (out?.permissionDecision === "deny") return { block: true, reason };
+		// No UI (print/RPC mode) means nobody to ask, so an ask blocks.
+		if (out?.permissionDecision === "ask") {
+			const ok = ctx.hasUI && (await ctx.ui.confirm("block-secrets", reason));
+			if (!ok) return { block: true, reason };
 		}
 	});
 }

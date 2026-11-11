@@ -77,7 +77,10 @@
       "Read(**/gh/hosts.yaml)",
       "Read(**/rclone.conf)",
       "Read(**/age/keys.txt)",
-      "Read(**/mise.local.toml)"
+      "Read(**/mise.local.toml)",
+      "Read(//run/secrets/**)",
+      "Read(//run/secrets.d/**)",
+      "Read(//proc/*/environ)"
     ],
     "ask": [
       "Bash(git push *--force*)",
