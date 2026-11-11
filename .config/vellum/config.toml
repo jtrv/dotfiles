@@ -1,0 +1,184 @@
+# Drawing
+draw_on = "all" # "all" monitors or "current" only.
+default_tool = "pen" # Tools: pen, line, arrow, triangle, rectangle, ellipse, text, eraser, select.
+remember_last_tool = true # Keep the selected tool between drawing sessions.
+clear_on_cancel = false # Clear drawings when exiting with cancel.
+freeze_on_activate = true # Freeze the screen when drawing starts.
+annotations_visible = true # Show annotations when drawing mode is off.
+whiteboard.color = "#000000" # CSS color for the board background.
+
+# Appearance
+stroke_size = 5 # Stroke width in pixels.
+default_fill_shapes = false # Fill shapes instead of drawing outlines.
+cursor.visible = true
+feedback_duration_ms = 500 # Change indicators, 0 to 60000 ms.
+
+# Scrolling
+# Steps set the change per scroll tick. Stops are values where scrolling pauses.
+# size_range = { min = 1, max = 100 }
+# steps.size = 1
+steps.opacity = 0.01
+steps.roundness = 0.01
+# Scrolling also pauses at the default value.
+stops.size = [] # Sizes within size_range, e.g. [5, 10, 20].
+stops.opacity = [] # 0.05 to 1.
+stops.roundness = [] # 0 to 1.
+
+# Palette: 2 to 12 CSS colors.
+default_color = "#E84046" # Must be one of the palette colors.
+palette = [
+  "#E84046",
+  "#EF8F4F",
+  "#EED14D",
+  "#4DD54F",
+  "#0483FA",
+  "#7C58EA",
+  "#EBEBEB",
+  "#141414",
+]
+
+# Shortcuts
+[keybinds]
+draw = ["MouseLeft"] # Draw, select, or edit text.
+open_picker = ["MouseRight"] # Hold or click to choose a tool or color.
+erase = ["MouseMiddle"] # Hold to erase, or click to toggle the eraser.
+undo = ["u", "MouseBack"]
+redo = ["Shift+u", "MouseForward"]
+select_all = ["percent"]
+delete = ["d", "Delete", "BackSpace"]
+cancel = ["Escape"] # Cancel, deselect, or exit drawing mode.
+toggle_fill = ["f"] # Toggle shape fill or text background.
+toggle_whiteboard = ["w"]
+toggle_freeze = ["p"]
+toggle_eraser = ["e"]
+clear = ["c"]
+
+# Text editing
+[text_keybinds]
+cancel = ["Escape"]
+delete = ["Delete", "Ctrl+d"]
+backspace = ["BackSpace", "Ctrl+h"]
+backspace_word = ["Ctrl+BackSpace", "Alt+BackSpace", "Ctrl+w"]
+commit_text = ["Enter", "KP_Enter"]
+newline = ["Shift+Enter", "Shift+KP_Enter", "Alt+Enter"]
+select_all = ["Ctrl+a"]
+left = ["Left", "Ctrl+b"]
+right = ["Right", "Ctrl+f"]
+up = ["Up", "Ctrl+p"]
+down = ["Down", "Ctrl+n"]
+word_left = ["Ctrl+Left", "Alt+b"]
+word_right = ["Ctrl+Right", "Alt+w", "Alt+f"]
+home = ["Home", "Alt+h"]
+end = ["End", "Alt+l", "Ctrl+e"]
+text_start = ["Ctrl+Home", "Alt+less"]
+text_end = ["Ctrl+End", "Alt+greater"]
+
+# Tools
+# Opacity: 0.05 to 1. Roundness: 0 (sharp) to 1 (round).
+
+[tools.pen]
+# size = 5
+# opacity = 1
+roundness = 1
+cursor.visible = false
+# size_range = { min = 1, max = 100 }
+# steps.size = 1
+# steps.opacity = 0.01
+# steps.roundness = 0.01
+# stops.size = []
+# stops.opacity = []
+# stops.roundness = []
+
+[tools.line]
+# size = 5
+# opacity = 1
+roundness = 0.5
+# cursor.visible = true
+# size_range = { min = 1, max = 100 }
+# steps.size = 1
+# steps.opacity = 0.01
+# steps.roundness = 0.01
+# stops.size = []
+# stops.opacity = []
+# stops.roundness = []
+
+[tools.arrow]
+# size = 5
+# opacity = 1
+roundness = 0.25
+cursor.visible = false
+# size_range = { min = 1, max = 100 }
+# steps.size = 1
+# steps.opacity = 0.01
+# steps.roundness = 0.01
+# stops.size = []
+# stops.opacity = []
+# stops.roundness = []
+
+[tools.triangle]
+# size = 5
+# opacity = 1
+roundness = 0
+# filled = false
+# cursor.visible = true
+# size_range = { min = 1, max = 100 }
+# steps.size = 1
+# steps.opacity = 0.01
+# steps.roundness = 0.01
+# stops.size = []
+# stops.opacity = []
+# stops.roundness = []
+
+[tools.rectangle]
+# size = 5
+# opacity = 1
+roundness = 0.1
+# filled = false
+# cursor.visible = true
+# size_range = { min = 1, max = 100 }
+# steps.size = 1
+# steps.opacity = 0.01
+# steps.roundness = 0.01
+# stops.size = []
+# stops.opacity = []
+# stops.roundness = []
+
+[tools.ellipse]
+# size = 5
+# opacity = 1
+# filled = false
+# cursor.visible = true
+# size_range = { min = 1, max = 100 }
+# steps.size = 1
+# steps.opacity = 0.01
+# stops.size = []
+# stops.opacity = []
+
+[tools.text]
+size = 16
+# opacity = 1
+roundness = 0.1
+background = false # Black or white background behind text.
+# cursor.visible = true
+# size_range = { min = 8, max = 500 }
+# steps.size = 0.5
+# steps.opacity = 0.01
+# steps.roundness = 0.01
+# stops.size = []
+# stops.opacity = []
+# stops.roundness = []
+
+font.family = "sans-serif" # Ordered CSS font-family list.
+font.weight = 400 # 1 to 1000.
+font.style = "normal" # normal, italic, oblique.
+font.features = {} # OpenType features, such as { tnum = 1, liga = 0 }.
+
+[tools.eraser]
+size = 10
+cursor.visible = false
+# size_range = { min = 1, max = 100 }
+# steps.size = 1
+# stops.size = []
+
+[tools.select]
+# cursor.visible = true
