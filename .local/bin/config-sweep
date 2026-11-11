@@ -27,7 +27,6 @@ owned='
 .config/gamemode.ini
 .config/pipewire/pipewire.conf
 .local/bin/steam
-.config/mimeapps.list
 .config/mozilla/firefox
 .config/pacman
 .config/paru
@@ -64,6 +63,7 @@ mixed='
 .config/fish/conf.d/aliases.fish
 .config/fish/conf.d/env.fish
 .config/kak/rc/modes.kak
+.config/mimeapps.list
 .config/mise/config.toml
 .config/topgrade.toml
 .config/waybar/config.jsonc
