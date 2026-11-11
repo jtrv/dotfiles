@@ -11,7 +11,7 @@ description: >
 
 # openrouter: one completion from any OpenRouter model
 
-`scripts/or-run` sends one chat completion and prints only the reply. Stats
+`scripts/openrouter-run` sends one chat completion and prints only the reply. Stats
 (model, provider, tokens, cost) go to stderr. It is a single turn with no tools
 and no file access: the model sees exactly what you send, nothing else.
 
@@ -19,9 +19,9 @@ and no file access: the model sees exactly what you send, nothing else.
 
 ```sh
 S=~/.config/agents/skills/openrouter/scripts
-$S/or-run --model deepseek/deepseek-v4-pro-0813 "TASK"
-$S/or-run --model M --system-file brief.md - < material.md   # brief as system, material as user
-$S/or-run --model M --max-tokens 2000 --temperature 0.7 "TASK"
+$S/openrouter-run --model deepseek/deepseek-v4-pro-0813 "TASK"
+$S/openrouter-run --model M --system-file brief.md - < material.md   # brief as system, material as user
+$S/openrouter-run --model M --max-tokens 2000 --temperature 0.7 "TASK"
 ```
 
 Exit 0 means stdout is the reply. Non-zero means no reply, and stderr says why.
@@ -49,9 +49,10 @@ curl reads the auth header from a process substitution.
 
 ## Setup
 
-- `OPENROUTER_API_KEY` must be in the environment, globally or from a project's
-  untracked `.config/mise/config.local.toml`.
+- The key comes from `OPENROUTER_API_KEY` when set, else from the sops-nix file
+  `/run/secrets/openrouter-key`. It is deliberately not exported shell-wide, so
+  agent processes never carry it in their environment.
 - Needs `curl` and `jq`. A Codex sandbox without network can't run it; call it from
   the steering session instead.
-- Self-check after editing the script: `scripts/or-run.test.sh` (fake curl, no
+- Self-check after editing the script: `scripts/openrouter-run.test.sh` (fake curl, no
   network, no key).
