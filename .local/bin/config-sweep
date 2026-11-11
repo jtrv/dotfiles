@@ -7,6 +7,13 @@
 # incoming deletions and files both sides changed that merged without conflict.
 # Keep the lists below in sync with the table; the table stays the source of truth.
 set -e
+# Exported GIT_DIR/GIT_WORK_TREE would point everything below, rm -rf
+# included, at the live $HOME tree. Only a linked worktree (staging) has a
+# git dir distinct from the common dir; the live bare-repo setup never does.
+unset GIT_DIR GIT_WORK_TREE
+gd=$(git rev-parse --absolute-git-dir) || exit 1
+cd_=$(cd "$(git rev-parse --git-common-dir)" && pwd)
+[ "$gd" != "$cd_" ] || { echo "config-sweep: run it in the staging worktree, not live" >&2; exit 1; }
 cd "$(git rev-parse --show-toplevel)"
 other=$(git rev-parse -q --verify MERGE_HEAD) || { echo "no merge in progress" >&2; exit 1; }
 base=$(git merge-base HEAD "$other")
