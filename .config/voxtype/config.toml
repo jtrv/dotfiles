@@ -26,7 +26,9 @@ engine = "whisper"
 #
 # Enable this if you're on X11, using a compositor without key-release support,
 # or prefer a dedicated key like ScrollLock. Requires 'input' group membership.
-enabled = true
+# Off on NixOS: the user isn't in `input` (nixos-config), so evdev finds no
+# keyboard. niri binds XF86Tools (kanata hold-4 → F13) to `voxtype record toggle`.
+enabled = false
 
 # Key to hold for push-to-talk (when enabled = true)
 # Common choices: SCROLLLOCK, PAUSE, RIGHTALT, F13-F24
@@ -66,7 +68,7 @@ max_duration_secs = 60
 
 [audio.feedback]
 # Enable audio feedback sounds (beeps when recording starts/stops)
-enabled = true
+enabled = false
 #
 # Sound theme: "default", "subtle", "mechanical", or path to custom theme directory
 theme = "default"
