@@ -3,11 +3,15 @@
 # Run in the staging worktree after `git merge origin/<other>` (before commit):
 # every owned path goes back to what HEAD had (restored if HEAD tracks it,
 # removed if not), manifests report what the other side had, and files that mix
-# shared and per-machine hunks are listed for review by hand.
+# shared and per-machine hunks are listed for review by hand, along with
+# incoming deletions and files both sides changed that merged without conflict.
 # Keep the lists below in sync with the table; the table stays the source of truth.
 set -e
 cd "$(git rev-parse --show-toplevel)"
 other=$(git rev-parse -q --verify MERGE_HEAD) || { echo "no merge in progress" >&2; exit 1; }
+base=$(git merge-base HEAD "$other")
+git for-each-ref --format='%(objectname)' refs/remotes/origin | grep -qx "$other" ||
+  echo "WARNING: merge source $other is not the tip of any origin/* ref (stale local branch or skipped fetch?)" >&2
 
 owned='
 .config/environment.d
@@ -21,7 +25,8 @@ owned='
 .config/paru
 .config/systemd/user
 .config/udev/rules.d
-.config/voxtype/config.toml
+.config/nvtop
+.local/bin/niri-edge-pan
 .config/fish/fish_plugins
 .config/mpv/shaders
 .config/warehouse/arch
@@ -54,8 +59,11 @@ mixed='
 .config/mise/config.toml
 .config/topgrade.toml
 .config/waybar/config.jsonc
+.config/voxtype/config.toml
 .config/waybar/style.css
+.local/bin/brostak
 .local/bin/exercism-dl
+.local/bin/lutris-sgdb
 .local/bin/nws-discussion
 .local/bin/nws-forecast
 '
@@ -66,17 +74,20 @@ keep_ours() {
   git checkout -q HEAD -- "$1" 2>/dev/null || true
 }
 
+echo "== owned paths they changed since the merge-base (discarded, kept ours) =="
+git diff --name-status "$base" "$other" -- $owned
 for p in $owned $manifests; do keep_ours "$p"; done
 
 echo "== per-branch files HEAD lacked (kept theirs; point them at this branch's host file) =="
 for p in $perbranch; do
-  if git cat-file -e HEAD:"$p" 2>/dev/null; then keep_ours "$p"; else git cat-file -e :"$p" 2>/dev/null && echo "$p"; fi
+  if git cat-file -e HEAD:"$p" 2>/dev/null; then keep_ours "$p"; else git checkout -q "$other" -- "$p" 2>/dev/null && echo "$p"; fi
 done
 
 echo "== theirs only (manifests, kept ours) =="
 for p in $manifests; do
-  case $p in .config/warehouse/*) ;; *) continue ;; esac
-  lines=$(git diff HEAD "$other" -- "$p" | grep "^+[^+]" | sed "s/^+//" || true)
+  # .crates2.json is one long JSON line; .crates.toml carries the same entries
+  [ "$p" = .local/share/cargo/.crates2.json ] && continue
+  lines=$(git diff HEAD "$other" -- "$p" | sed -n '/^+++ /d; s/^+//p')
   [ -n "$lines" ] && printf "%s\n%s\n\n" "$p" "$lines"
 done
 
@@ -84,5 +95,16 @@ echo "== review by hand (shared + per-machine hunks) =="
 for p in $mixed; do
   git diff --quiet HEAD -- "$p" 2>/dev/null && git diff --cached --quiet HEAD -- "$p" 2>/dev/null || echo "$p"
 done
+echo "== incoming deletions (restore ours with: git checkout HEAD -- <path>) =="
+git diff --cached --diff-filter=D --name-status HEAD
+
+echo "== changed on both sides, merged without conflict (check for doubled changes) =="
+t=$(mktemp -d); trap 'rm -rf "$t"' EXIT
+git diff --name-only "$base" HEAD | sort >"$t/ours"
+git diff --name-only "$base" "$other" | sort >"$t/theirs"
+git diff --cached --name-only HEAD | sort >"$t/staged"
+git diff --name-only --diff-filter=U | sort >"$t/unmerged"
+comm -12 "$t/ours" "$t/theirs" | comm -12 - "$t/staged" | comm -23 - "$t/unmerged"
+
 echo "== remaining conflicts =="
 git diff --name-only --diff-filter=U
