@@ -4,14 +4,14 @@
 tag=waybar-sleep-inhibit
 case "$1" in
 toggle)
-    if ! pkill -f "^systemd-inhibit .*$tag"; then
-        setsid systemd-inhibit --what=sleep --who="$tag" \
+    if ! pkill -f "^([^ ]*/)?systemd-inhibit .*--who=$tag"; then
+        systemd-run --user --scope --collect --quiet systemd-inhibit --what=sleep --who="$tag" \
             --why="manually inhibited from waybar" sleep infinity >/dev/null 2>&1 &
     fi
-    pkill -RTMIN+8 -x waybar
+    pkill -RTMIN+8 -x '\.?waybar(-wrapped)?'  # NixOS names the process .waybar-wrapped
     ;;
 *)
-    if pgrep -f "^systemd-inhibit .*$tag" >/dev/null; then
+    if pgrep -f "^([^ ]*/)?systemd-inhibit .*--who=$tag" >/dev/null; then
         printf '{"text":"󰒲 ","class":"activated","tooltip":"Sleep inhibited"}\n'
     else
         printf '{"text":"󰒳 ","class":"deactivated","tooltip":"Sleep allowed"}\n'

@@ -12,7 +12,3 @@ layout {
         bottom 1
     }
 }
-
-binds {
-    Mod+D hotkey-overlay-title="annotate: vellum" { spawn "vellum" "toggle"; }
-}

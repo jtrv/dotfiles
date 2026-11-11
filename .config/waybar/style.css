@@ -6,7 +6,7 @@
   padding: 0px;
   box-shadow: none;
   text-shadow: none;
-  font-family: "Blex Mono Nerd Font", sans-serif;
+  font-family: monospace;
   font-size: 16px;
   font-weight: 600;
 }
@@ -48,7 +48,7 @@
 #bluetooth,
 #clock,
 #cpu,
-#custom-pomodoro,
+#custom-focus,
 #disk,
 #custom-sleep-inhibitor,
 #idle_inhibitor,
@@ -77,7 +77,7 @@
 #bluetooth:hover,
 #clock:hover,
 #cpu:hover,
-#custom-pomodoro:hover,
+#custom-focus:hover,
 #disk:hover,
 #custom-sleep-inhibitor:hover,
 #idle_inhibitor:hover,
@@ -135,19 +135,31 @@
   color: @pink;
 }
 
-#custom-pomodoro {
-  color: @green;
+#custom-focus {
+  color: @overlay1;
 }
 
-#custom-pomodoro.work {
-  color: @red;
+#custom-focus.work {
+  color: @teal;
 }
 
-#custom-pomodoro.break {
+#custom-focus.warn {
   color: @peach;
 }
 
-#custom-pomodoro.pause {
+#custom-focus.over {
+  color: @red;
+}
+
+#custom-focus.break {
+  color: @green;
+}
+
+#custom-focus.ready {
+  color: @yellow;
+}
+
+#custom-focus.paused {
   color: @overlay0;
 }
 
