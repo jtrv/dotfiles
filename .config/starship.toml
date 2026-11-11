@@ -19,8 +19,7 @@ $fossil_metrics\
 $git_branch\
 $git_commit\
 $git_state\
-$git_metrics\
-$git_status\
+${env_var.STARSHIP_GIT}\
 $hg_branch\
 $hg_state\
 $pijul_channel\
@@ -106,6 +105,17 @@ $netns\
 $os\
 $shell\
 $character"""
+
+# git_metrics and git_status walk the work tree (~420 ms each in nixpkgs), so they
+# render apart from the prompt (`starship prompt --profile git`) and fish runs that in
+# the background, handing the result back in STARSHIP_GIT (see fish/config.fish).
+# branch, commit and state only read .git (~5 ms) and stay inline.
+[profiles]
+git = "$git_status$git_metrics"
+
+[env_var.STARSHIP_GIT]
+format = "$env_value"
+
 [aws]
 format = 'on [($profile )($region)$symbol]($style)'
 style = "bold yellow"
@@ -155,7 +165,7 @@ commit_hash_length = 4
 disabled = false
 
 [git_status]
-format = '([$all_status$ahead_behind]($style))'
+format = '([$ahead_behind$all_status]($style))'
 style = "bold"
 conflicted = '[=$count](dimmed bold red) '
 ahead      = '[⇡$count](dimmed bold mauve) '
