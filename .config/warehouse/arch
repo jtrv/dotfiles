@@ -188,7 +188,6 @@ ngrep
 niri
 nix
 nixd
-nixfmt
 noto-fonts
 noto-fonts-cjk
 noto-fonts-emoji
@@ -211,7 +210,6 @@ passt
 pastel
 pay-respects-bin
 pbzip2
-pcmanfm
 perf
 pipewire
 pipewire-alsa
