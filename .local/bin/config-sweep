@@ -25,6 +25,8 @@ owned='
 .config/environment.d
 .config/fontconfig/fonts.conf
 .config/gamemode.ini
+.config/xdg-desktop-portal-termfilechooser
+.config/xdg-desktop-portal/niri-portals.conf
 .config/pipewire/pipewire.conf
 .local/bin/steam
 .config/mozilla/firefox
