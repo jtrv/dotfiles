@@ -222,6 +222,7 @@
         "on-click-right": "wpctl set-mute @DEFAULT_SINK@ toggle",
         "on-scroll-up": "wpctl set-volume @DEFAULT_SINK@ 1%+",
         "on-scroll-down": "wpctl set-volume @DEFAULT_SINK@ 1%-",
+        "smooth-scrolling-threshold": 2,
         "scroll-step": 5,
     },
 
@@ -233,6 +234,7 @@
         "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
         "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 1%+",
         "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 1%-",
+        "smooth-scrolling-threshold": 2,
         "scroll-step": 5,
     },
 
