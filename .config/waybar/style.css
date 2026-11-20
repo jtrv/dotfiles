@@ -253,6 +253,8 @@
   color: @mauve;
   margin-left: 0px;
   margin-right: 0px;
+  min-width: 0px;
+  padding: 0px 6px;
   border-radius: 6px;
   transition: all 0.15s ease;
 }
