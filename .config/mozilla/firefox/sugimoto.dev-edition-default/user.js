@@ -27,7 +27,7 @@ user_pref("browser.ctrlTab.sortByRecentlyUsed", true);
 user_pref("browser.discovery.enabled", false);
 
 user_pref("browser.download.manager.addToRecentDocs", false);
-user_pref("browser.download.open_pdf_attachments_inline", false);
+user_pref("browser.download.open_pdf_attachments_inline", true);
 
 user_pref("browser.formfill.enable", false);
 user_pref("browser.menu.showViewImageInfo", true);
