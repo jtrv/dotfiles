@@ -31,10 +31,12 @@ means …? Stop for …?"). Skip the nudge when the finish line is obvious.
 End every run that changed or found something with these headings, in this
 order: **Needs you**, **Changed**, **Found**. **Needs you** holds every item
 that waits on me, blocking or not: questions, decisions, approvals, steps
-only I can run, and calls you made for me that I might want reversed. Write
-"nothing" when nothing does. **Found** is facts only: an item there that
-asks me something or leaves me a choice belongs in Needs you. Leave out
-Changed or Found when empty. Plain questions get plain answers.
+only I can run, offers ("want me to…?", "say if you want…"), and calls you
+made for me that I might want reversed. Blocking or dated items go first.
+Write "nothing" when nothing does; status notes and caveats go elsewhere.
+**Found** is facts only: an item there that asks me something or leaves me
+a choice belongs in Needs you. Leave out Changed or Found when empty. Plain
+questions get plain answers.
 
 ## Contexts
 In-depth per-context instructions live in `~/.config/agents/contexts/`. Before working in a matching context, Read the file — do not proceed on memory of it:
