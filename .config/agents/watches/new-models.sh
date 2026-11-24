@@ -7,7 +7,7 @@ known="$(dirname "$0")/new-models.known"
 touch "$known"
 
 ids=$(
-  { command -v agy >/dev/null && timeout 30 agy models 2>/dev/null | cut -f1 | sed -E 's/-(low|medium|high)$//'
+  { command -v agy >/dev/null && timeout 30 agy models 2>/dev/null | cut -f1 | sed -E 's/-(low|medium|high|xhigh)$//'
     jq -r '.models[]?.slug' "${CODEX_HOME:-$HOME/.cache/codex}/models_cache.json" 2>/dev/null
   } | grep -E '^[a-z0-9.-]+$' | sort -u
 )

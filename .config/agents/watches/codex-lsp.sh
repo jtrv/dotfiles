@@ -8,7 +8,7 @@ plugins=$(codex plugin list 2>/dev/null) || { echo "UNKNOWN: codex plugin list f
 feats=$(codex features list 2>/dev/null)
 
 # 'pyright' matches inside 'copyright', so anchor on LSP terms that do not hide in prose.
-hit=$(printf '%s\n%s\n' "$plugins" "$feats" | grep -iE 'lsp|language.server|rust-analyzer|gopls|clangd|tsserver')
+hit=$(printf '%s\n%s\n' "$plugins" "$feats" | grep -iE '(^|[^a-z])lsp([^a-z]|$)|language.server|rust-analyzer|gopls|clangd|tsserver')
 if [ -n "$hit" ]; then
   echo "CHECK: Codex LSP surfaced — $(echo "$hit" | head -3 | tr '\n' ';')"
 else
