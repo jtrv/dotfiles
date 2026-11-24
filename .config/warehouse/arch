@@ -63,8 +63,8 @@ diskwatch
 docbook-xml
 docbook-xsl
 docker
+docker-buildx
 docker-compose
-docker-rootless-extras
 doctest
 dosfstools
 downgrade
@@ -119,6 +119,7 @@ grim
 gst-plugin-pipewire
 gst-plugins-good
 gtk-doc
+gvisor-bin
 harper
 helvum
 hermes-streaming
@@ -208,7 +209,6 @@ papirus-folders-catppuccin-git
 paru
 passt
 pastel
-pay-respects-bin
 pbzip2
 perf
 pipewire
