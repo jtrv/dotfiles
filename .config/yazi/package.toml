@@ -4,11 +4,6 @@ rev = "56705e2"
 hash = "7c84fff414a652c86c44523dbb08026f"
 
 [[plugin.deps]]
-use = "Sonico98/exifaudio"
-rev = "4506f9d"
-hash = "4761fffb60a12d37096c34a356380cdf"
-
-[[plugin.deps]]
 use = "ndtoan96/ouch"
 rev = "596b666"
 hash = "c2f4f4aca257dcceafa9e3b828dbf1c9"
@@ -20,12 +15,12 @@ hash = "9776f378459072b6c2875eae5addc49d"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:diff"
-rev = "e0bbd20"
+rev = "1ef5fe0"
 hash = "14558d2829c0aa05e99c57de8f74d199"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:git"
-rev = "e0bbd20"
+rev = "1ef5fe0"
 hash = "347cc6b190eb0c2fd60513cc7ae37412"
 
 [[plugin.deps]]
@@ -35,23 +30,8 @@ hash = "6ea5f37c7f219671ec504cb8311f889d"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:mount"
-rev = "e0bbd20"
-hash = "ba1a606728adb75b091b6eaf3fd60372"
-
-[[plugin.deps]]
-use = "boydaihungst/mediainfo"
-rev = "f1cec0b"
-hash = "88ff9c34996a06d1e49eedfe50fd33b3"
-
-[[plugin.deps]]
-use = "kirasok/torrent-preview"
-rev = "d745df6"
-hash = "cf91ea69fa7626160d7246dbda0ea545"
-
-[[plugin.deps]]
-use = "AnirudhG07/nbpreview"
-rev = "b504594"
-hash = "b83919985400521dee78e1c352b5d9db"
+rev = "1ef5fe0"
+hash = "f0dcc0ea71d5c59ce0d527f4b8a3937b"
 
 [[plugin.deps]]
 use = "atareao/convert"
@@ -65,18 +45,8 @@ hash = "4f75208f47a25a09d8062da5d31553db"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:chmod"
-rev = "e0bbd20"
+rev = "1ef5fe0"
 hash = "87472b05a8c420100f6a2b9cde1e7746"
-
-[[plugin.deps]]
-use = "boydaihungst/fuse-archive"
-rev = "5731dea"
-hash = "df46d73c838dc8357fd69f98427b680b"
-
-[[plugin.deps]]
-use = "dedukun/relative-motions"
-rev = "a603d9e"
-hash = "e02a788e5b8ae0fb47fd0193dda589cc"
 
 [[plugin.deps]]
 use = "lpnh/fr"
@@ -85,15 +55,45 @@ hash = "8b0e87c3176e0d44f79a8656f79f0fa"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:vcs-files"
-rev = "e0bbd20"
+rev = "1ef5fe0"
 hash = "4f2a05edce73aef2bceb2ee2c134c8f2"
+
+[[plugin.deps]]
+use = "Jormala/relative-motions"
+rev = "d4f2003"
+hash = "e0017cae4c0772dd41b7e7c259a6e683"
+
+[[plugin.deps]]
+use = "boydaihungst/fuse-archive"
+rev = "1bc697b"
+hash = "8fc08da5cccfa42fc9c40a77c4d9fa05"
+
+[[plugin.deps]]
+use = "boydaihungst/mediainfo"
+rev = "f1cec0b"
+hash = "fd9312e974c63438b1f8737711462d52"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:mime-ext"
+rev = "1ef5fe0"
+hash = "b9b3ba0d1e0067fa0b729db184b85fdd"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:toggle-pane"
+rev = "1ef5fe0"
+hash = "5b2fbef7d1513ce38ff72623a071a5e"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:piper"
+rev = "1ef5fe0"
+hash = "d1e0499cae5f3aeb628c267616d4b682"
 
 [[flavor.deps]]
 use = "yazi-rs/flavors:catppuccin-mocha"
-rev = "1183892"
-hash = "ce320f877fe709b189433941aba747c4"
+rev = "38c08d8"
+hash = "57d33c9c6107017bf8afc8df186356c5"
 
 [[flavor.deps]]
 use = "yazi-rs/flavors:catppuccin-latte"
-rev = "1183892"
-hash = "273ee53369ccfbf7feb9b0c65e387ed8"
+rev = "38c08d8"
+hash = "f4044a93fcd86ac34f170f9f69d40a2"

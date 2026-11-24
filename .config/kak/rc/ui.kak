@@ -64,7 +64,7 @@ provide-module "ui" %{
 
     define-command ui-blame-toggle %{ git blame }
 
-    define-command ui-indent-enable %{ add-highlighter window/indent show-whitespaces -lf '' -tab '' -spc ' ' -indent '▏' }
+    define-command ui-indent-enable %{ add-highlighter window/indent show-whitespaces -lf '' -tab ' ' -spc ' ' -indent '▏' }
     define-command ui-indent-disable %{ remove-highlighter window/indent }
     define-command ui-indent-toggle %{ try ui-indent-enable catch ui-indent-disable }
 

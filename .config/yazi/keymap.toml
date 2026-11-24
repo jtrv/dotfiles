@@ -55,6 +55,13 @@ prepend_keymap = [
   { on = [ "8" ], run = "plugin relative-motions 8", desc = "Move in relative steps" },
   { on = [ "9" ], run = "plugin relative-motions 9", desc = "Move in relative steps" },
 
+  # dust-size
+  { on = [ "=" ], run = "plugin dust-size", desc = "Total size of selection or cwd" },
+
+  # toggle-pane
+  { on = [ "M" ], run = "plugin toggle-pane max-preview", desc = "Maximize or restore the preview pane" },
+  { on = [ "I" ], run = "plugin toggle-pane min-preview", desc = "Show or hide the preview pane" },
+
   # ripdrag
   { on = [ "<C-k>" ], run = 'shell -- ripdrag -abx %s 2>/dev/null &', desc = "drag and drop selected items" },
   { on = [ "<A-k>" ], run = 'shell -- ripdrag -ab  %s 2>/dev/null &', desc = "drag and drop selected items" },
