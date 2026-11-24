@@ -22,7 +22,7 @@ done
 
 export ANTHROPIC_BASE_URL="https://openrouter.ai/api"
 export ANTHROPIC_API_KEY=""
-export ANTHROPIC_AUTH_TOKEN="$(cat /run/secrets/openrouter-key)"
+export ANTHROPIC_AUTH_TOKEN="$OPENROUTER_API_KEY"
 unset CLAUDE_CODE_OAUTH_TOKEN
 
 m="deepseek/deepseek-v4.1-flash-1017"
