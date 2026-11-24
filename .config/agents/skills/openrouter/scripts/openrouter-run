@@ -5,19 +5,19 @@ set -euo pipefail
 
 usage() {
   cat <<'USAGE'
-usage: or-run --model ID [--system-file F] [--max-tokens N] [--temperature T]
+usage: openrouter-run --model ID [--system-file F] [--max-tokens N] [--temperature T]
               [--allow-retention] [--timeout SECS] [--] TASK
-       or-run ... -   (TASK from stdin)
+       openrouter-run ... -   (TASK from stdin)
 
   --model            OpenRouter model id, e.g. deepseek/deepseek-v4-pro-0813
   --system-file      system prompt from a file
   --allow-retention  drop the default zero-data-retention provider filter
   --timeout          seconds (default 300)
-Env: OPENROUTER_API_KEY (required), OR_URL (default https://openrouter.ai/api/v1),
-     OR_CURL (curl binary, for tests)
+Env: OPENROUTER_API_KEY (else read from OR_KEY_FILE, default /run/secrets/openrouter-key),
+     OR_URL (default https://openrouter.ai/api/v1), OR_CURL (curl binary, for tests)
 USAGE
 }
-die() { echo "or-run: $*" >&2; exit 2; }
+die() { echo "openrouter-run: $*" >&2; exit 2; }
 
 model='' system_file='' max_tokens='' temperature='' zdr=true timeout_s=300
 while [[ $# -gt 0 ]]; do
@@ -42,7 +42,9 @@ task=$1
 [[ $task == - ]] && task=$(cat)
 [[ -n $task ]] || die "empty task"
 [[ -z $system_file || -f $system_file ]] || die "no such system file: $system_file"
-[[ -n ${OPENROUTER_API_KEY:-} ]] || die "OPENROUTER_API_KEY is not set (see SKILL.md, Setup)"
+key_file=${OR_KEY_FILE:-/run/secrets/openrouter-key}
+[[ -n ${OPENROUTER_API_KEY:-} || ! -r $key_file ]] || OPENROUTER_API_KEY=$(<"$key_file")
+[[ -n ${OPENROUTER_API_KEY:-} ]] || die "OPENROUTER_API_KEY is not set and $key_file is unreadable (see SKILL.md, Setup)"
 
 tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT
@@ -66,18 +68,18 @@ curl=${OR_CURL:-curl}
 code=$("$curl" -sS --max-time "$timeout_s" -o "$tmp/out" -w '%{http_code}' \
   --config <(printf 'header = "Authorization: Bearer %s"\n' "$OPENROUTER_API_KEY") \
   -H 'Content-Type: application/json' \
-  -H 'X-Title: or-run' \
+  -H 'X-Title: openrouter-run' \
   --data-binary @"$tmp/body" \
   "${OR_URL:-https://openrouter.ai/api/v1}/chat/completions") || die "request failed (curl exit $?)"
 
 if [[ $code != 2* ]] || jq -e '.error' "$tmp/out" >/dev/null 2>&1; then
   msg=$(jq -r '.error.message // empty' "$tmp/out" 2>/dev/null || true)
-  echo "or-run: HTTP $code: ${msg:-$(head -c 500 "$tmp/out")}" >&2
+  echo "openrouter-run: HTTP $code: ${msg:-$(head -c 500 "$tmp/out")}" >&2
   exit 1
 fi
-jq -r '"or-run: \(.model) via \(.provider // "?") in=\(.usage.prompt_tokens // "?") out=\(.usage.completion_tokens // "?") cost=$\(.usage.cost // "?")"' "$tmp/out" >&2
+jq -r '"openrouter-run: \(.model) via \(.provider // "?") in=\(.usage.prompt_tokens // "?") out=\(.usage.completion_tokens // "?") cost=$\(.usage.cost // "?")"' "$tmp/out" >&2
 finish=$(jq -r '.choices[0].finish_reason // ""' "$tmp/out")
-[[ $finish == length ]] && echo "or-run: warning: stopped at max tokens" >&2
+[[ $finish == length ]] && echo "openrouter-run: warning: stopped at max tokens" >&2
 content=$(jq -r '.choices[0].message.content // empty' "$tmp/out")
 [[ -n $content ]] || die "empty reply (finish_reason=${finish:-none})"
 printf '%s\n' "$content"

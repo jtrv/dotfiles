@@ -24,6 +24,9 @@ export const CAP = 32 * 1024;
 // the third-family reviewer.
 export const AGY_MODELS = [
 	"auto",
+	"gemini-4-neon-high",
+	"gemini-4-neon-medium",
+	"gemini-4-neon-low",
 	"gemini-4-argon-high",
 	"gemini-4-argon-medium",
 	"gemini-4-argon-low",

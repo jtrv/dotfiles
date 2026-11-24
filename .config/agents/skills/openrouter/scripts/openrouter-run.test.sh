@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Self-check for or-run with a fake curl: request shape, key off argv, ZDR default, errors.
+# Self-check for openrouter-run with a fake curl: request shape, key off argv, ZDR default, errors.
 set -euo pipefail
 here=$(cd "$(dirname "$0")" && pwd)
 tmp=$(mktemp -d); trap 'rm -rf "$tmp"' EXIT
@@ -26,10 +26,10 @@ else
 fi
 F
 chmod +x "$tmp/curl"
-export OR_CURL=$tmp/curl RECORD=$tmp/rec OPENROUTER_API_KEY=sk-test-123
+export OR_CURL=$tmp/curl RECORD=$tmp/rec OPENROUTER_API_KEY=sk-test-123 OR_KEY_FILE=$tmp/no-such-key
 
 echo "be terse" > "$tmp/sys"
-out=$("$here/or-run" --model a/b --system-file "$tmp/sys" --max-tokens 50 "hello world" 2>"$tmp/err")
+out=$("$here/openrouter-run" --model a/b --system-file "$tmp/sys" --max-tokens 50 "hello world" 2>"$tmp/err")
 [[ $out == "echo:hello world" ]] || { echo "FAIL reply: $out"; exit 1; }
 grep -q 'sk-test-123' "$tmp/rec.argv" && { echo "FAIL: key in argv"; exit 1; }
 grep -q 'Bearer sk-test-123' "$tmp/rec.config" || { echo "FAIL: no auth header"; exit 1; }
@@ -39,13 +39,13 @@ jq -e '.model == "a/b" and .max_tokens == 50 and .messages[0].role == "system"
   || { echo "FAIL body:"; cat "$tmp/rec.body"; exit 1; }
 grep -q 'via Fake' "$tmp/err" || { echo "FAIL: no stats line"; exit 1; }
 
-echo "from stdin" | "$here/or-run" --model a/b --allow-retention - >/dev/null 2>&1
+echo "from stdin" | "$here/openrouter-run" --model a/b --allow-retention - >/dev/null 2>&1
 jq -e '.provider == null and .messages[0].content == "from stdin"' "$tmp/rec.body" >/dev/null \
   || { echo "FAIL stdin/retention:"; cat "$tmp/rec.body"; exit 1; }
 
-if "$here/or-run" --model bad/model x >/dev/null 2>"$tmp/err"; then echo "FAIL: error exited 0"; exit 1; fi
+if "$here/openrouter-run" --model bad/model x >/dev/null 2>"$tmp/err"; then echo "FAIL: error exited 0"; exit 1; fi
 grep -q 'No allowed providers' "$tmp/err" || { echo "FAIL: error not surfaced"; cat "$tmp/err"; exit 1; }
-if "$here/or-run" x >/dev/null 2>"$tmp/err"; then echo "FAIL: ran without --model"; exit 1; fi
-if OPENROUTER_API_KEY='' "$here/or-run" --model a/b x >/dev/null 2>"$tmp/err"; then echo "FAIL: ran without key"; exit 1; fi
+if "$here/openrouter-run" x >/dev/null 2>"$tmp/err"; then echo "FAIL: ran without --model"; exit 1; fi
+if OPENROUTER_API_KEY='' "$here/openrouter-run" --model a/b x >/dev/null 2>"$tmp/err"; then echo "FAIL: ran without key"; exit 1; fi
 grep -q 'OPENROUTER_API_KEY' "$tmp/err" || { echo "FAIL: key message"; exit 1; }
-echo "or-run: all checks passed"
+echo "openrouter-run: all checks passed"

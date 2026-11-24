@@ -6,9 +6,13 @@
 # Usage: nosleep.sh acquire|release|maybe-suspend   (hook JSON on stdin, for session_id)
 set -u
 
-self=$(readlink -f "${BASH_SOURCE[0]}")
 sid=$(jq -r '.session_id // empty' 2>/dev/null)
 unit="claude-nosleep-${sid:-unknown}"
+# acquire runs on every tool call; the marker lives exactly as long as the
+# inhibitor unit (ExecStopPost removes it), so a held inhibitor costs one stat.
+marker="${XDG_RUNTIME_DIR:-/run/user/$UID}/$unit.held"
+[[ ${1:-} == acquire && -e $marker ]] && exit 0
+self=$(readlink -f "${BASH_SOURCE[0]}")
 # Shared machine-wide: whichever session releases last owns the deferred check.
 timer="claude-nosleep-idlecheck"
 codexunit="claude-nosleep-codex"
@@ -40,14 +44,17 @@ case "${1:-}" in
     # screen would never lock during long runs.
     systemd-run --user --quiet --collect --unit="$unit" \
       --property=RuntimeMaxSec=4h \
+      --property=ExecStopPost="$(command -v rm) -f $marker" \
       systemd-inhibit --what=sleep --who=lock-no-sleep \
         --why="Claude Code working" \
-        sleep infinity 2>/dev/null
+        sleep infinity 2>/dev/null \
+      || systemctl --user is-active --quiet "$unit" && : >"$marker"
     ;;
   release)
     # Watcher starts before our inhibitor drops: no uninhibited window between.
     codex_busy && watch_codex
     systemctl --user stop "$unit" 2>/dev/null
+    rm -f "$marker"
     # swayidle is edge-triggered: a suspend it skipped is never retried, so
     # re-check ourselves. 90s gives a rewake turn time to cancel via acquire.
     systemd-run --user --quiet --collect --on-active=90 --unit="$timer" \

@@ -24,7 +24,7 @@ const taskFields = {
 	model: Type.Optional(
 		Type.String({
 			description:
-				"Pi: provider/model (default openai-codex/gpt-6.1-sol). Codex: gpt-6.1-terra | gpt-6.1-sol | gpt-6-astra (default gpt-6.1-sol). agy (Gemini): gemini-4-argon-high | gemini-4-argon-medium | gemini-4-argon-low | gemini-3.8-flash-high | gemini-3.8-flash-medium | gemini-3.8-flash-low (default auto).",
+				"Pi: provider/model (default openai-codex/gpt-6.1-sol). Codex: gpt-6.1-terra | gpt-6.1-sol | gpt-6-astra (default gpt-6.1-sol). agy (Gemini): gemini-4-neon-high | gemini-4-neon-medium | gemini-4-neon-low | gemini-4-argon-high | gemini-4-argon-medium | gemini-4-argon-low | gemini-3.8-flash-high | gemini-3.8-flash-medium | gemini-3.8-flash-low (default auto).",
 		}),
 	),
 	effort: Type.Optional(
