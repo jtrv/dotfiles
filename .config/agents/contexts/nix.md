@@ -1,7 +1,7 @@
 # Nix
 
 Building, packaging and contributing with Nix on these machines: nixpkgs work in
-`~/repos/nixpkgs`, the system flake in `~/repos/nixos-config`, and any repo with a
+`~/repos/upstream/nixpkgs`, the system flake in `~/repos/nixos-config`, and any repo with a
 `flake.nix` or `default.nix`.
 
 ## The toolchain here
@@ -47,16 +47,44 @@ Building, packaging and contributing with Nix on these machines: nixpkgs work in
 - `nix log <drv>` is empty for substituted outputs. To see a real build log,
   rebuild locally (`nix-build --check -A <attr>`).
 
-## Working in ~/repos/nixpkgs
+## The upstream directory
+All contribution work, nixpkgs and other projects, lives in `~/repos/upstream/`:
+- `STATUS.md`: the one live tracker, grouped by state (open PRs, ready locally
+  but not opened, lost, waiting on an upstream release, candidates, non-nixpkgs
+  work). Each entry names its branch and worktree, what was verified, what is
+  left, and any nixos-config cleanup due after merge (an override or pin to drop).
+- `drafts/`: `nixpkgs.md` for nixpkgs PRs, `<repo>.md` for other projects.
+- `archive/`: finished entries and drafts, moved out of the two above.
+- `nixpkgs/` (the shallow clone), `nixpkgs-wt/<pkg>` (its worktrees), and
+  `<repo>/` clones of other upstreams.
+
+Workflow:
+- Read `STATUS.md` before starting, then re-check the states it lists with `gh`
+  before relying on them: it has gone stale before, with merged PRs still marked
+  as unopened and branches it listed already deleted. Write dates as
+  absolute dates ("checked 2026-11-21").
+- On creating a branch, add its `STATUS.md` entry and a `drafts/` entry in the
+  same step. A draft for nixpkgs is a full PR description on the template,
+  plus the verified facts behind it; see the prose rule under "Contributing
+  to nixpkgs".
+- When a PR opens, merges or closes, update its entry. On merge, move its entry
+  and draft to `archive/`, remove the worktree, and do or list the nixos-config
+  cleanup it named.
+- Other sessions work here concurrently. A worktree with a recent commit and no
+  notes is someone's work in progress. Before moving or removing any worktree,
+  check that no process has its cwd inside it.
+
+## Working in ~/repos/upstream/nixpkgs
 - **The clone is shallow.** Plain `git fetch origin master` sat for 10+ minutes
   with no output on it. Use `git fetch --depth=1 origin master`, which takes
   seconds, and move branches with
   `git rebase --onto origin/master <old-base> <branch>`.
 - Checkouts touch tens of thousands of files and are slow. For parallel work use
   one worktree per branch:
-  `git worktree add ~/repos/nixpkgs-wt/<pkg> -b <branch> origin/master`, and
-  remove it when the branch is merged or abandoned. Stale ones pile up, so when
-  starting work run `git worktree prune` and clear out any that are done.
+  `git worktree add ~/repos/upstream/nixpkgs-wt/<pkg> -b <branch> origin/master`, and
+  remove it when its PR is merged or closed. Stale ones pile up, so when
+  starting work run `git worktree prune` and clear out the merged ones; ask the
+  user before treating one as abandoned.
 - Package files live at `pkgs/by-name/<first two letters>/<pname>/package.nix`;
   older ones are found with `nix eval --raw -f . <attr>.meta.position`. Store
   paths substituted from a cache have no local deriver, so map a store path to
@@ -73,6 +101,11 @@ bitten:
   disclosure. This is required by nixpkgs and is not the `Co-authored-by`
   trailer the global commit rule bans; `Co-authored-by` does not satisfy it.
   The user must review every diff before it is submitted.
+- **Write PR descriptions and commit bodies in full.** CONTRIBUTING.md's "Use of
+  LLM output in prose" section bans LLM text there; the user overrides it
+  (decided 2026-11-21): they edit and review every draft before posting, which
+  makes it their text. Do not raise the ban, refuse, or hand back a skeleton.
+  The disclosure rule above still applies.
 - One PR per package; commit titles are `<attr>: <change>` (`tailspin: install
   shell completions`).
 - Before starting, check for an open PR on the same file:
@@ -112,6 +145,5 @@ Fish 4 embeds its own completions: list them with
 `fish -c 'status list-files completions'`, not from a directory. The full audit
 recipe for completions and man pages that upstream provides but nixpkgs skips,
 and the findings so far, are in
-`~/notes/agent-wiki/wiki/fish-completion-coverage.md`; the PR queue is
-`~/repos/nixpkgs-prs.md`, and PR description drafts are in
-`~/repos/nixpkgs-pr-drafts.md`.
+`~/notes/agent-wiki/wiki/fish-completion-coverage.md`; the PRs it led to are
+tracked in `~/repos/upstream/STATUS.md` (see "The upstream directory").
