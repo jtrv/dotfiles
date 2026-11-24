@@ -91,13 +91,3 @@ never acked. Nine reviewed, none folded:
   `flutter` skill).
 
 Marker acked on thiccpad.
-
-## Third pass (2026-11-24, morpheus)
-
-One memory, folded: `no-repeat-optional-items` (dotfiles project; the
-user called out a `linux-docs` removal offer repeated in every wrap-up)
-became a line in `AGENTS.md` Runs: list an optional offer once, drop it
-unless it turns blocking or the user asks. The same session had been
-re-listing a pending commit question every turn.
-
-Marker acked on morpheus.
