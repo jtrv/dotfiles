@@ -257,16 +257,16 @@
     "playwright@claude-plugins-official": false,
     "ponytail@ponytail": false,
     "pyright-lsp@claude-plugins-official": false,
-    "ralph-loop@claude-plugins-official": true,
+    "ralph-loop@claude-plugins-official": false,
     "remember@claude-plugins-official": true,
-    "rust-analyzer-lsp@claude-plugins-official": true,
-    "security-guidance@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": false,
+    "security-guidance@claude-plugins-official": false,
     "skill-creator@claude-plugins-official": true,
-    "typescript-lsp@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": false,
     "vercel@claude-plugins-official": false,
-    "clangd-lsp@claude-plugins-official": true,
+    "clangd-lsp@claude-plugins-official": false,
     "cloudflare@cloudflare": true,
-    "typesafe@typesafe-ai": true
+    "typesafe@typesafe-ai": false
   },
   "extraKnownMarketplaces": {
     "context-mode": {
