@@ -35,14 +35,14 @@ gimp = [
 
 [open]
 prepend_rules = [
-	{ mime = "image/*",                     use = [ "open", "gimp", "reveal" ] },
-	{ mime = "application/zip",             use = [ "extract", "reveal" ] },
-	{ mime = "application/gzip",            use = [ "extract", "reveal" ] },
-	{ mime = "application/x-tar",           use = [ "extract", "reveal" ] },
-	{ mime = "application/x-bzip",          use = [ "extract", "reveal" ] },
-	{ mime = "application/x-bzip2",         use = [ "extract", "reveal" ] },
-	{ mime = "application/x-7z-compressed", use = [ "extract", "reveal" ] },
-	{ mime = "application/x-rar",           use = [ "extract", "reveal" ] },
+	{ mime = "image/*",                                     use = [ "open", "gimp", "reveal" ] },
+	{ mime = "application/zip",                             use = [ "extract", "reveal" ] },
+	{ mime = "application/gzip",                            use = [ "extract", "reveal" ] },
+	{ mime = "application/{x-tar,tar}",                     use = [ "extract", "reveal" ] },
+	{ mime = "application/{x-bzip,bzip}",                   use = [ "extract", "reveal" ] },
+	{ mime = "application/{x-bzip2,bzip2}",                 use = [ "extract", "reveal" ] },
+	{ mime = "application/{x-7z-compressed,7z-compressed}", use = [ "extract", "reveal" ] },
+	{ mime = "application/{x-rar,rar}",                     use = [ "extract", "reveal" ] },
 ]
 
 [tasks]
@@ -117,12 +117,10 @@ enabled = false
 
 [plugin]
 prepend_previewers = [
-  { mime = "application/x-7z-compressed", run = "ouch" },
-  { mime = "application/x-bzip2",         run = "ouch" },
-  { mime = "application/x-rar",           run = "ouch" },
-  { mime = "application/x-tar",           run = "ouch" },
-  { mime = "application/x-xz",            run = "ouch" },
-  { mime = "application/*zip",            run = "ouch" },
   { mime = "application/subrip",          run = "mediainfo"},
   { mime = "{image,audio,video}/*",       run = "mediainfo"},
+  { url = "*.torrent", run = 'piper -- aria2c -S "$1" | tail -n +2' },
+  # sed strips mcat's OSC 8 hyperlinks: yazi's preview drops the rest of any line containing one
+  { url = "*.md",      run = '''piper -- mcat -c -P -f --silent --sc "${w}xauto" "$1" | sed 's/\x1b]8;[^\x1b]*\x1b\\//g' ''' },
+  { url = "*.ipynb",   run = '''piper -- jq -r -f ~/.config/yazi/nb2md.jq "$1" | mcat -c -P -f --silent -e md --sc "${w}xauto" | sed 's/\x1b]8;[^\x1b]*\x1b\\//g' ''' },
 ]
