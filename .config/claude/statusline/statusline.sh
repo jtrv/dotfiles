@@ -55,6 +55,28 @@ if [ -f "$codex_rollout" ]; then
     [ -n "$codex" ] && export CC_CODEX="$(sev "$codex_max")$codex"
 fi
 
+# OpenRouter credit balance, only in sessions routed through it (claude-deepseek). The
+# bar renders every turn and every minute, so the balance is cached for 5 minutes and a
+# failed fetch keeps the last good value rather than blanking the chip. Thresholds are
+# dollars, not the shared percent ladder: percent of lifetime top-ups says nothing about
+# how close the account is to stopping.
+if [[ "${ANTHROPIC_BASE_URL:-}" == *openrouter.ai* ]] && [ -n "${ANTHROPIC_AUTH_TOKEN:-}" ]; then
+    or_cache="${XDG_RUNTIME_DIR:-/tmp}/claude-statusline/openrouter-credits"
+    if [ -z "$(find "$or_cache" -mmin -5 2>/dev/null)" ]; then
+        mkdir -p "${or_cache%/*}"
+        or_left=$(curl -sf -m 2 -H "Authorization: Bearer $ANTHROPIC_AUTH_TOKEN" \
+            https://openrouter.ai/api/v1/credits | jq -r '.data | .total_credits - .total_usage | numbers')
+        [ -n "$or_left" ] && printf '%s\n' "$or_left" > "$or_cache"
+    fi
+    or_left=$(cat "$or_cache" 2>/dev/null)
+    if [ -n "$or_left" ]; then
+        or_color=$(awk -v d="$or_left" 'BEGIN {
+            if (d < 1) printf "\033[1;38;2;243;139;168m"
+            else if (d < 5) printf "\033[1;38;2;249;226;175m" }')
+        export CC_OPENROUTER="${or_color}\$$(printf '%.2f' "$or_left")"
+    fi
+fi
+
 # the context window fills faster than any other number here, so it gets its own, earlier
 # ladder, the same colours as the cache chip: green, amber from 30%, pink from 45%, red past 60%
 pct=$(jq -r '.context_window.used_percentage | numbers | round' <<< "$input")
