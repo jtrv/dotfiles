@@ -2,12 +2,12 @@
 
 set -e
 
-grim -g "$(slurp)" - | tesseract stdin stdout >/tmp/ocr-grab.txt
+text=$(grim -g "$(slurp)" - | tesseract stdin stdout)
 
-if [ "$(wc -l </tmp/ocr-grab.txt)" -eq 0 ]; then
+if [ -z "$text" ]; then
   notify-send "ocr-grab" "No text was detected!"
   exit 1
 fi
 
-wl-copy </tmp/ocr-grab.txt
-notify-send "ocr-grab" "$(cat /tmp/ocr-grab.txt)"
+printf '%s' "$text" | wl-copy
+notify-send "ocr-grab" "$text"

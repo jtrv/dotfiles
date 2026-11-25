@@ -18,8 +18,25 @@ enable_primary = false
 # Ignore clips which match with one of the X11 `TARGETS`.
 sensitive_mime_types = ["x-kde-passwordManagerHint"]
 # Ignore text clips which match with one of the regular expressions.
-# 2FA codes
-denied_text_regex_patterns = ['^\s*\d{6}\s*$']
+# Rust `regex` crate: no lookaround. Token shapes are from gitleaks' config/gitleaks.toml.
+denied_text_regex_patterns = [
+  '^\s*\d{6}\s*$',                                        # 2FA codes
+  '-----BEGIN[ A-Z0-9_-]{0,100}PRIVATE KEY',
+  'AGE-SECRET-KEY-1[QPZRY9X8GF2TVDW0S3JN54KHCE6MUA7L]{58}',
+  '\bsk-(ant|or|proj|svcacct|admin)-[A-Za-z0-9_-]{20,}',  # Anthropic, OpenRouter, OpenAI
+  '\bgsk_[A-Za-z0-9]{40,}\b',                             # Groq
+  '\b(A3T[A-Z0-9]|AKIA|ASIA|ABIA|ACCA)[A-Z2-7]{16}\b',    # AWS
+  '\bgh[pousr]_[0-9a-zA-Z]{36}\b',
+  '\bgithub_pat_\w{82}',
+  '\bglpat-[\w-]{20}',
+  '\bxox[abprs]-[0-9A-Za-z-]{10,}',                       # Slack
+  '\b(sk|rk)_(test|live|prod)_[a-zA-Z0-9]{10,99}',        # Stripe
+  '\bAIza[\w-]{35}',                                      # Google
+  '\bnpm_[A-Za-z0-9]{36}\b',
+  '\bhf_[A-Za-z]{34}\b',
+  'pypi-AgEIcHlwaS5vcmc[\w-]{50,}',
+  '\bey[a-zA-Z0-9]{17,}\.ey[a-zA-Z0-9/_-]{17,}\.',        # JWT
+]
 # Ignore text clips with a length <= `filter_text_min_length`, in characters (Unicode scalar value), not in byte.
 filter_text_min_length = 1
 # Ignore text clips with a length > `filter_text_max_length`, in characters (Unicode scalar value), not in byte.

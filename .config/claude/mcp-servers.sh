@@ -18,7 +18,7 @@ if claude mcp get playwright >/dev/null 2>&1; then
 	echo "skip: playwright"
 else
 	claude mcp add --scope user playwright -- \
-		bunx @playwright/mcp@latest --executable-path "$(command -v chromium)" --headless
+		bunx @playwright/mcp@0.0.85 --executable-path "$(command -v chromium)" --headless
 fi
 
 echo "Done. Verify with: claude mcp list"

@@ -21,7 +21,7 @@ out of the conversation. Read-only is the default.
 S=~/.config/agents/skills/agy/scripts
 $S/agy-run "TASK"                              # read-only, 600 s timeout
 $S/agy-run --write "TASK"                      # edits and shell allowed
-$S/agy-run --model gemini-4-argon-medium "TASK" # effort is part of the id; `agy models` lists them
+$S/agy-run --model gemini-4-neon-medium "TASK" # effort is part of the id; `agy models` lists them
 $S/agy-run --timeout 120 --add-dir /other "TASK"
 $S/agy-run - < brief.md                        # long task from stdin
 ```
@@ -47,9 +47,9 @@ Without them Gemini explores until the timeout and returns nothing (measured
 on Flash: never finished at 300 s unbounded, about a minute bounded). Since
 agy 1.4.6 `read_file` is the only read tool — listing and search go through
 `run_command`, which read-only mode denies — so name every input file by
-absolute path. Start at `gemini-4-argon-medium`; use `-high` only when medium
+absolute path. Start at `gemini-4-neon-medium`; use `-high` only when medium
 misses; never `-low`. Routing and evidence:
-`research/2026-10-23-gemini-4-argon-routing.md`. Tell it to `cd` to the
+`research/2026-11-21-gemini-4-neon-routing.md`. Tell it to `cd` to the
 repo in any command it runs — agy executes shell commands in its own scratch
 directory, not the launch cwd, so relative paths in commands break. Ask for the
 result shape you want (verdict first, then evidence).

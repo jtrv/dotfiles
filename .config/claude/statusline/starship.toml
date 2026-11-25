@@ -22,6 +22,7 @@ ${env_var.CC_STALE}\
 ${env_var.CC_RATE_7D}\
 ${env_var.CC_RATE_5H}\
 ${env_var.CC_CODEX}\
+${env_var.CC_OPENROUTER}\
 ${env_var.CC_CTX}\
 ${env_var.CC_CACHE}\
 ${env_var.CC_CHOLO}\
@@ -139,6 +140,14 @@ format = "[$symbol$env_value]($style) "
 [env_var.CC_CODEX]
 variable = "CC_CODEX"
 symbol = " "
+style = "bold teal"
+format = "[$symbol$env_value]($style) "
+
+# OpenRouter credit left, in claude-deepseek sessions only. Teal: another provider's budget,
+# like codex. md-wallet; statusline.sh repaints it amber under $5 and red under $1.
+[env_var.CC_OPENROUTER]
+variable = "CC_OPENROUTER"
+symbol = "󰖄 "
 style = "bold teal"
 format = "[$symbol$env_value]($style) "
 

@@ -29,9 +29,14 @@ to stop and ask, nudge me for both in one line before starting ("Done
 means …? Stop for …?"). Skip the nudge when the finish line is obvious.
 
 End every run that changed or found something with these headings, in this
-order: **Blocked on you** (write "nothing" when nothing is), **Changed**,
-**Found**. Leave out Changed or Found when empty. Plain questions get plain
-answers.
+order: **Needs you**, **Changed**, **Found**. **Needs you** holds every item
+that waits on me, blocking or not: questions, decisions, approvals, steps
+only I can run, offers ("want me to…?", "say if you want…"), and calls you
+made for me that I might want reversed. Blocking or dated items go first.
+Write "nothing" when nothing does; status notes and caveats go elsewhere.
+**Found** is facts only: an item there that asks me something or leaves me
+a choice belongs in Needs you. Leave out Changed or Found when empty. Plain
+questions get plain answers.
 
 ## Contexts
 In-depth per-context instructions live in `~/.config/agents/contexts/`. Before working in a matching context, Read the file — do not proceed on memory of it:
@@ -93,7 +98,7 @@ Tier placement evidence: `research/2026-09-23-routing-tiers-opus-5-5-gpt-6.md`,
 | Demanding coding work — multi-file implementation, nontrivial refactor, sustained reliability over a long task | Codex `gpt-6.1-sol`. Inspect the result |
 | Ambiguous, hard debugging, substantial independent review | Stay here if this session is on Opus 5.5 (the strongest tier); otherwise Codex `gpt-6-astra` |
 | Ordered queue of separable tasks | `grind` |
-| Bounded one-shot: a cheap different-family second opinion on a diff or file, a single question, an extra refuter on a plan | Gemini `gemini-4-argon` through `agy`, effort `medium` first, `high` when medium misses; never `low`. The brief sets hard boundaries ("read X once, then answer; no other files, no commands") and names files by absolute path — read-only agy children cannot list or search. Never multi-step or long-horizon work, and never the sole plan refuter: one model is one family's blind spots. Never a coding tier — GPT-6.1 Sol beats it on score, cost, time and tokens. Rationale: `research/2026-10-23-gemini-4-argon-routing.md` |
+| Bounded one-shot: a cheap different-family second opinion on a diff or file, a single question, an extra refuter on a plan | Gemini `gemini-4-neon` through `agy`, effort `medium` first, `high` when medium misses; never `low`. The brief sets hard boundaries ("read X once, then answer; no other files, no commands") and names files by absolute path — read-only agy children cannot list or search. Never multi-step or long-horizon work, and never the sole plan refuter: one model is one family's blind spots. Never a coding tier — GPT-6.1 Sol matches it on FrontierCode for a fraction of the cost, time and tokens. Rationale: `research/2026-11-21-gemini-4-neon-routing.md` |
 | One completion from a model no harness reaches natively (no tools, no repo access): a letter or resume draft from one plain prompt, or a named DeepSeek, Mistral, Kimi or Nemotron model | OpenRouter `<model>` through the `openrouter` skill; picks and data policy there. Evidence: `research/2026-10-23-openrouter-prose-route.md` |
 | Agent instruction changes | Follow “Agent instructions get the strongest model” below |
 
@@ -108,8 +113,8 @@ dispatch (`grind` workers, `plan-refute` refuters) is unchanged.
 | Route | Claude Code | Codex | Pi |
 |---|---|---|---|
 | Codex `<model>` | `codex:codex-rescue` with `--model <model>`, plus `--effort <effort>` when the row names one | `spawn_agent` with `model=<model>`, `fork_turns="none"` and a self-contained task brief (a per-call effort is unverified; the child may run at default medium) | `delegate` with `runner=codex`, `model=<model>`, plus `effort=<effort>` when the row names one |
-| Gemini `gemini-4-argon` | `skills/agy/scripts/agy-run --model gemini-4-argon-medium "<brief>"` (read-only by default) | the same `agy-run` script from the shell | `delegate` with `runner=agy`, `model=gemini-4-argon-medium` |
-| OpenRouter `<model>` | `skills/openrouter/scripts/or-run --model <id> "<brief>"` | the same `or-run` script from a shell with network | the same `or-run` script from bash |
+| Gemini `gemini-4-neon` | `skills/agy/scripts/agy-run --model gemini-4-neon-medium "<brief>"` (read-only by default) | the same `agy-run` script from the shell | `delegate` with `runner=agy`, `model=gemini-4-neon-medium` |
+| OpenRouter `<model>` | `skills/openrouter/scripts/openrouter-run --model <id> "<brief>"` | the same `openrouter-run` script from a shell with network | the same `openrouter-run` script from bash |
 | Cross-family review | Suggest the user run `/codex:review`, or `/codex:adversarial-review` when the approach itself is in question; for a bounded read-only Gemini pass the session runs itself, the Gemini row above | Suggest the user run `/code-review` in Claude Code (or another non-OpenAI reviewer) | `delegate` with `runner=agy` (Gemini) for a read-only review the session runs itself; or, on a non-OpenAI model, suggest the user run `codex review` |
 | `grind` | the `grind` skill | the `grind` skill, one fresh `spawn_agent` per task | the `grind` skill's in-session loop, one `delegate` child with `mode=write` per task; inspect its result before continuing |
 | Fresh-context worker (one task, no parent reasoning, may edit) | `Agent` tool, default type; `isolation: "worktree"` when parallel | `spawn_agent` with `fork_turns="none"` | `delegate` with `mode=write` (its own worktree) |

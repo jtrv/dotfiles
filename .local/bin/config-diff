@@ -1,5 +1,5 @@
 #!/bin/sh
-CONFIG_DIFF=$(mktemp).diff
+CONFIG_DIFF=$(mktemp --suffix=.diff)
 
 BRANCH=$(config status -bsu no | rg -o '(\w+)\.\.\.' -r '$1')
 

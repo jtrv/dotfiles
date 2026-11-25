@@ -3,8 +3,10 @@
 # Layer 2 of 2 — permissions.deny in settings.json covers the file tools; this covers
 # Bash (cat .env, printenv, gh auth token) and MCP tools that take a path.
 #
-# Escape hatch: put SECRETS_OK=1 anywhere in the command/args to bypass for one call.
+# SECRETS_OK=1 anywhere in the command/args turns a deny into an "ask": the user
+# approves the call, never the agent alone (it can type SECRETS_OK=1 itself).
 set -uo pipefail
+shopt -s nocasematch
 
 input=$(cat)
 
@@ -16,7 +18,8 @@ target=$(jq -r '
   ] | map(select(type == "string")) | join(" ")' <<<"$input")
 
 [[ -z "$target" ]] && exit 0
-[[ "$target" == *SECRETS_OK=1* ]] && exit 0
+decision=deny
+[[ "$target" == *SECRETS_OK=1* ]] && decision=ask
 
 # Drop text that names no file being read before matching. A quoted-delimiter
 # heredoc fed to cat/tee is literal data the agent wrote (PLAN.md edits, configs,
@@ -38,15 +41,28 @@ scrubbed=$(awk '
   -e 's/\.env\.(example|sample|template|dist|schema)[[:alnum:].]*//gi')
 
 deny() {
-  jq -nc --arg r "$1" '{
+  jq -nc --arg r "$1" --arg d "$decision" '{
     hookSpecificOutput: {
       hookEventName: "PreToolUse",
-      permissionDecision: "deny",
+      permissionDecision: $d,
       permissionDecisionReason: ("Blocked by block-secrets hook: " + $r +
-        " Secrets must never enter context. If this file is genuinely not sensitive, re-run with SECRETS_OK=1 in the command.")
+        " Secrets must never enter context. If this is genuinely not sensitive, re-run with SECRETS_OK=1 in the command to ask the user to approve it.")
     }
   }'
   exit 0
+}
+
+# One combined regex per list, tested per line (grep -E semantics: ^ and $ are
+# line anchors); the loop that names the rule only runs on a hit. A grep per
+# pattern cost ~120 ms on every tool call of every harness.
+mapfile -t lines <<<"$scrubbed"
+scan() { # scan <reason-prefix> <patterns...>
+  local why=$1 all="" p line; shift
+  for p in "$@"; do all+="${all:+|}($p)"; done
+  for line in "${lines[@]}"; do
+    [[ $line =~ $all ]] || continue
+    for p in "$@"; do [[ $line =~ $p ]] && deny "$why (${p})."; done
+  done
 }
 
 # --- Secret file paths (any tool) ---
@@ -84,10 +100,11 @@ paths=(
   # Documented convention: mise.toml is committed, mise.local.toml is where the
   # secrets go and is never tracked.
   'mise\.local\.toml'
+  # sops-nix decrypted secrets, and any process's environment.
+  '/run/secrets(\.d)?([/[:space:]"'"'"';|)]|$)'
+  '/proc/[^/[:space:]]+/environ'
 )
-for p in "${paths[@]}"; do
-  grep -qEi -- "$p" <<<"$scrubbed" && deny "the path matches a known secret-file pattern (${p})."
-done
+scan "the path matches a known secret-file pattern" "${paths[@]}"
 
 # --- Bash-only: commands that print secrets even with no secret path in them ---
 cmds=(
@@ -106,9 +123,12 @@ cmds=(
   'kubectl[[:space:]]+get[[:space:]]+secret'
   'vault[[:space:]]+(kv[[:space:]]+get|read)'
   '(echo|printf|print)[^;|&]*\$\{?[A-Za-z_]*(KEY|TOKEN|SECRET|PASSWORD|PASSWD|CREDENTIAL|APIKEY)'
+  'printenv[[:space:]]+[A-Za-z_]*(KEY|TOKEN|SECRET|PASSWORD|PASSWD|CREDENTIAL|APIKEY)'
+  # Shell variable dumps: bash/fish `set`, `declare -p`, `typeset -p`.
+  '(^|[;&|(])[[:space:]]*(set|(declare|typeset)[[:space:]]+-p)[[:space:]]*($|>|\|)'
+  # A secret variable handed to a network client leaves the machine.
+  '(curl|wget2?|xh|https?|nc|ncat|socat)[[:space:]][^;|&]*\$\{?[A-Za-z_]*(KEY|TOKEN|SECRET|PASSWORD|PASSWD|CREDENTIAL|APIKEY)'
 )
-for c in "${cmds[@]}"; do
-  grep -qEi -- "$c" <<<"$scrubbed" && deny "the command would print credentials to stdout (${c})."
-done
+scan "the command would expose credentials" "${cmds[@]}"
 
 exit 0

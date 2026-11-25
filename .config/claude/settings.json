@@ -77,7 +77,10 @@
       "Read(**/gh/hosts.yaml)",
       "Read(**/rclone.conf)",
       "Read(**/age/keys.txt)",
-      "Read(**/mise.local.toml)"
+      "Read(**/mise.local.toml)",
+      "Read(//run/secrets/**)",
+      "Read(//run/secrets.d/**)",
+      "Read(//proc/*/environ)"
     ],
     "ask": [
       "Bash(git push *--force*)",
@@ -254,47 +257,56 @@
     "playwright@claude-plugins-official": false,
     "ponytail@ponytail": false,
     "pyright-lsp@claude-plugins-official": false,
-    "ralph-loop@claude-plugins-official": true,
+    "ralph-loop@claude-plugins-official": false,
     "remember@claude-plugins-official": true,
-    "rust-analyzer-lsp@claude-plugins-official": true,
-    "security-guidance@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": false,
+    "security-guidance@claude-plugins-official": false,
     "skill-creator@claude-plugins-official": true,
-    "typescript-lsp@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": false,
     "vercel@claude-plugins-official": false,
-    "clangd-lsp@claude-plugins-official": true,
+    "clangd-lsp@claude-plugins-official": false,
     "cloudflare@cloudflare": true,
-    "typesafe@typesafe-ai": true
+    "typesafe@typesafe-ai": false
   },
   "extraKnownMarketplaces": {
     "context-mode": {
       "source": {
         "source": "github",
-        "repo": "mksglu/context-mode"
-      }
+        "repo": "mksglu/context-mode",
+        "ref": "v1.0.169"
+      },
+      "autoUpdate": false
     },
     "openai-codex": {
       "source": {
         "source": "github",
-        "repo": "openai/codex-plugin-cc"
-      }
+        "repo": "openai/codex-plugin-cc",
+        "ref": "v1.0.6"
+      },
+      "autoUpdate": false
     },
     "ponytail": {
       "source": {
         "source": "github",
-        "repo": "DietrichGebert/ponytail"
-      }
+        "repo": "DietrichGebert/ponytail",
+        "ref": "v4.9.0"
+      },
+      "autoUpdate": false
     },
     "cloudflare": {
       "source": {
         "source": "github",
         "repo": "cloudflare/skills"
-      }
+      },
+      "autoUpdate": false
     },
     "typesafe-ai": {
       "source": {
         "source": "github",
-        "repo": "typesafe-ai/skills"
-      }
+        "repo": "typesafe-ai/skills",
+        "ref": "v0.5.7"
+      },
+      "autoUpdate": false
     }
   },
   "viewMode": "default",
