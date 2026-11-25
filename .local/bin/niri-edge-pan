@@ -1,4 +1,6 @@
-#!/usr/bin/env python3
+#!/usr/bin/env nix-shell
+#! nix-shell -i python3 -I nixpkgs=flake:nixpkgs
+#! nix-shell -p "python3.withPackages (ps: [ps.pygobject3 ps.pycairo ps.evdev])" gtk3 gtk-layer-shell gobject-introspection
 """niri-edge-pan - navigate when the pointer hits a screen edge.
 
 Left/right edges pan columns (focus-column-left/right); top/bottom edges switch
@@ -38,6 +40,10 @@ import json
 import subprocess
 import sys
 import time
+import tomllib
+from pathlib import Path
+
+DEFAULT_CONFIG_PATH = Path.home() / ".config" / "niri-edge-pan" / "config.toml"
 
 # ponytail: one step per excursion, no acceleration/repeat. Add only if resting
 # at the edge to pan several steps turns out to be something you actually want.
@@ -49,6 +55,24 @@ EDGES = {
     "top":    ("focus-workspace-up",  "v", "up"),
     "bottom": ("focus-workspace-down", "v", "down"),
 }
+
+
+def load_dwell_config(path):
+    """Per-edge dwell-ms overrides from `[dwell_ms]` in a TOML config file.
+
+    Missing file or missing table -> no overrides (CLI --dwell-ms applies to
+    every edge, the old global behaviour).
+    """
+    try:
+        with open(path, "rb") as f:
+            data = tomllib.load(f)
+    except FileNotFoundError:
+        return {}
+    overrides = data.get("dwell_ms", {})
+    unknown = [e for e in overrides if e not in EDGES]
+    if unknown:
+        sys.exit(f"niri-edge-pan: unknown edge(s) in {path}: {', '.join(unknown)}")
+    return overrides
 
 
 def _focused_ws(workspaces):
@@ -381,7 +405,11 @@ def main():
     # also fires on a fast sweep into the edge (e.g. reaching for waybar at the
     # top). Raise it if you get accidental steps; this is #4069's `resistance`.
     ap.add_argument("--dwell-ms", type=int, default=0,
-                    help="hold at the edge this long before firing (default: 0)")
+                    help="hold at the edge this long before firing; default for "
+                         "any edge not overridden in --config (default: 0)")
+    ap.add_argument("--config", type=Path, default=DEFAULT_CONFIG_PATH,
+                    help="TOML file with a [dwell_ms] table for per-edge overrides "
+                         f"(default: {DEFAULT_CONFIG_PATH})")
     ap.add_argument("--inset", type=int, default=24,
                     help="px kept clear at each corner so hot-corners still fire "
                          "(default: 24; use 0 if you disable hot-corners)")
@@ -401,6 +429,7 @@ def main():
     unknown = [e for e in edges if e not in EDGES]
     if unknown:
         sys.exit(f"niri-edge-pan: unknown edge(s): {', '.join(unknown)}")
+    dwell_overrides = load_dwell_config(args.config)
     pen = None
     if "top" in edges:
         try:
@@ -411,7 +440,8 @@ def main():
 
     for edge in edges:
         action, kind, direction = EDGES[edge]
-        build_strip(edge, action, kind, direction, args.thickness, args.dwell_ms,
+        dwell_ms = dwell_overrides.get(edge, args.dwell_ms)
+        build_strip(edge, action, kind, direction, args.thickness, dwell_ms,
                     args.inset, pen=pen if edge == "top" else None)
 
     Gtk.main()
